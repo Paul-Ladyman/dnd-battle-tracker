@@ -44,13 +44,19 @@ class CreateCreatureForm extends Component {
   render() {
     const {name, initiative, healthPoints} = this.state;
     return (
-      <form onKeyDown={this.formHandler}>
-        <label htmlFor="name">Name</label>
-        <input type="text" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
-        <label htmlFor="initiative">Initiative</label>
-        <input type="text" name="initiative" value={initiative} onChange={this.handleChange}/>
-        <label htmlFor="healthPoints">HP</label>
-        <input type="text" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
+      <form className="create-creature-form centered__space-evenly" onKeyDown={this.formHandler}>
+        <div className="create-creature-form--item">
+          <input className="create-creature-form--input" type="text" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
+          <label htmlFor="name">Name</label>
+        </div>
+        <div className="create-creature-form--item">
+          <input className="create-creature-form--input__numeric" type="text" name="initiative" value={initiative} onChange={this.handleChange}/>
+          <label htmlFor="initiative">Initiative</label>
+        </div>
+        <div className="create-creature-form--item">
+          <input className="create-creature-form--input__numeric" type="text" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
+          <label htmlFor="healthPoints">HP</label>
+        </div>
       </form>
     ); 
   }

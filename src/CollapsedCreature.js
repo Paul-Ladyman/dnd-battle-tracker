@@ -6,7 +6,10 @@ function CollapsedCreature({creature}) {
     '';
 
   return (
-    <div>{creature.name} {healthPoints}</div>
+    <div className="collapsed-creature centered__space-between">
+      <div>{creature.name}</div>
+      <div>{healthPoints}</div>
+    </div>
   );
 }
 

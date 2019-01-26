@@ -1,32 +1,86 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.centered__space-evenly {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-evenly;
 }
 
-.App-link {
-  color: #61dafb;
+.centered__space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.centered__columns {
+  display: flex;
+  flex-flow: column;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}
+
+.battle-toolbar {
+  display: flex;
+  justify-content: space-evenly;
+  border: 2px solid black;
+  height: 40px;
+  width: 100%;
+}
+
+.battle-toolbar--button {
+  height: 50%;
+  margin-top: 10px;
+}
+
+.battle-toolbar--stat {
+  height: 50%;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  font-weight: bold;
+}
+
+.battle-toolbar--stat-value {
+  font-weight: normal;
+}
+
+.create-creature-form {
+  flex-flow: row;
+  width: 50%;
+}
+
+.create-creature-form--item {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+}
+
+.create-creature-form--input__numeric {
+  width: 33%;
+}
+
+.creature-list {
+  width: 50%;
+  margin: 20px 0 20px 0;
+}
+
+.creature-wrapper {
+  width: 100%;
+  border: 2px solid black;
+  margin: 10px 0 10px 0;
+}
+
+.creature-wrapper__active {
+  border: 2px solid red;
+}
+
+.expanded-creature {
+  width: 100%;
+}
+
+.collapsed-creature {
+  width: 50%;
 }

@@ -24,19 +24,21 @@ class Creature extends Component {
 
   render () {
     const { creature, active } = this.props;
-    const activeSign = active ? '> ' : '';
+    const activeModifier = active ? 'creature-wrapper__active ' : '';
+    const classes=`creature-wrapper ${activeModifier} centered__space-between`;
     const buttonSign = this.state.expanded ? 'v' : '^';
     const buttonOnClick = this.state.expanded ? this.collapse : this.expand;
 
     return (
-      <div>
-        {activeSign}
-        {this.state.expanded ? 
-          <ExpandedCreature creature={creature} /> :
-          <CollapsedCreature creature={creature} />
-        }
-        {!active && <button onClick={buttonOnClick}>{buttonSign}</button>}
-      </div>
+      <React.Fragment>
+        <div className={classes}>
+          {this.state.expanded ? 
+            <ExpandedCreature creature={creature} /> :
+            <CollapsedCreature creature={creature} />
+          }
+          {!active && <button onClick={buttonOnClick}>{buttonSign}</button>}
+        </div>
+      </React.Fragment>
     );
   }
 }

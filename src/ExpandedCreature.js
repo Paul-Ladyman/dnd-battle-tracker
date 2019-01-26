@@ -6,8 +6,9 @@ function ExpandedCreature({creature}) {
     '';
 
   return (
-    <div>
-      {creature.name} {healthPoints}
+    <div className="expanded-creature centered__columns">
+      <div>{creature.name}</div>
+      <div>{healthPoints}</div>
       <div>Initiative: {creature.initiative}</div>
     </div>
   );
