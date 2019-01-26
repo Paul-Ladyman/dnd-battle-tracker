@@ -7,7 +7,7 @@ class Creature extends Component {
     super(props);
 
     this.state = {
-      expanded: props.active
+      expanded: false,
     };
 
     this.expand = this.expand.bind(this);
@@ -29,10 +29,12 @@ class Creature extends Component {
     const buttonSign = this.state.expanded ? 'v' : '^';
     const buttonOnClick = this.state.expanded ? this.collapse : this.expand;
 
+    const showExpanded = active || this.state.expanded;
+
     return (
       <React.Fragment>
         <div className={classes}>
-          {this.state.expanded ? 
+          {showExpanded ? 
             <ExpandedCreature creature={creature} /> :
             <CollapsedCreature creature={creature} />
           }
