@@ -45,8 +45,11 @@ class CreateCreatureForm extends Component {
     const {name, initiative, healthPoints} = this.state;
     return (
       <form onKeyDown={this.formHandler}>
+        <label for="name">Name</label>
         <input type="text" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
+        <label for="initiative">Initiative</label>
         <input type="text" name="initiative" value={initiative} onChange={this.handleChange}/>
+        <label for="healthPoints">HP</label>
         <input type="text" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
       </form>
     ); 
