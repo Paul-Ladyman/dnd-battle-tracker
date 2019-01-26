@@ -9,7 +9,7 @@ function sortCreatures(creatures) {
 function Creatures({creatures}) {
   return (
     sortCreatures(creatures).map((creature) => {
-      return <Creature creature={creature} />
+      return <Creature key={creature.id} creature={creature} />
     })
   );
 }
