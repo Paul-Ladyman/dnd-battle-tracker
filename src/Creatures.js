@@ -1,15 +1,11 @@
 import React from 'react';
 import Creature from './Creature';
 
-function sortCreatures(creatures) {
-  return creatures.sort((creatureA, creatureB) => {
-    return creatureB.initiative - creatureA.initiative;
-  });
-}
-function Creatures({creatures}) {
+function Creatures({creatures, activeCreature}) {
   return (
-    sortCreatures(creatures).map((creature) => {
-      return <Creature key={creature.id} creature={creature} />
+    creatures.map((creature, i) => {
+      const active = activeCreature === i;
+      return <Creature key={creature.id} creature={creature} active={active}/>
     })
   );
 }

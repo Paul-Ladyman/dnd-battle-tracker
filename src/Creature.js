@@ -1,8 +1,13 @@
 import React from 'react';
 
-function Creature({creature}) {
+function Creature({creature, active}) {
+  const activeSign = active ? '> ' : '';
+  const healthPoints = creature.healthPoints ?
+    ` ${creature.healthPoints}HP` :
+    '';
+
   return (
-    <div>{creature.name} ({creature.initiative}) {creature.healthPoints}HP</div>
+    <div>{activeSign}{creature.name} ({creature.initiative}){healthPoints}</div>
   );
 }
 
