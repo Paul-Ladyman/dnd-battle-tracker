@@ -46,16 +46,13 @@ class CreateCreatureForm extends Component {
     return (
       <form className="create-creature-form centered__space-evenly" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item">
-          <input className="create-creature-form--input" type="text" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
-          <label htmlFor="name">Name</label>
+          <input className="create-creature-form--input" type="text" name="name" placeholder="Name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
         </div>
         <div className="create-creature-form--item">
-          <input className="create-creature-form--input__numeric" type="text" name="initiative" value={initiative} onChange={this.handleChange}/>
-          <label htmlFor="initiative">Initiative</label>
+          <input className="create-creature-form--input__numeric" type="text" name="initiative" placeholder="Initiative" value={initiative} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item">
-          <input className="create-creature-form--input__numeric" type="text" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
-          <label htmlFor="healthPoints">HP</label>
+          <input className="create-creature-form--input__numeric" type="text" name="healthPoints" placeholder="HP" value={healthPoints} onChange={this.handleChange}/>
         </div>
       </form>
     ); 

@@ -27,6 +27,7 @@
   border: 2px solid black;
   height: 40px;
   width: 100%;
+  padding: 5px;
 }
 
 .battle-toolbar--button {
@@ -48,14 +49,12 @@
 }
 
 .create-creature-form {
-  flex-flow: row;
   width: 50%;
 }
 
 .create-creature-form--item {
   display: flex;
-  justify-content: left;
-  flex-flow: column;
+  justify-content: center;
 }
 
 .create-creature-form--input__numeric {
@@ -68,9 +67,9 @@
 }
 
 .creature-wrapper {
-  width: 100%;
   border: 2px solid black;
   margin: 10px 0 10px 0;
+  padding: 10px
 }
 
 .creature-wrapper__active {
@@ -83,4 +82,17 @@
 
 .collapsed-creature {
   width: 50%;
+}
+
+.expanded-creature--name {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.expanded-creature-stat {
+  margin-bottom: 10px;
+}
+
+.collapsed-creature--name {
+  font-weight: bold;
 }

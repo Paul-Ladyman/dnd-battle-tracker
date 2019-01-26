@@ -1,14 +1,10 @@
 import React from 'react';
 
 function CollapsedCreature({creature}) {
-  const healthPoints = creature.healthPoints ?
-    ` ${creature.healthPoints}HP` :
-    '';
-
   return (
     <div className="collapsed-creature centered__space-between">
-      <div>{creature.name}</div>
-      <div>{healthPoints}</div>
+      <div className="collapsed-creature--name">{creature.name}</div>
+      {creature.healthPoints && <div>{creature.healthPoints}HP</div>}
     </div>
   );
 }

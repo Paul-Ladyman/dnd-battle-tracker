@@ -1,15 +1,11 @@
 import React from 'react';
 
 function ExpandedCreature({creature}) {
-  const healthPoints = creature.healthPoints ?
-    ` ${creature.healthPoints}HP` :
-    '';
-
   return (
     <div className="expanded-creature centered__columns">
-      <div>{creature.name}</div>
-      <div>{healthPoints}</div>
-      <div>Initiative: {creature.initiative}</div>
+      <div className="expanded-creature--name">{creature.name}</div>
+      {creature.healthPoints && <div className="expanded-creature--stat">Health: {creature.healthPoints}</div>}
+      <div className="expanded-creature--stat">Initiative: {creature.initiative}</div>
     </div>
   );
 }
