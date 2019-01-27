@@ -1,3 +1,4 @@
+/* Utils */
 .centered__space-evenly {
   display: flex;
   align-items: center;
@@ -25,6 +26,7 @@ body {
   flex-flow: column;
 }
 
+/* Battle toolbar */
 .battle-toolbar {
   display: flex;
   justify-content: space-evenly;
@@ -54,6 +56,8 @@ body {
   color: black;
 }
 
+/* Create creature form */
+
 .create-creature-form {
   width: 50%;
 }
@@ -69,6 +73,8 @@ body {
   padding: 10px;
   width: 100%;
 }
+
+/* Creatures */
 
 .creature-list {
   width: 50%;

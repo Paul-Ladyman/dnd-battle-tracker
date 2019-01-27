@@ -22,21 +22,30 @@ class App extends Component {
     this.nextCreature = this.nextCreature.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
     this.killCreature = this.killCreature.bind(this);
+    this.reviveCreature = this.reviveCreature.bind(this);
   }
 
   resetBattle() {
     this.setState(this.initialState);
   }
 
-  killCreature(id) {
+  updateCreature(id, updates) {
     let newCreatures = [...this.state.creatures];
     const creatureIndex = newCreatures.findIndex((creature) => {
       return creature.id === id;
     });
     const existingCreature = newCreatures[creatureIndex]
-    newCreatures[creatureIndex] = {...existingCreature, alive: false};
+    newCreatures[creatureIndex] = {...existingCreature, ...updates};
 
     this.setState({...this.state, creatures: newCreatures});
+  }
+
+  killCreature(id) {
+    this.updateCreature(id, {alive: false});
+  }
+
+  reviveCreature(id) {
+    this.updateCreature(id, {alive: true});
   }
 
   nextCreature() {
@@ -60,9 +69,13 @@ class App extends Component {
       undefined :
       parseInt(creature.healthPoints);
 
+    const initiative = creature.initiative === '' ?
+      0 :
+      parseInt(creature.initiative);
+
     const newCreature = {
       ...creature,
-      initiative: parseInt(creature.initiative),
+      initiative,
       healthPoints,
       id: this.state.creatureCount,
       alive: true
@@ -90,6 +103,7 @@ class App extends Component {
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
           killCreature={this.killCreature}
+          reviveCreature={this.reviveCreature}
         />
         <CreateCreatureForm createCreature={this.createCreature} />
       </div>
