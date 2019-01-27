@@ -2,7 +2,14 @@ import React from 'react';
 import Creature from './Creature';
 import CreatureToolbar from './CreatureToolbar';
 
-function Creatures({creatures, activeCreature, killCreature, reviveCreature, damageCreature}) {
+function Creatures({
+  creatures,
+  activeCreature,
+  killCreature,
+  reviveCreature,
+  damageCreature,
+  healCreature
+}) {
   return (
     <div className="creature-list centered__columns">
       {creatures.map((creature, i) => {
@@ -15,6 +22,7 @@ function Creatures({creatures, activeCreature, killCreature, reviveCreature, dam
               killCreature={killCreature}
               reviveCreature={reviveCreature}
               damageCreature={damageCreature}
+              healCreature={healCreature}
             />
           </div>
         );

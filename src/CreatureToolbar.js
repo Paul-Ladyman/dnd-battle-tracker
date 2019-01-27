@@ -1,7 +1,13 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
 
-function CreatureToolbar({creature, killCreature, reviveCreature, damageCreature}) {
+function CreatureToolbar({
+  creature,
+  killCreature,
+  reviveCreature,
+  damageCreature,
+  healCreature
+}) {
   const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
   const statusButtonLabel = creature.alive ? 'Kill' : 'Revive';
   const showHealthItems = creature.healthPoints !== undefined;
@@ -9,6 +15,7 @@ function CreatureToolbar({creature, killCreature, reviveCreature, damageCreature
     <div className="creature-toolbar">
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
       {showHealthItems && <CreatureToolbarInput onSubmit={(damage) => damageCreature(creature.id, damage)}/>}
+      {showHealthItems && <CreatureToolbarInput onSubmit={(heal) => healCreature(creature.id, heal)}/>}
     </div>
   )
 }
