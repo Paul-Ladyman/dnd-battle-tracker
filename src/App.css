@@ -112,3 +112,8 @@ body {
   font-weight: bold;
   color: #5f130d
 }
+
+.collapsed-creature--name__dead {
+  text-decoration: line-through wavy;
+  text-decoration-color: black;
+}
