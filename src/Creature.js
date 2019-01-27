@@ -25,7 +25,8 @@ class Creature extends Component {
   render () {
     const { creature, active } = this.props;
     const activeModifier = active ? 'creature-wrapper__active ' : '';
-    const classes=`creature-wrapper ${activeModifier} centered__space-between`;
+    const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
+    const classes=`creature-wrapper ${activeModifier} ${aliveModifier} centered__space-between`;
     const buttonSign = this.state.expanded ? 'v' : '^';
     const buttonOnClick = this.state.expanded ? this.collapse : this.expand;
 

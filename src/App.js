@@ -21,10 +21,22 @@ class App extends Component {
     this.createCreature = this.createCreature.bind(this);
     this.nextCreature = this.nextCreature.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
+    this.killCreature = this.killCreature.bind(this);
   }
 
   resetBattle() {
     this.setState(this.initialState);
+  }
+
+  killCreature(id) {
+    let newCreatures = [...this.state.creatures];
+    const creatureIndex = newCreatures.findIndex((creature) => {
+      return creature.id === id;
+    });
+    const existingCreature = newCreatures[creatureIndex]
+    newCreatures[creatureIndex] = {...existingCreature, alive: false};
+
+    this.setState({...this.state, creatures: newCreatures});
   }
 
   nextCreature() {
@@ -52,7 +64,8 @@ class App extends Component {
       ...creature,
       initiative: parseInt(creature.initiative),
       healthPoints,
-      id: this.state.creatureCount
+      id: this.state.creatureCount,
+      alive: true
     };
     
     const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
@@ -76,6 +89,7 @@ class App extends Component {
         <Creatures
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
+          killCreature={this.killCreature}
         />
         <CreateCreatureForm createCreature={this.createCreature} />
       </div>

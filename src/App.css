@@ -86,6 +86,10 @@ body {
   border: 2px solid #b12000;
 }
 
+.creature-wrapper__dead {
+  background-color: darkgrey;
+}
+
 .expanded-creature {
   width: 100%;
 }
