@@ -14,8 +14,8 @@ function CreatureToolbar({
   return (
     <div className="creature-toolbar">
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
-      {showHealthItems && <CreatureToolbarInput onSubmit={(damage) => damageCreature(creature.id, damage)}/>}
-      {showHealthItems && <CreatureToolbarInput onSubmit={(heal) => healCreature(creature.id, heal)}/>}
+      {showHealthItems && <CreatureToolbarInput placeholder="damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>}
+      {showHealthItems && <CreatureToolbarInput placeholder="heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>}
     </div>
   )
 }
