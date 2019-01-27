@@ -66,8 +66,15 @@ body {
   margin-right: 30px;
 }
 
+.creature-toolbar--button {
+  border: 2px solid #5f130d;
+  padding: 10px;
+}
+
 .creature-toolbar--input {
   width: 33%;
+  border: 2px solid #5f130d;
+  padding: 10px;
 }
 
 /* Create creature form */
