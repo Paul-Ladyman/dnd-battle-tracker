@@ -36,7 +36,7 @@ class Creature extends Component {
       <React.Fragment>
         <div className={classes}>
           {showExpanded ? 
-            <ExpandedCreature creature={creature} /> :
+            <ExpandedCreature creature={creature} active={active} removeCreature={this.props.removeCreature}/> :
             <CollapsedCreature creature={creature} />
           }
           {!active && <button onClick={buttonOnClick}>{buttonSign}</button>}

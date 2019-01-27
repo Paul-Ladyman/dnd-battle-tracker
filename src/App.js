@@ -11,6 +11,7 @@ class App extends Component {
 
     this.initialState = {
       creatures: [],
+      creatureIdCount: 0,
       creatureCount: 0,
       activeCreature: 0,
       round: 1
@@ -25,10 +26,27 @@ class App extends Component {
     this.reviveCreature = this.reviveCreature.bind(this);
     this.damageCreature = this.damageCreature.bind(this);
     this.healCreature = this.healCreature.bind(this);
+    this.removeCreature = this.removeCreature.bind(this);
   }
 
   resetBattle() {
     this.setState(this.initialState);
+  }
+
+  removeCreature(creatureId) {
+    const currentlyActiveCreature = this.state.creatures[this.state.activeCreature];
+
+    const creatures = this.state.creatures.filter(({id}) => {
+      return creatureId !== id;
+    });
+
+    const activeCreature = creatures.findIndex(({id}) => {
+      return currentlyActiveCreature.id === id;
+    });
+
+    const creatureCount = this.state.creatureCount - 1;
+
+    this.setState({...this.state, creatures, activeCreature, creatureCount});
   }
 
   updateCreature(id, updates) {
@@ -108,14 +126,15 @@ class App extends Component {
       initiative,
       maxHealthPoints: healthPoints,
       healthPoints,
-      id: this.state.creatureCount,
+      id: this.state.creatureIdCount,
       alive: true
     };
     
     const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
     const creatureCount = this.state.creatureCount + 1;
+    const creatureIdCount = this.state.creatureIdCount + 1;
 
-    this.setState({...this.state, creatures, creatureCount});
+    this.setState({...this.state, creatures, creatureCount, creatureIdCount});
   }
 
   render() {
@@ -137,6 +156,7 @@ class App extends Component {
           reviveCreature={this.reviveCreature}
           damageCreature={this.damageCreature}
           healCreature={this.healCreature}
+          removeCreature={this.removeCreature}
         />
         <CreateCreatureForm createCreature={this.createCreature} />
       </div>

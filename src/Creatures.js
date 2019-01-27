@@ -8,7 +8,8 @@ function Creatures({
   killCreature,
   reviveCreature,
   damageCreature,
-  healCreature
+  healCreature,
+  removeCreature
 }) {
   return (
     <div className="creature-list centered__columns">
@@ -16,7 +17,7 @@ function Creatures({
         const active = activeCreature === i;
         return (
           <div key={creature.id}>
-            <Creature creature={creature} active={active}/>
+            <Creature creature={creature} active={active} removeCreature={removeCreature}/>
             <CreatureToolbar
               creature={creature}
               killCreature={killCreature}
