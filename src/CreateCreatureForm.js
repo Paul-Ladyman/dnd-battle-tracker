@@ -35,9 +35,20 @@ class CreateCreatureForm extends Component {
 
   formHandler(event) {
     if (event.keyCode === 13) {
-      const creature = this.state;
-      this.resetForm();
-      this.props.createCreature(creature);
+      const state = this.state;
+
+      if (state.name !== '' && state.initiative !== '') {
+        const healthPoints = state.healthPoints === '' ?
+          undefined :
+          parseInt(state.healthPoints);
+
+        const initiative = parseInt(state.initiative);
+
+        const creature = {...state, healthPoints, initiative};
+
+        this.resetForm();
+        this.props.createCreature(creature);
+      }
     }
   }
 
