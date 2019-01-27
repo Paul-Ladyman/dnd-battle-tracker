@@ -6,7 +6,7 @@ function CreatureToolbar({creature, killCreature, reviveCreature, damageCreature
   const statusButtonLabel = creature.alive ? 'Kill' : 'Revive';
   const showHealthItems = creature.healthPoints !== undefined;
   return (
-    <div>
+    <div className="creature-toolbar">
       <button onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
       {showHealthItems && <CreatureToolbarInput onSubmit={(damage) => damageCreature(creature.id, damage)}/>}
     </div>

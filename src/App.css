@@ -56,6 +56,20 @@ body {
   color: black;
 }
 
+/* Creature toolbar */
+
+.creature-toolbar {
+  display: flex;
+}
+
+.creature-toolbar > * {
+  margin-right: 30px;
+}
+
+.creature-toolbar--input {
+  width: 33%;
+}
+
 /* Create creature form */
 
 .create-creature-form {
@@ -83,7 +97,7 @@ body {
 
 .creature-wrapper {
   border: 2px solid #5f130d;
-  margin: 10px 0 10px 0;
+  margin: 40px 0 10px 0;
   padding: 10px;
   background-color: #daebbe;
 }

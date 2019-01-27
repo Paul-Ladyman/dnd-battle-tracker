@@ -32,7 +32,7 @@ class CreatureToolbarInput extends Component {
   render() {
     return (
       <form onKeyDown={this.formHandler}>
-        <input type="text" value={this.state.value} onChange={this.handleChange}/>
+        <input className="creature-toolbar--input" type="text" value={this.state.value} onChange={this.handleChange}/>
       </form>
     );
   }
