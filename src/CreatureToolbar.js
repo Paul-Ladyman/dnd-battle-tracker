@@ -11,7 +11,7 @@ function CreatureToolbar({
   addNoteToCreature
 }) {
   const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
-  const statusButtonLabel = creature.alive ? 'Kill' : 'Revive';
+  const statusButtonLabel = creature.alive ? 'KO' : 'Revive';
   const showHealthItems = creature.healthPoints !== undefined;
   const showConditions = conditions.length > 0;
   return (

@@ -31,8 +31,7 @@ class App extends Component {
       'poisoned',
       'prone',
       'restrained',
-      'stunned',
-      'unconscious'
+      'stunned'
     ];
 
     this.createCreature = this.createCreature.bind(this);
@@ -91,7 +90,7 @@ class App extends Component {
   }
 
   killCreature(id) {
-    this.updateCreature(id, {alive: false});
+    this.updateCreature(id, {alive: false, healthPoints: 0});
   }
 
   reviveCreature(id) {
