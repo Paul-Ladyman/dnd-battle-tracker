@@ -8,7 +8,7 @@ function CollapsedCreature({creature}) {
   const showNotes = creature.notes.length > 0;
   const showHealth = creature.healthPoints !== undefined;
   return (
-    <div className="collapsed-creature centered__space-between">
+    <div className="collapsed-creature">
       <div className={nameClasses}>{creature.name}</div>
       {showHealth && <HealthPoints
         short
