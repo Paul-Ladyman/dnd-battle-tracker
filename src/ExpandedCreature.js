@@ -1,5 +1,4 @@
 import React from 'react';
-import Timer from './Timer';
 import CreatureNoteList from './CreatureNoteList';
 
 function ExpandedCreature({

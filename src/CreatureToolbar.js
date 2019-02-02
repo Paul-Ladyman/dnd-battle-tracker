@@ -18,16 +18,18 @@ function CreatureToolbar({
     <div className="creature-toolbar">
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
       {showConditions &&
-        <select value="" onChange={(event) => addNoteToCreature(creature.id, event.target.value, true)}>
-          <option value="">--Conditions--</option>
-          {conditions.map((condition, i) => {
-            return <option key={i} value={condition}>{condition}</option>
-          })}
-        </select>
+        <div>
+          <select className="creature-toolbar--input" value="" onChange={(event) => addNoteToCreature(creature.id, event.target.value, true)}>
+            <option value="">Conditions</option>
+            {conditions.map((condition, i) => {
+              return <option key={i} value={condition}>{condition}</option>
+            })}
+          </select>
+        </div>
       }
+      <CreatureToolbarInput placeholder="note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
       {showHealthItems && <CreatureToolbarInput integer placeholder="damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>}
       {showHealthItems && <CreatureToolbarInput integer placeholder="heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>}
-      <CreatureToolbarInput placeholder="note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
     </div>
   )
 }
