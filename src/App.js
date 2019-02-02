@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
@@ -19,6 +18,12 @@ class App extends Component {
 
     this.state = this.initialState;
 
+    this.conditions = [
+      'blinded',
+      'charmed',
+      'poisoned'
+    ];
+
     this.createCreature = this.createCreature.bind(this);
     this.nextCreature = this.nextCreature.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
@@ -27,6 +32,9 @@ class App extends Component {
     this.damageCreature = this.damageCreature.bind(this);
     this.healCreature = this.healCreature.bind(this);
     this.removeCreature = this.removeCreature.bind(this);
+    this.addConditionToCreature = this.addConditionToCreature.bind(this);
+    this.removeConditionFromCreature = this.removeConditionFromCreature.bind(this);
+    this.findCreature = this.findCreature.bind(this);
   }
 
   resetBattle() {
@@ -49,6 +57,12 @@ class App extends Component {
     this.setState({...this.state, creatures, activeCreature, creatureCount});
   }
 
+  findCreature(creatureId) {
+    return this.state.creatures.find(({id}) => {
+      return creatureId === id;
+    });
+  }
+
   updateCreature(id, updates) {
     let newCreatures = [...this.state.creatures];
     const creatureIndex = newCreatures.findIndex((creature) => {
@@ -66,6 +80,23 @@ class App extends Component {
 
   reviveCreature(id) {
     this.updateCreature(id, {alive: true});
+  }
+
+  removeConditionFromCreature(creatureId, conditionName) {
+    const creature = this.findCreature(creatureId);
+    const conditions = creature.conditions.filter((condition) => {
+      return condition.name !== conditionName;
+    });
+    this.updateCreature(creatureId, {conditions});
+  }
+
+  addConditionToCreature(creatureId, conditionName) {
+    const creature = this.findCreature(creatureId);
+    const condition = {
+      name: conditionName
+    }
+    const conditions = [...creature.conditions, condition];
+    this.updateCreature(creatureId, {conditions});
   }
 
   damageCreature(creatureId, damage) {
@@ -127,7 +158,8 @@ class App extends Component {
       maxHealthPoints: healthPoints,
       healthPoints,
       id: this.state.creatureIdCount,
-      alive: true
+      alive: true,
+      conditions: []
     };
     
     const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
@@ -152,11 +184,14 @@ class App extends Component {
         <Creatures
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
+          conditions={this.conditions}
           killCreature={this.killCreature}
           reviveCreature={this.reviveCreature}
           damageCreature={this.damageCreature}
           healCreature={this.healCreature}
           removeCreature={this.removeCreature}
+          addConditionToCreature={this.addConditionToCreature}
+          removeConditionFromCreature={this.removeConditionFromCreature}
         />
         <CreateCreatureForm createCreature={this.createCreature} />
       </div>
