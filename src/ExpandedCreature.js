@@ -24,7 +24,9 @@ function ExpandedCreature({
         maxHp={maxHealthPoints}
         className="expanded-creature--stat"
       />}
-      <div className="expanded-creature--stat">Initiative: {initiative}</div>
+      <div className="expanded-creature--stat">
+        <b>Initiative:</b> {initiative}
+      </div>
       {showConditions && <CreatureNoteList
         creatureId={id}
         label="Conditions"
@@ -32,6 +34,7 @@ function ExpandedCreature({
         dismissHandler={(creatureId, text) => removeNoteFromCreature(creatureId, text, true)}
         round={round}
         secondsElapsed={secondsElapsed}
+        className="expanded-creature--stat"
       />}
       {showNotes && <CreatureNoteList
         creatureId={id}
@@ -40,8 +43,9 @@ function ExpandedCreature({
         dismissHandler={(creatureId, text) => removeNoteFromCreature(creatureId, text, false)}
         round={round}
         secondsElapsed={secondsElapsed}
+        className="expanded-creature--stat"
       />}
-      {!active && <button onClick={() => removeCreature(id)}>remove</button>}
+      {!active && <button className="expanded-creature--button" onClick={() => removeCreature(id)}>Remove</button>}
     </div>
   );
 }

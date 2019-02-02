@@ -39,6 +39,7 @@ body {
 .battle-toolbar--button {
   height: 50%;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .battle-toolbar--stat {
@@ -70,6 +71,7 @@ body {
   border: 2px solid #5f130d;
   padding: 10px;
   margin-right: 35px;
+  cursor: pointer;
 }
 
 .creature-toolbar--form {
@@ -81,6 +83,10 @@ body {
   padding: 10px;
   width: 100%;
   background-color: white;
+}
+
+.creature-toolbar--dropdown {
+  cursor: pointer;
 }
 
 /* Create creature form */
@@ -133,22 +139,69 @@ body {
 
 .expanded-creature--name {
   font-weight: bold;
+  font-size: 20px;
+  text-decoration: underline;
+  text-decoration-color: black;
   margin-bottom: 20px;
   color: #5f130d;
 }
 
-.expanded-creature-stat {
+.expanded-creature--stat {
   margin-bottom: 10px;
+}
+
+.expanded-creature--button {
+  border: 2px solid #5f130d;
+  padding: 10px;
+  width: 12%;
+  cursor: pointer;
 }
 
 .collapsed-creature--name {
   font-weight: bold;
+  font-size: 20px;
   color: #5f130d
 }
 
 .collapsed-creature--name__dead {
   text-decoration: line-through wavy;
   text-decoration-color: black;
+}
+
+/* Creature note list */
+
+.creature-note-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(60px, auto);
+  grid-gap: 10px;
+  margin-top: 5px;
+  border: 1px solid #b12000;
+  padding: 10px;
+}
+
+.creature-note-list--title {
+  display: flex;
+  align-items: center;
+}
+
+.creature-note-list--note {
+  text-transform: capitalize;
+  text-decoration: underline;
+  text-decoration-color: #b12000;
+  text-decoration-style: double;
+}
+
+.creature-note-list--button {
+  margin-left: 10px;
+  border: 2px solid #5f130d;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.creature-note-list--timer {
+  margin-top: 5px;
+  font-size: 14px;
 }
 
 /* Health points */

@@ -7,26 +7,32 @@ function CreatureNoteList({
   noteList,
   dismissHandler,
   round,
-  secondsElapsed
+  secondsElapsed,
+  className
 }) {
   return (
-    <React.Fragment>
-      <div>{label}:</div>
-      {noteList.map((note, i) => (
-        <div key={i}>
-          {note.text}
-          <button onClick={() => dismissHandler(creatureId, note.text)}>
-            x
-          </button>
-          <Timer
-            startRound={note.appliedAtRound}
-            endRound={round}
-            startTime={note.appliedAtSeconds}
-            endTime={secondsElapsed}
-          />
-        </div>
-      ))}
-    </React.Fragment>
+    <div className={className}>
+      <div><b>{label}:</b></div>
+      <div className="creature-note-list">
+        {noteList.map((note, i) => (
+          <div key={i}>
+            <div className="creature-note-list--title">
+              <span className="creature-note-list--note"><em>{note.text}</em></span>
+              <button className="creature-note-list--button" onClick={() => dismissHandler(creatureId, note.text)}>
+                x
+              </button>
+            </div>
+            <Timer
+              startRound={note.appliedAtRound}
+              endRound={round}
+              startTime={note.appliedAtSeconds}
+              endTime={secondsElapsed}
+              className="creature-note-list--timer"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

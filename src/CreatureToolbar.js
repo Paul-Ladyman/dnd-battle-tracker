@@ -19,7 +19,11 @@ function CreatureToolbar({
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
       {showConditions &&
         <div>
-          <select className="creature-toolbar--input" value="" onChange={(event) => addNoteToCreature(creature.id, event.target.value, true)}>
+          <select
+            className="creature-toolbar--input creature-toolbar--dropdown"
+            value=""
+            onChange={(event) => addNoteToCreature(creature.id, event.target.value, true)}
+          >
             <option value="">Conditions</option>
             {conditions.map((condition, i) => {
               return <option key={i} value={condition}>{condition}</option>

@@ -23,11 +23,14 @@ function HealthPoints({
   className
 }) {
   const classes = `${getDamageClass(hp, maxHp)} ${className}`;
-  const text = short ? `${hp}HP` : `Current Health: ${hp}`;
+  const text = short ? `${hp}HP` : hp;
   return (
     <React.Fragment>
-      {!short && <div className={className}>Max Health: {maxHp}</div>}
-      <div className={classes}>{text}</div>
+      {!short && <div className={className}><b>Max Health:</b> {maxHp}</div>}
+      <div className={classes}>
+        {!short && <b>CurrentHealth: </b>}
+        {text}
+      </div>
     </React.Fragment>
   )
 }
