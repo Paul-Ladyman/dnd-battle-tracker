@@ -21,7 +21,18 @@ class App extends Component {
     this.conditions = [
       'blinded',
       'charmed',
-      'poisoned'
+      'defeaned',
+      'frightened',
+      'grappled',
+      'incapacitated',
+      'invisible',
+      'paralyzed',
+      'petrified',
+      'poisoned',
+      'prone',
+      'restrained',
+      'stunned',
+      'unconscious'
     ];
 
     this.createCreature = this.createCreature.bind(this);
