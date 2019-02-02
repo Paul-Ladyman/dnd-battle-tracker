@@ -1,5 +1,6 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
+import HealthPoints from './HealthPoints';
 
 function ExpandedCreature({
   creature,
@@ -18,8 +19,11 @@ function ExpandedCreature({
   return (
     <div className="expanded-creature centered__columns">
       <div className="expanded-creature--name">{displayName}</div>
-      {showHealth && <div className="expanded-creature--stat">Max Health: {maxHealthPoints}</div>}
-      {showHealth && <div className="expanded-creature--stat">Current Health: {healthPoints}</div>}
+      {showHealth && <HealthPoints
+        hp={healthPoints}
+        maxHp={maxHealthPoints}
+        className="expanded-creature--stat"
+      />}
       <div className="expanded-creature--stat">Initiative: {initiative}</div>
       {showConditions && <CreatureNoteList
         creatureId={id}

@@ -150,3 +150,17 @@ body {
   text-decoration: line-through wavy;
   text-decoration-color: black;
 }
+
+/* Health points */
+
+.health-points--fine {
+  color: #669900;
+}
+
+.health-points--damaged {
+  color: #ff6600;
+}
+
+.health-points--critical {
+  color: #b12000;
+}
