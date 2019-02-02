@@ -16,7 +16,7 @@ function CollapsedCreature({creature}) {
         maxHp={creature.maxHealthPoints}
       />}
       {showConditions && 
-        <div>{
+        <div className="collapsed-creature--conditions">{
           creature.conditions.map((condition) => {
             return condition.text.substring(0, 2)
           }).join(', ')

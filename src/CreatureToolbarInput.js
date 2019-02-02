@@ -32,10 +32,12 @@ class CreatureToolbarInput extends Component {
 
   render() {
     const type = this.props.integer ? "number" : "text";
+    const classModifier = this.props.integer ? 'creature-toolbar--input__number' : '';
+    const classes = `creature-toolbar--input ${classModifier}`;
     return (
       <div className="creature-toolbar--form">
         <form onKeyDown={this.formHandler}>
-          <input className="creature-toolbar--input" type={type} placeholder={this.props.placeholder} value={this.state.value} onChange={this.handleChange}/>
+          <input className={classes} type={type} placeholder={this.props.placeholder} value={this.state.value} onChange={this.handleChange}/>
         </form>
       </div>
     );
