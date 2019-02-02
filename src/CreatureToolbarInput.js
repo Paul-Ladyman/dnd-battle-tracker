@@ -20,7 +20,8 @@ class CreatureToolbarInput extends Component {
       const value = this.state.value;
       if (value) {
         this.resetForm();
-        this.props.onSubmit(parseInt(value));
+        const submittedValue = this.props.integer ? parseInt(value) : value;
+        this.props.onSubmit(submittedValue);
       }
     }
   }
@@ -39,5 +40,9 @@ class CreatureToolbarInput extends Component {
     );
   }
 }
+
+CreatureToolbarInput.defaultProps = {
+  integer: false
+};
 
 export default CreatureToolbarInput;

@@ -15,13 +15,15 @@ function Creatures({
   creatures,
   activeCreature,
   conditions,
+  round,
+  secondsElapsed,
   killCreature,
   reviveCreature,
   damageCreature,
   healCreature,
   removeCreature,
-  addConditionToCreature,
-  removeConditionFromCreature
+  addNoteToCreature,
+  removeNoteFromCreature
 }) {
   return (
     <div className="creature-list centered__columns">
@@ -32,8 +34,10 @@ function Creatures({
             <Creature
               creature={creature}
               active={active}
+              round={round}
+              secondsElapsed={secondsElapsed}
               removeCreature={removeCreature}
-              removeConditionFromCreature={removeConditionFromCreature}
+              removeNoteFromCreature={removeNoteFromCreature}
             />
             <CreatureToolbar
               creature={creature}
@@ -42,7 +46,7 @@ function Creatures({
               reviveCreature={reviveCreature}
               damageCreature={damageCreature}
               healCreature={healCreature}
-              addConditionToCreature={addConditionToCreature}
+              addNoteToCreature={addNoteToCreature}
             />
           </div>
         );

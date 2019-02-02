@@ -8,7 +8,7 @@ function CreatureToolbar({
   reviveCreature,
   damageCreature,
   healCreature,
-  addConditionToCreature
+  addNoteToCreature
 }) {
   const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
   const statusButtonLabel = creature.alive ? 'Kill' : 'Revive';
@@ -18,15 +18,16 @@ function CreatureToolbar({
     <div className="creature-toolbar">
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
       {showConditions &&
-        <select value="" onChange={(event) => addConditionToCreature(creature.id, event.target.value)}>
+        <select value="" onChange={(event) => addNoteToCreature(creature.id, event.target.value, true)}>
           <option value="">--Conditions--</option>
-          {conditions.map((condition) => {
-            return <option value={condition}>{condition}</option>
+          {conditions.map((condition, i) => {
+            return <option key={i} value={condition}>{condition}</option>
           })}
         </select>
       }
-      {showHealthItems && <CreatureToolbarInput placeholder="damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>}
-      {showHealthItems && <CreatureToolbarInput placeholder="heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>}
+      {showHealthItems && <CreatureToolbarInput integer placeholder="damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>}
+      {showHealthItems && <CreatureToolbarInput integer placeholder="heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>}
+      <CreatureToolbarInput placeholder="note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
     </div>
   )
 }

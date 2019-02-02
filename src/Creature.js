@@ -39,8 +39,10 @@ class Creature extends Component {
             <ExpandedCreature
               creature={creature}
               active={active}
+              round={this.props.round}
+              secondsElapsed={this.props.secondsElapsed}
               removeCreature={this.props.removeCreature}
-              removeConditionFromCreature={this.props.removeConditionFromCreature}
+              removeNoteFromCreature={this.props.removeNoteFromCreature}
             /> :
             <CollapsedCreature creature={creature} />
           }

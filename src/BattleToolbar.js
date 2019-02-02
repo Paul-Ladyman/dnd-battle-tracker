@@ -1,8 +1,7 @@
 import React from 'react';
+import Timer from './Timer';
 
 function BattleToolbar({round, secondsElapsed, combatants, nextCreature, resetBattle}) {
-  const minutesElapsed = Math.floor(parseFloat(secondsElapsed) / 60.0);
-  const remainingSecondsElapsed = secondsElapsed % 60;
   return (
     <div className="battle-toolbar">
       <button className="battle-toolbar--button" onClick={nextCreature}>>></button>
@@ -16,7 +15,7 @@ function BattleToolbar({round, secondsElapsed, combatants, nextCreature, resetBa
       </div>
       <div className="battle-toolbar--stat">
         Time Elapsed:
-        <div className="battle-toolbar--stat-value">{minutesElapsed}m {remainingSecondsElapsed}s</div>
+        <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
       </div>
       <button className="battle-toolbar--button" onClick={resetBattle}>Reset</button>
     </div>

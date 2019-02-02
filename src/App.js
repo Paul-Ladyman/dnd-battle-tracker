@@ -43,9 +43,14 @@ class App extends Component {
     this.damageCreature = this.damageCreature.bind(this);
     this.healCreature = this.healCreature.bind(this);
     this.removeCreature = this.removeCreature.bind(this);
-    this.addConditionToCreature = this.addConditionToCreature.bind(this);
-    this.removeConditionFromCreature = this.removeConditionFromCreature.bind(this);
+    this.addNoteToCreature = this.addNoteToCreature.bind(this);
+    this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
     this.findCreature = this.findCreature.bind(this);
+    this.getSecondsElapsed = this.getSecondsElapsed.bind(this);
+  }
+
+  getSecondsElapsed() {
+    return (this.state.round - 1) * 6;
   }
 
   resetBattle() {
@@ -93,21 +98,33 @@ class App extends Component {
     this.updateCreature(id, {alive: true});
   }
 
-  removeConditionFromCreature(creatureId, conditionName) {
+  removeNoteFromCreature(creatureId, removedNote, isCondition) {
     const creature = this.findCreature(creatureId);
-    const conditions = creature.conditions.filter((condition) => {
-      return condition.name !== conditionName;
+    const noteList = isCondition ? creature.conditions : creature.notes;
+    const notes = noteList.filter((note) => {
+      return note.text !== removedNote;
     });
-    this.updateCreature(creatureId, {conditions});
+
+    const newNotes = isCondition ? {conditions: notes} : {notes};
+    this.updateCreature(creatureId, newNotes);
   }
 
-  addConditionToCreature(creatureId, conditionName) {
+  addNoteToCreature(creatureId, addedNote, isCondition) {
     const creature = this.findCreature(creatureId);
-    const condition = {
-      name: conditionName
+    const note = {
+      text: addedNote,
+      appliedAtRound: this.state.round,
+      appliedAtSeconds: this.getSecondsElapsed()
+    };
+
+    if (isCondition) {
+      const conditions = [...creature.conditions, note];
+      this.updateCreature(creatureId, {conditions});
     }
-    const conditions = [...creature.conditions, condition];
-    this.updateCreature(creatureId, {conditions});
+    else {
+      const notes = [...creature.notes, note];
+      this.updateCreature(creatureId, {notes});
+    }
   }
 
   damageCreature(creatureId, damage) {
@@ -170,7 +187,8 @@ class App extends Component {
       healthPoints,
       id: this.state.creatureIdCount,
       alive: true,
-      conditions: []
+      conditions: [],
+      notes: []
     };
     
     const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
@@ -181,7 +199,7 @@ class App extends Component {
   }
 
   render() {
-    const secondsElapsed = (this.state.round - 1) * 6;
+    const secondsElapsed = this.getSecondsElapsed();
 
     return (
       <div className="App">
@@ -196,13 +214,15 @@ class App extends Component {
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
           conditions={this.conditions}
+          round={this.state.round}
+          secondsElapsed={secondsElapsed}
           killCreature={this.killCreature}
           reviveCreature={this.reviveCreature}
           damageCreature={this.damageCreature}
           healCreature={this.healCreature}
           removeCreature={this.removeCreature}
-          addConditionToCreature={this.addConditionToCreature}
-          removeConditionFromCreature={this.removeConditionFromCreature}
+          addNoteToCreature={this.addNoteToCreature}
+          removeNoteFromCreature={this.removeNoteFromCreature}
         />
         <CreateCreatureForm createCreature={this.createCreature} />
       </div>
