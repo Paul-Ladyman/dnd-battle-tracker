@@ -5,7 +5,7 @@ import CreatureToolbar from './CreatureToolbar';
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
     const activeConditionIndex = creatureConditions.findIndex((activeCondition) => {
-      return activeCondition.name === condition;
+      return activeCondition.text === condition;
     });
     return activeConditionIndex === -1;
   });
