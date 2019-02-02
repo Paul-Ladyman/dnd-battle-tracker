@@ -18,7 +18,7 @@ function CollapsedCreature({creature}) {
       {showConditions && 
         <div className="collapsed-creature--conditions">{
           creature.conditions.map((condition) => {
-            return condition.text.substring(0, 2)
+            return condition.text.substring(0, 3)
           }).join(', ')
           }
         </div>
