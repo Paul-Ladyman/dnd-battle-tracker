@@ -56,10 +56,19 @@ body {
 .creature-toolbar {
   display: grid;
   grid-template-columns: repeat(5, auto);
-  grid-auto-rows: minmax(41px, auto);
   grid-gap: 10px;
-  width: 100%;
-  grid-auto-rows: minmax(14px, auto);
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-toolbar {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .creature-toolbar {
+    grid-template-columns: repeat(1, auto);
+  }
 }
 
 .creature-toolbar--button {
@@ -74,8 +83,9 @@ body {
   background-color: white;
 }
 
-.creature-toolbar--input__number {
-  width: 80%;
+.creature-toolbar--input__disabled {
+  background-color: transparent;
+  border: 2px dashed #5f130d;
 }
 
 .creature-toolbar--dropdown {
@@ -103,7 +113,7 @@ body {
 /* Creatures */
 
 .creature-list {
-  width: 50%;
+  min-width: 50%;
   margin: 20px 0 40px 0;
 }
 
@@ -196,6 +206,12 @@ body {
   margin-top: 5px;
   border: 1px solid #b12000;
   padding: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-note-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .creature-note-list--title {
