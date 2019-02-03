@@ -90,7 +90,9 @@ class App extends Component {
   }
 
   killCreature(id) {
-    this.updateCreature(id, {alive: false, healthPoints: 0});
+    const creature = this.findCreature(id);
+    const healthPoints = creature.healthPoints === undefined ? undefined : 0;
+    this.updateCreature(id, {alive: false, healthPoints});
   }
 
   reviveCreature(id) {
