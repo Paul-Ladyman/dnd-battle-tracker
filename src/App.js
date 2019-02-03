@@ -12,8 +12,8 @@ class App extends Component {
       creatures: [],
       creatureIdCount: 0,
       creatureCount: 0,
-      activeCreature: 0,
-      round: 1
+      activeCreature: undefined,
+      round: 0
     };
 
     this.state = this.initialState;
@@ -35,6 +35,7 @@ class App extends Component {
     ];
 
     this.createCreature = this.createCreature.bind(this);
+    this.startBattle = this.startBattle.bind(this);
     this.nextCreature = this.nextCreature.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
     this.killCreature = this.killCreature.bind(this);
@@ -50,6 +51,9 @@ class App extends Component {
   }
 
   getSecondsElapsed() {
+    if (this.state.round === 0) {
+      return 0;
+    }
     return (this.state.round - 1) * 6;
   }
 
@@ -164,6 +168,12 @@ class App extends Component {
     this.updateCreature(creatureId, {alive, healthPoints});
   }
 
+  startBattle() {
+    const round = 1;
+    const activeCreature = 0;
+    this.setState({...this.state, activeCreature, round});
+  }
+
   nextCreature() {
     let activeCreature = this.state.activeCreature + 1;
     let round = this.state.round;
@@ -193,14 +203,27 @@ class App extends Component {
       notes: []
     };
     
+    const currentlyActiveCreature = this.state.creatures[this.state.activeCreature];
     const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
+
+    let activeCreature = this.state.activeCreature;
+    if (this.state.round > 0) {
+      activeCreature = creatures.findIndex(({id}) => {
+        return currentlyActiveCreature.id === id;
+      });
+    }
+
     const creatureCount = this.state.creatureCount + 1;
     const creatureIdCount = this.state.creatureIdCount + 1;
 
-    this.setState({...this.state, creatures, creatureCount, creatureIdCount});
+    this.setState({...this.state, creatures, creatureCount, creatureIdCount, activeCreature});
   }
 
   getInitiative() {
+    if (this.state.round === 0) {
+      return '';
+    }
+
     return this.state.creatures.length > 0 ?
       this.state.creatures[this.state.activeCreature].name :
       '';
@@ -208,6 +231,8 @@ class App extends Component {
 
   render() {
     const secondsElapsed = this.getSecondsElapsed();
+    const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
+    const nextButtonFunc = this.state.round === 0 ? this.startBattle : this.nextCreature;
 
     return (
       <div className="App">
@@ -216,7 +241,8 @@ class App extends Component {
           round={this.state.round}
           secondsElapsed={secondsElapsed}
           combatants={this.state.creatureCount}
-          nextCreature={this.nextCreature}
+          nextButtonLabel={nextButtonLabel}
+          nextButtonFunc={nextButtonFunc}
           resetBattle={this.resetBattle}
         />
         <Creatures
