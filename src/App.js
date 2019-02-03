@@ -187,23 +187,21 @@ class App extends Component {
   }
 
   createCreature(creature) {
-    const {initiative, healthPoints} = creature;
+    const {healthPoints} = creature;
     const newCreature = {
       ...creature,
-      initiative,
       maxHealthPoints: healthPoints,
-      healthPoints,
       id: this.state.creatureIdCount,
       alive: true,
       conditions: [],
       notes: []
     };
     
-    const currentlyActiveCreature = this.state.creatures[this.state.activeCreature];
     const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
 
     let activeCreature = this.state.activeCreature;
     if (this.state.round > 0) {
+      const currentlyActiveCreature = this.state.creatures[this.state.activeCreature];
       activeCreature = creatures.findIndex(({id}) => {
         return currentlyActiveCreature.id === id;
       });
