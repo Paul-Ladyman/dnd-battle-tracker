@@ -14,6 +14,13 @@ body {
   background-color: #e1e1b5;
 }
 
+button {
+  cursor: pointer;
+  border: 2px solid #5f130d;
+  padding: 10px;
+  font-weight: bold; 
+}
+
 .App {
   display: flex;
   align-items: center;
@@ -30,12 +37,6 @@ body {
   padding: 5px;
 }
 
-.battle-toolbar--button {
-  cursor: pointer;
-  border: 2px solid #5f130d;
-  padding: 10px;
-}
-
 .battle-toolbar--stat {
   height: 50%;
   margin-top: 2px;
@@ -49,6 +50,7 @@ body {
 .battle-toolbar--stat-value {
   font-weight: normal;
   color: black;
+  text-transform: capitalize;
 }
 
 /* Creature toolbar */
@@ -69,12 +71,6 @@ body {
   .creature-toolbar {
     grid-template-columns: repeat(1, auto);
   }
-}
-
-.creature-toolbar--button {
-  border: 2px solid #5f130d;
-  padding: 10px;
-  cursor: pointer;
 }
 
 .creature-toolbar--input {
@@ -144,6 +140,10 @@ body {
   background-color: darkgrey;
 }
 
+.expand-creature-button {
+  padding: 5px;
+}
+
 .expanded-creature {
   width: 100%;
 }
@@ -163,10 +163,13 @@ body {
 }
 
 .expanded-creature--button {
-  border: 2px solid #5f130d;
-  padding: 10px;
   width: 12%;
-  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .expanded-creature--button {
+    width: 100%;
+  }
 }
 
 .collapsed-creature {
@@ -228,9 +231,8 @@ body {
 
 .creature-note-list--button {
   margin-left: 10px;
-  border: 2px solid #5f130d;
   text-decoration: none;
-  cursor: pointer;
+  padding: 3px;
 }
 
 .creature-note-list--timer {

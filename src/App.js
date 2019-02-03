@@ -46,6 +46,7 @@ class App extends Component {
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
     this.findCreature = this.findCreature.bind(this);
     this.getSecondsElapsed = this.getSecondsElapsed.bind(this);
+    this.getInitiative = this.getInitiative.bind(this);
   }
 
   getSecondsElapsed() {
@@ -199,12 +200,19 @@ class App extends Component {
     this.setState({...this.state, creatures, creatureCount, creatureIdCount});
   }
 
+  getInitiative() {
+    return this.state.creatures.length > 0 ?
+      this.state.creatures[this.state.activeCreature].name :
+      '';
+  }
+
   render() {
     const secondsElapsed = this.getSecondsElapsed();
 
     return (
       <div className="App">
         <BattleToolbar
+          initiative={this.getInitiative()}
           round={this.state.round}
           secondsElapsed={secondsElapsed}
           combatants={this.state.creatureCount}

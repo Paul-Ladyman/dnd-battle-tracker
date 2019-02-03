@@ -47,7 +47,7 @@ class Creature extends Component {
             /> :
             <CollapsedCreature creature={creature} />
           }
-          {!active && <button onClick={buttonOnClick}>{buttonSign}</button>}
+          {!active && <button className="expand-creature-button" onClick={buttonOnClick}>{buttonSign}</button>}
         </div>
       </React.Fragment>
     );
