@@ -134,9 +134,7 @@ class App extends Component {
   }
 
   damageCreature(creatureId, damage) {
-    const creature = this.state.creatures.find(({id}) => {
-      return creatureId === id;
-    });
+    const creature = this.findCreature(creatureId)
 
     let healthPoints = creature.healthPoints - damage;
     let alive = true;
@@ -150,9 +148,7 @@ class App extends Component {
   }
 
   healCreature(creatureId, heal) {
-    const creature = this.state.creatures.find(({id}) => {
-      return creatureId === id;
-    });
+    const creature = this.findCreature(creatureId);
 
     let healthPoints = creature.healthPoints + heal;
     let alive = false;
