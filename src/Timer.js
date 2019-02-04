@@ -8,7 +8,15 @@ function getTime(startTime, endTime) {
 }
 
 function getRound(startRound, endRound) {
-  if (startRound && endRound) {
+  if (startRound !== undefined && endRound !== undefined) {
+    if (endRound === 0) {
+      return endRound;
+    }
+
+    if (startRound === 0) {
+      return endRound - startRound -1;
+    }
+
     return endRound - startRound;
   }
   return startRound;
