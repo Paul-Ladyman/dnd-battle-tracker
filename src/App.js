@@ -3,6 +3,7 @@ import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
 import BattleToolbar from './BattleToolbar';
+import conditions from './conditions';
 import {
   newBattleState,
   getSecondsElapsed
@@ -13,22 +14,6 @@ class App extends Component {
     super(props);
 
     this.state = newBattleState;
-
-    this.conditions = [
-      'blinded',
-      'charmed',
-      'defeaned',
-      'frightened',
-      'grappled',
-      'incapacitated',
-      'invisible',
-      'paralyzed',
-      'petrified',
-      'poisoned',
-      'prone',
-      'restrained',
-      'stunned'
-    ];
 
     this.createCreature = this.createCreature.bind(this);
     this.startBattle = this.startBattle.bind(this);
@@ -230,7 +215,7 @@ class App extends Component {
         <Creatures
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
-          conditions={this.conditions}
+          conditions={conditions}
           round={this.state.round}
           secondsElapsed={secondsElapsed}
           killCreature={this.killCreature}
