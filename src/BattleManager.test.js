@@ -1,4 +1,21 @@
-import { getSecondsElapsed } from './BattleManager';
+import { 
+  newBattleState,
+  getSecondsElapsed
+} from './BattleManager';
+
+describe('newBattleState', () => {
+  test('contains the initial battle state', () => {
+    const expected = {
+      creatures: [],
+      creatureIdCount: 0,
+      creatureCount: 0,
+      activeCreature: undefined,
+      round: 0
+    };
+
+    expect(newBattleState).toEqual(expected);
+  });
+});
 
 describe('getSecondsElapsed', () => {
   test('returns the seconds elapsed up to but not including the current round', () => {

@@ -3,21 +3,16 @@ import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
 import BattleToolbar from './BattleToolbar';
-import { getSecondsElapsed } from './BattleManager';
+import {
+  newBattleState,
+  getSecondsElapsed
+} from './BattleManager';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.initialState = {
-      creatures: [],
-      creatureIdCount: 0,
-      creatureCount: 0,
-      activeCreature: undefined,
-      round: 0
-    };
-
-    this.state = this.initialState;
+    this.state = newBattleState;
 
     this.conditions = [
       'blinded',
@@ -51,7 +46,7 @@ class App extends Component {
   }
 
   resetBattle() {
-    this.setState(this.initialState);
+    this.setState(newBattleState);
   }
 
   removeCreature(creatureId) {
