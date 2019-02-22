@@ -6,7 +6,8 @@ import BattleToolbar from './BattleToolbar';
 import conditions from './conditions';
 import {
   newBattleState,
-  getSecondsElapsed
+  getSecondsElapsed,
+  removeCreature
 } from './BattleManager';
 
 class App extends Component {
@@ -35,19 +36,7 @@ class App extends Component {
   }
 
   removeCreature(creatureId) {
-    const currentlyActiveCreature = this.state.creatures[this.state.activeCreature];
-
-    const creatures = this.state.creatures.filter(({id}) => {
-      return creatureId !== id;
-    });
-
-    const activeCreature = creatures.findIndex(({id}) => {
-      return currentlyActiveCreature.id === id;
-    });
-
-    const creatureCount = this.state.creatureCount - 1;
-
-    this.setState({...this.state, creatures, activeCreature, creatureCount});
+    this.setState(removeCreature(this.state, creatureId));
   }
 
   findCreature(creatureId) {
