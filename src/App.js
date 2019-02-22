@@ -3,6 +3,7 @@ import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
 import BattleToolbar from './BattleToolbar';
+import { getSecondsElapsed } from './BattleManager';
 
 class App extends Component {
   constructor(props) {
@@ -46,15 +47,7 @@ class App extends Component {
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
     this.findCreature = this.findCreature.bind(this);
-    this.getSecondsElapsed = this.getSecondsElapsed.bind(this);
     this.getInitiative = this.getInitiative.bind(this);
-  }
-
-  getSecondsElapsed() {
-    if (this.state.round === 0) {
-      return 0;
-    }
-    return (this.state.round - 1) * 6;
   }
 
   resetBattle() {
@@ -120,7 +113,7 @@ class App extends Component {
     const note = {
       text: addedNote,
       appliedAtRound: this.state.round,
-      appliedAtSeconds: this.getSecondsElapsed()
+      appliedAtSeconds: getSecondsElapsed(this.state)
     };
 
     if (isCondition) {
@@ -224,7 +217,7 @@ class App extends Component {
   }
 
   render() {
-    const secondsElapsed = this.getSecondsElapsed();
+    const secondsElapsed = getSecondsElapsed(this.state);
     const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
     const nextButtonFunc = this.state.round === 0 ? this.startBattle : this.nextCreature;
 
