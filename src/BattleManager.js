@@ -4,6 +4,23 @@ function findCreatureIndex(creatures, creature) {
   });
 }
 
+function findCreature(creatures, creatureId) {
+  return creatures.find(({id}) => {
+    return creatureId === id;
+  });
+}
+
+function updateCreature(state, id, updates) {
+  let newCreatures = [...state.creatures];
+  const creatureIndex = newCreatures.findIndex((creature) => {
+    return creature.id === id;
+  });
+  const existingCreature = newCreatures[creatureIndex]
+  newCreatures[creatureIndex] = {...existingCreature, ...updates};
+
+  return { ...state, creatures: newCreatures };
+}
+
 export const newBattleState = {
   creatures: [],
   creatureIdCount: 0,
@@ -50,3 +67,9 @@ export function removeCreature(state, creatureId) {
 
   return {...state, creatures, creatureCount, activeCreature};
 };
+
+export function killCreature(state, creatureId) {
+  const creature = findCreature(state.creatures, creatureId);
+  const healthPoints = creature.healthPoints === undefined ? undefined : 0;
+  return updateCreature(state, creatureId, {alive: false, healthPoints});
+}

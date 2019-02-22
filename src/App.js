@@ -7,7 +7,8 @@ import conditions from './conditions';
 import {
   newBattleState,
   getSecondsElapsed,
-  removeCreature
+  removeCreature,
+  killCreature
 } from './BattleManager';
 
 class App extends Component {
@@ -57,9 +58,7 @@ class App extends Component {
   }
 
   killCreature(id) {
-    const creature = this.findCreature(id);
-    const healthPoints = creature.healthPoints === undefined ? undefined : 0;
-    this.updateCreature(id, {alive: false, healthPoints});
+    this.setState(killCreature(this.state, id));
   }
 
   reviveCreature(id) {

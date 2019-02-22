@@ -1,7 +1,8 @@
 import { 
   newBattleState,
   getSecondsElapsed,
-  removeCreature
+  removeCreature,
+  killCreature
 } from './BattleManager';
 
 const defaultState = {
@@ -201,5 +202,42 @@ describe('removeCreature', () => {
     const state = { not: 'valid'};
     const result = removeCreature(state, 0);
     expect(result).toEqual(state);
+  });
+});
+
+describe('killCreature', () => {
+  test('it kills a creature', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          alive: false
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = killCreature(defaultState, 0);
+    expect(result).toEqual(expected);
+  });
+  
+  test('it kills a creature and sets its health points to 0 if it has them', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          alive: false,
+          healthPoints: 0
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = killCreature(defaultState, 1);
+    expect(result).toEqual(expected);
   });
 });
