@@ -28,3 +28,15 @@ export function nextInitiative(state) {
 
   return {...state, round, activeCreature};
 };
+
+export function getInitiative(state) {
+  if (state.creatures.length === 0) {
+    return '';
+  }
+
+  if (state.round === 0) {
+    return '';
+  }
+
+  return state.creatures[state.activeCreature].name;
+}

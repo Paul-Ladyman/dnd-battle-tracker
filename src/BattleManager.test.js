@@ -1,7 +1,8 @@
 import { 
   newBattleState,
   getSecondsElapsed,
-  nextInitiative
+  nextInitiative,
+  getInitiative
 } from './BattleManager';
 
 const defaultState = {
@@ -140,5 +141,27 @@ describe('nextCreature', () => {
     };
 
     expect(nextInitiative(state)).toEqual(expected);
+  });
+});
+
+describe('getInitiative', () => {
+  test('it gets the name of the currently active creature', () => {
+    expect(getInitiative(defaultState)).toEqual('Goblin');
+  });
+
+  test('it returns an empty string if there are no creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: []
+    }
+    expect(getInitiative(state)).toEqual('');
+  });
+
+  test('it returns an empty string if the battle has not started', () => {
+    const state = {
+      ...defaultState,
+      round: 0
+    }
+    expect(getInitiative(state)).toEqual('');
   });
 });

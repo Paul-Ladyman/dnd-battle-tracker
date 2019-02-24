@@ -7,7 +7,8 @@ import conditions from './conditions';
 import {
   newBattleState,
   getSecondsElapsed,
-  nextInitiative
+  nextInitiative,
+  getInitiative
 } from './BattleManager';
 import {
   removeCreature,
@@ -34,7 +35,6 @@ class App extends Component {
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
     this.findCreature = this.findCreature.bind(this);
-    this.getInitiative = this.getInitiative.bind(this);
   }
 
   resetBattle() {
@@ -144,16 +144,6 @@ class App extends Component {
     this.setState({...this.state, creatures, creatureCount, creatureIdCount, activeCreature});
   }
 
-  getInitiative() {
-    if (this.state.round === 0) {
-      return '';
-    }
-
-    return this.state.creatures.length > 0 ?
-      this.state.creatures[this.state.activeCreature].name :
-      '';
-  }
-
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
     const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
@@ -161,7 +151,7 @@ class App extends Component {
     return (
       <div className="App">
         <BattleToolbar
-          initiative={this.getInitiative()}
+          initiative={getInitiative(this.state)}
           round={this.state.round}
           secondsElapsed={secondsElapsed}
           combatants={this.state.creatureCount}
