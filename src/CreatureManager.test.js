@@ -2,7 +2,8 @@ import {
   killCreature,
   reviveCreature,
   damageCreature,
-  healCreature
+  healCreature,
+  createCreature
 } from './CreatureManager';
 
 const defaultState = {
@@ -285,5 +286,11 @@ describe('healCreature', () => {
     };
 
     expect(healCreature(state, 1, 1)).toEqual(expected);
+  });
+});
+
+describe('createCreature', () => {
+  test('it creates a new creature given a name, initiative and health points', () => {
+    
   });
 });
