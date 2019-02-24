@@ -2,7 +2,8 @@ import {
   removeCreature,
   killCreature,
   reviveCreature,
-  damageCreature
+  damageCreature,
+  healCreature
 } from './CreatureManager';
 
 const defaultState = {
@@ -322,5 +323,77 @@ describe('damageCreature', () => {
     };
 
     expect(damageCreature(defaultState, 1, 100)).toEqual(expected);
+  });
+});
+
+describe('healCreature', () => {
+  test('it does nothing if a creature has no health points', () => {
+    expect(healCreature(defaultState, 0, 5)).toEqual(defaultState);
+  });
+
+  test('it does nothing to a fully healed creature', () => {
+    expect(healCreature(defaultState, 1, 5)).toEqual(defaultState);
+  });
+
+  test('it adds health points to a creature', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(healCreature(state, 1, 5)).toEqual(defaultState);
+  });
+
+  test('it does not exceed a creature\'s maximum health points', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(healCreature(state, 1, 10)).toEqual(defaultState);
+  });
+
+  test('it revives a creature if it was dead', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 0,
+          alive: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 1,
+          alive: true
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(healCreature(state, 1, 1)).toEqual(expected);
   });
 });

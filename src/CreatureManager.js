@@ -79,3 +79,23 @@ export function damageCreature(state, creatureId, damage) {
 
   return updateCreature(state, creatureId, {alive, healthPoints});
 };
+
+export function healCreature(state, creatureId, health) {
+  const creature = findCreature(state.creatures, creatureId);
+
+  if (creature.healthPoints === undefined) {
+    return state;
+  }
+
+  let healthPoints = creature.healthPoints + health;
+  if (healthPoints > creature.maxHealthPoints) {
+    healthPoints = creature.maxHealthPoints;
+  }
+
+  let alive = creature.alive;
+  if (healthPoints > 0) {
+    alive = true;
+  }
+
+  return updateCreature(state, creatureId, {alive, healthPoints});
+};
