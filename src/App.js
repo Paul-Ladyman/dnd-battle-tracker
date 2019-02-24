@@ -7,9 +7,11 @@ import conditions from './conditions';
 import {
   newBattleState,
   getSecondsElapsed,
+} from './BattleManager';
+import {
   removeCreature,
   killCreature
-} from './BattleManager';
+} from './CreatureManager';
 
 class App extends Component {
   constructor(props) {
