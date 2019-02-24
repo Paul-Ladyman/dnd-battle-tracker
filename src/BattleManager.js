@@ -12,3 +12,7 @@ export function getSecondsElapsed(state) {
   }
   return (state.round - 1) * 6;
 };
+
+export function startBattle(state) {
+  return {...state, round: 1, activeCreature: 0};
+};

@@ -7,6 +7,7 @@ import conditions from './conditions';
 import {
   newBattleState,
   getSecondsElapsed,
+  startBattle
 } from './BattleManager';
 import {
   removeCreature,
@@ -108,9 +109,7 @@ class App extends Component {
   }
 
   startBattle() {
-    const round = 1;
-    const activeCreature = 0;
-    this.setState({...this.state, activeCreature, round});
+    this.setState(startBattle(this.state));
   }
 
   nextCreature() {
