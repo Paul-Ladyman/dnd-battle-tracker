@@ -1,8 +1,7 @@
 import { 
   newBattleState,
   getSecondsElapsed,
-  startBattle,
-  nextCreature
+  nextInitiative
 } from './BattleManager';
 
 const defaultState = {
@@ -96,7 +95,7 @@ describe('getSecondsElapsed', () => {
   });
 });
 
-describe('startBattle', () => {
+describe('nextCreature', () => {
   test('it starts the first round with the first creature in the list', () => {
     const state = {
       ...defaultState,
@@ -108,36 +107,9 @@ describe('startBattle', () => {
       round: 1,
       activeCreature: 0
     };
-    expect(startBattle(state)).toEqual(expected);
+    expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('it does nothing to a battle that has just started', () => {
-    const state = {
-      ...defaultState,
-      round: 1,
-      activeCreature: 0
-    };
-    expect(startBattle(state)).toEqual(state);
-  });
-
-  test('it resets a battle that is in progress', () => {
-    const state = {
-      ...defaultState,
-      round: 5,
-      activeCreature: 3
-    };
-
-    const expected = {
-      ...defaultState,
-      round: 1,
-      activeCreature: 0
-    };
-
-    expect(startBattle(state)).toEqual(expected);
-  });
-});
-
-describe('nextCreature', () => {
   test('it advances the active creature by 1', () => {
     const state = {
       ...defaultState,
@@ -151,7 +123,7 @@ describe('nextCreature', () => {
       activeCreature: 1
     };
 
-    expect(nextCreature(state)).toEqual(expected);
+    expect(nextInitiative(state)).toEqual(expected);
   });
 
   test('it starts at the top of the next round after all creatures have had their go', () => {
@@ -167,6 +139,6 @@ describe('nextCreature', () => {
       activeCreature: 0
     };
 
-    expect(nextCreature(state)).toEqual(expected);
+    expect(nextInitiative(state)).toEqual(expected);
   });
 });

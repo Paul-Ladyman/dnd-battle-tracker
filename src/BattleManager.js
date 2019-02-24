@@ -13,11 +13,11 @@ export function getSecondsElapsed(state) {
   return (state.round - 1) * 6;
 };
 
-export function startBattle(state) {
-  return {...state, round: 1, activeCreature: 0};
-};
+export function nextInitiative(state) {
+  if (state.round === 0) {
+    return {...state, round: 1, activeCreature: 0};
+  }
 
-export function nextCreature(state) {
   let activeCreature = state.activeCreature + 1;
   let round = state.round;
 

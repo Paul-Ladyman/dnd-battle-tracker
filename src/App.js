@@ -7,8 +7,7 @@ import conditions from './conditions';
 import {
   newBattleState,
   getSecondsElapsed,
-  startBattle,
-  nextCreature
+  nextInitiative
 } from './BattleManager';
 import {
   removeCreature,
@@ -25,8 +24,7 @@ class App extends Component {
     this.state = newBattleState;
 
     this.createCreature = this.createCreature.bind(this);
-    this.startBattle = this.startBattle.bind(this);
-    this.nextCreature = this.nextCreature.bind(this);
+    this.nextInitiative = this.nextInitiative.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
     this.killCreature = this.killCreature.bind(this);
     this.reviveCreature = this.reviveCreature.bind(this);
@@ -109,12 +107,8 @@ class App extends Component {
     this.setState(healCreature(this.state, creatureId, health));
   }
 
-  startBattle() {
-    this.setState(startBattle(this.state));
-  }
-
-  nextCreature() {
-    this.setState(nextCreature(this.state));
+  nextInitiative() {
+    this.setState(nextInitiative(this.state));
   }
 
   sortCreatures(creatures) {
@@ -163,7 +157,6 @@ class App extends Component {
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
     const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
-    const nextButtonFunc = this.state.round === 0 ? this.startBattle : this.nextCreature;
 
     return (
       <div className="App">
@@ -173,7 +166,7 @@ class App extends Component {
           secondsElapsed={secondsElapsed}
           combatants={this.state.creatureCount}
           nextButtonLabel={nextButtonLabel}
-          nextButtonFunc={nextButtonFunc}
+          nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />
         <Creatures
