@@ -96,7 +96,7 @@ describe('getSecondsElapsed', () => {
   });
 });
 
-describe('nextCreature', () => {
+describe('nextInitiative', () => {
   test('it starts the first round with the first creature in the list', () => {
     const state = {
       ...defaultState,
@@ -141,6 +141,15 @@ describe('nextCreature', () => {
     };
 
     expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  test('it does nothing if there are no creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: []
+    };
+
+    expect(nextInitiative(state)).toEqual(state);
   });
 });
 

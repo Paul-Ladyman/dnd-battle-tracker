@@ -14,6 +14,10 @@ export function getSecondsElapsed(state) {
 };
 
 export function nextInitiative(state) {
+  if (state.creatures.length === 0) {
+    return state;
+  }
+
   if (state.round === 0) {
     return {...state, round: 1, activeCreature: 0};
   }
