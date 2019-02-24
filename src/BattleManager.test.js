@@ -1,7 +1,8 @@
 import { 
   newBattleState,
   getSecondsElapsed,
-  startBattle
+  startBattle,
+  nextCreature
 } from './BattleManager';
 
 const defaultState = {
@@ -14,11 +15,31 @@ const defaultState = {
       conditions: [],
       notes: []
     },
+    {
+      name: 'Goblin',
+      initiative: 10,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 1,
+      alive: true,
+      conditions: [],
+      notes: []
+    },
+    {
+      name: 'Goblin 2',
+      initiative: 12,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 2,
+      alive: true,
+      conditions: [],
+      notes: []
+    }
   ],
-  creatureIdCount: 1,
-  creatureCount: 1,
-  activeCreature: undefined,
-  round: 0
+  creatureIdCount: 3,
+  creatureCount: 3,
+  activeCreature: 1,
+  round: 1
 };
 
 describe('newBattleState', () => {
@@ -77,12 +98,17 @@ describe('getSecondsElapsed', () => {
 
 describe('startBattle', () => {
   test('it starts the first round with the first creature in the list', () => {
+    const state = {
+      ...defaultState,
+      round: 0,
+      activeCreature: undefined
+    };
     const expected = {
       ...defaultState,
       round: 1,
       activeCreature: 0
     };
-    expect(startBattle(defaultState)).toEqual(expected);
+    expect(startBattle(state)).toEqual(expected);
   });
 
   test('it does nothing to a battle that has just started', () => {
@@ -108,5 +134,39 @@ describe('startBattle', () => {
     };
 
     expect(startBattle(state)).toEqual(expected);
+  });
+});
+
+describe('nextCreature', () => {
+  test('it advances the active creature by 1', () => {
+    const state = {
+      ...defaultState,
+      round: 1,
+      activeCreature: 0
+    };
+
+    const expected = {
+      ...defaultState,
+      round: 1,
+      activeCreature: 1
+    };
+
+    expect(nextCreature(state)).toEqual(expected);
+  });
+
+  test('it starts at the top of the next round after all creatures have had their go', () => {
+    const state = {
+      ...defaultState,
+      round: 1,
+      activeCreature: 2
+    };
+
+    const expected = {
+      ...defaultState,
+      round: 2,
+      activeCreature: 0
+    };
+
+    expect(nextCreature(state)).toEqual(expected);
   });
 });

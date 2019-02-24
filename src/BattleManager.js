@@ -16,3 +16,15 @@ export function getSecondsElapsed(state) {
 export function startBattle(state) {
   return {...state, round: 1, activeCreature: 0};
 };
+
+export function nextCreature(state) {
+  let activeCreature = state.activeCreature + 1;
+  let round = state.round;
+
+  if (activeCreature === state.creatureCount) {
+    activeCreature = 0;
+    round = round + 1;
+  }
+
+  return {...state, round, activeCreature};
+};

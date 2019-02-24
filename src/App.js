@@ -7,7 +7,8 @@ import conditions from './conditions';
 import {
   newBattleState,
   getSecondsElapsed,
-  startBattle
+  startBattle,
+  nextCreature
 } from './BattleManager';
 import {
   removeCreature,
@@ -113,13 +114,7 @@ class App extends Component {
   }
 
   nextCreature() {
-    let activeCreature = this.state.activeCreature + 1;
-    let round = this.state.round;
-    if (activeCreature === this.state.creatureCount) {
-      activeCreature = 0;
-      round = round + 1;
-    }
-    this.setState({...this.state, activeCreature, round});
+    this.setState(nextCreature(this.state));
   }
 
   sortCreatures(creatures) {
