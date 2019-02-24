@@ -10,7 +10,8 @@ import {
 } from './BattleManager';
 import {
   removeCreature,
-  killCreature
+  killCreature,
+  reviveCreature
 } from './CreatureManager';
 
 class App extends Component {
@@ -64,7 +65,7 @@ class App extends Component {
   }
 
   reviveCreature(id) {
-    this.updateCreature(id, {alive: true});
+    this.setState(reviveCreature(this.state, id));
   }
 
   removeNoteFromCreature(creatureId, removedNote, isCondition) {

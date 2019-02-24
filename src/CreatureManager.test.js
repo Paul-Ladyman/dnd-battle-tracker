@@ -1,6 +1,7 @@
 import { 
   removeCreature,
-  killCreature
+  killCreature,
+  reviveCreature
 } from './CreatureManager';
 
 const defaultState = {
@@ -184,4 +185,68 @@ describe('killCreature', () => {
     const result = killCreature(defaultState, 1);
     expect(result).toEqual(expected);
   });
-})
+});
+
+describe('reviveCreature', () => {
+  test('it revives a creature who is dead with 0 hit points', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          alive: false,
+          healthPoints: 0
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          alive: true,
+          healthPoints: 0
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(reviveCreature(state, 1)).toEqual(expected);
+  });
+
+  test('it revives a creature who is dead with no hit points', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          alive: false
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ]
+    };
+
+    const expected = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          alive: true
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(reviveCreature(state, 0)).toEqual(expected);
+  });
+
+  test('it revives a creature who is already alive', () => {
+    expect(reviveCreature(defaultState, 0)).toEqual(defaultState);
+  });
+});
