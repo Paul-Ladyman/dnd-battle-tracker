@@ -8,10 +8,10 @@ import {
   newBattleState,
   getSecondsElapsed,
   nextInitiative,
-  getInitiative
+  getInitiative,
+  removeCreature
 } from './BattleManager';
 import {
-  removeCreature,
   killCreature,
   reviveCreature,
   damageCreature,
