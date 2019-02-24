@@ -1,7 +1,8 @@
 import { 
   removeCreature,
   killCreature,
-  reviveCreature
+  reviveCreature,
+  damageCreature
 } from './CreatureManager';
 
 const defaultState = {
@@ -248,5 +249,78 @@ describe('reviveCreature', () => {
 
   test('it revives a creature who is already alive', () => {
     expect(reviveCreature(defaultState, 0)).toEqual(defaultState);
+  });
+});
+
+describe('damageCreature', () => {
+  test('it does nothing if a creature has no health points', () => {
+    expect(damageCreature(defaultState, 0, 5)).toEqual(defaultState);
+  });
+
+  test('it does nothing to an already dead creature', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 0,
+          alive: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(damageCreature(state, 1, 5)).toEqual(state);
+  });
+
+  test('it removes health points from a creature', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(damageCreature(defaultState, 1, 5)).toEqual(expected);
+  });
+
+  test('it kills a creature if it drops to 0 health points', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 0,
+          alive: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(damageCreature(defaultState, 1, 10)).toEqual(expected);
+  });
+
+  test('it kills a creature and sets its HP to 0 if it drops below 0 health points', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 0,
+          alive: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    expect(damageCreature(defaultState, 1, 100)).toEqual(expected);
   });
 });

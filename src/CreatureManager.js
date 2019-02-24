@@ -62,3 +62,20 @@ export function killCreature(state, creatureId) {
 export function reviveCreature(state, creatureId) {
   return updateCreature(state, creatureId, {alive: true});
 };
+
+export function damageCreature(state, creatureId, damage) {
+  const creature = findCreature(state.creatures, creatureId);
+
+  if (!creature.healthPoints) {
+    return state;
+  }
+
+  let healthPoints = creature.healthPoints - damage;
+  let alive = creature.alive
+  if (healthPoints <= 0) {
+    healthPoints = 0;
+    alive = false;
+  }
+
+  return updateCreature(state, creatureId, {alive, healthPoints});
+};

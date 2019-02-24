@@ -11,7 +11,8 @@ import {
 import {
   removeCreature,
   killCreature,
-  reviveCreature
+  reviveCreature,
+  damageCreature
 } from './CreatureManager';
 
 class App extends Component {
@@ -98,17 +99,7 @@ class App extends Component {
   }
 
   damageCreature(creatureId, damage) {
-    const creature = this.findCreature(creatureId)
-
-    let healthPoints = creature.healthPoints - damage;
-    let alive = true;
-
-    if (healthPoints <= 0) {
-      healthPoints = 0;
-      alive = false;
-    }
-
-    this.updateCreature(creatureId, {alive, healthPoints});
+    this.setState(damageCreature(this.state, creatureId, damage));
   }
 
   healCreature(creatureId, heal) {
