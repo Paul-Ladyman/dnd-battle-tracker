@@ -18,7 +18,7 @@ function CreatureNoteList({
           <div key={i}>
             <div className="creature-note-list--title">
               <span className="creature-note-list--note"><em>{note.text}</em></span>
-              <button className="creature-note-list--button" onClick={() => dismissHandler(creatureId, note.text)}>
+              <button className="creature-note-list--button" onClick={() => dismissHandler(creatureId, note)}>
                 x
               </button>
             </div>

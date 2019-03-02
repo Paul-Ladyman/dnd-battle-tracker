@@ -94,11 +94,15 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
   return updateCreature(state, creatureId, { notes });
 }
 
-export function removeNoteFromCreature(state, creatureId, text, isCondition) {
+export function removeNoteFromCreature(state, creatureId, note, isCondition) {
   const creature = findCreature(state.creatures, creatureId);
   const notesList = isCondition ? creature.conditions : creature.notes;
-  const notes = notesList.filter((note) => {
-    return note.text !== text;
+  const notes = notesList.filter(({text, appliedAtRound, appliedAtSeconds}) => {
+    const notesAreEqual = text === note.text &&
+      appliedAtRound === note.appliedAtRound &&
+      appliedAtSeconds === note.appliedAtSeconds;
+
+    return !notesAreEqual;
   });
   const newNotes = isCondition ? { conditions: notes } : { notes };
   return updateCreature(state, creatureId, newNotes);

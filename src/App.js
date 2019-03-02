@@ -55,8 +55,8 @@ class App extends Component {
     this.setState(reviveCreature(this.state, id));
   }
 
-  removeNoteFromCreature(creatureId, text, isCondition) {
-    this.setState(removeNoteFromCreature(this.state, creatureId, text, isCondition));
+  removeNoteFromCreature(creatureId, note, isCondition) {
+    this.setState(removeNoteFromCreature(this.state, creatureId, note, isCondition));
   }
 
   addNoteToCreature(creatureId, text, isCondition) {

@@ -373,6 +373,34 @@ describe('addNoteToCreature', () => {
 
 describe('removeNoteFromCreature', () => {
   test('it removes a note from a creature', () => {
+    const note = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6
+    };
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [ note ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = removeNoteFromCreature(state, 1, note, false);
+
+    expect(result).toEqual(defaultState);
+  });
+
+  test('it does not remove other notes with the same text as the one being removed', () => {
+    const note = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6
+    };
     const state = {
       ...defaultState,
       creatures: [
@@ -382,8 +410,27 @@ describe('removeNoteFromCreature', () => {
           notes: [
             {
               text: 'some note',
-              appliedAtRound: 2,
-              appliedAtSeconds: 6
+              appliedAtRound: 1,
+              appliedAtSeconds: 0
+            },
+            note
+          ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [
+            {
+              text: 'some note',
+              appliedAtRound: 1,
+              appliedAtSeconds: 0
             }
           ]
         },
@@ -391,31 +438,57 @@ describe('removeNoteFromCreature', () => {
       ]
     };
 
-    const result = removeNoteFromCreature(state, 1, 'some note', false);
+    const result = removeNoteFromCreature(state, 1, note, false);
 
-    expect(result).toEqual(defaultState);
+    expect(result).toEqual(expectedState);
   });
 
-  test('it removes a condition from a creature if isCondition is true', () => {
+  test('it removes all duplicate notes from a creature', () => {
+    const note = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6
+    };
     const state = {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          conditions: [
-            {
-              text: 'some condition',
-              appliedAtRound: 2,
-              appliedAtSeconds: 6
-            }
+          notes: [
+            note,
+            note
           ]
         },
         defaultState.creatures[2]
       ]
     };
 
-    const result = removeNoteFromCreature(state, 1, 'some condition', true);
+    const result = removeNoteFromCreature(state, 1, note, false);
+
+    expect(result).toEqual(defaultState);
+  });
+
+  test('it removes a condition from a creature if isCondition is true', () => {
+    const condition = {
+      text: 'some condition',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6
+    };
+
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          conditions: [ condition ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = removeNoteFromCreature(state, 1, condition, true);
 
     expect(result).toEqual(defaultState);
   });
