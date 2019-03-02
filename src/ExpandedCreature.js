@@ -31,7 +31,7 @@ function ExpandedCreature({
         creatureId={id}
         label="Conditions"
         noteList={conditions}
-        dismissHandler={(creatureId, text) => removeNoteFromCreature(creatureId, text, true)}
+        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
         round={round}
         secondsElapsed={secondsElapsed}
         className="expanded-creature--stat"
@@ -40,7 +40,7 @@ function ExpandedCreature({
         creatureId={id}
         label="Notes"
         noteList={notes}
-        dismissHandler={(creatureId, text) => removeNoteFromCreature(creatureId, text, false)}
+        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
         round={round}
         secondsElapsed={secondsElapsed}
         className="expanded-creature--stat"
