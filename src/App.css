@@ -144,7 +144,7 @@ button {
 }
 
 .creature-wrapper__active {
-  border: 4px solid #b12000;
+  border: 4px solid #8b0d00;
 }
 
 .creature-wrapper__dead {
@@ -153,7 +153,6 @@ button {
 
 .expand-creature-button {
   padding: 5px;
-  background-color: transparent;
 }
 
 .expanded-creature {
@@ -219,7 +218,7 @@ button {
   grid-auto-rows: minmax(60px, auto);
   grid-gap: 10px;
   margin-top: 5px;
-  border: 1px solid #b12000;
+  border: 1px solid #8b0d00;
   padding: 10px;
 }
 
@@ -237,7 +236,7 @@ button {
 .creature-note-list--note {
   text-transform: capitalize;
   text-decoration: underline;
-  text-decoration-color: #b12000;
+  text-decoration-color: #8b0d00;
   text-decoration-style: double;
 }
 
@@ -255,7 +254,7 @@ button {
 /* Health points */
 
 .health-points--fine {
-  color: #669900;
+  color: green;
 }
 
 .health-points--damaged {
@@ -263,5 +262,5 @@ button {
 }
 
 .health-points--critical {
-  color: #b12000;
+  color: #8b0d00;
 }
