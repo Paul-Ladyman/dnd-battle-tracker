@@ -1,3 +1,5 @@
+import { getSecondsElapsed } from './BattleManager';
+
 function findCreature(creatures, creatureId) {
   return creatures.find(({id}) => {
     return creatureId === id;
@@ -74,3 +76,30 @@ export function createCreature(creatureId, {name, initiative, healthPoints}) {
     notes: []
   };
 };
+
+export function addNoteToCreature(state, creatureId, text, isCondition) {
+  const creature = findCreature(state.creatures, creatureId);
+  const note = {
+    text,
+    appliedAtRound: state.round,
+    appliedAtSeconds: getSecondsElapsed(state)
+  };
+
+  if (isCondition) {
+    const conditions = [...creature.conditions, note];
+    return updateCreature(state, creatureId, { conditions });
+  }
+
+  const notes = [...creature.notes, note];
+  return updateCreature(state, creatureId, { notes });
+}
+
+export function removeNoteFromCreature(state, creatureId, text, isCondition) {
+  const creature = findCreature(state.creatures, creatureId);
+  const notesList = isCondition ? creature.conditions : creature.notes;
+  const notes = notesList.filter((note) => {
+    return note.text !== text;
+  });
+  const newNotes = isCondition ? { conditions: notes } : { notes };
+  return updateCreature(state, creatureId, newNotes);
+}

@@ -16,7 +16,9 @@ import {
   killCreature,
   reviveCreature,
   damageCreature,
-  healCreature
+  healCreature,
+  addNoteToCreature,
+  removeNoteFromCreature
 } from './CreatureManager';
 
 class App extends Component {
@@ -35,7 +37,6 @@ class App extends Component {
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
-    this.findCreature = this.findCreature.bind(this);
   }
 
   resetBattle() {
@@ -46,23 +47,6 @@ class App extends Component {
     this.setState(removeCreature(this.state, creatureId));
   }
 
-  findCreature(creatureId) {
-    return this.state.creatures.find(({id}) => {
-      return creatureId === id;
-    });
-  }
-
-  updateCreature(id, updates) {
-    let newCreatures = [...this.state.creatures];
-    const creatureIndex = newCreatures.findIndex((creature) => {
-      return creature.id === id;
-    });
-    const existingCreature = newCreatures[creatureIndex]
-    newCreatures[creatureIndex] = {...existingCreature, ...updates};
-
-    this.setState({...this.state, creatures: newCreatures});
-  }
-
   killCreature(id) {
     this.setState(killCreature(this.state, id));
   }
@@ -71,33 +55,12 @@ class App extends Component {
     this.setState(reviveCreature(this.state, id));
   }
 
-  removeNoteFromCreature(creatureId, removedNote, isCondition) {
-    const creature = this.findCreature(creatureId);
-    const noteList = isCondition ? creature.conditions : creature.notes;
-    const notes = noteList.filter((note) => {
-      return note.text !== removedNote;
-    });
-
-    const newNotes = isCondition ? {conditions: notes} : {notes};
-    this.updateCreature(creatureId, newNotes);
+  removeNoteFromCreature(creatureId, text, isCondition) {
+    this.setState(removeNoteFromCreature(this.state, creatureId, text, isCondition));
   }
 
-  addNoteToCreature(creatureId, addedNote, isCondition) {
-    const creature = this.findCreature(creatureId);
-    const note = {
-      text: addedNote,
-      appliedAtRound: this.state.round,
-      appliedAtSeconds: getSecondsElapsed(this.state)
-    };
-
-    if (isCondition) {
-      const conditions = [...creature.conditions, note];
-      this.updateCreature(creatureId, {conditions});
-    }
-    else {
-      const notes = [...creature.notes, note];
-      this.updateCreature(creatureId, {notes});
-    }
+  addNoteToCreature(creatureId, text, isCondition) {
+    this.setState(addNoteToCreature(this.state, creatureId, text, isCondition));
   }
 
   damageCreature(creatureId, damage) {

@@ -4,6 +4,8 @@ import {
   damageCreature,
   healCreature,
   createCreature,
+  addNoteToCreature,
+  removeNoteFromCreature
 } from './CreatureManager';
 
 const defaultState = {
@@ -304,5 +306,117 @@ describe('createCreature', () => {
 
     const creature = createCreature(1, {name: 'name', initiative: 13,  healthPoints: 10});
     expect(creature).toEqual(expectedCreature);
+  });
+});
+
+describe('addNoteToCreature', () => {
+  test('it adds a note to a creature including application round and time', () => {
+    const state = {
+      ...defaultState,
+      round: 2
+    };
+
+    const result = addNoteToCreature(state, 1, 'some note', false);
+
+    const expectedNote = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [
+            expectedNote
+          ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  test('it adds a note as a condition to a creature if isCondition is true', () => {
+    const state = {
+      ...defaultState,
+      round: 2
+    };
+
+    const result = addNoteToCreature(state, 1, 'blinded', true);
+
+    const expectedCondition = {
+      text: 'blinded',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          conditions: [
+            expectedCondition
+          ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+    expect(result).toEqual(expectedState);
+  });
+});
+
+describe('removeNoteFromCreature', () => {
+  test('it removes a note from a creature', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [
+            {
+              text: 'some note',
+              appliedAtRound: 2,
+              appliedAtSeconds: 6
+            }
+          ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = removeNoteFromCreature(state, 1, 'some note', false);
+
+    expect(result).toEqual(defaultState);
+  });
+
+  test('it removes a condition from a creature if isCondition is true', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          conditions: [
+            {
+              text: 'some condition',
+              appliedAtRound: 2,
+              appliedAtSeconds: 6
+            }
+          ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = removeNoteFromCreature(state, 1, 'some condition', true);
+
+    expect(result).toEqual(defaultState);
   });
 });
