@@ -7,8 +7,10 @@ class Creature extends Component {
     super(props);
 
     this.state = {
-      expanded: false,
+      expanded: false
     };
+
+    this.creatureRef = React.createRef();
 
     this.expand = this.expand.bind(this);
     this.collapse = this.collapse.bind(this);
@@ -24,6 +26,11 @@ class Creature extends Component {
 
   render () {
     const { creature, active } = this.props;
+
+    if (active) {
+      this.creatureRef.current.scrollIntoView({ block: 'center' });
+    }
+
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
     const expandedModifier = this.state.expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
@@ -35,7 +42,7 @@ class Creature extends Component {
 
     return (
       <React.Fragment>
-        <div className={classes}>
+        <div className={classes} ref={this.creatureRef}>
           {showExpanded ? 
             <ExpandedCreature
               creature={creature}

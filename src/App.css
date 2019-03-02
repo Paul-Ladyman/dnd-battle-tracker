@@ -25,9 +25,6 @@ button {
   display: flex;
   align-items: center;
   flex-flow: column;
-}
-
-.App__sticky {
   padding-top: 44px;
 }
 
@@ -42,12 +39,8 @@ button {
   padding-top: 5px;
   padding-bottom: 5px;
   background-color: #e1e1b5;
-}
-
-.battle-toolbar__sticky {
   position: fixed;
   top: 0;
-  width: 100%
 }
 
 .battle-toolbar--stat {

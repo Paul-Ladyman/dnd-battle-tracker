@@ -8,13 +8,10 @@ function BattleToolbar({
   combatants,
   nextButtonLabel,
   nextInitiative,
-  resetBattle,
-  sticky
+  resetBattle
 }) {
-  const toolbarClass = 'battle-toolbar';
-  const toolbarClasses = sticky ? `${toolbarClass} ${toolbarClass}__sticky` : toolbarClass; 
   return (
-    <div className={toolbarClasses}>
+    <div className="battle-toolbar">
       <button className="battle-toolbar--button" onClick={nextInitiative}>{nextButtonLabel}</button>
       <div className="battle-toolbar--stat">
         Initiative:
