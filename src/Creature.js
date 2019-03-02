@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import equal from 'fast-deep-equal';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 
@@ -24,9 +25,21 @@ class Creature extends Component {
     this.setState({...this.state, expanded: false});
   }
 
+  /*
+   * Prevent Creature rerendering when nothing it has not been updated.
+   * Otherwise we would always scroll to the active creature when another creature
+   * is updated.
+   */
+  shouldComponentUpdate(nextProps, nextState) {
+    const shouldUpdate = !equal(nextProps.creature, this.props.creature) ||
+      nextProps.active !== this.props.active ||
+      nextState.expanded !== this.state.expanded;
+
+    return shouldUpdate;
+  }
+
   render () {
     const { creature, active } = this.props;
-
     if (active) {
       this.creatureRef.current.scrollIntoView({ block: 'center' });
     }
