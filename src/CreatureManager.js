@@ -62,4 +62,15 @@ export function healCreature(state, creatureId, health) {
   return updateCreature(state, creatureId, {alive, healthPoints});
 };
 
-export function creatureCreature({name, initiative, healthPoints}) {}
+export function createCreature(state, {name, initiative, healthPoints}) {
+  return {
+    name,
+    initiative,
+    healthPoints,
+    maxHealthPoints: healthPoints,
+    id: state.creatureIdCount,
+    alive: true,
+    conditions: [],
+    notes: []
+  };
+};

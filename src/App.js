@@ -15,7 +15,8 @@ import {
   killCreature,
   reviveCreature,
   damageCreature,
-  healCreature
+  healCreature,
+  createCreature
 } from './CreatureManager';
 
 class App extends Component {
@@ -118,15 +119,7 @@ class App extends Component {
   }
 
   createCreature(creature) {
-    const {healthPoints} = creature;
-    const newCreature = {
-      ...creature,
-      maxHealthPoints: healthPoints,
-      id: this.state.creatureIdCount,
-      alive: true,
-      conditions: [],
-      notes: []
-    };
+    const newCreature = createCreature(this.state, creature);
     
     const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
 
