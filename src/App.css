@@ -11,7 +11,7 @@
 }
 
 body {
-  background-color: #e1e1b5;
+  background-color: #f5f1ea;
 }
 
 button {
@@ -19,6 +19,7 @@ button {
   border: 2px solid #5f130d;
   padding: 10px;
   font-weight: bold; 
+  background-color: #e1e1b5;
 }
 
 .App {
@@ -38,7 +39,7 @@ button {
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
-  background-color: #e1e1b5;
+  background-color: #ebe2d3;
   position: fixed;
   top: 0;
 }
@@ -127,7 +128,7 @@ button {
   border: 2px solid #5f130d;
   margin: 40px 0 10px 0;
   padding: 10px;
-  background-color: #daebbe;
+  background-color: #e1e1b5;
 }
 
 .creature-wrapper__expanded {
@@ -147,11 +148,12 @@ button {
 }
 
 .creature-wrapper__dead {
-  background-color: darkgrey;
+  background-color: lightgrey;
 }
 
 .expand-creature-button {
   padding: 5px;
+  background-color: transparent;
 }
 
 .expanded-creature {
