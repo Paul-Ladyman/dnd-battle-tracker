@@ -1,9 +1,20 @@
 import React from 'react';
 import Timer from './Timer';
 
-function BattleToolbar({initiative, round, secondsElapsed, combatants, nextButtonLabel, nextInitiative, resetBattle}) {
+function BattleToolbar({
+  initiative,
+  round,
+  secondsElapsed,
+  combatants,
+  nextButtonLabel,
+  nextInitiative,
+  resetBattle,
+  sticky
+}) {
+  const toolbarClass = 'battle-toolbar';
+  const toolbarClasses = sticky ? `${toolbarClass} ${toolbarClass}__sticky` : toolbarClass; 
   return (
-    <div className="battle-toolbar">
+    <div className={toolbarClasses}>
       <button className="battle-toolbar--button" onClick={nextInitiative}>{nextButtonLabel}</button>
       <div className="battle-toolbar--stat">
         Initiative:

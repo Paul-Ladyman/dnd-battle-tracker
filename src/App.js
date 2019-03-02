@@ -37,6 +37,19 @@ class App extends Component {
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  handleScroll() {
+    if (window.pageYOffset > 0) {
+      this.setState({ ...this.state, sticky: true });
+    } else {
+      this.setState({ ...this.state, sticky: false });
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   resetBattle() {
@@ -82,9 +95,10 @@ class App extends Component {
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
     const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
+    const classes = this.state.sticky ? 'App App__sticky' : 'App';
 
     return (
-      <div className="App">
+      <div className={classes}>
         <BattleToolbar
           initiative={getInitiative(this.state)}
           round={this.state.round}
@@ -93,6 +107,7 @@ class App extends Component {
           nextButtonLabel={nextButtonLabel}
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
+          sticky={this.state.sticky}
         />
         <Creatures
           creatures={this.state.creatures}

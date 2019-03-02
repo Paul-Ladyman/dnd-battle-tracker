@@ -27,14 +27,27 @@ button {
   flex-flow: column;
 }
 
+.App__sticky {
+  padding-top: 44px;
+}
+
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
   justify-content: space-evenly;
-  border: 2px solid #5f130d;
+  border-top: 2px solid #5f130d;
+  border-bottom: 2px solid #5f130d;
   height: 40px;
   width: 100%;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #e1e1b5;
+}
+
+.battle-toolbar__sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
 }
 
 .battle-toolbar--stat {
