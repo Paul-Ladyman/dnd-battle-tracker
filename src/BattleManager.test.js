@@ -3,8 +3,12 @@ import {
   getSecondsElapsed,
   nextInitiative,
   getInitiative,
-  removeCreature
+  removeCreature,
+  addCreature
 } from './BattleManager';
+import { createCreature } from './CreatureManager';
+
+jest.mock('./CreatureManager');
 
 const defaultState = {
   creatures:[
@@ -18,7 +22,7 @@ const defaultState = {
     },
     {
       name: 'Goblin',
-      initiative: 10,
+      initiative: 12,
       healthPoints: 10,
       maxHealthPoints: 10,
       id: 1,
@@ -28,7 +32,7 @@ const defaultState = {
     },
     {
       name: 'Goblin 2',
-      initiative: 12,
+      initiative: 10,
       healthPoints: 10,
       maxHealthPoints: 10,
       id: 2,
@@ -42,6 +46,10 @@ const defaultState = {
   activeCreature: 1,
   round: 1
 };
+
+beforeEach(() => {
+  createCreature.mockClear();
+});
 
 describe('newBattleState', () => {
   test('contains the initial battle state', () => {
@@ -282,5 +290,158 @@ describe('removeCreature', () => {
     const state = { not: 'valid'};
     const result = removeCreature(state, 0);
     expect(result).toEqual(state);
+  });
+});
+
+describe('addCreature', () => {
+  test('it creates a creature, adds it to the list and increments relevant counts', () => {
+    const creature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10
+    };
+
+    const createdCreature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 3,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+
+    createCreature.mockReturnValue(createdCreature);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+        createdCreature
+      ],
+      creatureCount: 4,
+      creatureIdCount: 4
+    };
+
+    expect(addCreature(defaultState, creature)).toEqual(expectedState);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
+  });
+
+  test('it sorts creatures by their initiative', () => {
+    const creature = {
+      name: 'name',
+      initiative: 11,
+      healthPoints: 10
+    };
+
+    const createdCreature = {
+      name: 'name',
+      initiative: 11,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 3,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+
+    createCreature.mockReturnValue(createdCreature);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        createdCreature,
+        defaultState.creatures[2]
+      ],
+      creatureCount: 4,
+      creatureIdCount: 4
+    };
+
+    expect(addCreature(defaultState, creature)).toEqual(expectedState);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
+  });
+
+  test('it keeps the currently active creature', () => {
+    const creature = {
+      name: 'name',
+      initiative: 15,
+      healthPoints: 10
+    };
+
+    const createdCreature = {
+      name: 'name',
+      initiative: 15,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 3,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+
+    createCreature.mockReturnValue(createdCreature);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        createdCreature,
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ],
+      creatureCount: 4,
+      creatureIdCount: 4,
+      activeCreature: 2
+    };
+
+    expect(addCreature(defaultState, creature)).toEqual(expectedState);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
+  });
+
+  test('it does not change the active creature if the battle has not begun', () => {
+    const creature = {
+      name: 'name',
+      initiative: 15,
+      healthPoints: 10
+    };
+
+    const createdCreature = {
+      name: 'name',
+      initiative: 15,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 3,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+
+    createCreature.mockReturnValue(createdCreature);
+
+    const state = {
+      ...defaultState,
+      round: 0,
+      activeCreature: 0
+    }
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        createdCreature,
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ],
+      creatureCount: 4,
+      creatureIdCount: 4,
+    };
+
+    expect(addCreature(state, creature)).toEqual(expectedState);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
 });

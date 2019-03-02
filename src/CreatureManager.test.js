@@ -296,13 +296,13 @@ describe('createCreature', () => {
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
-      id: defaultState.creatureIdCount,
+      id: 1,
       alive: true,
       conditions: [],
       notes: []
     };
 
-    const creature = createCreature(defaultState, {name: 'name', initiative: 13,  healthPoints: 10});
+    const creature = createCreature(1, {name: 'name', initiative: 13,  healthPoints: 10});
     expect(creature).toEqual(expectedCreature);
   });
 });

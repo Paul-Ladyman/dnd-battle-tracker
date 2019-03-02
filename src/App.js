@@ -9,14 +9,14 @@ import {
   getSecondsElapsed,
   nextInitiative,
   getInitiative,
-  removeCreature
+  removeCreature,
+  addCreature
 } from './BattleManager';
 import {
   killCreature,
   reviveCreature,
   damageCreature,
-  healCreature,
-  createCreature
+  healCreature
 } from './CreatureManager';
 
 class App extends Component {
@@ -112,29 +112,8 @@ class App extends Component {
     this.setState(nextInitiative(this.state));
   }
 
-  sortCreatures(creatures) {
-    return creatures.sort((creatureA, creatureB) => {
-      return creatureB.initiative - creatureA.initiative;
-    });
-  }
-
   createCreature(creature) {
-    const newCreature = createCreature(this.state, creature);
-    
-    const creatures = this.sortCreatures([...this.state.creatures, newCreature]);
-
-    let activeCreature = this.state.activeCreature;
-    if (this.state.round > 0) {
-      const currentlyActiveCreature = this.state.creatures[this.state.activeCreature];
-      activeCreature = creatures.findIndex(({id}) => {
-        return currentlyActiveCreature.id === id;
-      });
-    }
-
-    const creatureCount = this.state.creatureCount + 1;
-    const creatureIdCount = this.state.creatureIdCount + 1;
-
-    this.setState({...this.state, creatures, creatureCount, creatureIdCount, activeCreature});
+    this.setState(addCreature(this.state, creature));
   }
 
   render() {

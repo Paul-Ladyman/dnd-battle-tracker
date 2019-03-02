@@ -1,6 +1,15 @@
+import { createCreature } from './CreatureManager';
+
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({id}) => {
     return creature.id === id;
+  });
+}
+
+
+function sortCreatures(creatures) {
+  return creatures.sort((creatureA, creatureB) => {
+    return creatureB.initiative - creatureA.initiative;
   });
 }
 
@@ -81,4 +90,19 @@ export function removeCreature(state, creatureId) {
   }
 
   return {...state, creatures, creatureCount, activeCreature};
+};
+
+export function addCreature(state, creature) {
+  const newCreature = createCreature(state.creatureIdCount, creature);
+  const creatures = sortCreatures([...state.creatures, newCreature]);
+  const currentlyActiveCreature = state.creatures[state.activeCreature];
+
+  let activeCreature = state.activeCreature;
+  if (state.round > 0) {
+    activeCreature = findCreatureIndex(creatures, currentlyActiveCreature);
+  }
+  const creatureCount = state.creatureCount + 1;
+  const creatureIdCount = state.creatureIdCount + 1;
+
+  return {...state, creatures, creatureCount, creatureIdCount, activeCreature};
 };
