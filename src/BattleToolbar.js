@@ -10,9 +10,11 @@ function BattleToolbar({
   nextInitiative,
   resetBattle
 }) {
+  const buttonClass = 'battle-toolbar--button';
+  const buttonClasses = combatants > 0 ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
   return (
     <div className="battle-toolbar">
-      <button className="battle-toolbar--button" onClick={nextInitiative}>{nextButtonLabel}</button>
+      <button className={buttonClasses} onClick={nextInitiative}>{nextButtonLabel}</button>
       <div className="battle-toolbar--stat">
         Initiative:
         <div className="battle-toolbar--stat-value">{initiative}</div>
@@ -29,7 +31,7 @@ function BattleToolbar({
         Time Elapsed:
         <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
       </div>
-      <button className="battle-toolbar--button" onClick={resetBattle}>Reset</button>
+      <button className={buttonClasses} onClick={resetBattle}>Reset</button>
     </div>
   );
 }

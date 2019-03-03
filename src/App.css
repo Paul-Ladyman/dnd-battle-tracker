@@ -60,6 +60,12 @@ button {
   text-transform: capitalize;
 }
 
+.battle-toolbar--button__disabled {
+  background-color: transparent;
+  cursor: auto;
+  border: 2px dashed #5f130d;
+}
+
 /* Creature toolbar */
 
 .creature-toolbar {
