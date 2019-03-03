@@ -1,6 +1,7 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
 import HealthPoints from './HealthPoints';
+import { conditionDescriptions } from './conditions';
 
 function ExpandedCreature({
   creature,
@@ -11,7 +12,11 @@ function ExpandedCreature({
   removeNoteFromCreature
 }) {
   const {alive, name, maxHealthPoints, healthPoints, initiative, id, conditions, notes} = creature;
-  const displayName = alive ? name : `${name} (dead/unconscious)`;
+  const displayName = alive ?
+    name : 
+    <React.Fragment>
+      {name} (<a href={conditionDescriptions.unconscious} target="_blank">unconscious/dead</a>)
+    </React.Fragment>;
   const showHealth = healthPoints !== undefined;
   const showConditions = conditions.length > 0;
   const showNotes = notes.length > 0;
