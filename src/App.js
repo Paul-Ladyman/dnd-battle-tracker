@@ -94,6 +94,7 @@ class App extends Component {
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />
+        <CreateCreatureForm createCreature={this.createCreature} />
         <Creatures
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
@@ -108,7 +109,6 @@ class App extends Component {
           addNoteToCreature={this.addNoteToCreature}
           removeNoteFromCreature={this.removeNoteFromCreature}
         />
-        <CreateCreatureForm createCreature={this.createCreature} />
       </div>
     );
   }

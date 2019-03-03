@@ -99,6 +99,7 @@ button {
 
 .create-creature-form {
   width: 50%;
+  margin-top: 40px;
 }
 
 .create-creature-form--item {
@@ -121,7 +122,7 @@ button {
 
 .creature-list {
   min-width: 50%;
-  margin: 20px 0 40px 0;
+  margin-bottom: 40px;
 }
 
 .creature-wrapper {
