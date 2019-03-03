@@ -7,6 +7,7 @@ import {
   addNoteToCreature,
   removeNoteFromCreature
 } from './CreatureManager';
+import { conditionDescriptions } from './conditions';
 
 const defaultState = {
   creatures:[
@@ -350,6 +351,37 @@ describe('addNoteToCreature', () => {
 
     const expectedCondition = {
       text: 'blinded',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6,
+      url: conditionDescriptions.blinded
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          conditions: [
+            expectedCondition
+          ]
+        },
+        defaultState.creatures[2]
+      ]
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  test('it does not add a URL to a condition if no URL is known', () => {
+    const state = {
+      ...defaultState,
+      round: 2
+    };
+
+    const result = addNoteToCreature(state, 1, 'unknown', true);
+
+    const expectedCondition = {
+      text: 'unknown',
       appliedAtRound: 2,
       appliedAtSeconds: 6
     };

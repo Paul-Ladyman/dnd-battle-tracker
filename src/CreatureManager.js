@@ -1,4 +1,5 @@
 import { getSecondsElapsed } from './BattleManager';
+import { conditionDescriptions } from './conditions';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({id}) => {
@@ -86,7 +87,11 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
   };
 
   if (isCondition) {
-    const conditions = [...creature.conditions, note];
+    const condition = {
+      ...note,
+      url: conditionDescriptions[note.text]
+    };
+    const conditions = [...creature.conditions, condition];
     return updateCreature(state, creatureId, { conditions });
   }
 
