@@ -2,6 +2,7 @@ import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
 import HealthPoints from './HealthPoints';
 import { conditionDescriptions } from './conditions';
+import ExternalLink from './ExternalLink';
 
 function ExpandedCreature({
   creature,
@@ -15,7 +16,7 @@ function ExpandedCreature({
   const displayName = alive ?
     name : 
     <React.Fragment>
-      {name} (<a href={conditionDescriptions.unconscious} target="_blank">unconscious/dead</a>)
+      {name} (<ExternalLink url={conditionDescriptions.unconscious} text="unconscious/dead"/>)
     </React.Fragment>;
   const showHealth = healthPoints !== undefined;
   const showConditions = conditions.length > 0;

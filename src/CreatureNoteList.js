@@ -1,5 +1,6 @@
 import React from 'react';
 import Timer from './Timer';
+import ExternalLink from './ExternalLink';
 
 function CreatureNoteList({
   creatureId,
@@ -16,7 +17,7 @@ function CreatureNoteList({
       <div className="creature-note-list">
         {noteList.map((note, i) => {
           const noteText = note.url ?
-            <a href={note.url} target="_blank">{note.text}</a> :
+            <ExternalLink url={note.url} text={note.text} /> :
             note.text;
 
           return (
