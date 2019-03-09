@@ -35,14 +35,27 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 * Allowing creatures to be killed/made unconscious and making it obvious to the DM that this has happened.
 * Creatures can be added to or removed from the list at any time, even after the battle has started.
 
-## To Run
+## Development
+
+### Checkout and install
 
      $ git clone git@github.com:Paul-Ladyman/dnd-battle-tracker.git
      $ cd dnd-battle-tracker
      $ npm install
+
+### To run
+
      $ npm start
+
+### To test
+
+     $ npm test
+
+## Release
+
+- `npm run build` to build the project and package all the static resources into a single HTML file for running the app under `dist/dnd-battle-tracker.html`.
+- Create a release in Github and upload the `dist/dnd-battle-tracker.html` file.
 
 ## TODO
 
-* Make installing/running the app simpler and possible for non-developers.
 * If a creature has all conditions applied the creature list columns exceeds its usual width.
