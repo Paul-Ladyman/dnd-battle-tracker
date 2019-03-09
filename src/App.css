@@ -271,3 +271,9 @@ button {
 .health-points--critical {
   color: #8b0d00;
 }
+
+/* Footer */
+
+.footer-text {
+  font-size: 12px;
+}

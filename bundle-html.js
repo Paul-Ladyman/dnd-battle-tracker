@@ -11,7 +11,8 @@ const html = `
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="theme-color" content="#000000" />
-    <title>React App</title>
+    <title>D&D Battle Tracker</title>
+    <link rel="shortcut icon" type="image/x-icon" href="http://dnd.wizards.com/sites/default/files/media/favicon.ico">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

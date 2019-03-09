@@ -20,6 +20,7 @@ import {
   addNoteToCreature,
   removeNoteFromCreature
 } from './CreatureManager';
+import Footer from './Footer';
 
 class App extends Component {
   constructor(props) {
@@ -109,6 +110,7 @@ class App extends Component {
           addNoteToCreature={this.addNoteToCreature}
           removeNoteFromCreature={this.removeNoteFromCreature}
         />
+        <Footer />
       </div>
     );
   }
