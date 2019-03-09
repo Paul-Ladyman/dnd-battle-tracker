@@ -2,6 +2,12 @@
 
 This is an easy to use battle tracker application for D&D 5e.
 
+## Download
+
+The D&D Battle Tracker is designed to run as a single HTML page in the browser (but does not require an internet connection). Simply download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
+
+**Latest release (v1.0.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.0.0/dnd-battle-tracker.html)
+
 ## Motivation
 
 As a new DM I found that I was frequently making mistakes during a battle, such as:
@@ -24,6 +30,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 
 ## Features
 
+* Works entirely offline.
 * Create a list of creatures who are involved in the battle by adding a name, initiative score and optionally health points for each one.
 * Automatically order creatures by their initiative.
 * Keep track of who's turn it is as the battle progresses as well as what the current round is and how long the battle has lasted.
