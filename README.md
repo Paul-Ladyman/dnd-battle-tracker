@@ -12,7 +12,6 @@ As a new DM I found that I was frequently making mistakes during a battle, such 
 
 It was clear that some automation would be helpful. There's a number of browser-based battle trackers out there at the time of writing:
 
-* [Kobold Club](https://kobold.club/fight/#/encounter-builder)
 * [Improved Initiative](https://www.improved-initiative.com/)
 * [Aide D&D](https://www.aidedd.org/dnd-tracker/index.php?l=1)
 * [Orc Pub](https://www.orcpub2.com/)
@@ -59,3 +58,4 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 ## TODO
 
 * If a creature has all conditions applied the creature list columns exceeds its usual width.
+* Consider adding a log to keep track of all battle events
