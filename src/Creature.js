@@ -33,7 +33,8 @@ class Creature extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const shouldUpdate = !equal(nextProps.creature, this.props.creature) ||
       nextProps.active !== this.props.active ||
-      nextState.expanded !== this.state.expanded;
+      nextState.expanded !== this.state.expanded ||
+      nextProps.round !== this.props.round;
 
     return shouldUpdate;
   }
