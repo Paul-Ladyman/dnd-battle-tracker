@@ -9,9 +9,10 @@ function ExpandedCreature({
   active,
   round,
   secondsElapsed,
-  removeCreature,
-  removeNoteFromCreature
+  creatureManagement
 }) {
+  const { removeCreature, removeNoteFromCreature, startEditingCreature } = creatureManagement;
+
   const {alive, name, maxHealthPoints, healthPoints, initiative, id, conditions, notes} = creature;
   const displayName = alive ?
     name : 
@@ -51,6 +52,7 @@ function ExpandedCreature({
         secondsElapsed={secondsElapsed}
         className="expanded-creature--stat"
       />}
+      {!active && <button className="expanded-creature--button" onClick={() => startEditingCreature(id)}>Edit</button>}
       {!active && <button className="expanded-creature--button" onClick={() => removeCreature(id)}>Remove</button>}
     </div>
   );

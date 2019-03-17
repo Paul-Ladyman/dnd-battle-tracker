@@ -18,7 +18,8 @@ import {
   damageCreature,
   healCreature,
   addNoteToCreature,
-  removeNoteFromCreature
+  removeNoteFromCreature,
+  startEditingCreature
 } from './CreatureManager';
 import Footer from './Footer';
 
@@ -38,6 +39,7 @@ class App extends Component {
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
+    this.startEditingCreature = this.startEditingCreature.bind(this);
   }
 
   resetBattle() {
@@ -72,6 +74,10 @@ class App extends Component {
     this.setState(healCreature(this.state, creatureId, health));
   }
 
+  startEditingCreature(creatureId) {
+    this.setState(startEditingCreature(this.state, creatureId));
+  }
+
   nextInitiative() {
     this.setState(nextInitiative(this.state));
   }
@@ -91,7 +97,8 @@ class App extends Component {
       healCreature: this.healCreature,
       removeCreature: this.removeCreature,
       addNoteToCreature: this.addNoteToCreature,
-      removeNoteFromCreature: this.removeNoteFromCreature
+      removeNoteFromCreature: this.removeNoteFromCreature,
+      startEditingCreature: this.startEditingCreature
     };
 
     return (

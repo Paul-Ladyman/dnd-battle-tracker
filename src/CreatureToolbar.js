@@ -22,6 +22,8 @@ function CreatureToolbar({
   const conditionsClasses = `creature-toolbar--input ${enabledModifier}`;
   return (
     <div className="creature-toolbar">
+      {creature.editing ||
+      <React.Fragment>
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
       <select
         className={conditionsClasses}
@@ -37,6 +39,11 @@ function CreatureToolbar({
       <CreatureToolbarInput placeholder="Note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
       <CreatureToolbarInput integer enabled={enableHealthItems} placeholder="Damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>
       <CreatureToolbarInput integer enabled={enableHealthItems} placeholder="Heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>
+      </React.Fragment>
+      }
+      {creature.editing &&
+        <div>Editing...</div>
+      }
     </div>
   )
 }

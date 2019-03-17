@@ -74,7 +74,8 @@ export function createCreature(creatureId, {name, initiative, healthPoints}) {
     id: creatureId,
     alive: true,
     conditions: [],
-    notes: []
+    notes: [],
+    editing: false
   };
 };
 
@@ -111,4 +112,8 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
   });
   const newNotes = isCondition ? { conditions: notes } : { notes };
   return updateCreature(state, creatureId, newNotes);
+}
+
+export function startEditingCreature(state, creatureId) {
+  return updateCreature(state, creatureId, { editing: true });
 }

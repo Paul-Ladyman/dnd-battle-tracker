@@ -5,7 +5,8 @@ import {
   healCreature,
   createCreature,
   addNoteToCreature,
-  removeNoteFromCreature
+  removeNoteFromCreature,
+  startEditingCreature
 } from './CreatureManager';
 import { conditionDescriptions } from './conditions';
 
@@ -17,7 +18,8 @@ const defaultState = {
       id: 0,
       alive:true,
       conditions: [],
-      notes: []
+      notes: [],
+      editing: false
     },
     {
       name: 'Goblin',
@@ -27,7 +29,8 @@ const defaultState = {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      editing: false
     },
     {
       name: 'Goblin 2',
@@ -37,7 +40,8 @@ const defaultState = {
       id: 2,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      editing: false
     }
   ],
   creatureIdCount: 3,
@@ -302,7 +306,8 @@ describe('createCreature', () => {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      editing: false
     };
 
     const creature = createCreature(1, {name: 'name', initiative: 13,  healthPoints: 10});
@@ -525,3 +530,39 @@ describe('removeNoteFromCreature', () => {
     expect(result).toEqual(defaultState);
   });
 });
+
+describe('start editing creature', () => {
+  test('it sets the creature\'s editing state to true', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          editing: true
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = startEditingCreature(defaultState, 1);
+    expect(result).toEqual(expectedState);
+  });
+
+  test('it does nothing if a creature\'s editing state is already true', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          editing: true
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = startEditingCreature(state, 1);
+    expect(result).toEqual(state);
+  });
+})
