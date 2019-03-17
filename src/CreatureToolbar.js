@@ -1,5 +1,6 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
+import CreateCreatureForm from './CreateCreatureForm';
 
 function CreatureToolbar({
   creature,
@@ -11,7 +12,8 @@ function CreatureToolbar({
     reviveCreature,
     damageCreature,
     healCreature,
-    addNoteToCreature
+    addNoteToCreature,
+    editCreature
   } = creatureManagement;
   const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
   const statusButtonLabel = creature.alive ? 'KO' : 'Revive';
@@ -42,7 +44,7 @@ function CreatureToolbar({
       </React.Fragment>
       }
       {creature.editing &&
-        <div>Editing...</div>
+        <CreateCreatureForm createCreature={(edit) => editCreature(creature.id, edit)} />
       }
     </div>
   )

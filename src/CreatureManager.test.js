@@ -4,6 +4,7 @@ import {
   damageCreature,
   healCreature,
   createCreature,
+  editCreature,
   addNoteToCreature,
   removeNoteFromCreature,
   startEditingCreature
@@ -30,12 +31,12 @@ const defaultState = {
       alive: true,
       conditions: [],
       notes: [],
-      editing: false
+      editing: true
     },
     {
       name: 'Goblin 2',
       initiative: 12,
-      healthPoints: 10,
+      healthPoints: 5,
       maxHealthPoints: 10,
       id: 2,
       alive: true,
@@ -315,6 +316,131 @@ describe('createCreature', () => {
   });
 });
 
+describe('editCreature', () => {
+  it('does nothing if the battle has started', () => {
+    const edit = { name: 'new name', initiative: 30, healthPoints: 100 };
+    expect(editCreature(defaultState, 1, edit)).toEqual(defaultState);
+  });
+
+  it('updates an existing creature and stops editing', () => {
+    const state = {
+      ...defaultState,
+      round: 0
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          name: 'new name',
+          initiative: 30,
+          healthPoints: 100,
+          maxHealthPoints: 100,
+          editing: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+
+    const edit = { name: 'new name', initiative: 30, healthPoints: 100 };
+    expect(editCreature(state, 1, edit)).toEqual(expectedState);
+  });
+
+  it('adds health and max health points to a creature that didn\'t have them', () => {
+    const state = {
+      ...defaultState,
+      round: 0
+    };
+    const expectedState = {
+      ...state,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          name: 'new name',
+          initiative: 30,
+          healthPoints: 100,
+          maxHealthPoints: 100
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ]
+    };
+
+    const edit = { name: 'new name', initiative: 30, healthPoints: 100 };
+    expect(editCreature(state, 0, edit)).toEqual(expectedState);
+  });
+
+  it('does not update the name if it has not been provided', () => {
+    const state = {
+      ...defaultState,
+      round: 0
+    };
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: 30,
+          healthPoints: 100,
+          maxHealthPoints: 100,
+          editing: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+    const edit = { name: '', initiative: 30, healthPoints: 100 };
+    expect(editCreature(state, 1, edit)).toEqual(expectedState);
+  });
+
+  it('does not update the initiative if it has not been provided', () => {
+    const state = {
+      ...defaultState,
+      round: 0
+    };
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          name: 'new name',
+          healthPoints: 100,
+          maxHealthPoints: 100,
+          editing: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+    const edit = { name: 'new name', initiative: undefined, healthPoints: 100 };
+    expect(editCreature(state, 1, edit)).toEqual(expectedState);
+  });
+
+  it('does not update the healthPoints if it has not been provided', () => {
+    const state = {
+      ...defaultState,
+      round: 0
+    };
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          name: 'new name',
+          initiative: 30,
+          editing: false
+        },
+        defaultState.creatures[2]
+      ]
+    };
+    const edit = { name: 'new name', initiative: 30, healthPoints: undefined };
+    expect(editCreature(state, 1, edit)).toEqual(expectedState);
+  });
+});
+
 describe('addNoteToCreature', () => {
   test('it adds a note to a creature including application round and time', () => {
     const state = {
@@ -537,9 +663,26 @@ describe('start editing creature', () => {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
+        defaultState.creatures[1],
+        {
+          ...defaultState.creatures[2],
+          editing: true
+        }
+      ]
+    };
+
+    const result = startEditingCreature(defaultState, 2);
+    expect(result).toEqual(expectedState);
+  });
+
+  test('stops editing if a creature\'s editing state is already true', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          editing: true
+          editing: false
         },
         defaultState.creatures[2]
       ]
@@ -547,22 +690,5 @@ describe('start editing creature', () => {
 
     const result = startEditingCreature(defaultState, 1);
     expect(result).toEqual(expectedState);
-  });
-
-  test('it does nothing if a creature\'s editing state is already true', () => {
-    const state = {
-      ...defaultState,
-      creatures: [
-        defaultState.creatures[0],
-        {
-          ...defaultState.creatures[1],
-          editing: true
-        },
-        defaultState.creatures[2]
-      ]
-    };
-
-    const result = startEditingCreature(state, 1);
-    expect(result).toEqual(state);
   });
 })

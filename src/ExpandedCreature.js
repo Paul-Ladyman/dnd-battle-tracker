@@ -22,6 +22,7 @@ function ExpandedCreature({
   const showHealth = healthPoints !== undefined;
   const showConditions = conditions.length > 0;
   const showNotes = notes.length > 0;
+  const showEditButton = !active && round === 0;
 
   return (
     <div className="expanded-creature centered__columns">
@@ -52,7 +53,7 @@ function ExpandedCreature({
         secondsElapsed={secondsElapsed}
         className="expanded-creature--stat"
       />}
-      {!active && <button className="expanded-creature--button" onClick={() => startEditingCreature(id)}>Edit</button>}
+      {showEditButton && <button className="expanded-creature--button" onClick={() => startEditingCreature(id)}>Edit</button>}
       {!active && <button className="expanded-creature--button" onClick={() => removeCreature(id)}>Remove</button>}
     </div>
   );

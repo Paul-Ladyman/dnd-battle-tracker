@@ -79,6 +79,29 @@ export function createCreature(creatureId, {name, initiative, healthPoints}) {
   };
 };
 
+export function editCreature(state, creatureId, {name, initiative, healthPoints}) {
+  if (state.round !== 0) {
+    return state;
+  }
+
+  let edit = { editing: false };
+
+  if (name) {
+    edit.name = name;
+  }
+
+  if (initiative) {
+    edit.initiative = initiative;
+  }
+
+  if (healthPoints) {
+    edit.maxHealthPoints = healthPoints;
+    edit.healthPoints = healthPoints;
+  }
+
+  return updateCreature(state, creatureId, edit);
+}
+
 export function addNoteToCreature(state, creatureId, text, isCondition) {
   const creature = findCreature(state.creatures, creatureId);
   const note = {
@@ -115,5 +138,6 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
 }
 
 export function startEditingCreature(state, creatureId) {
-  return updateCreature(state, creatureId, { editing: true });
+  const creature = findCreature(state.creatures, creatureId);
+  return updateCreature(state, creatureId, { editing: !creature.editing });
 }
