@@ -69,27 +69,31 @@ button {
 /* Creature toolbar */
 
 .creature-toolbar {
+  grid-gap: 22px;
   display: grid;
-  grid-template-columns: repeat(5, auto);
-  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, 25px);
 }
 
-@media only screen and (max-width: 768px) {
-  .creature-toolbar {
-    grid-template-columns: repeat(2, auto);
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .creature-toolbar {
-    grid-template-columns: repeat(1, auto);
-  }
+.creature-toolbar--form {
+  width: 100%;
+  height: 100%;
+  grid-column: span 5;
 }
 
 .creature-toolbar--input {
   border: 2px solid #5f130d;
   padding: 10px;
   background-color: white;
+  box-sizing: border-box;
+  display: block;
+  height: 100%;
+  width: 100%;
+  grid-column: span 5;
+}
+
+.creature-toolbar--button {
+  grid-column: span 2;
+  padding: 5px;
 }
 
 .creature-toolbar--input__disabled {
@@ -127,7 +131,7 @@ button {
 /* Creatures */
 
 .creature-list {
-  min-width: 50%;
+  min-width: 75%;
   margin-bottom: 40px;
 }
 
