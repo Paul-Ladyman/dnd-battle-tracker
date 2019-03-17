@@ -113,10 +113,15 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
   return updateCreature(state, creatureId, newNotes);
 }
 
-export function addHealthToCreature(state, creatureId, healthPoints) {
+export function addHealthToCreature(state, creatureId, health) {
   const creature = findCreature(state.creatures, creatureId);
   if (creature.healthPoints !== undefined) {
     return state;
   } 
-  return updateCreature(state, creatureId, { healthPoints, maxHealthPoints: healthPoints })
+
+  let healthPoints = health;
+  if (!creature.alive) {
+    healthPoints = 0;
+  }
+  return updateCreature(state, creatureId, { healthPoints, maxHealthPoints: health })
 }

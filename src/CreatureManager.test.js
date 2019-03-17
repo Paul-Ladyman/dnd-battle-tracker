@@ -546,6 +546,36 @@ describe('addHealthToCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
+  it('sets healthPoints to 0 if creature is dead', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          alive: false
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ]
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        {
+          ...state.creatures[0],
+          healthPoints: 0,
+          maxHealthPoints: 10
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = addHealthToCreature(state, 0, 10);
+    expect(result).toEqual(expectedState);
+  });
+
   it('does nothing to a creature that already has health', () => {
     const result = addHealthToCreature(defaultState, 1, 30);
     expect(result).toEqual(defaultState);

@@ -69,21 +69,15 @@ button {
 /* Creature toolbar */
 
 .creature-toolbar {
-  grid-gap: 10px;
+  grid-gap: 22px;
   display: grid;
-}
-
-.creature-toolbar--4-cols {
-  grid-template-columns: repeat(4, auto);
-}
-
-.creature-toolbar--5-cols {
-  grid-template-columns: repeat(5, auto);
+  grid-template-columns: repeat(auto-fit, 25px);
 }
 
 .creature-toolbar--form {
   width: 100%;
   height: 100%;
+  grid-column: span 5;
 }
 
 .creature-toolbar--input {
@@ -94,6 +88,12 @@ button {
   display: block;
   height: 100%;
   width: 100%;
+  grid-column: span 5;
+}
+
+.creature-toolbar--button {
+  grid-column: span 2;
+  padding: 5px;
 }
 
 .creature-toolbar--input__disabled {
@@ -131,7 +131,7 @@ button {
 /* Creatures */
 
 .creature-list {
-  min-width: 50%;
+  min-width: 75%;
   margin-bottom: 40px;
 }
 
