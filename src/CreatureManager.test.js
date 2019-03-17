@@ -5,7 +5,8 @@ import {
   healCreature,
   createCreature,
   addNoteToCreature,
-  removeNoteFromCreature
+  removeNoteFromCreature,
+  addHealthToCreature
 } from './CreatureManager';
 import { conditionDescriptions } from './conditions';
 
@@ -522,6 +523,31 @@ describe('removeNoteFromCreature', () => {
 
     const result = removeNoteFromCreature(state, 1, condition, true);
 
+    expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addHealthToCreature', () => {
+  it('adds health to a creature that does not already have it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          healthPoints: 10,
+          maxHealthPoints: 10
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2]
+      ]
+    };
+
+    const result = addHealthToCreature(defaultState, 0, 10);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature that already has health', () => {
+    const result = addHealthToCreature(defaultState, 1, 30);
     expect(result).toEqual(defaultState);
   });
 });

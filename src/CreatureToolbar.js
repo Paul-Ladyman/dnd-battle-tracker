@@ -11,17 +11,24 @@ function CreatureToolbar({
     reviveCreature,
     damageCreature,
     healCreature,
-    addNoteToCreature
+    addNoteToCreature,
+    addHealthToCreature
   } = creatureManagement;
   const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
   const statusButtonLabel = creature.alive ? 'KO' : 'Revive';
   const enableHealthItems = creature.healthPoints !== undefined;
+  const enableDamage = creature.healthPoints > 0;
+  const enableHeal = creature.healthPoints < creature.maxHealthPoints;
   const enableConditions = conditions.length > 0;
 
+  const toolbarClass = 'creature-toolbar'
+  const toolbarClasses = enableHealthItems ?
+    `${toolbarClass} creature-toolbar--5-cols` :
+    `${toolbarClass} creature-toolbar--4-cols`;
   const enabledModifier = enableConditions ? 'creature-toolbar--dropdown' : 'creature-toolbar--input__disabled';
   const conditionsClasses = `creature-toolbar--input ${enabledModifier}`;
   return (
-    <div className="creature-toolbar">
+    <div className={toolbarClasses}>
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
       <select
         className={conditionsClasses}
@@ -35,8 +42,15 @@ function CreatureToolbar({
         })}
       </select>
       <CreatureToolbarInput placeholder="Note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
-      <CreatureToolbarInput integer enabled={enableHealthItems} placeholder="Damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>
-      <CreatureToolbarInput integer enabled={enableHealthItems} placeholder="Heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>
+      {enableHealthItems &&
+        <React.Fragment>
+          <CreatureToolbarInput integer enabled={enableDamage} placeholder="Damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>
+          <CreatureToolbarInput integer enabled={enableHeal} placeholder="Heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>
+        </React.Fragment>
+      }
+      {!enableHealthItems &&
+        <CreatureToolbarInput integer placeholder="Add HP" onSubmit={(health) => addHealthToCreature(creature.id, health)}/>
+      }
     </div>
   )
 }
