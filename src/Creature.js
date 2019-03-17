@@ -54,6 +54,8 @@ class Creature extends Component {
 
     const showExpanded = active || this.state.expanded;
 
+    const { removeCreature, removeNoteFromCreature } = this.props.creatureManagement;
+
     return (
       <React.Fragment>
         <div className={classes} ref={this.creatureRef}>
@@ -63,8 +65,8 @@ class Creature extends Component {
               active={active}
               round={this.props.round}
               secondsElapsed={this.props.secondsElapsed}
-              removeCreature={this.props.removeCreature}
-              removeNoteFromCreature={this.props.removeNoteFromCreature}
+              removeCreature={removeCreature}
+              removeNoteFromCreature={removeNoteFromCreature}
             /> :
             <CollapsedCreature creature={creature} />
           }
