@@ -4,12 +4,15 @@ import CreatureToolbarInput from './CreatureToolbarInput';
 function CreatureToolbar({
   creature,
   conditions,
-  killCreature,
-  reviveCreature,
-  damageCreature,
-  healCreature,
-  addNoteToCreature
+  creatureManagement
 }) {
+  const {
+    killCreature,
+    reviveCreature,
+    damageCreature,
+    healCreature,
+    addNoteToCreature
+  } = creatureManagement;
   const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
   const statusButtonLabel = creature.alive ? 'KO' : 'Revive';
   const enableHealthItems = creature.healthPoints !== undefined;

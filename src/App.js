@@ -84,6 +84,16 @@ class App extends Component {
     const secondsElapsed = getSecondsElapsed(this.state);
     const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
 
+    const creatureManagement = {
+      killCreature: this.killCreature,
+      reviveCreature: this.reviveCreature,
+      damageCreature: this.damageCreature,
+      healCreature: this.healCreature,
+      removeCreature: this.removeCreature,
+      addNoteToCreature: this.addNoteToCreature,
+      removeNoteFromCreature: this.removeNoteFromCreature
+    };
+
     return (
       <div className="App">
         <BattleToolbar
@@ -102,13 +112,7 @@ class App extends Component {
           conditions={conditions}
           round={this.state.round}
           secondsElapsed={secondsElapsed}
-          killCreature={this.killCreature}
-          reviveCreature={this.reviveCreature}
-          damageCreature={this.damageCreature}
-          healCreature={this.healCreature}
-          removeCreature={this.removeCreature}
-          addNoteToCreature={this.addNoteToCreature}
-          removeNoteFromCreature={this.removeNoteFromCreature}
+          creatureManagement={creatureManagement}
         />
         <Footer />
       </div>
