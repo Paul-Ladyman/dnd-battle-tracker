@@ -70,5 +70,4 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 
 ## TODO
 
-* If a creature has all conditions applied the creature list columns exceeds its usual width.
 * Consider adding a log to keep track of all battle events

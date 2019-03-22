@@ -19,7 +19,7 @@ function BattleToolbar({
         Initiative:
         <div className="battle-toolbar--stat-value">{initiative}</div>
       </div>
-      <div className="battle-toolbar--stat">
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra">
         Combatants:
         <div className="battle-toolbar--stat-value">{combatants}</div>
       </div>
@@ -27,7 +27,7 @@ function BattleToolbar({
         Round:
         <div className="battle-toolbar--stat-value">{round}</div>
       </div>
-      <div className="battle-toolbar--stat">
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra">
         Time Elapsed:
         <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
       </div>

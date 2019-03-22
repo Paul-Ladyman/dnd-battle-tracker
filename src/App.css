@@ -1,15 +1,3 @@
-/* Utils */
-.centered__space-evenly {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.centered__columns {
-  display: flex;
-  flex-flow: column;
-}
-
 body {
   background-color: #f5f1ea;
 }
@@ -54,6 +42,18 @@ button {
   color: #5f130d;
 }
 
+@media only screen and (max-width: 768px) {
+  .battle-toolbar--stat__extra {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .battle-toolbar--stat {
+    display: none;
+  }
+}
+
 .battle-toolbar--stat-value {
   font-weight: normal;
   color: black;
@@ -70,14 +70,19 @@ button {
 
 .creature-toolbar {
   grid-gap: 22px;
+  grid-row-gap: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 25px);
+  grid-template-columns: repeat(auto-fit, 15px);
 }
 
 .creature-toolbar--form {
   width: 100%;
   height: 100%;
-  grid-column: span 5;
+  grid-column: span 8;
+}
+
+.creature-toolbar--form__number {
+  grid-column: span 4;
 }
 
 .creature-toolbar--input {
@@ -88,7 +93,6 @@ button {
   display: block;
   height: 100%;
   width: 100%;
-  grid-column: span 5;
 }
 
 .creature-toolbar--button {
@@ -103,6 +107,7 @@ button {
 
 .creature-toolbar--dropdown {
   cursor: pointer;
+  grid-column: span 4;
 }
 
 /* Create creature form */
@@ -110,11 +115,15 @@ button {
 .create-creature-form {
   width: 50%;
   margin-top: 40px;
+  grid-gap: 11px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 25px);
+  justify-content: space-evenly;
 }
 
 .create-creature-form--item {
   display: flex;
-  justify-content: center;
+  grid-column: span 5;
 }
 
 .create-creature-form--input {
@@ -131,13 +140,19 @@ button {
 /* Creatures */
 
 .creature-list {
-  min-width: 75%;
+  width: 75%;
   margin-bottom: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-list {
+    width: 100%;
+  }
 }
 
 .creature-wrapper {
   border: 2px solid #5f130d;
-  margin: 40px 0 10px 0;
+  margin: 60px 0 10px 0;
   padding: 10px;
   background-color: #e1e1b5;
 }
@@ -280,4 +295,5 @@ button {
 
 .footer-text {
   font-size: 12px;
+  line-height: 14px;
 }

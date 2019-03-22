@@ -66,7 +66,7 @@ class CreateCreatureForm extends Component {
     const nameClass = nameError ? `${inputClass} ${inputErrorClass}` : inputClass;
     const initiativeClass = initiativeError ? `${inputClass} ${inputErrorClass}` : inputClass;
     return (
-      <form className="create-creature-form centered__space-evenly" onKeyDown={this.formHandler}>
+      <form className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item">
           <input className={nameClass} type="text" name="name" placeholder="Name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
         </div>

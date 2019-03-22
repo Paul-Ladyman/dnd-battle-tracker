@@ -21,8 +21,8 @@ function CreatureToolbar({
   const enableHeal = creature.healthPoints < creature.maxHealthPoints;
   const enableConditions = conditions.length > 0;
 
-  const enabledModifier = enableConditions ? 'creature-toolbar--dropdown' : 'creature-toolbar--input__disabled';
-  const conditionsClasses = `creature-toolbar--input ${enabledModifier}`;
+  const enabledModifier = enableConditions ? '' : 'creature-toolbar--input__disabled';
+  const conditionsClasses = `creature-toolbar--input creature-toolbar--dropdown ${enabledModifier}`;
   return (
     <div className="creature-toolbar">
       <button className="creature-toolbar--button" onClick={() => statusButtonFunc(creature.id)}>{statusButtonLabel}</button>
