@@ -5,12 +5,12 @@ import { version } from '../package.json';
 function Footer() {
   return (
     <div className="footer-text">
-      Version {version}. Check&nbsp;
+      Version {version}. See&nbsp;
       <ExternalLink
-        url="https://paul-ladyman.github.io/dnd-battle-tracker/"
-        text="D&D Battle Tracker"
+        url="https://paul-ladyman.github.io/dnd-battle-tracker/info"
+        text="D&D Battle Tracker Info"
       />
-      &nbsp;for newer versions.
+      &nbsp;for newer versions, more info and to download this page for offline battles.
     </div>
   );
 }

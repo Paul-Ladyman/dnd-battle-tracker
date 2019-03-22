@@ -6,7 +6,7 @@ This is an easy to use battle tracker application for D&D 5e.
 
 The D&D Battle Tracker is designed to run as a single HTML page in the browser (but does not require an internet connection). Simply download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v1.2.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.2.0/dnd-battle-tracker.html)
+**Latest release (v1.3.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.3.0/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -59,7 +59,11 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 
 ## Release
 
-- `npm run build` to build the project and package all the static resources into a single HTML file for running the app under `dist/dnd-battle-tracker.html`.
+- Update the version in package.json and in the ***Download*** section of this README.
+- `npm run build` to build the project and package all the static resources into a single HTML file. This file will be made available under:
+  - `docs/index.html` to provide the live Github Pages site.
+  - `dist/dnd-battle-tracker.html` for people to download from Github to use offline.
+- Push the results to the `master` branch.
 - Create a release in Github and upload the `dist/dnd-battle-tracker.html` file.
 
 ## TODO

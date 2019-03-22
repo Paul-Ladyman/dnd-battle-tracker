@@ -24,5 +24,6 @@ const html = `
 </html>
 `; 
 
-fs.writeFileSync(__dirname + '/docs/index.html', html);
 fs.copyFileSync(__dirname + '/README.md', __dirname + '/docs/info.md');
+fs.writeFileSync(__dirname + '/docs/index.html', html);
+fs.writeFileSync(__dirname + '/dist/dnd-battle-tracker.html', html);
