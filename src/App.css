@@ -17,6 +17,12 @@ button {
   padding-top: 44px;
 }
 
+@media only screen and (max-width: 600px) {
+  .App {
+    padding-top: 0px;
+  }
+}
+
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
@@ -30,6 +36,12 @@ button {
   background-color: #ebe2d3;
   position: fixed;
   top: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .battle-toolbar {
+    position: relative;
+  }
 }
 
 .battle-toolbar--stat {
