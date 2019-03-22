@@ -1,12 +1,14 @@
-# D&D Battle Tracker
+# [D&D Battle Tracker|https://paul-ladyman.github.io/dnd-battle-tracker/]
 
 This is an easy to use battle tracker application for D&D 5e.
 
-## Download
+## Use
 
-The D&D Battle Tracker is designed to run as a single HTML page in the browser (but does not require an internet connection). Simply download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
+The D&D Battle Tracker is designed to run as a single HTML page in the browser (but does not require an internet connection).
 
-**Latest release (v1.4.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.4.0/dnd-battle-tracker.html)
+You can either [access the D&D Battle Tracker live|https://paul-ladyman.github.io/dnd-battle-tracker/] or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
+
+**Latest release (v1.5.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.5.0/dnd-battle-tracker.html)
 
 ## Motivation
 
