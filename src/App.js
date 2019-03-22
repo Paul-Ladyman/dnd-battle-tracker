@@ -42,6 +42,12 @@ class App extends Component {
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
   }
 
+  componentDidMount() {
+    window.onbeforeunload = () => {
+      return true;
+    };
+  }
+
   resetBattle() {
     this.setState(newBattleState);
   }
