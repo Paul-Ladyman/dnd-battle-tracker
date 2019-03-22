@@ -1,6 +1,6 @@
 {
   "name": "dnd-battle-tracker",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "private": true,
   "dependencies": {
     "fast-deep-equal": "^2.0.1",

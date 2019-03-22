@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](https://paul-ladyman.github.io/dnd-battle-tracker/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v1.5.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.5.1/dnd-battle-tracker.html)
+**Latest release (v1.6.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.6.0/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -70,5 +70,4 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 
 ## TODO
 
-* If a creature has all conditions applied the creature list columns exceeds its usual width.
 * Consider adding a log to keep track of all battle events
