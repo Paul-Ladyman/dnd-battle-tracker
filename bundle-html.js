@@ -25,4 +25,4 @@ const html = `
 `; 
 
 fs.writeFileSync(__dirname + '/docs/index.html', html);
-fs.copyFileSync(__dirname + '/README.md', __dirname + '/docs/info.html');
+fs.copyFileSync(__dirname + '/README.md', __dirname + '/docs/info.md');
