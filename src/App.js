@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import isHotkey from 'is-hotkey';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
@@ -45,6 +46,12 @@ class App extends Component {
   componentDidMount() {
     window.onbeforeunload = () => {
       return true;
+    };
+
+    window.onkeydown = (e) => {
+      if (isHotkey('alt+.', e)) {
+        this.nextInitiative();
+      }
     };
   }
 

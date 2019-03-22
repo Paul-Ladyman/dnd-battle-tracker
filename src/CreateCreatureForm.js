@@ -68,13 +68,13 @@ class CreateCreatureForm extends Component {
     return (
       <form className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item">
-          <input className={nameClass} type="text" name="name" placeholder="Name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
+          <input className={nameClass} type="text" name="name" placeholder="Add creature - Name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
         </div>
         <div className="create-creature-form--item">
           <input className={initiativeClass} type="number" name="initiative" placeholder="Initiative" value={initiative} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item">
-          <input className={inputClass} type="number" name="healthPoints" placeholder="HP" value={healthPoints} onChange={this.handleChange}/>
+          <input className={inputClass} type="number" name="healthPoints" placeholder="HP (optional)" value={healthPoints} onChange={this.handleChange}/>
         </div>
       </form>
     ); 

@@ -5,12 +5,15 @@ import { version } from '../package.json';
 function Footer() {
   return (
     <div className="footer-text">
+      <p>
       Version {version}. See&nbsp;
       <ExternalLink
         url="https://paul-ladyman.github.io/dnd-battle-tracker/info"
         text="D&D Battle Tracker Info"
       />
       &nbsp;for newer versions, more info and to download this page for offline battles.
+      </p>
+      <p>Hint: Press alt+. to advance to the next creature in the initiative order.</p>
     </div>
   );
 }

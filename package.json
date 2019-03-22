@@ -4,13 +4,14 @@
   "private": true,
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
+    "is-hotkey": "^0.1.4",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run build:react && npm run build:bundle:static && npm run build:bundle:html", 
+    "build": "npm run build:react && npm run build:bundle:static && npm run build:bundle:html",
     "build:react": "react-scripts build",
     "build:bundle:static": "webpack --config webpack.config.js",
     "build:bundle:html": "node bundle-html.js",
