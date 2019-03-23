@@ -4,11 +4,12 @@ body {
 
 button {
   cursor: pointer;
-  border: 2px solid #5f130d;
+  border: 2px solid #822000;
   padding: 10px;
   font-weight: bold; 
-  background-color: #e1e1b5;
+  background-color: #e6d898;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
 }
 
 .App {
@@ -22,8 +23,8 @@ button {
 .battle-toolbar {
   display: flex;
   justify-content: space-evenly;
-  border-top: 2px solid #5f130d;
-  border-bottom: 2px solid #5f130d;
+  border-top: 2px solid #822000;
+  border-bottom: 2px solid #822000;
   height: 40px;
   width: 100%;
   padding-top: 5px;
@@ -54,7 +55,7 @@ button {
   align-items: center;
   flex-flow: column;
   font-weight: bold;
-  color: #5f130d;
+  color: #822000;
 }
 
 /* Remove most unimportant battle bar info for screens smaller than 768px */
@@ -80,7 +81,7 @@ button {
 .battle-toolbar--button__disabled {
   background-color: transparent;
   cursor: auto;
-  border: 2px dashed #5f130d;
+  border: 2px dashed #822000;
 }
 
 /* Creature toolbar */
@@ -109,8 +110,9 @@ button {
 }
 
 .creature-toolbar--input {
-  border: 2px solid #5f130d;
+  border: 2px solid #822000;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
   padding: 10px;
   background-color: white;
   box-sizing: border-box;
@@ -126,7 +128,7 @@ button {
 
 .creature-toolbar--input__disabled {
   background-color: transparent;
-  border: 2px dashed #5f130d;
+  border: 2px dashed #822000;
 }
 
 .creature-toolbar--dropdown {
@@ -176,10 +178,11 @@ button {
 }
 
 .create-creature-form--input {
-  border: 2px solid #5f130d;
+  border: 2px solid #822000;
   padding: 10px;
   width: 100%;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
 }
 
 .create-creature-form--input__error {
@@ -194,11 +197,15 @@ button {
 }
 
 .creature-wrapper {
-  border: 2px solid #5f130d;
+  border-top: 10px double #822000;
+  border-bottom: 10px double #822000;
+  border-left: 1px solid #822000;
+  border-right: 1px solid #822000;
+  box-shadow: 0 0 5px #979AA4;
   border-radius: 15px;
   margin: 60px 0 10px 0;
   padding: 10px;
-  background-color: #e1e1b5;
+  background-color: #e6d898;
 }
 
 .creature-wrapper__expanded {
@@ -249,12 +256,12 @@ button {
 
 .expanded-creature--name {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 28px;
   text-decoration: underline;
   text-decoration-color: black;
   text-transform: capitalize;
   margin-bottom: 20px;
-  color: #5f130d;
+  color: #822000;
 }
 
 .expanded-creature--stat {
@@ -284,8 +291,8 @@ button {
 
 .collapsed-creature--name {
   font-weight: bold;
-  font-size: 20px;
-  color: #5f130d;
+  font-size: 28px;
+  color: #822000;
   text-align: left;
   text-transform: capitalize;
 }
@@ -309,6 +316,7 @@ button {
   margin-top: 5px;
   border: 1px solid #8b0d00;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
   padding: 10px;
 }
 
