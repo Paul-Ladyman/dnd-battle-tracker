@@ -221,7 +221,7 @@ button {
 }
 
 .creature-wrapper__active {
-  border: 4px solid #8b0d00;
+  border: 4px solid #822000;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -247,7 +247,7 @@ button {
 }
 
 .expand-creature-button {
-  padding: 5px;
+  padding: 10px;
 }
 
 .expanded-creature {
@@ -257,19 +257,24 @@ button {
 .expanded-creature--name {
   font-weight: bold;
   font-size: 28px;
-  text-decoration: underline;
-  text-decoration-color: black;
   text-transform: capitalize;
-  margin-bottom: 20px;
   color: #822000;
 }
 
 .expanded-creature--stat {
   margin-bottom: 10px;
+  color: #822000;
 }
 
 .expanded-creature--button {
   max-width: 15%;
+}
+
+.expanded-creature--separator {
+  background-image: linear-gradient(to left, rgba(255,0,0,0), #822000);
+  height: 3px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */
@@ -314,7 +319,7 @@ button {
   grid-auto-rows: minmax(60px, auto);
   grid-gap: 10px;
   margin-top: 5px;
-  border: 1px solid #8b0d00;
+  border: 1px solid #822000;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
   padding: 10px;
@@ -327,6 +332,14 @@ button {
   }
 }
 
+.creature-note-list--label {
+  font-size: 22px;
+  color: #822000;
+  border-bottom: 1px solid black;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
 .creature-note-list--title {
   display: flex;
   align-items: center;
@@ -335,19 +348,21 @@ button {
 .creature-note-list--note {
   text-transform: capitalize;
   text-decoration: underline;
-  text-decoration-color: #8b0d00;
+  text-decoration-color: #822000;
   text-decoration-style: double;
+  color: black;
 }
 
 .creature-note-list--button {
   margin-left: 10px;
   text-decoration: none;
-  padding: 3px;
+  padding: 8px;
 }
 
 .creature-note-list--timer {
   margin-top: 5px;
   font-size: 14px;
+  color: black;
 }
 
 /* Health points */
@@ -357,11 +372,11 @@ button {
 }
 
 .health-points--damaged {
-  color: #ff6600;
+  color: orangered;
 }
 
 .health-points--critical {
-  color: #8b0d00;
+  color: #822000;
 }
 
 /* Footer */

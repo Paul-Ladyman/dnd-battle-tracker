@@ -13,7 +13,7 @@ function CreatureNoteList({
 }) {
   return (
     <div className={className}>
-      <div><b>{label}:</b></div>
+      <div className="creature-note-list--label">{label}</div>
       <div className="creature-note-list">
         {noteList.map((note, i) => {
           const noteText = note.url ?

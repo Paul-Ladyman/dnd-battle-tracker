@@ -26,9 +26,9 @@ function HealthPoints({
   const text = short ? `${hp}HP` : hp;
   return (
     <React.Fragment>
-      {!short && <div className={className}><b>Max Health:</b> {maxHp}</div>}
+      {!short && <div className={className}><b>Max Hit Points</b> {maxHp}</div>}
       <div className={classes}>
-        {!short && <b>CurrentHealth: </b>}
+        {!short && <b>Current Hit Points </b>}
         {text}
       </div>
     </React.Fragment>

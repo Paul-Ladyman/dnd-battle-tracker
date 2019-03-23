@@ -25,33 +25,49 @@ function ExpandedCreature({
   return (
     <div className="expanded-creature centered__columns">
       <div className="expanded-creature--name">{displayName}</div>
+      <div className="expanded-creature--separator" />
       {showHealth && <HealthPoints
         hp={healthPoints}
         maxHp={maxHealthPoints}
         className="expanded-creature--stat"
       />}
       <div className="expanded-creature--stat">
-        <b>Initiative:</b> {initiative}
+        <b>Initiative</b> {initiative}
       </div>
-      {showConditions && <CreatureNoteList
-        creatureId={id}
-        label="Conditions"
-        noteList={conditions}
-        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
-        round={round}
-        secondsElapsed={secondsElapsed}
-        className="expanded-creature--stat"
-      />}
-      {showNotes && <CreatureNoteList
-        creatureId={id}
-        label="Notes"
-        noteList={notes}
-        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
-        round={round}
-        secondsElapsed={secondsElapsed}
-        className="expanded-creature--stat"
-      />}
-      {!active && <button className="expanded-creature--button" onClick={() => removeCreature(id)}>Remove</button>}
+      {showConditions && 
+      <React.Fragment>
+        <div className="expanded-creature--separator" />
+        <CreatureNoteList
+          creatureId={id}
+          label="Conditions"
+          noteList={conditions}
+          dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
+          round={round}
+          secondsElapsed={secondsElapsed}
+          className="expanded-creature--stat"
+        />
+      </React.Fragment>
+      }
+      {showNotes && 
+      <React.Fragment>
+        <div className="expanded-creature--separator" />
+        <CreatureNoteList
+          creatureId={id}
+          label="Notes"
+          noteList={notes}
+          dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
+          round={round}
+          secondsElapsed={secondsElapsed}
+          className="expanded-creature--stat"
+        />
+      </React.Fragment>
+      }
+      {!active &&
+        <React.Fragment>  
+        <div className="expanded-creature--separator" />
+        <button className="expanded-creature--button" onClick={() => removeCreature(id)}>Remove</button>
+        </React.Fragment>
+      }
     </div>
   );
 }
