@@ -19,15 +19,15 @@ function BattleToolbar({
         Initiative:
         <div className="battle-toolbar--stat-value">{initiative}</div>
       </div>
-      <div className="battle-toolbar--stat battle-toolbar--stat__extra">
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
         Combatants:
         <div className="battle-toolbar--stat-value">{combatants}</div>
       </div>
-      <div className="battle-toolbar--stat">
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra1">
         Round:
         <div className="battle-toolbar--stat-value">{round}</div>
       </div>
-      <div className="battle-toolbar--stat battle-toolbar--stat__extra">
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
         Time Elapsed:
         <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
       </div>

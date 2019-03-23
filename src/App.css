@@ -17,12 +17,6 @@ button {
   padding-top: 44px;
 }
 
-@media only screen and (max-width: 600px) {
-  .App {
-    padding-top: 0px;
-  }
-}
-
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
@@ -38,7 +32,15 @@ button {
   top: 0;
 }
 
-@media only screen and (max-width: 600px) {
+/*
+ * Remove sticky bar bahviour for landscape screens bigger than 600px.
+ * On screen keyboards and the sticky bar leave a very small viewport.
+ */
+@media only screen and (max-width: 600px) and (orientation: landscape) {
+  .App {
+    padding-top: 0px;
+  }
+
   .battle-toolbar {
     position: relative;
   }
@@ -54,14 +56,16 @@ button {
   color: #5f130d;
 }
 
+/* Remove most unimportant battle bar info for screens smaller than 768px */
 @media only screen and (max-width: 768px) {
-  .battle-toolbar--stat__extra {
+  .battle-toolbar--stat__extra2 {
     display: none;
   }
 }
 
+/* Remove second-most unimportant battle bar info for screens smaller than 600px */
 @media only screen and (max-width: 600px) {
-  .battle-toolbar--stat {
+  .battle-toolbar--stat__extra1 {
     display: none;
   }
 }
@@ -85,6 +89,12 @@ button {
   grid-row-gap: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 15px);
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-toolbar {
+    justify-content: center;
+  }
 }
 
 .creature-toolbar--form {
@@ -122,6 +132,20 @@ button {
   grid-column: span 4;
 }
 
+/*
+ * Ensure the first and last rows of the creature toolbar are centered
+ * on the smallest portrait screens.
+ */
+@media only screen and (max-width: 436px) and (orientation: portrait) {
+  .creature-toolbar--button {
+    grid-column: 2 / span 2;
+  }
+
+  .creature-toolbar--last {
+    grid-column: 3 / span 4;
+  }
+}
+
 /* Create creature form */
 
 .create-creature-form {
@@ -136,6 +160,17 @@ button {
 .create-creature-form--item {
   display: flex;
   grid-column: span 5;
+}
+
+
+/*
+ * Ensure last row of create creature form is centered on screens large enough to support
+ * the form on 2 rows but not large enough to support it on 1.
+ */
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .create-creature-form--item__last {
+    grid-column: 3 / span 6;
+  }
 }
 
 .create-creature-form--input {
@@ -154,12 +189,6 @@ button {
 .creature-list {
   width: 75%;
   margin-bottom: 40px;
-}
-
-@media only screen and (max-width: 768px) {
-  .creature-list {
-    width: 100%;
-  }
 }
 
 .creature-wrapper {
@@ -183,6 +212,23 @@ button {
 
 .creature-wrapper__active {
   border: 4px solid #8b0d00;
+}
+
+/* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
+@media only screen and (max-width: 768px) {
+  .creature-list {
+    width: 100%;
+  }
+
+  .creature-wrapper {
+    border-left: none;
+    border-right: none;
+  }
+
+  .creature-wrapper__active {
+    border-left: none;
+    border-right: none;
+  }
 }
 
 .creature-wrapper__dead {
@@ -212,12 +258,13 @@ button {
 }
 
 .expanded-creature--button {
-  width: 12%;
+  max-width: 15%;
 }
 
-@media only screen and (max-width: 768px) {
+/* Allow more room for buttons in creature box on smaller screen sizes. */
+@media only screen and (max-width: 600px) {
   .expanded-creature--button {
-    width: 100%;
+    max-width: 30%;
   }
 }
 
@@ -260,6 +307,7 @@ button {
   padding: 10px;
 }
 
+/* Reduce width of note list to two columns on smaller screen sizes */
 @media only screen and (max-width: 768px) {
   .creature-note-list {
     grid-template-columns: repeat(2, 1fr);
@@ -308,4 +356,5 @@ button {
 .footer-text {
   font-size: 12px;
   line-height: 14px;
+  padding: 10px;
 }

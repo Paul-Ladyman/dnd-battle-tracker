@@ -36,7 +36,7 @@ class CreatureToolbarInput extends Component {
     const disabledModifier = this.props.enabled ? '' : 'creature-toolbar--input__disabled';
     const classes = `creature-toolbar--input ${disabledModifier}`;
     return (
-      <form className={`creature-toolbar--form ${numberModifier}`} onKeyDown={this.formHandler}>
+      <form className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`} onKeyDown={this.formHandler}>
         <input disabled={!this.props.enabled} className={classes} type={type} placeholder={this.props.placeholder} value={this.state.value} onChange={this.handleChange}/>
       </form>
     );
@@ -45,7 +45,8 @@ class CreatureToolbarInput extends Component {
 
 CreatureToolbarInput.defaultProps = {
   integer: false,
-  enabled: true
+  enabled: true,
+  customClasses: ''
 };
 
 export default CreatureToolbarInput;
