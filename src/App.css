@@ -8,6 +8,7 @@ button {
   padding: 10px;
   font-weight: bold; 
   background-color: #e1e1b5;
+  border-radius: 15px;
 }
 
 .App {
@@ -109,6 +110,7 @@ button {
 
 .creature-toolbar--input {
   border: 2px solid #5f130d;
+  border-radius: 15px;
   padding: 10px;
   background-color: white;
   box-sizing: border-box;
@@ -177,6 +179,7 @@ button {
   border: 2px solid #5f130d;
   padding: 10px;
   width: 100%;
+  border-radius: 15px;
 }
 
 .create-creature-form--input__error {
@@ -192,6 +195,7 @@ button {
 
 .creature-wrapper {
   border: 2px solid #5f130d;
+  border-radius: 15px;
   margin: 60px 0 10px 0;
   padding: 10px;
   background-color: #e1e1b5;
@@ -222,6 +226,7 @@ button {
   .creature-wrapper {
     border-left: none;
     border-right: none;
+    border-radius: 0;
   }
 
   .creature-wrapper__active {
@@ -303,6 +308,7 @@ button {
   grid-gap: 10px;
   margin-top: 5px;
   border: 1px solid #8b0d00;
+  border-radius: 15px;
   padding: 10px;
 }
 
