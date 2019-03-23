@@ -152,6 +152,7 @@ button {
   width: 50%;
   margin-top: 40px;
   grid-gap: 11px;
+  grid-row-gap: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 25px);
   justify-content: space-evenly;
@@ -161,7 +162,6 @@ button {
   display: flex;
   grid-column: span 5;
 }
-
 
 /*
  * Ensure last row of create creature form is centered on screens large enough to support
@@ -175,7 +175,6 @@ button {
 
 .create-creature-form--input {
   border: 2px solid #5f130d;
-  margin: 10px 0 10px 0;
   padding: 10px;
   width: 100%;
 }
