@@ -17,7 +17,7 @@ function CreatureNoteList({
       <div className="creature-note-list">
         {noteList.map((note, i) => {
           const noteText = note.url ?
-            <ExternalLink url={note.url} text={note.text} /> :
+            <ExternalLink className="creature-note-list--link" url={note.url} text={note.text} /> :
             note.text;
 
           return (

@@ -246,10 +246,6 @@ button {
   background-color: lightgrey;
 }
 
-.expand-creature-button {
-  padding: 10px;
-}
-
 .expanded-creature {
   width: 100%;
 }
@@ -327,11 +323,12 @@ button {
 }
 
 .collapsed-creature--conditions {
-  grid-column: span 8;
+  grid-column: span 16;
   text-transform: capitalize;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #822000;
 }
 
 /* Reduce space taken by conditions on all but the widest screens */
@@ -343,6 +340,7 @@ button {
 
 .collapsed-creature--notes {
   grid-column: span 4;
+  color: #822000;
 }
 
 /* Reduce space taken by notes on smaller screens */
@@ -392,6 +390,15 @@ button {
   text-decoration-color: #822000;
   text-decoration-style: double;
   color: black;
+}
+
+.creature-note-list--link {
+  text-decoration-color: #822000;
+  color: black;
+}
+
+.creature-note-list--link:hover {
+  color: #822000;
 }
 
 .creature-note-list--button {
