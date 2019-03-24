@@ -1,7 +1,7 @@
 export const conditionDescriptions = {
   blinded: 'https://roll20.net/compendium/dnd5e/Conditions#toc_1',
   charmed: 'https://roll20.net/compendium/dnd5e/Conditions#toc_2',
-  defeaned: 'https://roll20.net/compendium/dnd5e/Conditions#toc_3',
+  deafened: 'https://roll20.net/compendium/dnd5e/Conditions#toc_3',
   frightened: 'https://roll20.net/compendium/dnd5e/Conditions#toc_5',
   grappled: 'https://roll20.net/compendium/dnd5e/Conditions#toc_6',
   incapacitated: 'https://roll20.net/compendium/dnd5e/Conditions#toc_7',
@@ -18,7 +18,7 @@ export const conditionDescriptions = {
 export default [
   'blinded',
   'charmed',
-  'defeaned',
+  'deafened',
   'frightened',
   'grappled',
   'incapacitated',

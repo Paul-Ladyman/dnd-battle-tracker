@@ -134,6 +134,7 @@ button {
 .creature-toolbar--dropdown {
   cursor: pointer;
   grid-column: span 4;
+  text-transform: capitalize;
 }
 
 /*
