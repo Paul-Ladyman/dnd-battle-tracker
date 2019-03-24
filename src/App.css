@@ -192,7 +192,7 @@ button {
 /* Creatures */
 
 .creature-list {
-  width: 75%;
+  width: 80%;
   margin-bottom: 40px;
 }
 
@@ -286,15 +286,23 @@ button {
 
 .collapsed-creature {
   width: 100%;
+  grid-gap: 22px;
+  grid-row-gap: 10px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(30px, auto);
-  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, 15px);
   text-align: center;
   align-items: center;
 }
 
+/* Reduce space between collapsed-creature elements on small screens */
+@media only screen and (max-width: 436px) {
+  .collapsed-creature {
+    grid-gap: 11px;
+  }
+}
+
 .collapsed-creature--name {
+  grid-column: span 4;
   font-weight: bold;
   font-size: 28px;
   color: #822000;
@@ -307,8 +315,41 @@ button {
   text-decoration-color: black;
 }
 
+.collapsed-creature--health-points {
+  grid-column: span 4;
+}
+
+/* Reduce space taken by health points on smaller screens */
+@media only screen and (max-width: 568px) {
+  .collapsed-creature--health-points {
+    grid-column: span 2;
+  }
+}
+
 .collapsed-creature--conditions {
+  grid-column: span 8;
   text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Reduce space taken by conditions on all but the widest screens */
+@media only screen and (max-width: 1024px) {
+  .collapsed-creature--conditions {
+    grid-column: span 4;
+  }
+}
+
+.collapsed-creature--notes {
+  grid-column: span 4;
+}
+
+/* Reduce space taken by notes on smaller screens */
+@media only screen and (max-width: 568px) {
+  .collapsed-creature--notes {
+    grid-column: span 2;
+  }
 }
 
 /* Creature note list */

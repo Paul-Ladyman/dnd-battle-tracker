@@ -14,6 +14,7 @@ function CollapsedCreature({creature}) {
         short
         hp={creature.healthPoints}
         maxHp={creature.maxHealthPoints}
+        className="collapsed-creature--health-points"
       />}
       {showConditions && 
         <div className="collapsed-creature--conditions">{
@@ -23,7 +24,7 @@ function CollapsedCreature({creature}) {
           }
         </div>
       }
-      {showNotes && <div>Notes...</div>}
+      {showNotes && <div className="collapsed-creature--notes">Notes...</div>}
     </div>
   );
 }
