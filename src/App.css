@@ -415,6 +415,10 @@ button {
   color: black;
 }
 
+.expand-creature-button {
+  padding: 2px;
+}
+
 /* Health points */
 
 .health-points--fine {
