@@ -295,7 +295,7 @@ button {
 /* Reduce space between collapsed-creature elements on small screens */
 @media only screen and (max-width: 436px) {
   .collapsed-creature {
-    grid-gap: 11px;
+    grid-gap: 15px;
   }
 }
 
