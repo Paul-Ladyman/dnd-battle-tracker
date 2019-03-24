@@ -4,11 +4,12 @@ body {
 
 button {
   cursor: pointer;
-  border: 2px solid #5f130d;
+  border: 2px solid #822000;
   padding: 10px;
   font-weight: bold; 
-  background-color: #e1e1b5;
+  background-color: #e6d898;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
 }
 
 .App {
@@ -22,8 +23,8 @@ button {
 .battle-toolbar {
   display: flex;
   justify-content: space-evenly;
-  border-top: 2px solid #5f130d;
-  border-bottom: 2px solid #5f130d;
+  border-top: 2px solid #822000;
+  border-bottom: 2px solid #822000;
   height: 40px;
   width: 100%;
   padding-top: 5px;
@@ -54,7 +55,7 @@ button {
   align-items: center;
   flex-flow: column;
   font-weight: bold;
-  color: #5f130d;
+  color: #822000;
 }
 
 /* Remove most unimportant battle bar info for screens smaller than 768px */
@@ -80,7 +81,7 @@ button {
 .battle-toolbar--button__disabled {
   background-color: transparent;
   cursor: auto;
-  border: 2px dashed #5f130d;
+  border: 2px dashed #822000;
 }
 
 /* Creature toolbar */
@@ -109,8 +110,9 @@ button {
 }
 
 .creature-toolbar--input {
-  border: 2px solid #5f130d;
+  border: 2px solid #822000;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
   padding: 10px;
   background-color: white;
   box-sizing: border-box;
@@ -126,7 +128,7 @@ button {
 
 .creature-toolbar--input__disabled {
   background-color: transparent;
-  border: 2px dashed #5f130d;
+  border: 2px dashed #822000;
 }
 
 .creature-toolbar--dropdown {
@@ -176,10 +178,11 @@ button {
 }
 
 .create-creature-form--input {
-  border: 2px solid #5f130d;
+  border: 2px solid #822000;
   padding: 10px;
   width: 100%;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
 }
 
 .create-creature-form--input__error {
@@ -189,16 +192,20 @@ button {
 /* Creatures */
 
 .creature-list {
-  width: 75%;
+  width: 80%;
   margin-bottom: 40px;
 }
 
 .creature-wrapper {
-  border: 2px solid #5f130d;
+  border-top: 10px double #822000;
+  border-bottom: 10px double #822000;
+  border-left: 1px solid #822000;
+  border-right: 1px solid #822000;
+  box-shadow: 0 0 5px #979AA4;
   border-radius: 15px;
   margin: 60px 0 10px 0;
   padding: 10px;
-  background-color: #e1e1b5;
+  background-color: #e6d898;
 }
 
 .creature-wrapper__expanded {
@@ -214,7 +221,7 @@ button {
 }
 
 .creature-wrapper__active {
-  border: 4px solid #8b0d00;
+  border: 4px solid #822000;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -239,30 +246,32 @@ button {
   background-color: lightgrey;
 }
 
-.expand-creature-button {
-  padding: 5px;
-}
-
 .expanded-creature {
   width: 100%;
 }
 
 .expanded-creature--name {
   font-weight: bold;
-  font-size: 20px;
-  text-decoration: underline;
-  text-decoration-color: black;
+  font-size: 28px;
   text-transform: capitalize;
-  margin-bottom: 20px;
-  color: #5f130d;
+  color: #822000;
+  margin-top: 4px;
 }
 
 .expanded-creature--stat {
   margin-bottom: 10px;
+  color: #822000;
 }
 
 .expanded-creature--button {
   max-width: 15%;
+}
+
+.expanded-creature--separator {
+  background-image: linear-gradient(to left, rgba(255,0,0,0), #822000);
+  height: 4px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */
@@ -274,18 +283,26 @@ button {
 
 .collapsed-creature {
   width: 100%;
+  grid-gap: 22px;
+  grid-row-gap: 10px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(30px, auto);
-  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, 15px);
   text-align: center;
   align-items: center;
 }
 
+/* Reduce space between collapsed-creature elements on small screens */
+@media only screen and (max-width: 436px) {
+  .collapsed-creature {
+    grid-gap: 11px;
+  }
+}
+
 .collapsed-creature--name {
+  grid-column: span 4;
   font-weight: bold;
-  font-size: 20px;
-  color: #5f130d;
+  font-size: 28px;
+  color: #822000;
   text-align: left;
   text-transform: capitalize;
 }
@@ -295,8 +312,43 @@ button {
   text-decoration-color: black;
 }
 
+.collapsed-creature--health-points {
+  grid-column: span 4;
+}
+
+/* Reduce space taken by health points on smaller screens */
+@media only screen and (max-width: 568px) {
+  .collapsed-creature--health-points {
+    grid-column: span 2;
+  }
+}
+
 .collapsed-creature--conditions {
+  grid-column: span 16;
   text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #822000;
+}
+
+/* Reduce space taken by conditions on all but the widest screens */
+@media only screen and (max-width: 1024px) {
+  .collapsed-creature--conditions {
+    grid-column: span 4;
+  }
+}
+
+.collapsed-creature--notes {
+  grid-column: span 4;
+  color: #822000;
+}
+
+/* Reduce space taken by notes on smaller screens */
+@media only screen and (max-width: 568px) {
+  .collapsed-creature--notes {
+    grid-column: span 2;
+  }
 }
 
 /* Creature note list */
@@ -307,8 +359,9 @@ button {
   grid-auto-rows: minmax(60px, auto);
   grid-gap: 10px;
   margin-top: 5px;
-  border: 1px solid #8b0d00;
+  border: 1px solid #822000;
   border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
   padding: 10px;
 }
 
@@ -319,6 +372,14 @@ button {
   }
 }
 
+.creature-note-list--label {
+  font-size: 22px;
+  color: #822000;
+  border-bottom: 1px solid black;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
 .creature-note-list--title {
   display: flex;
   align-items: center;
@@ -327,19 +388,30 @@ button {
 .creature-note-list--note {
   text-transform: capitalize;
   text-decoration: underline;
-  text-decoration-color: #8b0d00;
+  text-decoration-color: #822000;
   text-decoration-style: double;
+  color: black;
+}
+
+.creature-note-list--link {
+  text-decoration-color: #822000;
+  color: black;
+}
+
+.creature-note-list--link:hover {
+  color: #822000;
 }
 
 .creature-note-list--button {
   margin-left: 10px;
   text-decoration: none;
-  padding: 3px;
+  padding: 8px;
 }
 
 .creature-note-list--timer {
   margin-top: 5px;
   font-size: 14px;
+  color: black;
 }
 
 /* Health points */
@@ -349,11 +421,11 @@ button {
 }
 
 .health-points--damaged {
-  color: #ff6600;
+  color: orangered;
 }
 
 .health-points--critical {
-  color: #8b0d00;
+  color: #822000;
 }
 
 /* Footer */
