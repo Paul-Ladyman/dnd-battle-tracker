@@ -272,7 +272,7 @@ button {
 
 .expanded-creature--separator {
   background-image: linear-gradient(to left, rgba(255,0,0,0), #822000);
-  height: 3px;
+  height: 4px;
   margin-bottom: 20px;
   margin-top: 20px;
 }
