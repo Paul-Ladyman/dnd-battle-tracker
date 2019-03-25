@@ -19,6 +19,8 @@ function CreatureToolbar({
   const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
   const statusButtonTitle = creature.alive ? 'Kill/Make unconscious' : 'Stabalize';
   const statusButtonIcon = creature.alive ? <KillIcon /> : <ReviveIcon />;
+  const statusButtonClass = 'creature-toolbar--button';
+  const statusButtonClasses = creature.alive ? statusButtonClass : `${statusButtonClass} ${statusButtonClass}__dead`
   const enableHealthItems = creature.healthPoints !== undefined;
   const enableDamage = creature.healthPoints > 0;
   const enableHeal = creature.healthPoints < creature.maxHealthPoints;
@@ -28,7 +30,7 @@ function CreatureToolbar({
   const conditionsClasses = `creature-toolbar--input creature-toolbar--dropdown ${enabledModifier}`;
   return (
     <div className="creature-toolbar">
-      <button className="creature-toolbar--button" title={statusButtonTitle} onClick={() => statusButtonFunc(creature.id)}>{statusButtonIcon}</button>
+      <button className={statusButtonClasses} title={statusButtonTitle} onClick={() => statusButtonFunc(creature.id)}>{statusButtonIcon}</button>
       <select
         className={conditionsClasses}
         disabled={!enableConditions}

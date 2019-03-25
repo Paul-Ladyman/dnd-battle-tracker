@@ -101,7 +101,6 @@ class App extends Component {
 
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
-    const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
 
     const creatureManagement = {
       killCreature: this.killCreature,

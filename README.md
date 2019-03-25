@@ -43,6 +43,12 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 * Allowing creatures to be killed/made unconscious and making it obvious to the DM that this has happened.
 * Creatures can be added to or removed from the list at any time, even after the battle has started.
 
+## Credits
+
+* All icons taken from [game-icons.net](https://game-icons.net/).
+* [Critical Role](https://www.youtube.com/channel/UCpXBGqwsBkpvcYjsJBQ7LEQ) for the inspiration.
+* This application is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC.
+
 ## Development
 
 ### Checkout and install

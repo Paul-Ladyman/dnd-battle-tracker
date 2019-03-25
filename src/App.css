@@ -7,9 +7,18 @@ button {
   border: 2px solid #822000;
   padding: 10px;
   font-weight: bold; 
-  background-color: #e6d898;
+  background-color: transparent;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
+}
+
+a {
+  text-decoration-color: #822000;
+  color: black;
+}
+
+a:hover {
+  color: #822000;
 }
 
 .App {
@@ -80,6 +89,7 @@ button {
 
 .battle-toolbar--button {
   padding: 4px;
+  background-color: #e6d898;
 }
 
 .battle-toolbar--button__reset {
@@ -100,6 +110,7 @@ button {
   grid-row-gap: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 15px);
+  grid-auto-rows: 1fr;
 }
 
 @media only screen and (max-width: 768px) {
@@ -133,7 +144,12 @@ button {
 .creature-toolbar--button {
   grid-column: span 2;
   padding: 8px;
-  display: flex
+  display: flex;
+  background-color: #e6d898;
+}
+
+.creature-toolbar--button__dead {
+  background-color: lightgrey;
 }
 
 .creature-toolbar--input__disabled {
@@ -415,15 +431,6 @@ button {
   text-decoration-color: #822000;
   text-decoration-style: double;
   color: black;
-}
-
-.creature-note-list--link {
-  text-decoration-color: #822000;
-  color: black;
-}
-
-.creature-note-list--link:hover {
-  color: #822000;
 }
 
 .creature-note-list--button {
