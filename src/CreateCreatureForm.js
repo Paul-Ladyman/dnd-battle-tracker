@@ -77,7 +77,7 @@ class CreateCreatureForm extends Component {
           <input className={initiativeClass} type="number" name="initiative" placeholder="Initiative" value={initiative} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__last">
-          <input className={healthClass} type="number" name="healthPoints" placeholder="HP (optional)" value={healthPoints} onChange={this.handleChange}/>
+          <input className={healthClass} type="number" name="healthPoints" placeholder="Max HP (optional)" value={healthPoints} onChange={this.handleChange}/>
         </div>
       </form>
     ); 

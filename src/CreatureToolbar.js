@@ -50,7 +50,7 @@ function CreatureToolbar({
         </React.Fragment>
       }
       {!enableHealthItems &&
-        <CreatureToolbarInput customClasses="creature-toolbar--last" integer placeholder="Add HP" onSubmit={(health) => addHealthToCreature(creature.id, health)}/>
+        <CreatureToolbarInput customClasses="creature-toolbar--last" integer placeholder="Add Max HP" onSubmit={(health) => addHealthToCreature(creature.id, health)}/>
       }
     </div>
   )

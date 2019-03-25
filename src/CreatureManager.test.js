@@ -580,4 +580,14 @@ describe('addHealthToCreature', () => {
     const result = addHealthToCreature(defaultState, 1, 30);
     expect(result).toEqual(defaultState);
   });
+
+  it('does nothing to a creature if 0 health is added', () => {
+    const result = addHealthToCreature(defaultState, 0, 0);
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing to a creature if less than 0 health is added', () => {
+    const result = addHealthToCreature(defaultState, 0, -1);
+    expect(result).toEqual(defaultState);
+  });
 });
