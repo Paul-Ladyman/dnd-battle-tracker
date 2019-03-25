@@ -101,7 +101,6 @@ class App extends Component {
 
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
-    const nextButtonLabel = this.state.round === 0 ? 'Start' : 'Next';
 
     const creatureManagement = {
       killCreature: this.killCreature,
@@ -121,7 +120,6 @@ class App extends Component {
           round={this.state.round}
           secondsElapsed={secondsElapsed}
           combatants={this.state.creatureCount}
-          nextButtonLabel={nextButtonLabel}
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />

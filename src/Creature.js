@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
+import ExpandIcon from './icons/ExpandIcon';
+import CollapseIcon from './icons/CollapseIcon';
 
 class Creature extends Component {
   constructor(props) {
@@ -49,7 +51,8 @@ class Creature extends Component {
     const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
     const expandedModifier = this.state.expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
-    const buttonSign = this.state.expanded ? 'v' : '^';
+    const buttonTitle = this.state.expanded ? 'Collapse creature' : 'Expand creature';
+    const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
     const buttonOnClick = this.state.expanded ? this.collapse : this.expand;
 
     const showExpanded = active || this.state.expanded;
@@ -70,7 +73,7 @@ class Creature extends Component {
             /> :
             <CollapsedCreature creature={creature} />
           }
-          {!active && <button className="expand-creature-button" onClick={buttonOnClick}>{buttonSign}</button>}
+          {!active && <button className="expand-creature-button" title={buttonTitle} onClick={buttonOnClick}>{buttonIcon}</button>}
         </div>
       </React.Fragment>
     );

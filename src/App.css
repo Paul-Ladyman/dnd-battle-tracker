@@ -7,9 +7,18 @@ button {
   border: 2px solid #822000;
   padding: 10px;
   font-weight: bold; 
-  background-color: #e6d898;
+  background-color: transparent;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
+}
+
+a {
+  text-decoration-color: #822000;
+  color: black;
+}
+
+a:hover {
+  color: #822000;
 }
 
 .App {
@@ -78,6 +87,16 @@ button {
   text-transform: capitalize;
 }
 
+.battle-toolbar--button {
+  padding: 4px;
+  background-color: #e6d898;
+}
+
+.battle-toolbar--button__reset {
+  padding-bottom: 2px;
+  padding-top: 0;
+}
+
 .battle-toolbar--button__disabled {
   background-color: transparent;
   cursor: auto;
@@ -91,6 +110,7 @@ button {
   grid-row-gap: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 15px);
+  grid-auto-rows: 1fr;
 }
 
 @media only screen and (max-width: 768px) {
@@ -123,7 +143,13 @@ button {
 
 .creature-toolbar--button {
   grid-column: span 2;
-  padding: 5px;
+  padding: 8px;
+  display: flex;
+  background-color: #e6d898;
+}
+
+.creature-toolbar--button__dead {
+  background-color: lightgrey;
 }
 
 .creature-toolbar--input__disabled {
@@ -264,8 +290,20 @@ button {
   color: #822000;
 }
 
-.expanded-creature--button {
-  max-width: 15%;
+.expanded-creature--remove-button {
+  max-width: 20%;
+  padding: 4px;
+  height: 43px;
+}
+
+.expanded-creature--confirm-remove-button {
+  max-width: 20%;
+  padding: 4px;
+  height: 43px;
+  min-width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .expanded-creature--separator {
@@ -277,8 +315,8 @@ button {
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */
 @media only screen and (max-width: 600px) {
-  .expanded-creature--button {
-    max-width: 30%;
+  .expanded-creature--confirm-remove-button {
+    max-width: 40%;
   }
 }
 
@@ -373,17 +411,18 @@ button {
   }
 }
 
+.creature-note-list--item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .creature-note-list--label {
   font-size: 22px;
   color: #822000;
   border-bottom: 1px solid black;
   width: 50%;
   margin-bottom: 20px;
-}
-
-.creature-note-list--title {
-  display: flex;
-  align-items: center;
 }
 
 .creature-note-list--note {
@@ -394,25 +433,22 @@ button {
   color: black;
 }
 
-.creature-note-list--link {
-  text-decoration-color: #822000;
-  color: black;
-}
-
-.creature-note-list--link:hover {
-  color: #822000;
-}
-
 .creature-note-list--button {
-  margin-left: 10px;
-  text-decoration: none;
-  padding: 8px;
+  margin-right: 15%;
+  margin-left: 5px;
+  padding: 4px;
+  display: flex;
 }
 
 .creature-note-list--timer {
   margin-top: 5px;
   font-size: 14px;
   color: black;
+}
+
+.expand-creature-button {
+  padding: 4px;
+  display: flex;
 }
 
 /* Health points */

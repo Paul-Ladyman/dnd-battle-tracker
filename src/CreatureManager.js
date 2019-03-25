@@ -114,6 +114,10 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
 }
 
 export function addHealthToCreature(state, creatureId, health) {
+  if (health <= 0) {
+    return state;
+  }
+
   const creature = findCreature(state.creatures, creatureId);
   if (creature.healthPoints !== undefined) {
     return state;
