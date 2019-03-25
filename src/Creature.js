@@ -51,6 +51,7 @@ class Creature extends Component {
     const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
     const expandedModifier = this.state.expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
+    const buttonTitle = this.state.expanded ? 'Collapse creature' : 'Expand creature';
     const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
     const buttonOnClick = this.state.expanded ? this.collapse : this.expand;
 
@@ -72,7 +73,7 @@ class Creature extends Component {
             /> :
             <CollapsedCreature creature={creature} />
           }
-          {!active && <button className="expand-creature-button" onClick={buttonOnClick}>{buttonIcon}</button>}
+          {!active && <button className="expand-creature-button" title={buttonTitle} onClick={buttonOnClick}>{buttonIcon}</button>}
         </div>
       </React.Fragment>
     );

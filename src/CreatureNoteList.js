@@ -1,6 +1,7 @@
 import React from 'react';
 import Timer from './Timer';
 import ExternalLink from './ExternalLink';
+import RemoveIcon from './icons/RemoveIcon';
 
 function CreatureNoteList({
   creatureId,
@@ -21,22 +22,24 @@ function CreatureNoteList({
             note.text;
 
           return (
-            <div key={i}>
-              <div className="creature-note-list--title">
-                <span className="creature-note-list--note"><em>{noteText}</em></span>
-                <button className="creature-note-list--button" onClick={() => dismissHandler(creatureId, note)}>
-                  x
-                </button>
+            <div className="creature-note-list--item" key={i}>
+              <div>
+                <div className="creature-note-list--title">
+                  <span className="creature-note-list--note"><em>{noteText}</em></span>
+                </div>
+                <Timer
+                  startRound={note.appliedAtRound}
+                  endRound={round}
+                  startTime={note.appliedAtSeconds}
+                  endTime={secondsElapsed}
+                  className="creature-note-list--timer"
+                />
               </div>
-              <Timer
-                startRound={note.appliedAtRound}
-                endRound={round}
-                startTime={note.appliedAtSeconds}
-                endTime={secondsElapsed}
-                className="creature-note-list--timer"
-              />
+              <button className="creature-note-list--button" title="Remove note" onClick={() => dismissHandler(creatureId, note)}>
+                <RemoveIcon />
+              </button>
             </div>
-          )
+          );
         })}
       </div>
     </div>
