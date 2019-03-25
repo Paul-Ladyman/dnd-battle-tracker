@@ -3,6 +3,8 @@ import CreatureNoteList from './CreatureNoteList';
 import HealthPoints from './HealthPoints';
 import { conditionDescriptions } from './conditions';
 import ExternalLink from './ExternalLink';
+import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
+import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';
 
 class ExpandedCreature extends Component {
   constructor(props) {
@@ -82,10 +84,14 @@ class ExpandedCreature extends Component {
           </React.Fragment>
         }
         {!active && !this.state.removing &&
-          <button className="expanded-creature--button" onClick={this.removing}>Remove</button>
+          <button title="Remove creature" className="expanded-creature--remove-button" onClick={this.removing}>
+            <RemoveCreatureIcon />
+          </button>
         }
         {!active && this.state.removing &&
-          <button className="expanded-creature--button" onClick={() => removeCreature(id)}>Confirm Remove</button>
+          <button title="Confirm remove creature" className="expanded-creature--confirm-remove-button" onClick={() => removeCreature(id)}>
+              <ConfirmRemoveCreatureIcon />
+          </button>
         }
       </div>
     );

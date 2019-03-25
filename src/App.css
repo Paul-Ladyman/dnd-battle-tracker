@@ -78,6 +78,15 @@ button {
   text-transform: capitalize;
 }
 
+.battle-toolbar--button {
+  padding: 4px;
+}
+
+.battle-toolbar--button__reset {
+  padding-bottom: 2px;
+  padding-top: 0;
+}
+
 .battle-toolbar--button__disabled {
   background-color: transparent;
   cursor: auto;
@@ -123,7 +132,8 @@ button {
 
 .creature-toolbar--button {
   grid-column: span 2;
-  padding: 1px;
+  padding: 8px;
+  display: flex
 }
 
 .creature-toolbar--input__disabled {
@@ -264,8 +274,20 @@ button {
   color: #822000;
 }
 
-.expanded-creature--button {
-  max-width: 15%;
+.expanded-creature--remove-button {
+  max-width: 20%;
+  padding: 4px;
+  height: 43px;
+}
+
+.expanded-creature--confirm-remove-button {
+  max-width: 20%;
+  padding: 4px;
+  height: 43px;
+  min-width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .expanded-creature--separator {
@@ -277,8 +299,8 @@ button {
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */
 @media only screen and (max-width: 600px) {
-  .expanded-creature--button {
-    max-width: 30%;
+  .expanded-creature--confirm-remove-button {
+    max-width: 40%;
   }
 }
 
