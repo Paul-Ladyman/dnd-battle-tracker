@@ -283,6 +283,20 @@ a:hover {
   text-transform: capitalize;
   color: #822000;
   margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.expanded-creature--status {
+  text-decoration: underline;
+  text-decoration-color: #822000;
+  text-decoration-style: double;
+  color: black;
+  padding-top: 4px;
+}
+
+.expanded-creature--active-icon {
+  padding-left: 10px;
 }
 
 .expanded-creature--stat {
@@ -426,11 +440,14 @@ a:hover {
 }
 
 .creature-note-list--note {
-  text-transform: capitalize;
   text-decoration: underline;
   text-decoration-color: #822000;
   text-decoration-style: double;
   color: black;
+}
+
+.creature-note-list--note::first-letter {
+  text-transform: uppercase;
 }
 
 .creature-note-list--button {

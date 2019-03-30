@@ -24,9 +24,9 @@ function CreatureNoteList({
           return (
             <div className="creature-note-list--item" key={i}>
               <div>
-                <div className="creature-note-list--title">
-                  <span className="creature-note-list--note"><em>{noteText}</em></span>
-                </div>
+                  <div className="creature-note-list--note">
+                    <em>{noteText}</em>
+                  </div>
                 <Timer
                   startRound={note.appliedAtRound}
                   endRound={round}
