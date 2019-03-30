@@ -283,6 +283,12 @@ a:hover {
   text-transform: capitalize;
   color: #822000;
   margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.expanded-creature--active-icon {
+  padding-left: 10px;
 }
 
 .expanded-creature--stat {

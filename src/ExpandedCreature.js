@@ -5,6 +5,7 @@ import { conditionDescriptions } from './conditions';
 import ExternalLink from './ExternalLink';
 import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
 import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';
+import ActiveCreatureIcon from './icons/ActiveCreatureIcon';
 
 class ExpandedCreature extends Component {
   constructor(props) {
@@ -42,7 +43,10 @@ class ExpandedCreature extends Component {
 
     return (
       <div className="expanded-creature centered__columns">
-        <div className="expanded-creature--name">{displayName}</div>
+        <div className="expanded-creature--name">
+          {displayName}
+          {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
+        </div>
         <div className="expanded-creature--separator" />
         {showHealth &&
           <HealthPoints
