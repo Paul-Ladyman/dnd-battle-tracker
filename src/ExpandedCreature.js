@@ -32,11 +32,6 @@ class ExpandedCreature extends Component {
       removeNoteFromCreature
     } = this.props;
     const { alive, name, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
-    const displayName = alive ?
-      name : 
-      <React.Fragment>
-        {name} (<ExternalLink url={conditionDescriptions.unconscious} text="unconscious/dead"/>)
-      </React.Fragment>;
     const showHealth = healthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
@@ -44,9 +39,14 @@ class ExpandedCreature extends Component {
     return (
       <div className="expanded-creature centered__columns">
         <div className="expanded-creature--name">
-          {displayName}
+          {name}
           {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
         </div>
+        {!alive &&
+          <div className="expanded-creature--status">
+            <em><ExternalLink url={conditionDescriptions.unconscious} text="Unconscious/dead"/></em>
+          </div>
+        }
         <div className="expanded-creature--separator" />
         {showHealth &&
           <HealthPoints
