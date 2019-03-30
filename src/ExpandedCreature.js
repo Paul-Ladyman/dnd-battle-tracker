@@ -58,9 +58,9 @@ class ExpandedCreature extends Component {
         <div className="expanded-creature--stat">
           <b>Initiative</b> {initiative}
         </div>
-        <div className="expanded-creature--separator" />
         {showConditions &&
           <React.Fragment>
+            <div className="expanded-creature--separator" />
             <CreatureNoteList
               creatureId={id}
               label="Conditions"
@@ -70,11 +70,11 @@ class ExpandedCreature extends Component {
               secondsElapsed={secondsElapsed}
               className="expanded-creature--stat"
             />
-            {!showNotes && <div className="expanded-creature--separator" /> }
           </React.Fragment>
         }
         {showNotes &&
           <React.Fragment>
+            {!showConditions && <div className="expanded-creature--separator" /> }
             <CreatureNoteList
               creatureId={id}
               label="Notes"
@@ -84,9 +84,9 @@ class ExpandedCreature extends Component {
               secondsElapsed={secondsElapsed}
               className="expanded-creature--stat"
             />
-            <div className="expanded-creature--separator" />
           </React.Fragment>
         }
+        {!active && <div className="expanded-creature--separator" /> }
         {!active && !this.state.removing &&
           <button title="Remove creature" className="expanded-creature--remove-button" onClick={this.removing}>
             <RemoveCreatureIcon />
