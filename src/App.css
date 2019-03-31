@@ -233,17 +233,8 @@ a:hover {
   margin: 60px 0 10px 0;
   padding: 10px;
   background-color: #e6d898;
-}
-
-.creature-wrapper__expanded {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-}
-
-.creature-wrapper__collapsed {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
@@ -292,11 +283,11 @@ a:hover {
   text-decoration-color: #822000;
   text-decoration-style: double;
   color: black;
-  padding-top: 4px;
+  margin-top: 4px;
 }
 
 .expanded-creature--active-icon {
-  padding-left: 10px;
+  margin-left: 10px;
 }
 
 .expanded-creature--stat {
@@ -336,28 +327,33 @@ a:hover {
 
 .collapsed-creature {
   width: 100%;
-  grid-gap: 22px;
-  grid-row-gap: 10px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 15px);
-  text-align: center;
-  align-items: center;
 }
 
-/* Reduce space between collapsed-creature elements on small screens */
-@media only screen and (max-width: 436px) {
+/* Reduce width of inner collapsed creature box on all but the largest screens */
+@media only screen and (max-width: 1024px) {
   .collapsed-creature {
-    grid-gap: 15px;
+    width: 85%;
   }
 }
 
+.collapsed-creature--status {
+  display: flex;
+  margin: 4px 0 4px 0;
+  color: black;
+  font-style: italic;
+}
+
+.collapsed-creature--status__margin {
+  margin-left: 5px;
+}
+
 .collapsed-creature--name {
-  grid-column: span 4;
   font-weight: bold;
   font-size: 28px;
   color: #822000;
   text-align: left;
   text-transform: capitalize;
+  margin-top: 4px;
 }
 
 .collapsed-creature--name__dead {
@@ -365,43 +361,12 @@ a:hover {
   text-decoration-color: black;
 }
 
-.collapsed-creature--health-points {
-  grid-column: span 4;
-}
-
-/* Reduce space taken by health points on smaller screens */
-@media only screen and (max-width: 568px) {
-  .collapsed-creature--health-points {
-    grid-column: span 2;
-  }
-}
-
-.collapsed-creature--conditions {
-  grid-column: span 16;
-  text-transform: capitalize;
+.collapsed-creature--notes {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #822000;
-}
-
-/* Reduce space taken by conditions on all but the widest screens */
-@media only screen and (max-width: 1024px) {
-  .collapsed-creature--conditions {
-    grid-column: span 4;
-  }
-}
-
-.collapsed-creature--notes {
-  grid-column: span 4;
-  color: #822000;
-}
-
-/* Reduce space taken by notes on smaller screens */
-@media only screen and (max-width: 568px) {
-  .collapsed-creature--notes {
-    grid-column: span 2;
-  }
+  padding-right: 2px;
+  max-width: 45%;
 }
 
 /* Creature note list */
