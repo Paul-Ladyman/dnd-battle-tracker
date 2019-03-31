@@ -361,14 +361,6 @@ a:hover {
   text-decoration-color: black;
 }
 
-.collapsed-creature--conditions {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 45%;
-  padding-right: 2px;
-}
-
 .collapsed-creature--notes {
   white-space: nowrap;
   overflow: hidden;

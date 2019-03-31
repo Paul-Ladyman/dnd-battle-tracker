@@ -26,7 +26,7 @@ function CollapsedCreature({creature}) {
           className="collapsed-creature--health-points"
         />}
         {showConditions && 
-          <div className={`collapsed-creature--conditions ${conditionsMarginClass}`}>{
+          <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>{
             commaSeparate(creature.conditions)
           }</div>
         }
