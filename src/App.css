@@ -354,6 +354,10 @@ a:hover {
   font-style: italic;
 }
 
+.collapsed-creature--status__margin {
+  margin-left: 10px;
+}
+
 /* Reduce space between collapsed-creature elements on small screens */
 @media only screen and (max-width: 436px) {
   .collapsed-creature {
@@ -395,7 +399,6 @@ a:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   /* color: #822000; */
-  margin-left: 10px;
   max-width: 45%;
   padding-right: 2px;
 }
@@ -410,7 +413,6 @@ a:hover {
 .collapsed-creature--notes {
   /* grid-column: span 4; */
   /* color: #822000; */
-  margin-left: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
