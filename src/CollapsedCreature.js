@@ -10,21 +10,30 @@ function CollapsedCreature({creature}) {
   return (
     <div className="collapsed-creature">
       <div className={nameClasses}>{creature.name}</div>
-      {showHealth && <HealthPoints
-        short
-        hp={creature.healthPoints}
-        maxHp={creature.maxHealthPoints}
-        className="collapsed-creature--health-points"
-      />}
-      {showConditions && 
-        <div className="collapsed-creature--conditions">{
-          creature.conditions.map((condition) => {
-            return condition.text.substring(0, 3)
-          }).join(', ')
+      <div className="collapsed-creature--status">
+        {showHealth && <HealthPoints
+          short
+          hp={creature.healthPoints}
+          maxHp={creature.maxHealthPoints}
+          className="collapsed-creature--health-points"
+        />}
+        {showConditions && 
+          <div className="collapsed-creature--conditions">{
+            creature.conditions.map((condition) => {
+              return condition.text
+            }).join(', ')
+            }
+          </div>
+        }
+        {showNotes && 
+          <div className="collapsed-creature--notes">{
+            creature.notes.map((note) => {
+              return note.text
+            }).join(', ')
           }
-        </div>
-      }
-      {showNotes && <div className="collapsed-creature--notes">Notes...</div>}
+          </div>
+        }
+      </div>
     </div>
   );
 }
