@@ -1,6 +1,12 @@
 import React from 'react';
 import HealthPoints from './HealthPoints';
 
+function commaSeparate(notes) {
+  return notes.map((note) => {
+    return `${note.text[0].toUpperCase()}${note.text.substring(1)}`;
+  }).join(', ');
+}
+
 function CollapsedCreature({creature}) {
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
@@ -21,19 +27,13 @@ function CollapsedCreature({creature}) {
         />}
         {showConditions && 
           <div className={`collapsed-creature--conditions ${conditionsMarginClass}`}>{
-            creature.conditions.map((condition) => {
-              return condition.text
-            }).join(', ')
-            }
-          </div>
+            commaSeparate(creature.conditions)
+          }</div>
         }
         {showNotes && 
           <div className={`collapsed-creature--notes ${notesMarginClass}`}>{
-            creature.notes.map((note) => {
-              return note.text
-            }).join(', ')
-          }
-          </div>
+            commaSeparate(creature.notes)
+          }</div>
         }
       </div>
     </div>

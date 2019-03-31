@@ -394,7 +394,6 @@ a:hover {
 
 .collapsed-creature--conditions {
   /* grid-column: span 16; */
-  text-transform: capitalize;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -416,7 +415,6 @@ a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-transform: capitalize;
   padding-right: 2px;
   max-width: 45%;
 }
