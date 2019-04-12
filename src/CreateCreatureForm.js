@@ -99,7 +99,7 @@ class CreateCreatureForm extends Component {
     const multiplierClass = multiplierError ? `${inputClass} ${inputErrorClass}` : inputClass;
     return (
       <form className="create-creature-form" onKeyDown={this.formHandler}>
-        <div className="create-creature-form--item">
+        <div className="create-creature-form--item create-creature-form--item__text">
           <input className={nameClass} type="text" name="name" placeholder="Add creature - Name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
@@ -108,7 +108,7 @@ class CreateCreatureForm extends Component {
         <div className="create-creature-form--item create-creature-form--item__number">
           <input className={healthClass} type="number" min="1" name="healthPoints" placeholder="Max HP (optional)" value={healthPoints} onChange={this.handleChange}/>
         </div>
-        <div className="create-creature-form--item create-creature-form--item__number create-creature-form--item__last">
+        <div className="create-creature-form--item create-creature-form--item__small-number create-creature-form--item__last">
           <input className={multiplierClass} type="number" min="1" name="multiplier" value={multiplier} onChange={this.handleChange}/>
         </div>
       </form>
