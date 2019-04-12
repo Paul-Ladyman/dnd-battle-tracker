@@ -194,6 +194,10 @@ a:hover {
   grid-column: span 5;
 }
 
+.create-creature-form--item__number {
+  grid-column: span 3;
+}
+
 /*
  * Ensure last row of create creature form is centered on screens large enough to support
  * the form on 2 rows but not large enough to support it on 1.

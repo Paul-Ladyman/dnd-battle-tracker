@@ -92,17 +92,34 @@ export function removeCreature(state, creatureId) {
   return {...state, creatures, creatureCount, activeCreature};
 };
 
+function createCreatures(creatureIdCount, creature, multiplier) {
+  if (multiplier <= 1) {
+    return [ createCreature(creatureIdCount, creature) ];
+  }
+
+  let creatures = [];
+  for (let i = 0; i < multiplier; i++) {
+    const name = `${creature.name} #${i + 1}`;
+    creatures.push(createCreature(creatureIdCount + i, { ...creature, name }));
+  }
+
+  return creatures;
+}
+
 export function addCreature(state, creature) {
-  const newCreature = createCreature(state.creatureIdCount, creature);
-  const creatures = sortCreatures([...state.creatures, newCreature]);
+  const { multiplier, ...creatureStats } = creature;
+  const creatureMultiplier = multiplier || 1;
+
+  const newCreatures = createCreatures(state.creatureIdCount, creatureStats, creatureMultiplier);
+  const creatures = sortCreatures([...state.creatures, ...newCreatures]);
   const currentlyActiveCreature = state.creatures[state.activeCreature];
 
   let activeCreature = state.activeCreature;
   if (state.round > 0) {
     activeCreature = findCreatureIndex(creatures, currentlyActiveCreature);
   }
-  const creatureCount = state.creatureCount + 1;
-  const creatureIdCount = state.creatureIdCount + 1;
+  const creatureCount = state.creatureCount + creatureMultiplier;
+  const creatureIdCount = state.creatureIdCount + creatureMultiplier;
 
   return {...state, creatures, creatureCount, creatureIdCount, activeCreature};
 };
