@@ -180,7 +180,7 @@ a:hover {
 /* Create creature form */
 
 .create-creature-form {
-  width: 50%;
+  width: 60%;
   margin-top: 40px;
   grid-gap: 11px;
   grid-row-gap: 10px;
@@ -191,17 +191,19 @@ a:hover {
 
 .create-creature-form--item {
   display: flex;
-  grid-column: span 5;
+  align-items: baseline;
 }
 
-/*
- * Ensure last row of create creature form is centered on screens large enough to support
- * the form on 2 rows but not large enough to support it on 1.
- */
-@media only screen and (min-width: 700px) and (max-width: 1024px) {
-  .create-creature-form--item__last {
-    grid-column: 3 / span 6;
-  }
+.create-creature-form--item__text {
+  grid-column: span 6;
+}
+
+.create-creature-form--item__number {
+  grid-column: span 4;
+}
+
+.create-creature-form--item__small-number {
+  grid-column: span 2;
 }
 
 .create-creature-form--input {
@@ -212,8 +214,53 @@ a:hover {
   box-shadow: 0 0 5px #979AA4;
 }
 
+.create-creature-form--input__small-number {
+  padding-left: 5px;
+  font-weight: bold;
+}
+
+.create-creature-form--multiplier {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
 .create-creature-form--input__error {
-  border: 4px solid red;
+  border: 2px solid red;
+}
+
+/*
+ * Ensure create creature form is centered on multiple rows on small screens
+ */
+@media only screen and (max-width: 825px) {
+  .create-creature-form {
+    grid-template-columns: repeat(6, 25px);
+  }
+
+  .create-creature-form--item__text {
+    grid-column: 2 / span 4;
+  }
+
+  .create-creature-form--item__number {
+    grid-column: 2 / span 4;
+  }
+
+  .create-creature-form--item__small-number {
+    grid-column: 3 / span 2;
+  }
+
+  .create-creature-form--input {
+    text-align: center;
+  }
+  
+  .create-creature-form--input__small-number {
+    text-align: left;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .create-creature-form--item__text {
+    grid-column: span 6;
+  }
 }
 
 /* Creatures */

@@ -444,4 +444,57 @@ describe('addCreature', () => {
     expect(addCreature(state, creature)).toEqual(expectedState);
     expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
+
+  test('it creates multiple creatures at once based on a multiplier', () => {
+    const creature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10,
+      multiplier: 2
+    };
+
+    const createdCreature = {
+      name: 'name #1',
+      initiative: 9,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 3,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+    const createdCreature2 = { ...createdCreature, name: 'name #2', id: 4 };
+
+    createCreature
+      .mockReturnValueOnce(createdCreature)
+      .mockReturnValueOnce(createdCreature2);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+        createdCreature,
+        createdCreature2
+      ],
+      creatureCount: 5,
+      creatureIdCount: 5
+    };
+
+    expect(addCreature(defaultState, creature)).toEqual(expectedState);
+    expect(createCreature.mock.calls.length).toBe(2)
+    const expectedCreature1 = {
+      name: 'name #1',
+      initiative: 9,
+      healthPoints: 10,
+    };
+    const expectedCreature2 = {
+      name: 'name #2',
+      initiative: 9,
+      healthPoints: 10,
+    };
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
+    expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
+  });
 });
