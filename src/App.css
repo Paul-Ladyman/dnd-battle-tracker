@@ -210,9 +210,18 @@ a:hover {
   font-weight: bold;
 }
 
+.create-creature-form--multiplier-container {
+  display: flex;
+  align-items: baseline;
+}
+
 .create-creature-form--multiplier {
   margin-right: 5px;
   font-weight: bold;
+}
+
+.create-creature-form--item__multiplier .create-creature-form--label {
+  margin-left: 0px;
 }
 
 .create-creature-form--input__error {
@@ -246,7 +255,7 @@ a:hover {
     grid-column: 2 / span 4;
   }
 
-  .create-creature-form--item__small-number {
+  .create-creature-form--item__multiplier {
     grid-column: 3 / span 2;
   }
 
