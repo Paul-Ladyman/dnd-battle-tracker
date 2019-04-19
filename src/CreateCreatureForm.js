@@ -100,17 +100,21 @@ class CreateCreatureForm extends Component {
     return (
       <form className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item create-creature-form--item__text">
-          <input className={nameClass} type="text" required name="name" placeholder="Add creature - Name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
+          <label for="name" class="create-creature-form--label">Name <b>*</b></label>
+          <input className={nameClass} type="text" required id="name" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <input className={initiativeClass} type="number" required name="initiative" placeholder="Initiative" value={initiative} onChange={this.handleChange}/>
+          <label for="initiative" class="create-creature-form--label">Initiative <b>*</b></label>
+          <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <input className={healthClass} type="number" min="1" name="healthPoints" placeholder="Max HP (optional)" value={healthPoints} onChange={this.handleChange}/>
+          <label for="healthPoints" class="create-creature-form--label">HP</label>
+          <input className={healthClass} type="number" min="1" id="healthPoints" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__small-number">
-          <div className="create-creature-form--multiplier">x</div>
-          <input className={`${multiplierClass} ${inputClass}__small-number`} type="number" min="1" max="50" name="multiplier" value={multiplier} onChange={this.handleChange}/>
+          <label for="multiplier" class="create-creature-form--label">Multiplier <b>*</b></label>
+          {/* <div className="create-creature-form--multiplier">x</div> */}
+          <input className={`${multiplierClass} ${inputClass}__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
         </div>
       </form>
     ); 
