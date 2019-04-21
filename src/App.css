@@ -508,3 +508,10 @@ a:hover {
   line-height: 14px;
   padding: 10px;
 }
+
+/* Hide keyboard shortcuts from devices unlikely to have a physical keyboard */ 
+@media only screen and (max-width: 1024px) {
+  .footer-text--shortcuts {
+    display: none;
+  }
+}
