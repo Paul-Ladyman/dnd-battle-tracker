@@ -17,6 +17,9 @@ class Creature extends Component {
 
     this.expand = this.expand.bind(this);
     this.collapse = this.collapse.bind(this);
+    this.keyHandler = this.keyHandler.bind(this);
+    this.getExpandCollapseFunc = this.getExpandCollapseFunc.bind(this);
+    this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
   }
 
   expand() {
@@ -28,7 +31,7 @@ class Creature extends Component {
   }
 
   /*
-   * Prevent Creature rerendering when nothing it has not been updated.
+   * Prevent Creature rerendering when it has not been updated.
    * Otherwise we would always scroll to the active creature when another creature
    * is updated.
    */
@@ -39,6 +42,22 @@ class Creature extends Component {
       nextProps.round !== this.props.round;
 
     return shouldUpdate;
+  }
+
+  getExpandCollapseFunc() {
+    return this.state.expanded ? this.collapse : this.expand;
+  }
+
+
+  keyHandler(event) {
+    const targetId = event.target.getAttribute('id');
+    if (event.keyCode === 13 && targetId === 'creature-wrapper') {
+      this.getExpandCollapseFunc()();
+    }
+  }
+
+  expandCreatureHandler() {
+    this.getExpandCollapseFunc()();
   }
 
   render () {
@@ -53,7 +72,6 @@ class Creature extends Component {
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
     const buttonTitle = this.state.expanded ? 'Collapse creature' : 'Expand creature';
     const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
-    const buttonOnClick = this.state.expanded ? this.collapse : this.expand;
 
     const showExpanded = active || this.state.expanded;
 
@@ -61,8 +79,21 @@ class Creature extends Component {
 
     return (
       <React.Fragment>
-        <section className={classes} ref={this.creatureRef} tabIndex='0'>
-          {!active && <button className="expand-creature-button" title={buttonTitle} onClick={buttonOnClick}>{buttonIcon}</button>}
+        <section
+          className={classes}
+          id="creature-wrapper"
+          ref={this.creatureRef}
+          tabIndex='0'
+          onKeyDown={this.keyHandler}
+        >
+          {!active && 
+            <button
+              className="expand-creature-button"
+              title={buttonTitle}
+              onClick={this.expandCreatureHandler}>
+                {buttonIcon}
+            </button>
+          }
           {showExpanded ? 
             <ExpandedCreature
               creature={creature}
