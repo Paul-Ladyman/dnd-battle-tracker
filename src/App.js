@@ -10,6 +10,8 @@ import {
   getSecondsElapsed,
   nextInitiative,
   getInitiative,
+  nextFocus,
+  prevFocus,
   removeCreature,
   addCreature
 } from './BattleManager';
@@ -32,6 +34,8 @@ class App extends Component {
 
     this.createCreature = this.createCreature.bind(this);
     this.nextInitiative = this.nextInitiative.bind(this);
+    this.nextFocus = this.nextFocus.bind(this);
+    this.prevFocus = this.prevFocus.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
     this.killCreature = this.killCreature.bind(this);
     this.reviveCreature = this.reviveCreature.bind(this);
@@ -51,6 +55,14 @@ class App extends Component {
     window.onkeydown = (e) => {
       if (isHotkey('alt+.', e)) {
         this.nextInitiative();
+      }
+
+      if (isHotkey('alt+ArrowDown', e)) {
+        this.nextFocus();
+      }
+
+      if (isHotkey('alt+ArrowUp', e)) {
+        this.prevFocus();
       }
     };
   }
@@ -95,6 +107,14 @@ class App extends Component {
     this.setState(nextInitiative(this.state));
   }
 
+  nextFocus() {
+    this.setState(nextFocus(this.state));
+  }
+
+  prevFocus() {
+    this.setState(prevFocus(this.state));
+  }
+
   createCreature(creature) {
     this.setState(addCreature(this.state, creature));
   }
@@ -127,6 +147,7 @@ class App extends Component {
         <Creatures
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
+          focusedCreature={this.state.focusedCreature}
           conditions={conditions}
           round={this.state.round}
           secondsElapsed={secondsElapsed}

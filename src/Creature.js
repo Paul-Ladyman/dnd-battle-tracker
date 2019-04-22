@@ -38,6 +38,7 @@ class Creature extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const shouldUpdate = !equal(nextProps.creature, this.props.creature) ||
       nextProps.active !== this.props.active ||
+      nextProps.focused !== this.props.focused ||
       nextState.expanded !== this.state.expanded ||
       nextProps.round !== this.props.round;
 
@@ -61,8 +62,9 @@ class Creature extends Component {
   }
 
   render () {
-    const { creature, active } = this.props;
-    if (active) {
+    const { creature, active, focused } = this.props;
+    if (focused) {
+      this.creatureRef.current.focus();
       this.creatureRef.current.scrollIntoView({ block: 'center' });
     }
 

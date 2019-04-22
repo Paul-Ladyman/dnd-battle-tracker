@@ -18,6 +18,7 @@ export const newBattleState = {
   creatureIdCount: 0,
   creatureCount: 0,
   activeCreature: undefined,
+  focusedCreature: undefined,
   round: 0
 };
 
@@ -34,7 +35,7 @@ export function nextInitiative(state) {
   }
 
   if (state.round === 0) {
-    return {...state, round: 1, activeCreature: 0};
+    return {...state, round: 1, activeCreature: 0, focusedCreature: 0};
   }
 
   let activeCreature = state.activeCreature + 1;
@@ -45,8 +46,40 @@ export function nextInitiative(state) {
     round = round + 1;
   }
 
-  return {...state, round, activeCreature};
+  return {...state, round, activeCreature, focusedCreature: activeCreature};
 };
+
+export function nextFocus(state) {
+  if (state.creatures.length === 0) {
+    return state;
+  }
+
+  let focusedCreature = 0;
+
+  if (state.focusedCreature !== undefined) {
+    focusedCreature = state.focusedCreature + 1;
+  }
+  
+  if (focusedCreature === state.creatureCount) {
+    focusedCreature = 0;
+  }
+
+  return {...state, focusedCreature};
+}
+
+export function prevFocus(state) {
+  if (state.creatures.length === 0) {
+    return state;
+  }
+
+  let focusedCreature = state.focusedCreature - 1;
+
+  if (state.focusedCreature === undefined || state.focusedCreature === 0) {
+    focusedCreature = state.creatureCount - 1;
+  }
+
+  return {...state, focusedCreature};
+}
 
 export function getInitiative(state) {
   if (state.creatures.length === 0) {
