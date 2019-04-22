@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import isHotkey from 'is-hotkey';
+import { hotkeys } from './hotkeys';
 
 class CreateCreatureForm extends Component {
   static formErrors(name, initiative, healthPoints, multiplier) {
@@ -47,7 +48,7 @@ class CreateCreatureForm extends Component {
     this.nameInput.current.focus();
 
     window.addEventListener('keydown', (e) => {
-      if (isHotkey('alt+c', e)) {
+      if (isHotkey(hotkeys.createCreature, e)) {
         this.nameInput.current.focus();
       }
     });

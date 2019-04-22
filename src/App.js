@@ -26,6 +26,7 @@ import {
   addHealthToCreature
 } from './CreatureManager';
 import Footer from './Footer';
+import { hotkeys } from './hotkeys';
 
 class App extends Component {
   constructor(props) {
@@ -55,15 +56,15 @@ class App extends Component {
     };
 
     window.addEventListener('keydown', (e) => {
-      if (isHotkey('alt+.', e)) {
+      if (isHotkey(hotkeys.nextInitiative, e)) {
         this.nextInitiative();
       }
 
-      if (isHotkey('alt+ArrowDown', e)) {
+      if (isHotkey(hotkeys.nextFocus, e)) {
         this.nextFocus();
       }
 
-      if (isHotkey('alt+ArrowUp', e)) {
+      if (isHotkey(hotkeys.prevFocus, e)) {
         this.prevFocus();
       }
     });

@@ -1,11 +1,22 @@
 import React from 'react';
 import ExternalLink from './ExternalLink';
 import { version } from '../package.json';
+import { hotkeys, hotkeyDescriptions } from './hotkeys';
 
 function Footer() {
   return (
     <div className="footer-text">
-      <p className="footer-text--shortcuts">Hint: Press alt+. to advance to the next creature in the initiative order.</p>
+      <div className="footer-text--shortcuts">
+        <p>Keyboard shortcuts:</p>
+        <ul>
+          {Object.keys(hotkeys).map((key, i) => {
+            const hotkey = hotkeys[key]; 
+            return (
+              <li key={i}><b>{hotkey}</b> {hotkeyDescriptions[key]}</li>
+            );
+          })}
+        </ul>
+      </div>
       <p>
       Version {version}. See&nbsp;
       <ExternalLink

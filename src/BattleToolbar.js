@@ -4,6 +4,7 @@ import Timer from './Timer';
 import StartBattleIcon from './icons/StartBattleIcon';
 import NextInitiativeIcon from './icons/NextInitiativeIcon';
 import ResetIcon from './icons/ResetIcon';
+import { hotkeys } from './hotkeys';
 
 class BattleToolbar extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class BattleToolbar extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', (e) => {
-      if (isHotkey('alt+b', e)) {
+      if (isHotkey(hotkeys.battlebar, e)) {
         this.nextButton.current.focus();
       }
     });
