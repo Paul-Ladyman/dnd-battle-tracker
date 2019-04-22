@@ -272,12 +272,6 @@ a:hover {
   }
 }
 
-@media only screen and (max-width: 375px) {
-  .create-creature-form--item__text {
-    grid-column: span 6;
-  }
-}
-
 /* Creatures */
 
 .creature-list {
