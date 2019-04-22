@@ -27,7 +27,7 @@ function Creatures({
         const active = activeCreature === i;
         const focused = focusedCreature === i;
         return (
-          <div key={creature.id}>
+          <section key={creature.id}>
             <Creature
               creature={creature}
               active={active}
@@ -42,7 +42,7 @@ function Creatures({
               conditions={getAvailableConditions(conditions, creature.conditions)}
               creatureManagement={creatureManagement}
             />
-          </div>
+          </section>
         );
       })}
     </div>

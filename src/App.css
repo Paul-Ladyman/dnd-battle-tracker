@@ -21,11 +21,18 @@ a:hover {
   color: #822000;
 }
 
-.App {
+.main-footer-wrapper {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}
+
+.main {
   display: flex;
   align-items: center;
   flex-flow: column;
   padding-top: 44px;
+  width: 100%;
 }
 
 /* Battle toolbar */
@@ -48,7 +55,7 @@ a:hover {
  * On screen keyboards and the sticky bar leave a very small viewport.
  */
 @media only screen and (max-width: 600px) and (orientation: landscape) {
-  .App {
+  .main {
     padding-top: 0px;
   }
 
@@ -409,6 +416,7 @@ a:hover {
   text-align: left;
   text-transform: capitalize;
   margin-top: 4px;
+  margin-bottom: 0px;
 }
 
 .collapsed-creature--name__dead {

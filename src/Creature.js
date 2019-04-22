@@ -93,7 +93,7 @@ class Creature extends Component {
 
     return (
       <React.Fragment>
-        <section
+        <div
           className={classes}
           id="creature-wrapper"
           ref={this.creatureRef}
@@ -120,7 +120,7 @@ class Creature extends Component {
             /> :
             <CollapsedCreature creature={creature} />
           }
-        </section>
+        </div>
       </React.Fragment>
     );
   }

@@ -17,7 +17,7 @@ function CollapsedCreature({creature}) {
   const notesMarginClass = showHealth || showConditions ? 'collapsed-creature--status__margin' : '';
   return (
     <div className="collapsed-creature">
-      <div className={nameClasses}>{creature.name}</div>
+      <h1 className={nameClasses}>{creature.name}</h1>
       <div className="collapsed-creature--status">
         {showHealth && <HealthPoints
           short

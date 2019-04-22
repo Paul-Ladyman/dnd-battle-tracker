@@ -141,7 +141,7 @@ class App extends Component {
     };
 
     return (
-      <div className="App">
+      <React.Fragment>
         <BattleToolbar
           initiative={getInitiative(this.state)}
           round={this.state.round}
@@ -150,19 +150,23 @@ class App extends Component {
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />
-        <CreateCreatureForm createCreature={this.createCreature} />
-        <Creatures
-          creatures={this.state.creatures}
-          activeCreature={this.state.activeCreature}
-          focusedCreature={this.state.focusedCreature}
-          setFocus={this.setFocus}
-          conditions={conditions}
-          round={this.state.round}
-          secondsElapsed={secondsElapsed}
-          creatureManagement={creatureManagement}
-        />
-        <Footer />
-      </div>
+        <div className="main-footer-wrapper">
+          <main className="main">
+           <CreateCreatureForm createCreature={this.createCreature} />
+           <Creatures
+             creatures={this.state.creatures}
+             activeCreature={this.state.activeCreature}
+             focusedCreature={this.state.focusedCreature}
+             setFocus={this.setFocus}
+             conditions={conditions}
+             round={this.state.round}
+             secondsElapsed={secondsElapsed}
+             creatureManagement={creatureManagement}
+            />
+          </main>
+          <Footer />
+         </div>
+      </React.Fragment>
     );
   }
 }

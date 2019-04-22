@@ -35,7 +35,7 @@ class BattleToolbar extends Component {
     const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
     return (
-      <div className="battle-toolbar">
+      <header className="battle-toolbar">
         <button
           title={nextButtonTitle}
           className={buttonClasses}
@@ -59,7 +59,7 @@ class BattleToolbar extends Component {
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
         <button title="Reset" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
-      </div>
+      </header>
     );
   }
 }

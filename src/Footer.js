@@ -5,7 +5,7 @@ import { hotkeys, hotkeyDescriptions } from './hotkeys';
 
 function Footer() {
   return (
-    <div className="footer-text">
+    <footer className="footer-text" role="contentinfo">
       <div className="footer-text--shortcuts">
         <p>Keyboard shortcuts:</p>
         <ul>
@@ -25,7 +25,7 @@ function Footer() {
       />
       &nbsp;for newer versions, more info and to download this page for offline battles.
       </p>
-    </div>
+    </footer>
   );
 }
 
