@@ -2,9 +2,10 @@ import {
   newBattleState,
   getSecondsElapsed,
   nextInitiative,
+  getInitiative,
   nextFocus,
   prevFocus,
-  getInitiative,
+  setFocus,
   removeCreature,
   addCreature
 } from './BattleManager';
@@ -190,6 +191,28 @@ describe('nextInitiative', () => {
   });
 });
 
+describe('getInitiative', () => {
+  test('it gets the name of the currently active creature', () => {
+    expect(getInitiative(defaultState)).toEqual('Goblin');
+  });
+
+  test('it returns an empty string if there are no creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: []
+    }
+    expect(getInitiative(state)).toEqual('');
+  });
+
+  test('it returns an empty string if the battle has not started', () => {
+    const state = {
+      ...defaultState,
+      round: 0
+    }
+    expect(getInitiative(state)).toEqual('');
+  });
+});
+
 describe('nextFocus', () => {
   test('it starts with the first creature in the list', () => {
     const state = {
@@ -292,25 +315,23 @@ describe('prevFocus', () => {
   });
 });
 
-describe('getInitiative', () => {
-  test('it gets the name of the currently active creature', () => {
-    expect(getInitiative(defaultState)).toEqual('Goblin');
+describe('setFocus', () => {
+  it('sets the focus to the index of the creature provided', () => {
+    const expected = {
+      ...defaultState,
+      focusedCreature: 2
+    };
+
+    expect(setFocus(defaultState, defaultState.creatures[2])).toEqual(expected);
   });
 
-  test('it returns an empty string if there are no creatures', () => {
-    const state = {
+  it('sets the focus to the first creature if the provided creature does not exist', () => {
+    const expected = {
       ...defaultState,
-      creatures: []
-    }
-    expect(getInitiative(state)).toEqual('');
-  });
+      focusedCreature: 0
+    };
 
-  test('it returns an empty string if the battle has not started', () => {
-    const state = {
-      ...defaultState,
-      round: 0
-    }
-    expect(getInitiative(state)).toEqual('');
+    expect(setFocus(defaultState, {id: 3})).toEqual(expected);
   });
 });
 

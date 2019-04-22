@@ -81,6 +81,14 @@ export function prevFocus(state) {
   return {...state, focusedCreature};
 }
 
+export function setFocus(state, creature) {
+  let focusedCreature = findCreatureIndex(state.creatures, creature);
+  if (focusedCreature === -1) {
+    focusedCreature = 0;
+  }
+  return {...state, focusedCreature};
+}
+
 export function getInitiative(state) {
   if (state.creatures.length === 0) {
     return '';

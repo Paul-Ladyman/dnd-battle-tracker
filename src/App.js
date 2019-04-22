@@ -12,6 +12,7 @@ import {
   getInitiative,
   nextFocus,
   prevFocus,
+  setFocus,
   removeCreature,
   addCreature
 } from './BattleManager';
@@ -36,6 +37,7 @@ class App extends Component {
     this.nextInitiative = this.nextInitiative.bind(this);
     this.nextFocus = this.nextFocus.bind(this);
     this.prevFocus = this.prevFocus.bind(this);
+    this.setFocus = this.setFocus.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
     this.killCreature = this.killCreature.bind(this);
     this.reviveCreature = this.reviveCreature.bind(this);
@@ -115,6 +117,10 @@ class App extends Component {
     this.setState(prevFocus(this.state));
   }
 
+  setFocus(creature) {
+    this.setState(setFocus(this.state, creature));
+  }
+
   createCreature(creature) {
     this.setState(addCreature(this.state, creature));
   }
@@ -148,6 +154,7 @@ class App extends Component {
           creatures={this.state.creatures}
           activeCreature={this.state.activeCreature}
           focusedCreature={this.state.focusedCreature}
+          setFocus={this.setFocus}
           conditions={conditions}
           round={this.state.round}
           secondsElapsed={secondsElapsed}

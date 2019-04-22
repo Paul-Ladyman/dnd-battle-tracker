@@ -20,6 +20,7 @@ class Creature extends Component {
     this.keyHandler = this.keyHandler.bind(this);
     this.getExpandCollapseFunc = this.getExpandCollapseFunc.bind(this);
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
+    this.focusHandler = this.focusHandler.bind(this);
   }
 
   expand() {
@@ -61,11 +62,18 @@ class Creature extends Component {
     this.getExpandCollapseFunc()();
   }
 
+  focusHandler(event) {
+    const targetId = event.target.getAttribute('id');
+    if (targetId === 'creature-wrapper') {
+      const { setFocus, creature } = this.props;
+      setFocus(creature);
+    }
+  }
+
   render () {
     const { creature, active, focused } = this.props;
     if (focused) {
       this.creatureRef.current.focus();
-      this.creatureRef.current.scrollIntoView({ block: 'center' });
     }
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
@@ -87,6 +95,7 @@ class Creature extends Component {
           ref={this.creatureRef}
           tabIndex='0'
           onKeyDown={this.keyHandler}
+          onFocus={this.focusHandler}
         >
           {!active && 
             <button

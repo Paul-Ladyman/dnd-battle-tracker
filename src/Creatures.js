@@ -15,6 +15,7 @@ function Creatures({
   creatures,
   activeCreature,
   focusedCreature,
+  setFocus,
   conditions,
   round,
   secondsElapsed,
@@ -31,6 +32,7 @@ function Creatures({
               creature={creature}
               active={active}
               focused={focused}
+              setFocus={setFocus}
               round={round}
               secondsElapsed={secondsElapsed}
               creatureManagement={creatureManagement}
