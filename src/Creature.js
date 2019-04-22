@@ -17,6 +17,10 @@ class Creature extends Component {
 
     this.expand = this.expand.bind(this);
     this.collapse = this.collapse.bind(this);
+    this.keyHandler = this.keyHandler.bind(this);
+    this.getExpandCollapseFunc = this.getExpandCollapseFunc.bind(this);
+    this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
+    this.focusHandler = this.focusHandler.bind(this);
   }
 
   expand() {
@@ -28,24 +32,53 @@ class Creature extends Component {
   }
 
   /*
-   * Prevent Creature rerendering when nothing it has not been updated.
+   * Prevent Creature rerendering when it has not been updated.
    * Otherwise we would always scroll to the active creature when another creature
    * is updated.
    */
   shouldComponentUpdate(nextProps, nextState) {
     const shouldUpdate = !equal(nextProps.creature, this.props.creature) ||
       nextProps.active !== this.props.active ||
+      nextProps.focused !== this.props.focused ||
       nextState.expanded !== this.state.expanded ||
       nextProps.round !== this.props.round;
 
     return shouldUpdate;
   }
 
+  getExpandCollapseFunc() {
+    return this.state.expanded ? this.collapse : this.expand;
+  }
+
+
+  keyHandler(event) {
+    const targetId = event.target.getAttribute('id');
+    if (event.keyCode === 13 && targetId === 'creature-wrapper') {
+      this.getExpandCollapseFunc()();
+    }
+  }
+
+  expandCreatureHandler() {
+    this.getExpandCollapseFunc()();
+  }
+
+  focusHandler(event) {
+    const targetId = event.target.getAttribute('id');
+    if (targetId === 'creature-wrapper') {
+      const { setFocus, creature } = this.props;
+      setFocus(creature);
+    }
+  }
+
+  componentDidUpdate() {
+    const { focused } = this.props;
+    if (focused) {
+      this.creatureRef.current.focus();
+    }
+  }
+
   render () {
     const { creature, active } = this.props;
-    if (active) {
-      this.creatureRef.current.scrollIntoView({ block: 'center' });
-    }
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
@@ -53,7 +86,6 @@ class Creature extends Component {
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
     const buttonTitle = this.state.expanded ? 'Collapse creature' : 'Expand creature';
     const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
-    const buttonOnClick = this.state.expanded ? this.collapse : this.expand;
 
     const showExpanded = active || this.state.expanded;
 
@@ -61,7 +93,22 @@ class Creature extends Component {
 
     return (
       <React.Fragment>
-        <div className={classes} ref={this.creatureRef}>
+        <div
+          className={classes}
+          id="creature-wrapper"
+          ref={this.creatureRef}
+          tabIndex='0'
+          onKeyDown={this.keyHandler}
+          onFocus={this.focusHandler}
+        >
+          {!active && 
+            <button
+              className="expand-creature-button"
+              title={buttonTitle}
+              onClick={this.expandCreatureHandler}>
+                {buttonIcon}
+            </button>
+          }
           {showExpanded ? 
             <ExpandedCreature
               creature={creature}
@@ -73,7 +120,6 @@ class Creature extends Component {
             /> :
             <CollapsedCreature creature={creature} />
           }
-          {!active && <button className="expand-creature-button" title={buttonTitle} onClick={buttonOnClick}>{buttonIcon}</button>}
         </div>
       </React.Fragment>
     );

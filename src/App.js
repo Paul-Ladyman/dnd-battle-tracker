@@ -10,6 +10,9 @@ import {
   getSecondsElapsed,
   nextInitiative,
   getInitiative,
+  nextFocus,
+  prevFocus,
+  setFocus,
   removeCreature,
   addCreature
 } from './BattleManager';
@@ -23,6 +26,7 @@ import {
   addHealthToCreature
 } from './CreatureManager';
 import Footer from './Footer';
+import { hotkeys } from './hotkeys';
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +36,9 @@ class App extends Component {
 
     this.createCreature = this.createCreature.bind(this);
     this.nextInitiative = this.nextInitiative.bind(this);
+    this.nextFocus = this.nextFocus.bind(this);
+    this.prevFocus = this.prevFocus.bind(this);
+    this.setFocus = this.setFocus.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
     this.killCreature = this.killCreature.bind(this);
     this.reviveCreature = this.reviveCreature.bind(this);
@@ -48,11 +55,19 @@ class App extends Component {
       return true;
     };
 
-    window.onkeydown = (e) => {
-      if (isHotkey('alt+.', e)) {
+    window.addEventListener('keydown', (e) => {
+      if (isHotkey(hotkeys.nextInitiative, e)) {
         this.nextInitiative();
       }
-    };
+
+      if (isHotkey(hotkeys.nextFocus, e)) {
+        this.nextFocus();
+      }
+
+      if (isHotkey(hotkeys.prevFocus, e)) {
+        this.prevFocus();
+      }
+    });
   }
 
   resetBattle() {
@@ -95,6 +110,18 @@ class App extends Component {
     this.setState(nextInitiative(this.state));
   }
 
+  nextFocus() {
+    this.setState(nextFocus(this.state));
+  }
+
+  prevFocus() {
+    this.setState(prevFocus(this.state));
+  }
+
+  setFocus(creature) {
+    this.setState(setFocus(this.state, creature));
+  }
+
   createCreature(creature) {
     this.setState(addCreature(this.state, creature));
   }
@@ -114,7 +141,7 @@ class App extends Component {
     };
 
     return (
-      <div className="App">
+      <React.Fragment>
         <BattleToolbar
           initiative={getInitiative(this.state)}
           round={this.state.round}
@@ -123,17 +150,23 @@ class App extends Component {
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />
-        <CreateCreatureForm createCreature={this.createCreature} />
-        <Creatures
-          creatures={this.state.creatures}
-          activeCreature={this.state.activeCreature}
-          conditions={conditions}
-          round={this.state.round}
-          secondsElapsed={secondsElapsed}
-          creatureManagement={creatureManagement}
-        />
-        <Footer />
-      </div>
+        <div className="main-footer-wrapper">
+          <main className="main">
+           <CreateCreatureForm createCreature={this.createCreature} />
+           <Creatures
+             creatures={this.state.creatures}
+             activeCreature={this.state.activeCreature}
+             focusedCreature={this.state.focusedCreature}
+             setFocus={this.setFocus}
+             conditions={conditions}
+             round={this.state.round}
+             secondsElapsed={secondsElapsed}
+             creatureManagement={creatureManagement}
+            />
+          </main>
+          <Footer />
+         </div>
+      </React.Fragment>
     );
   }
 }

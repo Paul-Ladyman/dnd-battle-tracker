@@ -14,6 +14,8 @@ function getAvailableConditions(allConditions, creatureConditions) {
 function Creatures({
   creatures,
   activeCreature,
+  focusedCreature,
+  setFocus,
   conditions,
   round,
   secondsElapsed,
@@ -23,11 +25,14 @@ function Creatures({
     <div className="creature-list centered__columns">
       {creatures.map((creature, i) => {
         const active = activeCreature === i;
+        const focused = focusedCreature === i;
         return (
-          <div key={creature.id}>
+          <section key={creature.id}>
             <Creature
               creature={creature}
               active={active}
+              focused={focused}
+              setFocus={setFocus}
               round={round}
               secondsElapsed={secondsElapsed}
               creatureManagement={creatureManagement}
@@ -37,7 +42,7 @@ function Creatures({
               conditions={getAvailableConditions(conditions, creature.conditions)}
               creatureManagement={creatureManagement}
             />
-          </div>
+          </section>
         );
       })}
     </div>

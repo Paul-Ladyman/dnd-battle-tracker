@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import isHotkey from 'is-hotkey';
+import { hotkeys } from './hotkeys';
 
 class CreateCreatureForm extends Component {
   static formErrors(name, initiative, healthPoints, multiplier) {
@@ -44,6 +46,12 @@ class CreateCreatureForm extends Component {
 
   componentDidMount() {
     this.nameInput.current.focus();
+
+    window.addEventListener('keydown', (e) => {
+      if (isHotkey(hotkeys.createCreature, e)) {
+        this.nameInput.current.focus();
+      }
+    });
   }
 
   resetForm() {
@@ -100,17 +108,23 @@ class CreateCreatureForm extends Component {
     return (
       <form className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item create-creature-form--item__text">
-          <input className={nameClass} type="text" required name="name" placeholder="Add creature - Name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
+          <label htmlFor="name" className="create-creature-form--label">Name <b>*</b></label>
+          <input className={nameClass} type="text" required id="name" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <input className={initiativeClass} type="number" required name="initiative" placeholder="Initiative" value={initiative} onChange={this.handleChange}/>
+          <label htmlFor="initiative" className="create-creature-form--label">Initiative <b>*</b></label>
+          <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <input className={healthClass} type="number" min="1" name="healthPoints" placeholder="Max HP (optional)" value={healthPoints} onChange={this.handleChange}/>
+          <label htmlFor="healthPoints" className="create-creature-form--label">HP</label>
+          <input className={healthClass} type="number" min="1" id="healthPoints" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
         </div>
-        <div className="create-creature-form--item create-creature-form--item__small-number">
-          <div className="create-creature-form--multiplier">x</div>
-          <input className={`${multiplierClass} ${inputClass}__small-number`} type="number" min="1" max="50" name="multiplier" value={multiplier} onChange={this.handleChange}/>
+        <div className="create-creature-form--item create-creature-form--item__multiplier">
+          <label htmlFor="multiplier" className="create-creature-form--label">Multiplier <b>*</b></label>
+          <div className="create-creature-form--multiplier-container">
+            <div className="create-creature-form--multiplier">x</div>
+            <input className={`${multiplierClass} ${inputClass}__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
+          </div>
         </div>
       </form>
     ); 

@@ -3,6 +3,9 @@ import {
   getSecondsElapsed,
   nextInitiative,
   getInitiative,
+  nextFocus,
+  prevFocus,
+  setFocus,
   removeCreature,
   addCreature
 } from './BattleManager';
@@ -44,6 +47,7 @@ const defaultState = {
   creatureIdCount: 3,
   creatureCount: 3,
   activeCreature: 1,
+  focusedCreature: 1,
   round: 1
 };
 
@@ -58,6 +62,7 @@ describe('newBattleState', () => {
       creatureIdCount: 0,
       creatureCount: 0,
       activeCreature: undefined,
+      focusedCreature: undefined,
       round: 0
     };
 
@@ -110,12 +115,14 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       round: 0,
-      activeCreature: undefined
+      activeCreature: undefined,
+      focusedCreature: undefined
     };
     const expected = {
       ...defaultState,
       round: 1,
-      activeCreature: 0
+      activeCreature: 0,
+      focusedCreature: 0
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -124,13 +131,33 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       round: 1,
-      activeCreature: 0
+      activeCreature: 0,
+      focusedCreature: 0
     };
 
     const expected = {
       ...defaultState,
       round: 1,
-      activeCreature: 1
+      activeCreature: 1,
+      focusedCreature: 1
+    };
+
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  test('it resets the focused creature if it has been changed', () => {
+    const state = {
+      ...defaultState,
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 2
+    };
+
+    const expected = {
+      ...defaultState,
+      round: 1,
+      activeCreature: 1,
+      focusedCreature: 1
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -140,13 +167,15 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       round: 1,
-      activeCreature: 2
+      activeCreature: 2,
+      focusedCreature: 2
     };
 
     const expected = {
       ...defaultState,
       round: 2,
-      activeCreature: 0
+      activeCreature: 0,
+      focusedCreature: 0
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -181,6 +210,128 @@ describe('getInitiative', () => {
       round: 0
     }
     expect(getInitiative(state)).toEqual('');
+  });
+});
+
+describe('nextFocus', () => {
+  test('it starts with the first creature in the list', () => {
+    const state = {
+      ...defaultState,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...defaultState,
+      focusedCreature: 0
+    };
+    expect(nextFocus(state)).toEqual(expected);
+  });
+
+  test('it advances the focused creature by 1', () => {
+    const state = {
+      ...defaultState,
+      focusedCreature: 0
+    };
+
+    const expected = {
+      ...defaultState,
+      focusedCreature: 1
+    };
+
+    expect(nextFocus(state)).toEqual(expected);
+  });
+
+  test('it starts at the first creature after all creatures have been focused', () => {
+    const state = {
+      ...defaultState,
+      focusedCreature: 2
+    };
+
+    const expected = {
+      ...defaultState,
+      focusedCreature: 0
+    };
+
+    expect(nextFocus(state)).toEqual(expected);
+  });
+
+  test('it does nothing if there are no creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: []
+    };
+
+    expect(nextFocus(state)).toEqual(state);
+  });
+});
+
+describe('prevFocus', () => {
+  test('it starts with the last creature in the list', () => {
+    const state = {
+      ...defaultState,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...defaultState,
+      focusedCreature: 2
+    };
+    expect(prevFocus(state)).toEqual(expected);
+  });
+
+  test('it reduces the focused creature by 1', () => {
+    const state = {
+      ...defaultState,
+      focusedCreature: 1
+    };
+
+    const expected = {
+      ...defaultState,
+      focusedCreature: 0
+    };
+
+    expect(prevFocus(state)).toEqual(expected);
+  });
+
+  test('it returns to the last creature after all creatures have been focused in reverse', () => {
+    const state = {
+      ...defaultState,
+      focusedCreature: 0
+    };
+
+    const expected = {
+      ...defaultState,
+      focusedCreature: 2
+    };
+
+    expect(prevFocus(state)).toEqual(expected);
+  });
+
+  test('it does nothing if there are no creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: []
+    };
+
+    expect(prevFocus(state)).toEqual(state);
+  });
+});
+
+describe('setFocus', () => {
+  it('sets the focus to the index of the creature provided', () => {
+    const expected = {
+      ...defaultState,
+      focusedCreature: 2
+    };
+
+    expect(setFocus(defaultState, defaultState.creatures[2])).toEqual(expected);
+  });
+
+  it('sets the focus to the first creature if the provided creature does not exist', () => {
+    const expected = {
+      ...defaultState,
+      focusedCreature: 0
+    };
+
+    expect(setFocus(defaultState, {id: 3})).toEqual(expected);
   });
 });
 
