@@ -70,11 +70,15 @@ class Creature extends Component {
     }
   }
 
-  render () {
-    const { creature, active, focused } = this.props;
+  componentDidUpdate() {
+    const { focused } = this.props;
     if (focused) {
       this.creatureRef.current.focus();
     }
+  }
+
+  render () {
+    const { creature, active } = this.props;
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
