@@ -54,7 +54,7 @@ class App extends Component {
       return true;
     };
 
-    window.onkeydown = (e) => {
+    window.addEventListener('keydown', (e) => {
       if (isHotkey('alt+.', e)) {
         this.nextInitiative();
       }
@@ -66,7 +66,7 @@ class App extends Component {
       if (isHotkey('alt+ArrowUp', e)) {
         this.prevFocus();
       }
-    };
+    });
   }
 
   resetBattle() {
