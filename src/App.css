@@ -38,7 +38,7 @@ a:hover {
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   border-top: 2px solid #822000;
   border-bottom: 2px solid #822000;
   height: 40px;
@@ -189,7 +189,7 @@ a:hover {
 .create-creature-form {
   width: 80%;
   margin-top: 40px;
-  grid-gap: 35px;
+  grid-gap: 50px;
   display: grid;
   grid-template-columns: 20% 10% 10% 10%;
   justify-content: center;
@@ -205,6 +205,7 @@ a:hover {
   padding: 10px;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
+  width: 100%;
 }
 
 .create-creature-form--label {
