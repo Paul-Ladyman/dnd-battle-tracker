@@ -61,7 +61,8 @@ class Creature extends Component {
 
     return (
       <React.Fragment>
-        <div className={classes} ref={this.creatureRef}>
+        <section className={classes} ref={this.creatureRef} tabIndex='0'>
+          {!active && <button className="expand-creature-button" title={buttonTitle} onClick={buttonOnClick}>{buttonIcon}</button>}
           {showExpanded ? 
             <ExpandedCreature
               creature={creature}
@@ -73,8 +74,7 @@ class Creature extends Component {
             /> :
             <CollapsedCreature creature={creature} />
           }
-          {!active && <button className="expand-creature-button" title={buttonTitle} onClick={buttonOnClick}>{buttonIcon}</button>}
-        </div>
+        </section>
       </React.Fragment>
     );
   }
