@@ -1,6 +1,6 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import ReviveIcon from './icons/ReviveIcon';
+import StabalizeIcon from './icons/StabalizeIcon';
 import KillIcon from './icons/KillIcon';
 
 function CreatureToolbar({
@@ -10,15 +10,15 @@ function CreatureToolbar({
 }) {
   const {
     killCreature,
-    reviveCreature,
+    stabalizeCreature,
     damageCreature,
     healCreature,
     addNoteToCreature,
     addHealthToCreature
   } = creatureManagement;
-  const statusButtonFunc = creature.alive ? killCreature : reviveCreature;
+  const statusButtonFunc = creature.alive ? killCreature : stabalizeCreature;
   const statusButtonTitle = creature.alive ? 'Kill/Make unconscious' : 'Stabalize';
-  const statusButtonIcon = creature.alive ? <KillIcon /> : <ReviveIcon />;
+  const statusButtonIcon = creature.alive ? <KillIcon /> : <StabalizeIcon />;
   const statusButtonClass = 'creature-toolbar--button';
   const statusButtonClasses = creature.alive ? statusButtonClass : `${statusButtonClass} ${statusButtonClass}__dead`
   const enableHealthItems = creature.healthPoints !== undefined;

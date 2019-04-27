@@ -1,6 +1,6 @@
 import { 
   killCreature,
-  reviveCreature,
+  stabalizeCreature,
   damageCreature,
   healCreature,
   createCreature,
@@ -87,8 +87,8 @@ describe('killCreature', () => {
   });
 });
 
-describe('reviveCreature', () => {
-  test('it revives a creature who is dead with 0 hit points', () => {
+describe('stabalizeCreature', () => {
+  test('it stabalizes a creature who is dead with 0 hit points', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -116,10 +116,10 @@ describe('reviveCreature', () => {
       ariaAnnouncements: ['Goblin stabalized']
     };
 
-    expect(reviveCreature(state, 1)).toEqual(expected);
+    expect(stabalizeCreature(state, 1)).toEqual(expected);
   });
 
-  test('it revives a creature who is dead with no hit points', () => {
+  test('it stabalizes a creature who is dead with no hit points', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -145,15 +145,15 @@ describe('reviveCreature', () => {
       ariaAnnouncements: ['Wellby stabalized']
     };
 
-    expect(reviveCreature(state, 0)).toEqual(expected);
+    expect(stabalizeCreature(state, 0)).toEqual(expected);
   });
 
-  test('it revives a creature who is already alive', () => {
+  test('it stabalizes a creature who is already alive', () => {
     const expected = {
       ...defaultState,
       ariaAnnouncements: ['Wellby stabalized']
     }
-    expect(reviveCreature(defaultState, 0)).toEqual(expected);
+    expect(stabalizeCreature(defaultState, 0)).toEqual(expected);
   });
 });
 
@@ -288,7 +288,7 @@ describe('healCreature', () => {
     expect(healCreature(state, 1, 10)).toEqual(expectedState);
   });
 
-  test('it revives a creature if it was dead', () => {
+  test('it stabalizes a creature if it was dead', () => {
     const state = {
       ...defaultState,
       creatures: [
