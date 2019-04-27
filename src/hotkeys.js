@@ -1,9 +1,9 @@
 export const hotkeys =  {
-  nextInitiative: 'ctrl+.',
-  nextFocus: 'ctrl+s',
-  prevFocus: 'ctrl+w',
-  createCreature: 'ctrl+c',
-  battlebar: 'ctrl+b',
+  nextInitiative: 'mod+shift+.',
+  nextFocus: 'mod+shift+Down',
+  prevFocus: 'mod+shift+Up',
+  createCreature: 'mod+shift+k',
+  battlebar: 'mod+shift+l',
 };
 
 export const hotkeyDescriptions =  {
