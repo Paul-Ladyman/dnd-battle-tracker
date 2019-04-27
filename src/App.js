@@ -147,7 +147,7 @@ class App extends Component {
           initiative={getInitiative(this.state)}
           round={this.state.round}
           secondsElapsed={secondsElapsed}
-          combatants={this.state.creatureCount}
+          creatures={this.state.creatureCount}
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />
