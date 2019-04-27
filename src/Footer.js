@@ -7,7 +7,7 @@ function Footer() {
   return (
     <footer className="footer-text" role="contentinfo">
       <div className="footer-text--shortcuts">
-        <p>Keyboard shortcuts:</p>
+        <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
         <ul>
           {Object.keys(hotkeys).map((key, i) => {
             const hotkey = hotkeys[key]; 
