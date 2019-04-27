@@ -147,6 +147,31 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
+  test('announces if the active creature is dead', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          alive: false
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      round: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...state,
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Wellby\'s go. Wellby is dead/unconscious']
+    };
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
   test('it advances the active creature by 1', () => {
     const state = {
       ...defaultState,

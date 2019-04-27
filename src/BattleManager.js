@@ -48,8 +48,12 @@ export function nextInitiative(state) {
     }
   }
 
-  const { name } = state.creatures[activeCreature];
-  const ariaAnnouncement = `its ${name}'s go`;
+  const { name, alive } = state.creatures[activeCreature];
+  let ariaAnnouncement = `its ${name}'s go`;
+
+  if (!alive) {
+    ariaAnnouncement = `${ariaAnnouncement}. ${name} is dead/unconscious`;
+  }
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
   return {...state, round, activeCreature, focusedCreature: activeCreature, ariaAnnouncements};

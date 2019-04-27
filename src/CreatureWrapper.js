@@ -17,6 +17,20 @@ function getAvailableConditions(allConditions, creatureConditions) {
   });
 }
 
+function getCreatureAriaLabel(creature, active, expanded) {
+  const { name } = creature;
+  let label = name;
+  if (active) {
+    label = `active creature ${label}`;
+  }
+
+  if (expanded && !active) {
+    label = `${label} expanded`;
+  }
+
+  return label;
+}
+
 class CreatureWrapper extends Component {
   constructor(props) {
     super(props);
@@ -110,10 +124,11 @@ class CreatureWrapper extends Component {
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
     const buttonTitle = this.state.expanded ? 'Collapse creature' : 'Expand creature';
     const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
+    const buttonAriaLabel = this.state.expanded ? `collapse ${creature.name}` : `expand ${creature.name}`;
 
     const showExpanded = active || this.state.expanded;
 
-    const creatureAriaLabel = active ? `active creature ${creature.name}` : creature.name;
+    const creatureAriaLabel = getCreatureAriaLabel(creature, active, this.state.expanded);
 
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
 
@@ -141,6 +156,7 @@ class CreatureWrapper extends Component {
           }
           {!active && 
             <button
+              aria-label={buttonAriaLabel}
               className="expand-creature-button"
               title={buttonTitle}
               onClick={this.expandCreatureHandler}>
