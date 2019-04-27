@@ -34,8 +34,12 @@ function Timer ({
   const showRound = round !== undefined;
   const minutes = Math.floor(parseFloat(time) / 60.0);
   const remainingSeconds = time % 60;
+
+  const roundAriaLabel = showRound ? `${round} rounds ` : '';
+  const timeAriaLabel = `${minutes} minutes ${remainingSeconds} seconds`;
+
   return (
-    <div className={className}>
+    <div className={className} aria-label={roundAriaLabel + timeAriaLabel}>
       {showRound && `${round}r `}
       {`${minutes}m `}
       {`${remainingSeconds}s`}
