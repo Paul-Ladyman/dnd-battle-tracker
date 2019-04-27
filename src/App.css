@@ -290,7 +290,7 @@ a:hover {
   padding: 10px;
   background-color: #e6d898;
   display: flex;
-  flex-flow: row-reverse;
+  flex-flow: row;
   align-items: flex-start;
   justify-content: space-between;
 }
