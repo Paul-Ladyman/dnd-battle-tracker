@@ -116,11 +116,11 @@ class CreateCreatureForm extends Component {
           <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="health points" htmlFor="healthPoints" className="create-creature-form--label">HP</label>
+          <label aria-label="health points (optional)" htmlFor="healthPoints" className="create-creature-form--label">HP</label>
           <input className={healthClass} type="number" min="1" id="healthPoints" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__multiplier">
-          <label aria-label="multiplier (require)" htmlFor="multiplier" className="create-creature-form--label">Multiplier <b>*</b></label>
+          <label aria-label="multiplier (required)" htmlFor="multiplier" className="create-creature-form--label">Multiplier <b>*</b></label>
           <div className="create-creature-form--multiplier-container">
             <div className="create-creature-form--multiplier">x</div>
             <input className={`${multiplierClass} ${inputClass}__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
