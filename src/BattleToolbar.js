@@ -58,7 +58,7 @@ class BattleToolbar extends Component {
           Time Elapsed:
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
-        <button title="Reset" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
+        <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
       </header>
     );
   }

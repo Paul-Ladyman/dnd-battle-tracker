@@ -68,12 +68,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking a battle
 ## Release
 
 - Update the version in package.json and in the ***Download*** section of this README.
-- `npm run build` to build the project and package all the static resources into a single HTML file. This file will be made available under:
-  - `docs/index.html` to provide the live Github Pages site.
-  - `dist/dnd-battle-tracker.html` for people to download from Github to use offline.
+- `npm run build` to build the project and package all the static resources into a single HTML file. This file will be made available under `dist/dnd-battle-tracker.html`.
 - Push the results to the `master` branch.
 - Create a release in Github and upload the `dist/dnd-battle-tracker.html` file.
-
-## TODO
-
-* Consider adding a log to keep track of all battle events

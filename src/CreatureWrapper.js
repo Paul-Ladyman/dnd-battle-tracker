@@ -113,7 +113,7 @@ class CreatureWrapper extends Component {
 
     const showExpanded = active || this.state.expanded;
 
-    const creatureAriaLabel = `${active ? 'active' : ''} creature ${creature.name}`;
+    const creatureAriaLabel = active ? `active creature ${creature.name}` : creature.name;
 
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
 
@@ -150,7 +150,7 @@ class CreatureWrapper extends Component {
         </section>
         <section
           tabIndex="0"
-          aria-label={`creature toolbar for ${creature.name}`}
+          aria-label={`${creature.name} toolbar`}
           ref={this.creatureToolbarRef}
           onKeyDown={this.creatureToolbarKeyHandler}
         >

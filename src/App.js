@@ -14,7 +14,8 @@ import {
   prevFocus,
   setFocus,
   removeCreature,
-  addCreature
+  addCreature,
+  resetBattle
 } from './BattleManager';
 import {
   killCreature,
@@ -71,7 +72,7 @@ class App extends Component {
   }
 
   resetBattle() {
-    this.setState(newBattleState);
+    this.setState(resetBattle(this.state));
   }
 
   removeCreature(creatureId) {
@@ -150,6 +151,9 @@ class App extends Component {
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />
+        <div className="aria-announcements" role='region' aria-live="assertive">
+          {this.state.ariaAnnouncements}
+        </div>
         <div className="main-footer-wrapper">
           <main className="main">
            <CreateCreatureForm createCreature={this.createCreature} />

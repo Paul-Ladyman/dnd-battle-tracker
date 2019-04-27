@@ -12,7 +12,7 @@ function Creatures({
   creatureManagement
 }) {
   return (
-    <div className="creature-list centered__columns">
+    <div className="creature-list">
       {creatures.map((creature, i) => {
         const active = activeCreature === i;
         const focused = focusedCreature === i;

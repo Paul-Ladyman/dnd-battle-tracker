@@ -37,12 +37,12 @@ function CreatureToolbar({
         value=""
         onChange={(event) => addNoteToCreature(creature.id, event.target.value, true)}
       >
-        <option value="">Conditions</option>
+        <option value="">Add Condition</option>
         {conditions.map((condition, i) => {
           return <option key={i} value={condition}>{condition}</option>
         })}
       </select>
-      <CreatureToolbarInput placeholder="Note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
+      <CreatureToolbarInput placeholder="Add Note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
       {enableHealthItems &&
         <React.Fragment>
           <CreatureToolbarInput integer enabled={enableDamage} placeholder="Damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>
