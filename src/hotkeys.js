@@ -4,8 +4,8 @@ export const hotkeys =  {
   prevFocus: 'mod+shift+Up',
   focusCreature: 'mod+shift+Left',
   focusCreatureToolbar: 'mod+shift+Right',
-  createCreature: 'mod+shift+k',
-  battlebar: 'mod+shift+l',
+  createCreature: 'alt+shift+k',
+  battlebar: 'alt+shift+l',
 };
 
 export const hotkeyDescriptions =  {
