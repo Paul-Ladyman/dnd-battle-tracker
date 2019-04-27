@@ -25,13 +25,13 @@ class BattleToolbar extends Component {
       initiative,
       round,
       secondsElapsed,
-      combatants,
+      creatures,
       nextInitiative,
       resetBattle
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
-    const buttonClasses = combatants > 0 ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
+    const buttonClasses = creatures > 0 ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
     const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
     return (
@@ -47,8 +47,8 @@ class BattleToolbar extends Component {
           <div className="battle-toolbar--stat-value">{initiative}</div>
         </div>
         <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
-          Combatants:
-          <div className="battle-toolbar--stat-value">{combatants}</div>
+          Creatures:
+          <div className="battle-toolbar--stat-value">{creatures}</div>
         </div>
         <div className="battle-toolbar--stat battle-toolbar--stat__extra1">
           Round:
@@ -58,7 +58,7 @@ class BattleToolbar extends Component {
           Time Elapsed:
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
-        <button title="Reset" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
+        <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
       </header>
     );
   }

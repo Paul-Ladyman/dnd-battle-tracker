@@ -27,6 +27,11 @@ a:hover {
   flex-flow: column;
 }
 
+.aria-announcements {
+  position: fixed;
+  left: -9999px;
+}
+
 .main {
   display: flex;
   align-items: center;
@@ -140,7 +145,7 @@ a:hover {
   border: 2px solid #822000;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
-  padding: 10px;
+  padding: 8px;
   background-color: white;
   box-sizing: border-box;
   display: block;
@@ -290,7 +295,7 @@ a:hover {
   padding: 10px;
   background-color: #e6d898;
   display: flex;
-  flex-flow: row-reverse;
+  flex-flow: row;
   align-items: flex-start;
   justify-content: space-between;
 }

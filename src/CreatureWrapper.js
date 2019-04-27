@@ -1,11 +1,37 @@
 import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
+import isHotkey from 'is-hotkey';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import ExpandIcon from './icons/ExpandIcon';
 import CollapseIcon from './icons/CollapseIcon';
+import CreatureToolbar from './CreatureToolbar';
+import { hotkeys } from './hotkeys';
 
-class Creature extends Component {
+function getAvailableConditions(allConditions, creatureConditions) {
+  return allConditions.filter((condition) => {
+    const activeConditionIndex = creatureConditions.findIndex((activeCondition) => {
+      return activeCondition.text === condition;
+    });
+    return activeConditionIndex === -1;
+  });
+}
+
+function getCreatureAriaLabel(creature, active, expanded) {
+  const { name } = creature;
+  let label = name;
+  if (active) {
+    label = `active creature ${label}`;
+  }
+
+  if (expanded && !active) {
+    label = `${label} expanded`;
+  }
+
+  return label;
+}
+
+class CreatureWrapper extends Component {
   constructor(props) {
     super(props);
 
@@ -14,10 +40,12 @@ class Creature extends Component {
     };
 
     this.creatureRef = React.createRef();
+    this.creatureToolbarRef = React.createRef();
 
     this.expand = this.expand.bind(this);
     this.collapse = this.collapse.bind(this);
-    this.keyHandler = this.keyHandler.bind(this);
+    this.creatureKeyHandler = this.creatureKeyHandler.bind(this);
+    this.creatureToolbarKeyHandler = this.creatureToolbarKeyHandler.bind(this);
     this.getExpandCollapseFunc = this.getExpandCollapseFunc.bind(this);
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
@@ -51,10 +79,20 @@ class Creature extends Component {
   }
 
 
-  keyHandler(event) {
+  creatureKeyHandler(event) {
     const targetId = event.target.getAttribute('id');
     if (event.keyCode === 13 && targetId === 'creature-wrapper') {
       this.getExpandCollapseFunc()();
+    }
+
+    if (isHotkey(hotkeys.focusCreatureToolbar, event)) {
+      this.creatureToolbarRef.current.focus();
+    }
+  }
+
+  creatureToolbarKeyHandler(event) {
+    if (isHotkey(hotkeys.focusCreature, event)) {
+      this.creatureRef.current.focus();
     }
   }
 
@@ -78,7 +116,7 @@ class Creature extends Component {
   }
 
   render () {
-    const { creature, active } = this.props;
+    const { creature, active, conditions, creatureManagement } = this.props;
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
@@ -86,29 +124,25 @@ class Creature extends Component {
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
     const buttonTitle = this.state.expanded ? 'Collapse creature' : 'Expand creature';
     const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
+    const buttonAriaLabel = this.state.expanded ? `collapse ${creature.name}` : `expand ${creature.name}`;
 
     const showExpanded = active || this.state.expanded;
 
-    const { removeCreature, removeNoteFromCreature } = this.props.creatureManagement;
+    const creatureAriaLabel = getCreatureAriaLabel(creature, active, this.state.expanded);
+
+    const { removeCreature, removeNoteFromCreature } = creatureManagement;
 
     return (
       <React.Fragment>
-        <div
+        <section
           className={classes}
           id="creature-wrapper"
           ref={this.creatureRef}
           tabIndex='0'
-          onKeyDown={this.keyHandler}
+          aria-label={creatureAriaLabel}
+          onKeyDown={this.creatureKeyHandler}
           onFocus={this.focusHandler}
         >
-          {!active && 
-            <button
-              className="expand-creature-button"
-              title={buttonTitle}
-              onClick={this.expandCreatureHandler}>
-                {buttonIcon}
-            </button>
-          }
           {showExpanded ? 
             <ExpandedCreature
               creature={creature}
@@ -120,10 +154,31 @@ class Creature extends Component {
             /> :
             <CollapsedCreature creature={creature} />
           }
-        </div>
+          {!active && 
+            <button
+              aria-label={buttonAriaLabel}
+              className="expand-creature-button"
+              title={buttonTitle}
+              onClick={this.expandCreatureHandler}>
+                {buttonIcon}
+            </button>
+          }
+        </section>
+        <section
+          tabIndex="0"
+          aria-label={`${creature.name} toolbar`}
+          ref={this.creatureToolbarRef}
+          onKeyDown={this.creatureToolbarKeyHandler}
+        >
+          <CreatureToolbar
+            creature={creature}
+            conditions={getAvailableConditions(conditions, creature.conditions)}
+            creatureManagement={creatureManagement}
+          />
+        </section>
       </React.Fragment>
     );
   }
 }
 
-export default Creature;
+export default CreatureWrapper;

@@ -88,12 +88,22 @@ class ExpandedCreature extends Component {
         }
         {!active && <div className="expanded-creature--separator" /> }
         {!active && !this.state.removing &&
-          <button title="Remove creature" className="expanded-creature--remove-button" onClick={this.removing}>
+          <button
+            aria-label={`remove ${creature.name}`}
+            title="Remove creature"
+            className="expanded-creature--remove-button"
+            onClick={this.removing}
+          >
             <RemoveCreatureIcon />
           </button>
         }
         {!active && this.state.removing &&
-          <button title="Confirm remove creature" className="expanded-creature--confirm-remove-button" onClick={() => removeCreature(id)}>
+          <button
+            aria-label={`confirm remove ${creature.name}`}
+            title="Confirm remove creature"
+            className="expanded-creature--confirm-remove-button"
+            onClick={() => removeCreature(id)}
+          >
               <ConfirmRemoveCreatureIcon />
           </button>
         }

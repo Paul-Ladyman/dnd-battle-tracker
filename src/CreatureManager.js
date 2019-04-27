@@ -7,7 +7,7 @@ function findCreature(creatures, creatureId) {
   });
 }
 
-function updateCreature(state, id, updates) {
+function updateCreature(state, id, updates, announcement) {
   let newCreatures = [...state.creatures];
   const creatureIndex = newCreatures.findIndex((creature) => {
     return creature.id === id;
@@ -15,17 +15,23 @@ function updateCreature(state, id, updates) {
   const existingCreature = newCreatures[creatureIndex]
   newCreatures[creatureIndex] = {...existingCreature, ...updates};
 
-  return { ...state, creatures: newCreatures };
+  const ariaAnnouncement = announcement ? [announcement] : [];
+  const ariaAnnouncements = state.ariaAnnouncements.concat(ariaAnnouncement);
+
+  return { ...state, creatures: newCreatures, ariaAnnouncements };
 }
 
 export function killCreature(state, creatureId) {
   const creature = findCreature(state.creatures, creatureId);
   const healthPoints = creature.healthPoints === undefined ? undefined : 0;
-  return updateCreature(state, creatureId, {alive: false, healthPoints});
+  const ariaAnnouncement = `${creature.name} killed/made unconscious`;
+  return updateCreature(state, creatureId, {alive: false, healthPoints}, ariaAnnouncement);
 };
 
-export function reviveCreature(state, creatureId) {
-  return updateCreature(state, creatureId, {alive: true});
+export function stabalizeCreature(state, creatureId) {
+  const creature = findCreature(state.creatures, creatureId);
+  const ariaAnnouncement = `${creature.name} stabalized`;
+  return updateCreature(state, creatureId, {alive: true}, ariaAnnouncement);
 };
 
 export function damageCreature(state, creatureId, damage) {
@@ -42,7 +48,8 @@ export function damageCreature(state, creatureId, damage) {
     alive = false;
   }
 
-  return updateCreature(state, creatureId, {alive, healthPoints});
+  const ariaAnnouncement = `damaged ${creature.name} by ${damage}. ${creature.name}'s health is ${healthPoints}`;
+  return updateCreature(state, creatureId, {alive, healthPoints}, ariaAnnouncement);
 };
 
 export function healCreature(state, creatureId, health) {
@@ -62,7 +69,8 @@ export function healCreature(state, creatureId, health) {
     alive = true;
   }
 
-  return updateCreature(state, creatureId, {alive, healthPoints});
+  const ariaAnnouncement = `healed ${creature.name} by ${health}. ${creature.name}'s health is ${healthPoints}`;
+  return updateCreature(state, creatureId, {alive, healthPoints}, ariaAnnouncement);
 };
 
 export function createCreature(creatureId, {name, initiative, healthPoints}) {
@@ -92,11 +100,14 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
       url: conditionDescriptions[note.text]
     };
     const conditions = [...creature.conditions, condition];
-    return updateCreature(state, creatureId, { conditions });
+    const ariaAnnouncement = `${note.text} condition added to ${creature.name}`;
+    return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
   }
 
   const notes = [...creature.notes, note];
-  return updateCreature(state, creatureId, { notes });
+
+  const ariaAnnouncement = `note added to ${creature.name}`;
+  return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
 
 export function removeNoteFromCreature(state, creatureId, note, isCondition) {
@@ -110,7 +121,10 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
     return !notesAreEqual;
   });
   const newNotes = isCondition ? { conditions: notes } : { notes };
-  return updateCreature(state, creatureId, newNotes);
+  const ariaAnnouncement = isCondition ?
+    `${note.text} condition removed from ${creature.name}` :
+    `note removed from ${creature.name}`;
+  return updateCreature(state, creatureId, newNotes, ariaAnnouncement);
 }
 
 export function addHealthToCreature(state, creatureId, health) {
@@ -127,5 +141,7 @@ export function addHealthToCreature(state, creatureId, health) {
   if (!creature.alive) {
     healthPoints = 0;
   }
-  return updateCreature(state, creatureId, { healthPoints, maxHealthPoints: health })
+
+  const ariaAnnouncement = `${creature.name}'s health is ${healthPoints}, max health is ${health}`;
+  return updateCreature(state, creatureId, { healthPoints, maxHealthPoints: health}, ariaAnnouncement);
 }

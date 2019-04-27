@@ -7,7 +7,8 @@ import {
   prevFocus,
   setFocus,
   removeCreature,
-  addCreature
+  addCreature,
+  resetBattle
 } from './BattleManager';
 import { createCreature } from './CreatureManager';
 
@@ -48,7 +49,8 @@ const defaultState = {
   creatureCount: 3,
   activeCreature: 1,
   focusedCreature: 1,
-  round: 1
+  round: 1,
+  ariaAnnouncements: []
 };
 
 beforeEach(() => {
@@ -63,10 +65,27 @@ describe('newBattleState', () => {
       creatureCount: 0,
       activeCreature: undefined,
       focusedCreature: undefined,
-      round: 0
+      round: 0,
+      ariaAnnouncements: []
     };
 
     expect(newBattleState).toEqual(expected);
+  });
+});
+
+describe('resetBattle', () => {
+  test('resets to the initial battle state', () => {
+    const expected = {
+      creatures: [],
+      creatureIdCount: 0,
+      creatureCount: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined,
+      round: 0,
+      ariaAnnouncements: ['battle reset']
+    };
+
+    expect(resetBattle(defaultState)).toEqual(expected);
   });
 });
 
@@ -122,7 +141,33 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 0,
-      focusedCreature: 0
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Wellby\'s go']
+    };
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  test('announces if the active creature is dead', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          alive: false
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      round: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...state,
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Wellby\'s go. Wellby is dead/unconscious']
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -139,7 +184,8 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 1,
-      focusedCreature: 1
+      focusedCreature: 1,
+      ariaAnnouncements: ['its Goblin\'s go']
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -157,7 +203,8 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 1,
-      focusedCreature: 1
+      focusedCreature: 1,
+      ariaAnnouncements: ['its Goblin\'s go']
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -175,7 +222,8 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 2,
       activeCreature: 0,
-      focusedCreature: 0
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Wellby\'s go']
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -184,7 +232,8 @@ describe('nextInitiative', () => {
   test('it does nothing if there are no creatures', () => {
     const state = {
       ...defaultState,
-      creatures: []
+      creatures: [],
+      ariaAnnouncements: []
     };
 
     expect(nextInitiative(state)).toEqual(state);
@@ -350,7 +399,8 @@ describe('removeCreature', () => {
         state.creatures[2]
       ],
       creatureCount: 2,
-      activeCreature: undefined
+      activeCreature: undefined,
+      ariaAnnouncements: ['creature removed from battle']
     };
 
     const result = removeCreature(state, 1);
@@ -370,7 +420,8 @@ describe('removeCreature', () => {
         state.creatures[2]
       ],
       creatureCount: 2,
-      activeCreature: 0
+      activeCreature: 0,
+      ariaAnnouncements: ['creature removed from battle']
     };
     const result = removeCreature(state, 1);
     expect(result).toEqual(expected);
@@ -384,7 +435,8 @@ describe('removeCreature', () => {
         defaultState.creatures[2]
       ],
       creatureCount: 2,
-      activeCreature: 0
+      activeCreature: 0,
+      ariaAnnouncements: ['creature removed from battle']
     };
     const result = removeCreature(defaultState, 0);
     expect(result).toEqual(expected);
@@ -398,7 +450,8 @@ describe('removeCreature', () => {
         defaultState.creatures[2]
       ],
       creatureCount: 2,
-      activeCreature: 1
+      activeCreature: 1,
+      ariaAnnouncements: ['creature removed from battle']
     };
     const result = removeCreature(defaultState, 1);
     expect(result).toEqual(expected);
@@ -412,7 +465,8 @@ describe('removeCreature', () => {
         defaultState.creatures[1]
       ],
       creatureCount: 2,
-      activeCreature: 1
+      activeCreature: 1,
+      ariaAnnouncements: ['creature removed from battle']
     };
     const result = removeCreature(defaultState, 2);
     expect(result).toEqual(expected);
@@ -431,7 +485,8 @@ describe('removeCreature', () => {
       ...state,
       creatures: [],
       creatureCount: 0,
-      activeCreature: undefined
+      activeCreature: undefined,
+      ariaAnnouncements: ['creature removed from battle']
     };
     const result = removeCreature(state, 0);
     expect(result).toEqual(expected);
@@ -474,7 +529,8 @@ describe('addCreature', () => {
         createdCreature
       ],
       creatureCount: 4,
-      creatureIdCount: 4
+      creatureIdCount: 4,
+      ariaAnnouncements: ['name added']
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
@@ -510,7 +566,8 @@ describe('addCreature', () => {
         defaultState.creatures[2]
       ],
       creatureCount: 4,
-      creatureIdCount: 4
+      creatureIdCount: 4,
+      ariaAnnouncements: ['name added']
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
@@ -547,7 +604,8 @@ describe('addCreature', () => {
       ],
       creatureCount: 4,
       creatureIdCount: 4,
-      activeCreature: 2
+      activeCreature: 2,
+      ariaAnnouncements: ['name added']
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
@@ -590,6 +648,7 @@ describe('addCreature', () => {
       ],
       creatureCount: 4,
       creatureIdCount: 4,
+      ariaAnnouncements: ['name added']
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
@@ -630,7 +689,8 @@ describe('addCreature', () => {
         createdCreature2
       ],
       creatureCount: 5,
-      creatureIdCount: 5
+      creatureIdCount: 5,
+      ariaAnnouncements: ['creatures added']
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);

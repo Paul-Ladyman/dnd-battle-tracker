@@ -14,11 +14,12 @@ import {
   prevFocus,
   setFocus,
   removeCreature,
-  addCreature
+  addCreature,
+  resetBattle
 } from './BattleManager';
 import {
   killCreature,
-  reviveCreature,
+  stabalizeCreature,
   damageCreature,
   healCreature,
   addNoteToCreature,
@@ -41,7 +42,7 @@ class App extends Component {
     this.setFocus = this.setFocus.bind(this);
     this.resetBattle = this.resetBattle.bind(this);
     this.killCreature = this.killCreature.bind(this);
-    this.reviveCreature = this.reviveCreature.bind(this);
+    this.stabalizeCreature = this.stabalizeCreature.bind(this);
     this.damageCreature = this.damageCreature.bind(this);
     this.healCreature = this.healCreature.bind(this);
     this.addHealthToCreature = this.addHealthToCreature.bind(this);
@@ -71,7 +72,7 @@ class App extends Component {
   }
 
   resetBattle() {
-    this.setState(newBattleState);
+    this.setState(resetBattle(this.state));
   }
 
   removeCreature(creatureId) {
@@ -82,8 +83,8 @@ class App extends Component {
     this.setState(killCreature(this.state, id));
   }
 
-  reviveCreature(id) {
-    this.setState(reviveCreature(this.state, id));
+  stabalizeCreature(id) {
+    this.setState(stabalizeCreature(this.state, id));
   }
 
   removeNoteFromCreature(creatureId, note, isCondition) {
@@ -131,7 +132,7 @@ class App extends Component {
 
     const creatureManagement = {
       killCreature: this.killCreature,
-      reviveCreature: this.reviveCreature,
+      stabalizeCreature: this.stabalizeCreature,
       damageCreature: this.damageCreature,
       healCreature: this.healCreature,
       addHealthToCreature: this.addHealthToCreature,
@@ -146,10 +147,13 @@ class App extends Component {
           initiative={getInitiative(this.state)}
           round={this.state.round}
           secondsElapsed={secondsElapsed}
-          combatants={this.state.creatureCount}
+          creatures={this.state.creatureCount}
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
         />
+        <div className="aria-announcements" role='region' aria-live="assertive">
+          {this.state.ariaAnnouncements}
+        </div>
         <div className="main-footer-wrapper">
           <main className="main">
            <CreateCreatureForm createCreature={this.createCreature} />

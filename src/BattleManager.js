@@ -19,7 +19,8 @@ export const newBattleState = {
   creatureCount: 0,
   activeCreature: undefined,
   focusedCreature: undefined,
-  round: 0
+  round: 0,
+  ariaAnnouncements: []
 };
 
 export function getSecondsElapsed(state) {
@@ -34,19 +35,28 @@ export function nextInitiative(state) {
     return state;
   }
 
-  if (state.round === 0) {
-    return {...state, round: 1, activeCreature: 0, focusedCreature: 0};
+  let activeCreature = 0;
+  let round = 1;
+
+  if (state.round > 0) {
+    activeCreature = state.activeCreature + 1;
+    round = state.round;
+
+    if (activeCreature === state.creatureCount) {
+      activeCreature = 0;
+      round = round + 1;
+    }
   }
 
-  let activeCreature = state.activeCreature + 1;
-  let round = state.round;
+  const { name, alive } = state.creatures[activeCreature];
+  let ariaAnnouncement = `its ${name}'s go`;
 
-  if (activeCreature === state.creatureCount) {
-    activeCreature = 0;
-    round = round + 1;
+  if (!alive) {
+    ariaAnnouncement = `${ariaAnnouncement}. ${name} is dead/unconscious`;
   }
+  const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
-  return {...state, round, activeCreature, focusedCreature: activeCreature};
+  return {...state, round, activeCreature, focusedCreature: activeCreature, ariaAnnouncements};
 };
 
 export function nextFocus(state) {
@@ -130,7 +140,9 @@ export function removeCreature(state, creatureId) {
     }
   }
 
-  return {...state, creatures, creatureCount, activeCreature};
+  const ariaAnnouncement = 'creature removed from battle';
+  const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
+  return {...state, creatures, creatureCount, activeCreature, ariaAnnouncements};
 };
 
 function createCreatures(creatureIdCount, creature, multiplier) {
@@ -162,5 +174,13 @@ export function addCreature(state, creature) {
   const creatureCount = state.creatureCount + creatureMultiplier;
   const creatureIdCount = state.creatureIdCount + creatureMultiplier;
 
-  return {...state, creatures, creatureCount, creatureIdCount, activeCreature};
+  const ariaAnnouncement = newCreatures.length > 1 ? 'creatures added' : `${newCreatures[0].name} added`;
+  const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
+
+  return {...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements};
 };
+
+export function resetBattle(state) {
+  const ariaAnnouncements = state.ariaAnnouncements.concat(['battle reset']);
+  return {...newBattleState, ariaAnnouncements};
+}
