@@ -38,10 +38,10 @@ class ExpandedCreature extends Component {
 
     return (
       <div className="expanded-creature centered__columns">
-        <h1 className="expanded-creature--name">
+        <h2 className="expanded-creature--name">
           {name}
           {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
-        </h1>
+        </h2>
         {!alive &&
           <div className="expanded-creature--status">
             <em><ExternalLink url={conditionDescriptions.unconscious} text="Unconscious/dead"/></em>
