@@ -40,6 +40,12 @@ a:hover {
   width: 100%;
 }
 
+.main-title {
+  margin-top: 40px;
+  color: #822000;
+  text-align: center;
+}
+
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
@@ -193,7 +199,7 @@ a:hover {
 
 .create-creature-form {
   width: 80%;
-  margin-top: 40px;
+  margin-top: 20px;
   grid-gap: 50px;
   display: grid;
   grid-template-columns: 20% 10% 10% 10%;
