@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v1.18.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.18.0/dnd-battle-tracker.html)
+**Latest release (v1.19.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.19.0/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -20,11 +20,14 @@ As a new DM I found that I was frequently making mistakes during a battle, such 
 
 It was clear that some automation would be helpful. There's a number of browser-based battle trackers out there at the time of writing:
 
-* [Improved Initiative](https://www.improved-initiative.com/)
 * [Aide D&D](https://www.aidedd.org/dnd-tracker/index.php?l=1)
+* [DHMStark](http://dhmstark.co.uk/rpgs/encounter-tracker/)
+* [Donjon](https://donjon.bin.sh/5e/initiative/)
+* [Harmless Key](https://harmlesskey.com/)
+* [Improved Initiative](https://www.improved-initiative.com/)
+* [Kassoon](https://www.kassoon.com/dnd/combat-tracker/)
 * [Orc Pub](https://www.orcpub2.com/)
 * [Roll20](https://app.roll20.net/sessions/new)
-* [D&D Beyond](https://www.dndbeyond.com/) (Currently in development)
 
 Many of these systems are very feature rich and aim to provide tools beyond the battle tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
