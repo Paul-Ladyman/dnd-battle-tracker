@@ -156,7 +156,7 @@ class App extends Component {
         </div>
         <div className="main-footer-wrapper">
           <main className="main">
-           <h1 className="main-title">D&D 5E Battle Tracker</h1>
+           <h1 className="main-title">D&D Battle Tracker</h1>
            <CreateCreatureForm createCreature={this.createCreature} />
            <Creatures
              creatures={this.state.creatures}

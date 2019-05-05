@@ -6,6 +6,7 @@ import { hotkeys, hotkeyDescriptions } from './hotkeys';
 function Footer() {
   return (
     <footer className="footer-text" role="contentinfo">
+      <p>D&D Battle Tracker is a combat management tool for Dungeons & Dragons 5th Edition.</p>
       <div className="footer-text--shortcuts">
         <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
         <ul>
