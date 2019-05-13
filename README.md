@@ -1,6 +1,6 @@
 # [D&D Battle Tracker](http://dndbattletracker.com/)
 
-This is an easy to use battle tracker application for D&D 5e.
+D&D Battle Tracker is a combat management tool for Dungeons & Dragons 5th Edition.
 
 ## Use
 
@@ -12,13 +12,13 @@ You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/
 
 ## Motivation
 
-As a new DM I found that I was frequently making mistakes during a battle, such as:
+As a new DM I found that I was frequently making mistakes during combat, such as:
 
 * Forgetting who's turn it was or skipping a creature's turn altogether.
 * Forgetting what conditions creatures were under.
 * Doing maths wrong when applying damage to creatures (!)
 
-It was clear that some automation would be helpful. There's a number of browser-based battle trackers out there at the time of writing:
+It was clear that some automation would be helpful. There's a number of browser-based combat trackers out there at the time of writing:
 
 * [Aide D&D](https://www.aidedd.org/dnd-tracker/index.php?l=1)
 * [DHMStark](http://dhmstark.co.uk/rpgs/encounter-tracker/)
@@ -29,22 +29,22 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [Orc Pub](https://www.orcpub2.com/)
 * [Roll20](https://app.roll20.net/sessions/new)
 
-Many of these systems are very feature rich and aim to provide tools beyond the battle tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
+Many of these systems are very feature rich and aim to provide tools beyond the combat tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
-This D&D Battle Tracker simply aims to automate the process of tracking a battle using a pen and paper. It attempts to do this in a way that is as straight-forward and easy to use as possible. As such it does not do things like automate dice roles, provide custom character creation tools, battle map creation tools or provide content from the Player's Hand Book. Instead it focuses on automating the smaller things that are prone to error and often distract a DM from the battle itself.
+This D&D Battle Tracker simply aims to automate the process of tracking combat using a pen and paper. It attempts to do this in a way that is as straight-forward and easy to use as possible. As such it does not do things like automate dice roles, provide custom character creation tools, battle map creation tools or provide content from the Player's Hand Book. Instead it focuses on automating the smaller things that are prone to error and often distract a DM from the combat itself.
 
 ## Features
 
 * Works entirely offline.
-* Create a list of creatures who are involved in the battle by adding a name, initiative score and optionally health points for each one.
+* Create a list of creatures who are involved in combat by adding a name, initiative score and optionally health points for each one.
 * Automatically order creatures by their initiative.
-* Keep track of who's turn it is as the battle progresses as well as what the current round is and how long the battle has lasted.
+* Keep track of who's turn it is as combat progresses as well as what the current round is and how long combat has lasted.
 * Keep track of creature conditions and any additional notes and how long they have been applied.
 * Make it obvious when conditions or notes have been applied to help the DM not to forget to take them into account.
 * Provide links to Roll20 compendium of condition descriptions.
 * Manage the health points of enemy creatures or NPCs allowing HP to be added and removed whilst supporting adding PCs to the creature list without HP.
 * Allowing creatures to be killed/made unconscious and making it obvious to the DM that this has happened.
-* Creatures can be added to or removed from the list at any time, even after the battle has started.
+* Creatures can be added to or removed from the list at any time, even after combat has started.
 
 ## Credits
 
