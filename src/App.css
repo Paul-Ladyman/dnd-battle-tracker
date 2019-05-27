@@ -132,12 +132,6 @@ a:hover {
   width: 100%;
 }
 
-@media only screen and (max-width: 768px) {
-  .creature-toolbar {
-    justify-content: center;
-  }
-}
-
 .creature-toolbar--form {
   width: 100%;
   height: 100%;
@@ -162,17 +156,20 @@ a:hover {
   width: 100%;
 }
 
-.creature-toolbar--form label {
+.creature-toolbar--label {
   margin-bottom: 5px;
   margin-left: 10px;
+  font-size: 14px;
 }
 
 .creature-toolbar--button {
   padding: 4px;
   display: flex;
   background-color: #EBE1AD;
-  margin-top: 24px;
-  margin-right: 22px;
+  margin-top: 22px;
+  height: 40px;
+  width: 40px;
+  grid-column: span 2;
 }
 
 .creature-toolbar--button__dead {
@@ -187,14 +184,23 @@ a:hover {
 .creature-toolbar--dropdown {
   cursor: pointer;
   grid-column: span 4;
-  text-transform: capitalize;
   display: flex;
   flex-direction: column;
 }
 
+.creature-toolbar--dropdown option {
+  text-transform: capitalize;
+}
+
+/* TODO get rid of this */
 .creature-toolbar--dropdown label {
   margin-bottom: 5px;
-  margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-toolbar {
+    justify-content: center;
+  }
 }
 
 /*
@@ -238,6 +244,7 @@ a:hover {
 .create-creature-form--label {
   margin-bottom: 5px;
   margin-left: 10px;
+  font-size: 14px;
 }
 
 .create-creature-form--input__small-number {
