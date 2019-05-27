@@ -129,6 +129,7 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fit, 15px);
   grid-auto-rows: 1fr;
+  width: 100%;
 }
 
 @media only screen and (max-width: 768px) {
@@ -141,6 +142,8 @@ a:hover {
   width: 100%;
   height: 100%;
   grid-column: span 8;
+  display: flex;
+  flex-direction: column;
 }
 
 .creature-toolbar--form__number {
@@ -151,7 +154,7 @@ a:hover {
   border: 2px solid #822000;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
-  padding: 8px;
+  padding: 10px;
   background-color: white;
   box-sizing: border-box;
   display: block;
@@ -159,11 +162,17 @@ a:hover {
   width: 100%;
 }
 
+.creature-toolbar--form label {
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
 .creature-toolbar--button {
-  grid-column: span 2;
-  padding: 8px;
+  padding: 4px;
   display: flex;
   background-color: #EBE1AD;
+  margin-top: 24px;
+  margin-right: 22px;
 }
 
 .creature-toolbar--button__dead {
@@ -179,6 +188,13 @@ a:hover {
   cursor: pointer;
   grid-column: span 4;
   text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+}
+
+.creature-toolbar--dropdown label {
+  margin-bottom: 5px;
+  margin-left: 10px;
 }
 
 /*
