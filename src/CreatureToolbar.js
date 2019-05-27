@@ -40,6 +40,7 @@ function CreatureToolbar({
           value=""
           onChange={(event) => addNoteToCreature(creature.id, event.target.value, true)}
         >
+          <option>--Conditions--</option>
           {conditions.map((condition, i) => {
             return <option key={i} value={condition}>{condition}</option>
           })}

@@ -39,9 +39,7 @@ class CreatureToolbarInput extends Component {
         <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
           <label>{this.props.placeholder}</label>
           <form  onKeyDown={this.formHandler}>
-            {/* <div> */}
-            <input disabled={!this.props.enabled} className={classes} type={type} minLength='1' value={this.state.value} onChange={this.handleChange}/>
-            {/* </div> */}
+            <input disabled={!this.props.enabled} className={classes} type={type} value={this.state.value} onChange={this.handleChange}/>
           </form>
         </div>
     );
