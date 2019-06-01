@@ -48,11 +48,11 @@ function CreatureToolbar({
           </select>
         </label>
       </div>
-      <CreatureToolbarInput name="creature-toolbar-note" label="Add Note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
+      <CreatureToolbarInput label="Add Note" onSubmit={(note) => addNoteToCreature(creature.id, note, false)} />
       {enableHealthItems &&
         <React.Fragment>
-          <CreatureToolbarInput integer enabled={enableDamage} name="creature-toolbar-damage" label="Damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>
-          <CreatureToolbarInput integer enabled={enableHeal} name="creature-toolbar-heal" label="Heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>
+          <CreatureToolbarInput integer enabled={enableDamage} label="Damage" onSubmit={(damage) => damageCreature(creature.id, damage)}/>
+          <CreatureToolbarInput integer enabled={enableHeal} label="Heal" onSubmit={(heal) => healCreature(creature.id, heal)}/>
         </React.Fragment>
       }
       {!enableHealthItems &&
