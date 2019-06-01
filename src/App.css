@@ -46,6 +46,20 @@ a:hover {
   text-align: center;
 }
 
+.form--input {
+  border: 2px solid #822000;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
+  width: 100%;
+}
+
+.form--label {
+  margin-bottom: 5px;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
@@ -107,7 +121,7 @@ a:hover {
 
 .battle-toolbar--button {
   padding: 4px;
-  background-color: #e6d898;
+  background-color: #EBE1AD;
 }
 
 .battle-toolbar--button__reset {
@@ -129,18 +143,15 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fit, 15px);
   grid-auto-rows: 1fr;
-}
-
-@media only screen and (max-width: 768px) {
-  .creature-toolbar {
-    justify-content: center;
-  }
+  width: 100%;
 }
 
 .creature-toolbar--form {
   width: 100%;
   height: 100%;
   grid-column: span 8;
+  display: flex;
+  flex-direction: column;
 }
 
 .creature-toolbar--form__number {
@@ -148,22 +159,18 @@ a:hover {
 }
 
 .creature-toolbar--input {
-  border: 2px solid #822000;
-  border-radius: 15px;
-  box-shadow: 0 0 5px #979AA4;
-  padding: 8px;
   background-color: white;
   box-sizing: border-box;
   display: block;
-  height: 100%;
-  width: 100%;
 }
 
 .creature-toolbar--button {
-  grid-column: span 2;
-  padding: 8px;
+  padding: 4px;
   display: flex;
-  background-color: #e6d898;
+  background-color: #EBE1AD;
+  margin-top: 22px;
+  grid-column: span 2;
+  padding-left: 10px;
 }
 
 .creature-toolbar--button__dead {
@@ -178,7 +185,18 @@ a:hover {
 .creature-toolbar--dropdown {
   cursor: pointer;
   grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.creature-toolbar--dropdown option {
   text-transform: capitalize;
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-toolbar {
+    justify-content: center;
+  }
 }
 
 /*
@@ -209,19 +227,6 @@ a:hover {
 .create-creature-form--item {
   display: flex;
   flex-direction: column;
-}
-
-.create-creature-form--input {
-  border: 2px solid #822000;
-  padding: 10px;
-  border-radius: 15px;
-  box-shadow: 0 0 5px #979AA4;
-  width: 100%;
-}
-
-.create-creature-form--label {
-  margin-bottom: 5px;
-  margin-left: 10px;
 }
 
 .create-creature-form--input__small-number {
@@ -299,7 +304,7 @@ a:hover {
   border-radius: 15px;
   margin: 60px 0 10px 0;
   padding: 10px;
-  background-color: #e6d898;
+  background-color: #EBE1AD;
   display: flex;
   flex-flow: row;
   align-items: flex-start;
@@ -505,15 +510,18 @@ a:hover {
 /* Health points */
 
 .health-points--fine {
-  color: green;
+  color: #004D00;
+  font-weight: bold;
 }
 
 .health-points--damaged {
-  color: orangered;
+  color: black;
+  font-weight: bold;
 }
 
 .health-points--critical {
   color: #822000;
+  font-weight: bold;
 }
 
 /* Footer */
