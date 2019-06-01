@@ -169,9 +169,8 @@ a:hover {
   display: flex;
   background-color: #EBE1AD;
   margin-top: 22px;
-  height: 40px;
-  width: 40px;
   grid-column: span 2;
+  padding-left: 10px;
 }
 
 .creature-toolbar--button__dead {
