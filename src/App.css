@@ -46,6 +46,20 @@ a:hover {
   text-align: center;
 }
 
+.form--input {
+  border: 2px solid #822000;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 5px #979AA4;
+  width: 100%;
+}
+
+.form--label {
+  margin-bottom: 5px;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
@@ -145,21 +159,9 @@ a:hover {
 }
 
 .creature-toolbar--input {
-  border: 2px solid #822000;
-  border-radius: 15px;
-  box-shadow: 0 0 5px #979AA4;
-  padding: 10px;
   background-color: white;
   box-sizing: border-box;
   display: block;
-  height: 100%;
-  width: 100%;
-}
-
-.creature-toolbar--label {
-  margin-bottom: 5px;
-  margin-left: 10px;
-  font-size: 14px;
 }
 
 .creature-toolbar--button {
@@ -190,11 +192,6 @@ a:hover {
 
 .creature-toolbar--dropdown option {
   text-transform: capitalize;
-}
-
-/* TODO get rid of this */
-.creature-toolbar--dropdown label {
-  margin-bottom: 5px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -231,20 +228,6 @@ a:hover {
 .create-creature-form--item {
   display: flex;
   flex-direction: column;
-}
-
-.create-creature-form--input {
-  border: 2px solid #822000;
-  padding: 10px;
-  border-radius: 15px;
-  box-shadow: 0 0 5px #979AA4;
-  width: 100%;
-}
-
-.create-creature-form--label {
-  margin-bottom: 5px;
-  margin-left: 10px;
-  font-size: 14px;
 }
 
 .create-creature-form--input__small-number {
