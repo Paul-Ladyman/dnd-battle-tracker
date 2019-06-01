@@ -33,8 +33,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    // this.state = newBattleState;
-    this.state = {"creatures":[{"name":"goblin #1","initiative":1,"healthPoints":3,"maxHealthPoints":7,"id":0,"alive":true,"conditions":[],"notes":[]},{"name":"goblin #2","initiative":1,"healthPoints":1,"maxHealthPoints":7,"id":1,"alive":true,"conditions":[{"text":"blinded","appliedAtRound":0,"appliedAtSeconds":0,"url":"https://roll20.net/compendium/dnd5e/Conditions#toc_1"}],"notes":[{"text":"note","appliedAtRound":0,"appliedAtSeconds":0}]},{"name":"goblin #3","initiative":1,"healthPoints":7,"maxHealthPoints":7,"id":2,"alive":true,"conditions":[{"text":"deafened","appliedAtRound":0,"appliedAtSeconds":0,"url":"https://roll20.net/compendium/dnd5e/Conditions#toc_3"}],"notes":[{"text":"note","appliedAtRound":0,"appliedAtSeconds":0}]},{"name":"goblin #4","initiative":1,"healthPoints":0,"maxHealthPoints":7,"id":3,"alive":false,"conditions":[],"notes":[]}],"creatureIdCount":4,"creatureCount":4,"round":0,"ariaAnnouncements":["creatures added","damaged goblin #2 by 3. goblin #2's health is 4","damaged goblin #2 by 1. goblin #2's health is 3","battle reset","creatures added","damaged goblin #1 by 4. goblin #1's health is 3","damaged goblin #2 by 6. goblin #2's health is 1","note added to goblin #3","deafened condition added to goblin #3","goblin #4 added","goblin #4 killed/made unconscious","blinded condition added to goblin #2","note added to goblin #2"]};
+    this.state = newBattleState;
 
     this.createCreature = this.createCreature.bind(this);
     this.nextInitiative = this.nextInitiative.bind(this);
@@ -129,9 +128,6 @@ class App extends Component {
   }
 
   render() {
-
-    console.log(JSON.stringify(this.state));
-
     const secondsElapsed = getSecondsElapsed(this.state);
 
     const creatureManagement = {

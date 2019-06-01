@@ -126,7 +126,7 @@ class CreatureWrapper extends Component {
     const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
     const buttonAriaLabel = this.state.expanded ? `collapse ${creature.name}` : `expand ${creature.name}`;
 
-    const showExpanded = creature.id === 1;//active || this.state.expanded;
+    const showExpanded = active || this.state.expanded;
 
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, this.state.expanded);
 
