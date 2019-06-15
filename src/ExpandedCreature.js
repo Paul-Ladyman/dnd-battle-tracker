@@ -29,7 +29,8 @@ class ExpandedCreature extends Component {
       round,
       secondsElapsed,
       removeCreature,
-      removeNoteFromCreature
+      removeNoteFromCreature,
+      creatureExpander
     } = this.props;
     const { alive, name, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
     const showHealth = healthPoints !== undefined;
@@ -37,11 +38,14 @@ class ExpandedCreature extends Component {
     const showNotes = notes.length > 0;
 
     return (
-      <div className="expanded-creature centered__columns">
-        <h2 className="expanded-creature--name">
-          {name}
-          {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
-        </h2>
+      <div className="expanded-creature">
+        <div className="creature-title">
+          <h2 className="expanded-creature--name">
+            {name}
+            {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
+          </h2>
+          {creatureExpander}
+        </div>
         {!alive &&
           <div className="expanded-creature--status">
             <em><ExternalLink url={conditionDescriptions.unconscious} text="Unconscious/dead"/></em>

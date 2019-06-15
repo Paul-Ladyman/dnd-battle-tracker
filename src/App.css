@@ -1,5 +1,6 @@
 body {
   background-color: #f5f1ea;
+  font-size: 18px;
 }
 
 button {
@@ -57,7 +58,7 @@ a:hover {
 .form--label {
   margin-bottom: 5px;
   margin-left: 10px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* Battle toolbar */
@@ -162,6 +163,11 @@ a:hover {
   background-color: white;
   box-sizing: border-box;
   display: block;
+}
+
+.creature-toolbar--dropdown {
+  -webkit-appearance: none;
+  cursor: pointer;
 }
 
 .creature-toolbar--button {
@@ -305,14 +311,16 @@ a:hover {
   margin: 60px 0 10px 0;
   padding: 10px;
   background-color: #EBE1AD;
-  display: flex;
-  flex-flow: row;
-  align-items: flex-start;
-  justify-content: space-between;
 }
 
 .creature-wrapper__active {
   border: 4px solid #822000;
+}
+
+.creature-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -347,6 +355,7 @@ a:hover {
   text-transform: capitalize;
   color: #822000;
   margin-top: 4px;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
 }
@@ -402,13 +411,6 @@ a:hover {
   width: 100%;
 }
 
-/* Reduce width of inner collapsed creature box on all but the largest screens */
-@media only screen and (max-width: 1024px) {
-  .collapsed-creature {
-    width: 85%;
-  }
-}
-
 .collapsed-creature--status {
   display: flex;
   margin: 4px 0 4px 0;
@@ -449,7 +451,7 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(60px, auto);
-  grid-gap: 10px;
+  grid-gap: 15px;
   margin-top: 5px;
   border: 1px solid #822000;
   border-radius: 15px;
@@ -483,6 +485,7 @@ a:hover {
   text-decoration-color: #822000;
   text-decoration-style: double;
   color: black;
+  word-break: break-word;
 }
 
 .creature-note-list--note::first-letter {
@@ -527,8 +530,7 @@ a:hover {
 /* Footer */
 
 .footer-text {
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 16px;
   padding: 10px;
 }
 

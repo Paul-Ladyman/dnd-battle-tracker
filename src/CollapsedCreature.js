@@ -7,7 +7,7 @@ function commaSeparate(notes) {
   }).join(', ');
 }
 
-function CollapsedCreature({creature}) {
+function CollapsedCreature({creature, creatureExpander}) {
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
   const showConditions = creature.conditions.length > 0;
@@ -17,7 +17,10 @@ function CollapsedCreature({creature}) {
   const notesMarginClass = showHealth || showConditions ? 'collapsed-creature--status__margin' : '';
   return (
     <div className="collapsed-creature">
-      <h2 className={nameClasses}>{creature.name}</h2>
+      <div className="creature-title">
+        <h2 className={nameClasses}>{creature.name}</h2>
+        {creatureExpander}
+      </div>
       <div className="collapsed-creature--status">
         {showHealth && <HealthPoints
           short
