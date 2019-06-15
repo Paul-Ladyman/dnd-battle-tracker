@@ -3,10 +3,9 @@ import equal from 'fast-deep-equal';
 import isHotkey from 'is-hotkey';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
-import ExpandIcon from './icons/ExpandIcon';
-import CollapseIcon from './icons/CollapseIcon';
 import CreatureToolbar from './CreatureToolbar';
 import { hotkeys } from './hotkeys';
+import CreatureExpander from './CreatureExpander';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
@@ -122,16 +121,16 @@ class CreatureWrapper extends Component {
     const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
     const expandedModifier = this.state.expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
-    const buttonTitle = this.state.expanded ? 'Collapse creature' : 'Expand creature';
-    const buttonIcon = this.state.expanded ? <CollapseIcon /> : <ExpandIcon />;
-    const buttonAriaLabel = this.state.expanded ? `collapse ${creature.name}` : `expand ${creature.name}`;
-
     const showExpanded = active || this.state.expanded;
-
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, this.state.expanded);
-
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
-
+    const creatureExpander = <CreatureExpander
+      active={active}
+      expanded={this.state.expanded}
+      name={creature.name}
+      expandHandler={this.expandCreatureHandler}
+    />
+          
     return (
       <React.Fragment>
         <section
@@ -151,17 +150,9 @@ class CreatureWrapper extends Component {
               secondsElapsed={this.props.secondsElapsed}
               removeCreature={removeCreature}
               removeNoteFromCreature={removeNoteFromCreature}
+              creatureExpander={creatureExpander}
             /> :
-            <CollapsedCreature creature={creature} />
-          }
-          {!active && 
-            <button
-              aria-label={buttonAriaLabel}
-              className="expand-creature-button"
-              title={buttonTitle}
-              onClick={this.expandCreatureHandler}>
-                {buttonIcon}
-            </button>
+            <CollapsedCreature creature={creature} creatureExpander={creatureExpander} />
           }
         </section>
         <section

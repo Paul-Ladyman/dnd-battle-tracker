@@ -311,14 +311,16 @@ a:hover {
   margin: 60px 0 10px 0;
   padding: 10px;
   background-color: #EBE1AD;
-  display: flex;
-  flex-flow: row;
-  align-items: flex-start;
-  justify-content: space-between;
 }
 
 .creature-wrapper__active {
   border: 4px solid #822000;
+}
+
+.creature-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -353,6 +355,7 @@ a:hover {
   text-transform: capitalize;
   color: #822000;
   margin-top: 4px;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
 }
@@ -406,13 +409,6 @@ a:hover {
 
 .collapsed-creature {
   width: 100%;
-}
-
-/* Reduce width of inner collapsed creature box on all but the largest screens */
-@media only screen and (max-width: 1024px) {
-  .collapsed-creature {
-    width: 85%;
-  }
 }
 
 .collapsed-creature--status {
