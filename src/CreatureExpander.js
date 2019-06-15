@@ -3,7 +3,6 @@ import ExpandIcon from './icons/ExpandIcon';
 import CollapseIcon from './icons/CollapseIcon';
 
 function CreatureExpander({active, expanded, name, expandHandler}) {
-  console.log('>>> expanded', expanded);
   const buttonTitle = expanded ? 'Collapse creature' : 'Expand creature';
   const buttonIcon = expanded ? <CollapseIcon /> : <ExpandIcon />;
   const buttonAriaLabel = expanded ? `collapse ${name}` : `expand ${name}`;

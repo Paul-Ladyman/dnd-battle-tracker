@@ -457,7 +457,6 @@ a:hover {
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
   padding: 10px;
-  overflow: scroll;
 }
 
 /* Reduce width of note list to two columns on smaller screen sizes */
@@ -486,6 +485,7 @@ a:hover {
   text-decoration-color: #822000;
   text-decoration-style: double;
   color: black;
+  word-break: break-word;
 }
 
 .creature-note-list--note::first-letter {
@@ -493,6 +493,7 @@ a:hover {
 }
 
 .creature-note-list--button {
+  margin-right: 15%;
   margin-left: 5px;
   padding: 4px;
   display: flex;
