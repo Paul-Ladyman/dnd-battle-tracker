@@ -16,17 +16,17 @@ export const conditionDescriptions = {
 };
 
 export default [
-  'blinded',
-  'charmed',
-  'deafened',
-  'frightened',
-  'grappled',
-  'incapacitated',
-  'invisible',
-  'paralyzed',
-  'petrified',
-  'poisoned',
-  'prone',
-  'restrained',
-  'stunned'
+  'Blinded',
+  'Charmed',
+  'Deafened',
+  'Frightened',
+  'Grappled',
+  'Incapacitated',
+  'Invisible',
+  'Paralyzed',
+  'Petrified',
+  'Poisoned',
+  'Prone',
+  'Restrained',
+  'Stunned'
 ];

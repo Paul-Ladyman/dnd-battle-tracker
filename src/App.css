@@ -1,5 +1,6 @@
 body {
   background-color: #f5f1ea;
+  font-size: 18px;
 }
 
 button {
@@ -57,7 +58,7 @@ a:hover {
 .form--label {
   margin-bottom: 5px;
   margin-left: 10px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* Battle toolbar */
@@ -162,6 +163,11 @@ a:hover {
   background-color: white;
   box-sizing: border-box;
   display: block;
+}
+
+.creature-toolbar--dropdown {
+  -webkit-appearance: none;
+  cursor: pointer;
 }
 
 .creature-toolbar--button {
@@ -449,12 +455,13 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(60px, auto);
-  grid-gap: 10px;
+  grid-gap: 15px;
   margin-top: 5px;
   border: 1px solid #822000;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
   padding: 10px;
+  overflow: scroll;
 }
 
 /* Reduce width of note list to two columns on smaller screen sizes */
@@ -490,7 +497,6 @@ a:hover {
 }
 
 .creature-note-list--button {
-  margin-right: 15%;
   margin-left: 5px;
   padding: 4px;
   display: flex;
@@ -527,8 +533,6 @@ a:hover {
 /* Footer */
 
 .footer-text {
-  font-size: 12px;
-  line-height: 14px;
   padding: 10px;
 }
 
