@@ -40,7 +40,8 @@ class BattleToolbar extends Component {
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
-    const buttonClasses = creatures > 0 ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
+    const creaturesAdded = creatures > 0;
+    const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
     const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
     const optionsMenuIcon = this.state.optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
@@ -52,6 +53,7 @@ class BattleToolbar extends Component {
           className={buttonClasses}
           onClick={nextInitiative}
           ref={this.nextButton}
+          disabled={!creaturesAdded}
         >{nextButtonLabel}</button>
         <div className="battle-toolbar--stat">
           Initiative:
@@ -70,9 +72,18 @@ class BattleToolbar extends Component {
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
         <div className="battle-toolbar--options-container">
-          <button title="Options Menu" className={`${buttonClass} battle-toolbar--button__options`} onClick={this.toggleOptions}>{optionsMenuIcon}</button>
+          <button
+            title="Options Menu"
+            className={`${buttonClass} battle-toolbar--button__options`}
+            onClick={this.toggleOptions}
+          >{optionsMenuIcon}</button>
           <div className={optionsClass}>
-            <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
+            <button 
+              title="Reset Battle"
+              className={`${buttonClasses} battle-toolbar--button__reset`}
+              onClick={() => {this.toggleOptions(); resetBattle();}}
+              disabled={!creaturesAdded}
+            ><ResetIcon /></button>
           </div>
         </div>
       </header>
