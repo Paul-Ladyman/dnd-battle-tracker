@@ -74,7 +74,7 @@ a:hover {
   height: 40px;
   width: 100%;
   padding-top: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
   background-color: #ebe2d3;
   position: fixed;
   top: 0;
@@ -96,7 +96,6 @@ a:hover {
 
 .battle-toolbar--stat {
   height: 50%;
-  margin-top: 2px;
   display: flex;
   align-items: center;
   flex-flow: column;
@@ -144,7 +143,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 64px;
+  width: 40px;
   height: 245px;
 }
 
@@ -154,17 +153,14 @@ a:hover {
   border-right: 2px solid #822000;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  box-shadow: 0 5px 5px #979AA4;
   padding: 20px 10px;
   background: #ebe2d3;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-top: 1px;
+  margin-top: 4px;
   height: 100%;
-}
-
-.battle-toolbar--button__options {
-  /* width: 40px; */
 }
 
 /* Creature toolbar */
