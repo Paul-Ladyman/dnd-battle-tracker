@@ -15,14 +15,21 @@ class BattleToolbar extends Component {
     super(props);
     this.state = { optionsExpanded: false };
     this.nextButton = React.createRef();
+    this.optionsButton = React.createRef();
 
     this.toggleOptions = this.toggleOptions.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('keydown', (e) => {
+      console.log(this.nextButton.current.attributes.disabled)
       if (isHotkey(hotkeys.battlebar, e)) {
-        this.nextButton.current.focus();
+        const { disabled: nextButtonDisabled } = this.nextButton.current.attributes;
+        if (nextButtonDisabled) {
+          this.optionsButton.current.focus();
+        } else {
+          this.nextButton.current.focus();
+        }
       }
     });
   }
@@ -78,6 +85,7 @@ class BattleToolbar extends Component {
             title="Options Menu"
             className={`${buttonClass} battle-toolbar--button__options`}
             onClick={this.toggleOptions}
+            ref={this.optionsButton}
           >{optionsMenuIcon}</button>
           <div className={optionsClass}>
             <button
