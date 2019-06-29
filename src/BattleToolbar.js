@@ -67,11 +67,13 @@ class BattleToolbar extends Component {
           Time Elapsed:
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
-        <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={this.toggleOptions}><ResetIcon /></button>
-        <div className={optionsClass}>
-          <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
-          <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
-          <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
+        <div className="battle-toolbar--options-container">
+          <button title="Reset Battle" className={`${buttonClass} battle-toolbar--button__options`} onClick={this.toggleOptions}><StartBattleIcon /></button>
+          <div className={optionsClass}>
+            <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
+            <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
+            <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
+          </div>
         </div>
       </header>
     );

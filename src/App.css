@@ -140,10 +140,14 @@ a:hover {
   border: 2px dashed #822000;
 }
 
+.battle-toolbar--options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+}
+
 .battle-toolbar--options-dropdown {
-  position: absolute;
-  top: 50px;
-  right: 5%;
   border-top: 2px solid #ebe2d3;
   border-bottom: 2px solid #822000;
   border-left: 2px solid #822000;
@@ -153,7 +157,11 @@ a:hover {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  height: 140px;
+  margin-top: 2px;
+}
+
+.battle-toolbar--button__options {
+  /* width: 40px; */
 }
 
 /* Creature toolbar */
