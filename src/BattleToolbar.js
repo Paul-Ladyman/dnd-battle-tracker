@@ -5,6 +5,8 @@ import StartBattleIcon from './icons/StartBattleIcon';
 import NextInitiativeIcon from './icons/NextInitiativeIcon';
 import OptionsMenuClosedIcon from './icons/OptionsMenuClosedIcon';
 import OptionsMenuOpenIcon from './icons/OptionsMenuOpenIcon';
+import SaveIcon from './icons/SaveIcon';
+import LoadIcon from './icons/LoadIcon';
 import ResetIcon from './icons/ResetIcon';
 import { hotkeys } from './hotkeys';
 
@@ -78,9 +80,19 @@ class BattleToolbar extends Component {
             onClick={this.toggleOptions}
           >{optionsMenuIcon}</button>
           <div className={optionsClass}>
-            <button 
+            <button
+              title="Save Battle"
+              className={buttonClass}
+              onClick={() => {this.toggleOptions()}}
+            ><SaveIcon /></button>
+            <button
+              title="Load Battle"
+              className={buttonClass}
+              onClick={() => {this.toggleOptions()}}
+            ><LoadIcon /></button>
+            <button
               title="Reset Battle"
-              className={`${buttonClasses} battle-toolbar--button__reset`}
+              className={buttonClasses}
               onClick={() => {this.toggleOptions(); resetBattle();}}
               disabled={!creaturesAdded}
             ><ResetIcon /></button>
