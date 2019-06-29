@@ -3,6 +3,8 @@ import isHotkey from 'is-hotkey';
 import Timer from './Timer';
 import StartBattleIcon from './icons/StartBattleIcon';
 import NextInitiativeIcon from './icons/NextInitiativeIcon';
+import OptionsMenuClosedIcon from './icons/OptionsMenuClosedIcon';
+import OptionsMenuOpenIcon from './icons/OptionsMenuOpenIcon';
 import ResetIcon from './icons/ResetIcon';
 import { hotkeys } from './hotkeys';
 
@@ -24,7 +26,6 @@ class BattleToolbar extends Component {
   }
 
   toggleOptions() {
-    console.log('>>> optionsExpanded', this.state.optionsExpanded);
     this.setState({ optionsExpanded: !this.state.optionsExpanded });
   }
 
@@ -42,6 +43,7 @@ class BattleToolbar extends Component {
     const buttonClasses = creatures > 0 ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
     const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
+    const optionsMenuIcon = this.state.optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
     const optionsClass = this.state.optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
     return (
       <header className="battle-toolbar">
@@ -68,10 +70,8 @@ class BattleToolbar extends Component {
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
         <div className="battle-toolbar--options-container">
-          <button title="Reset Battle" className={`${buttonClass} battle-toolbar--button__options`} onClick={this.toggleOptions}><StartBattleIcon /></button>
+          <button title="Options Menu" className={`${buttonClass} battle-toolbar--button__options`} onClick={this.toggleOptions}>{optionsMenuIcon}</button>
           <div className={optionsClass}>
-            <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
-            <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
             <button title="Reset Battle" className={`${buttonClasses} battle-toolbar--button__reset`} onClick={resetBattle}><ResetIcon /></button>
           </div>
         </div>
