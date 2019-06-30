@@ -16,8 +16,10 @@ class BattleToolbar extends Component {
     this.state = { optionsExpanded: false };
     this.nextButton = React.createRef();
     this.optionsButton = React.createRef();
+    this.fileSelector = React.createRef();
 
     this.toggleOptions = this.toggleOptions.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +40,11 @@ class BattleToolbar extends Component {
     this.setState({ optionsExpanded: !this.state.optionsExpanded });
   }
 
+  handleUpload(loadBattle) {
+    const file = this.fileSelector.current.files[0];
+    loadBattle(file);
+  }
+
   render() {
     const {
       initiative,
@@ -46,7 +53,8 @@ class BattleToolbar extends Component {
       creatures,
       nextInitiative,
       resetBattle,
-      saveBattle
+      saveBattle,
+      loadBattle
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
@@ -94,10 +102,17 @@ class BattleToolbar extends Component {
               className={buttonClass}
               onClick={() => {this.toggleOptions(); saveBattle();}}
             ><SaveIcon /></button>
+            <input
+              type='file'
+              class="hidden"
+              accept="application/json"
+              ref={this.fileSelector}
+              onChange={() => this.handleUpload(loadBattle)}
+            />
             <button
               title="Load Battle"
               className={buttonClass}
-              onClick={() => {this.toggleOptions()}}
+              onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
             ><LoadIcon /></button>
             <button
               title="Reset Battle"

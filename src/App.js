@@ -26,7 +26,7 @@ import {
   removeNoteFromCreature,
   addHealthToCreature
 } from './CreatureManager';
-import { save } from './AppManager';
+import { save, load } from './AppManager';
 import Footer from './Footer';
 import { hotkeys } from './hotkeys';
 
@@ -51,6 +51,7 @@ class App extends Component {
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
     this.saveBattle = this.saveBattle.bind(this);
+    this.loadBattle = this.loadBattle.bind(this);
   }
 
   componentDidMount() {
@@ -133,6 +134,10 @@ class App extends Component {
     save(this.state);
   }
 
+  async loadBattle(file) {
+    this.setState(await load(file));
+  }
+
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
 
@@ -157,6 +162,7 @@ class App extends Component {
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
           saveBattle={this.saveBattle}
+          loadBattle={this.loadBattle}
         />
         <div className="aria-announcements" role='region' aria-live="assertive">
           {this.state.ariaAnnouncements}

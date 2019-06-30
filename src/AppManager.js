@@ -7,3 +7,15 @@ export function save(state) {
   const timeSuffix = `${now.toLocaleDateString()}_${now.toLocaleTimeString()}`;
   FileSaver.saveAs(blob, `dnd_battle_tracker_${timeSuffix}.json`);
 }
+
+export function load(file) {
+  const reader = new FileReader();
+
+  return new Promise((resolve) => {
+    reader.addEventListener('loadend', (e) => {
+      const loadedState = JSON.parse(e.srcElement.result);
+      resolve(loadedState);
+    });
+    reader.readAsText(file);
+  });
+}
