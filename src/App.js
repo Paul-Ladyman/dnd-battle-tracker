@@ -26,6 +26,7 @@ import {
   removeNoteFromCreature,
   addHealthToCreature
 } from './CreatureManager';
+import { save } from './AppManager';
 import Footer from './Footer';
 import { hotkeys } from './hotkeys';
 
@@ -49,6 +50,7 @@ class App extends Component {
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
+    this.saveBattle = this.saveBattle.bind(this);
   }
 
   componentDidMount() {
@@ -127,6 +129,10 @@ class App extends Component {
     this.setState(addCreature(this.state, creature));
   }
 
+  saveBattle() {
+    save(this.state);
+  }
+
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
 
@@ -150,6 +156,7 @@ class App extends Component {
           creatures={this.state.creatureCount}
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
+          saveBattle={this.saveBattle}
         />
         <div className="aria-announcements" role='region' aria-live="assertive">
           {this.state.ariaAnnouncements}

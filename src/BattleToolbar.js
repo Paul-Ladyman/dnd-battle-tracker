@@ -45,7 +45,8 @@ class BattleToolbar extends Component {
       secondsElapsed,
       creatures,
       nextInitiative,
-      resetBattle
+      resetBattle,
+      saveBattle
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
@@ -91,7 +92,7 @@ class BattleToolbar extends Component {
             <button
               title="Save Battle"
               className={buttonClass}
-              onClick={() => {this.toggleOptions()}}
+              onClick={() => {this.toggleOptions(); saveBattle();}}
             ><SaveIcon /></button>
             <button
               title="Load Battle"

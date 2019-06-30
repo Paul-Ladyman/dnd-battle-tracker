@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
+    "file-saver": "^2.0.2",
     "is-hotkey": "^0.1.4",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
