@@ -24,7 +24,6 @@ class BattleToolbar extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', (e) => {
-      console.log(this.nextButton.current.attributes.disabled)
       if (isHotkey(hotkeys.battlebar, e)) {
         const { disabled: nextButtonDisabled } = this.nextButton.current.attributes;
         if (nextButtonDisabled) {
@@ -104,10 +103,11 @@ class BattleToolbar extends Component {
             ><SaveIcon /></button>
             <input
               type='file'
-              class="hidden"
+              className="hidden"
               accept="application/json"
               ref={this.fileSelector}
               onChange={() => this.handleUpload(loadBattle)}
+              value=""
             />
             <button
               title="Load Battle"
