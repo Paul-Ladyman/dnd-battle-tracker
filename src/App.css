@@ -29,8 +29,12 @@ a:hover {
 }
 
 .aria-announcements {
-  position: fixed;
-  left: -9999px;
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .main {
