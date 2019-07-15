@@ -581,7 +581,7 @@ a:hover {
   position: fixed;
   top: 53px;
   background: red;
-  padding: 10px;
+  padding: 10px 0;
   border-bottom: 2px solid #822000;
 }
 
@@ -592,10 +592,21 @@ a:hover {
 @media only screen and (max-width: 600px) and (orientation: landscape) {
   .errors {
     position: inherit;
+    width: inherit;
   }
 }
 
 .error {
-  padding: 10px;
+  padding-left: 10px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.error--button {
+  padding: 4px;
+  border: none;
+  box-shadow: none;
+  color: black;
+  margin-left: 20px;
 }
