@@ -32,6 +32,7 @@ import {
   isSaveLoadSupported
 } from './AppManager';
 import Footer from './Footer';
+import Errors from './Errors';
 import { hotkeys } from './hotkeys';
 
 class App extends Component {
@@ -156,6 +157,8 @@ class App extends Component {
       removeNoteFromCreature: this.removeNoteFromCreature
     };
 
+    const errors = this.state.errors.length > 0;
+
     return (
       <React.Fragment>
         <BattleToolbar
@@ -169,6 +172,7 @@ class App extends Component {
           loadBattle={this.loadBattle}
           isSaveLoadSupported={isSaveLoadSupported}
         />
+        { errors && <Errors errors={this.state.errors} /> }
         <div className="aria-announcements" role='region' aria-live="assertive">
           {this.state.ariaAnnouncements}
         </div>

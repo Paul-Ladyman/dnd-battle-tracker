@@ -571,3 +571,31 @@ a:hover {
     display: none;
   }
 }
+
+/* Errors */
+
+.errors {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 53px;
+  background: red;
+  padding: 10px;
+  border-bottom: 2px solid #822000;
+}
+
+/*
+ * Remove sticky bar bahviour for landscape screens bigger than 600px.
+ * On screen keyboards and the sticky bar leave a very small viewport.
+ */
+@media only screen and (max-width: 600px) and (orientation: landscape) {
+  .errors {
+    position: inherit;
+  }
+}
+
+.error {
+  padding: 10px;
+  font-weight: bold;
+}

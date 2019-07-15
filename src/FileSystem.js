@@ -18,7 +18,7 @@ function load(fileName) {
 
 function isSaveSupported() {
   try {
-    return !!new Blob;
+    return !!new Blob();
   } catch (e) {
     return false;
   }
