@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v1.22.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.22.1/dnd-battle-tracker.html)
+**Latest release (v1.23.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.23.0/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -45,6 +45,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * Manage the health points of enemy creatures or NPCs allowing HP to be added and removed whilst supporting adding PCs to the creature list without HP.
 * Allowing creatures to be killed/made unconscious and making it obvious to the DM that this has happened.
 * Creatures can be added to or removed from the list at any time, even after combat has started.
+* Save and load battles in case they continue into another session.
 
 ## Credits
 
