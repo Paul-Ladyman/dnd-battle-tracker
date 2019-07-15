@@ -28,7 +28,7 @@ export async function load(file, state) {
 
   const newState = valid ? loadedState : state;
   const ariaAnnouncement = valid ? 'battle loaded' : 'failed to load battle';
-  const error = valid ? [] : [`Failed to load battle. The file ${file} was invalid.`];
+  const error = valid ? [] : [`Failed to load battle. The file ${file.name} was invalid.`];
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
   const errors = state.errors.concat(error);
 

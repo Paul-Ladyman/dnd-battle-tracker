@@ -85,17 +85,21 @@ describe('save', () => {
 });
 
 describe('load', () => {
+  const file = {
+    name: 'fileName'
+  };
+
   it('parses the contents of a file as JSON and adds an aria announcement', async () => {
     const { ariaAnnouncements, ...fileContents } = defaultState;
     FileSystem.load.mockReturnValue(new Promise(resolve =>
       resolve(JSON.stringify(fileContents))
     ));
 
-    const loadedFileContents = await load('fileName', defaultState);
+    const loadedFileContents = await load(file, defaultState);
 
     const { calls } = FileSystem.load.mock;
     expect(calls.length).toBe(1);
-    expect(calls[0][0]).toBe('fileName');
+    expect(calls[0][0]).toBe(file);
     const expectedFileContents = {
       ...defaultState,
       ariaAnnouncements: ['battle loaded']
@@ -111,7 +115,7 @@ describe('load', () => {
       resolve(JSON.stringify(fileContents))
     ));
 
-    const results = await load('fileName', defaultState);
+    const results = await load(file, defaultState);
 
     const expectedState = {
       ...defaultState,
