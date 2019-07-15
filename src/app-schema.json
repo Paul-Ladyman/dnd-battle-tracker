@@ -1,0 +1,207 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "creatures",
+    "creatureIdCount",
+    "creatureCount",
+    "round"
+  ],
+  "properties": {
+    "creatures": {
+      "$id": "#/properties/creatures",
+      "type": "array",
+      "title": "The Creatures Schema",
+      "items": {
+        "$id": "#/properties/creatures/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "name",
+          "initiative",
+          "id",
+          "alive",
+          "conditions",
+          "notes"
+        ],
+        "properties": {
+          "name": {
+            "$id": "#/properties/creatures/items/properties/name",
+            "type": "string",
+            "title": "The Name Schema",
+            "default": "",
+            "examples": [
+              "goblin #1"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "initiative": {
+            "$id": "#/properties/creatures/items/properties/initiative",
+            "type": "integer",
+            "title": "The Initiative Schema",
+            "default": 0,
+            "examples": [
+              1
+            ]
+          },
+          "healthPoints": {
+            "$id": "#/properties/creatures/items/properties/healthPoints",
+            "type": "integer",
+            "title": "The Healthpoints Schema",
+            "default": 0,
+            "examples": [
+              7
+            ]
+          },
+          "maxHealthPoints": {
+            "$id": "#/properties/creatures/items/properties/maxHealthPoints",
+            "type": "integer",
+            "title": "The Maxhealthpoints Schema",
+            "default": 0,
+            "examples": [
+              7
+            ]
+          },
+          "id": {
+            "$id": "#/properties/creatures/items/properties/id",
+            "type": "integer",
+            "title": "The Id Schema",
+            "default": 0,
+            "examples": [
+              0
+            ]
+          },
+          "alive": {
+            "$id": "#/properties/creatures/items/properties/alive",
+            "type": "boolean",
+            "title": "The Alive Schema",
+            "default": false,
+            "examples": [
+              true
+            ]
+          },
+          "conditions": {
+            "$id": "#/properties/creatures/items/properties/conditions",
+            "type": "array",
+            "title": "The Conditions Schema",
+            "items": {
+              "$id": "#/properties/creatures/items/properties/conditions/items",
+              "type": "object",
+              "title": "The Items Schema",
+              "required": [
+                "text",
+                "appliedAtRound",
+                "appliedAtSeconds"
+              ],
+              "properties": {
+                "text": {
+                  "$id": "#/properties/creatures/items/properties/conditions/items/properties/text",
+                  "type": "string",
+                  "title": "The Text Schema",
+                  "default": "",
+                  "examples": [
+                    "Prone"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "appliedAtRound": {
+                  "$id": "#/properties/creatures/items/properties/conditions/items/properties/appliedAtRound",
+                  "type": "integer",
+                  "title": "The Appliedatround Schema",
+                  "default": 0,
+                  "examples": [
+                    0
+                  ]
+                },
+                "appliedAtSeconds": {
+                  "$id": "#/properties/creatures/items/properties/conditions/items/properties/appliedAtSeconds",
+                  "type": "integer",
+                  "title": "The Appliedatseconds Schema",
+                  "default": 0,
+                  "examples": [
+                    0
+                  ]
+                }
+              }
+            }
+          },
+          "notes": {
+            "$id": "#/properties/creatures/items/properties/notes",
+            "type": "array",
+            "title": "The Notes Schema",
+            "items": {
+              "$id": "#/properties/creatures/items/properties/notes/items",
+              "type": "object",
+              "title": "The Items Schema",
+              "required": [
+                "text",
+                "appliedAtRound",
+                "appliedAtSeconds"
+              ],
+              "properties": {
+                "text": {
+                  "$id": "#/properties/creatures/items/properties/notes/items/properties/text",
+                  "type": "string",
+                  "title": "The Text Schema",
+                  "default": "",
+                  "examples": [
+                    "note"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "appliedAtRound": {
+                  "$id": "#/properties/creatures/items/properties/notes/items/properties/appliedAtRound",
+                  "type": "integer",
+                  "title": "The Appliedatround Schema",
+                  "default": 0,
+                  "examples": [
+                    0
+                  ]
+                },
+                "appliedAtSeconds": {
+                  "$id": "#/properties/creatures/items/properties/notes/items/properties/appliedAtSeconds",
+                  "type": "integer",
+                  "title": "The Appliedatseconds Schema",
+                  "default": 0,
+                  "examples": [
+                    0
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "creatureIdCount": {
+      "$id": "#/properties/creatureIdCount",
+      "type": "integer",
+      "title": "The Creatureidcount Schema",
+      "default": 0,
+      "examples": [
+        2
+      ]
+    },
+    "creatureCount": {
+      "$id": "#/properties/creatureCount",
+      "type": "integer",
+      "title": "The Creaturecount Schema",
+      "default": 0,
+      "examples": [
+        2
+      ]
+    },
+    "round": {
+      "$id": "#/properties/round",
+      "type": "integer",
+      "title": "The Round Schema",
+      "default": 0,
+      "examples": [
+        0
+      ]
+    }
+  }
+}
