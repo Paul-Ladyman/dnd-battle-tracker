@@ -39,7 +39,8 @@ const defaultState = {
   activeCreature: 1,
   focusedCreature: 1,
   round: 1,
-  ariaAnnouncements: []
+  ariaAnnouncements: [],
+  errors: []
 };
 
 
@@ -99,5 +100,24 @@ describe('load', () => {
       ariaAnnouncements: ['battle loaded']
     };
     expect(loadedFileContents).toEqual(expectedFileContents);
+  });
+
+  it('sets an error in app state if the loaded file contents do not meet the schema', async () => {
+    expect.assertions(1);
+
+    const fileContents = { fake: 'contents' };
+    FileSystem.load.mockReturnValue(new Promise(resolve =>
+      resolve(JSON.stringify(fileContents))
+    ));
+
+    const results = await load('fileName', defaultState);
+
+    const expectedState = {
+      ...defaultState,
+      ariaAnnouncements: ['failed to load battle'],
+      errors: ['Failed to load battle. The file fileName was invalid.']
+    };
+
+    expect(results).toEqual(expectedState);
   });
 });
