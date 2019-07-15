@@ -1,4 +1,4 @@
-import { save, load, isSaveLoadSupported } from './AppManager';
+import { save, load, isSaveLoadSupported, dismissErrors } from './AppManager';
 import FileSystem from './FileSystem';
 
 jest.mock('./FileSystem');
@@ -158,5 +158,22 @@ describe('isSaveLoadSupported', () => {
   it('returns false if saving a file is not supported', () => {
     FileSystem.isSaveSupported.mockReturnValue(false);
     expect(isSaveLoadSupported()).toBe(false);
+  });
+});
+
+describe('dismissErrors', () => {
+  it('resets errors to an empty array', () => {
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two', 'three']
+    };
+
+    const result = dismissErrors(state);
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing if there are no errors', () => {
+    const result = dismissErrors(defaultState);
+    expect(result).toEqual(defaultState);
   });
 });

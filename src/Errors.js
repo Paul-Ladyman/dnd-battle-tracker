@@ -1,7 +1,7 @@
 import React from 'react';
 import RemoveIcon from './icons/RemoveIcon';
 
-export default function Errors({ errors }) {
+export default function Errors({ errors, dismissErrors }) {
   return (
     <div className="error-bar">
       <div className="error-bar--errors">
@@ -15,7 +15,7 @@ export default function Errors({ errors }) {
           );
         })}
       </div>
-      <button className="error-bar--dismiss" title="Dismiss errors">
+      <button className="error-bar--dismiss" title="Dismiss errors" onClick={dismissErrors} >
         <RemoveIcon fill="black" />
       </button>
     </div>

@@ -42,3 +42,10 @@ export async function load(file, state) {
 export function isSaveLoadSupported() {
   return FileSystem.isSaveSupported();
 }
+
+export function dismissErrors(state) {
+  return {
+    ...state,
+    errors: []
+  };
+}

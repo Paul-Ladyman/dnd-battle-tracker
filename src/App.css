@@ -599,6 +599,7 @@ a:hover {
 
 .error-bar--errors {
   padding-left: 10px;
+  margin: 8px 0;
   font-weight: bold;
   display: flex;
   flex-direction: column;

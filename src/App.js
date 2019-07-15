@@ -29,7 +29,8 @@ import {
 import {
   save,
   load,
-  isSaveLoadSupported
+  isSaveLoadSupported,
+  dismissErrors
 } from './AppManager';
 import Footer from './Footer';
 import Errors from './Errors';
@@ -57,6 +58,7 @@ class App extends Component {
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
     this.saveBattle = this.saveBattle.bind(this);
     this.loadBattle = this.loadBattle.bind(this);
+    this.dismissErrors = this.dismissErrors.bind(this);
   }
 
   componentDidMount() {
@@ -143,6 +145,10 @@ class App extends Component {
     this.setState(await load(file, this.state));
   }
 
+  dismissErrors() {
+    this.setState(dismissErrors(this.state))
+  }
+
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
 
@@ -172,7 +178,11 @@ class App extends Component {
           loadBattle={this.loadBattle}
           isSaveLoadSupported={isSaveLoadSupported}
         />
-        { errors && <Errors errors={this.state.errors} /> }
+        { errors && <Errors
+            errors={this.state.errors}
+            dismissErrors={this.dismissErrors}
+          />
+         }
         <div className="aria-announcements" role='region' aria-live="assertive">
           {this.state.ariaAnnouncements}
         </div>
