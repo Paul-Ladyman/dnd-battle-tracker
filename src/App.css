@@ -75,7 +75,7 @@ a:hover {
   justify-content: space-around;
   border-top: 2px solid #822000;
   border-bottom: 2px solid #822000;
-  height: 40px;
+  height: 50px;
   width: 100%;
   padding-top: 5px;
   padding-bottom: 4px;
@@ -105,6 +105,7 @@ a:hover {
   flex-flow: column;
   font-weight: bold;
   color: #822000;
+  margin-top: 2px;
 }
 
 /* Remove most unimportant battle bar info for screens smaller than 768px */
@@ -130,6 +131,8 @@ a:hover {
 .battle-toolbar--button {
   padding: 4px;
   background-color: #EBE1AD;
+  height: 40px;
+  margin-top: 5px;
 }
 
 .battle-toolbar--button__reset {
@@ -148,7 +151,7 @@ a:hover {
   flex-direction: column;
   align-items: center;
   width: 40px;
-  height: 245px;
+  height: 250px;
 }
 
 .battle-toolbar--options-dropdown {
@@ -158,12 +161,12 @@ a:hover {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   box-shadow: 0 5px 5px #979AA4;
-  padding: 20px 10px;
+  padding: 10px 10px;
   background: #ebe2d3;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-top: 4px;
+  margin-top: 9px;
   height: 100%;
 }
 
@@ -578,7 +581,7 @@ a:hover {
   width: 100%;
   display: flex;
   position: fixed;
-  top: 51px;
+  top: 61px;
   background: red;
   padding: 10px 0;
   border-top: 2px solid #822000;
