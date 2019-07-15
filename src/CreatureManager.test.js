@@ -45,7 +45,8 @@ const defaultState = {
   creatureCount: 3,
   activeCreature: 1,
   round: 1,
-  ariaAnnouncements: []
+  ariaAnnouncements: [],
+  errors: []
 };
 
 describe('killCreature', () => {
