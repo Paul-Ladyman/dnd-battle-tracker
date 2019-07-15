@@ -574,15 +574,16 @@ a:hover {
 
 /* Errors */
 
-.errors {
+.error-bar {
   width: 100%;
   display: flex;
-  flex-direction: column;
   position: fixed;
   top: 53px;
   background: red;
   padding: 10px 0;
   border-bottom: 2px solid #822000;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 /*
@@ -590,23 +591,31 @@ a:hover {
  * On screen keyboards and the sticky bar leave a very small viewport.
  */
 @media only screen and (max-width: 600px) and (orientation: landscape) {
-  .errors {
+  .error-bar {
     position: inherit;
     width: inherit;
   }
 }
 
-.error {
+.error-bar--errors {
   padding-left: 10px;
   font-weight: bold;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
-.error--button {
+.error-bar--error {
+  margin-bottom: 10px;
+}
+
+.error-bar--error__last {
+  margin-bottom: 0;
+}
+
+.error-bar--dismiss {
   padding: 4px;
-  border: none;
-  box-shadow: none;
-  color: black;
-  margin-left: 20px;
+  height: 36px;
+  width: 36px;
+  border: 2px solid black;
+  margin-right: 10px;
 }

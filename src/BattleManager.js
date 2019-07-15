@@ -21,7 +21,7 @@ export const newBattleState = {
   focusedCreature: undefined,
   round: 0,
   ariaAnnouncements: [],
-  errors: []
+  errors: ['one', 'two', 'three']
 };
 
 export function getSecondsElapsed(state) {
