@@ -68,7 +68,7 @@ class BattleToolbar extends Component {
     const ResetButton = () =>
       <button
         title="Reset Battle"
-        className={buttonClasses}
+        className={`${buttonClasses} ${buttonClass}__reset`}
         onClick={() => {this.toggleOptions(); resetBattle();}}
         disabled={!creaturesAdded}
       ><ResetIcon /></button>;
@@ -122,7 +122,7 @@ class BattleToolbar extends Component {
               />
               <button
                 title="Load Battle"
-                className={buttonClass}
+                className={`${buttonClass} ${buttonClass}__load`}
                 onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
               ><LoadIcon /></button>
               <ResetButton />

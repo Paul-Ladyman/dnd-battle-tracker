@@ -78,7 +78,7 @@ a:hover {
   height: 50px;
   width: 100%;
   padding-top: 5px;
-  padding-bottom: 4px;
+  padding-bottom: 5px;
   background-color: #ebe2d3;
   position: fixed;
   top: 0;
@@ -140,6 +140,10 @@ a:hover {
   padding-top: 0;
 }
 
+.battle-toolbar--button__load {
+  padding-bottom: 0;
+}
+
 .battle-toolbar--button__disabled {
   background-color: transparent;
   cursor: auto;
@@ -166,7 +170,7 @@ a:hover {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-top: 9px;
+  margin-top: 10px;
   height: 100%;
 }
 
