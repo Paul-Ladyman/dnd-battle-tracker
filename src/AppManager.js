@@ -4,7 +4,7 @@ import FileSystem from './FileSystem';
 const appSchema = require('./app-schema.json');
 
 export function save(state) {
-  const { ariaAnnouncements, ...stateToSave } = state;
+  const { ariaAnnouncements, errors, ...stateToSave } = state;
   const now = new Date(Date.now());
   const dateSuffix = `${now.getDate()}_${now.getMonth()}_${now.getFullYear()}`;
   const timeSuffix = `${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`;
@@ -30,7 +30,7 @@ export async function load(file, state) {
   const ariaAnnouncement = valid ? 'battle loaded' : 'failed to load battle';
   const error = valid ? [] : [`Failed to load battle. The file ${file.name} was invalid.`];
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
-  const errors = state.errors.concat(error);
+  const errors = valid ? error : state.errors.concat(error);
 
   return {
     ...newState,

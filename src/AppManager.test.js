@@ -51,12 +51,12 @@ beforeEach(() => {
 });
 
 describe('save', () => {
-  it('saves the current app state removing aria announcements', () => {
+  it('saves the current app state removing aria announcements and errors', () => {
     save(defaultState);
     const { calls } = FileSystem.save.mock;
     expect(calls.length).toBe(1);
     const fileContents = JSON.parse(calls[0][2]);
-    const { ariaAnnouncements, ...expectedFileContents } = defaultState;
+    const { ariaAnnouncements, errors, ...expectedFileContents } = defaultState;
     expect(fileContents).toEqual(expectedFileContents);
   });
 
@@ -96,6 +96,28 @@ describe('load', () => {
     ));
 
     const loadedFileContents = await load(file, defaultState);
+
+    const { calls } = FileSystem.load.mock;
+    expect(calls.length).toBe(1);
+    expect(calls[0][0]).toBe(file);
+    const expectedFileContents = {
+      ...defaultState,
+      ariaAnnouncements: ['battle loaded']
+    };
+    expect(loadedFileContents).toEqual(expectedFileContents);
+  });
+
+  it('resets errors on load', async () => {
+    const state = {
+      ...defaultState,
+      errors: ['an error']
+    };
+    const { ariaAnnouncements, ...fileContents } = defaultState;
+    FileSystem.load.mockReturnValue(new Promise(resolve =>
+      resolve(JSON.stringify(fileContents))
+    ));
+
+    const loadedFileContents = await load(file, state);
 
     const { calls } = FileSystem.load.mock;
     expect(calls.length).toBe(1);
