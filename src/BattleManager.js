@@ -20,7 +20,8 @@ export const newBattleState = {
   activeCreature: undefined,
   focusedCreature: undefined,
   round: 0,
-  ariaAnnouncements: []
+  ariaAnnouncements: [],
+  errors: []
 };
 
 export function getSecondsElapsed(state) {

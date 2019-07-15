@@ -65,13 +65,17 @@ a:hover {
   font-size: 16px;
 }
 
+.hidden {
+  display: none;
+}
+
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
   justify-content: space-around;
   border-top: 2px solid #822000;
   border-bottom: 2px solid #822000;
-  height: 40px;
+  height: 50px;
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -96,12 +100,12 @@ a:hover {
 
 .battle-toolbar--stat {
   height: 50%;
-  margin-top: 2px;
   display: flex;
   align-items: center;
   flex-flow: column;
   font-weight: bold;
   color: #822000;
+  margin-top: 2px;
 }
 
 /* Remove most unimportant battle bar info for screens smaller than 768px */
@@ -127,6 +131,8 @@ a:hover {
 .battle-toolbar--button {
   padding: 4px;
   background-color: #EBE1AD;
+  height: 40px;
+  margin-top: 5px;
 }
 
 .battle-toolbar--button__reset {
@@ -134,10 +140,38 @@ a:hover {
   padding-top: 0;
 }
 
+.battle-toolbar--button__load {
+  padding-bottom: 0;
+}
+
 .battle-toolbar--button__disabled {
   background-color: transparent;
   cursor: auto;
   border: 2px dashed #822000;
+}
+
+.battle-toolbar--options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+  height: 250px;
+}
+
+.battle-toolbar--options-dropdown {
+  border-bottom: 2px solid #822000;
+  border-left: 2px solid #822000;
+  border-right: 2px solid #822000;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: 0 5px 5px #979AA4;
+  padding: 10px 10px;
+  background: #ebe2d3;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 10px;
+  height: 100%;
 }
 
 /* Creature toolbar */
@@ -543,4 +577,56 @@ a:hover {
   .footer-text--shortcuts {
     display: none;
   }
+}
+
+/* Errors */
+
+.error-bar {
+  width: 100%;
+  display: flex;
+  position: fixed;
+  top: 61px;
+  background: red;
+  padding: 10px 0;
+  border-top: 2px solid #822000;
+  border-bottom: 2px solid #822000;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/*
+ * Remove sticky bar bahviour for landscape screens bigger than 600px.
+ * On screen keyboards and the sticky bar leave a very small viewport.
+ */
+@media only screen and (max-width: 600px) and (orientation: landscape) {
+  .error-bar {
+    position: inherit;
+    width: inherit;
+  }
+}
+
+.error-bar--errors {
+  padding-left: 10px;
+  margin: 8px 0;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.error-bar--error {
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.error-bar--error__last {
+  margin-bottom: 0;
+}
+
+.error-bar--dismiss {
+  padding: 4px;
+  height: 36px;
+  width: 36px;
+  border: 2px solid black;
+  margin-right: 10px;
 }

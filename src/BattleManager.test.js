@@ -50,7 +50,8 @@ const defaultState = {
   activeCreature: 1,
   focusedCreature: 1,
   round: 1,
-  ariaAnnouncements: []
+  ariaAnnouncements: [],
+  errors: []
 };
 
 beforeEach(() => {
@@ -66,7 +67,8 @@ describe('newBattleState', () => {
       activeCreature: undefined,
       focusedCreature: undefined,
       round: 0,
-      ariaAnnouncements: []
+      ariaAnnouncements: [],
+      errors: []
     };
 
     expect(newBattleState).toEqual(expected);
@@ -82,7 +84,8 @@ describe('resetBattle', () => {
       activeCreature: undefined,
       focusedCreature: undefined,
       round: 0,
-      ariaAnnouncements: ['battle reset']
+      ariaAnnouncements: ['battle reset'],
+      errors: []
     };
 
     expect(resetBattle(defaultState)).toEqual(expected);

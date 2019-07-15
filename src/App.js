@@ -26,7 +26,14 @@ import {
   removeNoteFromCreature,
   addHealthToCreature
 } from './CreatureManager';
+import {
+  save,
+  load,
+  isSaveLoadSupported,
+  dismissErrors
+} from './AppManager';
 import Footer from './Footer';
+import Errors from './Errors';
 import { hotkeys } from './hotkeys';
 
 class App extends Component {
@@ -49,6 +56,9 @@ class App extends Component {
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
+    this.saveBattle = this.saveBattle.bind(this);
+    this.loadBattle = this.loadBattle.bind(this);
+    this.dismissErrors = this.dismissErrors.bind(this);
   }
 
   componentDidMount() {
@@ -127,6 +137,18 @@ class App extends Component {
     this.setState(addCreature(this.state, creature));
   }
 
+  saveBattle() {
+    this.setState(save(this.state));
+  }
+
+  async loadBattle(file) {
+    this.setState(await load(file, this.state));
+  }
+
+  dismissErrors() {
+    this.setState(dismissErrors(this.state))
+  }
+
   render() {
     const secondsElapsed = getSecondsElapsed(this.state);
 
@@ -141,6 +163,8 @@ class App extends Component {
       removeNoteFromCreature: this.removeNoteFromCreature
     };
 
+    const errors = this.state.errors.length > 0;
+
     return (
       <React.Fragment>
         <BattleToolbar
@@ -150,7 +174,15 @@ class App extends Component {
           creatures={this.state.creatureCount}
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
+          saveBattle={this.saveBattle}
+          loadBattle={this.loadBattle}
+          isSaveLoadSupported={isSaveLoadSupported}
         />
+        { errors && <Errors
+            errors={this.state.errors}
+            dismissErrors={this.dismissErrors}
+          />
+         }
         <div className="aria-announcements" role='region' aria-live="assertive">
           {this.state.ariaAnnouncements}
         </div>
