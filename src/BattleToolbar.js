@@ -9,6 +9,7 @@ import SaveIcon from './icons/SaveIcon';
 import LoadIcon from './icons/LoadIcon';
 import ResetIcon from './icons/ResetIcon';
 import { hotkeys } from './hotkeys';
+import { isSaveLoadSupported } from './AppManager';
 
 class BattleToolbar extends Component {
   constructor(props) {
@@ -63,6 +64,15 @@ class BattleToolbar extends Component {
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
     const optionsMenuIcon = this.state.optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
     const optionsClass = this.state.optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
+
+    const ResetButton = () =>
+      <button
+        title="Reset Battle"
+        className={buttonClasses}
+        onClick={() => {this.toggleOptions(); resetBattle();}}
+        disabled={!creaturesAdded}
+      ><ResetIcon /></button>;
+
     return (
       <header className="battle-toolbar">
         <button
@@ -88,40 +98,38 @@ class BattleToolbar extends Component {
           Time Elapsed:
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
-        <div className="battle-toolbar--options-container">
-          <button
-            title="Options Menu"
-            className={`${buttonClass} battle-toolbar--button__options`}
-            onClick={this.toggleOptions}
-            ref={this.optionsButton}
-          >{optionsMenuIcon}</button>
-          <div className={optionsClass}>
+        { isSaveLoadSupported() &&
+          <div className="battle-toolbar--options-container">
             <button
-              title="Save Battle"
-              className={buttonClass}
-              onClick={() => {this.toggleOptions(); saveBattle();}}
-            ><SaveIcon /></button>
-            <input
-              type='file'
-              className="hidden"
-              accept="application/json"
-              ref={this.fileSelector}
-              onChange={() => this.handleUpload(loadBattle)}
-              value=""
-            />
-            <button
-              title="Load Battle"
-              className={buttonClass}
-              onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
-            ><LoadIcon /></button>
-            <button
-              title="Reset Battle"
-              className={buttonClasses}
-              onClick={() => {this.toggleOptions(); resetBattle();}}
-              disabled={!creaturesAdded}
-            ><ResetIcon /></button>
+              title="Options Menu"
+              className={`${buttonClass} battle-toolbar--button__options`}
+              onClick={this.toggleOptions}
+              ref={this.optionsButton}
+            >{optionsMenuIcon}</button>
+            <div className={optionsClass}>
+              <button
+                title="Save Battle"
+                className={buttonClass}
+                onClick={() => {this.toggleOptions(); saveBattle();}}
+              ><SaveIcon /></button>
+              <input
+                type='file'
+                className="hidden"
+                accept="application/json"
+                ref={this.fileSelector}
+                onChange={() => this.handleUpload(loadBattle)}
+                value=""
+              />
+              <button
+                title="Load Battle"
+                className={buttonClass}
+                onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
+              ><LoadIcon /></button>
+              <ResetButton />
+            </div>
           </div>
-        </div>
+        }
+        { !isSaveLoadSupported() && <ResetButton /> }
       </header>
     );
   }

@@ -1,4 +1,4 @@
-import { save, load } from './AppManager';
+import { save, load, isSaveLoadSupported } from './AppManager';
 import FileSystem from './FileSystem';
 
 jest.mock('./FileSystem');
@@ -47,6 +47,7 @@ const defaultState = {
 beforeEach(() => {
   FileSystem.save.mockReset();
   FileSystem.load.mockReset();
+  FileSystem.isSaveSupported.mockReset();
 });
 
 describe('save', () => {
@@ -119,5 +120,17 @@ describe('load', () => {
     };
 
     expect(results).toEqual(expectedState);
+  });
+});
+
+describe('isSaveLoadSupported', () => {
+  it('returns true if saving a file is supported', () => {
+    FileSystem.isSaveSupported.mockReturnValue(true);
+    expect(isSaveLoadSupported()).toBe(true);
+  });
+
+  it('returns false if saving a file is not supported', () => {
+    FileSystem.isSaveSupported.mockReturnValue(false);
+    expect(isSaveLoadSupported()).toBe(false);
   });
 });

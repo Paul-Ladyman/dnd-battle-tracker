@@ -16,4 +16,12 @@ function load(fileName) {
   });
 }
 
-export default { save, load };
+function isSaveSupported() {
+  try {
+    return !!new Blob;
+  } catch (e) {
+    return false;
+  }
+}
+
+export default { save, load, isSaveSupported };

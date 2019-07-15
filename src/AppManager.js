@@ -38,3 +38,7 @@ export async function load(file, state) {
     errors
   };
 }
+
+export function isSaveLoadSupported() {
+  return FileSystem.isSaveSupported();
+}

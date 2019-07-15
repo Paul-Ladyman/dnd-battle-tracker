@@ -26,7 +26,11 @@ import {
   removeNoteFromCreature,
   addHealthToCreature
 } from './CreatureManager';
-import { save, load } from './AppManager';
+import {
+  save,
+  load,
+  isSaveLoadSupported
+} from './AppManager';
 import Footer from './Footer';
 import { hotkeys } from './hotkeys';
 
@@ -163,6 +167,7 @@ class App extends Component {
           resetBattle={this.resetBattle}
           saveBattle={this.saveBattle}
           loadBattle={this.loadBattle}
+          isSaveLoadSupported={isSaveLoadSupported}
         />
         <div className="aria-announcements" role='region' aria-live="assertive">
           {this.state.ariaAnnouncements}
