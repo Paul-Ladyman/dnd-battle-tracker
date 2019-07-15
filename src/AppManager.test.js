@@ -42,6 +42,12 @@ const defaultState = {
   ariaAnnouncements: []
 };
 
+
+beforeEach(() => {
+  FileSystem.save.mockReset();
+  FileSystem.load.mockReset();
+});
+
 describe('save', () => {
   it('saves the current app state removing aria announcements', () => {
     save(defaultState);
@@ -59,26 +65,39 @@ describe('save', () => {
   });
 
   it('includes the current time in the file name', () => {
+    save(defaultState);
     const { calls } = FileSystem.save.mock;
     const fileNameRegex = /dnd_battle_tracker_(\d|\d\d)_(\d|\d\d)_\d\d\d\d_(\d|\d\d)_(\d|\d\d)_(\d|\d\d)\.json/g;
     const fileName = calls[0][0];
 
     expect(fileName.match(fileNameRegex).length).toBe(1);
   });
+
+  it('sets an aria announcement in the app state', () => {
+    const expectedState = {
+      ...defaultState,
+      ariaAnnouncements: ['battle saved']
+    };
+    expect(save(defaultState)).toEqual(expectedState);
+  });
 });
 
 describe('load', () => {
-  it('parses the contents of a file as JSON', async () => {
-    const { ariaAnnouncements, ...expectedFileContents } = defaultState;
+  it('parses the contents of a file as JSON and adds an aria announcement', async () => {
+    const { ariaAnnouncements, ...fileContents } = defaultState;
     FileSystem.load.mockReturnValue(new Promise(resolve =>
-      resolve(JSON.stringify(expectedFileContents))
+      resolve(JSON.stringify(fileContents))
     ));
 
-    const loadedFileContents = await load('fileName');
+    const loadedFileContents = await load('fileName', defaultState);
 
     const { calls } = FileSystem.load.mock;
     expect(calls.length).toBe(1);
     expect(calls[0][0]).toBe('fileName');
+    const expectedFileContents = {
+      ...defaultState,
+      ariaAnnouncements: ['battle loaded']
+    };
     expect(loadedFileContents).toEqual(expectedFileContents);
   });
 });

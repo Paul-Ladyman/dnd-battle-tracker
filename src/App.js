@@ -131,11 +131,11 @@ class App extends Component {
   }
 
   saveBattle() {
-    save(this.state);
+    this.setState(save(this.state));
   }
 
   async loadBattle(file) {
-    this.setState(await load(file));
+    this.setState(await load(file, this.state));
   }
 
   render() {
