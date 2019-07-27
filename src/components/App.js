@@ -4,7 +4,7 @@ import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
 import BattleToolbar from './BattleToolbar';
-import conditions from './conditions';
+import conditions from '../model/conditions';
 import {
   newBattleState,
   getSecondsElapsed,
@@ -16,7 +16,7 @@ import {
   removeCreature,
   addCreature,
   resetBattle
-} from './BattleManager';
+} from '../state/BattleManager';
 import {
   killCreature,
   stabalizeCreature,
@@ -25,16 +25,16 @@ import {
   addNoteToCreature,
   removeNoteFromCreature,
   addHealthToCreature
-} from './CreatureManager';
+} from '../state/CreatureManager';
 import {
   save,
   load,
   isSaveLoadSupported,
   dismissErrors
-} from './AppManager';
+} from '../state/AppManager';
 import Footer from './Footer';
 import Errors from './Errors';
-import { hotkeys } from './hotkeys';
+import { hotkeys } from '../hotkeys/hotkeys';
 
 class App extends Component {
   constructor(props) {

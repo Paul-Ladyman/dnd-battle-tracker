@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CreatureNoteList from './CreatureNoteList';
 import HealthPoints from './HealthPoints';
-import { conditionDescriptions } from './conditions';
+import { conditionDescriptions } from '../model/conditions';
 import ExternalLink from './ExternalLink';
 import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
 import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';

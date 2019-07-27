@@ -4,7 +4,7 @@ import isHotkey from 'is-hotkey';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
-import { hotkeys } from './hotkeys';
+import { hotkeys } from '../hotkeys/hotkeys';
 import CreatureExpander from './CreatureExpander';
 
 function getAvailableConditions(allConditions, creatureConditions) {

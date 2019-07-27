@@ -8,7 +8,7 @@ import {
   removeNoteFromCreature,
   addHealthToCreature
 } from './CreatureManager';
-import { conditionDescriptions } from './conditions';
+import { conditionDescriptions } from '../model/conditions';
 
 const defaultState = {
   creatures:[

@@ -8,8 +8,8 @@ import OptionsMenuOpenIcon from './icons/OptionsMenuOpenIcon';
 import SaveIcon from './icons/SaveIcon';
 import LoadIcon from './icons/LoadIcon';
 import ResetIcon from './icons/ResetIcon';
-import { hotkeys } from './hotkeys';
-import { isSaveLoadSupported } from './AppManager';
+import { hotkeys } from '../hotkeys/hotkeys';
+import { isSaveLoadSupported } from '../state/AppManager';
 
 class BattleToolbar extends Component {
   constructor(props) {

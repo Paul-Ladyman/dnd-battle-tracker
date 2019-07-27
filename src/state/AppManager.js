@@ -1,7 +1,7 @@
 import { validate } from 'jsonschema';
-import FileSystem from './FileSystem';
+import FileSystem from '../util/fileSystem';
 
-const appSchema = require('./app-schema.json');
+const appSchema = require('../resources/app-schema.json');
 
 export function save(state) {
   const { ariaAnnouncements, errors, ...stateToSave } = state;

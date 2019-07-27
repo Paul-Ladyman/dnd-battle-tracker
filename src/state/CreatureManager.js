@@ -1,5 +1,5 @@
 import { getSecondsElapsed } from './BattleManager';
-import { conditionDescriptions } from './conditions';
+import { conditionDescriptions } from '../model/conditions';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({id}) => {

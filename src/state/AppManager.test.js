@@ -1,7 +1,7 @@
 import { save, load, isSaveLoadSupported, dismissErrors } from './AppManager';
-import FileSystem from './FileSystem';
+import FileSystem from '../util/fileSystem';
 
-jest.mock('./FileSystem');
+jest.mock('../util/fileSystem');
 
 const defaultState = {
   creatures:[
