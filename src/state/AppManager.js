@@ -20,17 +20,27 @@ export function save(state) {
   };
 }
 
+function jsonParse(value) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return undefined;
+  }
+}
+
 export async function load(file, state) {
   const fileContents = await FileSystem.load(file);
-  const loadedState = JSON.parse(fileContents);
+  const loadedState = jsonParse(fileContents);
 
-  const { valid } = validate(loadedState, appSchema);
+  const { valid: validSchema } = validate(loadedState, appSchema);
 
-  const newState = valid ? loadedState : state;
-  const ariaAnnouncement = valid ? 'battle loaded' : 'failed to load battle';
-  const error = valid ? [] : [`Failed to load battle. The file ${file.name} was invalid.`];
+  const validLoadedState = loadedState && validSchema;
+
+  const newState = validLoadedState ? loadedState : state;
+  const ariaAnnouncement = validLoadedState ? 'battle loaded' : 'failed to load battle';
+  const error = validLoadedState ? [] : [`Failed to load battle. The file "${file.name}" was invalid.`];
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
-  const errors = valid ? error : state.errors.concat(error);
+  const errors = validLoadedState ? error : state.errors.concat(error);
 
   return {
     ...newState,
