@@ -142,7 +142,26 @@ describe('load', () => {
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file fileName was invalid.']
+      errors: ['Failed to load battle. The file "fileName" was invalid.']
+    };
+
+    expect(results).toEqual(expectedState);
+  });
+  
+  it('sets an error in app state if the loaded file contents are not JSON', async () => {
+    expect.assertions(1);
+
+    const fileContents = 'not JSON';
+    FileSystem.load.mockReturnValue(new Promise(resolve =>
+      resolve(fileContents)
+    ));
+
+    const results = await load(file, defaultState);
+
+    const expectedState = {
+      ...defaultState,
+      ariaAnnouncements: ['failed to load battle'],
+      errors: ['Failed to load battle. The file "fileName" was invalid.']
     };
 
     expect(results).toEqual(expectedState);
