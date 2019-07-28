@@ -664,8 +664,8 @@ a:hover {
 
 .error-bar--dismiss {
   padding: 4px;
-  height: 36px;
-  width: 36px;
+  height: 40px;
+  width: 40px;
   border: 2px solid black;
   margin-right: 10px;
 }
