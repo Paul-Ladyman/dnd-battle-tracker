@@ -46,10 +46,12 @@ class CreatureToolbarInput extends Component {
       <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
         <label aria-label={this.props.ariaLabel}>
           <div className="form--label">{this.props.label}</div>
-          <form className={formClasses} onKeyDown={this.formHandler}>
+          <div className={formClasses}>
+          <form onKeyDown={this.formHandler}>
             <input disabled={!this.props.enabled} className='creature-toolbar--input' name={this.props.name} type={type} value={this.state.value} onChange={this.handleChange}/>
-            <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label} onClick={this.submitHandler}>{this.props.submitIcon()}</button>
           </form>
+          <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label} onClick={this.submitHandler}>{this.props.submitIcon()}</button>
+          </div>
         </label>
       </div>
     );

@@ -202,6 +202,11 @@ a:hover {
   border-radius: 15px;
   background: white;
   box-shadow: 0 0 5px #979aa4;
+  height: 40px;
+}
+
+.creature-toolbar--input-wrapper form {
+  width: 100%;
 }
 
 .creature-toolbar--input-wrapper__disabled {
@@ -211,6 +216,7 @@ a:hover {
 
 .creature-toolbar--input {
   width: 100%;
+  height: 35px;
   background: transparent;
   border: none;
   margin-left: 5px;
@@ -224,7 +230,8 @@ a:hover {
 }
 
 .creature-toolbar--submit {
-  padding: 3px 5px 1px 5px;
+  padding: 3px 5px 1px 0;
+  margin-left:5px;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -233,11 +240,6 @@ a:hover {
 
 .creature-toolbar--submit__disabled {
   cursor: default;
-}
-
-.creature-toolbar--dropdown {
-  -webkit-appearance: none;
-  cursor: pointer;
 }
 
 .creature-toolbar--button {
@@ -253,10 +255,12 @@ a:hover {
 }
 
 .creature-toolbar--dropdown {
+  -webkit-appearance: none;
   cursor: pointer;
   grid-column: span 4;
   display: flex;
   flex-direction: column;
+  height: 44px;
 }
 
 @media only screen and (max-width: 768px) {
