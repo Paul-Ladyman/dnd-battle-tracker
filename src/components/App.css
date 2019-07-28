@@ -278,9 +278,10 @@ a:hover {
   font-weight: bold;
 }
 
-.create-creature-form--multiplier-container {
+.create-creature-form--input-container {
   display: flex;
   align-items: baseline;
+  width: 100%;
 }
 
 .create-creature-form--multiplier {
@@ -340,8 +341,7 @@ a:hover {
 
   .create-creature-form--submit {
     grid-column: 4 / span 2;
-    margin-left: 20px;
-    width: 75%;
+    width: 100%;
   }
 }
 
