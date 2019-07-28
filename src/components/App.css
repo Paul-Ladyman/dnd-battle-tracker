@@ -264,7 +264,7 @@ a:hover {
   margin-top: 20px;
   grid-gap: 50px;
   display: grid;
-  grid-template-columns: 20% 10% 10% 10%;
+  grid-template-columns: 20% 10% 10% 10% 5%;
   justify-content: center;
 }
 
@@ -298,8 +298,15 @@ a:hover {
 
 @media only screen and (max-width: 1175px) {
   .create-creature-form {
-    grid-template-columns: 30% 15% 15% 15%;
+    grid-template-columns: 30% 15% 15% 15% 5%;
   }
+}
+
+.create-creature-form--submit {
+  height: 40px;
+  width: 40px;
+  margin-top: 22px;
+  padding: 6px;
 }
 
 /*
@@ -324,11 +331,17 @@ a:hover {
   }
 
   .create-creature-form--item__multiplier {
-    grid-column: 3 / span 2;
+    grid-column: 2 / span 2;
   }
 
   .create-creature-form--label {
     margin-left: 0px;
+  }
+
+  .create-creature-form--submit {
+    grid-column: 4 / span 2;
+    margin-left: 20px;
+    width: 75%;
   }
 }
 

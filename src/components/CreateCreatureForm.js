@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import isHotkey from 'is-hotkey';
 import { hotkeys } from '../hotkeys/hotkeys';
+import AddCreatureIcon from './icons/RemoveIcon';
 
 class CreateCreatureForm extends Component {
   static formErrors(name, initiative, healthPoints, multiplier) {
@@ -108,7 +109,7 @@ class CreateCreatureForm extends Component {
     return (
       <form  className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item create-creature-form--item__text">
-          <label aria-label="create creature form. Name (required)" htmlFor="name" className="form--label">Name <b>*</b></label>
+          <label aria-label="create creature form. Name (required)" htmlFor="name" className="form--label">Creature Name <b>*</b></label>
           <input className={nameClass} type="text" required id="name" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
@@ -126,6 +127,7 @@ class CreateCreatureForm extends Component {
             <input className={`${multiplierClass} ${inputClass}__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
           </div>
         </div>
+        <button className="create-creature-form--submit" title="Add creature"><AddCreatureIcon /></button>
       </form>
     ); 
   }
