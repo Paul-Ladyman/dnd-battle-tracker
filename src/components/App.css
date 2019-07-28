@@ -259,10 +259,6 @@ a:hover {
   flex-direction: column;
 }
 
-.creature-toolbar--dropdown option {
-  text-transform: capitalize;
-}
-
 @media only screen and (max-width: 768px) {
   .creature-toolbar {
     justify-content: center;
