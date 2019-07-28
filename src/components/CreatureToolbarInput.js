@@ -8,21 +8,26 @@ class CreatureToolbarInput extends Component {
     this.formHandler = this.formHandler.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
   resetForm() {
     this.setState({value: ''});
   }
 
+  submitHandler() {
+    const { value } = this.state;
+    if (value) {
+      this.resetForm();
+      const submittedValue = this.props.integer ? parseInt(value) : value;
+      this.props.onSubmit(submittedValue);
+    }
+  }
+
   formHandler(event) {
     if (event.keyCode === 13) {
       event.preventDefault();
-      const value = this.state.value;
-      if (value) {
-        this.resetForm();
-        const submittedValue = this.props.integer ? parseInt(value) : value;
-        this.props.onSubmit(submittedValue);
-      }
+      this.submitHandler();
     }
   }
 
@@ -37,17 +42,16 @@ class CreatureToolbarInput extends Component {
     const formClasses = `creature-toolbar--input-wrapper ${disabledModifier}`;
     const buttonClasses = this.props.enabled ? 'creature-toolbar--submit' : 'creature-toolbar--submit creature-toolbar--submit__disabled';
 
-    console.log(this.props.submitIcon);
     return (
-        <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
-          <label aria-label={this.props.ariaLabel}>
-            <div className="form--label">{this.props.label}</div>
-            <form className={formClasses} onKeyDown={this.formHandler}>
-              <input disabled={!this.props.enabled} className='creature-toolbar--input' name={this.props.name} type={type} value={this.state.value} onChange={this.handleChange}/>
-              <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label}>{this.props.submitIcon()}</button>
-            </form>
-          </label>
-        </div>
+      <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
+        <label aria-label={this.props.ariaLabel}>
+          <div className="form--label">{this.props.label}</div>
+          <form className={formClasses} onKeyDown={this.formHandler}>
+            <input disabled={!this.props.enabled} className='creature-toolbar--input' name={this.props.name} type={type} value={this.state.value} onChange={this.handleChange}/>
+            <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label} onClick={this.submitHandler}>{this.props.submitIcon()}</button>
+          </form>
+        </label>
+      </div>
     );
   }
 }
