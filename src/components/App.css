@@ -199,7 +199,6 @@ a:hover {
 .creature-toolbar--input-wrapper {
   display: flex;
   border: 2px solid #822000;
-  padding: 2px;
   border-radius: 15px;
   background: white;
   box-shadow: 0 0 5px #979aa4;
@@ -215,6 +214,7 @@ a:hover {
   background: transparent;
   border: none;
   margin-left: 5px;
+  padding: 2px;
 }
 
 .creature-toolbar--select {
@@ -224,11 +224,11 @@ a:hover {
 }
 
 .creature-toolbar--submit {
-  margin: 0 5px;
-  padding: 0px;
+  padding: 2px 5px;
   background: transparent;
   border: none;
   box-shadow: none;
+  width: 50px;
 }
 
 .creature-toolbar--submit__disabled {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import AddCreatureIcon from './icons/AddCreatureIcon';
 
 class CreatureToolbarInput extends Component {
   constructor(props) {
@@ -37,13 +36,15 @@ class CreatureToolbarInput extends Component {
     const disabledModifier = this.props.enabled ? '' : 'creature-toolbar--input-wrapper__disabled';
     const formClasses = `creature-toolbar--input-wrapper ${disabledModifier}`;
     const buttonClasses = this.props.enabled ? 'creature-toolbar--submit' : 'creature-toolbar--submit creature-toolbar--submit__disabled';
+
+    console.log(this.props.submitIcon);
     return (
         <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
           <label aria-label={this.props.ariaLabel}>
             <div className="form--label">{this.props.label}</div>
             <form className={formClasses} onKeyDown={this.formHandler}>
               <input disabled={!this.props.enabled} className='creature-toolbar--input' name={this.props.name} type={type} value={this.state.value} onChange={this.handleChange}/>
-              <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label}><AddCreatureIcon /></button>
+              <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label}>{this.props.submitIcon()}</button>
             </form>
           </label>
         </div>
