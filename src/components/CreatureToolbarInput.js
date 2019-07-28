@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AddCreatureIcon from './icons/AddCreatureIcon';
 
 class CreatureToolbarInput extends Component {
   constructor(props) {
@@ -39,8 +40,9 @@ class CreatureToolbarInput extends Component {
         <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
           <label aria-label={this.props.ariaLabel}>
             <div className="form--label">{this.props.label}</div>
-            <form  onKeyDown={this.formHandler}>
+            <form className="creature-toolbar--input-wrapper" onKeyDown={this.formHandler}>
               <input disabled={!this.props.enabled} className={classes} name={this.props.name} type={type} value={this.state.value} onChange={this.handleChange}/>
+              <button type="button" className="creature-toolbar--submit" title={this.props.label}><AddCreatureIcon /></button>
             </form>
           </label>
         </div>

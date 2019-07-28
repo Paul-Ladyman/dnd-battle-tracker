@@ -196,10 +196,22 @@ a:hover {
   grid-column: span 4;
 }
 
+.creature-toolbar--input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .creature-toolbar--input {
   background-color: white;
   box-sizing: border-box;
   display: block;
+}
+
+.creature-toolbar--submit {
+  margin-left: 10px;
+  height: 40px;
+  width: 40px;
+  padding: 4px;
 }
 
 .creature-toolbar--dropdown {
