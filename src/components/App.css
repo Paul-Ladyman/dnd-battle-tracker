@@ -198,10 +198,26 @@ a:hover {
 
 .creature-toolbar--input-wrapper {
   display: flex;
-  align-items: center;
+  border: 2px solid #822000;
+  padding: 2px;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 0 5px #979aa4;
+}
+
+.creature-toolbar--input-wrapper__disabled {
+  background-color: transparent;
+  border: 2px dashed #822000;
 }
 
 .creature-toolbar--input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  margin-left: 5px;
+}
+
+.creature-toolbar--select {
   background-color: white;
   box-sizing: border-box;
   display: block;
@@ -209,9 +225,15 @@ a:hover {
 
 .creature-toolbar--submit {
   margin-left: 10px;
-  height: 40px;
-  width: 40px;
-  padding: 4px;
+  margin-right: 5px;
+  padding: 0px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.creature-toolbar--submit__disabled {
+  cursor: default;
 }
 
 .creature-toolbar--dropdown {
@@ -229,11 +251,6 @@ a:hover {
 
 .creature-toolbar--button__dead {
   background-color: lightgrey;
-}
-
-.creature-toolbar--input__disabled {
-  background-color: transparent;
-  border: 2px dashed #822000;
 }
 
 .creature-toolbar--dropdown {

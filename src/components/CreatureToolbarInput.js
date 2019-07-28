@@ -34,15 +34,16 @@ class CreatureToolbarInput extends Component {
   render() {
     const type = this.props.integer ? "number" : "text";
     const numberModifier = this.props.integer ? 'creature-toolbar--form__number' : '';
-    const disabledModifier = this.props.enabled ? '' : 'creature-toolbar--input__disabled';
-    const classes = `form--input creature-toolbar--input ${disabledModifier}`;
+    const disabledModifier = this.props.enabled ? '' : 'creature-toolbar--input-wrapper__disabled';
+    const formClasses = `creature-toolbar--input-wrapper ${disabledModifier}`;
+    const buttonClasses = this.props.enabled ? 'creature-toolbar--submit' : 'creature-toolbar--submit creature-toolbar--submit__disabled';
     return (
         <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
           <label aria-label={this.props.ariaLabel}>
             <div className="form--label">{this.props.label}</div>
-            <form className="creature-toolbar--input-wrapper" onKeyDown={this.formHandler}>
-              <input disabled={!this.props.enabled} className={classes} name={this.props.name} type={type} value={this.state.value} onChange={this.handleChange}/>
-              <button type="button" className="creature-toolbar--submit" title={this.props.label}><AddCreatureIcon /></button>
+            <form className={formClasses} onKeyDown={this.formHandler}>
+              <input disabled={!this.props.enabled} className='creature-toolbar--input' name={this.props.name} type={type} value={this.state.value} onChange={this.handleChange}/>
+              <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label}><AddCreatureIcon /></button>
             </form>
           </label>
         </div>

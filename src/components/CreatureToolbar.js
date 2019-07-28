@@ -28,7 +28,7 @@ function CreatureToolbar({
   const enableConditions = conditions.length > 0;
 
   const enabledModifier = enableConditions ? '' : 'creature-toolbar--input__disabled';
-  const conditionsClasses = `form--input creature-toolbar--input creature-toolbar--dropdown ${enabledModifier}`;
+  const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
   return (
     <div className="creature-toolbar">
       <button className={statusButtonClasses} aria-label={`${statusButtonTitle} ${name}`} title={statusButtonTitle} onClick={() => statusButtonFunc(id)}>{statusButtonIcon}</button>
