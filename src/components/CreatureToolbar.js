@@ -2,6 +2,10 @@ import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
 import StabalizeIcon from './icons/StabalizeIcon';
 import KillIcon from './icons/KillIcon';
+import AddNoteIcon from './icons/AddNoteIcon';
+import HealIcon from './icons/HealIcon';
+import DamageIcon from './icons/DamageIcon';
+import AddHpIcon from './icons/AddHpIcon';
 
 function CreatureToolbar({
   creature,
@@ -28,7 +32,7 @@ function CreatureToolbar({
   const enableConditions = conditions.length > 0;
 
   const enabledModifier = enableConditions ? '' : 'creature-toolbar--input__disabled';
-  const conditionsClasses = `form--input creature-toolbar--input creature-toolbar--dropdown ${enabledModifier}`;
+  const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
   return (
     <div className="creature-toolbar">
       <button className={statusButtonClasses} aria-label={`${statusButtonTitle} ${name}`} title={statusButtonTitle} onClick={() => statusButtonFunc(id)}>{statusButtonIcon}</button>
@@ -49,15 +53,41 @@ function CreatureToolbar({
           </select>
         </label>
       </div>
-      <CreatureToolbarInput ariaLabel={`add note to ${name}`} label="Add Note" onSubmit={(note) => addNoteToCreature(id, note, false)} />
+      <CreatureToolbarInput
+        ariaLabel={`add note to ${name}`}
+        label="Add Note"
+        onSubmit={(note) => addNoteToCreature(id, note, false)}
+        submitIcon={AddNoteIcon}
+      />
       {enableHealthItems &&
         <React.Fragment>
-          <CreatureToolbarInput integer enabled={enableDamage} ariaLabel={`damage ${name}`} label="Damage" onSubmit={(damage) => damageCreature(id, damage)}/>
-          <CreatureToolbarInput integer enabled={enableHeal} ariaLabel={`heal ${name}`} label="Heal" onSubmit={(heal) => healCreature(id, heal)}/>
+          <CreatureToolbarInput
+            integer
+            enabled={enableDamage}
+            ariaLabel={`damage ${name}`}
+            label="Damage"
+            onSubmit={(damage) => damageCreature(id, damage)}
+            submitIcon={DamageIcon}
+          />
+          <CreatureToolbarInput
+            integer
+            enabled={enableHeal}
+            ariaLabel={`heal ${name}`}
+            label="Heal"
+            onSubmit={(heal) => healCreature(id, heal)}
+            submitIcon={HealIcon}
+          />
         </React.Fragment>
       }
       {!enableHealthItems &&
-        <CreatureToolbarInput customClasses="creature-toolbar--last" integer name="creature-toolbar-maxhp" ariaLabel={`add max hp ${name}`} label="Add Max HP" onSubmit={(health) => addHealthToCreature(id, health)}/>
+        <CreatureToolbarInput
+          customClasses="creature-toolbar--last"
+          integer name="creature-toolbar-maxhp"
+          ariaLabel={`add max hp ${name}`}
+          label="Add Max HP"
+          onSubmit={(health) => addHealthToCreature(id, health)}
+          submitIcon={AddHpIcon}
+        />
       }
     </div>
   )
