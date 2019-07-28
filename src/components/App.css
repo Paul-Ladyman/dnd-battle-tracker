@@ -8,7 +8,7 @@ button {
   border: 2px solid #822000;
   padding: 10px;
   font-weight: bold; 
-  background-color: transparent;
+  background-color: #EBE1AD;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
 }
@@ -130,7 +130,6 @@ a:hover {
 
 .battle-toolbar--button {
   padding: 4px;
-  background-color: #EBE1AD;
   height: 40px;
   margin-top: 5px;
 }
@@ -211,7 +210,6 @@ a:hover {
 .creature-toolbar--button {
   padding: 4px;
   display: flex;
-  background-color: #EBE1AD;
   margin-top: 22px;
   grid-column: span 2;
   padding-left: 10px;
@@ -307,7 +305,7 @@ a:hover {
   height: 40px;
   width: 40px;
   margin-top: 22px;
-  padding: 6px;
+  padding: 4px;
 }
 
 /*

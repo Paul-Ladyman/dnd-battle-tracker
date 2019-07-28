@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import isHotkey from 'is-hotkey';
 import { hotkeys } from '../hotkeys/hotkeys';
-import AddCreatureIcon from './icons/RemoveIcon';
+import AddCreatureIcon from './icons/AddCreatureIcon';
 
 class CreateCreatureForm extends Component {
   static formErrors(name, initiative, healthPoints, multiplier) {
