@@ -224,8 +224,7 @@ a:hover {
 }
 
 .creature-toolbar--submit {
-  margin-left: 10px;
-  margin-right: 5px;
+  margin: 0 5px;
   padding: 0px;
   background: transparent;
   border: none;
