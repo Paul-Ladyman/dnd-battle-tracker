@@ -4,24 +4,6 @@ import { hotkeys } from '../hotkeys/hotkeys';
 import AddCreatureIcon from './icons/AddCreatureIcon';
 
 class CreateCreatureForm extends Component {
-  static formErrors(name, initiative, healthPoints, multiplier) {
-    const nameError = name === '';
-    const initiativeError = initiative === '';
-    const healthError = healthPoints <= 0;
-    const multiplierError = multiplier <= 0 || multiplier > 50;
-
-    if (nameError || initiativeError || healthError || multiplierError) {
-      return {
-        nameError,
-        initiativeError,
-        healthError,
-        multiplierError
-      };
-    }
-
-    return undefined;
-  }
-
   constructor(props) {
     super(props);
 
@@ -29,11 +11,7 @@ class CreateCreatureForm extends Component {
       name: '',
       initiative: '',
       healthPoints: '',
-      multiplier: 1,
-      nameError: false,
-      initiativeError: false,
-      healthError: false,
-      multiplierError: false
+      multiplier: 1
     };
 
     this.state = this.initialState;
@@ -74,27 +52,16 @@ class CreateCreatureForm extends Component {
       undefined :
       parseInt(state.healthPoints);
 
-    const multiplier = state.multiplier === '' ?
-      0 :
-      parseInt(state.multiplier);
-
-    const errors = CreateCreatureForm.formErrors(
-      state.name,
-      state.initiative,
-      healthPoints,
-      multiplier
-    );
-
-    // if (errors) {
-      // return this.setState({...this.state, ...errors});
-    // }
+    const multiplier = parseInt(state.multiplier);
 
     const initiative = parseInt(state.initiative);
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
-    this.resetForm();
-    this.props.createCreature(creature);
+    const createSuccess = this.props.createCreature(creature);
+    if (createSuccess) {
+      this.resetForm();
+    }
   }
 
   formHandler(event) {
@@ -112,6 +79,7 @@ class CreateCreatureForm extends Component {
     const initiativeClass = initiativeError ? `${inputClass} ${inputErrorClass}` : inputClass;
     const healthClass = healthError ? `${inputClass} ${inputErrorClass}` : inputClass;
     const multiplierClass = multiplierError ? `${inputClass} ${inputErrorClass}` : inputClass;
+
     return (
       <form  className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item create-creature-form--item__text">

@@ -134,7 +134,9 @@ class App extends Component {
   }
 
   createCreature(creature) {
-    this.setState(addCreature(this.state, creature));
+    const newState = addCreature(this.state, creature)
+    this.setState(newState);
+    return Object.keys(newState).length === 0;
   }
 
   saveBattle() {

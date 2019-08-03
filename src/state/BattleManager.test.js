@@ -734,4 +734,17 @@ describe('addCreature', () => {
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
   });
+
+  test('resets createCreatureErrors if a creature is valid', () => {
+    const creature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10,
+      multiplier: 2
+    };
+
+    validateCreature.mockReturnValue(undefined);
+
+    expect(addCreature(defaultState, creature).createCreatureErrors).toEqual({});
+  });
 });
