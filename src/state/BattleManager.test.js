@@ -10,7 +10,7 @@ import {
   addCreature,
   resetBattle
 } from './BattleManager';
-import { createCreature } from './CreatureManager';
+import { createCreature, validateCreature } from './CreatureManager';
 
 jest.mock('./CreatureManager');
 
@@ -51,7 +51,8 @@ const defaultState = {
   focusedCreature: 1,
   round: 1,
   ariaAnnouncements: [],
-  errors: []
+  errors: [],
+  createCreatureErrors: {}
 };
 
 beforeEach(() => {
@@ -68,7 +69,8 @@ describe('newBattleState', () => {
       focusedCreature: undefined,
       round: 0,
       ariaAnnouncements: [],
-      errors: []
+      errors: [],
+      createCreatureErrors: {}
     };
 
     expect(newBattleState).toEqual(expected);
@@ -85,7 +87,8 @@ describe('resetBattle', () => {
       focusedCreature: undefined,
       round: 0,
       ariaAnnouncements: ['battle reset'],
-      errors: []
+      errors: [],
+      createCreatureErrors: {}
     };
 
     expect(resetBattle(defaultState)).toEqual(expected);
@@ -710,5 +713,25 @@ describe('addCreature', () => {
     };
     expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
     expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
+  });
+
+  test('does not add a creature if it is not valid', () => {
+    const creature = {
+      name: '',
+      initiative: 9,
+      healthPoints: 10,
+      multiplier: 2
+    };
+
+    validateCreature.mockReturnValue({nameError: true});
+
+    const expectedState = {
+      ...defaultState,
+      ariaAnnouncements: ['create creature form is invalid'],
+      errors: ['Failed to create creature. Create creature form is invalid'],
+      createCreatureErrors: {nameError: true}
+    };
+
+    expect(addCreature(defaultState, creature)).toEqual(expectedState);
   });
 });

@@ -1,4 +1,5 @@
-import { createCreature } from './CreatureManager';
+import { createCreature, validateCreature } from './CreatureManager';
+import { addError } from './AppManager';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({id}) => {
@@ -21,7 +22,8 @@ export const newBattleState = {
   focusedCreature: undefined,
   round: 0,
   ariaAnnouncements: [],
-  errors: []
+  errors: [],
+  createCreatureErrors: {}
 };
 
 export function getSecondsElapsed(state) {
@@ -163,6 +165,15 @@ function createCreatures(creatureIdCount, creature, multiplier) {
 export function addCreature(state, creature) {
   const { multiplier, ...creatureStats } = creature;
   const creatureMultiplier = multiplier || 1;
+
+  const {name, initiative, healthPoints} = creatureStats;
+  const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier); 
+
+  if (createCreatureErrors) {
+    const ariaAnnouncements = state.ariaAnnouncements.concat(['create creature form is invalid']);
+    const errors = addError(state, 'Failed to create creature. Create creature form is invalid');
+    return {...state, ariaAnnouncements, errors, createCreatureErrors};
+  }
 
   const newCreatures = createCreatures(state.creatureIdCount, creatureStats, creatureMultiplier);
   const creatures = sortCreatures([...state.creatures, ...newCreatures]);

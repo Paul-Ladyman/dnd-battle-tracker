@@ -85,9 +85,9 @@ class CreateCreatureForm extends Component {
       multiplier
     );
 
-    if (errors) {
-      return this.setState({...this.state, ...errors});
-    }
+    // if (errors) {
+      // return this.setState({...this.state, ...errors});
+    // }
 
     const initiative = parseInt(state.initiative);
 
@@ -104,7 +104,8 @@ class CreateCreatureForm extends Component {
   }
 
   render() {
-    const { name, initiative, healthPoints, multiplier, nameError, initiativeError, healthError, multiplierError } = this.state;
+    const { name, initiative, healthPoints, multiplier } = this.state;
+    const { nameError, initiativeError, healthError, multiplierError } = this.props.createCreatureErrors;
     const inputClass = 'form--input';
     const inputErrorClass = 'create-creature-form--input__error';
     const nameClass = nameError ? `${inputClass} ${inputErrorClass}` : inputClass;

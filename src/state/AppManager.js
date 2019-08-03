@@ -40,7 +40,7 @@ export async function load(file, state) {
   const ariaAnnouncement = validLoadedState ? 'battle loaded' : 'failed to load battle';
   const error = validLoadedState ? [] : [`Failed to load battle. The file "${file.name}" was invalid.`];
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
-  const errors = validLoadedState ? error : state.errors.concat(error);
+  const errors = validLoadedState ? error : addError(state, error);
 
   return {
     ...newState,
@@ -58,4 +58,14 @@ export function dismissErrors(state) {
     ...state,
     errors: []
   };
+}
+
+export function addError(state, errorToAdd) {
+  const errorExists = state.errors.find(error => error === errorToAdd);
+
+  if (errorExists) {
+    return state.errors;
+  }
+
+  return state.errors.concat(errorToAdd);
 }

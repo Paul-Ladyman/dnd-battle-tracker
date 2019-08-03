@@ -86,6 +86,24 @@ export function createCreature(creatureId, {name, initiative, healthPoints}) {
   };
 };
 
+export function validateCreature(name, initiative, healthPoints, multiplier) {
+  const nameError = name === '';
+  const initiativeError = isNaN(initiative);
+  const healthError = healthPoints <= 0;
+  const multiplierError = multiplier <= 0 || multiplier > 50;
+
+  if (nameError || initiativeError || healthError || multiplierError) {
+    return {
+      nameError,
+      initiativeError,
+      healthError,
+      multiplierError
+    };
+  }
+
+  return undefined;
+}
+
 export function addNoteToCreature(state, creatureId, text, isCondition) {
   const creature = findCreature(state.creatures, creatureId);
   const note = {

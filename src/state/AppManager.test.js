@@ -1,4 +1,4 @@
-import { save, load, isSaveLoadSupported, dismissErrors } from './AppManager';
+import { save, load, isSaveLoadSupported, dismissErrors, addError } from './AppManager';
 import FileSystem from '../util/fileSystem';
 
 jest.mock('../util/fileSystem');
@@ -40,7 +40,8 @@ const defaultState = {
   focusedCreature: 1,
   round: 1,
   ariaAnnouncements: [],
-  errors: []
+  errors: [],
+  createCreatureErrors: {}
 };
 
 
@@ -194,5 +195,29 @@ describe('dismissErrors', () => {
   it('does nothing if there are no errors', () => {
     const result = dismissErrors(defaultState);
     expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addError', () => {
+  test('adds a new error', () => {
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two', 'three']
+    };
+
+    const result = addError(state, 'four');
+    const expectedErrors = ['one', 'two', 'three', 'four'];
+    expect(result).toEqual(expectedErrors);
+  });
+
+  test('does not add an error if it exists', () => {
+    const errors = ['one', 'two', 'three'];
+    const state = {
+      ...defaultState,
+      errors
+    };
+
+    const result = addError(state, 'three');
+    expect(result).toEqual(errors);
   });
 });
