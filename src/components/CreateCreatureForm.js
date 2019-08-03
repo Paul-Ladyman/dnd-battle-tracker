@@ -135,10 +135,12 @@ class CreateCreatureForm extends Component {
           <label aria-label="multiplier (required)" htmlFor="multiplier" className="form--label">Multiplier <b>*</b></label>
           <div className="create-creature-form--input-container">
             <div className="create-creature-form--multiplier">x</div>
-            <input className={`${multiplierClass} ${inputClass}__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
+            <input className={`${multiplierClass} create-creature-form--input__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
           </div>
         </div>
-        <button type="button" className="create-creature-form--submit" title="Add creature" onClick={this.createCreature}><AddCreatureIcon /></button>
+        <div className="create-creature-form--item create-creature-form--item__submit">
+          <button type="button" className="create-creature-form--submit" title="Add creature" onClick={this.createCreature}><AddCreatureIcon /></button>
+        </div>
       </form>
     ); 
   }

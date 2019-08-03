@@ -57,6 +57,7 @@ a:hover {
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
   width: 100%;
+  min-width: 0;
 }
 
 .form--label {
@@ -67,6 +68,16 @@ a:hover {
 
 .hidden {
   display: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 /* Battle toolbar */
@@ -200,13 +211,18 @@ a:hover {
   display: flex;
   border: 2px solid #822000;
   border-radius: 15px;
-  background: white;
+  background: #EBE1AD;
   box-shadow: 0 0 5px #979aa4;
   height: 40px;
 }
 
 .creature-toolbar--input-wrapper form {
   width: 100%;
+  background: white;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-right: 2px solid #822000;
+  overflow: hidden;
 }
 
 .creature-toolbar--input-wrapper__disabled {
@@ -214,13 +230,23 @@ a:hover {
   border: 2px dashed #822000;
 }
 
+.creature-toolbar--input-wrapper__disabled form {
+  background-color: transparent;
+  border-right: none;
+}
+
 .creature-toolbar--input {
-  width: 100%;
+  width: 95%;
   height: 35px;
   background: transparent;
   border: none;
   margin-left: 5px;
   padding: 2px;
+  padding-right: 0;
+}
+
+input[type=number].creature-toolbar--input {
+  width: 85%;
 }
 
 .creature-toolbar--select {
@@ -230,12 +256,11 @@ a:hover {
 }
 
 .creature-toolbar--submit {
-  padding: 3px 5px 1px 0;
-  margin-left:5px;
+  padding: 5px 3px 0 0;
   background: transparent;
   border: none;
   box-shadow: none;
-  width: 50px;
+  width: 55px;
 }
 
 .creature-toolbar--submit__disabled {
@@ -288,15 +313,32 @@ a:hover {
 .create-creature-form {
   width: 80%;
   margin-top: 20px;
-  grid-gap: 50px;
-  display: grid;
-  grid-template-columns: 20% 10% 10% 10% 5%;
   justify-content: center;
+  grid-gap: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 15px);
 }
 
 .create-creature-form--item {
   display: flex;
   flex-direction: column;
+}
+
+.create-creature-form--item__text {
+  grid-column: span 8;
+}
+
+.create-creature-form--item__number {
+  grid-column: span 4;
+}
+
+.create-creature-form--item__multiplier {
+  grid-column: span 4;
+}
+
+.create-creature-form--item__submit {
+  grid-column: span 2;
+  justify-content: flex-end;
 }
 
 .create-creature-form--input__small-number {
@@ -315,25 +357,20 @@ a:hover {
   font-weight: bold;
 }
 
-.create-creature-form--item__multiplier .create-creature-form--label {
-  margin-left: 0px;
-}
-
 .create-creature-form--input__error {
   border: 2px solid red;
 }
 
-@media only screen and (max-width: 1175px) {
-  .create-creature-form {
-    grid-template-columns: 30% 15% 15% 15% 5%;
-  }
-}
-
 .create-creature-form--submit {
   height: 40px;
-  width: 40px;
-  margin-top: 22px;
   padding: 4px;
+  grid-column: span 2;
+}
+
+@media only screen and (max-width: 1175px) {
+  .create-creature-form {
+    width: 100%;
+  }
 }
 
 /*
@@ -342,7 +379,8 @@ a:hover {
 @media only screen and (max-width: 825px) {
   .create-creature-form {
     grid-template-columns: repeat(6, 25px);
-    grid-row-gap: 10px;
+    grid-row-gap: 15px;
+    grid-column-gap: 60px;
   }
 
   .create-creature-form--item {
@@ -361,13 +399,23 @@ a:hover {
     grid-column: 2 / span 2;
   }
 
+  .create-creature-form--item__multiplier .create-creature-form--input-container {
+    margin-left: 50px;
+  }
+
+  .create-creature-form--item__multiplier .form--label {
+    width: 100%;
+    text-align: center;
+    margin-left: 50px;
+  }
+
   .create-creature-form--label {
     margin-left: 0px;
   }
 
   .create-creature-form--submit {
     grid-column: 4 / span 2;
-    width: 100%;
+    width: 60px;
   }
 }
 
