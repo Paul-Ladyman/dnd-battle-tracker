@@ -57,7 +57,7 @@ describe('save', () => {
     const { calls } = FileSystem.save.mock;
     expect(calls.length).toBe(1);
     const fileContents = JSON.parse(calls[0][2]);
-    const { ariaAnnouncements, errors, ...expectedFileContents } = defaultState;
+    const { ariaAnnouncements, errors, createCreatureErrors, ...expectedFileContents } = defaultState;
     expect(fileContents).toEqual(expectedFileContents);
   });
 
@@ -111,9 +111,10 @@ describe('load', () => {
   it('resets errors on load', async () => {
     const state = {
       ...defaultState,
-      errors: ['an error']
+      errors: ['an error'],
+      createCreatureErrors: {some: 'error'}
     };
-    const { ariaAnnouncements, ...fileContents } = defaultState;
+    const { ariaAnnouncements, createCreatureErrors, errors, ...fileContents } = defaultState;
     FileSystem.load.mockReturnValue(new Promise(resolve =>
       resolve(JSON.stringify(fileContents))
     ));

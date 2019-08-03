@@ -4,7 +4,7 @@ import FileSystem from '../util/fileSystem';
 const appSchema = require('../resources/app-schema.json');
 
 export function save(state) {
-  const { ariaAnnouncements, errors, ...stateToSave } = state;
+  const { ariaAnnouncements, errors, createCreatureErrors, ...stateToSave } = state;
   const now = new Date(Date.now());
   const dateSuffix = `${now.getDate()}_${now.getMonth()}_${now.getFullYear()}`;
   const timeSuffix = `${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`;
@@ -45,7 +45,8 @@ export async function load(file, state) {
   return {
     ...newState,
     ariaAnnouncements,
-    errors
+    errors,
+    createCreatureErrors: {}
   };
 }
 
