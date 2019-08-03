@@ -399,6 +399,16 @@ input[type=number].creature-toolbar--input {
     grid-column: 2 / span 2;
   }
 
+  .create-creature-form--item__multiplier .create-creature-form--input-container {
+    margin-left: 50px;
+  }
+
+  .create-creature-form--item__multiplier .form--label {
+    width: 100%;
+    text-align: center;
+    margin-left: 50px;
+  }
+
   .create-creature-form--label {
     margin-left: 0px;
   }
