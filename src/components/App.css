@@ -70,6 +70,16 @@ a:hover {
   display: none;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 /* Battle toolbar */
 .battle-toolbar {
   display: flex;
@@ -201,13 +211,18 @@ a:hover {
   display: flex;
   border: 2px solid #822000;
   border-radius: 15px;
-  background: white;
+  background: #EBE1AD;
   box-shadow: 0 0 5px #979aa4;
   height: 40px;
 }
 
 .creature-toolbar--input-wrapper form {
   width: 100%;
+  background: white;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-right: 2px solid #822000;
+  overflow: hidden;
 }
 
 .creature-toolbar--input-wrapper__disabled {
@@ -215,13 +230,23 @@ a:hover {
   border: 2px dashed #822000;
 }
 
+.creature-toolbar--input-wrapper__disabled form {
+  background-color: transparent;
+  border-right: none;
+}
+
 .creature-toolbar--input {
-  width: 100%;
+  width: 95%;
   height: 35px;
   background: transparent;
   border: none;
   margin-left: 5px;
   padding: 2px;
+  padding-right: 0;
+}
+
+input[type=number].creature-toolbar--input {
+  width: 85%;
 }
 
 .creature-toolbar--select {
@@ -231,12 +256,11 @@ a:hover {
 }
 
 .creature-toolbar--submit {
-  padding: 3px 5px 1px 0;
-  margin-left:5px;
+  padding: 5px 3px 0 0;
   background: transparent;
   border: none;
   box-shadow: none;
-  width: 50px;
+  width: 55px;
 }
 
 .creature-toolbar--submit__disabled {
