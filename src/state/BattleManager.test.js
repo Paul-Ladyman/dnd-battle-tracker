@@ -728,7 +728,7 @@ describe('addCreature', () => {
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['create creature form is invalid'],
-      errors: ['Failed to create creature. Create creature form is invalid'],
+      errors: ['Failed to create creature. Create creature form is invalid.'],
       createCreatureErrors: {nameError: true}
     };
 

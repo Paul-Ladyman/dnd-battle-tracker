@@ -171,7 +171,7 @@ export function addCreature(state, creature) {
 
   if (createCreatureErrors) {
     const ariaAnnouncements = state.ariaAnnouncements.concat(['create creature form is invalid']);
-    const errors = addError(state, 'Failed to create creature. Create creature form is invalid');
+    const errors = addError(state, 'Failed to create creature. Create creature form is invalid.');
     return {...state, ariaAnnouncements, errors, createCreatureErrors};
   }
 

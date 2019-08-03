@@ -93,6 +93,7 @@ input[type="number"] {
   background-color: #ebe2d3;
   position: fixed;
   top: 0;
+  z-index: 1;
 }
 
 /*
