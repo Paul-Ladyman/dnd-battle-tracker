@@ -348,7 +348,7 @@ describe('validateCreature', () => {
 
   test('name must be non-empty', () => {
     const expectedErrors = {
-      nameError: true,
+      nameError: 'Name must be provided.',
       initiativeError: false,
       healthError: false,
       multiplierError: false
@@ -359,7 +359,7 @@ describe('validateCreature', () => {
   test('initiative must be a number', () => {
     const expectedErrors = {
       nameError: false,
-      initiativeError: true,
+      initiativeError: 'Initiative must be a number.',
       healthError: false,
       multiplierError: false
     };
@@ -370,7 +370,7 @@ describe('validateCreature', () => {
     const expectedErrors = {
       nameError: false,
       initiativeError: false,
-      healthError: true,
+      healthError: 'Health must be greater than 0.',
       multiplierError: false
     };
     expect(validateCreature('a', 1, 0, 1)).toEqual(expectedErrors);
@@ -381,7 +381,7 @@ describe('validateCreature', () => {
       nameError: false,
       initiativeError: false,
       healthError: false,
-      multiplierError: true
+      multiplierError: 'Multiplier must be greater than 0 and less than 50.'
     };
     expect(validateCreature('a', 1, 1, 0)).toEqual(expectedErrors);
   });
@@ -391,7 +391,7 @@ describe('validateCreature', () => {
       nameError: false,
       initiativeError: false,
       healthError: false,
-      multiplierError: true
+      multiplierError: 'Multiplier must be greater than 0 and less than 50.'
     };
     expect(validateCreature('a', 1, 1, 51)).toEqual(expectedErrors);
   });

@@ -1,4 +1,4 @@
-import { save, load, isSaveLoadSupported, dismissErrors, addError } from './AppManager';
+import { save, load, isSaveLoadSupported, dismissErrors, addError, addErrors } from './AppManager';
 import FileSystem from '../util/fileSystem';
 
 jest.mock('../util/fileSystem');

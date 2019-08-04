@@ -723,13 +723,13 @@ describe('addCreature', () => {
       multiplier: 2
     };
 
-    validateCreature.mockReturnValue({nameError: true});
+    validateCreature.mockReturnValue({nameError: 'some error'});
 
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['create creature form is invalid'],
+      ariaAnnouncements: ['Failed to create creature. some error'],
       errors: ['Failed to create creature. Create creature form is invalid.'],
-      createCreatureErrors: {nameError: true}
+      createCreatureErrors: {nameError: 'some error'}
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);

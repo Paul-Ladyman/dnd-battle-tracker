@@ -170,7 +170,12 @@ export function addCreature(state, creature) {
   const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier); 
 
   if (createCreatureErrors) {
-    const ariaAnnouncements = state.ariaAnnouncements.concat(['create creature form is invalid']);
+    const createCreatureErrorMessages = Object.keys(createCreatureErrors)
+      .filter(error => createCreatureErrors[error])
+      .map(error => createCreatureErrors[error])
+      .join('. ');
+
+    const ariaAnnouncements = state.ariaAnnouncements.concat(`Failed to create creature. ${createCreatureErrorMessages}`);
     const errors = addError(state, 'Failed to create creature. Create creature form is invalid.');
     return {...state, ariaAnnouncements, errors, createCreatureErrors};
   }

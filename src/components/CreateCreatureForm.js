@@ -89,19 +89,19 @@ class CreateCreatureForm extends Component {
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="initiative (required)" htmlFor="initiative" className="form--label">Initiative <b>*</b></label>
+          <label aria-label="create creature form. Initiative (required)" htmlFor="initiative" className="form--label">Initiative <b>*</b></label>
           <div className="create-creature-form--input-container">
             <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="health points (optional)" htmlFor="healthPoints" className="form--label">HP</label>
+          <label aria-label="create creature form. Health points (optional)" htmlFor="healthPoints" className="form--label">HP</label>
           <div className="create-creature-form--input-container">
             <input className={healthClass} type="number" min="1" id="healthPoints" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__multiplier">
-          <label aria-label="multiplier (required)" htmlFor="multiplier" className="form--label">Multiplier <b>*</b></label>
+          <label aria-label="create creature form. Multiplier (required)" htmlFor="multiplier" className="form--label">Multiplier <b>*</b></label>
           <div className="create-creature-form--input-container">
             <div className="create-creature-form--multiplier">x</div>
             <input className={`${multiplierClass} create-creature-form--input__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
