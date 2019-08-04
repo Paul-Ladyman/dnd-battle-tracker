@@ -35,6 +35,10 @@ export function stabalizeCreature(state, creatureId) {
 };
 
 export function damageCreature(state, creatureId, damage) {
+  if (damage < 0) {
+    return state;
+  }
+
   const creature = findCreature(state.creatures, creatureId);
 
   if (!creature.healthPoints) {
@@ -53,6 +57,10 @@ export function damageCreature(state, creatureId, damage) {
 };
 
 export function healCreature(state, creatureId, health) {
+  if (health < 0) {
+    return state;
+  }
+
   const creature = findCreature(state.creatures, creatureId);
 
   if (creature.healthPoints === undefined) {

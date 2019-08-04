@@ -63,6 +63,7 @@ function CreatureToolbar({
         <React.Fragment>
           <CreatureToolbarInput
             integer
+            min={1}
             enabled={enableDamage}
             ariaLabel={`damage ${name}`}
             label="Damage"
@@ -71,6 +72,7 @@ function CreatureToolbar({
           />
           <CreatureToolbarInput
             integer
+            min={1}
             enabled={enableHeal}
             ariaLabel={`heal ${name}`}
             label="Heal"
@@ -83,6 +85,7 @@ function CreatureToolbar({
         <CreatureToolbarInput
           customClasses="creature-toolbar--last"
           integer name="creature-toolbar-maxhp"
+          min={1}
           ariaLabel={`add max hp ${name}`}
           label="Add Max HP"
           onSubmit={(health) => addHealthToCreature(id, health)}

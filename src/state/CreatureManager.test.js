@@ -182,6 +182,10 @@ describe('damageCreature', () => {
     expect(damageCreature(state, 1, 5)).toEqual(state);
   });
 
+  test('it does nothing if the damage is negative', () => {
+    expect(damageCreature(defaultState, 1, -1)).toEqual(defaultState);
+  });
+
   test('it removes health points from a creature', () => {
     const expected = {
       ...defaultState,
@@ -247,6 +251,10 @@ describe('healCreature', () => {
       ariaAnnouncements: ['healed Goblin by 5. Goblin\'s health is 10']
     };
     expect(healCreature(defaultState, 1, 5)).toEqual(expectedState);
+  });
+
+  test('it does nothing if the damage is negative', () => {
+    expect(healCreature(defaultState, 1, -1)).toEqual(defaultState);
   });
 
   test('it adds health points to a creature', () => {
