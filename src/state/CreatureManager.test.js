@@ -6,7 +6,8 @@ import {
   createCreature,
   addNoteToCreature,
   removeNoteFromCreature,
-  addHealthToCreature
+  addHealthToCreature,
+  validateCreature
 } from './CreatureManager';
 import { conditionDescriptions } from '../model/conditions';
 
@@ -46,7 +47,8 @@ const defaultState = {
   activeCreature: 1,
   round: 1,
   ariaAnnouncements: [],
-  errors: []
+  errors: [],
+  createCreatureErrors: {}
 };
 
 describe('killCreature', () => {
@@ -336,6 +338,62 @@ describe('createCreature', () => {
 
     const creature = createCreature(1, {name: 'name', initiative: 13,  healthPoints: 10});
     expect(creature).toEqual(expectedCreature);
+  });
+});
+
+describe('validateCreature', () => {
+  test('returns undefined if creature is valid', () => {
+    expect(validateCreature('a', '1', 1, 1)).toEqual(undefined);
+  });
+
+  test('name must be non-empty', () => {
+    const expectedErrors = {
+      nameError: 'Name must be provided.',
+      initiativeError: false,
+      healthError: false,
+      multiplierError: false
+    };
+    expect(validateCreature('', '1', 1, 1)).toEqual(expectedErrors);
+  });
+
+  test('initiative must be a number', () => {
+    const expectedErrors = {
+      nameError: false,
+      initiativeError: 'Initiative must be a number.',
+      healthError: false,
+      multiplierError: false
+    };
+    expect(validateCreature('a', NaN, 1, 1)).toEqual(expectedErrors);
+  });
+
+  test('health must be greater than 0', () => {
+    const expectedErrors = {
+      nameError: false,
+      initiativeError: false,
+      healthError: 'Health must be greater than 0.',
+      multiplierError: false
+    };
+    expect(validateCreature('a', 1, 0, 1)).toEqual(expectedErrors);
+  });
+
+  test('multiplier must be greater than 0', () => {
+    const expectedErrors = {
+      nameError: false,
+      initiativeError: false,
+      healthError: false,
+      multiplierError: 'Multiplier must be greater than 0 and less than 50.'
+    };
+    expect(validateCreature('a', 1, 1, 0)).toEqual(expectedErrors);
+  });
+
+  test('multiplier must be less than 51', () => {
+    const expectedErrors = {
+      nameError: false,
+      initiativeError: false,
+      healthError: false,
+      multiplierError: 'Multiplier must be greater than 0 and less than 50.'
+    };
+    expect(validateCreature('a', 1, 1, 51)).toEqual(expectedErrors);
   });
 });
 

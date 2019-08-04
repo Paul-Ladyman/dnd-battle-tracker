@@ -134,7 +134,9 @@ class App extends Component {
   }
 
   createCreature(creature) {
-    this.setState(addCreature(this.state, creature));
+    const newState = addCreature(this.state, creature)
+    this.setState(newState);
+    return Object.keys(newState.createCreatureErrors).length === 0;
   }
 
   saveBattle() {
@@ -189,7 +191,10 @@ class App extends Component {
         <div className="main-footer-wrapper">
           <main className="main">
            <h1 className="main-title">D&D Battle Tracker</h1>
-           <CreateCreatureForm createCreature={this.createCreature} />
+           <CreateCreatureForm
+             createCreature={this.createCreature}
+             createCreatureErrors={this.state.createCreatureErrors}
+           />
            <Creatures
              creatures={this.state.creatures}
              activeCreature={this.state.activeCreature}

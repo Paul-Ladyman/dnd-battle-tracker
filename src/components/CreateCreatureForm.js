@@ -4,24 +4,6 @@ import { hotkeys } from '../hotkeys/hotkeys';
 import AddCreatureIcon from './icons/AddCreatureIcon';
 
 class CreateCreatureForm extends Component {
-  static formErrors(name, initiative, healthPoints, multiplier) {
-    const nameError = name === '';
-    const initiativeError = initiative === '';
-    const healthError = healthPoints <= 0;
-    const multiplierError = multiplier <= 0 || multiplier > 50;
-
-    if (nameError || initiativeError || healthError || multiplierError) {
-      return {
-        nameError,
-        initiativeError,
-        healthError,
-        multiplierError
-      };
-    }
-
-    return undefined;
-  }
-
   constructor(props) {
     super(props);
 
@@ -29,11 +11,7 @@ class CreateCreatureForm extends Component {
       name: '',
       initiative: '',
       healthPoints: '',
-      multiplier: 1,
-      nameError: false,
-      initiativeError: false,
-      healthError: false,
-      multiplierError: false
+      multiplier: 1
     };
 
     this.state = this.initialState;
@@ -74,27 +52,16 @@ class CreateCreatureForm extends Component {
       undefined :
       parseInt(state.healthPoints);
 
-    const multiplier = state.multiplier === '' ?
-      0 :
-      parseInt(state.multiplier);
-
-    const errors = CreateCreatureForm.formErrors(
-      state.name,
-      state.initiative,
-      healthPoints,
-      multiplier
-    );
-
-    if (errors) {
-      return this.setState({...this.state, ...errors});
-    }
+    const multiplier = parseInt(state.multiplier);
 
     const initiative = parseInt(state.initiative);
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
-    this.resetForm();
-    this.props.createCreature(creature);
+    const createSuccess = this.props.createCreature(creature);
+    if (createSuccess) {
+      this.resetForm();
+    }
   }
 
   formHandler(event) {
@@ -104,13 +71,15 @@ class CreateCreatureForm extends Component {
   }
 
   render() {
-    const { name, initiative, healthPoints, multiplier, nameError, initiativeError, healthError, multiplierError } = this.state;
+    const { name, initiative, healthPoints, multiplier } = this.state;
+    const { nameError, initiativeError, healthError, multiplierError } = this.props.createCreatureErrors;
     const inputClass = 'form--input';
     const inputErrorClass = 'create-creature-form--input__error';
     const nameClass = nameError ? `${inputClass} ${inputErrorClass}` : inputClass;
     const initiativeClass = initiativeError ? `${inputClass} ${inputErrorClass}` : inputClass;
     const healthClass = healthError ? `${inputClass} ${inputErrorClass}` : inputClass;
     const multiplierClass = multiplierError ? `${inputClass} ${inputErrorClass}` : inputClass;
+
     return (
       <form  className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item create-creature-form--item__text">
@@ -120,19 +89,19 @@ class CreateCreatureForm extends Component {
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="initiative (required)" htmlFor="initiative" className="form--label">Initiative <b>*</b></label>
+          <label aria-label="create creature form. Initiative (required)" htmlFor="initiative" className="form--label">Initiative <b>*</b></label>
           <div className="create-creature-form--input-container">
             <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="health points (optional)" htmlFor="healthPoints" className="form--label">HP</label>
+          <label aria-label="create creature form. Health points (optional)" htmlFor="healthPoints" className="form--label">HP</label>
           <div className="create-creature-form--input-container">
             <input className={healthClass} type="number" min="1" id="healthPoints" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__multiplier">
-          <label aria-label="multiplier (required)" htmlFor="multiplier" className="form--label">Multiplier <b>*</b></label>
+          <label aria-label="create creature form. Multiplier (required)" htmlFor="multiplier" className="form--label">Multiplier <b>*</b></label>
           <div className="create-creature-form--input-container">
             <div className="create-creature-form--multiplier">x</div>
             <input className={`${multiplierClass} create-creature-form--input__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>

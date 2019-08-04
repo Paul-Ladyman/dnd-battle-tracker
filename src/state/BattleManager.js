@@ -1,4 +1,5 @@
-import { createCreature } from './CreatureManager';
+import { createCreature, validateCreature } from './CreatureManager';
+import { addError } from './AppManager';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({id}) => {
@@ -21,7 +22,8 @@ export const newBattleState = {
   focusedCreature: undefined,
   round: 0,
   ariaAnnouncements: [],
-  errors: []
+  errors: [],
+  createCreatureErrors: {}
 };
 
 export function getSecondsElapsed(state) {
@@ -164,6 +166,20 @@ export function addCreature(state, creature) {
   const { multiplier, ...creatureStats } = creature;
   const creatureMultiplier = multiplier || 1;
 
+  const {name, initiative, healthPoints} = creatureStats;
+  const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier); 
+
+  if (createCreatureErrors) {
+    const createCreatureErrorMessages = Object.keys(createCreatureErrors)
+      .filter(error => createCreatureErrors[error])
+      .map(error => createCreatureErrors[error])
+      .join('. ');
+
+    const ariaAnnouncements = state.ariaAnnouncements.concat(`Failed to create creature. ${createCreatureErrorMessages}`);
+    const errors = addError(state, 'Failed to create creature. Create creature form is invalid.');
+    return {...state, ariaAnnouncements, errors, createCreatureErrors};
+  }
+
   const newCreatures = createCreatures(state.creatureIdCount, creatureStats, creatureMultiplier);
   const creatures = sortCreatures([...state.creatures, ...newCreatures]);
   const currentlyActiveCreature = state.creatures[state.activeCreature];
@@ -178,7 +194,7 @@ export function addCreature(state, creature) {
   const ariaAnnouncement = newCreatures.length > 1 ? 'creatures added' : `${newCreatures[0].name} added`;
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
-  return {...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements};
+  return {...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements, createCreatureErrors: {}, errors: []};
 };
 
 export function resetBattle(state) {
