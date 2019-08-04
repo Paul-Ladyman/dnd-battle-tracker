@@ -62,8 +62,12 @@ a:hover {
 
 .form--label {
   margin-bottom: 5px;
-  margin-left: 10px;
   font-size: 16px;
+}
+
+.form--label__error {
+  font-weight: bold;
+  color: red;
 }
 
 .hidden {
@@ -405,7 +409,7 @@ input[type=number].creature-toolbar--input {
   }
 
   .create-creature-form--item__multiplier .form--label {
-    width: 100%;
+    width: 110%;
     text-align: center;
     margin-left: 50px;
   }

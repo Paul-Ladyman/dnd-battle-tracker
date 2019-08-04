@@ -83,25 +83,37 @@ class CreateCreatureForm extends Component {
     return (
       <form  className="create-creature-form" onKeyDown={this.formHandler}>
         <div className="create-creature-form--item create-creature-form--item__text">
-          <label aria-label="create creature form. Name (required)" htmlFor="name" className="form--label">Creature Name <b>*</b></label>
+          <label aria-label="create creature form. Name (required)" htmlFor="name" className="form--label">
+            Creature Name
+            {nameError && <span class="form--label__error"> *</span>}
+          </label>
           <div className="create-creature-form--input-container">
             <input className={nameClass} type="text" required id="name" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="create creature form. Initiative (required)" htmlFor="initiative" className="form--label">Initiative <b>*</b></label>
+          <label aria-label="create creature form. Initiative (required)" htmlFor="initiative" className="form--label">
+            Initiative
+            {initiativeError && <span class="form--label__error"> *</span>}
+          </label>
           <div className="create-creature-form--input-container">
             <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="create creature form. Health points (optional)" htmlFor="healthPoints" className="form--label">HP</label>
+          <label aria-label="create creature form. Health points (optional)" htmlFor="healthPoints" className="form--label">
+            HP (optional)
+            {healthError && <span class="form--label__error"> > 0</span>}
+          </label>
           <div className="create-creature-form--input-container">
             <input className={healthClass} type="number" min="1" id="healthPoints" name="healthPoints" value={healthPoints} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__multiplier">
-          <label aria-label="create creature form. Multiplier (required)" htmlFor="multiplier" className="form--label">Multiplier <b>*</b></label>
+          <label aria-label="create creature form. Multiplier (required)" htmlFor="multiplier" className="form--label">
+            Multiply
+            {multiplierError && <span class="form--label__error"> * 1 - 50</span>}
+          </label>
           <div className="create-creature-form--input-container">
             <div className="create-creature-form--multiplier">x</div>
             <input className={`${multiplierClass} create-creature-form--input__small-number`} type="number" min="1" max="50" id="multiplier" name="multiplier" value={multiplier} onChange={this.handleChange}/>
