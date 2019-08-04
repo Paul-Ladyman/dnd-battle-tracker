@@ -735,7 +735,7 @@ describe('addCreature', () => {
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
   });
 
-  test('resets createCreatureErrors if a creature is valid', () => {
+  test('resets all errors if a creature is valid', () => {
     const creature = {
       name: 'name',
       initiative: 9,
@@ -745,6 +745,14 @@ describe('addCreature', () => {
 
     validateCreature.mockReturnValue(undefined);
 
-    expect(addCreature(defaultState, creature).createCreatureErrors).toEqual({});
+    const state = {
+      ...defaultState,
+      createCreatureErrors: {nameError: 'some error'},
+      errors: ['create creature error']
+    }
+
+    const result = addCreature(state, creature);
+    expect(result.createCreatureErrors).toEqual(defaultState.createCreatureErrors);
+    expect(result.errors).toEqual(defaultState.errors);
   });
 });

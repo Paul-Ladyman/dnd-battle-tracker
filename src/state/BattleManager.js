@@ -194,7 +194,7 @@ export function addCreature(state, creature) {
   const ariaAnnouncement = newCreatures.length > 1 ? 'creatures added' : `${newCreatures[0].name} added`;
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
-  return {...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements, createCreatureErrors: {}};
+  return {...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements, createCreatureErrors: {}, errors: []};
 };
 
 export function resetBattle(state) {
