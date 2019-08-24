@@ -662,6 +662,14 @@ input[type=number].creature-toolbar--input {
 .footer-text {
   font-size: 16px;
   padding: 10px;
+  width: 80%;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .footer-text {
+    width: auto;
+  }
 }
 
 /* Hide keyboard shortcuts from devices unlikely to have a physical keyboard */ 

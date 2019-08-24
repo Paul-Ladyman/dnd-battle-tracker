@@ -1,6 +1,6 @@
 # [D&D Battle Tracker](http://dndbattletracker.com/)
 
-D&D Battle Tracker is a combat tracker tool for Dungeons & Dragons 5th Edition (D&D 5e). Track the initiative and status of all creatures involved in combat.
+D&D Battle Tracker is a combat tracker tool for Dungeons & Dragons 5th Edition (D&D 5e). Track the initiative and status of all creatures involved in combat with this D&D combat tracker!
 
 ## Use
 
