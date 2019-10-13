@@ -153,24 +153,21 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
     return [ createCreature(creatureIdCount, creature) ];
   }
 
-  const regex = new RegExp(`^${creature.name} #(\\d*)$`);
-  const latestGroupIndex = creatures
-    .filter(c => c.name.toLowerCase().match(regex) !== null)
-    .map(c => parseInt(c.name.toLowerCase().match(regex)[1]))
+  const groupRegex = new RegExp(`^${creature.name} #(\\d*)$`);
+  const groupMatch = _ => _.name.toLowerCase().match(groupRegex);
+
+  const groupIndexes = creatures
+    .filter(c => groupMatch(c) !== null)
+    .map(c => parseInt(groupMatch(c)[1]))
     .sort((a, b) => a - b);
 
-  console.log(latestGroupIndex);
+  const groupSize = groupIndexes.length;
+  const groupOffset = groupSize > 0 ? groupIndexes[groupSize - 1] : 0;
 
-  const add = latestGroupIndex.length > 0 ? latestGroupIndex[latestGroupIndex.length - 1] : 0;
-
-  let newCreatures = [];
-  for (let i = 0; i < multiplier; i++) {
-    console.log(i, add);
-    const name = `${creature.name} #${i + add + 1}`;
-    newCreatures.push(createCreature(creatureIdCount + i, { ...creature, name }));
-  }
-
-  return newCreatures;
+  return Array(multiplier).fill().map((_, i) => {
+    const name = `${creature.name} #${i + 1 + groupOffset}`;
+    return createCreature(creatureIdCount + i, { ...creature, name });
+  });
 }
 
 export function addCreature(state, creature) {
