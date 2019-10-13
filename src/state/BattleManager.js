@@ -148,25 +148,36 @@ export function removeCreature(state, creatureId) {
   return {...state, creatures, creatureCount, activeCreature, ariaAnnouncements};
 };
 
-function createCreatures(creatureIdCount, creature, multiplier) {
+function createCreatures(creatureIdCount, creatures, creature, multiplier) {
   if (multiplier <= 1) {
     return [ createCreature(creatureIdCount, creature) ];
   }
 
-  let creatures = [];
+  const regex = new RegExp(`^${creature.name} #(\\d*)$`);
+  const latestGroupIndex = creatures
+    .filter(c => c.name.toLowerCase().match(regex) !== null)
+    .map(c => parseInt(c.name.toLowerCase().match(regex)[1]))
+    .sort((a, b) => a - b);
+
+  console.log(latestGroupIndex);
+
+  const add = latestGroupIndex.length > 0 ? latestGroupIndex[latestGroupIndex.length - 1] : 0;
+
+  let newCreatures = [];
   for (let i = 0; i < multiplier; i++) {
-    const name = `${creature.name} #${i + 1}`;
-    creatures.push(createCreature(creatureIdCount + i, { ...creature, name }));
+    console.log(i, add);
+    const name = `${creature.name} #${i + add + 1}`;
+    newCreatures.push(createCreature(creatureIdCount + i, { ...creature, name }));
   }
 
-  return creatures;
+  return newCreatures;
 }
 
 export function addCreature(state, creature) {
   const { multiplier, ...creatureStats } = creature;
   const creatureMultiplier = multiplier || 1;
 
-  const {name, initiative, healthPoints} = creatureStats;
+  const { name, initiative, healthPoints } = creatureStats;
   const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier); 
 
   if (createCreatureErrors) {
@@ -180,14 +191,14 @@ export function addCreature(state, creature) {
     return {...state, ariaAnnouncements, errors, createCreatureErrors};
   }
 
-  const newCreatures = createCreatures(state.creatureIdCount, creatureStats, creatureMultiplier);
+  const newCreatures = createCreatures(state.creatureIdCount, state.creatures, creatureStats, creatureMultiplier);
   const creatures = sortCreatures([...state.creatures, ...newCreatures]);
   const currentlyActiveCreature = state.creatures[state.activeCreature];
 
-  let activeCreature = state.activeCreature;
-  if (state.round > 0) {
-    activeCreature = findCreatureIndex(creatures, currentlyActiveCreature);
-  }
+  const activeCreature = state.round > 0 ? 
+    findCreatureIndex(creatures, currentlyActiveCreature) :
+    state.activeCreature;
+
   const creatureCount = state.creatureCount + creatureMultiplier;
   const creatureIdCount = state.creatureIdCount + creatureMultiplier;
 
