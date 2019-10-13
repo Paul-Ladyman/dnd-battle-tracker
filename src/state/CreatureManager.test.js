@@ -9,7 +9,7 @@ import {
   addHealthToCreature,
   validateCreature
 } from './CreatureManager';
-import { conditionDescriptions } from '../model/conditions';
+import conditions, { conditionDescriptions } from '../model/conditions';
 
 const defaultState = {
   creatures:[
@@ -443,13 +443,13 @@ describe('addNoteToCreature', () => {
       round: 2
     };
 
-    const result = addNoteToCreature(state, 1, 'blinded', true);
+    const result = addNoteToCreature(state, 1, conditions[0], true);
 
     const expectedCondition = {
-      text: 'blinded',
+      text: conditions[0],
       appliedAtRound: 2,
       appliedAtSeconds: 6,
-      url: conditionDescriptions.blinded
+      url: conditionDescriptions.Blinded
     };
 
     const expectedState = {
@@ -464,7 +464,7 @@ describe('addNoteToCreature', () => {
         },
         defaultState.creatures[2]
       ],
-      ariaAnnouncements: ['blinded condition added to Goblin']
+      ariaAnnouncements: ['Blinded condition added to Goblin']
     };
     expect(result).toEqual(expectedState);
   });

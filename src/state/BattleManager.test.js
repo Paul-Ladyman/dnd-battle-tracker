@@ -25,7 +25,7 @@ const defaultState = {
       notes: []
     },
     {
-      name: 'Goblin',
+      name: 'Goblin #1',
       initiative: 12,
       healthPoints: 10,
       maxHealthPoints: 10,
@@ -35,8 +35,8 @@ const defaultState = {
       notes: []
     },
     {
-      name: 'Goblin 2',
-      initiative: 10,
+      name: 'Goblin #2',
+      initiative: 12,
       healthPoints: 10,
       maxHealthPoints: 10,
       id: 2,
@@ -191,7 +191,7 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 1,
       focusedCreature: 1,
-      ariaAnnouncements: ['its Goblin\'s go']
+      ariaAnnouncements: ['its Goblin #1\'s go']
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -210,7 +210,7 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 1,
       focusedCreature: 1,
-      ariaAnnouncements: ['its Goblin\'s go']
+      ariaAnnouncements: ['its Goblin #1\'s go']
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -248,7 +248,7 @@ describe('nextInitiative', () => {
 
 describe('getInitiative', () => {
   test('it gets the name of the currently active creature', () => {
-    expect(getInitiative(defaultState)).toEqual('Goblin');
+    expect(getInitiative(defaultState)).toEqual('Goblin #1');
   });
 
   test('it returns an empty string if there are no creatures', () => {
@@ -546,13 +546,13 @@ describe('addCreature', () => {
   test('it sorts creatures by their initiative', () => {
     const creature = {
       name: 'name',
-      initiative: 11,
+      initiative: 5,
       healthPoints: 10
     };
 
     const createdCreature = {
       name: 'name',
-      initiative: 11,
+      initiative: 5,
       healthPoints: 10,
       maxHealthPoints: 10,
       id: 3,
@@ -568,8 +568,8 @@ describe('addCreature', () => {
       creatures: [
         defaultState.creatures[0],
         defaultState.creatures[1],
-        createdCreature,
-        defaultState.creatures[2]
+        defaultState.creatures[2],
+        createdCreature
       ],
       creatureCount: 4,
       creatureIdCount: 4,
@@ -713,6 +713,81 @@ describe('addCreature', () => {
     };
     expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
     expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
+  });
+
+  test('it adds multiple creatures to an existing group based on a multiplier', () => {
+    const creature = {
+      name: 'goblin',
+      initiative: 9,
+      healthPoints: 10,
+      multiplier: 2
+    };
+
+    const createdCreature = {
+      name: 'goblin #5',
+      initiative: 9,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 5,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+    const createdCreature2 = { ...createdCreature, name: 'goblin #6', id: 6 };
+
+    createCreature
+      .mockReturnValueOnce(createdCreature)
+      .mockReturnValueOnce(createdCreature2);
+
+    const initialCreature = {
+      name: 'goblin #3',
+      initiative: 15,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 3,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+    const initialCreature2 = { ...initialCreature, name: 'goblin#4', id: 4 };
+
+    const initialState = {
+      ...defaultState,
+      creatures: [
+        initialCreature,
+        initialCreature2,
+        ...defaultState.creatures
+      ],
+      creatureCount: 5,
+      creatureIdCount: 5,
+    }
+
+    const expectedState = {
+      ...initialState,
+      creatures: [
+        ...initialState.creatures,
+        createdCreature,
+        createdCreature2
+      ],
+      creatureCount: 7,
+      creatureIdCount: 7,
+      ariaAnnouncements: ['creatures added']
+    };
+
+    expect(addCreature(initialState, creature)).toEqual(expectedState);
+    expect(createCreature.mock.calls.length).toBe(2)
+    const expectedCreature1 = {
+      name: 'goblin #5',
+      initiative: 9,
+      healthPoints: 10,
+    };
+    const expectedCreature2 = {
+      name: 'goblin #6',
+      initiative: 9,
+      healthPoints: 10,
+    };
+    expect(createCreature).toHaveBeenCalledWith(5, expectedCreature1);
+    expect(createCreature).toHaveBeenCalledWith(6, expectedCreature2);
   });
 
   test('does not add a creature if it is not valid', () => {
