@@ -157,8 +157,8 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
   const groupMatch = _ => _.name.toLowerCase().match(groupRegex);
 
   const groupIndexes = creatures
-    .filter(c => groupMatch(c) !== null)
-    .map(c => parseInt(groupMatch(c)[1]))
+    .filter(_ => groupMatch(_) !== null)
+    .map(_ => parseInt(groupMatch(_)[1]))
     .sort((a, b) => a - b);
 
   const groupSize = groupIndexes.length;
