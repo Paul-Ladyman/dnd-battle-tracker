@@ -749,7 +749,7 @@ describe('addCreature', () => {
       conditions: [],
       notes: []
     };
-    const initialCreature2 = { ...initialCreature, name: 'goblin #4', id: 4 };
+    const initialCreature2 = { ...initialCreature, name: 'goblin#4', id: 4 };
 
     const initialState = {
       ...defaultState,

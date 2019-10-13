@@ -153,7 +153,7 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
     return [ createCreature(creatureIdCount, creature) ];
   }
 
-  const groupRegex = new RegExp(`^${creature.name} #(\\d*)$`);
+  const groupRegex = new RegExp(`^${creature.name}\\s*#(\\d*)$`);
   const groupMatch = _ => _.name.toLowerCase().match(groupRegex);
 
   const groupIndexes = creatures
