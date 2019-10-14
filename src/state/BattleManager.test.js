@@ -717,7 +717,7 @@ describe('addCreature', () => {
 
   test('it adds multiple creatures to an existing group based on a multiplier', () => {
     const creature = {
-      name: 'goblin',
+      name: 'Goblin',
       initiative: 9,
       healthPoints: 10,
       multiplier: 2
@@ -777,12 +777,12 @@ describe('addCreature', () => {
     expect(addCreature(initialState, creature)).toEqual(expectedState);
     expect(createCreature.mock.calls.length).toBe(2)
     const expectedCreature1 = {
-      name: 'goblin #5',
+      name: 'Goblin #5',
       initiative: 9,
       healthPoints: 10,
     };
     const expectedCreature2 = {
-      name: 'goblin #6',
+      name: 'Goblin #6',
       initiative: 9,
       healthPoints: 10,
     };
