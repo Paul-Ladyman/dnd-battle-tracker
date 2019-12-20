@@ -18,23 +18,21 @@ function CreatureNoteList({
       <div className="creature-note-list">
         {noteList.map((note, i) => {
           const noteText = note.url ?
-            <ExternalLink url={note.url} text={note.text} /> :
-            note.text;
+            <b><ExternalLink url={note.url} text={note.text} /></b> :
+            <span><b>{i+1}.</b> {`${note.text[0].toUpperCase()}${note.text.substring(1)}`}</span>;
 
           return (
             <div className="creature-note-list--item" key={i}>
-              <div>
-                  <div className="creature-note-list--note">
-                    <em>{noteText}</em>
-                  </div>
-                <Timer
-                  startRound={note.appliedAtRound}
-                  endRound={round}
-                  startTime={note.appliedAtSeconds}
-                  endTime={secondsElapsed}
-                  className="creature-note-list--timer"
-                />
-              </div>
+                <div className="creature-note-list--note">
+                  {noteText}.
+                  <Timer
+                    startRound={note.appliedAtRound}
+                    endRound={round}
+                    startTime={note.appliedAtSeconds}
+                    endTime={secondsElapsed}
+                    className="creature-note-list--timer"
+                  />
+                </div>
               <button className="creature-note-list--button" title="Remove note" onClick={() => dismissHandler(creatureId, note)}>
                 <RemoveIcon />
               </button>

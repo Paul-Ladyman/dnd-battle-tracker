@@ -578,28 +578,30 @@ input[type=number].creature-toolbar--input {
 /* Creature note list */
 
 .creature-note-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(60px, auto);
-  grid-gap: 15px;
-  margin-top: 5px;
-  border: 1px solid #822000;
-  border-radius: 15px;
-  box-shadow: 0 0 5px #979AA4;
-  padding: 10px;
+  /* display: grid; */
+  /* grid-template-columns: repeat(4, 1fr); */
+  /* grid-auto-rows: minmax(60px, auto); */
+  /* grid-gap: 15px; */
+  /* margin-top: 5px; */
+  /* border: 1px solid #822000; */
+  /* border-radius: 15px; */
+  /* box-shadow: 0 0 5px #979AA4; */
+  /* padding: 10px; */
+  width: 75%;
 }
 
 /* Reduce width of note list to two columns on smaller screen sizes */
 @media only screen and (max-width: 768px) {
   .creature-note-list {
-    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-columns: repeat(2, 1fr); */
   }
 }
 
 .creature-note-list--item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .creature-note-list--label {
@@ -607,15 +609,20 @@ input[type=number].creature-toolbar--input {
   color: #822000;
   border-bottom: 1px solid black;
   width: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .creature-note-list--note {
-  text-decoration: underline;
-  text-decoration-color: #822000;
-  text-decoration-style: double;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* margin-right: 10px; */
+  margin-top: 10px;
+  /* text-decoration: underline; */
+  /* text-decoration-color: #822000; */
+  /* text-decoration-style: double; */
   color: black;
-  word-break: break-word;
+  /* word-break: break-word; */
+  font-style: italic;
 }
 
 .creature-note-list--note::first-letter {
@@ -630,9 +637,11 @@ input[type=number].creature-toolbar--input {
 }
 
 .creature-note-list--timer {
-  margin-top: 5px;
-  font-size: 14px;
-  color: black;
+  /* margin-top: 5px; */
+  /* font-size: 14px; */
+  /* color: black; */
+  margin-left: 10px;
+  white-space: nowrap;
 }
 
 .expand-creature-button {
