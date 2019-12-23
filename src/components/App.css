@@ -450,7 +450,7 @@ input[type=number].creature-toolbar--input {
 .creature-title {
   display: flex;
   align-items: baseline;
-  /* justify-content: space-between; */
+  margin-bottom: 5px;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */

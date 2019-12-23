@@ -44,10 +44,7 @@ class ExpandedCreature extends Component {
         <div className={`expanded-creature--columns ${columnClassName}`}>
           <div className="creature-title">
             <h2 className="expanded-creature--name">
-              {showHealth ?
-                <ExternalLink url={`https://www.dndbeyond.com/monsters/${name}`} text={name} /> :
-                name
-              }
+              {name}
               {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
             </h2>
             {creatureExpander}

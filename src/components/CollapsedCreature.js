@@ -22,10 +22,7 @@ function CollapsedCreature({creature, creatureExpander}) {
     <div className="collapsed-creature">
       <div className="creature-title">
         <h2 className={nameClasses}>
-          {showHealth ?
-            <ExternalLink url={`https://www.dndbeyond.com/monsters/${name}`} text={name} /> :
-            name
-          } 
+          {name}
         </h2>
         {creatureExpander}
       </div>
