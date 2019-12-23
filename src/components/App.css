@@ -449,8 +449,8 @@ input[type=number].creature-toolbar--input {
 
 .creature-title {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: baseline;
+  /* justify-content: space-between; */
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -496,6 +496,7 @@ input[type=number].creature-toolbar--input {
   text-decoration-style: double;
   color: black;
   margin-top: 4px;
+  margin-bottom: 35px;
 }
 
 .expanded-creature--active-icon {
@@ -532,6 +533,7 @@ input[type=number].creature-toolbar--input {
 }
 
 .expanded-creature--columns {
+  /* margin-top: 20px; */
   margin-bottom: 15px;
 }
 
@@ -633,7 +635,7 @@ input[type=number].creature-toolbar--input {
 }
 
 .creature-note-list--last {
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
 }
 
 .creature-note-list--note {
@@ -671,6 +673,7 @@ input[type=number].creature-toolbar--input {
 .expand-creature-button {
   padding: 4px;
   display: flex;
+  margin-left: 10px;
 }
 
 /* Health points */

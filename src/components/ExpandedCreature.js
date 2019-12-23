@@ -36,27 +36,29 @@ class ExpandedCreature extends Component {
     const showHealth = healthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
-    const columnCount = showConditions || showNotes ? 2 : 1;
+    const multiColumn = showConditions || showNotes;
+    const columnCount = multiColumn ? 2 : 1;
 
     return (
       <div className="expanded-creature">
-        <div className="creature-title">
-          <h2 className="expanded-creature--name">
-            {showHealth ?
-              <ExternalLink url={`https://www.dndbeyond.com/monsters/${name}`} text={name} /> :
-              name
-            }
-            {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
-          </h2>
-          {creatureExpander}
-        </div>
-        {!alive &&
-          <div className="expanded-creature--status">
-            <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
-          </div>
-        }
         <div style={{'column-count': `${columnCount}`}} className="expanded-creature--columns">
+          <div className="creature-title">
+            <h2 className="expanded-creature--name">
+              {showHealth ?
+                <ExternalLink url={`https://www.dndbeyond.com/monsters/${name}`} text={name} /> :
+                name
+              }
+              {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
+            </h2>
+            {creatureExpander}
+          </div>
+          {!alive &&
+            <div className="expanded-creature--status">
+              <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
+            </div>
+          }
           <div className="expanded-creature--separator" />
+          <div>
           {showHealth &&
             <HealthPoints
               hp={healthPoints}
@@ -67,9 +69,10 @@ class ExpandedCreature extends Component {
           <div className="expanded-creature--stat">
             <b>Initiative</b> {initiative}
           </div>
+          {multiColumn && <div className="expanded-creature--separator" /> }
+          </div>
           {showConditions &&
             <React.Fragment>
-              <div className="expanded-creature--separator" />
               <CreatureNoteList
                 creatureId={id}
                 label="Conditions"
@@ -83,7 +86,7 @@ class ExpandedCreature extends Component {
           }
           {showNotes &&
             <React.Fragment>
-              {!showConditions && <div className="expanded-creature--separator" /> }
+              {/* {!showConditions && <div className="expanded-creature--separator" /> } */}
               <CreatureNoteList
                 creatureId={id}
                 label="Notes"
