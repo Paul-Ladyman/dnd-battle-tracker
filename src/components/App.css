@@ -491,10 +491,6 @@ input[type=number].creature-toolbar--input {
 }
 
 .expanded-creature--status {
-  text-decoration: underline;
-  text-decoration-color: #822000;
-  text-decoration-style: double;
-  color: black;
   margin-top: 4px;
   margin-bottom: 35px;
 }
