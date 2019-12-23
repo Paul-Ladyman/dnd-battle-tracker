@@ -36,12 +36,16 @@ class ExpandedCreature extends Component {
     const showHealth = healthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
+    const columnCount = showConditions || showNotes ? 2 : 1;
 
     return (
       <div className="expanded-creature">
         <div className="creature-title">
           <h2 className="expanded-creature--name">
-            {name}
+            {showHealth ?
+              <ExternalLink url={`https://www.dndbeyond.com/monsters/${name}`} text={name} /> :
+              name
+            }
             {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
           </h2>
           {creatureExpander}
@@ -51,46 +55,48 @@ class ExpandedCreature extends Component {
             <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
           </div>
         }
-        <div className="expanded-creature--separator" />
-        {showHealth &&
-          <HealthPoints
-            hp={healthPoints}
-            maxHp={maxHealthPoints}
-            className="expanded-creature--stat"
-          />
-        }
-        <div className="expanded-creature--stat">
-          <b>Initiative</b> {initiative}
+        <div style={{'column-count': `${columnCount}`}} className="expanded-creature--columns">
+          <div className="expanded-creature--separator" />
+          {showHealth &&
+            <HealthPoints
+              hp={healthPoints}
+              maxHp={maxHealthPoints}
+              className="expanded-creature--stat"
+            />
+          }
+          <div className="expanded-creature--stat">
+            <b>Initiative</b> {initiative}
+          </div>
+          {showConditions &&
+            <React.Fragment>
+              <div className="expanded-creature--separator" />
+              <CreatureNoteList
+                creatureId={id}
+                label="Conditions"
+                noteList={conditions}
+                dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
+                round={round}
+                secondsElapsed={secondsElapsed}
+                className="expanded-creature--stat"
+              />
+            </React.Fragment>
+          }
+          {showNotes &&
+            <React.Fragment>
+              {!showConditions && <div className="expanded-creature--separator" /> }
+              <CreatureNoteList
+                creatureId={id}
+                label="Notes"
+                noteList={notes}
+                dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
+                round={round}
+                secondsElapsed={secondsElapsed}
+                className="expanded-creature--stat"
+              />
+            </React.Fragment>
+          }
         </div>
-        {showConditions &&
-          <React.Fragment>
-            <div className="expanded-creature--separator" />
-            <CreatureNoteList
-              creatureId={id}
-              label="Conditions"
-              noteList={conditions}
-              dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
-              round={round}
-              secondsElapsed={secondsElapsed}
-              className="expanded-creature--stat"
-            />
-          </React.Fragment>
-        }
-        {showNotes &&
-          <React.Fragment>
-            {!showConditions && <div className="expanded-creature--separator" /> }
-            <CreatureNoteList
-              creatureId={id}
-              label="Notes"
-              noteList={notes}
-              dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
-              round={round}
-              secondsElapsed={secondsElapsed}
-              className="expanded-creature--stat"
-            />
-          </React.Fragment>
-        }
-        {!active && <div className="expanded-creature--separator" /> }
+        {/* {!active && <div className="expanded-creature--separator" /> } */}
         {!active && !this.state.removing &&
           <button
             aria-label={`remove ${creature.name}`}

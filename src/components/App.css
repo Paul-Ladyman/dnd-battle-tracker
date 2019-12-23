@@ -528,6 +528,17 @@ input[type=number].creature-toolbar--input {
   height: 4px;
   margin-bottom: 20px;
   margin-top: 20px;
+  width: 85%;
+}
+
+.expanded-creature--columns {
+  margin-bottom: 15px;
+}
+
+.expanded-creature--columns > * {
+  -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */
@@ -602,6 +613,9 @@ input[type=number].creature-toolbar--input {
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 10px;
+  /* -webkit-column-break-inside: avoid; */
+  /* page-break-inside: avoid; */
+  /* break-inside: avoid; */
 }
 
 .creature-note-list--label {
@@ -609,7 +623,17 @@ input[type=number].creature-toolbar--input {
   color: #822000;
   border-bottom: 1px solid black;
   width: 50%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+}
+
+.creature-note-list--first {
+  /* -webkit-column-break-inside: avoid; */
+  /* page-break-inside: avoid; */
+  /* break-inside: avoid; */
+}
+
+.creature-note-list--last {
+  margin-bottom: 0;
 }
 
 .creature-note-list--note {

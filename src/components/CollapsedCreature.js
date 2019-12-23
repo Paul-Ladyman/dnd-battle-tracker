@@ -1,5 +1,6 @@
 import React from 'react';
 import HealthPoints from './HealthPoints';
+import ExternalLink from './ExternalLink';
 
 function commaSeparate(notes) {
   return notes.map((note) => {
@@ -8,6 +9,7 @@ function commaSeparate(notes) {
 }
 
 function CollapsedCreature({creature, creatureExpander}) {
+  const { name } = creature;
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
   const showConditions = creature.conditions.length > 0;
@@ -18,7 +20,12 @@ function CollapsedCreature({creature, creatureExpander}) {
   return (
     <div className="collapsed-creature">
       <div className="creature-title">
-        <h2 className={nameClasses}>{creature.name}</h2>
+        <h2 className={nameClasses}>
+          {showHealth ?
+            <ExternalLink url={`https://www.dndbeyond.com/monsters/${name}`} text={name} /> :
+            name
+          } 
+        </h2>
         {creatureExpander}
       </div>
       <div className="collapsed-creature--status">
