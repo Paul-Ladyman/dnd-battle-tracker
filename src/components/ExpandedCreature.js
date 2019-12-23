@@ -54,8 +54,8 @@ class ExpandedCreature extends Component {
               <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
             </div>
           }
-          <div className="expanded-creature--separator" />
           <div>
+            <div className="expanded-creature--separator" />
             {showHealth &&
               <HealthPoints
                 hp={healthPoints}
