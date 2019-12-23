@@ -37,11 +37,11 @@ class ExpandedCreature extends Component {
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
-    const columnCount = multiColumn ? 2 : 1;
+    const columnClassName = multiColumn ? 'expanded-creature--columns__wide' : 'expanded-creature--columns__normal';
 
     return (
       <div className="expanded-creature">
-        <div style={{'column-count': `${columnCount}`}} className="expanded-creature--columns">
+        <div className={`expanded-creature--columns ${columnClassName}`}>
           <div className="creature-title">
             <h2 className="expanded-creature--name">
               {showHealth ?

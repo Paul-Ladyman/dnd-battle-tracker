@@ -532,9 +532,29 @@ input[type=number].creature-toolbar--input {
   width: 85%;
 }
 
+@media only screen and (max-width: 768px) {
+  .expanded-creature--separator {
+    width: 100%;
+  }
+}
+
+.expanded-creature--columns__wide {
+  column-count: 2;
+}
+
+.expanded-creature--columns__normal {
+  column-count: 1;
+}
+
 .expanded-creature--columns {
   /* margin-top: 20px; */
   margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  .expanded-creature--columns__wide {
+    column-count: 1;
+  }
 }
 
 .expanded-creature--columns > * {
@@ -660,6 +680,13 @@ input[type=number].creature-toolbar--input {
   margin-left: 5px;
   padding: 4px;
   display: flex;
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-note-list--button {
+    margin-right: 0;
+    /* grid-template-columns: repeat(2, 1fr); */
+  }
 }
 
 .creature-note-list--timer {
