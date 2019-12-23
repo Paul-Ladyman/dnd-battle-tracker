@@ -2,10 +2,11 @@ import React from 'react';
 import HealthPoints from './HealthPoints';
 import ExternalLink from './ExternalLink';
 
-function commaSeparate(notes) {
+function commaSeparate(notes, trailing) {
+  const suffix = trailing ? ',' : ''
   return notes.map((note) => {
     return `${note.text[0].toUpperCase()}${note.text.substring(1)}`;
-  }).join(', ');
+  }).join(', ') + suffix;
 }
 
 function CollapsedCreature({creature, creatureExpander}) {
@@ -37,12 +38,12 @@ function CollapsedCreature({creature, creatureExpander}) {
         />}
         {showConditions && 
           <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>{
-            commaSeparate(creature.conditions)
+            commaSeparate(creature.conditions, showNotes)
           }</div>
         }
         {showNotes && 
           <div className={`collapsed-creature--notes ${notesMarginClass}`}>{
-            commaSeparate(creature.notes)
+            commaSeparate(creature.notes, false)
           }</div>
         }
       </div>
