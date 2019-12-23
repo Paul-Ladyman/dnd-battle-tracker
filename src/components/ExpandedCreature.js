@@ -59,47 +59,39 @@ class ExpandedCreature extends Component {
           }
           <div className="expanded-creature--separator" />
           <div>
-          {showHealth &&
-            <HealthPoints
-              hp={healthPoints}
-              maxHp={maxHealthPoints}
-              className="expanded-creature--stat"
-            />
-          }
-          <div className="expanded-creature--stat">
-            <b>Initiative</b> {initiative}
-          </div>
-          {multiColumn && <div className="expanded-creature--separator" /> }
+            {showHealth &&
+              <HealthPoints
+                hp={healthPoints}
+                maxHp={maxHealthPoints}
+                className="expanded-creature--stat"
+              />
+            }
+            <div className="expanded-creature--stat">
+              <b>Initiative</b> {initiative}
+            </div>
+            {multiColumn && <div className="expanded-creature--separator" /> }
           </div>
           {showConditions &&
-            <React.Fragment>
-              <CreatureNoteList
-                creatureId={id}
-                label="Conditions"
-                noteList={conditions}
-                dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
-                round={round}
-                secondsElapsed={secondsElapsed}
-                className="expanded-creature--stat"
-              />
-            </React.Fragment>
+            <CreatureNoteList
+              creatureId={id}
+              label="Conditions"
+              noteList={conditions}
+              dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
+              round={round}
+              secondsElapsed={secondsElapsed}
+            />
           }
           {showNotes &&
-            <React.Fragment>
-              {/* {!showConditions && <div className="expanded-creature--separator" /> } */}
-              <CreatureNoteList
-                creatureId={id}
-                label="Notes"
-                noteList={notes}
-                dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
-                round={round}
-                secondsElapsed={secondsElapsed}
-                className="expanded-creature--stat"
-              />
-            </React.Fragment>
+            <CreatureNoteList
+              creatureId={id}
+              label="Notes"
+              noteList={notes}
+              dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
+              round={round}
+              secondsElapsed={secondsElapsed}
+            />
           }
         </div>
-        {/* {!active && <div className="expanded-creature--separator" /> } */}
         {!active && !this.state.removing &&
           <button
             aria-label={`remove ${creature.name}`}
@@ -117,7 +109,7 @@ class ExpandedCreature extends Component {
             className="expanded-creature--confirm-remove-button"
             onClick={() => removeCreature(id)}
           >
-              <ConfirmRemoveCreatureIcon />
+            <ConfirmRemoveCreatureIcon />
           </button>
         }
       </div>
