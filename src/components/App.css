@@ -542,6 +542,14 @@ input[type=number].creature-toolbar--input {
   column-count: 1;
 }
 
+.expanded-creature--first-column__short {
+  min-height: 120px;
+}
+
+.expanded-creature--first-column__tall {
+  min-height: 160px;
+}
+
 .expanded-creature--columns {
   margin-bottom: 15px;
 }

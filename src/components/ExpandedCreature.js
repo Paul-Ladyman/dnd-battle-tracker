@@ -38,23 +38,24 @@ class ExpandedCreature extends Component {
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
     const columnClassName = multiColumn ? 'expanded-creature--columns__wide' : 'expanded-creature--columns__normal';
+    const firstColumnClassModifier = showHealth && !alive ? '__tall' : '__short';
 
     return (
       <div className="expanded-creature">
         <div className={`expanded-creature--columns ${columnClassName}`}>
-          <div className="creature-title">
-            <h2 className="expanded-creature--name">
-              {name}
-              {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
-            </h2>
-            {creatureExpander}
-          </div>
-          {!alive &&
-            <div className="expanded-creature--status">
-              <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
+          <div className={`expanded-creature--first-column${firstColumnClassModifier}`}>
+            <div className="creature-title">
+              <h2 className="expanded-creature--name">
+                {name}
+                {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
+              </h2>
+              {creatureExpander}
             </div>
-          }
-          <div>
+            {!alive &&
+              <div className="expanded-creature--status">
+                <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
+              </div>
+            }
             <div className="expanded-creature--separator" />
             {showHealth &&
               <HealthPoints
@@ -66,7 +67,7 @@ class ExpandedCreature extends Component {
             <div className="expanded-creature--stat">
               <b>Initiative</b> {initiative}
             </div>
-            {multiColumn && <div className="expanded-creature--separator" /> }
+            {multiColumn && <div className="expanded-creature--separator" />}
           </div>
           {showConditions &&
             <CreatureNoteList
