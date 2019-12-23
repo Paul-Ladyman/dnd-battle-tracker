@@ -624,8 +624,14 @@ input[type=number].creature-toolbar--input {
   font-size: 22px;
   color: #822000;
   border-bottom: 1px solid black;
-  width: 50%;
+  width: 85%;
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-note-list--label {
+    width: 100%;
+  }
 }
 
 .creature-note-list--note {
