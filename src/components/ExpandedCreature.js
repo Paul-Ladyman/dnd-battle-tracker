@@ -36,35 +36,40 @@ class ExpandedCreature extends Component {
     const showHealth = healthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
+    const multiColumn = showConditions || showNotes;
+    const columnClassName = multiColumn ? 'expanded-creature--columns__wide' : 'expanded-creature--columns__normal';
+    const firstColumnClassModifier = showHealth && !alive ? '__tall' : '__short';
 
     return (
       <div className="expanded-creature">
-        <div className="creature-title">
-          <h2 className="expanded-creature--name">
-            {name}
-            {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
-          </h2>
-          {creatureExpander}
-        </div>
-        {!alive &&
-          <div className="expanded-creature--status">
-            <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
-          </div>
-        }
-        <div className="expanded-creature--separator" />
-        {showHealth &&
-          <HealthPoints
-            hp={healthPoints}
-            maxHp={maxHealthPoints}
-            className="expanded-creature--stat"
-          />
-        }
-        <div className="expanded-creature--stat">
-          <b>Initiative</b> {initiative}
-        </div>
-        {showConditions &&
-          <React.Fragment>
+        <div className={`expanded-creature--columns ${columnClassName}`}>
+          <div className={`expanded-creature--first-column${firstColumnClassModifier}`}>
+            <div className="creature-title">
+              <h2 className="expanded-creature--name">
+                {name}
+                {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
+              </h2>
+              {creatureExpander}
+            </div>
+            {!alive &&
+              <div className="expanded-creature--status">
+                <em><ExternalLink url={conditionDescriptions.Unconscious} text="Unconscious/dead"/></em>
+              </div>
+            }
             <div className="expanded-creature--separator" />
+            {showHealth &&
+              <HealthPoints
+                hp={healthPoints}
+                maxHp={maxHealthPoints}
+                className="expanded-creature--stat"
+              />
+            }
+            <div className="expanded-creature--stat">
+              <b>Initiative</b> {initiative}
+            </div>
+            {multiColumn && <div className="expanded-creature--separator" />}
+          </div>
+          {showConditions &&
             <CreatureNoteList
               creatureId={id}
               label="Conditions"
@@ -72,13 +77,9 @@ class ExpandedCreature extends Component {
               dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
               round={round}
               secondsElapsed={secondsElapsed}
-              className="expanded-creature--stat"
             />
-          </React.Fragment>
-        }
-        {showNotes &&
-          <React.Fragment>
-            {!showConditions && <div className="expanded-creature--separator" /> }
+          }
+          {showNotes &&
             <CreatureNoteList
               creatureId={id}
               label="Notes"
@@ -86,11 +87,9 @@ class ExpandedCreature extends Component {
               dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
               round={round}
               secondsElapsed={secondsElapsed}
-              className="expanded-creature--stat"
             />
-          </React.Fragment>
-        }
-        {!active && <div className="expanded-creature--separator" /> }
+          }
+        </div>
         {!active && !this.state.removing &&
           <button
             aria-label={`remove ${creature.name}`}
@@ -108,7 +107,7 @@ class ExpandedCreature extends Component {
             className="expanded-creature--confirm-remove-button"
             onClick={() => removeCreature(id)}
           >
-              <ConfirmRemoveCreatureIcon />
+            <ConfirmRemoveCreatureIcon />
           </button>
         }
       </div>

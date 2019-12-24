@@ -1,8 +1,9 @@
+import findIndex from 'lodash.findindex';
 import { createCreature, validateCreature } from './CreatureManager';
 import { addError } from './AppManager';
 
 function findCreatureIndex(creatures, creature) {
-  return creatures.findIndex(({id}) => {
+  return findIndex(creatures, ({id}) => {
     return creature.id === id;
   });
 }

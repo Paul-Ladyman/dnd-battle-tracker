@@ -39,11 +39,11 @@ function Timer ({
   const timeAriaLabel = `${minutes} minutes ${remainingSeconds} seconds`;
 
   return (
-    <div className={className} aria-label={roundAriaLabel + timeAriaLabel}>
+    <span className={className} aria-label={roundAriaLabel + timeAriaLabel}>
       {showRound && `${round}r `}
       {`${minutes}m `}
       {`${remainingSeconds}s`}
-    </div>
+    </span>
   );
 }
 

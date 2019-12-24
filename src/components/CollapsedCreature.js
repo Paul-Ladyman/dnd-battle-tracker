@@ -1,13 +1,15 @@
 import React from 'react';
 import HealthPoints from './HealthPoints';
 
-function commaSeparate(notes) {
+function commaSeparate(notes, trailing) {
+  const suffix = trailing ? ',' : ''
   return notes.map((note) => {
     return `${note.text[0].toUpperCase()}${note.text.substring(1)}`;
-  }).join(', ');
+  }).join(', ') + suffix;
 }
 
 function CollapsedCreature({creature, creatureExpander}) {
+  const { name } = creature;
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
   const showConditions = creature.conditions.length > 0;
@@ -18,7 +20,9 @@ function CollapsedCreature({creature, creatureExpander}) {
   return (
     <div className="collapsed-creature">
       <div className="creature-title">
-        <h2 className={nameClasses}>{creature.name}</h2>
+        <h2 className={nameClasses}>
+          {name}
+        </h2>
         {creatureExpander}
       </div>
       <div className="collapsed-creature--status">
@@ -30,12 +34,12 @@ function CollapsedCreature({creature, creatureExpander}) {
         />}
         {showConditions && 
           <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>{
-            commaSeparate(creature.conditions)
+            commaSeparate(creature.conditions, showNotes)
           }</div>
         }
         {showNotes && 
           <div className={`collapsed-creature--notes ${notesMarginClass}`}>{
-            commaSeparate(creature.notes)
+            commaSeparate(creature.notes, false)
           }</div>
         }
       </div>

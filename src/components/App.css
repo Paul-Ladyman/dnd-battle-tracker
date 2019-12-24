@@ -449,8 +449,8 @@ input[type=number].creature-toolbar--input {
 
 .creature-title {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -491,11 +491,8 @@ input[type=number].creature-toolbar--input {
 }
 
 .expanded-creature--status {
-  text-decoration: underline;
-  text-decoration-color: #822000;
-  text-decoration-style: double;
-  color: black;
   margin-top: 4px;
+  margin-bottom: 35px;
 }
 
 .expanded-creature--active-icon {
@@ -528,6 +525,45 @@ input[type=number].creature-toolbar--input {
   height: 4px;
   margin-bottom: 20px;
   margin-top: 20px;
+  width: 85%;
+}
+
+@media only screen and (max-width: 768px) {
+  .expanded-creature--separator {
+    width: 100%;
+  }
+}
+
+.expanded-creature--columns__wide {
+  column-count: 2;
+}
+
+.expanded-creature--columns__normal {
+  column-count: 1;
+}
+
+.expanded-creature--first-column__short {
+  min-height: 120px;
+}
+
+.expanded-creature--first-column__tall {
+  min-height: 170px;
+}
+
+.expanded-creature--columns {
+  margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  .expanded-creature--columns__wide {
+    column-count: 1;
+  }
+}
+
+.expanded-creature--columns > * {
+  -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */
@@ -578,44 +614,34 @@ input[type=number].creature-toolbar--input {
 /* Creature note list */
 
 .creature-note-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(60px, auto);
-  grid-gap: 15px;
-  margin-top: 5px;
-  border: 1px solid #822000;
-  border-radius: 15px;
-  box-shadow: 0 0 5px #979AA4;
-  padding: 10px;
-}
-
-/* Reduce width of note list to two columns on smaller screen sizes */
-@media only screen and (max-width: 768px) {
-  .creature-note-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  width: 75%;
 }
 
 .creature-note-list--item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .creature-note-list--label {
   font-size: 22px;
   color: #822000;
   border-bottom: 1px solid black;
-  width: 50%;
-  margin-bottom: 20px;
+  width: 85%;
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .creature-note-list--label {
+    width: 100%;
+  }
 }
 
 .creature-note-list--note {
-  text-decoration: underline;
-  text-decoration-color: #822000;
-  text-decoration-style: double;
+  margin-top: 10px;
   color: black;
-  word-break: break-word;
+  font-style: italic;
 }
 
 .creature-note-list--note::first-letter {
@@ -629,15 +655,21 @@ input[type=number].creature-toolbar--input {
   display: flex;
 }
 
+@media only screen and (max-width: 768px) {
+  .creature-note-list--button {
+    margin-right: 0;
+  }
+}
+
 .creature-note-list--timer {
-  margin-top: 5px;
-  font-size: 14px;
-  color: black;
+  margin-left: 10px;
+  white-space: nowrap;
 }
 
 .expand-creature-button {
   padding: 4px;
   display: flex;
+  margin-left: 10px;
 }
 
 /* Health points */
