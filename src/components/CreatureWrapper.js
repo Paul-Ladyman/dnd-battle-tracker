@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
 import isHotkey from 'is-hotkey';
+import findIndex from 'lodash.findindex';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
@@ -9,7 +10,7 @@ import CreatureExpander from './CreatureExpander';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
-    const activeConditionIndex = creatureConditions.findIndex((activeCondition) => {
+    const activeConditionIndex = findIndex(creatureConditions, (activeCondition) => {
       return activeCondition.text === condition;
     });
     return activeConditionIndex === -1;

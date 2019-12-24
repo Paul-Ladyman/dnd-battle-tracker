@@ -547,7 +547,7 @@ input[type=number].creature-toolbar--input {
 }
 
 .expanded-creature--first-column__tall {
-  min-height: 160px;
+  min-height: 170px;
 }
 
 .expanded-creature--columns {
