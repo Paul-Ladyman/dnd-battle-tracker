@@ -1,6 +1,5 @@
 import React from 'react';
 import HealthPoints from './HealthPoints';
-import ExternalLink from './ExternalLink';
 
 function commaSeparate(notes, trailing) {
   const suffix = trailing ? ',' : ''
