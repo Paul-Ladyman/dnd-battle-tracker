@@ -702,12 +702,14 @@ describe('addCreature', () => {
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
     expect(createCreature.mock.calls.length).toBe(2)
     const expectedCreature1 = {
-      name: 'name #1',
+      name: 'name',
+      number: 1,
       initiative: 9,
       healthPoints: 10,
     };
     const expectedCreature2 = {
-      name: 'name #2',
+      name: 'name',
+      number: 2,
       initiative: 9,
       healthPoints: 10,
     };
@@ -777,12 +779,14 @@ describe('addCreature', () => {
     expect(addCreature(initialState, creature)).toEqual(expectedState);
     expect(createCreature.mock.calls.length).toBe(2)
     const expectedCreature1 = {
-      name: 'Goblin #5',
+      name: 'Goblin',
+      number: 5,
       initiative: 9,
       healthPoints: 10,
     };
     const expectedCreature2 = {
-      name: 'Goblin #6',
+      name: 'Goblin',
+      number: 6,
       initiative: 9,
       healthPoints: 10,
     };

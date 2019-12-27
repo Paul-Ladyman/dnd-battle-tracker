@@ -166,8 +166,9 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
   const groupOffset = groupSize > 0 ? groupIndexes[groupSize - 1] : 0;
 
   return Array(multiplier).fill().map((_, i) => {
-    const name = `${creature.name} #${i + 1 + groupOffset}`;
-    return createCreature(creatureIdCount + i, { ...creature, name });
+    const { name } = creature;
+    const number = i + 1 + groupOffset;
+    return createCreature(creatureIdCount + i, { ...creature, name, number });
   });
 }
 

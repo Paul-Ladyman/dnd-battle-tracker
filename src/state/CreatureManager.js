@@ -83,9 +83,11 @@ export function healCreature(state, creatureId, health) {
   return updateCreature(state, creatureId, {alive, healthPoints}, ariaAnnouncement);
 };
 
-export function createCreature(creatureId, {name, initiative, healthPoints}) {
+export function createCreature(creatureId, {name, number, initiative, healthPoints}) {
+  const groupedName = number ? `${name} #${number}` : name;
   return {
-    name,
+    name: groupedName,
+    rawName: name,
     initiative,
     healthPoints,
     maxHealthPoints: healthPoints,

@@ -33,7 +33,7 @@ class ExpandedCreature extends Component {
       removeNoteFromCreature,
       creatureExpander
     } = this.props;
-    const { alive, name, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
+    const { alive, name, rawName, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
     const showHealth = healthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
@@ -47,7 +47,7 @@ class ExpandedCreature extends Component {
           <div className={`expanded-creature--first-column${firstColumnClassModifier}`}>
             <div className="creature-title">
               <h2 className="expanded-creature--name">{name}</h2>
-              <MonsterSearcher search={name} />
+              <MonsterSearcher search={rawName} />
               {creatureExpander}
               {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
             </div>
