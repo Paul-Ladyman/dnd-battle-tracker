@@ -1,5 +1,6 @@
 import React from 'react';
 import HealthPoints from './HealthPoints';
+import MonsterSearcher from './MonsterSearcher';
 
 function commaSeparate(notes, trailing) {
   const suffix = trailing ? ',' : ''
@@ -23,6 +24,7 @@ function CollapsedCreature({creature, creatureExpander}) {
         <h2 className={nameClasses}>
           {name}
         </h2>
+        <MonsterSearcher search={name}/>
         {creatureExpander}
       </div>
       <div className="collapsed-creature--status">

@@ -115,19 +115,23 @@ input[type="number"] {
 }
 
 .battle-toolbar--stat {
-  height: 50%;
   display: flex;
   align-items: center;
   flex-flow: column;
   font-weight: bold;
   color: #822000;
   margin-top: 2px;
+  max-width: 25%;
 }
 
 /* Remove most unimportant battle bar info for screens smaller than 768px */
 @media only screen and (max-width: 768px) {
   .battle-toolbar--stat__extra2 {
     display: none;
+  }
+
+  .battle-toolbar--stat {
+    max-width: 33%;
   }
 }
 
@@ -136,12 +140,21 @@ input[type="number"] {
   .battle-toolbar--stat__extra1 {
     display: none;
   }
+
+  .battle-toolbar--stat {
+    max-width: 50%;
+  }
 }
 
 .battle-toolbar--stat-value {
   font-weight: normal;
   color: black;
   text-transform: capitalize;
+  text-overflow: ellipsis;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .battle-toolbar--button {
@@ -562,8 +575,8 @@ input[type=number].creature-toolbar--input {
 
 .expanded-creature--columns > * {
   -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */

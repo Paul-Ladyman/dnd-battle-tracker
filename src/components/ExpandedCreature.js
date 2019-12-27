@@ -3,6 +3,7 @@ import CreatureNoteList from './CreatureNoteList';
 import HealthPoints from './HealthPoints';
 import { conditionDescriptions } from '../model/conditions';
 import ExternalLink from './ExternalLink';
+import MonsterSearcher from './MonsterSearcher';
 import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
 import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';
 import ActiveCreatureIcon from './icons/ActiveCreatureIcon';
@@ -45,11 +46,10 @@ class ExpandedCreature extends Component {
         <div className={`expanded-creature--columns ${columnClassName}`}>
           <div className={`expanded-creature--first-column${firstColumnClassModifier}`}>
             <div className="creature-title">
-              <h2 className="expanded-creature--name">
-                {name}
-                {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
-              </h2>
+              <h2 className="expanded-creature--name">{name}</h2>
+              <MonsterSearcher search={name} />
               {creatureExpander}
+              {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
             </div>
             {!alive &&
               <div className="expanded-creature--status">
