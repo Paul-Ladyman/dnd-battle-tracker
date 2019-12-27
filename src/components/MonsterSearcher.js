@@ -3,16 +3,14 @@ import ExternalLink from './ExternalLink';
 import MonsterSearchIcon from './icons/MonsterSearchIcon';
 
 function MonsterSearcher({ search }) {
-  const monsterSearchButton = <button
-    aria-label={`Search ${search} on D&D Beyond`}
-    className="expand-creature-button"
-    title="D&D Beyond Monster Search">
-      {<MonsterSearchIcon />}
-  </button>
+  const encodedSearch = encodeURIComponent(search);
 
   return (<ExternalLink
-    url={`https://www.dndbeyond.com/monsters?filter-search=${search}`} 
-    text={monsterSearchButton}
+    url={`https://www.dndbeyond.com/monsters?filter-search=${encodedSearch}`} 
+    text={<MonsterSearchIcon />}
+    className="button expand-creature-button"
+    ariaLabel={`Search ${search} on D&D Beyond`}
+    title="D&D Beyond Monster Search"
   />);
 
 

@@ -3,7 +3,7 @@ body {
   font-size: 18px;
 }
 
-button {
+button, .button {
   cursor: pointer;
   border: 2px solid #822000;
   padding: 10px;
