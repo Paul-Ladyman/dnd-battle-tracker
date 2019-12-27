@@ -499,10 +499,13 @@ input[type=number].creature-toolbar--input {
   color: #822000;
   margin-top: 4px;
   margin-bottom: 4px;
+}
+
+.expanded-creature--name__one-line {
+  display: block;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  display: block;
 }
 
 @media only screen and (max-width: 768px) {

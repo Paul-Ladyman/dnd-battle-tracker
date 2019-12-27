@@ -6,7 +6,7 @@ function MonsterSearcher({ search }) {
   const encodedSearch = encodeURIComponent(search);
 
   return (<ExternalLink
-    url={`https://www.dndbeyond.com/monsters?filter-search=${encodedSearch}`} 
+    url={`https://www.dndbeyond.com/monsters?filter-search=${encodedSearch}&sort=cr`} 
     text={<MonsterSearchIcon />}
     className="button expand-creature-button"
     ariaLabel={`Search ${search} on D&D Beyond`}

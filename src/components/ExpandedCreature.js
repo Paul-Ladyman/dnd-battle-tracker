@@ -40,13 +40,15 @@ class ExpandedCreature extends Component {
     const multiColumn = showConditions || showNotes;
     const columnClassName = multiColumn ? 'expanded-creature--columns__wide' : 'expanded-creature--columns__normal';
     const firstColumnClassModifier = showHealth && !alive ? '__tall' : '__short';
+    const nameClass = 'expanded-creature--name';
+    const nameClasses = multiColumn ? `${nameClass} ${nameClass}__one-line` : nameClass;
 
     return (
       <div className="expanded-creature">
         <div className={`expanded-creature--columns ${columnClassName}`}>
           <div className={`expanded-creature--first-column${firstColumnClassModifier}`}>
             <div className="creature-title">
-              <h2 className="expanded-creature--name">{name}</h2>
+              <h2 className={nameClasses}>{name}</h2>
               <MonsterSearcher search={rawName} />
               {creatureExpander}
               {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
