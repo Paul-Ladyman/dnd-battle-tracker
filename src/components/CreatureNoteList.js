@@ -36,7 +36,7 @@ function CreatureNoteList({
             </div>;
 
           return i === 0 ?
-            <div>
+            <div key={i}>
               <div className="creature-note-list--label">{label}</div>
               {item}
             </div> :
