@@ -691,7 +691,7 @@ input[type=number].creature-toolbar--input {
   white-space: nowrap;
 }
 
-.expand-creature-button {
+.creature-title-button {
   padding: 4px;
   display: flex;
   margin-left: 10px;

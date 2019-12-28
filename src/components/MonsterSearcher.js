@@ -7,11 +7,10 @@ function MonsterSearcher({ search }) {
 
   return (<ExternalLink
     url={`https://www.dndbeyond.com/monsters?filter-search=${encodedSearch}&sort=cr`} 
-    text={<MonsterSearchIcon />}
-    className="button expand-creature-button"
+    className="button creature-title-button"
     ariaLabel={`Search ${search} on D&D Beyond`}
     title="D&D Beyond Monster Search"
-  />);
+  ><MonsterSearchIcon /></ExternalLink>);
 
 
 }

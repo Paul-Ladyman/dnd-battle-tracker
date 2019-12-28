@@ -13,8 +13,7 @@ function Footer() {
       Version {version}. See&nbsp;
       <ExternalLink
         url="https://paul-ladyman.github.io/dnd-battle-tracker"
-        text="D&D Battle Tracker Info"
-      />
+      >D&D Battle Tracker Info</ExternalLink>
       &nbsp;for newer versions, more info and to download this page for offline battles.
       Track the initiative and status of all creatures involved in combat with this D&D combat tracker!
       </p>

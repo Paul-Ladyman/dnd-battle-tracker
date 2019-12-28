@@ -15,7 +15,7 @@ function CreatureNoteList({
     <React.Fragment>
         {noteList.map((note, i) => {
           const noteText = note.url ?
-            <b><ExternalLink url={note.url} text={note.text} /></b> :
+            <b><ExternalLink url={note.url} >{note.text}</ExternalLink></b> :
             <span><b>{i+1}.</b> {`${note.text[0].toUpperCase()}${note.text.substring(1)}`}</span>;
 
           const item =
