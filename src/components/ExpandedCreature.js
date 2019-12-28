@@ -112,6 +112,7 @@ class ExpandedCreature extends Component {
             <ConfirmRemoveCreatureIcon />
           </button>
         }
+        {active && <div style={{height: '43px'}}></div>}
       </div>
     );
   }

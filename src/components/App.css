@@ -568,7 +568,7 @@ input[type=number].creature-toolbar--input {
 }
 
 .expanded-creature--first-column__short {
-  min-height: 120px;
+  min-height: 125px;
 }
 
 .expanded-creature--first-column__tall {
@@ -620,7 +620,7 @@ input[type=number].creature-toolbar--input {
   text-align: left;
   text-transform: capitalize;
   margin-top: 4px;
-  margin-bottom: 0px;
+  margin-bottom: 4px;
 }
 
 .collapsed-creature--name__dead {
