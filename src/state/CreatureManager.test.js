@@ -335,6 +335,7 @@ describe('createCreature', () => {
   test('it creates a new creature given a name, initiative and health points', () => {
     const expectedCreature = {
       name: 'name',
+      rawName: 'name',
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
@@ -345,6 +346,23 @@ describe('createCreature', () => {
     };
 
     const creature = createCreature(1, {name: 'name', initiative: 13,  healthPoints: 10});
+    expect(creature).toEqual(expectedCreature);
+  });
+
+  test('it creates a new creature given a name, initiative, health points and a number', () => {
+    const expectedCreature = {
+      name: 'name #3',
+      rawName: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 1,
+      alive: true,
+      conditions: [],
+      notes: []
+    };
+
+    const creature = createCreature(1, {name: 'name', number: 3, initiative: 13,  healthPoints: 10});
     expect(creature).toEqual(expectedCreature);
   });
 });

@@ -10,7 +10,7 @@ function CreatureExpander({active, expanded, name, expandHandler}) {
   return (!active && 
     <button
       aria-label={buttonAriaLabel}
-      className="expand-creature-button"
+      className="creature-title-button"
       title={buttonTitle}
       onClick={expandHandler}>
         {buttonIcon}

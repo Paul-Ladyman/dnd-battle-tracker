@@ -3,7 +3,7 @@ body {
   font-size: 18px;
 }
 
-button {
+button, .button {
   cursor: pointer;
   border: 2px solid #822000;
   padding: 10px;
@@ -115,19 +115,23 @@ input[type="number"] {
 }
 
 .battle-toolbar--stat {
-  height: 50%;
   display: flex;
   align-items: center;
   flex-flow: column;
   font-weight: bold;
   color: #822000;
   margin-top: 2px;
+  max-width: 25%;
 }
 
 /* Remove most unimportant battle bar info for screens smaller than 768px */
 @media only screen and (max-width: 768px) {
   .battle-toolbar--stat__extra2 {
     display: none;
+  }
+
+  .battle-toolbar--stat {
+    max-width: 33%;
   }
 }
 
@@ -136,12 +140,21 @@ input[type="number"] {
   .battle-toolbar--stat__extra1 {
     display: none;
   }
+
+  .battle-toolbar--stat {
+    max-width: 50%;
+  }
 }
 
 .battle-toolbar--stat-value {
   font-weight: normal;
   color: black;
   text-transform: capitalize;
+  text-overflow: ellipsis;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .battle-toolbar--button {
@@ -486,8 +499,20 @@ input[type=number].creature-toolbar--input {
   color: #822000;
   margin-top: 4px;
   margin-bottom: 4px;
-  display: flex;
-  align-items: center;
+}
+
+.expanded-creature--name__one-line {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 768px) {
+  .expanded-creature--name {
+    white-space: unset;
+    overflow: unset
+  };
 }
 
 .expanded-creature--status {
@@ -543,7 +568,7 @@ input[type=number].creature-toolbar--input {
 }
 
 .expanded-creature--first-column__short {
-  min-height: 120px;
+  min-height: 125px;
 }
 
 .expanded-creature--first-column__tall {
@@ -562,8 +587,8 @@ input[type=number].creature-toolbar--input {
 
 .expanded-creature--columns > * {
   -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */
@@ -595,7 +620,7 @@ input[type=number].creature-toolbar--input {
   text-align: left;
   text-transform: capitalize;
   margin-top: 4px;
-  margin-bottom: 0px;
+  margin-bottom: 4px;
 }
 
 .collapsed-creature--name__dead {
@@ -666,7 +691,7 @@ input[type=number].creature-toolbar--input {
   white-space: nowrap;
 }
 
-.expand-creature-button {
+.creature-title-button {
   padding: 4px;
   display: flex;
   margin-left: 10px;
