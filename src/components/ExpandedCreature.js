@@ -69,7 +69,7 @@ class ExpandedCreature extends Component {
             <div className="expanded-creature--stat">
               <b>Initiative</b> {initiative}
             </div>
-            {multiColumn && <div className="expanded-creature--separator" />}
+            <div className="expanded-creature--separator" />
           </div>
           {showConditions &&
             <CreatureNoteList
