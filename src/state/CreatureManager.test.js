@@ -7,7 +7,8 @@ import {
   addNoteToCreature,
   removeNoteFromCreature,
   addHealthToCreature,
-  validateCreature
+  validateCreature,
+  addInitiativeToCreature
 } from './CreatureManager';
 import conditions, { conditionDescriptions } from '../model/conditions';
 
@@ -23,7 +24,6 @@ const defaultState = {
     },
     {
       name: 'Goblin',
-      initiative: 10,
       healthPoints: 10,
       maxHealthPoints: 10,
       id: 1,
@@ -746,6 +746,31 @@ describe('addHealthToCreature', () => {
 
   it('does nothing to a creature if less than 0 health is added', () => {
     const result = addHealthToCreature(defaultState, 0, -1);
+    expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addInitiativeToCreature', () => {
+  it('adds initiative to a creature that does not already have it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: 10
+        },
+        defaultState.creatures[2]
+      ],
+      ariaAnnouncements: ['Goblin\'s initiative is 10']
+    };
+
+    const result = addInitiativeToCreature(defaultState, 1, 10);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature that already has initiative', () => {
+    const result = addInitiativeToCreature(defaultState, 0, 30);
     expect(result).toEqual(defaultState);
   });
 });

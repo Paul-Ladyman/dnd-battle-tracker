@@ -176,3 +176,14 @@ export function addHealthToCreature(state, creatureId, health) {
   const ariaAnnouncement = `${creature.name}'s health is ${healthPoints}, max health is ${health}`;
   return updateCreature(state, creatureId, { healthPoints, maxHealthPoints: health}, ariaAnnouncement);
 }
+
+export function addInitiativeToCreature(state, creatureId, initiative) {
+  const creature = findCreature(state.creatures, creatureId);
+
+  if (creature.initiative !== undefined) {
+    return state;
+  }
+
+  const ariaAnnouncement = `${creature.name}'s initiative is ${initiative}`;
+  return updateCreature(state, creatureId, { initiative }, ariaAnnouncement);
+}

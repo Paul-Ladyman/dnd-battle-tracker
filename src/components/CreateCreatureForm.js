@@ -94,12 +94,12 @@ class CreateCreatureForm extends Component {
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="create creature form. Initiative (required)" htmlFor="initiative" className="form--label">
-            Initiative
+          <label aria-label="create creature form. Initiative (optional)" htmlFor="initiative" className="form--label">
+            Initiative (optional)
             {initiativeError && <span className="form--label__error"> *</span>}
           </label>
           <div className="create-creature-form--input-container">
-            <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
+            <input className={initiativeClass} type="number" id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">
