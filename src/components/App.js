@@ -24,7 +24,8 @@ import {
   healCreature,
   addNoteToCreature,
   removeNoteFromCreature,
-  addHealthToCreature
+  addHealthToCreature,
+  addInitiativeToCreature
 } from '../state/CreatureManager';
 import {
   save,
@@ -53,6 +54,7 @@ class App extends Component {
     this.damageCreature = this.damageCreature.bind(this);
     this.healCreature = this.healCreature.bind(this);
     this.addHealthToCreature = this.addHealthToCreature.bind(this);
+    this.addInitiativeToCreature = this.addInitiativeToCreature.bind(this);
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
@@ -103,6 +105,10 @@ class App extends Component {
 
   addNoteToCreature(creatureId, text, isCondition) {
     this.setState(addNoteToCreature(this.state, creatureId, text, isCondition));
+  }
+
+  addInitiativeToCreature(creatureId, initiative) {
+    this.setState(addInitiativeToCreature(this.state, creatureId, initiative));
   }
 
   damageCreature(creatureId, damage) {
@@ -160,6 +166,7 @@ class App extends Component {
       damageCreature: this.damageCreature,
       healCreature: this.healCreature,
       addHealthToCreature: this.addHealthToCreature,
+      addInitiativeToCreature: this.addInitiativeToCreature,
       removeCreature: this.removeCreature,
       addNoteToCreature: this.addNoteToCreature,
       removeNoteFromCreature: this.removeNoteFromCreature

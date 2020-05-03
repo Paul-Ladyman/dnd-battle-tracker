@@ -18,9 +18,10 @@ function CreatureToolbar({
     damageCreature,
     healCreature,
     addNoteToCreature,
-    addHealthToCreature
+    addHealthToCreature,
+    addInitiativeToCreature
   } = creatureManagement;
-  const { alive, healthPoints, maxHealthPoints, id, name } = creature; 
+  const { alive, healthPoints, maxHealthPoints, id, name, initiative } = creature; 
   const statusButtonFunc = alive ? killCreature : stabalizeCreature;
   const statusButtonTitle = alive ? 'Kill/Make unconscious' : 'Stabalize';
   const statusButtonIcon = alive ? <KillIcon /> : <StabalizeIcon />;
@@ -30,6 +31,7 @@ function CreatureToolbar({
   const enableDamage = healthPoints > 0;
   const enableHeal = healthPoints < maxHealthPoints;
   const enableConditions = conditions.length > 0;
+  const enableInitiative = initiative === undefined;
 
   const enabledModifier = enableConditions ? '' : 'creature-toolbar--input__disabled';
   const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
@@ -59,6 +61,15 @@ function CreatureToolbar({
         onSubmit={(note) => addNoteToCreature(id, note, false)}
         submitIcon={AddNoteIcon}
       />
+      {enableInitiative &&
+        <CreatureToolbarInput
+          integer
+          ariaLabel={`add initiative to ${name}`}
+          label="Initiative"
+          onSubmit={(initiative) => addInitiativeToCreature(id, initiative)}
+          submitIcon={DamageIcon}
+        />
+      }
       {enableHealthItems &&
         <React.Fragment>
           <CreatureToolbarInput
