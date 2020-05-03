@@ -24,7 +24,9 @@ import {
   healCreature,
   addNoteToCreature,
   removeNoteFromCreature,
-  addHealthToCreature
+  addHealthToCreature,
+  addInitiativeToCreature,
+  toggleCreatureLock
 } from '../state/CreatureManager';
 import {
   save,
@@ -53,9 +55,11 @@ class App extends Component {
     this.damageCreature = this.damageCreature.bind(this);
     this.healCreature = this.healCreature.bind(this);
     this.addHealthToCreature = this.addHealthToCreature.bind(this);
+    this.addInitiativeToCreature = this.addInitiativeToCreature.bind(this);
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
+    this.toggleCreatureLock = this.toggleCreatureLock.bind(this);
     this.saveBattle = this.saveBattle.bind(this);
     this.loadBattle = this.loadBattle.bind(this);
     this.dismissErrors = this.dismissErrors.bind(this);
@@ -105,6 +109,10 @@ class App extends Component {
     this.setState(addNoteToCreature(this.state, creatureId, text, isCondition));
   }
 
+  addInitiativeToCreature(creatureId, initiative) {
+    this.setState(addInitiativeToCreature(this.state, creatureId, initiative));
+  }
+
   damageCreature(creatureId, damage) {
     this.setState(damageCreature(this.state, creatureId, damage));
   }
@@ -115,6 +123,10 @@ class App extends Component {
 
   addHealthToCreature(creatureId, health) {
     this.setState(addHealthToCreature(this.state, creatureId, health));
+  }
+
+  toggleCreatureLock(creatureId) {
+    this.setState(toggleCreatureLock(this.state, creatureId));
   }
 
   nextInitiative() {
@@ -160,9 +172,11 @@ class App extends Component {
       damageCreature: this.damageCreature,
       healCreature: this.healCreature,
       addHealthToCreature: this.addHealthToCreature,
+      addInitiativeToCreature: this.addInitiativeToCreature,
       removeCreature: this.removeCreature,
       addNoteToCreature: this.addNoteToCreature,
-      removeNoteFromCreature: this.removeNoteFromCreature
+      removeNoteFromCreature: this.removeNoteFromCreature,
+      toggleCreatureLock: this.toggleCreatureLock
     };
 
     const errors = this.state.errors.length > 0;

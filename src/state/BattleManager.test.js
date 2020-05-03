@@ -10,7 +10,7 @@ import {
   addCreature,
   resetBattle
 } from './BattleManager';
-import { createCreature, validateCreature } from './CreatureManager';
+import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
 jest.mock('./CreatureManager');
 
@@ -32,7 +32,8 @@ const defaultState = {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: true
     },
     {
       name: 'Goblin #2',
@@ -42,7 +43,8 @@ const defaultState = {
       id: 2,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: true
     }
   ],
   creatureIdCount: 3,
@@ -78,11 +80,25 @@ describe('newBattleState', () => {
 });
 
 describe('resetBattle', () => {
-  test('resets to the initial battle state', () => {
+  test('resets to the initial battle state, keeping and resetting locked creatures', () => {
+    const resetCreature1 = {
+      ...defaultState.creatures[1],
+      id: 0,
+      initiative: undefined
+    };
+    const resetCreature2 = {
+      ...defaultState.creatures[2],
+      id: 1,
+      initiative: undefined
+    };
+    resetCreature.mockReturnValueOnce(resetCreature1).mockReturnValueOnce(resetCreature2);
     const expected = {
-      creatures: [],
-      creatureIdCount: 0,
-      creatureCount: 0,
+      creatures: [
+        resetCreature1,
+        resetCreature2
+      ],
+      creatureIdCount: 2,
+      creatureCount: 2,
       activeCreature: undefined,
       focusedCreature: undefined,
       round: 0,
@@ -92,6 +108,7 @@ describe('resetBattle', () => {
     };
 
     expect(resetBattle(defaultState)).toEqual(expected);
+    expect(resetCreature).toHaveBeenCalledTimes(2);
   });
 });
 
@@ -153,6 +170,49 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
+  test('it sorts creatures by their initiative', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        ...defaultState.creatures,
+        {
+          name: 'Droop',
+          initiative: 15,
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        }
+      ],
+      round: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...defaultState,
+      creatures: [
+        {
+          name: 'Droop',
+          initiative: 15,
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        },
+        ...defaultState.creatures
+      ],
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Droop\'s go']
+    };
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
   test('announces if the active creature is dead', () => {
     const state = {
       ...defaultState,
@@ -191,6 +251,51 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 1,
       focusedCreature: 1,
+      ariaAnnouncements: ['its Goblin #1\'s go']
+    };
+
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  test('it advances the active creature by 1 after sorting creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        ...defaultState.creatures,
+        {
+          name: 'Droop',
+          initiative: 15,
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        }
+      ],
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 0
+    };
+
+    const expected = {
+      ...defaultState,
+      creatures: [
+        {
+          name: 'Droop',
+          initiative: 15,
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        },
+        ...defaultState.creatures
+      ],
+      round: 1,
+      activeCreature: 2,
+      focusedCreature: 2,
       ariaAnnouncements: ['its Goblin #1\'s go']
     };
 
@@ -243,6 +348,93 @@ describe('nextInitiative', () => {
     };
 
     expect(nextInitiative(state)).toEqual(state);
+  });
+
+  test('sets an error and does not continue if a creature is missing initiative', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        ...defaultState.creatures,
+        {
+          name: 'Droop',
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        }
+      ],
+      round: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...state,
+      ariaAnnouncements: ['Cannot continue battle. Droop has no initiative.'],
+      errors: ['Cannot continue battle; Droop has no initiative.'],
+    };
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  test('clears existing errors before adding new ones', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        ...defaultState.creatures,
+        {
+          name: 'Droop',
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        }
+      ],
+      errors: ['some error'],
+      round: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...state,
+      ariaAnnouncements: ['Cannot continue battle. Droop has no initiative.'],
+      errors: ['Cannot continue battle; Droop has no initiative.'],
+    };
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  test('clears existing errors when advancing to next initiative', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        ...defaultState.creatures,
+        {
+          name: 'Droop',
+          initiative: 1,
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        }
+      ],
+      errors: ['some error'],
+      round: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...state,
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 0,
+      errors: [],
+      ariaAnnouncements: ['its Wellby\'s go']
+    };
+    expect(nextInitiative(state)).toEqual(expected);
   });
 });
 

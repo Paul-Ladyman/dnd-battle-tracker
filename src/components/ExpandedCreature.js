@@ -31,25 +31,27 @@ class ExpandedCreature extends Component {
       secondsElapsed,
       removeCreature,
       removeNoteFromCreature,
-      creatureExpander
+      creatureExpander,
+      creatureLocker
     } = this.props;
     const { alive, name, rawName, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
+    const showInitiative = initiative !== undefined;
     const showHealth = healthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
     const columnClassName = multiColumn ? 'expanded-creature--columns__wide' : 'expanded-creature--columns__normal';
-    const firstColumnClassModifier = showHealth && !alive ? '__tall' : '__short';
     const nameClass = 'expanded-creature--name';
     const nameClasses = multiColumn ? `${nameClass} ${nameClass}__one-line` : nameClass;
 
     return (
       <div className="expanded-creature">
         <div className={`expanded-creature--columns ${columnClassName}`}>
-          <div className={`expanded-creature--first-column${firstColumnClassModifier}`}>
+          <div>
             <div className="creature-title">
               <h2 className={nameClasses}>{name}</h2>
               <MonsterSearcher search={rawName} />
+              {creatureLocker}
               {creatureExpander}
               {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
             </div>
@@ -66,10 +68,12 @@ class ExpandedCreature extends Component {
                 className="expanded-creature--stat"
               />
             }
-            <div className="expanded-creature--stat">
-              <b>Initiative</b> {initiative}
-            </div>
-            <div className="expanded-creature--separator" />
+            {showInitiative &&
+              <div className="expanded-creature--stat">
+                <b>Initiative</b> {initiative}
+              </div>
+            }
+            { (showHealth || showInitiative) && <div className="expanded-creature--separator" /> }
           </div>
           {showConditions &&
             <CreatureNoteList

@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v1.31.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v1.31.1/dnd-battle-tracker.html)
+**Latest release (v2.0.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v2.0.0/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -36,7 +36,8 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 ## Features
 
 * Works entirely offline.
-* Create a list of creatures who are involved in combat by adding a name, initiative score and optionally health points for each one.
+* Create a list of creatures who are involved in combat by adding a name, initiative score and health points for each one.
+* Track creature status pre- and post-battle so active conditions carry into battle and persist when its over.
 * Automatically order creatures by their initiative.
 * Keep track of who's turn it is as combat progresses as well as what the current round is and how long combat has lasted.
 * Keep track of creature conditions and any additional notes and how long they have been applied.

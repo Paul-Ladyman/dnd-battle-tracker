@@ -5,6 +5,7 @@ import KillIcon from './icons/KillIcon';
 import AddNoteIcon from './icons/AddNoteIcon';
 import HealIcon from './icons/HealIcon';
 import DamageIcon from './icons/DamageIcon';
+import InitiativeIcon from './icons/InitiativeIcon';
 import AddHpIcon from './icons/AddHpIcon';
 
 function CreatureToolbar({
@@ -18,9 +19,10 @@ function CreatureToolbar({
     damageCreature,
     healCreature,
     addNoteToCreature,
-    addHealthToCreature
+    addHealthToCreature,
+    addInitiativeToCreature
   } = creatureManagement;
-  const { alive, healthPoints, maxHealthPoints, id, name } = creature; 
+  const { alive, healthPoints, maxHealthPoints, id, name, initiative } = creature; 
   const statusButtonFunc = alive ? killCreature : stabalizeCreature;
   const statusButtonTitle = alive ? 'Kill/Make unconscious' : 'Stabalize';
   const statusButtonIcon = alive ? <KillIcon /> : <StabalizeIcon />;
@@ -30,6 +32,7 @@ function CreatureToolbar({
   const enableDamage = healthPoints > 0;
   const enableHeal = healthPoints < maxHealthPoints;
   const enableConditions = conditions.length > 0;
+  const enableInitiative = initiative === undefined;
 
   const enabledModifier = enableConditions ? '' : 'creature-toolbar--input__disabled';
   const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
@@ -59,6 +62,15 @@ function CreatureToolbar({
         onSubmit={(note) => addNoteToCreature(id, note, false)}
         submitIcon={AddNoteIcon}
       />
+      {enableInitiative &&
+        <CreatureToolbarInput
+          integer
+          ariaLabel={`add initiative to ${name}`}
+          label="Initiative"
+          onSubmit={(initiative) => addInitiativeToCreature(id, initiative)}
+          submitIcon={InitiativeIcon}
+        />
+      }
       {enableHealthItems &&
         <React.Fragment>
           <CreatureToolbarInput
@@ -71,6 +83,7 @@ function CreatureToolbar({
             submitIcon={DamageIcon}
           />
           <CreatureToolbarInput
+            customClasses={enableInitiative ? 'creature-toolbar--last' : ''}
             integer
             min={1}
             enabled={enableHeal}
@@ -83,11 +96,11 @@ function CreatureToolbar({
       }
       {!enableHealthItems &&
         <CreatureToolbarInput
-          customClasses="creature-toolbar--last"
+          customClasses={enableInitiative ? '' : 'creature-toolbar--last'}
           integer name="creature-toolbar-maxhp"
           min={1}
           ariaLabel={`add max hp ${name}`}
-          label="Add Max HP"
+          label='Add Max HP'
           onSubmit={(health) => addHealthToCreature(id, health)}
           submitIcon={AddHpIcon}
         />

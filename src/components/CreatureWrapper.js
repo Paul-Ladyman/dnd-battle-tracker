@@ -7,6 +7,7 @@ import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
 import { hotkeys } from '../hotkeys/hotkeys';
 import CreatureExpander from './CreatureExpander';
+import CreatureLocker from './CreatureLocker';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
@@ -131,6 +132,11 @@ class CreatureWrapper extends Component {
       name={creature.name}
       expandHandler={this.expandCreatureHandler}
     />
+    const creatureLocker = <CreatureLocker
+      locked={creature.locked}
+      name={creature.name}
+      lockHandler={() => creatureManagement.toggleCreatureLock(creature.id)}
+    />
           
     return (
       <React.Fragment>
@@ -152,8 +158,13 @@ class CreatureWrapper extends Component {
               removeCreature={removeCreature}
               removeNoteFromCreature={removeNoteFromCreature}
               creatureExpander={creatureExpander}
+              creatureLocker={creatureLocker}
             /> :
-            <CollapsedCreature creature={creature} creatureExpander={creatureExpander} />
+            <CollapsedCreature
+              creature={creature}
+              creatureExpander={creatureExpander}
+              creatureLocker={creatureLocker}
+            />
           }
         </section>
         <section

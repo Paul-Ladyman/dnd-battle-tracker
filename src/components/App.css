@@ -359,6 +359,10 @@ input[type=number].creature-toolbar--input {
   justify-content: flex-end;
 }
 
+.create-creature-form--item__tall {
+  margin-top: -18px;
+}
+
 .create-creature-form--input__small-number {
   padding-left: 5px;
   font-weight: bold;
@@ -425,6 +429,10 @@ input[type=number].creature-toolbar--input {
     width: 110%;
     text-align: center;
     margin-left: 50px;
+  }
+  
+  .create-creature-form--item__tall {
+    margin-top: 0;
   }
 
   .create-creature-form--label {
@@ -565,14 +573,6 @@ input[type=number].creature-toolbar--input {
 
 .expanded-creature--columns__normal {
   column-count: 1;
-}
-
-.expanded-creature--first-column__short {
-  min-height: 125px;
-}
-
-.expanded-creature--first-column__tall {
-  min-height: 170px;
 }
 
 .expanded-creature--columns {

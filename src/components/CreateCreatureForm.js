@@ -54,7 +54,9 @@ class CreateCreatureForm extends Component {
 
     const multiplier = parseInt(state.multiplier);
 
-    const initiative = parseInt(state.initiative);
+    const initiative = state.initiative === '' ?
+      undefined :  
+      parseInt(state.initiative);
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
@@ -91,13 +93,13 @@ class CreateCreatureForm extends Component {
             <input className={nameClass} type="text" required id="name" name="name" value={name} onChange={this.handleChange} ref={this.nameInput}/>
           </div>
         </div>
-        <div className="create-creature-form--item create-creature-form--item__number">
-          <label aria-label="create creature form. Initiative (required)" htmlFor="initiative" className="form--label">
-            Initiative
+        <div className="create-creature-form--item create-creature-form--item__number create-creature-form--item__tall">
+          <label aria-label="create creature form. Initiative (optional)" htmlFor="initiative" className="form--label">
+            Initiative (optional)
             {initiativeError && <span className="form--label__error"> *</span>}
           </label>
           <div className="create-creature-form--input-container">
-            <input className={initiativeClass} type="number" required id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
+            <input className={initiativeClass} type="number" id="initiative" name="initiative" value={initiative} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="create-creature-form--item create-creature-form--item__number">

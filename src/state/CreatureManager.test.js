@@ -7,7 +7,10 @@ import {
   addNoteToCreature,
   removeNoteFromCreature,
   addHealthToCreature,
-  validateCreature
+  validateCreature,
+  addInitiativeToCreature,
+  toggleCreatureLock,
+  resetCreature
 } from './CreatureManager';
 import conditions, { conditionDescriptions } from '../model/conditions';
 
@@ -19,17 +22,18 @@ const defaultState = {
       id: 0,
       alive:true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     },
     {
       name: 'Goblin',
-      initiative: 10,
       healthPoints: 10,
       maxHealthPoints: 10,
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: true
     },
     {
       name: 'Goblin 2',
@@ -39,7 +43,8 @@ const defaultState = {
       id: 2,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     }
   ],
   creatureIdCount: 3,
@@ -342,7 +347,8 @@ describe('createCreature', () => {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     };
 
     const creature = createCreature(1, {name: 'name', initiative: 13,  healthPoints: 10});
@@ -359,7 +365,8 @@ describe('createCreature', () => {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     };
 
     const creature = createCreature(1, {name: 'name 1', initiative: 13,  healthPoints: 10});
@@ -376,7 +383,8 @@ describe('createCreature', () => {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     };
 
     const creature = createCreature(1, {name: 'name', number: 3, initiative: 13,  healthPoints: 10});
@@ -389,6 +397,14 @@ describe('validateCreature', () => {
     expect(validateCreature('a', '1', 1, 1)).toEqual(undefined);
   });
 
+  test('initiative is optional', () => {
+    expect(validateCreature('a', undefined, 1, 1)).toEqual(undefined);
+  });
+
+  test('health is optional', () => {
+    expect(validateCreature('a', '1', undefined, 1)).toEqual(undefined);
+  });
+
   test('name must be non-empty', () => {
     const expectedErrors = {
       nameError: 'Name must be provided.',
@@ -399,7 +415,7 @@ describe('validateCreature', () => {
     expect(validateCreature('', '1', 1, 1)).toEqual(expectedErrors);
   });
 
-  test('initiative must be a number', () => {
+  test('initiative must be a number if non-empty', () => {
     const expectedErrors = {
       nameError: false,
       initiativeError: 'Initiative must be a number.',
@@ -739,5 +755,93 @@ describe('addHealthToCreature', () => {
   it('does nothing to a creature if less than 0 health is added', () => {
     const result = addHealthToCreature(defaultState, 0, -1);
     expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addInitiativeToCreature', () => {
+  it('adds initiative to a creature that does not already have it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: 10
+        },
+        defaultState.creatures[2]
+      ],
+      ariaAnnouncements: ['Goblin\'s initiative is 10']
+    };
+
+    const result = addInitiativeToCreature(defaultState, 1, 10);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature that already has initiative', () => {
+    const result = addInitiativeToCreature(defaultState, 0, 30);
+    expect(result).toEqual(defaultState);
+  });
+});
+
+describe('toggleCreatureLock', () => {
+  it('locks a creature if it is unlocked', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          locked: true
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby is locked']
+    };
+
+    const result = toggleCreatureLock(defaultState, 0);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('unlocks a creature if it is locked', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          locked: false
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin is unlocked']
+    };
+
+    const result = toggleCreatureLock(defaultState, 1);
+    expect(result).toEqual(expectedState);
+  });
+});
+
+describe('resetCreatures', () => {
+  it('resets a creature\'s id, initiative, notes and conditions', () => {
+    const creature = {
+      name: 'Goblin',
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 1,
+      alive: true,
+      conditions: [],
+      notes: [{text: "Exhaustion", appliedAtRound: 1, appliedAtSeconds: 6}],
+      conditions: [{text: "Exhaustion", appliedAtRound: 1, appliedAtSeconds: 6, url: 'someurl'}],
+      locked: true
+    }
+    const expectedCreature = {
+      ...creature,
+      initiative: undefined,
+      id: 0,
+      notes: [{text: "Exhaustion", appliedAtRound: 0, appliedAtSeconds: 0}],
+      conditions: [{text: "Exhaustion", appliedAtRound: 0, appliedAtSeconds: 0, url: 'someurl'}],
+    };
+    const result = resetCreature(0, creature);
+    expect(result).toEqual(expectedCreature);
   });
 });

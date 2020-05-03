@@ -21,7 +21,6 @@
         "title": "The Items Schema",
         "required": [
           "name",
-          "initiative",
           "id",
           "alive",
           "conditions",
