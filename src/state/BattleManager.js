@@ -53,9 +53,6 @@ export function nextInitiative(state) {
     findCreatureIndex(sortedCreatures, initialActiveCreature) :
     state.activeCreature;
 
-  console.log('>>> current', initialActiveCreature);
-  console.log('>>> now', currentlyActiveCreature)
-
   let activeCreature = 0;
   let round = 1;
 

@@ -82,6 +82,7 @@ function CreatureToolbar({
             submitIcon={DamageIcon}
           />
           <CreatureToolbarInput
+            customClasses={enableInitiative ? 'creature-toolbar--last' : ''}
             integer
             min={1}
             enabled={enableHeal}
@@ -94,11 +95,11 @@ function CreatureToolbar({
       }
       {!enableHealthItems &&
         <CreatureToolbarInput
-          customClasses="creature-toolbar--last"
+          customClasses={enableInitiative ? '' : 'creature-toolbar--last'}
           integer name="creature-toolbar-maxhp"
           min={1}
           ariaLabel={`add max hp ${name}`}
-          label="Add Max HP"
+          label='Add Max HP'
           onSubmit={(health) => addHealthToCreature(id, health)}
           submitIcon={AddHpIcon}
         />
