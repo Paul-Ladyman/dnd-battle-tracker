@@ -32,7 +32,8 @@ const defaultState = {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: true
     },
     {
       name: 'Goblin #2',
@@ -42,7 +43,8 @@ const defaultState = {
       id: 2,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: true
     }
   ],
   creatureIdCount: 3,
@@ -78,11 +80,22 @@ describe('newBattleState', () => {
 });
 
 describe('resetBattle', () => {
-  test('resets to the initial battle state', () => {
+  test('resets to the initial battle state, keeping locked creatures whilst resetting their initiative', () => {
     const expected = {
-      creatures: [],
-      creatureIdCount: 0,
-      creatureCount: 0,
+      creatures: [
+        {
+          ...defaultState.creatures[1],
+          id: 0,
+          initiative: undefined
+        },
+        {
+          ...defaultState.creatures[2],
+          id: 1,
+          initiative: undefined
+        }
+      ],
+      creatureIdCount: 2,
+      creatureCount: 2,
       activeCreature: undefined,
       focusedCreature: undefined,
       round: 0,

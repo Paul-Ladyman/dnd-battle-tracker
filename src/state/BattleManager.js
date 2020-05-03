@@ -222,6 +222,13 @@ export function addCreature(state, creature) {
 };
 
 export function resetBattle(state) {
+  const lockedCreatures = state.creatures.filter(creature => creature.locked);
+  const creatureCount = lockedCreatures.length;
+  const resetLockedCreatures = lockedCreatures.map((creature, id) => ({
+    ...creature,
+    id,
+    initiative: undefined
+  }));
   const ariaAnnouncements = state.ariaAnnouncements.concat(['battle reset']);
-  return {...newBattleState, ariaAnnouncements};
+  return {...newBattleState, creatureCount, creatureIdCount: creatureCount, creatures: resetLockedCreatures, ariaAnnouncements};
 }
