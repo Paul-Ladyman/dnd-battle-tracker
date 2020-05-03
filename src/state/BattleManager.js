@@ -1,5 +1,5 @@
 import findIndex from 'lodash.findindex';
-import { createCreature, validateCreature } from './CreatureManager';
+import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 import { addError } from './AppManager';
 
 function findCreatureIndex(creatures, creature) {
@@ -224,11 +224,7 @@ export function addCreature(state, creature) {
 export function resetBattle(state) {
   const lockedCreatures = state.creatures.filter(creature => creature.locked);
   const creatureCount = lockedCreatures.length;
-  const resetLockedCreatures = lockedCreatures.map((creature, id) => ({
-    ...creature,
-    id,
-    initiative: undefined
-  }));
+  const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
   const ariaAnnouncements = state.ariaAnnouncements.concat(['battle reset']);
   return {...newBattleState, creatureCount, creatureIdCount: creatureCount, creatures: resetLockedCreatures, ariaAnnouncements};
 }

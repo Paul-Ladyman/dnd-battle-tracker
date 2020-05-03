@@ -126,6 +126,8 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
     appliedAtSeconds: getSecondsElapsed(state)
   };
 
+  console.log(note);
+
   if (isCondition) {
     const condition = {
       ...note,
@@ -194,4 +196,16 @@ export function toggleCreatureLock(state, creatureId) {
   const newState = creature.locked ? 'unlocked' : 'locked';
   const ariaAnnouncement = `${creature.name} is ${newState}`;
   return updateCreature(state, creatureId, { locked: !creature.locked }, ariaAnnouncement);
+}
+
+export function resetCreature(id, creature) {
+  const notes = creature.notes.map(note => ({...note, appliedAtRound: 0, appliedAtSeconds: 0}));
+  const conditions = creature.conditions.map(condition => ({...condition, appliedAtRound: 0, appliedAtSeconds: 0}));
+  return {
+    ...creature,
+    id,
+    initiative: undefined,
+    notes,
+    conditions
+  };
 }

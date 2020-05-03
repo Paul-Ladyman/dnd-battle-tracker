@@ -10,7 +10,7 @@ import {
   addCreature,
   resetBattle
 } from './BattleManager';
-import { createCreature, validateCreature } from './CreatureManager';
+import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
 jest.mock('./CreatureManager');
 
@@ -80,19 +80,22 @@ describe('newBattleState', () => {
 });
 
 describe('resetBattle', () => {
-  test('resets to the initial battle state, keeping locked creatures whilst resetting their initiative', () => {
+  test('resets to the initial battle state, keeping and resetting locked creatures', () => {
+    const resetCreature1 = {
+      ...defaultState.creatures[1],
+      id: 0,
+      initiative: undefined
+    };
+    const resetCreature2 = {
+      ...defaultState.creatures[2],
+      id: 1,
+      initiative: undefined
+    };
+    resetCreature.mockReturnValueOnce(resetCreature1).mockReturnValueOnce(resetCreature2);
     const expected = {
       creatures: [
-        {
-          ...defaultState.creatures[1],
-          id: 0,
-          initiative: undefined
-        },
-        {
-          ...defaultState.creatures[2],
-          id: 1,
-          initiative: undefined
-        }
+        resetCreature1,
+        resetCreature2
       ],
       creatureIdCount: 2,
       creatureCount: 2,
@@ -105,6 +108,7 @@ describe('resetBattle', () => {
     };
 
     expect(resetBattle(defaultState)).toEqual(expected);
+    expect(resetCreature).toHaveBeenCalledTimes(2);
   });
 });
 

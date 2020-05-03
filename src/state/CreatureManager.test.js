@@ -9,7 +9,8 @@ import {
   addHealthToCreature,
   validateCreature,
   addInitiativeToCreature,
-  toggleCreatureLock
+  toggleCreatureLock,
+  resetCreature
 } from './CreatureManager';
 import conditions, { conditionDescriptions } from '../model/conditions';
 
@@ -817,5 +818,30 @@ describe('toggleCreatureLock', () => {
 
     const result = toggleCreatureLock(defaultState, 1);
     expect(result).toEqual(expectedState);
+  });
+});
+
+describe('resetCreatures', () => {
+  it('resets a creature\'s id, initiative, notes and conditions', () => {
+    const creature = {
+      name: 'Goblin',
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 1,
+      alive: true,
+      conditions: [],
+      notes: [{text: "Exhaustion", appliedAtRound: 1, appliedAtSeconds: 6}],
+      conditions: [{text: "Exhaustion", appliedAtRound: 1, appliedAtSeconds: 6, url: 'someurl'}],
+      locked: true
+    }
+    const expectedCreature = {
+      ...creature,
+      initiative: undefined,
+      id: 0,
+      notes: [{text: "Exhaustion", appliedAtRound: 0, appliedAtSeconds: 0}],
+      conditions: [{text: "Exhaustion", appliedAtRound: 0, appliedAtSeconds: 0, url: 'someurl'}],
+    };
+    const result = resetCreature(0, creature);
+    expect(result).toEqual(expectedCreature);
   });
 });
