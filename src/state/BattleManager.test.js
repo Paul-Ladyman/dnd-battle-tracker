@@ -136,6 +136,23 @@ describe('getSecondsElapsed', () => {
 });
 
 describe('nextInitiative', () => {
+  test('it starts the first round with the first creature in the list', () => {
+    const state = {
+      ...defaultState,
+      round: 0,
+      activeCreature: undefined,
+      focusedCreature: undefined
+    };
+    const expected = {
+      ...defaultState,
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Wellby\'s go']
+    };
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
   test('it sorts creatures by their initiative', () => {
     const state = {
       ...defaultState,
@@ -179,23 +196,6 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('it starts the first round with the first creature in the list', () => {
-    const state = {
-      ...defaultState,
-      round: 0,
-      activeCreature: undefined,
-      focusedCreature: undefined
-    };
-    const expected = {
-      ...defaultState,
-      round: 1,
-      activeCreature: 0,
-      focusedCreature: 0,
-      ariaAnnouncements: ['its Wellby\'s go']
-    };
-    expect(nextInitiative(state)).toEqual(expected);
-  });
-
   test('announces if the active creature is dead', () => {
     const state = {
       ...defaultState,
@@ -234,6 +234,51 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 1,
       focusedCreature: 1,
+      ariaAnnouncements: ['its Goblin #1\'s go']
+    };
+
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  test('it advances the active creature by 1 after sorting creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        ...defaultState.creatures,
+        {
+          name: 'Droop',
+          initiative: 15,
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        }
+      ],
+      round: 1,
+      activeCreature: 0,
+      focusedCreature: 0
+    };
+
+    const expected = {
+      ...defaultState,
+      creatures: [
+        {
+          name: 'Droop',
+          initiative: 15,
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: []
+        },
+        ...defaultState.creatures
+      ],
+      round: 1,
+      activeCreature: 2,
+      focusedCreature: 2,
       ariaAnnouncements: ['its Goblin #1\'s go']
     };
 

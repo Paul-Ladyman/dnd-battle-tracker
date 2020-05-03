@@ -8,7 +8,6 @@ function findCreatureIndex(creatures, creature) {
   });
 }
 
-
 function sortCreatures(creatures) {
   return creatures.sort((creatureA, creatureB) => {
     return creatureB.initiative - creatureA.initiative;
@@ -47,13 +46,21 @@ export function nextInitiative(state) {
     return {...state, ariaAnnouncements, errors};
   }
 
+  const initialActiveCreature = state.creatures[state.activeCreature];
   const sortedCreatures = sortCreatures(state.creatures);
+
+  const currentlyActiveCreature = state.round > 0 ? 
+    findCreatureIndex(sortedCreatures, initialActiveCreature) :
+    state.activeCreature;
+
+  console.log('>>> current', initialActiveCreature);
+  console.log('>>> now', currentlyActiveCreature)
 
   let activeCreature = 0;
   let round = 1;
 
   if (state.round > 0) {
-    activeCreature = state.activeCreature + 1;
+    activeCreature = currentlyActiveCreature + 1;
     round = state.round;
 
     if (activeCreature === state.creatureCount) {
