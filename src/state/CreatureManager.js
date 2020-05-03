@@ -126,8 +126,6 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
     appliedAtSeconds: getSecondsElapsed(state)
   };
 
-  console.log(note);
-
   if (isCondition) {
     const condition = {
       ...note,

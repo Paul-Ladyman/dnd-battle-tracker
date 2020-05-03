@@ -42,7 +42,7 @@ export function nextInitiative(state) {
   if (creaturesWithoutInitiative.length > 0) {
     const { name } = creaturesWithoutInitiative[0];
     const ariaAnnouncements = state.ariaAnnouncements.concat(`Cannot continue battle. ${name} has no initiative.`);
-    const errors = addError({...state, errors: []}, `Cannot continue battle. ${name} has no initiative.`);
+    const errors = addError({...state, errors: []}, `Cannot continue battle; ${name} has no initiative.`);
     return {...state, ariaAnnouncements, errors};
   }
 
