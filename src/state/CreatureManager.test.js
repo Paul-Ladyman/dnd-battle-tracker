@@ -389,6 +389,14 @@ describe('validateCreature', () => {
     expect(validateCreature('a', '1', 1, 1)).toEqual(undefined);
   });
 
+  test('initiative is optional', () => {
+    expect(validateCreature('a', undefined, 1, 1)).toEqual(undefined);
+  });
+
+  test('health is optional', () => {
+    expect(validateCreature('a', '1', undefined, 1)).toEqual(undefined);
+  });
+
   test('name must be non-empty', () => {
     const expectedErrors = {
       nameError: 'Name must be provided.',
@@ -399,7 +407,7 @@ describe('validateCreature', () => {
     expect(validateCreature('', '1', 1, 1)).toEqual(expectedErrors);
   });
 
-  test('initiative must be a number', () => {
+  test('initiative must be a number if non-empty', () => {
     const expectedErrors = {
       nameError: false,
       initiativeError: 'Initiative must be a number.',

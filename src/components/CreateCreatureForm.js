@@ -54,7 +54,9 @@ class CreateCreatureForm extends Component {
 
     const multiplier = parseInt(state.multiplier);
 
-    const initiative = parseInt(state.initiative);
+    const initiative = state.initiative === '' ?
+      undefined :  
+      parseInt(state.initiative);
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
