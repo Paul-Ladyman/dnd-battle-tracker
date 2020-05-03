@@ -9,7 +9,7 @@ function commaSeparate(notes, trailing) {
   }).join(', ') + suffix;
 }
 
-function CollapsedCreature({creature, creatureExpander}) {
+function CollapsedCreature({creature, creatureExpander, creatureLocker}) {
   const { name, rawName } = creature;
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
@@ -25,6 +25,7 @@ function CollapsedCreature({creature, creatureExpander}) {
           {name}
         </h2>
         <MonsterSearcher search={rawName}/>
+        {creatureLocker}
         {creatureExpander}
       </div>
       <div className="collapsed-creature--status">

@@ -25,7 +25,8 @@ import {
   addNoteToCreature,
   removeNoteFromCreature,
   addHealthToCreature,
-  addInitiativeToCreature
+  addInitiativeToCreature,
+  toggleCreatureLock
 } from '../state/CreatureManager';
 import {
   save,
@@ -58,6 +59,7 @@ class App extends Component {
     this.removeCreature = this.removeCreature.bind(this);
     this.addNoteToCreature = this.addNoteToCreature.bind(this);
     this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
+    this.toggleCreatureLock = this.toggleCreatureLock.bind(this);
     this.saveBattle = this.saveBattle.bind(this);
     this.loadBattle = this.loadBattle.bind(this);
     this.dismissErrors = this.dismissErrors.bind(this);
@@ -123,6 +125,10 @@ class App extends Component {
     this.setState(addHealthToCreature(this.state, creatureId, health));
   }
 
+  toggleCreatureLock(creatureId) {
+    this.setState(toggleCreatureLock(this.state, creatureId));
+  }
+
   nextInitiative() {
     this.setState(nextInitiative(this.state));
   }
@@ -169,7 +175,8 @@ class App extends Component {
       addInitiativeToCreature: this.addInitiativeToCreature,
       removeCreature: this.removeCreature,
       addNoteToCreature: this.addNoteToCreature,
-      removeNoteFromCreature: this.removeNoteFromCreature
+      removeNoteFromCreature: this.removeNoteFromCreature,
+      toggleCreatureLock: this.toggleCreatureLock
     };
 
     const errors = this.state.errors.length > 0;

@@ -31,7 +31,8 @@ class ExpandedCreature extends Component {
       secondsElapsed,
       removeCreature,
       removeNoteFromCreature,
-      creatureExpander
+      creatureExpander,
+      creatureLocker
     } = this.props;
     const { alive, name, rawName, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
     const showInitiative = initiative !== undefined;
@@ -51,6 +52,7 @@ class ExpandedCreature extends Component {
             <div className="creature-title">
               <h2 className={nameClasses}>{name}</h2>
               <MonsterSearcher search={rawName} />
+              {creatureLocker}
               {creatureExpander}
               {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
             </div>

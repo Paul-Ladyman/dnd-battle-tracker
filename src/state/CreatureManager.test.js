@@ -8,7 +8,8 @@ import {
   removeNoteFromCreature,
   addHealthToCreature,
   validateCreature,
-  addInitiativeToCreature
+  addInitiativeToCreature,
+  toggleCreatureLock
 } from './CreatureManager';
 import conditions, { conditionDescriptions } from '../model/conditions';
 
@@ -20,7 +21,8 @@ const defaultState = {
       id: 0,
       alive:true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     },
     {
       name: 'Goblin',
@@ -29,7 +31,8 @@ const defaultState = {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: true
     },
     {
       name: 'Goblin 2',
@@ -39,7 +42,8 @@ const defaultState = {
       id: 2,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     }
   ],
   creatureIdCount: 3,
@@ -342,7 +346,8 @@ describe('createCreature', () => {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     };
 
     const creature = createCreature(1, {name: 'name', initiative: 13,  healthPoints: 10});
@@ -359,7 +364,8 @@ describe('createCreature', () => {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     };
 
     const creature = createCreature(1, {name: 'name 1', initiative: 13,  healthPoints: 10});
@@ -376,7 +382,8 @@ describe('createCreature', () => {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
+      locked: false
     };
 
     const creature = createCreature(1, {name: 'name', number: 3, initiative: 13,  healthPoints: 10});
@@ -772,5 +779,43 @@ describe('addInitiativeToCreature', () => {
   it('does nothing to a creature that already has initiative', () => {
     const result = addInitiativeToCreature(defaultState, 0, 30);
     expect(result).toEqual(defaultState);
+  });
+});
+
+describe('toggleCreatureLock', () => {
+  it('locks a creature if it is unlocked', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          locked: true
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby is locked']
+    };
+
+    const result = toggleCreatureLock(defaultState, 0);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('unlocks a creature if it is locked', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          locked: false
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin is unlocked']
+    };
+
+    const result = toggleCreatureLock(defaultState, 1);
+    expect(result).toEqual(expectedState);
   });
 });

@@ -95,7 +95,8 @@ export function createCreature(creatureId, {name, number, initiative, healthPoin
     id: creatureId,
     alive: true,
     conditions: [],
-    notes: []
+    notes: [],
+    locked: false
   };
 };
 
@@ -186,4 +187,11 @@ export function addInitiativeToCreature(state, creatureId, initiative) {
 
   const ariaAnnouncement = `${creature.name}'s initiative is ${initiative}`;
   return updateCreature(state, creatureId, { initiative }, ariaAnnouncement);
+}
+
+export function toggleCreatureLock(state, creatureId) {
+  const creature = findCreature(state.creatures, creatureId);
+  const newState = creature.locked ? 'unlocked' : 'locked';
+  const ariaAnnouncement = `${creature.name} is ${newState}`;
+  return updateCreature(state, creatureId, { locked: !creature.locked }, ariaAnnouncement);
 }
