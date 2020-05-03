@@ -5,6 +5,7 @@ import KillIcon from './icons/KillIcon';
 import AddNoteIcon from './icons/AddNoteIcon';
 import HealIcon from './icons/HealIcon';
 import DamageIcon from './icons/DamageIcon';
+import InitiativeIcon from './icons/InitiativeIcon';
 import AddHpIcon from './icons/AddHpIcon';
 
 function CreatureToolbar({
@@ -67,7 +68,7 @@ function CreatureToolbar({
           ariaLabel={`add initiative to ${name}`}
           label="Initiative"
           onSubmit={(initiative) => addInitiativeToCreature(id, initiative)}
-          submitIcon={DamageIcon}
+          submitIcon={InitiativeIcon}
         />
       }
       {enableHealthItems &&
