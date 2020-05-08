@@ -28,6 +28,8 @@ function Input({
     `${inputWrapperClass} ${disabledModifier}` :
     `${inputWrapperClass} ${noButtonModifier} ${disabledModifier}`;
   const buttonClasses = enabled ? 'creature-toolbar--submit' : 'creature-toolbar--submit creature-toolbar--submit__disabled';
+  const inputErrorClass = error ? 'create-creature-form--input__error' : '';
+  const inputClass = 'creature-toolbar--input';
 
   return (
     <div className={`creature-toolbar--form ${numberModifier} ${customClasses}`}>
@@ -36,9 +38,9 @@ function Input({
           {label}
           {error}
         </div>
-        <div className={inputWrapperClasses}>
+        <div className={`${inputWrapperClasses} ${inputErrorClass}`}>
           <div onKeyDown={formHandler} id="input">
-            <input disabled={!enabled} required={required} className='creature-toolbar--input' ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange}/>
+            <input disabled={!enabled} required={required} className={inputClass} ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange}/>
           </div>
           {RightControl && <div className={`button ${buttonClasses}`} style={{display: 'flex', justifyContent: 'center'}}>{RightControl}</div>}
           {!RightControl && SubmitIcon &&

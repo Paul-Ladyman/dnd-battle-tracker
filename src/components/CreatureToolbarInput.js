@@ -46,31 +46,6 @@ class CreatureToolbarInput extends Component {
         formHandler={this.formHandler}
       />
     );
-    const type = this.props.integer ? "number" : "text";
-    const numberModifier = this.props.integer ? 'creature-toolbar--form__number' : '';
-    const disabledModifier = this.props.enabled ? '' : 'creature-toolbar--input-wrapper__disabled';
-    const inputWrapperClass = 'creature-toolbar--input-wrapper';
-    const noButtonModifier = `creature-toolbar--input-wrapper__no-button`;
-    const inputWrapperClasses = this.props.submitIcon ?
-      `${inputWrapperClass} ${disabledModifier}` :
-      `${inputWrapperClass} ${noButtonModifier} ${disabledModifier}`;
-    const buttonClasses = this.props.enabled ? 'creature-toolbar--submit' : 'creature-toolbar--submit creature-toolbar--submit__disabled';
-
-    return (
-      <div className={`creature-toolbar--form ${numberModifier} ${this.props.customClasses}`}>
-        <label aria-label={this.props.ariaLabel}>
-          <div className="form--label">{this.props.label}</div>
-          <div className={inputWrapperClasses}>
-            <div onKeyDown={this.formHandler}>
-              <input disabled={!this.props.enabled} className='creature-toolbar--input' name={this.props.name} type={type} min={this.props.min} value={this.state.value} onChange={this.handleChange}/>
-            </div>
-            {this.props.submitIcon &&
-              <button disabled={!this.props.enabled} type="button" className={buttonClasses} title={this.props.label} onClick={this.submitHandler}>{this.props.submitIcon()}</button>
-            }
-          </div>
-        </label>
-      </div>
-    );
   }
 }
 

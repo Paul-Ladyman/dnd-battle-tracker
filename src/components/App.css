@@ -426,6 +426,7 @@ input[type=number].creature-toolbar--input {
 
   .create-creature-form--item__multiplier {
     grid-column: 2 / span 2;
+    margin-left: 30px;
   }
 
   .create-creature-form--item__multiplier .create-creature-form--input-container {
@@ -433,9 +434,15 @@ input[type=number].creature-toolbar--input {
   }
 
   .create-creature-form--item__multiplier .form--label {
-    width: 110%;
     text-align: center;
-    margin-left: 50px;
+  }
+
+  .create-creature-form--item__text .form--label {
+    text-align: center;
+  }
+
+  .create-creature-form--item__number .form--label {
+    text-align: center;
   }
   
   .create-creature-form--item__tall {
