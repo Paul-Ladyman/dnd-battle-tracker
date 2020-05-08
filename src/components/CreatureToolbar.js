@@ -34,7 +34,7 @@ function CreatureToolbar({
   const enableConditions = conditions.length > 0;
   const enableInitiative = initiative === undefined;
 
-  const enabledModifier = enableConditions ? '' : 'creature-toolbar--input__disabled';
+  const enabledModifier = enableConditions ? '' : 'input-wrapper__disabled';
   const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
   return (
     <div className="creature-toolbar">

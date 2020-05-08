@@ -20,19 +20,18 @@ function Input({
     formHandler
 }) {
   const type = integer ? "number" : "text";
-  const numberModifier = integer ? 'creature-toolbar--form__number' : '';
-  const disabledModifier = enabled ? '' : 'creature-toolbar--input-wrapper__disabled';
-  const inputWrapperClass = 'creature-toolbar--input-wrapper';
-  const noButtonModifier = `creature-toolbar--input-wrapper__no-button`;
+  const numberModifier = integer ? 'input--number' : '';
+  const disabledModifier = enabled ? '' : 'input-wrapper__disabled';
+  const inputWrapperClass = 'input-wrapper';
+  const noButtonModifier = `input-wrapper__no-button`;
   const inputWrapperClasses = SubmitIcon || RightControl ?
     `${inputWrapperClass} ${disabledModifier}` :
     `${inputWrapperClass} ${noButtonModifier} ${disabledModifier}`;
-  const buttonClasses = enabled ? 'creature-toolbar--submit' : 'creature-toolbar--submit creature-toolbar--submit__disabled';
-  const inputErrorClass = error ? 'create-creature-form--input__error' : '';
-  const inputClass = 'creature-toolbar--input';
+  const buttonClasses = enabled ? 'input--submit' : 'input--submit input--submit__disabled';
+  const inputErrorClass = error ? 'input__error' : '';
 
   return (
-    <div className={`creature-toolbar--form ${numberModifier} ${customClasses}`}>
+    <div className={`input--form ${numberModifier} ${customClasses}`}>
       <label aria-label={ariaLabel}>
         <div className="form--label">
           {label}
@@ -40,7 +39,7 @@ function Input({
         </div>
         <div className={`${inputWrapperClasses} ${inputErrorClass}`}>
           <div onKeyDown={formHandler} id="input">
-            <input disabled={!enabled} required={required} className={inputClass} ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange}/>
+            <input disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange}/>
           </div>
           {RightControl && <div className={`button ${buttonClasses}`} style={{display: 'flex', justifyContent: 'center'}}>{RightControl}</div>}
           {!RightControl && SubmitIcon &&
