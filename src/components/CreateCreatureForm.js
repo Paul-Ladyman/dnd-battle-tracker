@@ -130,7 +130,7 @@ class CreateCreatureForm extends Component {
           name="multiplier"
           handleChange={this.handleChange}
         />
-        <div className="create-creature-form--item create-creature-form--item__submit">
+        <div className="create-creature-form--item__submit">
           <button type="button" className="create-creature-form--submit" title="Add creature" onClick={this.createCreature}><AddCreatureIcon /></button>
         </div>
       </form>

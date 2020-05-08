@@ -343,47 +343,15 @@ input[type=number].creature-toolbar--input {
   grid-template-columns: repeat(auto-fit, 15px);
 }
 
-.create-creature-form--item {
+.create-creature-form--item__submit {
   display: flex;
   flex-direction: column;
-}
-
-.create-creature-form--item__text {
-  grid-column: span 8;
-}
-
-.create-creature-form--item__number {
-  grid-column: span 4;
-}
-
-.create-creature-form--item__multiplier {
-  grid-column: span 4;
-}
-
-.create-creature-form--item__submit {
   grid-column: span 2;
   justify-content: flex-end;
-}
+} 
 
 .create-creature-form--item__tall {
   margin-top: -18px;
-}
-
-.create-creature-form--input__small-number {
-  padding-left: 5px;
-  font-weight: bold;
-  height: 22px;
-}
-
-.create-creature-form--input-container {
-  display: flex;
-  align-items: baseline;
-  width: 100%;
-}
-
-.create-creature-form--multiplier {
-  margin-right: 5px;
-  font-weight: bold;
 }
 
 .create-creature-form--input__error {
@@ -412,10 +380,6 @@ input[type=number].creature-toolbar--input {
     grid-column-gap: 60px;
   }
 
-  .create-creature-form--item {
-    align-items: center;
-  }
-
   .create-creature-form--item__text {
     grid-column: 2 / span 4;
   }
@@ -427,10 +391,6 @@ input[type=number].creature-toolbar--input {
   .create-creature-form--item__multiplier {
     grid-column: 2 / span 2;
     margin-left: 30px;
-  }
-
-  .create-creature-form--item__multiplier .create-creature-form--input-container {
-    margin-left: 50px;
   }
 
   .create-creature-form--item__multiplier .form--label {
@@ -447,10 +407,6 @@ input[type=number].creature-toolbar--input {
   
   .create-creature-form--item__tall {
     margin-top: 0;
-  }
-
-  .create-creature-form--label {
-    margin-left: 0px;
   }
 
   .create-creature-form--submit {
