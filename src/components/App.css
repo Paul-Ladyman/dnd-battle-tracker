@@ -234,7 +234,7 @@ input[type="number"] {
   height: 40px;
 }
 
-.creature-toolbar--input-wrapper form {
+.creature-toolbar--input-wrapper #input {
   width: 100%;
   background: white;
   border-top-left-radius: 15px;
@@ -243,12 +243,18 @@ input[type="number"] {
   overflow: hidden;
 }
 
+.creature-toolbar--input-wrapper__no-button #input {
+  border-right: none;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
 .creature-toolbar--input-wrapper__disabled {
   background-color: transparent;
   border: 2px dashed #822000;
 }
 
-.creature-toolbar--input-wrapper__disabled form {
+.creature-toolbar--input-wrapper__disabled #input {
   background-color: transparent;
   border-right: none;
 }
@@ -366,6 +372,7 @@ input[type=number].creature-toolbar--input {
 .create-creature-form--input__small-number {
   padding-left: 5px;
   font-weight: bold;
+  height: 22px;
 }
 
 .create-creature-form--input-container {
@@ -384,7 +391,7 @@ input[type=number].creature-toolbar--input {
 }
 
 .create-creature-form--submit {
-  height: 40px;
+  height: 44px;
   padding: 4px;
   grid-column: span 2;
 }

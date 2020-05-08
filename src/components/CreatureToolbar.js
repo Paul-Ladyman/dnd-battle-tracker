@@ -60,7 +60,7 @@ function CreatureToolbar({
         ariaLabel={`add note to ${name}`}
         label="Add Note"
         onSubmit={(note) => addNoteToCreature(id, note, false)}
-        submitIcon={AddNoteIcon}
+        SubmitIcon={<AddNoteIcon/>}
       />
       {enableInitiative &&
         <CreatureToolbarInput
@@ -68,7 +68,7 @@ function CreatureToolbar({
           ariaLabel={`add initiative to ${name}`}
           label="Initiative"
           onSubmit={(initiative) => addInitiativeToCreature(id, initiative)}
-          submitIcon={InitiativeIcon}
+          SubmitIcon={<InitiativeIcon/>}
         />
       }
       {enableHealthItems &&
@@ -80,7 +80,7 @@ function CreatureToolbar({
             ariaLabel={`damage ${name}`}
             label="Damage"
             onSubmit={(damage) => damageCreature(id, damage)}
-            submitIcon={DamageIcon}
+            SubmitIcon={<DamageIcon/>}
           />
           <CreatureToolbarInput
             customClasses={enableInitiative ? 'creature-toolbar--last' : ''}
@@ -90,7 +90,7 @@ function CreatureToolbar({
             ariaLabel={`heal ${name}`}
             label="Heal"
             onSubmit={(heal) => healCreature(id, heal)}
-            submitIcon={HealIcon}
+            SubmitIcon={<HealIcon/>}
           />
         </React.Fragment>
       }
@@ -102,7 +102,7 @@ function CreatureToolbar({
           ariaLabel={`add max hp ${name}`}
           label='Add Max HP'
           onSubmit={(health) => addHealthToCreature(id, health)}
-          submitIcon={AddHpIcon}
+          SubmitIcon={<AddHpIcon/>}
         />
       }
     </div>
