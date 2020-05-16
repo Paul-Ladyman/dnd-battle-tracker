@@ -10,7 +10,8 @@ import {
   validateCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
-  resetCreature
+  resetCreature,
+  getRawName
 } from './CreatureManager';
 import conditions, { conditionDescriptions } from '../model/conditions';
 
@@ -336,11 +337,22 @@ describe('healCreature', () => {
   });
 });
 
+describe('getRawName', () => {
+  it('strips numbers and whitespace from the name', () => {
+    const rawName = getRawName('name 1');
+    expect(rawName).toBe('name');
+  });
+
+  it('strips hashes from the name', () => {
+    const rawName = getRawName('name #1');
+    expect(rawName).toBe('name');
+  });
+});
+
 describe('createCreature', () => {
   test('it creates a new creature given a name, initiative and health points', () => {
     const expectedCreature = {
       name: 'name',
-      rawName: 'name',
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
@@ -355,28 +367,9 @@ describe('createCreature', () => {
     expect(creature).toEqual(expectedCreature);
   });
 
-  test('it strips numbers and whitespace from the name to create the rawName', () => {
-    const expectedCreature = {
-      name: 'name 1',
-      rawName: 'name',
-      initiative: 13,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 1,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: false
-    };
-
-    const creature = createCreature(1, {name: 'name 1', initiative: 13,  healthPoints: 10});
-    expect(creature).toEqual(expectedCreature);
-  });
-
   test('it creates a new creature given a name, initiative, health points and a number', () => {
     const expectedCreature = {
       name: 'name #3',
-      rawName: 'name',
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
