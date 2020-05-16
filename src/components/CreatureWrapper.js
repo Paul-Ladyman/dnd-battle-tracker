@@ -8,6 +8,7 @@ import CreatureToolbar from './CreatureToolbar';
 import { hotkeys } from '../hotkeys/hotkeys';
 import CreatureExpander from './CreatureExpander';
 import CreatureLocker from './CreatureLocker';
+import MonsterSearcher from './MonsterSearcher';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
@@ -118,9 +119,10 @@ class CreatureWrapper extends Component {
 
   render () {
     const { creature, active, conditions, creatureManagement } = this.props;
+    const { name, id, locked, alive } = creature;
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
-    const aliveModifier = creature.alive ? '' : 'creature-wrapper__dead';
+    const aliveModifier = alive ? '' : 'creature-wrapper__dead';
     const expandedModifier = this.state.expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
     const classes=`creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
     const showExpanded = active || this.state.expanded;
@@ -129,14 +131,15 @@ class CreatureWrapper extends Component {
     const creatureExpander = <CreatureExpander
       active={active}
       expanded={this.state.expanded}
-      name={creature.name}
+      name={name}
       expandHandler={this.expandCreatureHandler}
     />
     const creatureLocker = <CreatureLocker
-      locked={creature.locked}
-      name={creature.name}
-      lockHandler={() => creatureManagement.toggleCreatureLock(creature.id)}
+      locked={locked}
+      name={name}
+      lockHandler={() => creatureManagement.toggleCreatureLock(id)}
     />
+    const monsterSearcher = <MonsterSearcher search={name} />
           
     return (
       <React.Fragment>
@@ -159,17 +162,19 @@ class CreatureWrapper extends Component {
               removeNoteFromCreature={removeNoteFromCreature}
               creatureExpander={creatureExpander}
               creatureLocker={creatureLocker}
+              monsterSearcher={monsterSearcher}
             /> :
             <CollapsedCreature
               creature={creature}
               creatureExpander={creatureExpander}
               creatureLocker={creatureLocker}
+              monsterSearcher={monsterSearcher}
             />
           }
         </section>
         <section
           tabIndex="0"
-          aria-label={`${creature.name} toolbar`}
+          aria-label={`${name} toolbar`}
           ref={this.creatureToolbarRef}
           onKeyDown={this.creatureToolbarKeyHandler}
         >

@@ -83,12 +83,14 @@ export function healCreature(state, creatureId, health) {
   return updateCreature(state, creatureId, {alive, healthPoints}, ariaAnnouncement);
 };
 
+export function getRawName(name) {
+  return name.replace(/[0-9]|#/g, '').trim();
+}
+
 export function createCreature(creatureId, {name, number, initiative, healthPoints}) {
   const groupedName = number ? `${name} #${number}` : name;
-  const rawName = name.replace(/[0-9]/g, '').trim();
   return {
     name: groupedName,
-    rawName,
     initiative,
     healthPoints,
     maxHealthPoints: healthPoints,
