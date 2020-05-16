@@ -349,6 +349,24 @@ input[type=number].input {
   grid-template-columns: repeat(auto-fit, 15px);
 }
 
+.create-creature-form--multiplier-wrapper {
+  display: flex;
+  width: 100%;
+  grid-column: span 4;
+  align-items: center;
+}
+
+.create-creature-form--multiplier-symbol {
+  margin-right: 5px;
+  margin-top: 18px;
+  font-weight: 700;
+}
+
+.create-creature-form--multiplier-wrapper input {
+  margin-left: 2px;
+  font-weight: 700;
+}
+
 .create-creature-form--item__submit {
   display: flex;
   flex-direction: column;
@@ -390,9 +408,17 @@ input[type=number].input {
     grid-column: 2 / span 4;
   }
 
+  .create-creature-form--multiplier-wrapper {
+    grid-column: 2 / span 2;
+    margin-left: 40px;
+  }
+
   .create-creature-form--item__multiplier {
     grid-column: 2 / span 2;
-    margin-left: 30px;
+  }
+
+  .create-creature-form--item__submit {
+    margin-left: 10px;
   }
 
   .create-creature-form--item__multiplier .form--label {

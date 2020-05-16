@@ -116,20 +116,23 @@ class CreateCreatureForm extends Component {
           name="healthPoints"
           handleChange={this.handleChange}
         />
-        <Input
-          customClasses="create-creature-form--item__multiplier"
-          enabled
-          integer
-          required
-          min="1"
-          max="50"
-          error={multiplierError && <span className="form--label__error"> * 1 - 50</span>}
-          value={multiplier}
-          ariaLabel="create creature form. Multiplier (required)"
-          label="Multiply"
-          name="multiplier"
-          handleChange={this.handleChange}
-        />
+        <div className="create-creature-form--multiplier-wrapper">
+          <span className="create-creature-form--multiplier-symbol">x</span>
+          <Input
+            customClasses="create-creature-form--item__multiplier"
+            enabled
+            integer
+            required
+            min="1"
+            max="50"
+            error={multiplierError && <span className="form--label__error"> * 1 - 50</span>}
+            value={multiplier}
+            ariaLabel="create creature form. Multiplier (required)"
+            label="Multiply"
+            name="multiplier"
+            handleChange={this.handleChange}
+          />
+        </div>
         <div className="create-creature-form--item__submit">
           <button type="button" className="create-creature-form--submit" title="Add creature" onClick={this.createCreature}><AddCreatureIcon /></button>
         </div>
