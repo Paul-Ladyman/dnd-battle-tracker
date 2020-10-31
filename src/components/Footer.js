@@ -1,9 +1,10 @@
 import React from 'react';
 import ExternalLink from './ExternalLink';
-import { version } from '../../package.json';
+import packageInfo from '../../package.json';
 import { hotkeys, hotkeyDescriptions } from '../hotkeys/hotkeys';
 
 function Footer() {
+  const { version } = packageInfo;
   return (
     <footer className="footer-text" role="contentinfo">
       <p>
