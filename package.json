@@ -11,7 +11,7 @@
     "lodash.findindex": "^4.6.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.0.1"
+    "react-scripts": "^4.0.0"
   },
   "scripts": {
     "start": "npm run build:index && react-scripts start",
