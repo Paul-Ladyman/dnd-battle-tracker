@@ -1,21 +1,52 @@
-const path = require("path")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
-const glob = require("glob")
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-  entry: {
-    "bundle.js": glob.sync("build/static/?(js|css)/*.?(js|css)").map(f => path.resolve(__dirname, f)),
-  },
-  output: {
-    filename: "bundle.min.js",
+  resolve: {
+    fallback: { url: false }
+  }, 
+  optimization: {
+    minimizer: [
+      `...`,
+      new CssMinimizerPlugin(),
+    ],
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
+      // {
+      //   test: /\.css$/,
+      //   use: ["style-loader", "css-loader"],
+      // },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      }
     ],
   },
-  plugins: [new UglifyJsPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+    new HtmlWebPackPlugin({
+      template: "./public/index.html",
+      filename: "./index.html"
+    })
+  ]
 }
