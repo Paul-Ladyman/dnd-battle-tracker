@@ -18,6 +18,10 @@ function Footer() {
       &nbsp;for newer versions, more info and to download this page for offline battles.
       Track the initiative and status of all creatures involved in combat with this D&D combat tracker!
       </p>
+      <a href='https://ko-fi.com/R5R12KANF' target='_blank'><img height='36' style={{border: '0px', height:'36px'}} src='https://cdn.ko-fi.com/cdn/kofi5.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+      <p>
+        (Feature ideas and general feedback welcome).
+      </p>
       <div className="footer-text--shortcuts">
         <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
         <ul>
