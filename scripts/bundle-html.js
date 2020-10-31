@@ -6,7 +6,7 @@ const htmlTemplate = fs.readFileSync(__dirname + '/../public/index.mustache.html
 
 const bundle = {
   bundle: `<script>${js}</script>`,
-  styleBundle: `<style> type="text/css"${css}</style>`
+  styleBundle: `<style type="text/css">${css}</style>`
 };
 const html = Mustache.render(htmlTemplate, bundle);
 
