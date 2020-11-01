@@ -1,5 +1,4 @@
 import React from 'react';
-import HealthPoints from './HealthPoints';
 
 function commaSeparate(notes, trailing) {
   const suffix = trailing ? ',' : ''
@@ -8,7 +7,7 @@ function commaSeparate(notes, trailing) {
   }).join(', ') + suffix;
 }
 
-function CollapsedCreature({creature, creatureExpander, creatureLocker, monsterSearcher}) {
+function CollapsedCreature({creature, creatureExpander, creatureLocker, monsterSearcher, healthPoints}) {
   const { name } = creature;
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
@@ -28,12 +27,7 @@ function CollapsedCreature({creature, creatureExpander, creatureLocker, monsterS
         {creatureExpander}
       </div>
       <div className="collapsed-creature--status">
-        {showHealth && <HealthPoints
-          short
-          hp={creature.healthPoints}
-          maxHp={creature.maxHealthPoints}
-          className="collapsed-creature--health-points"
-        />}
+        {showHealth && healthPoints}
         {showConditions && 
           <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>{
             commaSeparate(creature.conditions, showNotes)

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CreatureNoteList from './CreatureNoteList';
-import HealthPoints from './HealthPoints';
 import { conditionDescriptions } from '../model/conditions';
 import ExternalLink from './ExternalLink';
 import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
@@ -32,11 +31,12 @@ class ExpandedCreature extends Component {
       removeNoteFromCreature,
       creatureExpander,
       creatureLocker,
-      monsterSearcher
+      monsterSearcher,
+      healthPoints
     } = this.props;
-    const { alive, name, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
+    const { alive, name, healthPoints: creatureHealthPoints, initiative, id, conditions, notes } = creature;
     const showInitiative = initiative !== undefined;
-    const showHealth = healthPoints !== undefined;
+    const showHealth = creatureHealthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
@@ -61,13 +61,7 @@ class ExpandedCreature extends Component {
               </div>
             }
             <div className="expanded-creature--separator" />
-            {showHealth &&
-              <HealthPoints
-                hp={healthPoints}
-                maxHp={maxHealthPoints}
-                className="expanded-creature--stat"
-              />
-            }
+            {showHealth && healthPoints}
             {showInitiative &&
               <div className="expanded-creature--stat">
                 <b>Initiative</b> {initiative}

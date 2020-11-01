@@ -42,7 +42,41 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = newBattleState;
+    const { playerSession } = this.props;
+
+    this.state = playerSession ?
+   {
+      "creatures": [
+        {
+          "name": "goblin",
+          "initiative": 1,
+          "healthPoints": 1,
+          "maxHealthPoints": 4,
+          "id": 0,
+          "alive": true,
+          "conditions": [
+            {
+              "text": "Petrified",
+              "appliedAtRound": 0,
+              "appliedAtSeconds": 0,
+              "url": "https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Petrified"
+            }
+          ],
+          "notes": [
+            {
+              "text": "note",
+              "appliedAtRound": 0,
+              "appliedAtSeconds": 0
+            }
+          ],
+          "locked": true
+        }
+      ],
+      "creatureIdCount": 1,
+      "creatureCount": 1,
+      "round": 0
+    } 
+    : newBattleState;
 
     this.createCreature = this.createCreature.bind(this);
     this.nextInitiative = this.nextInitiative.bind(this);
@@ -164,6 +198,8 @@ class App extends Component {
   }
 
   render() {
+    const { playerSession } = this.props;
+
     const secondsElapsed = getSecondsElapsed(this.state);
 
     const creatureManagement = {
@@ -179,7 +215,7 @@ class App extends Component {
       toggleCreatureLock: this.toggleCreatureLock
     };
 
-    const errors = this.state.errors.length > 0;
+    const errors = this.state.errors && this.state.errors.length > 0;
 
     return (
       <React.Fragment>
@@ -205,10 +241,11 @@ class App extends Component {
         <div className="main-footer-wrapper">
           <main className="main">
            <h1 className="main-title">D&D Battle Tracker</h1>
-           <CreateCreatureForm
+           { !playerSession && <CreateCreatureForm
              createCreature={this.createCreature}
              createCreatureErrors={this.state.createCreatureErrors}
            />
+           }
            <Creatures
              creatures={this.state.creatures}
              activeCreature={this.state.activeCreature}
@@ -218,6 +255,7 @@ class App extends Component {
              round={this.state.round}
              secondsElapsed={secondsElapsed}
              creatureManagement={creatureManagement}
+             playerSession={playerSession}
             />
           </main>
           <Footer />

@@ -9,6 +9,7 @@ import { hotkeys } from '../hotkeys/hotkeys';
 import CreatureExpander from './CreatureExpander';
 import CreatureLocker from './CreatureLocker';
 import MonsterSearcher from './MonsterSearcher';
+import HealthPoints from './HealthPoints';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
@@ -118,8 +119,8 @@ class CreatureWrapper extends Component {
   }
 
   render () {
-    const { creature, active, conditions, creatureManagement } = this.props;
-    const { name, id, locked, alive } = creature;
+    const { creature, active, conditions, creatureManagement, playerSession } = this.props;
+    const { name, id, locked, alive, healthPoints: creatureHealthPoints, maxHealthPoints } = creature;
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = alive ? '' : 'creature-wrapper__dead';
@@ -134,12 +135,19 @@ class CreatureWrapper extends Component {
       name={name}
       expandHandler={this.expandCreatureHandler}
     />
-    const creatureLocker = <CreatureLocker
+    const creatureLocker = !playerSession && <CreatureLocker
       locked={locked}
       name={name}
       lockHandler={() => creatureManagement.toggleCreatureLock(id)}
     />
-    const monsterSearcher = <MonsterSearcher search={name} />
+    const monsterSearcher = !playerSession && <MonsterSearcher search={name} />
+    const healthPoints = <HealthPoints
+       short={!showExpanded}
+       hp={creatureHealthPoints}
+       maxHp={maxHealthPoints}
+       className={showExpanded ? "expanded-creature--stat" : "collapsed-creature--health-points"}
+       playerSession={playerSession}
+     />
           
     return (
       <React.Fragment>
@@ -163,27 +171,30 @@ class CreatureWrapper extends Component {
               creatureExpander={creatureExpander}
               creatureLocker={creatureLocker}
               monsterSearcher={monsterSearcher}
+              healthPoints={healthPoints}
             /> :
             <CollapsedCreature
               creature={creature}
               creatureExpander={creatureExpander}
               creatureLocker={creatureLocker}
               monsterSearcher={monsterSearcher}
+              healthPoints={healthPoints}
             />
           }
         </section>
-        <section
-          tabIndex="0"
-          aria-label={`${name} toolbar`}
-          ref={this.creatureToolbarRef}
-          onKeyDown={this.creatureToolbarKeyHandler}
-        >
-          <CreatureToolbar
-            creature={creature}
-            conditions={getAvailableConditions(conditions, creature.conditions)}
-            creatureManagement={creatureManagement}
-          />
-        </section>
+        { !playerSession && <section
+            tabIndex="0"
+            aria-label={`${name} toolbar`}
+            ref={this.creatureToolbarRef}
+            onKeyDown={this.creatureToolbarKeyHandler}
+          >
+            <CreatureToolbar
+              creature={creature}
+              conditions={getAvailableConditions(conditions, creature.conditions)}
+              creatureManagement={creatureManagement}
+            />
+          </section>
+        }
       </React.Fragment>
     );
   }
