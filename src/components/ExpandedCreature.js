@@ -32,7 +32,8 @@ class ExpandedCreature extends Component {
       creatureExpander,
       creatureLocker,
       monsterSearcher,
-      healthPoints
+      healthPoints,
+      playerSession
     } = this.props;
     const { alive, name, healthPoints: creatureHealthPoints, initiative, id, conditions, notes } = creature;
     const showInitiative = initiative !== undefined;
@@ -77,6 +78,7 @@ class ExpandedCreature extends Component {
               dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
               round={round}
               secondsElapsed={secondsElapsed}
+              playerSession={playerSession}
             />
           }
           {showNotes &&
@@ -87,10 +89,11 @@ class ExpandedCreature extends Component {
               dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
               round={round}
               secondsElapsed={secondsElapsed}
+              playerSession={playerSession}
             />
           }
         </div>
-        {!active && !this.state.removing &&
+        {!playerSession && !active && !this.state.removing &&
           <button
             aria-label={`remove ${creature.name}`}
             title="Remove creature"
@@ -100,7 +103,7 @@ class ExpandedCreature extends Component {
             <RemoveCreatureIcon />
           </button>
         }
-        {!active && this.state.removing &&
+        {!playerSession && !active && this.state.removing &&
           <button
             aria-label={`confirm remove ${creature.name}`}
             title="Confirm remove creature"

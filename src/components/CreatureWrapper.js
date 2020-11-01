@@ -172,6 +172,7 @@ class CreatureWrapper extends Component {
               creatureLocker={creatureLocker}
               monsterSearcher={monsterSearcher}
               healthPoints={healthPoints}
+              playerSession={playerSession}
             /> :
             <CollapsedCreature
               creature={creature}
