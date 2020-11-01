@@ -54,7 +54,8 @@ class BattleToolbar extends Component {
       nextInitiative,
       resetBattle,
       saveBattle,
-      loadBattle
+      loadBattle,
+      playerSession
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
@@ -75,13 +76,13 @@ class BattleToolbar extends Component {
 
     return (
       <header className="battle-toolbar">
-        <button
+        {!playerSession && <button
           title={nextButtonTitle}
           className={buttonClasses}
           onClick={nextInitiative}
           ref={this.nextButton}
           disabled={!creaturesAdded}
-        >{nextButtonLabel}</button>
+        >{nextButtonLabel}</button>}
         <div className="battle-toolbar--stat">
           Initiative:
           <div className="battle-toolbar--stat-value">{initiative}</div>
@@ -98,7 +99,7 @@ class BattleToolbar extends Component {
           Time Elapsed:
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
-        { isSaveLoadSupported() &&
+        { !playerSession && isSaveLoadSupported() &&
           <div className="battle-toolbar--options-container">
             <button
               title="Options Menu"
@@ -129,7 +130,7 @@ class BattleToolbar extends Component {
             </div>
           </div>
         }
-        { !isSaveLoadSupported() && <ResetButton /> }
+        { !playerSession && !isSaveLoadSupported() && <ResetButton /> }
       </header>
     );
   }

@@ -229,6 +229,7 @@ class App extends Component {
           saveBattle={this.saveBattle}
           loadBattle={this.loadBattle}
           isSaveLoadSupported={isSaveLoadSupported}
+          playerSession={playerSession}
         />
         { errors && <Errors
             errors={this.state.errors}
