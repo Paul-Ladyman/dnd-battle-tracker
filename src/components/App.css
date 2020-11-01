@@ -51,6 +51,10 @@ a:hover {
   text-align: center;
 }
 
+.main-title--player-session {
+  margin-bottom: 0px;
+}
+
 .form--input {
   border: 2px solid #822000;
   padding: 10px;

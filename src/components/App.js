@@ -266,7 +266,9 @@ class App extends Component {
         </div>
         <div className="main-footer-wrapper">
           <main className="main">
-           <h1 className="main-title">D&D Battle Tracker</h1>
+           <h1 className={`main-title${playerSession ? ' main-title--player-session' : ''}`}>
+             D&D Battle Tracker
+           </h1>
            { !playerSession && <CreateCreatureForm
              createCreature={this.createCreature}
              createCreatureErrors={this.state.createCreatureErrors}
