@@ -1,6 +1,6 @@
 {
   "name": "dnd-battle-tracker",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "private": true,
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
@@ -24,10 +24,7 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    },
-    "setupFiles": [
-      "<rootDir>/jest.init.js"
-    ]
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
