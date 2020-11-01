@@ -1,10 +1,11 @@
 import React from 'react';
 import ExternalLink from './ExternalLink';
 import packageInfo from '../../package.json';
-import { hotkeys, hotkeyDescriptions } from '../hotkeys/hotkeys';
+import { hotkeys, playerSessionHotKeys, hotkeyDescriptions } from '../hotkeys/hotkeys';
 
-function Footer() {
+function Footer({ playerSession }) {
   const { version } = packageInfo;
+  const hotkeysToPrint = playerSession ? playerSessionHotKeys : hotkeys;
   return (
     <footer className="footer-text" role="contentinfo">
       <p>
@@ -25,8 +26,8 @@ function Footer() {
       <div className="footer-text--shortcuts">
         <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
         <ul>
-          {Object.keys(hotkeys).map((key, i) => {
-            const hotkey = hotkeys[key]; 
+          {Object.keys(hotkeysToPrint).map((key, i) => {
+            const hotkey = hotkeysToPrint[key]; 
             return (
               <li key={i}><b>{hotkey}</b> {hotkeyDescriptions[key]}</li>
             );

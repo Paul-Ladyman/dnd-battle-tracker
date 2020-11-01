@@ -87,14 +87,17 @@ class CreatureWrapper extends Component {
     if (event.keyCode === 13 && targetId === 'creature-wrapper') {
       this.getExpandCollapseFunc()();
     }
+    
+    const { playerSession } = this.props;
 
-    if (isHotkey(hotkeys.focusCreatureToolbar, event)) {
+    if (!playerSession && isHotkey(hotkeys.focusCreatureToolbar, event)) {
       this.creatureToolbarRef.current.focus();
     }
   }
 
   creatureToolbarKeyHandler(event) {
-    if (isHotkey(hotkeys.focusCreature, event)) {
+    const { playerSession } = this.props;
+    if (!playerSession && isHotkey(hotkeys.focusCreature, event)) {
       this.creatureRef.current.focus();
     }
   }

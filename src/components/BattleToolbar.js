@@ -24,8 +24,9 @@ class BattleToolbar extends Component {
   }
 
   componentDidMount() {
+    const { playerSession } = this.props;
     window.addEventListener('keydown', (e) => {
-      if (isHotkey(hotkeys.battlebar, e)) {
+      if (!playerSession && isHotkey(hotkeys.battlebar, e)) {
         const { disabled: nextButtonDisabled } = this.nextButton.current.attributes;
         if (nextButtonDisabled) {
           this.optionsButton.current.focus();

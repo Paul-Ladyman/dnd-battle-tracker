@@ -70,10 +70,34 @@ class App extends Component {
             }
           ],
           "locked": true
+        },
+        {
+          "name": "goblin2",
+          "initiative": 1,
+          "healthPoints": 1,
+          "maxHealthPoints": 1,
+          "id": 1,
+          "alive": true,
+          "conditions": [
+            {
+              "text": "Petrified",
+              "appliedAtRound": 0,
+              "appliedAtSeconds": 0,
+              "url": "https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Petrified"
+            }
+          ],
+          "notes": [
+            {
+              "text": "note",
+              "appliedAtRound": 0,
+              "appliedAtSeconds": 0
+            }
+          ],
+          "locked": true
         }
       ],
-      "creatureIdCount": 1,
-      "creatureCount": 1,
+      "creatureIdCount": 2,
+      "creatureCount": 2,
       "round": 0
     } 
     : newBattleState;
@@ -100,12 +124,13 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const { playerSession } = this.props;
     window.onbeforeunload = () => {
       return true;
     };
 
     window.addEventListener('keydown', (e) => {
-      if (isHotkey(hotkeys.nextInitiative, e)) {
+      if (!playerSession && isHotkey(hotkeys.nextInitiative, e)) {
         this.nextInitiative();
       }
 
@@ -245,6 +270,7 @@ class App extends Component {
            { !playerSession && <CreateCreatureForm
              createCreature={this.createCreature}
              createCreatureErrors={this.state.createCreatureErrors}
+             playerSession={playerSession}
            />
            }
            <Creatures
@@ -259,7 +285,9 @@ class App extends Component {
              playerSession={playerSession}
             />
           </main>
-          <Footer />
+          <Footer
+            playerSession={playerSession}
+          />
          </div>
       </React.Fragment>
     );

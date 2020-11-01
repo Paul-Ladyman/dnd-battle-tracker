@@ -28,9 +28,10 @@ class CreateCreatureForm extends Component {
 
   componentDidMount() {
     this.nameInput.current.focus();
+    const { playerSession } = this.props;
 
     window.addEventListener('keydown', (e) => {
-      if (isHotkey(hotkeys.createCreature, e)) {
+      if (!playerSession && isHotkey(hotkeys.createCreature, e)) {
         this.nameInput.current.focus();
       }
     });
