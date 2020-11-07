@@ -3,6 +3,7 @@ import isHotkey from 'is-hotkey';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
+import AppSync from './AppSync';
 import BattleToolbar from './BattleToolbar';
 import conditions from '../model/conditions';
 import {
@@ -275,6 +276,7 @@ class App extends Component {
              playerSession={playerSession}
            />
            }
+           <AppSync />
            <Creatures
              creatures={this.state.creatures}
              activeCreature={this.state.activeCreature}

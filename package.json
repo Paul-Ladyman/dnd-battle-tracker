@@ -3,8 +3,10 @@
   "version": "2.2.1",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.2.5",
     "fast-deep-equal": "^2.0.1",
     "file-saver": "^2.0.2",
+    "graphql": "^15.4.0",
     "is-hotkey": "^0.1.6",
     "jsonschema": "^1.2.5",
     "lodash.find": "^4.6.0",
