@@ -7,21 +7,24 @@ import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
-const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com/graphql';
-const apiKey = 'da2-6w2nnyb6tzem7mj6uahnad7apm';
+const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com';
+const apiKey = '';
 const httpLink = new HttpLink({
-  uri: `https://${graphqlHost}`,
+  uri: `https://${graphqlHost}/graphql`,
   headers: {
     'x-api-key': apiKey
   },
 });
 
+const webSocketHeader = {
+    "host": graphqlHost,
+    "x-api-key": apiKey
+};
+let base64data = btoa(JSON.stringify(webSocketHeader));
+console.log(base64data);
 const wsLink = new WebSocketLink({
-  uri: `ws://${graphqlHost}`,
+  uri: `wss://wyqoq6xpifbjlm6xq6jnqugjvm.appsync-realtime-api.eu-west-2.amazonaws.com/graphql?header=${base64data}&payload=e30=`,
   options: {
-    connectionParams: {
-        'x-api-key': apiKey
-    },
     reconnect: true
   }
 });

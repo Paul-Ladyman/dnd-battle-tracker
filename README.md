@@ -82,5 +82,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * [AppSync IAM auth](https://docs.aws.amazon.com/appsync/latest/devguide/security.html#aws-iam-authorization)
 * [AppSync auth type keys](https://github.com/awslabs/aws-mobile-appsync-sdk-js/blob/master/packages/aws-appsync-auth-link/src/auth-link.ts)
 * [AppSync subscription authorisation](https://docs.aws.amazon.com/appsync/latest/devguide/real-time-websocket-client.html#header-parameter-format-based-on-appsync-api-authorization-mode)
+* [Apollo and AppSync](https://github.com/apollographql/apollo-feature-requests/issues/224)
 * [Cognito client getting credentials](https://docs.aws.amazon.com/cognito/latest/developerguide/getting-credentials.html)
 * [Apollo docs](https://www.apollographql.com/docs/react/data/mutations/)

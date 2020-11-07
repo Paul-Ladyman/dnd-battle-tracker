@@ -12,17 +12,16 @@ subscription GetBattle($battleId: String!) {
 function ExchangeRates({ battleId }) {
   console.log('>>> rendering battle', battleId);
   const { loading, error, data } = useSubscription(GET_BATTLE, {
-    variables: { battleId },
-    // pollInterval: 500,
+    variables: { battleId }
   });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-    console.log(data);
-    return (
-        <div><h2>BATTLES {battleId}</h2>{JSON.stringify(data.getDndbattletracker)}</div>
-    );
+  console.log(data);
+  return (
+      <div><h2>BATTLES {battleId}</h2>{JSON.stringify(data.getDndbattletracker)}</div>
+  );
 }
 
 export default ExchangeRates;
