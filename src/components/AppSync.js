@@ -5,7 +5,7 @@ const EXCHANGE_RATES = gql`
     query listDndbattletrackers {
       listDndbattletrackers {
         items {
-          battleId
+          id: battleId
         }
       }
     }

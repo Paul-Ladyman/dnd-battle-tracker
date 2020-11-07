@@ -48,7 +48,7 @@ class CreateCreatureForm extends Component {
     this.setState(newState);
   }
 
-  createCreature() {
+  async createCreature() {
     const state = this.state;
 
     const healthPoints = state.healthPoints === '' ?
@@ -63,7 +63,7 @@ class CreateCreatureForm extends Component {
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
-    const createSuccess = this.props.createCreature(creature);
+    const createSuccess = await this.props.createCreature(creature);
     if (createSuccess) {
       this.resetForm();
     }

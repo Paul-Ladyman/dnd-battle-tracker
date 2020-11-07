@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
+import { gql, useMutation } from '@apollo/client';
+import { nanoid } from 'nanoid';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
@@ -38,6 +40,15 @@ import {
 import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
+
+const ADD_BATTLE = gql`
+mutation ADD_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) {
+  createDndbattletracker(input: $createdndbattletrackerinput) {
+    id: battleId
+  }
+}
+`;
+
 
 function App({ playerSession }) { 
   const initialState = playerSession ?
@@ -99,6 +110,7 @@ function App({ playerSession }) {
     : newBattleState;
 
   const [state, setState] = useState(initialState);
+  const [addBattle] = useMutation(ADD_BATTLE);
 
   useEffect(() => {
     window.onbeforeunload = () => {
@@ -118,17 +130,20 @@ function App({ playerSession }) {
         updateBattle(prevFocus)();
       }
     });
+
   });
 
   const updateBattle = (update) => {
     return async function() {
-      setState(await update(state, ...arguments));
+      addBattle({ variables: { createdndbattletrackerinput: { battleId: nanoid(11) } } });
+      const newState = await update(state, ...arguments);
+      setState(newState);
+      return newState;
     };
   };
 
-  const createCreature = (creature) => {
-    const newState = addCreature(state, creature)
-    setState(newState);
+  const createCreature = async (creature) => {
+    const newState = await updateBattle(addCreature)(creature);
     return Object.keys(newState.createCreatureErrors).length === 0;
   }
 
