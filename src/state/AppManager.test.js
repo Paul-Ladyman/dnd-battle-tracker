@@ -96,7 +96,7 @@ describe('load', () => {
       resolve(JSON.stringify(fileContents))
     ));
 
-    const loadedFileContents = await load(file, defaultState);
+    const loadedFileContents = await load(defaultState, file);
 
     const { calls } = FileSystem.load.mock;
     expect(calls.length).toBe(1);
@@ -119,7 +119,7 @@ describe('load', () => {
       resolve(JSON.stringify(fileContents))
     ));
 
-    const loadedFileContents = await load(file, state);
+    const loadedFileContents = await load(state, file);
 
     const { calls } = FileSystem.load.mock;
     expect(calls.length).toBe(1);
@@ -139,7 +139,7 @@ describe('load', () => {
       resolve(JSON.stringify(fileContents))
     ));
 
-    const results = await load(file, defaultState);
+    const results = await load(defaultState, file);
 
     const expectedState = {
       ...defaultState,
@@ -158,7 +158,7 @@ describe('load', () => {
       resolve(fileContents)
     ));
 
-    const results = await load(file, defaultState);
+    const results = await load(defaultState, file);
 
     const expectedState = {
       ...defaultState,

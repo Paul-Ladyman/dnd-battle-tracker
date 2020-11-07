@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
@@ -39,13 +39,8 @@ import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    const { playerSession } = this.props;
-
-    this.state = playerSession ?
+function App({ playerSession }) { 
+  const initialState = playerSession ?
    {
       "creatures": [
         {
@@ -103,199 +98,109 @@ class App extends Component {
     } 
     : newBattleState;
 
-    this.createCreature = this.createCreature.bind(this);
-    this.nextInitiative = this.nextInitiative.bind(this);
-    this.nextFocus = this.nextFocus.bind(this);
-    this.prevFocus = this.prevFocus.bind(this);
-    this.setFocus = this.setFocus.bind(this);
-    this.resetBattle = this.resetBattle.bind(this);
-    this.killCreature = this.killCreature.bind(this);
-    this.stabalizeCreature = this.stabalizeCreature.bind(this);
-    this.damageCreature = this.damageCreature.bind(this);
-    this.healCreature = this.healCreature.bind(this);
-    this.addHealthToCreature = this.addHealthToCreature.bind(this);
-    this.addInitiativeToCreature = this.addInitiativeToCreature.bind(this);
-    this.removeCreature = this.removeCreature.bind(this);
-    this.addNoteToCreature = this.addNoteToCreature.bind(this);
-    this.removeNoteFromCreature = this.removeNoteFromCreature.bind(this);
-    this.toggleCreatureLock = this.toggleCreatureLock.bind(this);
-    this.saveBattle = this.saveBattle.bind(this);
-    this.loadBattle = this.loadBattle.bind(this);
-    this.dismissErrors = this.dismissErrors.bind(this);
-  }
+  const [state, setState] = useState(initialState);
 
-  componentDidMount() {
-    const { playerSession } = this.props;
+  useEffect(() => {
     window.onbeforeunload = () => {
       return true;
     };
 
     window.addEventListener('keydown', (e) => {
       if (!playerSession && isHotkey(hotkeys.nextInitiative, e)) {
-        this.nextInitiative();
+        updateBattle(nextInitiative)();
       }
 
       if (isHotkey(hotkeys.nextFocus, e)) {
-        this.nextFocus();
+        updateBattle(nextFocus)();
       }
 
       if (isHotkey(hotkeys.prevFocus, e)) {
-        this.prevFocus();
+        updateBattle(prevFocus)();
       }
     });
-  }
+  });
 
-  resetBattle() {
-    this.setState(resetBattle(this.state));
-  }
+  const updateBattle = (update) => {
+    return async function() {
+      setState(await update(state, ...arguments));
+    };
+  };
 
-  removeCreature(creatureId) {
-    this.setState(removeCreature(this.state, creatureId));
-  }
-
-  killCreature(id) {
-    this.setState(killCreature(this.state, id));
-  }
-
-  stabalizeCreature(id) {
-    this.setState(stabalizeCreature(this.state, id));
-  }
-
-  removeNoteFromCreature(creatureId, note, isCondition) {
-    this.setState(removeNoteFromCreature(this.state, creatureId, note, isCondition));
-  }
-
-  addNoteToCreature(creatureId, text, isCondition) {
-    this.setState(addNoteToCreature(this.state, creatureId, text, isCondition));
-  }
-
-  addInitiativeToCreature(creatureId, initiative) {
-    this.setState(addInitiativeToCreature(this.state, creatureId, initiative));
-  }
-
-  damageCreature(creatureId, damage) {
-    this.setState(damageCreature(this.state, creatureId, damage));
-  }
-
-  healCreature(creatureId, health) {
-    this.setState(healCreature(this.state, creatureId, health));
-  }
-
-  addHealthToCreature(creatureId, health) {
-    this.setState(addHealthToCreature(this.state, creatureId, health));
-  }
-
-  toggleCreatureLock(creatureId) {
-    this.setState(toggleCreatureLock(this.state, creatureId));
-  }
-
-  nextInitiative() {
-    this.setState(nextInitiative(this.state));
-  }
-
-  nextFocus() {
-    this.setState(nextFocus(this.state));
-  }
-
-  prevFocus() {
-    this.setState(prevFocus(this.state));
-  }
-
-  setFocus(creature) {
-    this.setState(setFocus(this.state, creature));
-  }
-
-  createCreature(creature) {
-    const newState = addCreature(this.state, creature)
-    this.setState(newState);
+  const createCreature = (creature) => {
+    const newState = addCreature(state, creature)
+    setState(newState);
     return Object.keys(newState.createCreatureErrors).length === 0;
   }
 
-  saveBattle() {
-    this.setState(save(this.state));
-  }
+  const secondsElapsed = getSecondsElapsed(state);
 
-  async loadBattle(file) {
-    this.setState(await load(file, this.state));
-  }
+  const creatureManagement = {
+    killCreature: updateBattle(killCreature),
+    stabalizeCreature: updateBattle(stabalizeCreature),
+    damageCreature: updateBattle(damageCreature),
+    healCreature: updateBattle(healCreature),
+    addHealthToCreature: updateBattle(addHealthToCreature),
+    addInitiativeToCreature: updateBattle(addInitiativeToCreature),
+    removeCreature: updateBattle(removeCreature),
+    addNoteToCreature: updateBattle(addNoteToCreature),
+    removeNoteFromCreature: updateBattle(removeNoteFromCreature),
+    toggleCreatureLock: updateBattle(toggleCreatureLock)
+  };
 
-  dismissErrors() {
-    this.setState(dismissErrors(this.state))
-  }
+  const errors = state.errors && state.errors.length > 0;
 
-  render() {
-    const { playerSession } = this.props;
-
-    const secondsElapsed = getSecondsElapsed(this.state);
-
-    const creatureManagement = {
-      killCreature: this.killCreature,
-      stabalizeCreature: this.stabalizeCreature,
-      damageCreature: this.damageCreature,
-      healCreature: this.healCreature,
-      addHealthToCreature: this.addHealthToCreature,
-      addInitiativeToCreature: this.addInitiativeToCreature,
-      removeCreature: this.removeCreature,
-      addNoteToCreature: this.addNoteToCreature,
-      removeNoteFromCreature: this.removeNoteFromCreature,
-      toggleCreatureLock: this.toggleCreatureLock
-    };
-
-    const errors = this.state.errors && this.state.errors.length > 0;
-
-    return (
-      <React.Fragment>
-        <BattleToolbar
-          initiative={getInitiative(this.state)}
-          round={this.state.round}
-          secondsElapsed={secondsElapsed}
-          creatures={this.state.creatureCount}
-          nextInitiative={this.nextInitiative}
-          resetBattle={this.resetBattle}
-          saveBattle={this.saveBattle}
-          loadBattle={this.loadBattle}
-          isSaveLoadSupported={isSaveLoadSupported}
+  return (
+    <React.Fragment>
+      <BattleToolbar
+        initiative={getInitiative(state)}
+        round={state.round}
+        secondsElapsed={secondsElapsed}
+        creatures={state.creatureCount}
+        nextInitiative={updateBattle(nextInitiative)}
+        resetBattle={updateBattle(resetBattle)}
+        saveBattle={updateBattle(save)}
+        loadBattle={updateBattle(load)}
+        isSaveLoadSupported={isSaveLoadSupported}
+        playerSession={playerSession}
+      />
+      { errors && <Errors
+          errors={state.errors}
+          dismissErrors={updateBattle(dismissErrors)}
+        />
+       }
+      <div className="aria-announcements" role='region' aria-live="assertive">
+        {state.ariaAnnouncements}
+      </div>
+      <div className="main-footer-wrapper">
+        <main className="main">
+         <h1 className={`main-title${playerSession ? ' main-title--player-session' : ''}`}>
+           D&D Battle Tracker
+         </h1>
+         { !playerSession && <CreateCreatureForm
+           createCreature={createCreature}
+           createCreatureErrors={state.createCreatureErrors}
+           playerSession={playerSession}
+         />
+         }
+         <AppSync />
+         <Creatures
+           creatures={state.creatures}
+           activeCreature={state.activeCreature}
+           focusedCreature={state.focusedCreature}
+           setFocus={updateBattle(setFocus)}
+           conditions={conditions}
+           round={state.round}
+           secondsElapsed={secondsElapsed}
+           creatureManagement={creatureManagement}
+           playerSession={playerSession}
+          />
+        </main>
+        <Footer
           playerSession={playerSession}
         />
-        { errors && <Errors
-            errors={this.state.errors}
-            dismissErrors={this.dismissErrors}
-          />
-         }
-        <div className="aria-announcements" role='region' aria-live="assertive">
-          {this.state.ariaAnnouncements}
-        </div>
-        <div className="main-footer-wrapper">
-          <main className="main">
-           <h1 className={`main-title${playerSession ? ' main-title--player-session' : ''}`}>
-             D&D Battle Tracker
-           </h1>
-           { !playerSession && <CreateCreatureForm
-             createCreature={this.createCreature}
-             createCreatureErrors={this.state.createCreatureErrors}
-             playerSession={playerSession}
-           />
-           }
-           <AppSync />
-           <Creatures
-             creatures={this.state.creatures}
-             activeCreature={this.state.activeCreature}
-             focusedCreature={this.state.focusedCreature}
-             setFocus={this.setFocus}
-             conditions={conditions}
-             round={this.state.round}
-             secondsElapsed={secondsElapsed}
-             creatureManagement={creatureManagement}
-             playerSession={playerSession}
-            />
-          </main>
-          <Footer
-            playerSession={playerSession}
-          />
-         </div>
-      </React.Fragment>
-    );
-  }
+       </div>
+    </React.Fragment>
+  );
 }
 
 export default App;

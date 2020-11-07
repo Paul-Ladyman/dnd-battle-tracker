@@ -29,7 +29,7 @@ function jsonParse(value) {
   }
 }
 
-export async function load(file, state) {
+export async function load(state, file) {
   const fileContents = await FileSystem.load(file);
   const loadedState = jsonParse(fileContents);
 
