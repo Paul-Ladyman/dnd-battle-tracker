@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { 
   newBattleState,
   getSecondsElapsed,
@@ -13,6 +14,7 @@ import {
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
 jest.mock('./CreatureManager');
+jest.mock('nanoid');
 
 const defaultState = {
   creatures:[
@@ -54,15 +56,19 @@ const defaultState = {
   round: 1,
   ariaAnnouncements: [],
   errors: [],
-  createCreatureErrors: {}
+  createCreatureErrors: {},
+  battleId: '123'
 };
 
 beforeEach(() => {
+  resetCreature.mockClear();
   createCreature.mockClear();
+  nanoid.mockClear();
 });
 
 describe('newBattleState', () => {
-  test('contains the initial battle state', () => {
+  test('returns the initial battle state', () => {
+    nanoid.mockReturnValue('123');
     const expected = {
       creatures: [],
       creatureIdCount: 0,
@@ -72,15 +78,33 @@ describe('newBattleState', () => {
       round: 0,
       ariaAnnouncements: [],
       errors: [],
-      createCreatureErrors: {}
+      createCreatureErrors: {},
+      battleId: '123'
     };
 
-    expect(newBattleState).toEqual(expected);
+    expect(newBattleState()).toEqual(expected);
+    expect(nanoid).toHaveBeenCalledWith(11);
   });
 });
 
 describe('resetBattle', () => {
-  test('resets to the initial battle state, keeping and resetting locked creatures', () => {
+  test('resets to the initial battle state', () => {
+    const expected = {
+      creatureIdCount: 2,
+      creatureCount: 2,
+      activeCreature: undefined,
+      focusedCreature: undefined,
+      round: 0,
+      ariaAnnouncements: ['battle reset'],
+      errors: [],
+      createCreatureErrors: {}
+    };
+
+    expect(resetBattle(defaultState)).toMatchObject(expected);
+    expect(resetCreature).toHaveBeenCalledTimes(2);
+  });
+
+  test('resets the battle state, keeping and resetting locked creatures', () => {
     const resetCreature1 = {
       ...defaultState.creatures[1],
       id: 0,
@@ -97,19 +121,19 @@ describe('resetBattle', () => {
         resetCreature1,
         resetCreature2
       ],
-      creatureIdCount: 2,
-      creatureCount: 2,
-      activeCreature: undefined,
-      focusedCreature: undefined,
-      round: 0,
-      ariaAnnouncements: ['battle reset'],
-      errors: [],
-      createCreatureErrors: {}
     };
 
-    expect(resetBattle(defaultState)).toEqual(expected);
+    expect(resetBattle(defaultState)).toMatchObject(expected);
     expect(resetCreature).toHaveBeenCalledTimes(2);
-  });
+  }); 
+
+  test('resets the battle state, keeping the battleId', () => {
+    const expected = {
+      battleId: '123'
+    };
+
+    expect(resetBattle(defaultState)).toMatchObject(expected);
+  })
 });
 
 describe('getSecondsElapsed', () => {

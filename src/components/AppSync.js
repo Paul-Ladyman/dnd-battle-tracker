@@ -1,25 +1,27 @@
 import { useQuery, gql } from '@apollo/client';
 import React from 'react';
 
-const EXCHANGE_RATES = gql`
-    query listDndbattletrackers {
-      listDndbattletrackers {
-        items {
-          id: battleId
-        }
-      }
-    }
+const GET_BATTLE = gql`
+query GetBattle($battleId: String!) {
+  getDndbattletracker(battleId: $battleId) {
+    id: battleId
+  }
+}
 `;
 
-function ExchangeRates() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+function ExchangeRates({ battleId }) {
+  console.log('>>> rendering battle', battleId);
+  const { loading, error, data } = useQuery(GET_BATTLE, {
+    variables: { battleId },
+    pollInterval: 500,
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
     console.log(data);
     return (
-        <div><h2>BATTLES!</h2>{JSON.stringify(data.listDndbattletrackers.items)}</div>
+        <div><h2>BATTLES {battleId}</h2>{JSON.stringify(data.getDndbattletracker)}</div>
     );
 }
 

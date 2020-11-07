@@ -107,9 +107,12 @@ function App({ playerSession }) {
       "creatureCount": 2,
       "round": 0
     } 
-    : newBattleState;
+    : newBattleState();
 
   const [state, setState] = useState(initialState);
+
+  console.log('>>> battleID', state.battleId);
+
   const [addBattle] = useMutation(ADD_BATTLE);
 
   useEffect(() => {
@@ -135,7 +138,7 @@ function App({ playerSession }) {
 
   const updateBattle = (update) => {
     return async function() {
-      addBattle({ variables: { createdndbattletrackerinput: { battleId: nanoid(11) } } });
+      addBattle({ variables: { createdndbattletrackerinput: { battleId: state.battleId } } });
       const newState = await update(state, ...arguments);
       setState(newState);
       return newState;
@@ -197,7 +200,7 @@ function App({ playerSession }) {
            playerSession={playerSession}
          />
          }
-         <AppSync />
+         <AppSync battleId={state.battleId}/>
          <Creatures
            creatures={state.creatures}
            activeCreature={state.activeCreature}

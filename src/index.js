@@ -6,7 +6,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 
 const uri = 'https://wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com/graphql';
-const apiKey = '';
+const apiKey = 'da2-6w2nnyb6tzem7mj6uahnad7apm';
 const client = new ApolloClient({
   uri,
   headers: {
