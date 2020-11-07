@@ -76,3 +76,10 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 - `npm run build` to build the project and package all the static resources into a single HTML file. This file will be made available under `dist/dnd-battle-tracker.html`.
 - Push the results to the `master` branch.
 - Create a release in Github and upload the `dist/dnd-battle-tracker.html` file.
+
+## Notes
+* [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)
+* [AppSync IAM auth](https://docs.aws.amazon.com/appsync/latest/devguide/security.html#aws-iam-authorization)
+* [AppSync auth type keys](https://github.com/awslabs/aws-mobile-appsync-sdk-js/blob/master/packages/aws-appsync-auth-link/src/auth-link.ts)
+* [Cognito client getting credentials](https://docs.aws.amazon.com/cognito/latest/developerguide/getting-credentials.html)
+* [Apollo docs](https://www.apollographql.com/docs/react/data/mutations/)
