@@ -1,9 +1,9 @@
-import { useQuery, gql } from '@apollo/client';
+import { useSubscription, gql } from '@apollo/client';
 import React from 'react';
 
 const GET_BATTLE = gql`
-query GetBattle($battleId: String!) {
-  getDndbattletracker(battleId: $battleId) {
+subscription GetBattle($battleId: String!) {
+  onCreateDndbattletracker(battleId: $battleId) {
     id: battleId
   }
 }
@@ -11,9 +11,9 @@ query GetBattle($battleId: String!) {
 
 function ExchangeRates({ battleId }) {
   console.log('>>> rendering battle', battleId);
-  const { loading, error, data } = useQuery(GET_BATTLE, {
+  const { loading, error, data } = useSubscription(GET_BATTLE, {
     variables: { battleId },
-    pollInterval: 500,
+    // pollInterval: 500,
   });
 
   if (loading) return <p>Loading...</p>;
