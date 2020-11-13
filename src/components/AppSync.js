@@ -4,7 +4,7 @@ import React from 'react';
 const GET_BATTLE = gql`
 subscription GetBattle($battleId: String!) {
   onCreateDndbattletracker(battleId: $battleId) {
-    id: battleId
+    battleId
   }
 }
 `;
@@ -15,9 +15,7 @@ function ExchangeRates({ battleId }) {
     variables: { battleId }
   });
 
-  console.log(loading, error, data);
   if (loading) return <p>Loading...</p>;
-  console.log(error);
   if (error) return <p>Error :(</p>;
 
   return (

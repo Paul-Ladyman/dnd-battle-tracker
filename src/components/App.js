@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import { gql, useMutation } from '@apollo/client';
-import { nanoid } from 'nanoid';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
@@ -44,11 +43,10 @@ import { hotkeys } from '../hotkeys/hotkeys';
 const ADD_BATTLE = gql`
 mutation ADD_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) {
   createDndbattletracker(input: $createdndbattletrackerinput) {
-    id: battleId
+    battleId
   }
 }
 `;
-
 
 function App({ playerSession }) { 
   const initialState = playerSession ?
@@ -110,8 +108,6 @@ function App({ playerSession }) {
     : newBattleState();
 
   const [state, setState] = useState(initialState);
-
-  console.log('>>> battleID', state.battleId);
 
   const [addBattle] = useMutation(ADD_BATTLE);
 
