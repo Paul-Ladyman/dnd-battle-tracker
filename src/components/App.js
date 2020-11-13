@@ -49,6 +49,15 @@ mutation ADD_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) 
 }
 `;
 
+const UPDATE_BATTLE = gql`
+mutation UPDATE_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) {
+  updateDndbattletracker(input: $createdndbattletrackerinput) {
+    battleId
+    creatureCount
+  }
+}
+`;
+
 function App({ playerSession }) { 
   const initialState = playerSession ?
    {
@@ -109,6 +118,7 @@ function App({ playerSession }) {
     : newBattleState();
 
   const [state, setState] = useState(initialState);
+  const [battleCreated, setBattleCreated] = useState(false);
 
   const [addBattle] = useMutation(ADD_BATTLE);
 
@@ -136,10 +146,12 @@ function App({ playerSession }) {
   const updateBattle = (update) => {
     return async function() {
       const newState = await update(state, ...arguments);
-      addBattle({ variables: { createdndbattletrackerinput: {
+      const battleSync = battleCreated ? updateBattle : addBattle;
+      battleSync({ variables: { createdndbattletrackerinput: {
         battleId: newState.battleId,
         creatureCount: newState.creatureCount
       }}});
+      setBattleCreated(true);
       setState(newState);
       return newState;
     };
