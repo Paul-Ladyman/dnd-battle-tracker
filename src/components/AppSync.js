@@ -15,10 +15,11 @@ function ExchangeRates({ battleId }) {
     variables: { battleId }
   });
 
+  console.log(loading, error, data);
   if (loading) return <p>Loading...</p>;
+  console.log(error);
   if (error) return <p>Error :(</p>;
 
-  console.log(data);
   return (
       <div><h2>BATTLES {battleId}</h2>{JSON.stringify(data.getDndbattletracker)}</div>
   );

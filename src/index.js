@@ -3,38 +3,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import { split, HttpLink } from '@apollo/client';
+import { split, HttpLink, ApolloLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
+import { createAuthLink } from 'aws-appsync-auth-link';
 
 const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com';
-const apiKey = '';
-const httpLink = new HttpLink({
-  uri: `https://${graphqlHost}/graphql`,
-  headers: {
-    'x-api-key': apiKey
-  },
-});
+const uri = `https://${graphqlHost}/graphql`;
+const apiKey = 'da2-6w2nnyb6tzem7mj6uahnad7apm';
 
-const webSocketHeader = {
-    "host": graphqlHost,
-    "x-api-key": apiKey
+const auth = {
+  type: 'API_KEY',
+  apiKey,
 };
-let base64data = btoa(JSON.stringify(webSocketHeader));
-console.log(base64data);
-const wsLink = new WebSocketLink({
-  uri: `wss://wyqoq6xpifbjlm6xq6jnqugjvm.appsync-realtime-api.eu-west-2.amazonaws.com/graphql?header=${base64data}&payload=e30=`,
-  options: {
-    reconnect: true
-  }
-});
+
+const httpLink = ApolloLink.from([
+   createAuthLink({ uri, region: 'eu-west-2', auth }), 
+   new HttpLink({ uri })
+]);
+
+const wsLink = createSubscriptionHandshakeLink(uri, httpLink);
 
 // The split function takes three parameters:
 //
 // * A function that's called for each operation to execute
 // * The Link to use for an operation if the function returns a "truthy" value
 // * The Link to use for an operation if the function returns a "falsy" value
-const splitLink = split(
+const link = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
     return (
@@ -46,9 +41,8 @@ const splitLink = split(
   httpLink,
 );
 
-
 const client = new ApolloClient({
-  link: splitLink,
+  link,
   cache: new InMemoryCache()
 });
 
