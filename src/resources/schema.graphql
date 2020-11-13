@@ -1,0 +1,104 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Dndbattletracker {
+  battleId: String!
+  creatureCount: Int!
+}
+
+type DndbattletrackerConnection {
+  items: [Dndbattletracker]
+  nextToken: String
+}
+
+type Mutation {
+  createDndbattletracker(input: CreateDndbattletrackerInput!): Dndbattletracker
+  deleteDndbattletracker(input: DeleteDndbattletrackerInput!): Dndbattletracker
+  updateDndbattletracker(input: UpdateDndbattletrackerInput!): Dndbattletracker
+}
+
+type Query {
+  getDndbattletracker(battleId: String!): Dndbattletracker
+  listDndbattletrackers(filter: TableDndbattletrackerFilterInput, limit: Int, nextToken: String): DndbattletrackerConnection
+}
+
+type Subscription {
+  onCreateDndbattletracker(battleId: String): Dndbattletracker @aws_subscribe(mutations : ["createDndbattletracker"])
+  onDeleteDndbattletracker(battleId: String): Dndbattletracker @aws_subscribe(mutations : ["deleteDndbattletracker"])
+  onUpdateDndbattletracker(battleId: String): Dndbattletracker @aws_subscribe(mutations : ["updateDndbattletracker"])
+}
+
+input CreateDndbattletrackerInput {
+  battleId: String!
+  creatureCount: Int!
+}
+
+input DeleteDndbattletrackerInput {
+  battleId: String!
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableDndbattletrackerFilterInput {
+  battleId: TableStringFilterInput
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input UpdateDndbattletrackerInput {
+  battleId: String!
+}

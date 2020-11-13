@@ -44,6 +44,7 @@ const ADD_BATTLE = gql`
 mutation ADD_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) {
   createDndbattletracker(input: $createdndbattletrackerinput) {
     battleId
+    creatureCount
   }
 }
 `;
@@ -134,8 +135,11 @@ function App({ playerSession }) {
 
   const updateBattle = (update) => {
     return async function() {
-      addBattle({ variables: { createdndbattletrackerinput: { battleId: state.battleId } } });
       const newState = await update(state, ...arguments);
+      addBattle({ variables: { createdndbattletrackerinput: {
+        battleId: newState.battleId,
+        creatureCount: newState.creatureCount
+      }}});
       setState(newState);
       return newState;
     };
