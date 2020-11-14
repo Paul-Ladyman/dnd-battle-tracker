@@ -1,6 +1,6 @@
 import { useQuery, useSubscription } from '@apollo/client';
 import React from 'react';
-import { GET_BATTLE, SYNC_BATTLE } from '../graphql/graphql';
+import { GET_BATTLE, SYNC_BATTLE } from '../graphql/operations';
 import BattleToolbar from './BattleToolbar';
 import Footer from './Footer';
 import { 

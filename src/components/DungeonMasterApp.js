@@ -39,7 +39,7 @@ import {
 import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
-import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/graphql';
+import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
 
 function DungeonMasterApp() { 
   const [state, setState] = useState(newBattleState());
