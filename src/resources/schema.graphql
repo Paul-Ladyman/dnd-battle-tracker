@@ -36,6 +36,11 @@ input CreateDndbattletrackerInput {
   creatureCount: Int!
 }
 
+input UpdateDndbattletrackerInput {
+  battleId: String!
+  creatureCount: Int!
+}
+
 input DeleteDndbattletrackerInput {
   battleId: String!
 }
@@ -97,8 +102,4 @@ input TableStringFilterInput {
   lt: String
   ne: String
   notContains: String
-}
-
-input UpdateDndbattletrackerInput {
-  battleId: String!
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
+import PlayerSessionApp from './components/PlayerSessionApp';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { split, HttpLink, ApolloLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
@@ -10,7 +11,7 @@ import { createAuthLink } from 'aws-appsync-auth-link';
 
 const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com';
 const uri = `https://${graphqlHost}/graphql`;
-const apiKey = 'da2-6w2nnyb6tzem7mj6uahnad7apm';
+const apiKey = 'da2-vfqkeqsnxncaxem4oddrhqwa5u';
 
 const auth = {
   type: 'API_KEY',
@@ -57,7 +58,10 @@ const playerSessionParam = getUrlParameter('playerSession');
 
 const WithProvider = () => (
   <ApolloProvider client={client}>
-      <App playerSession={playerSessionParam} />
+      {playerSessionParam ?
+        <PlayerSessionApp battleId={playerSessionParam} /> :
+        <App playerSession={playerSessionParam} />
+      }
   </ApolloProvider>
 )
 

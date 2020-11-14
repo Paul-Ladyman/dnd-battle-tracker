@@ -4,7 +4,6 @@ import { gql, useMutation } from '@apollo/client';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
-import AppSync from './AppSync';
 import BattleToolbar from './BattleToolbar';
 import conditions from '../model/conditions';
 import {
@@ -50,8 +49,8 @@ mutation ADD_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) 
 `;
 
 const UPDATE_BATTLE = gql`
-mutation UPDATE_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) {
-  updateDndbattletracker(input: $createdndbattletrackerinput) {
+mutation UPDATE_BATTLE($updatedndbattletrackerinput: UpdateDndbattletrackerInput!) {
+  updateDndbattletracker(input: $updatedndbattletrackerinput) {
     battleId
     creatureCount
   }
@@ -121,6 +120,7 @@ function App({ playerSession }) {
   const [battleCreated, setBattleCreated] = useState(false);
 
   const [addBattle] = useMutation(ADD_BATTLE);
+  const [syncBattle] = useMutation(UPDATE_BATTLE);
 
   useEffect(() => {
     window.onbeforeunload = () => {
@@ -146,11 +146,19 @@ function App({ playerSession }) {
   const updateBattle = (update) => {
     return async function() {
       const newState = await update(state, ...arguments);
-      const battleSync = battleCreated ? updateBattle : addBattle;
-      battleSync({ variables: { createdndbattletrackerinput: {
-        battleId: newState.battleId,
-        creatureCount: newState.creatureCount
-      }}});
+
+      if (battleCreated) {
+        syncBattle({ variables: { updatedndbattletrackerinput: {
+          battleId: newState.battleId,
+          creatureCount: newState.creatureCount
+        }}});
+      }
+      else {
+        addBattle({ variables: { createdndbattletrackerinput: {
+          battleId: newState.battleId,
+          creatureCount: newState.creatureCount
+        }}});
+      }
       setBattleCreated(true);
       setState(newState);
       return newState;
@@ -178,6 +186,8 @@ function App({ playerSession }) {
   };
 
   const errors = state.errors && state.errors.length > 0;
+
+  console.log(state.battleId);
 
   return (
     <React.Fragment>
@@ -212,7 +222,6 @@ function App({ playerSession }) {
            playerSession={playerSession}
          />
          }
-         <AppSync battleId={state.battleId}/>
          <Creatures
            creatures={state.creatures}
            activeCreature={state.activeCreature}
