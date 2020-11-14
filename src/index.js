@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
-import PlayerSessionApp from './components/PlayerSessionApp';
+import DungeonMasterApp from './components/DungeonMasterApp';
+import PlayerApp from './components/PlayerApp';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { split, HttpLink, ApolloLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
@@ -54,13 +54,13 @@ function getUrlParameter(name) {
     return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
 
-const playerSessionParam = getUrlParameter('playerSession');
+const battleId = getUrlParameter('battle');
 
 const WithProvider = () => (
   <ApolloProvider client={client}>
-      {playerSessionParam ?
-        <PlayerSessionApp battleId={playerSessionParam} /> :
-        <App playerSession={playerSessionParam} />
+      {battleId ?
+        <PlayerApp battleId={battleId} /> :
+        <DungeonMasterApp />
       }
   </ApolloProvider>
 )
