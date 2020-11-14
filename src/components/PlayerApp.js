@@ -1,5 +1,6 @@
-import { useQuery, useSubscription, gql } from '@apollo/client';
+import { useQuery, useSubscription } from '@apollo/client';
 import React from 'react';
+import { GET_BATTLE, SYNC_BATTLE } from '../graphql/graphql';
 import BattleToolbar from './BattleToolbar';
 import Footer from './Footer';
 import { 
@@ -7,25 +8,6 @@ import {
   getSecondsElapsed
 } from '../state/BattleManager';
 
-const GET_BATTLE = gql`
-query GetBattle($battleId: String!) {
-  getDndbattletracker(battleId: $battleId) {
-    battleId
-    creatureCount
-    round
-  }
-}
-`;
-
-const SYNC_BATTLE = gql`
-subscription SyncBattle($battleId: String!) {
-  onUpdateDndbattletracker(battleId: $battleId) {
-    battleId
-    creatureCount
-    round
-  }
-}
-`;
 
 function getBattleData(queryData, subData) {
   if (subData) {

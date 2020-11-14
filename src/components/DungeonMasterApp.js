@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
@@ -39,30 +39,13 @@ import {
 import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
-
-const ADD_BATTLE = gql`
-mutation ADD_BATTLE($battleinput: BattleInput!) {
-  createDndbattletracker(input: $battleinput) {
-    battleId
-  }
-}
-`;
-
-const UPDATE_BATTLE = gql`
-mutation UPDATE_BATTLE($battleinput: BattleInput!) {
-  updateDndbattletracker(input: $battleinput) {
-    battleId
-    creatureCount
-    round
-  }
-}
-`;
+import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/graphql';
 
 function DungeonMasterApp() { 
   const [state, setState] = useState(newBattleState());
   const [battleCreated, setBattleCreated] = useState(false);
 
-  const [addBattleMutation] = useMutation(ADD_BATTLE);
+  const [addBattleMutation] = useMutation(CREATE_BATTLE);
   const [updateBattleMutation] = useMutation(UPDATE_BATTLE);
 
   useEffect(() => {
