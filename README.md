@@ -87,6 +87,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * share button
 * IAM role not API key
 * treeshaking
+* run Lighthouse over player view
 
 ## Bugs
 * two creatures with same name and no initiative. Add initiative for one removes the other
