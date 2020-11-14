@@ -86,6 +86,9 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * share button
 * IAM role not API key
 
+## Bugs
+* two creatures with same name and no initiative. Add initiative for one removes the other
+
 ## Notes
 * [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)
 * [AppSync IAM auth](https://docs.aws.amazon.com/appsync/latest/devguide/security.html#aws-iam-authorization)

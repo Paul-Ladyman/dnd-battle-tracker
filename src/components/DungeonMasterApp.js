@@ -41,19 +41,19 @@ import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
 
 const ADD_BATTLE = gql`
-mutation ADD_BATTLE($createdndbattletrackerinput: CreateDndbattletrackerInput!) {
-  createDndbattletracker(input: $createdndbattletrackerinput) {
+mutation ADD_BATTLE($battleinput: BattleInput!) {
+  createDndbattletracker(input: $battleinput) {
     battleId
-    creatureCount
   }
 }
 `;
 
 const UPDATE_BATTLE = gql`
-mutation UPDATE_BATTLE($updatedndbattletrackerinput: UpdateDndbattletrackerInput!) {
-  updateDndbattletracker(input: $updatedndbattletrackerinput) {
+mutation UPDATE_BATTLE($battleinput: BattleInput!) {
+  updateDndbattletracker(input: $battleinput) {
     battleId
     creatureCount
+    round
   }
 }
 `;
@@ -62,8 +62,8 @@ function DungeonMasterApp() {
   const [state, setState] = useState(newBattleState());
   const [battleCreated, setBattleCreated] = useState(false);
 
-  const [addBattle] = useMutation(ADD_BATTLE);
-  const [syncBattle] = useMutation(UPDATE_BATTLE);
+  const [addBattleMutation] = useMutation(ADD_BATTLE);
+  const [updateBattleMutation] = useMutation(UPDATE_BATTLE);
 
   useEffect(() => {
     window.onbeforeunload = () => {
@@ -90,18 +90,12 @@ function DungeonMasterApp() {
     return async function() {
       const newState = await update(state, ...arguments);
 
-      if (battleCreated) {
-        syncBattle({ variables: { updatedndbattletrackerinput: {
-          battleId: newState.battleId,
-          creatureCount: newState.creatureCount
-        }}});
-      }
-      else {
-        addBattle({ variables: { createdndbattletrackerinput: {
-          battleId: newState.battleId,
-          creatureCount: newState.creatureCount
-        }}});
-      }
+      const syncBattle = battleCreated ? updateBattleMutation : addBattleMutation;
+      syncBattle({ variables: { battleinput: {
+        battleId: newState.battleId,
+        creatureCount: newState.creatureCount,
+        round: newState.round
+      }}});
       setBattleCreated(true);
       setState(newState);
       return newState;

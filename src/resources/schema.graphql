@@ -4,45 +4,38 @@
   subscription: Subscription
 }
 
-type Dndbattletracker {
+type Battle {
   battleId: String!
   creatureCount: Int!
+  round: Int!
+}
+
+input BattleInput {
+  battleId: String!
+  creatureCount: Int!
+  round: Int!
 }
 
 type DndbattletrackerConnection {
-  items: [Dndbattletracker]
+  items: [Battle]
   nextToken: String
 }
 
 type Mutation {
-  createDndbattletracker(input: CreateDndbattletrackerInput!): Dndbattletracker
-  deleteDndbattletracker(input: DeleteDndbattletrackerInput!): Dndbattletracker
-  updateDndbattletracker(input: UpdateDndbattletrackerInput!): Dndbattletracker
+  createDndbattletracker(input: BattleInput!): Battle
+  deleteDndbattletracker(battleId: String!): Battle
+  updateDndbattletracker(input: BattleInput!): Battle
 }
 
 type Query {
-  getDndbattletracker(battleId: String!): Dndbattletracker
+  getDndbattletracker(battleId: String!): Battle
   listDndbattletrackers(filter: TableDndbattletrackerFilterInput, limit: Int, nextToken: String): DndbattletrackerConnection
 }
 
 type Subscription {
-  onCreateDndbattletracker(battleId: String): Dndbattletracker @aws_subscribe(mutations : ["createDndbattletracker"])
-  onDeleteDndbattletracker(battleId: String): Dndbattletracker @aws_subscribe(mutations : ["deleteDndbattletracker"])
-  onUpdateDndbattletracker(battleId: String): Dndbattletracker @aws_subscribe(mutations : ["updateDndbattletracker"])
-}
-
-input CreateDndbattletrackerInput {
-  battleId: String!
-  creatureCount: Int!
-}
-
-input UpdateDndbattletrackerInput {
-  battleId: String!
-  creatureCount: Int!
-}
-
-input DeleteDndbattletrackerInput {
-  battleId: String!
+  onCreateDndbattletracker(battleId: String): Battle @aws_subscribe(mutations : ["createDndbattletracker"])
+  onDeleteDndbattletracker(battleId: String): Battle @aws_subscribe(mutations : ["deleteDndbattletracker"])
+  onUpdateDndbattletracker(battleId: String): Battle @aws_subscribe(mutations : ["updateDndbattletracker"])
 }
 
 input TableBooleanFilterInput {

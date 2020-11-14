@@ -2,13 +2,17 @@ import { useQuery, useSubscription, gql } from '@apollo/client';
 import React from 'react';
 import BattleToolbar from './BattleToolbar';
 import Footer from './Footer';
-import { newBattleState } from '../state/BattleManager';
+import { 
+  newBattleState,
+  getSecondsElapsed
+} from '../state/BattleManager';
 
 const GET_BATTLE = gql`
 query GetBattle($battleId: String!) {
   getDndbattletracker(battleId: $battleId) {
     battleId
     creatureCount
+    round
   }
 }
 `;
@@ -18,6 +22,7 @@ subscription SyncBattle($battleId: String!) {
   onUpdateDndbattletracker(battleId: $battleId) {
     battleId
     creatureCount
+    round
   }
 }
 `;
@@ -45,14 +50,17 @@ function PlayerApp({ battleId }) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-    console.log(loading, syncLoading, data, syncData, getBattleData(data, syncData))
-  const { creatureCount } = getBattleData(data, syncData);
+  const battleData = getBattleData(data, syncData);
+
+  const secondsElapsed = getSecondsElapsed(battleData);
+  const { creatureCount, round } = battleData;
+
   return (
     <React.Fragment>
       <BattleToolbar
           // initiative={getInitiative(state)}
-          // round={state.round}
-          // secondsElapsed={secondsElapsed}
+          round={round}
+          secondsElapsed={secondsElapsed}
           creatures={creatureCount}
           playerSession
       />
