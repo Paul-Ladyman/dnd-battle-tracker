@@ -80,7 +80,8 @@ function DungeonMasterApp() {
         creatureCount: newState.creatureCount,
         round: newState.round,
         creatures: JSON.stringify(newState.creatures),
-        activeCreature: newState.activeCreature
+        activeCreature: newState.activeCreature,
+        focusedCreature: newState.focusedCreature
       }}});
       setBattleCreated(true);
       setState(newState);

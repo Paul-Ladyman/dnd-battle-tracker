@@ -10,6 +10,7 @@ type Battle {
   round: Int!
   creatures: String!
   activeCreature: Int
+  focusedCreature: Int
 }
 
 input BattleInput {
@@ -18,6 +19,7 @@ input BattleInput {
   round: Int!
   creatures: String!
   activeCreature: Int
+  focusedCreature: Int
 }
 
 type DndbattletrackerConnection {

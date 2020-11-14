@@ -7,6 +7,7 @@ const Battle = `{
   round
   creatures
   activeCreature
+  focusedCreature
 }`;
 
 export const GET_BATTLE = gql`

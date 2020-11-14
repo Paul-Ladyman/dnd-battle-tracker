@@ -38,7 +38,7 @@ function PlayerApp({ battleId }) {
   const state = { ...battleData, creatures: JSON.parse(battleData.creatures) };
 
   const secondsElapsed = getSecondsElapsed(state);
-  const { creatureCount, round, creatures, activeCreature } = state;
+  const { creatureCount, round, creatures, activeCreature, focusedCreature } = state;
 
   return (
     <React.Fragment>
@@ -66,7 +66,7 @@ function PlayerApp({ battleId }) {
          <Creatures
            creatures={creatures}
            activeCreature={activeCreature}
-          //  focusedCreature={state.focusedCreature}
+           focusedCreature={focusedCreature}
           //  setFocus={updateBattle(setFocus)}
            round={round}
            secondsElapsed={secondsElapsed}
