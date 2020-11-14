@@ -5,6 +5,7 @@ import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
 import BattleToolbar from './BattleToolbar';
+import ExternalLink from './ExternalLink';
 import conditions from '../model/conditions';
 import {
   newBattleState,
@@ -155,7 +156,7 @@ function DungeonMasterApp() {
          <h1 className="main-title">
            D&D Battle Tracker
          </h1>
-         <h2>DM Session {state.battleId}</h2>
+         <h2>DM Session <ExternalLink url={`/?battle=${state.battleId}`}>{state.battleId}</ExternalLink></h2>
          <CreateCreatureForm
            createCreature={createCreature}
            createCreatureErrors={state.createCreatureErrors}
