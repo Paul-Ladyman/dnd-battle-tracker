@@ -4,20 +4,58 @@
   subscription: Subscription
 }
 
+type Condition {
+  text: String!
+  appliedAtRound: Int!
+  appliedAtSeconds: Int!
+  url: String
+}
+
+type Creature {
+  name: String!
+  initiative: Int
+  healthPoints: Int
+  maxHealthPoints: Int
+  id: Int!
+  alive: Boolean!
+  conditions: [Condition!]
+  notes: [Condition!]
+  locked: Boolean!
+}
+
 type Battle {
   battleId: String!
   creatureCount: Int!
   round: Int!
-  creatures: String!
+  creatures: [Creature!]
   activeCreature: Int
   focusedCreature: Int
+}
+
+input ConditionInput {
+  text: String!
+  appliedAtRound: Int!
+  appliedAtSeconds: Int!
+  url: String
+}
+
+input CreatureInput {
+  name: String!
+  initiative: Int
+  healthPoints: Int
+  maxHealthPoints: Int
+  id: Int!
+  alive: Boolean!
+  conditions: [ConditionInput!]
+  notes: [ConditionInput!]
+  locked: Boolean!
 }
 
 input BattleInput {
   battleId: String!
   creatureCount: Int!
   round: Int!
-  creatures: String!
+  creatures: [CreatureInput!]
   activeCreature: Int
   focusedCreature: Int
 }

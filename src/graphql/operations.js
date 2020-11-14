@@ -1,11 +1,27 @@
 
 import { gql } from '@apollo/client';
 
+const Note = `{
+  text
+  appliedAtRound
+  appliedAtSeconds
+  url
+}`;
+
 const Battle = `{
   battleId
   creatureCount
   round
-  creatures
+  creatures {
+    id
+    name
+    initiative
+    healthPoints
+    maxHealthPoints
+    alive
+    conditions ${Note}
+    notes ${Note}
+  }
   activeCreature
   focusedCreature
 }`;

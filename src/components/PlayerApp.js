@@ -14,13 +14,11 @@ import {
 // TODO abstract into SyncManager
 function getBattleData(queryDataLoading, queryData, subLoading, subData) {
   if (!subLoading && subData && subData.onUpdateDndbattletracker) {
-    const { onUpdateDndbattletracker } = subData;
-    return { ...onUpdateDndbattletracker, creatures: JSON.parse(onUpdateDndbattletracker.creatures)};
+    return subData.onUpdateDndbattletracker;
   }
   
   if (!queryDataLoading && queryData && queryData.getDndbattletracker) {
-    const { getDndbattletracker } = queryData;
-    return { ...getDndbattletracker, creatures: JSON.parse(getDndbattletracker.creatures) };
+    return queryData.getDndbattletracker;
   }
 
   return newBattleState();
