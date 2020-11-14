@@ -23,8 +23,6 @@ function getBattleData(queryDataLoading, queryData, subLoading, subData) {
     return { ...getDndbattletracker, creatures: JSON.parse(getDndbattletracker.creatures) };
   }
 
-  console.log('>>> new');
-
   return newBattleState();
 }
 
