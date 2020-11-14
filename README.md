@@ -86,10 +86,12 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * error handling
 * share button
 * IAM role not API key
+* treeshaking
 
 ## Bugs
 * two creatures with same name and no initiative. Add initiative for one removes the other
 * set active creature in dm view then clear battle. Add creatures again and note in player view active creature is still set, despite not starting battle
+* DM hotkeys generate a lot of updates and crash browser
 
 ## Notes
 * [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)

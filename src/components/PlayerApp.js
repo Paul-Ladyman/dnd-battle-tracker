@@ -11,17 +11,23 @@ import {
 } from '../state/BattleManager';
 
 
-function getBattleData(queryData, subData) {
-  if (subData) {
-    return subData.onUpdateDndbattletracker
+// TODO abstract into SyncManager
+function getBattleData(queryDataLoading, queryData, subLoading, subData) {
+  if (!subLoading && subData && subData.onUpdateDndbattletracker) {
+    const { onUpdateDndbattletracker } = subData;
+    return { ...onUpdateDndbattletracker, creatures: JSON.parse(onUpdateDndbattletracker.creatures)};
   }
   
-  if (queryData && queryData.getDndbattletracker) {
-    return queryData.getDndbattletracker
+  if (!queryDataLoading && queryData && queryData.getDndbattletracker) {
+    const { getDndbattletracker } = queryData;
+    return { ...getDndbattletracker, creatures: JSON.parse(getDndbattletracker.creatures) };
   }
+
+  console.log('>>> new');
 
   return newBattleState();
 }
+
 function PlayerApp({ battleId }) {
   const { loading, error, data } = useQuery(GET_BATTLE, {
     variables: { battleId }
@@ -31,19 +37,17 @@ function PlayerApp({ battleId }) {
     variables: { battleId }
   });
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :( {JSON.stringify(error)}</p>;
 
-  const battleData = getBattleData(data, syncData);
-  const state = { ...battleData, creatures: JSON.parse(battleData.creatures) };
+  const battleData = getBattleData(loading, data, syncLoading, syncData);
 
-  const secondsElapsed = getSecondsElapsed(state);
-  const { creatureCount, round, creatures, activeCreature, focusedCreature } = state;
+  const secondsElapsed = getSecondsElapsed(battleData);
+  const { creatureCount, round, creatures, activeCreature, focusedCreature } = battleData;
 
   return (
     <React.Fragment>
       <BattleToolbar
-          initiative={getInitiative(state)}
+          initiative={getInitiative(battleData)}
           round={round}
           secondsElapsed={secondsElapsed}
           creatures={creatureCount}

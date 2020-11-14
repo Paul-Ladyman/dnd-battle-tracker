@@ -73,7 +73,7 @@ function DungeonMasterApp() {
     return async function() {
       const newState = await update(state, ...arguments);
 
-      // TODO abstract syncing battle. Set battle created on state
+      // TODO abstract into SyncManager. Set battle created on state
       const syncBattle = battleCreated ? updateBattleMutation : addBattleMutation;
       syncBattle({ variables: { battleinput: {
         battleId: newState.battleId,
