@@ -8,12 +8,16 @@ type Battle {
   battleId: String!
   creatureCount: Int!
   round: Int!
+  creatures: String!
+  activeCreature: Int
 }
 
 input BattleInput {
   battleId: String!
   creatureCount: Int!
   round: Int!
+  creatures: String!
+  activeCreature: Int
 }
 
 type DndbattletrackerConnection {

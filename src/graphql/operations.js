@@ -5,6 +5,8 @@ const Battle = `{
   battleId
   creatureCount
   round
+  creatures
+  activeCreature
 }`;
 
 export const GET_BATTLE = gql`

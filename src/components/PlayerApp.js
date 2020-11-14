@@ -2,10 +2,12 @@ import { useQuery, useSubscription } from '@apollo/client';
 import React from 'react';
 import { GET_BATTLE, SYNC_BATTLE } from '../graphql/operations';
 import BattleToolbar from './BattleToolbar';
+import Creatures from './Creatures';
 import Footer from './Footer';
 import { 
   newBattleState,
-  getSecondsElapsed
+  getSecondsElapsed,
+  getInitiative
 } from '../state/BattleManager';
 
 
@@ -30,17 +32,18 @@ function PlayerApp({ battleId }) {
   });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>Error :( {JSON.stringify(error)}</p>;
 
   const battleData = getBattleData(data, syncData);
+  const state = { ...battleData, creatures: JSON.parse(battleData.creatures) };
 
-  const secondsElapsed = getSecondsElapsed(battleData);
-  const { creatureCount, round } = battleData;
+  const secondsElapsed = getSecondsElapsed(state);
+  const { creatureCount, round, creatures, activeCreature } = state;
 
   return (
     <React.Fragment>
       <BattleToolbar
-          // initiative={getInitiative(state)}
+          initiative={getInitiative(state)}
           round={round}
           secondsElapsed={secondsElapsed}
           creatures={creatureCount}
@@ -60,21 +63,18 @@ function PlayerApp({ battleId }) {
            D&D Battle Tracker
          </h1>
          <h2>Player Session {battleId}</h2>
-         {/* <Creatures
-           creatures={state.creatures}
-           activeCreature={state.activeCreature}
-           focusedCreature={state.focusedCreature}
-           setFocus={updateBattle(setFocus)}
-           conditions={conditions}
-           round={state.round}
+         <Creatures
+           creatures={creatures}
+           activeCreature={activeCreature}
+          //  focusedCreature={state.focusedCreature}
+          //  setFocus={updateBattle(setFocus)}
+           round={round}
            secondsElapsed={secondsElapsed}
-           creatureManagement={creatureManagement}
-           playerSession={playerSession}
-          /> */}
+           creatureManagement={{}}
+           playerSession
+          />
         </main>
-        <Footer
-          playerSession
-        />
+        <Footer playerSession/>
        </div>
     </React.Fragment>
   );
