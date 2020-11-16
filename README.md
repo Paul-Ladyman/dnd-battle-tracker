@@ -89,6 +89,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * treeshaking
 * run Lighthouse over player view
 * rate limiting?
+* game icon credits
 
 ## Bugs
 * two creatures with same name and no initiative. Add initiative for one removes the other
