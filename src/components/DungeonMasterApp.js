@@ -68,22 +68,24 @@ function DungeonMasterApp() {
     });
   });
 
-  const updateBattle = (update) => {
+  const updateBattle = (update, sync = true) => {
     return function() {
       setState((prevState) => {
         const newState = update(prevState, ...arguments);
 
-        // TODO abstract into SyncManager. Set battle created on state
-        const syncBattle = battleCreated ? updateBattleMutation : addBattleMutation;
-        syncBattle({ variables: { battleinput: {
-          battleId: newState.battleId,
-          creatureCount: newState.creatureCount,
-          round: newState.round,
-          creatures: newState.creatures,
-          activeCreature: newState.activeCreature,
-          focusedCreature: newState.focusedCreature
-        }}});
-        setBattleCreated(true);
+        if (sync) {
+          // TODO abstract into SyncManager. Set battle created on state
+          const syncBattle = battleCreated ? updateBattleMutation : addBattleMutation;
+          syncBattle({ variables: { battleinput: {
+            battleId: newState.battleId,
+            creatureCount: newState.creatureCount,
+            round: newState.round,
+            creatures: newState.creatures,
+            activeCreature: newState.activeCreature,
+            focusedCreature: newState.focusedCreature
+          }}});
+          setBattleCreated(true);
+        }
         return newState;
       });
     };
@@ -101,7 +103,7 @@ function DungeonMasterApp() {
     removeCreature: updateBattle(removeCreature),
     addNoteToCreature: updateBattle(addNoteToCreature),
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
-    toggleCreatureLock: updateBattle(toggleCreatureLock)
+    toggleCreatureLock: updateBattle(toggleCreatureLock, false)
   };
 
   const errors = state.errors && state.errors.length > 0;
@@ -115,13 +117,13 @@ function DungeonMasterApp() {
         creatures={state.creatureCount}
         nextInitiative={updateBattle(nextInitiative)}
         resetBattle={updateBattle(resetBattle)}
-        saveBattle={updateBattle(save)}
+        saveBattle={updateBattle(save, false)}
         loadBattle={updateBattle(load)}
         isSaveLoadSupported={isSaveLoadSupported}
       />
       { errors && <Errors
           errors={state.errors}
-          dismissErrors={updateBattle(dismissErrors)}
+          dismissErrors={updateBattle(dismissErrors, false)}
         />
        }
       <div className="aria-announcements" role='region' aria-live="assertive">
@@ -141,7 +143,7 @@ function DungeonMasterApp() {
            creatures={state.creatures}
            activeCreature={state.activeCreature}
            focusedCreature={state.focusedCreature}
-           setFocus={updateBattle(setFocus)}
+           setFocus={updateBattle(setFocus, false)}
            conditions={conditions}
            round={state.round}
            secondsElapsed={secondsElapsed}
