@@ -96,17 +96,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * set active creature in dm view then clear battle. Add creatures again and note in player view active creature is still set, despite not starting battle
 * DM hotkeys generate a lot of updates and crash browser
 * in player view rendering HP Fine when creature has no HP
-* VM3658 react_devtools_backend.js:2430 Cache data may be lost when replacing the conditions field of a Creature object.
-
-To address this problem (which is not a bug in Apollo Client), define a custom merge function for the Creature.conditions field, so InMemoryCache can safely merge these objects:
-
-  existing: [{"__typename":"Condition","text":"Deafened","appliedAtRound":0,"appliedAtSeconds":0,"url":"https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Deafened"},{"__typename":"Condition","text":"Exhaustion","appliedAtRound":0,"appliedAtSeconds":0,"url":"https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Exhaustion"}]
-  incoming: []
-
-For more information about these options, please refer to the documentation:
-
-  * Ensuring entity objects have IDs: https://go.apollo.dev/c/generating-unique-identifiers
-  * Defining custom merge functions: https://go.apollo.dev/c/merging-non-normalized-objects
 
 ## Notes
 * [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)

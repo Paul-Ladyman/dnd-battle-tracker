@@ -36,6 +36,15 @@ class CreateCreatureForm extends Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    const prevErrors = Object.keys(prevProps.createCreatureErrors).length > 0;
+    const newErrors = Object.keys(this.props.createCreatureErrors).length > 0;
+    
+    if (!newErrors && (prevErrors !== newErrors)) {
+      this.resetForm();
+    }
+  }
+
   resetForm() {
     this.setState(this.initialState);
     this.nameInput.current.focus();
@@ -62,10 +71,7 @@ class CreateCreatureForm extends Component {
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
-    const createSuccess = await this.props.createCreature(creature);
-    if (createSuccess) {
-      this.resetForm();
-    }
+    await this.props.createCreature(creature);
   }
 
   formHandler(event) {

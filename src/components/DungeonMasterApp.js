@@ -66,34 +66,28 @@ function DungeonMasterApp() {
         updateBattle(prevFocus)();
       }
     });
-
   });
 
   const updateBattle = (update) => {
-    return async function() {
-      const newState = await update(state, ...arguments);
+    return function() {
+      setState((prevState) => {
+        const newState = update(prevState, ...arguments);
 
-      // TODO abstract into SyncManager. Set battle created on state
-      const syncBattle = battleCreated ? updateBattleMutation : addBattleMutation;
-      console.log(newState)
-      syncBattle({ variables: { battleinput: {
-        battleId: newState.battleId,
-        creatureCount: newState.creatureCount,
-        round: newState.round,
-        creatures: newState.creatures,
-        activeCreature: newState.activeCreature,
-        focusedCreature: newState.focusedCreature
-      }}});
-      setBattleCreated(true);
-      setState(newState);
-      return newState;
+        // TODO abstract into SyncManager. Set battle created on state
+        const syncBattle = battleCreated ? updateBattleMutation : addBattleMutation;
+        syncBattle({ variables: { battleinput: {
+          battleId: newState.battleId,
+          creatureCount: newState.creatureCount,
+          round: newState.round,
+          creatures: newState.creatures,
+          activeCreature: newState.activeCreature,
+          focusedCreature: newState.focusedCreature
+        }}});
+        setBattleCreated(true);
+        return newState;
+      });
     };
   };
-
-  const createCreature = async (creature) => {
-    const newState = await updateBattle(addCreature)(creature);
-    return Object.keys(newState.createCreatureErrors).length === 0;
-  }
 
   const secondsElapsed = getSecondsElapsed(state);
 
@@ -140,7 +134,7 @@ function DungeonMasterApp() {
          </h1>
          <h2>DM Session <ExternalLink url={`/?battle=${state.battleId}`}>{state.battleId}</ExternalLink></h2>
          <CreateCreatureForm
-           createCreature={createCreature}
+           createCreature={updateBattle(addCreature)}
            createCreatureErrors={state.createCreatureErrors}
          />
          <Creatures
