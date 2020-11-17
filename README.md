@@ -93,7 +93,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 ## Bugs
 * two creatures with same name and no initiative. Add initiative for one removes the other
 * set active creature in dm view then clear battle. Add creatures again and note in player view active creature is still set, despite not starting battle
-* DM hotkeys generate a lot of updates and crash browser
 * in player view rendering HP Fine when creature has no HP
 
 ## Notes

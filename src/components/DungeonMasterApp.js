@@ -59,14 +59,14 @@ function DungeonMasterApp() {
       }
 
       if (isHotkey(hotkeys.nextFocus, e)) {
-        updateBattle(nextFocus)();
+        updateBattle(nextFocus, false)();
       }
 
       if (isHotkey(hotkeys.prevFocus, e)) {
-        updateBattle(prevFocus)();
+        updateBattle(prevFocus, false)();
       }
     });
-  });
+  }, []);
 
   const updateBattle = (update, sync = true) => {
     return function() {
