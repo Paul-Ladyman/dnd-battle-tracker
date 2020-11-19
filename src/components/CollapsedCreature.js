@@ -7,13 +7,19 @@ function commaSeparate(notes, trailing) {
   }).join(', ') + suffix;
 }
 
-function CollapsedCreature({creature, creatureExpander, creatureLocker, monsterSearcher, healthPoints}) {
+function CollapsedCreature({
+  creature,
+  creatureExpander,
+  creatureLocker,
+  monsterSearcher,
+  healthPoints,
+  showHealth
+}) {
   const { name } = creature;
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
   const showConditions = creature.conditions.length > 0;
   const showNotes = creature.notes.length > 0;
-  const showHealth = creature.healthPoints !== undefined;
   const conditionsMarginClass = showHealth ? 'collapsed-creature--status__margin' : '';
   const notesMarginClass = showHealth || showConditions ? 'collapsed-creature--status__margin' : '';
   return (

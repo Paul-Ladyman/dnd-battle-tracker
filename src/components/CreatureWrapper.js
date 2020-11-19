@@ -151,6 +151,7 @@ class CreatureWrapper extends Component {
        className={showExpanded ? "expanded-creature--stat" : "collapsed-creature--health-points"}
        playerSession={playerSession}
      />
+     const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
           
     return (
       <React.Fragment>
@@ -175,6 +176,7 @@ class CreatureWrapper extends Component {
               creatureLocker={creatureLocker}
               monsterSearcher={monsterSearcher}
               healthPoints={healthPoints}
+              showHealth={showHealth}
               playerSession={playerSession}
             /> :
             <CollapsedCreature
@@ -183,6 +185,7 @@ class CreatureWrapper extends Component {
               creatureLocker={creatureLocker}
               monsterSearcher={monsterSearcher}
               healthPoints={healthPoints}
+              showHealth={showHealth}
             />
           }
         </section>

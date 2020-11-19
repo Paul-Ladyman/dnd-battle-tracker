@@ -5,7 +5,11 @@ function getDamageLevel(hp, maxHp) {
   const damagedLevel = maxHpFloat / 2.0;
   const criticalLevel = maxHpFloat / 4.0;
 
-  if (hp <= damagedLevel && hp > criticalLevel) {
+  if (hp === 0) {
+    return { level: 'critical', display: 'Unconscious' };
+  }
+
+  if (hp < maxHp && hp > criticalLevel) {
     return { level: 'damaged', display: 'Damaged' };
   }
 

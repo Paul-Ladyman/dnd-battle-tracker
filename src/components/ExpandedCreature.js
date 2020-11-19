@@ -33,11 +33,11 @@ class ExpandedCreature extends Component {
       creatureLocker,
       monsterSearcher,
       healthPoints,
+      showHealth,
       playerSession
     } = this.props;
-    const { alive, name, healthPoints: creatureHealthPoints, initiative, id, conditions, notes } = creature;
+    const { alive, name, initiative, id, conditions, notes } = creature;
     const showInitiative = initiative !== undefined;
-    const showHealth = creatureHealthPoints !== undefined;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
