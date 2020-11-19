@@ -58,6 +58,7 @@ input BattleInput {
   creatures: [CreatureInput!]
   activeCreature: Int
   focusedCreature: Int
+  expdate: Int!
 }
 
 type DndbattletrackerConnection {

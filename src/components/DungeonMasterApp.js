@@ -82,7 +82,8 @@ function DungeonMasterApp() {
             round: newState.round,
             creatures: newState.creatures,
             activeCreature: newState.activeCreature,
-            focusedCreature: newState.focusedCreature
+            focusedCreature: newState.focusedCreature,
+            expdate: Math.floor(new Date().getTime()/1000.0) + 60
           }}});
           setBattleCreated(true);
         }
