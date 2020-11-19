@@ -36,6 +36,7 @@ import {
   isSaveLoadSupported,
   dismissErrors
 } from '../state/AppManager';
+import { syncBattle } from '../state/SyncManager';
 import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
@@ -43,9 +44,8 @@ import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
 
 function DungeonMasterApp() { 
   const [state, setState] = useState(newBattleState());
-  const [battleCreated, setBattleCreated] = useState(false);
 
-  const [addBattleMutation] = useMutation(CREATE_BATTLE);
+  const [createBattleMutation] = useMutation(CREATE_BATTLE);
   const [updateBattleMutation] = useMutation(UPDATE_BATTLE);
 
   useEffect(() => {
@@ -72,20 +72,8 @@ function DungeonMasterApp() {
     return function() {
       setState((prevState) => {
         const newState = update(prevState, ...arguments);
-
         if (sync) {
-          // TODO abstract into SyncManager. Set battle created on state
-          const syncBattle = battleCreated ? updateBattleMutation : addBattleMutation;
-          syncBattle({ variables: { battleinput: {
-            battleId: newState.battleId,
-            creatureCount: newState.creatureCount,
-            round: newState.round,
-            creatures: newState.creatures,
-            activeCreature: newState.activeCreature,
-            focusedCreature: newState.focusedCreature,
-            expdate: Math.floor(new Date().getTime()/1000.0) + 86400
-          }}});
-          setBattleCreated(true);
+          return syncBattle(newState, createBattleMutation, updateBattleMutation, new Date());
         }
         return newState;
       });
