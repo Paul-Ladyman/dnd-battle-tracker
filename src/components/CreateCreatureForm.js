@@ -13,7 +13,8 @@ class CreateCreatureForm extends Component {
       name: '',
       initiative: '',
       healthPoints: '',
-      multiplier: 1
+      multiplier: 1,
+      submitted: false
     };
 
     this.state = this.initialState;
@@ -36,11 +37,10 @@ class CreateCreatureForm extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    const prevErrors = Object.keys(prevProps.createCreatureErrors).length > 0;
-    const newErrors = Object.keys(this.props.createCreatureErrors).length > 0;
-    
-    if (!newErrors && (prevErrors !== newErrors)) {
+  componentDidUpdate() {
+    const errors = Object.keys(this.props.createCreatureErrors).length > 0;
+
+    if (this.state.submitted && !errors) {
       this.resetForm();
     }
   }
@@ -56,7 +56,7 @@ class CreateCreatureForm extends Component {
     this.setState(newState);
   }
 
-  async createCreature() {
+  createCreature() {
     const state = this.state;
 
     const healthPoints = state.healthPoints === '' ?
@@ -71,7 +71,8 @@ class CreateCreatureForm extends Component {
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
-    await this.props.createCreature(creature);
+    this.props.createCreature(creature);
+    this.setState({...this.state, submitted: true});
   }
 
   formHandler(event) {
