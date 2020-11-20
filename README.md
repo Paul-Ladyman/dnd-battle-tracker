@@ -60,21 +60,21 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * Health normal icon by [sbed](https://opengameart.org/content/95-game-icons)
 * Hearts icon by Skoll
 * Icons by [Delapouite](https://delapouite.com/):
-  * Hamburger menu icon
-  * Save arrow icon
-  * Share icon
-  * Broom icon
-  * Padlock open icon
-  * Contract icon
-  * Expand icon
-  * Trash can icon
-  * Pencil icon
-  * Player time icon
+  * Hamburger menu
+  * Save arrow
+  * Share
+  * Broom
+  * Padlock open
+  * Contract
+  * Expand
+  * Trash can
+  * Pencil
+  * Player time
 * Icons by [Lorc](http://lorcblog.blogspot.com/):
-  * Magnifying glass icon
-  * Crossed swords icon
-  * Padlock icon
-  * Skull crossed bones icon
+  * Magnifying glass
+  * Crossed swords
+  * Padlock
+  * Skull crossed bones
 
 ## Development
 
