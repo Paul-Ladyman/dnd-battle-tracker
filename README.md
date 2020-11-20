@@ -50,9 +50,31 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 ## Credits
 
-* All icons taken from [game-icons.net](https://game-icons.net/).
+* All icons taken from [game-icons.net](https://game-icons.net/) under the terms of the [Creative Commons 3.0 BY license|https://creativecommons.org/licenses/by/3.0/]. See below for individual credits.
 * [Critical Role](https://www.youtube.com/channel/UCpXBGqwsBkpvcYjsJBQ7LEQ) for the inspiration.
 * This application is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC.
+
+### Icons
+
+* Play button icon by [Guard13007](https://guard13007.com/)
+* Health normal icon by [sbed](https://opengameart.org/content/95-game-icons)
+* Hearts icon by Skoll
+* Icons by [Delapouite](https://delapouite.com/):
+  * Hamburger menu icon
+  * Save arrow icon
+  * Share icon
+  * Broom icon
+  * Padlock open icon
+  * Contract icon
+  * Expand icon
+  * Trash can icon
+  * Pencil icon
+  * Player time icon
+* Icons by [Lorc](http://lorcblog.blogspot.com/):
+  * Magnifying glass icon
+  * Crossed swords icon
+  * Padlock icon
+  * Skull crossed bones icon
 
 ## Development
 
@@ -86,11 +108,9 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * treeshaking
 * run Lighthouse over player view
 * rate limiting?
-* game icon credits
 
 ## Bugs
-* two creatures with same name and no initiative. Add initiative for one removes the other
-* set active creature in dm view then clear battle. Add creatures again and note in player view active creature is still set, despite not starting battle
+* Removing conditions sometimes doesn't sync
 
 ## Notes
 * [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)
