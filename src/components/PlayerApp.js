@@ -59,7 +59,7 @@ function PlayerApp({ battleId }) {
       {/* </div> */}
       <div className="main-footer-wrapper">
         <main className="main">
-         <h1 className="main-title">
+         <h1 className="main-title main-title__short">
            D&D Battle Tracker
          </h1>
          <h2>Player Session {battleId}</h2>

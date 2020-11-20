@@ -24,7 +24,9 @@ const initialBattleState = {
   round: 0,
   ariaAnnouncements: [],
   errors: [],
-  createCreatureErrors: {}
+  createCreatureErrors: {},
+  battleCreated: false,
+  syncEnabled: false
 };
 
 export function newBattleState() {
@@ -230,10 +232,29 @@ export function addCreature(state, creature) {
 };
 
 export function resetBattle(state) {
-  const { creatures, ariaAnnouncements: currentAriaAnnouncements, battleId } = state;
+  const {
+    creatures,
+    ariaAnnouncements: currentAriaAnnouncements,
+    battleId,
+    syncEnabled,
+    battleCreated
+  } = state;
   const lockedCreatures = creatures.filter(creature => creature.locked);
   const creatureCount = lockedCreatures.length;
   const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
   const ariaAnnouncements = currentAriaAnnouncements.concat(['battle reset']);
-  return {...initialBattleState, battleId, creatureCount, creatureIdCount: creatureCount, creatures: resetLockedCreatures, ariaAnnouncements};
+  return {
+    ...initialBattleState,
+    battleCreated,
+    syncEnabled,
+    battleId,
+    creatureCount,
+    creatureIdCount: creatureCount,
+    creatures: resetLockedCreatures,
+    ariaAnnouncements
+  };
+}
+
+export function toggleSync(state) {
+  return { ...state, syncEnabled: !state.syncEnabled };
 }

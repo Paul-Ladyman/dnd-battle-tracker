@@ -8,6 +8,8 @@ import OptionsMenuOpenIcon from './icons/OptionsMenuOpenIcon';
 import SaveIcon from './icons/SaveIcon';
 import LoadIcon from './icons/LoadIcon';
 import ResetIcon from './icons/ResetIcon';
+import ShareEnabledIcon from './icons/ShareEnabledIcon';
+import ShareDisabledIcon from './icons/ShareDisabledIcon';
 import { hotkeys } from '../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../state/AppManager';
 
@@ -56,7 +58,9 @@ class BattleToolbar extends Component {
       resetBattle,
       saveBattle,
       loadBattle,
-      playerSession
+      playerSession,
+      shareEnabled,
+      toggleShare
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
@@ -74,6 +78,18 @@ class BattleToolbar extends Component {
         onClick={() => {this.toggleOptions(); resetBattle();}}
         disabled={!creaturesAdded}
       ><ResetIcon /></button>;
+
+      const ShareButton = () => {
+        const Icon = shareEnabled ? ShareEnabledIcon : ShareDisabledIcon;
+        const title = shareEnabled ? 'Disable share' : 'Enable share';
+        return (
+          <button
+            title={title}
+            className={buttonClass}
+            onClick={() => {this.toggleOptions(); toggleShare();}}
+          ><Icon /></button>
+        );
+      }
 
     return (
       <header className="battle-toolbar">
@@ -127,6 +143,7 @@ class BattleToolbar extends Component {
                 className={`${buttonClass} ${buttonClass}__load`}
                 onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
               ><LoadIcon /></button>
+              <ShareButton />
               <ResetButton />
             </div>
           </div>

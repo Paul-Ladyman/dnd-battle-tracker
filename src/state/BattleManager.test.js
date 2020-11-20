@@ -9,7 +9,8 @@ import {
   setFocus,
   removeCreature,
   addCreature,
-  resetBattle
+  resetBattle,
+  toggleSync
 } from './BattleManager';
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
@@ -57,6 +58,8 @@ const defaultState = {
   ariaAnnouncements: [],
   errors: [],
   createCreatureErrors: {},
+  battleCreated: false,
+  syncEnabled: false,
   battleId: '123'
 };
 
@@ -79,6 +82,8 @@ describe('newBattleState', () => {
       ariaAnnouncements: [],
       errors: [],
       createCreatureErrors: {},
+      battleCreated: false,
+      syncEnabled: false,
       battleId: '123'
     };
 
@@ -133,7 +138,19 @@ describe('resetBattle', () => {
     };
 
     expect(resetBattle(defaultState)).toMatchObject(expected);
-  })
+  });
+
+  test('resets the battle state, keeping sync enabled', () => {
+    const state = { ...defaultState, syncEnabled: true };
+    const expected = { syncEnabled: true };
+    expect(resetBattle(state)).toMatchObject(expected);
+  });
+
+  test('resets the battle state, keeping battleCreated', () => {
+    const state = { ...defaultState, battleCreated: true };
+    const expected = { battleCreated: true };
+    expect(resetBattle(state)).toMatchObject(expected);
+  });
 });
 
 describe('getSecondsElapsed', () => {
@@ -1049,5 +1066,16 @@ describe('addCreature', () => {
     const result = addCreature(state, creature);
     expect(result.createCreatureErrors).toEqual(defaultState.createCreatureErrors);
     expect(result.errors).toEqual(defaultState.errors);
+  });
+});
+
+describe('toggleSync', () => {
+  it('enables sync if it is disabled', () => {
+    expect(toggleSync(defaultState)).toEqual({ ...defaultState, syncEnabled: true });
+  });
+
+  it('disables sync if it is disabled', () => {
+    const state = { ...defaultState, syncEnabled: true };
+    expect(toggleSync(state)).toEqual({ ...state, syncEnabled: false });
   });
 });

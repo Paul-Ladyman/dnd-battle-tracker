@@ -17,7 +17,8 @@ import {
   setFocus,
   removeCreature,
   addCreature,
-  resetBattle
+  resetBattle,
+  toggleSync
 } from '../state/BattleManager';
 import {
   killCreature,
@@ -72,9 +73,7 @@ function DungeonMasterApp() {
     return function() {
       setState((prevState) => {
         const newState = update(prevState, ...arguments);
-        if (sync) {
-          return syncBattle(newState, createBattleMutation, updateBattleMutation, new Date());
-        }
+        if (sync) return syncBattle(newState, createBattleMutation, updateBattleMutation, new Date());
         return newState;
       });
     };
@@ -108,6 +107,8 @@ function DungeonMasterApp() {
         resetBattle={updateBattle(resetBattle)}
         saveBattle={updateBattle(save, false)}
         loadBattle={updateBattle(load)}
+        toggleShare={updateBattle(toggleSync)}
+        shareEnabled={state.syncEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
       />
       { errors && <Errors
@@ -120,10 +121,16 @@ function DungeonMasterApp() {
       </div>
       <div className="main-footer-wrapper">
         <main className="main">
-         <h1 className="main-title">
+         <h1 className={`main-title ${state.syncEnabled ? 'main-title__short' : ''}`}>
            D&D Battle Tracker
          </h1>
-         <h2>DM Session <ExternalLink url={`/?battle=${state.battleId}`}>{state.battleId}</ExternalLink></h2>
+         { state.syncEnabled &&
+            <h2>
+              DM Session <ExternalLink url={`/?battle=${state.battleId}`}>
+                {state.battleId}
+              </ExternalLink>
+            </h2>
+         }
          <CreateCreatureForm
            createCreature={updateBattle(addCreature)}
            createCreatureErrors={state.createCreatureErrors}

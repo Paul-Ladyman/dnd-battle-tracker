@@ -1,4 +1,8 @@
 export function syncBattle(state, createBattle, updateBattle, date) {
+  if (!state.syncEnabled) {
+    return state;
+  }
+
   const syncInput = { variables: { battleinput: {
     battleId: state.battleId,
     creatureCount: state.creatureCount,

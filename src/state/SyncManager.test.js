@@ -23,7 +23,8 @@ const defaultState = {
   errors: [],
   createCreatureErrors: {},
   battleId: '123',
-  battleCreated: false
+  battleCreated: false,
+  syncEnabled: true
 };
 
 const date = new Date(1605815493000);
@@ -62,5 +63,13 @@ describe('syncBattle', () => {
     expect(updateBattleMock.mock.calls[0][0]).toEqual(expectedSyncInput);
     expect(createBattleMock).not.toHaveBeenCalled();
   });
-  
+
+  it('does nothing if sync is disabled', () => {
+    const state = { ...defaultState, syncEnabled: false };
+    const newState = syncBattle(state, createBattleMock, updateBattleMock, date);
+
+    expect(newState).toEqual(state);
+    expect(createBattleMock).not.toHaveBeenCalled();
+    expect(updateBattleMock).not.toHaveBeenCalled();
+  });
 });

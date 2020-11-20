@@ -49,6 +49,9 @@ a:hover {
   margin-top: 40px;
   color: #822000;
   text-align: center;
+}
+
+.main-title__short {
   margin-bottom: 0px;
 }
 
@@ -184,7 +187,7 @@ input[type="number"] {
   flex-direction: column;
   align-items: center;
   width: 40px;
-  height: 250px;
+  height: 314px;
 }
 
 .battle-toolbar--options-dropdown {
