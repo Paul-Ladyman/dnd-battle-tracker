@@ -37,7 +37,7 @@ class ExpandedCreature extends Component {
       playerSession
     } = this.props;
     const { alive, name, initiative, id, conditions, notes } = creature;
-    const showInitiative = initiative !== undefined;
+    const showInitiative = initiative !== undefined && initiative !== null;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
