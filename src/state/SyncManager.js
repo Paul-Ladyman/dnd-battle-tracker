@@ -1,9 +1,9 @@
-export function syncBattle(state, createBattle, updateBattle, date) {
-  if (!state.syncEnabled) {
+export function shareBattle(state, createBattle, updateBattle, date) {
+  if (!state.shareEnabled) {
     return state;
   }
 
-  const syncInput = { variables: { battleinput: {
+  const input = { variables: { battleinput: {
     battleId: state.battleId,
     creatureCount: state.creatureCount,
     round: state.round,
@@ -16,10 +16,10 @@ export function syncBattle(state, createBattle, updateBattle, date) {
   const { battleCreated } = state;
 
   if (battleCreated) {
-    updateBattle(syncInput);
+    updateBattle(input);
     return state;
   }
 
-  createBattle(syncInput);
+  createBattle(input);
   return { ...state, battleCreated: true };
 }

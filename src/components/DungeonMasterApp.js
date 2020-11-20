@@ -37,7 +37,7 @@ import {
   isSaveLoadSupported,
   dismissErrors
 } from '../state/AppManager';
-import { syncBattle } from '../state/SyncManager';
+import { shareBattle } from '../state/SyncManager';
 import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
@@ -69,11 +69,11 @@ function DungeonMasterApp() {
     });
   }, []);
 
-  const updateBattle = (update, sync = true) => {
+  const updateBattle = (update, share = true) => {
     return function() {
       setState((prevState) => {
         const newState = update(prevState, ...arguments);
-        if (sync) return syncBattle(newState, createBattleMutation, updateBattleMutation, new Date());
+        if (share) return shareBattle(newState, createBattleMutation, updateBattleMutation, new Date());
         return newState;
       });
     };
@@ -108,7 +108,7 @@ function DungeonMasterApp() {
         saveBattle={updateBattle(save, false)}
         loadBattle={updateBattle(load)}
         toggleShare={updateBattle(toggleSync)}
-        shareEnabled={state.syncEnabled}
+        shareEnabled={state.shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
       />
       { errors && <Errors
@@ -121,10 +121,10 @@ function DungeonMasterApp() {
       </div>
       <div className="main-footer-wrapper">
         <main className="main">
-         <h1 className={`main-title ${state.syncEnabled ? 'main-title__short' : ''}`}>
+         <h1 className={`main-title ${state.shareEnabled ? 'main-title__short' : ''}`}>
            D&D Battle Tracker
          </h1>
-         { state.syncEnabled &&
+         { state.shareEnabled &&
             <h2>
               DM Session <ExternalLink url={`/?battle=${state.battleId}`}>
                 {state.battleId}

@@ -59,7 +59,7 @@ const defaultState = {
   errors: [],
   createCreatureErrors: {},
   battleCreated: false,
-  syncEnabled: false,
+  shareEnabled: false,
   battleId: '123'
 };
 
@@ -83,7 +83,7 @@ describe('newBattleState', () => {
       errors: [],
       createCreatureErrors: {},
       battleCreated: false,
-      syncEnabled: false,
+      shareEnabled: false,
       battleId: '123'
     };
 
@@ -140,9 +140,9 @@ describe('resetBattle', () => {
     expect(resetBattle(defaultState)).toMatchObject(expected);
   });
 
-  test('resets the battle state, keeping sync enabled', () => {
-    const state = { ...defaultState, syncEnabled: true };
-    const expected = { syncEnabled: true };
+  test('resets the battle state, keeping share enabled', () => {
+    const state = { ...defaultState, shareEnabled: true };
+    const expected = { shareEnabled: true };
     expect(resetBattle(state)).toMatchObject(expected);
   });
 
@@ -1070,12 +1070,12 @@ describe('addCreature', () => {
 });
 
 describe('toggleSync', () => {
-  it('enables sync if it is disabled', () => {
-    expect(toggleSync(defaultState)).toEqual({ ...defaultState, syncEnabled: true });
+  it('enables share if it is disabled', () => {
+    expect(toggleSync(defaultState)).toEqual({ ...defaultState, shareEnabled: true });
   });
 
-  it('disables sync if it is disabled', () => {
-    const state = { ...defaultState, syncEnabled: true };
-    expect(toggleSync(state)).toEqual({ ...state, syncEnabled: false });
+  it('disables share if it is disabled', () => {
+    const state = { ...defaultState, shareEnabled: true };
+    expect(toggleSync(state)).toEqual({ ...state, shareEnabled: false });
   });
 });

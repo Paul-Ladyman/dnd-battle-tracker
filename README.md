@@ -82,7 +82,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * hotkeys
 * aria
 * error handling
-* share button
 * IAM role not API key
 * treeshaking
 * run Lighthouse over player view

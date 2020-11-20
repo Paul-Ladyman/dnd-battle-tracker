@@ -1,4 +1,4 @@
-import { syncBattle } from './SyncManager';
+import { shareBattle } from './SyncManager';
 
 const createBattleMock = jest.fn();
 const updateBattleMock = jest.fn();
@@ -24,12 +24,12 @@ const defaultState = {
   createCreatureErrors: {},
   battleId: '123',
   battleCreated: false,
-  syncEnabled: true
+  shareEnabled: true
 };
 
 const date = new Date(1605815493000);
 
-const expectedSyncInput = { variables: { battleinput: {
+const expectedInput = { variables: { battleinput: {
   battleId: defaultState.battleId,
   creatureCount: defaultState.creatureCount,
   round: defaultState.round,
@@ -44,29 +44,29 @@ beforeEach(() => {
   updateBattleMock.mockReset();
 });
 
-describe('syncBattle', () => {
+describe('shareBattle', () => {
   it('creates a new battle with a 24 hour TTL', () => {
-    const newState = syncBattle(defaultState, createBattleMock, updateBattleMock, date);
+    const newState = shareBattle(defaultState, createBattleMock, updateBattleMock, date);
 
     expect(newState).toEqual({ ...defaultState, battleCreated: true });
     expect(createBattleMock).toHaveBeenCalledTimes(1);
-    expect(createBattleMock.mock.calls[0][0]).toEqual(expectedSyncInput);
+    expect(createBattleMock.mock.calls[0][0]).toEqual(expectedInput);
     expect(updateBattleMock).not.toHaveBeenCalled();
   });
 
   it('updates an existing battle with a 24 hour TTL', () => {
     const state = { ...defaultState, battleCreated: true };
-    const newState = syncBattle(state, createBattleMock, updateBattleMock, date);
+    const newState = shareBattle(state, createBattleMock, updateBattleMock, date);
 
     expect(newState).toEqual(state);
     expect(updateBattleMock).toHaveBeenCalledTimes(1);
-    expect(updateBattleMock.mock.calls[0][0]).toEqual(expectedSyncInput);
+    expect(updateBattleMock.mock.calls[0][0]).toEqual(expectedInput);
     expect(createBattleMock).not.toHaveBeenCalled();
   });
 
-  it('does nothing if sync is disabled', () => {
-    const state = { ...defaultState, syncEnabled: false };
-    const newState = syncBattle(state, createBattleMock, updateBattleMock, date);
+  it('does nothing if share is disabled', () => {
+    const state = { ...defaultState, shareEnabled: false };
+    const newState = shareBattle(state, createBattleMock, updateBattleMock, date);
 
     expect(newState).toEqual(state);
     expect(createBattleMock).not.toHaveBeenCalled();

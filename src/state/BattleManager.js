@@ -26,7 +26,7 @@ const initialBattleState = {
   errors: [],
   createCreatureErrors: {},
   battleCreated: false,
-  syncEnabled: false
+  shareEnabled: false
 };
 
 export function newBattleState() {
@@ -236,7 +236,7 @@ export function resetBattle(state) {
     creatures,
     ariaAnnouncements: currentAriaAnnouncements,
     battleId,
-    syncEnabled,
+    shareEnabled,
     battleCreated
   } = state;
   const lockedCreatures = creatures.filter(creature => creature.locked);
@@ -246,7 +246,7 @@ export function resetBattle(state) {
   return {
     ...initialBattleState,
     battleCreated,
-    syncEnabled,
+    shareEnabled,
     battleId,
     creatureCount,
     creatureIdCount: creatureCount,
@@ -256,5 +256,5 @@ export function resetBattle(state) {
 }
 
 export function toggleSync(state) {
-  return { ...state, syncEnabled: !state.syncEnabled };
+  return { ...state, shareEnabled: !state.shareEnabled };
 }
