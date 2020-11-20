@@ -58,23 +58,23 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 * [Play button](https://game-icons.net/1x1/guard13007/play-button.html) icon by [Guard13007](https://guard13007.com/)
 * [Health normal](https://game-icons.net/1x1/sbed/health-normal.html) icon by [sbed](https://opengameart.org/content/95-game-icons)
-* [Hearts|https://game-icons.net/1x1/skoll/hearts.html] icon by Skoll
+* [Hearts](https://game-icons.net/1x1/skoll/hearts.html) icon by Skoll
 * Icons by [Delapouite](https://delapouite.com/):
-  * [Hamburger menu|https://game-icons.net/1x1/delapouite/hamburger-menu.html]
-  * [Save arrow|https://game-icons.net/1x1/delapouite/save-arrow.html]
-  * [Share|https://game-icons.net/1x1/delapouite/share.html]
-  * [Broom|https://game-icons.net/1x1/delapouite/broom.html]
-  * [Padlock open|https://game-icons.net/1x1/delapouite/padlock-open.html]
-  * [Contract|https://game-icons.net/1x1/delapouite/contract.html]
-  * [Expand|https://game-icons.net/1x1/delapouite/expand.html]
-  * [Trash can|https://game-icons.net/1x1/delapouite/trash-can.html]
-  * [Pencil|https://game-icons.net/1x1/delapouite/pencil.html]
-  * [Player time|https://game-icons.net/1x1/delapouite/player-time.html]
+  * [Hamburger menu](https://game-icons.net/1x1/delapouite/hamburger-menu.html)
+  * [Save arrow](https://game-icons.net/1x1/delapouite/save-arrow.html)
+  * [Share](https://game-icons.net/1x1/delapouite/share.html)
+  * [Broom](https://game-icons.net/1x1/delapouite/broom.html)
+  * [Padlock open](https://game-icons.net/1x1/delapouite/padlock-open.html)
+  * [Contract](https://game-icons.net/1x1/delapouite/contract.html)
+  * [Expand](https://game-icons.net/1x1/delapouite/expand.html)
+  * [Trash can](https://game-icons.net/1x1/delapouite/trash-can.html)
+  * [Pencil](https://game-icons.net/1x1/delapouite/pencil.html)
+  * [Player time](https://game-icons.net/1x1/delapouite/player-time.html)
 * Icons by [Lorc](http://lorcblog.blogspot.com/):
-  * [Magnifying glass|https://game-icons.net/1x1/lorc/magnifying-glass.html]
-  * [Crossed swords|https://game-icons.net/1x1/lorc/crossed-swords.html]
-  * [Padlock|https://game-icons.net/1x1/lorc/padlock.html]
-  * [Skull crossed bones|https://game-icons.net/1x1/lorc/skull-crossed-bones.html]
+  * [Magnifying glass](https://game-icons.net/1x1/lorc/magnifying-glass.html)
+  * [Crossed swords](https://game-icons.net/1x1/lorc/crossed-swords.html)
+  * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
+  * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html]
 
 ## Development
 
