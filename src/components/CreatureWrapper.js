@@ -104,11 +104,20 @@ class CreatureWrapper extends Component {
 
   expandCreatureHandler() {
     this.getExpandCollapseFunc()();
+    const { playerSession } = this.props;
+    if (playerSession) {
+      this.creatureRef.current.focus();
+    }
+    else {
+      const { setFocus, creature } = this.props;
+      setFocus(creature);
+    }
   }
 
   focusHandler(event) {
     const targetId = event.target.getAttribute('id');
-    if (targetId === 'creature-wrapper') {
+    const { playerSession } = this.props;
+    if (!playerSession && targetId === 'creature-wrapper') {
       const { setFocus, creature } = this.props;
       setFocus(creature);
     }

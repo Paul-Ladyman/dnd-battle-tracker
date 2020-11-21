@@ -100,9 +100,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 - Create a release in Github and upload the `dist/dnd-battle-tracker.html` file.
 
 ## TODO
-* independent focus controls
-* hotkeys
-* aria
 * error handling
 * IAM role not API key
 * treeshaking

@@ -1,11 +1,11 @@
 import React from 'react';
 import ExternalLink from './ExternalLink';
 import packageInfo from '../../package.json';
-import { hotkeys, playerSessionHotKeys, hotkeyDescriptions } from '../hotkeys/hotkeys';
+import { hotkeys, hotkeyDescriptions } from '../hotkeys/hotkeys';
 
 function Footer({ playerSession }) {
   const { version } = packageInfo;
-  const hotkeysToPrint = playerSession ? playerSessionHotKeys : hotkeys;
+
   return (
     <footer className="footer-text" role="contentinfo">
       <p>
@@ -23,17 +23,18 @@ function Footer({ playerSession }) {
       <p>
         (Feature ideas and general feedback welcome).
       </p>
-      <div className="footer-text--shortcuts">
+      {!playerSession && <div className="footer-text--shortcuts">
         <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
         <ul>
-          {Object.keys(hotkeysToPrint).map((key, i) => {
-            const hotkey = hotkeysToPrint[key]; 
+          {Object.keys(hotkeys).map((key, i) => {
+            const hotkey = hotkeys[key]; 
             return (
               <li key={i}><b>{hotkey}</b> {hotkeyDescriptions[key]}</li>
             );
           })}
         </ul>
       </div>
+      }
     </footer>
   );
 }

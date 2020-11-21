@@ -54,9 +54,6 @@ function PlayerApp({ battleId }) {
          {/* dismissErrors={updateBattle(dismissErrors)} */}
        {/* /> */}
       {/* } */}
-      {/* <div className="aria-announcements" role='region' aria-live="assertive"> */}
-        {/* {state.ariaAnnouncements} */}
-      {/* </div> */}
       <div className="main-footer-wrapper">
         <main className="main">
          <h1 className="main-title main-title__short">
@@ -67,7 +64,6 @@ function PlayerApp({ battleId }) {
            creatures={creatures}
            activeCreature={activeCreature}
            focusedCreature={focusedCreature}
-          //  setFocus={updateBattle(setFocus)}
            round={round}
            secondsElapsed={secondsElapsed}
            creatureManagement={{}}

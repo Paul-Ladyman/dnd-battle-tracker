@@ -8,11 +8,6 @@ export const hotkeys = {
   battlebar: 'alt+shift+l',
 };
 
-export const playerSessionHotKeys = {
-  nextFocus: 'mod+shift+Down',
-  prevFocus: 'mod+shift+Up',
-};
-
 export const hotkeyDescriptions =  {
   nextInitiative: 'Advance to the next creature in the initiative order.',
   nextFocus: 'Move focus to next creature.',
