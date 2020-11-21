@@ -102,6 +102,8 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 ## TODO
 * error handling
+  * bad data from graphql
+  * failure to create/update remote battle
 * IAM role not API key
 * treeshaking
 * run Lighthouse over player view
@@ -109,6 +111,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 ## Bugs
 * Removing conditions sometimes doesn't sync
+* load is broken
 
 ## Notes
 * [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)
