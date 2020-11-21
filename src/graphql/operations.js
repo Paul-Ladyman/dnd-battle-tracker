@@ -23,7 +23,6 @@ const Battle = `{
     notes ${Note}
   }
   activeCreature
-  focusedCreature
 }`;
 
 export const GET_BATTLE = gql`

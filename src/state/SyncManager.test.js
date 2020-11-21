@@ -18,6 +18,7 @@ const defaultState = {
   creatureIdCount: 3,
   creatureCount: 3,
   activeCreature: 1,
+  focusedCreature: 0,
   round: 1,
   ariaAnnouncements: [],
   errors: [],
@@ -35,7 +36,6 @@ const expectedInput = { variables: { battleinput: {
   round: defaultState.round,
   creatures: defaultState.creatures,
   activeCreature: defaultState.activeCreature,
-  focusedCreature: defaultState.focusedCreature,
   expdate: 1605901893
 }}}
 

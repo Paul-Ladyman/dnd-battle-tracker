@@ -9,7 +9,6 @@ export function shareBattle(state, createBattle, updateBattle, date) {
     round: state.round,
     creatures: state.creatures,
     activeCreature: state.activeCreature,
-    focusedCreature: state.focusedCreature,
     expdate: Math.floor(date.getTime()/1000.0) + 86400
   }}};
 
