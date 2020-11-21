@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { shareBattle } from './SyncManager';
+import { share } from './SyncManager';
 
 jest.mock('nanoid');
 
@@ -48,9 +48,9 @@ beforeEach(() => {
   nanoid.mockReset();
 });
 
-describe('shareBattle', () => {
+describe('share', () => {
   it('creates a new battle with a 24 hour TTL', () => {
-    const newState = shareBattle(defaultState, createBattleMock, updateBattleMock, date);
+    const newState = share(defaultState, createBattleMock, updateBattleMock, date);
 
     expect(newState).toEqual({ ...defaultState, battleCreated: true });
     expect(createBattleMock).toHaveBeenCalledTimes(1);
@@ -60,7 +60,7 @@ describe('shareBattle', () => {
 
   it('updates an existing battle with a 24 hour TTL', () => {
     const state = { ...defaultState, battleCreated: true };
-    const newState = shareBattle(state, createBattleMock, updateBattleMock, date);
+    const newState = share(state, createBattleMock, updateBattleMock, date);
 
     expect(newState).toEqual(state);
     expect(updateBattleMock).toHaveBeenCalledTimes(1);
@@ -70,7 +70,7 @@ describe('shareBattle', () => {
 
   it('does nothing if share is disabled', () => {
     const state = { ...defaultState, shareEnabled: false };
-    const newState = shareBattle(state, createBattleMock, updateBattleMock, date);
+    const newState = share(state, createBattleMock, updateBattleMock, date);
 
     expect(newState).toEqual(state);
     expect(createBattleMock).not.toHaveBeenCalled();
@@ -81,7 +81,7 @@ describe('shareBattle', () => {
     nanoid.mockReturnValue('new-id');
 
     const state = { ...defaultState, battleId: undefined };
-    const newState = shareBattle(state, createBattleMock, updateBattleMock, date);
+    const newState = share(state, createBattleMock, updateBattleMock, date);
 
     const expectedState = { ...defaultState, battleCreated: true, battleId: 'new-id'}
 

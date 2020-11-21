@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-export function shareBattle(state, createBattle, updateBattle, date) {
+export function share(state, createBattle, updateBattle, date) {
   if (!state.shareEnabled) {
     return state;
   }

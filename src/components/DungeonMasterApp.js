@@ -38,7 +38,7 @@ import {
   dismissErrors,
   updateErrors
 } from '../state/AppManager';
-import { shareBattle } from '../state/SyncManager';
+import { share } from '../state/SyncManager';
 import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
@@ -70,19 +70,21 @@ function DungeonMasterApp() {
     });
   }, []);
 
-  const updateBattle = (update, share = true) => {
+  const shareBattle = (shareState) =>
+    share(shareState, createBattleMutation, updateBattleMutation, new Date());
+
+  const updateBattle = (update, doShare = true) => {
     return function() {
       setState((prevState) => {
         const newState = update(prevState, ...arguments);
-        if (share) return shareBattle(newState, createBattleMutation, updateBattleMutation, new Date());
+        if (doShare) return shareBattle(newState);
         return newState;
       });
     };
   };
 
   const loadBattle = async (file) => {
-    const loadedState = await load(state, file);
-    const newState = shareBattle(loadedState, createBattleMutation, updateBattleMutation, new Date());
+    const newState = shareBattle(await load(state, file));
     setState(newState);
   }
 
