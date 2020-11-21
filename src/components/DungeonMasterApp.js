@@ -79,6 +79,10 @@ function DungeonMasterApp() {
     };
   };
 
+  const loadBattle = async (file) => {
+    setState(await load(state, file));
+  }
+
   const secondsElapsed = getSecondsElapsed(state);
 
   const creatureManagement = {
@@ -106,7 +110,7 @@ function DungeonMasterApp() {
         nextInitiative={updateBattle(nextInitiative)}
         resetBattle={updateBattle(resetBattle)}
         saveBattle={updateBattle(save, false)}
-        loadBattle={updateBattle(load)}
+        loadBattle={loadBattle}
         toggleShare={updateBattle(toggleSync)}
         shareEnabled={state.shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
