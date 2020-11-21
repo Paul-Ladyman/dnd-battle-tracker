@@ -37,6 +37,8 @@ export async function load(state, file) {
 
   const validLoadedState = loadedState && validSchema;
 
+  const { battleId, battleCreated, shareEnabled } = state;
+
   const newState = validLoadedState ? loadedState : state;
   const ariaAnnouncement = validLoadedState ? 'battle loaded' : 'failed to load battle';
   const error = validLoadedState ? [] : [`Failed to load battle. The file "${file.name}" was invalid.`];
@@ -45,6 +47,9 @@ export async function load(state, file) {
 
   return {
     ...newState,
+    battleId,
+    battleCreated,
+    shareEnabled,
     ariaAnnouncements,
     errors,
     createCreatureErrors: {}

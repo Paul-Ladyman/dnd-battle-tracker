@@ -80,7 +80,9 @@ function DungeonMasterApp() {
   };
 
   const loadBattle = async (file) => {
-    setState(await load(state, file));
+    const loadedState = await load(state, file);
+    const newState = shareBattle(loadedState, createBattleMutation, updateBattleMutation, new Date());
+    setState(newState);
   }
 
   const secondsElapsed = getSecondsElapsed(state);

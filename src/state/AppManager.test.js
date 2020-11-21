@@ -108,6 +108,31 @@ describe('load', () => {
     expect(loadedFileContents).toEqual(expectedFileContents);
   });
 
+  it('keeps battle sharing data of current session', async () => {
+    const { ariaAnnouncements, ...fileContents } = defaultState;
+    FileSystem.load.mockReturnValue(new Promise(resolve =>
+      resolve(JSON.stringify(fileContents))
+    ));
+
+    const state = {
+      ...defaultState,
+      battleId: '123',
+      battleCreated: true,
+      shareEnabled: true
+    }
+
+    const loadedFileContents = await load(state, file);
+
+    const { calls } = FileSystem.load.mock;
+    expect(calls.length).toBe(1);
+    expect(calls[0][0]).toBe(file);
+    const expectedFileContents = {
+      ...state,
+      ariaAnnouncements: ['battle loaded']
+    };
+    expect(loadedFileContents).toEqual(expectedFileContents);
+  });
+
   it('resets errors on load', async () => {
     const state = {
       ...defaultState,
