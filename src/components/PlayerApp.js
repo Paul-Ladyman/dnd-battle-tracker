@@ -13,13 +13,13 @@ import {
 
 
 // TODO abstract into SyncManager
-function getBattleData(queryDataLoading, queryData, subLoading, subData) {
-  if (!subLoading && subData && subData.onUpdateDndbattletracker) {
-    return subData.onUpdateDndbattletracker;
+function getBattleData(getLoading, getData, syncLoading, syncData) {
+  if (!syncLoading && syncData && syncData.onUpdateDndbattletracker) {
+    return syncData.onUpdateDndbattletracker;
   }
   
-  if (!queryDataLoading && queryData && queryData.getDndbattletracker) {
-    return queryData.getDndbattletracker;
+  if (!getLoading && getData && getData.getDndbattletracker) {
+    return getData.getDndbattletracker;
   }
 
   return newBattleState;
@@ -28,24 +28,24 @@ function getBattleData(queryDataLoading, queryData, subLoading, subData) {
 function PlayerApp({ battleId }) {
   const [errors, setErrors] = useState(false);
 
-  const { loading, error, data } = useQuery(GET_BATTLE, {
+  const { loading: getLoading, error: getError, data: getData } = useQuery(GET_BATTLE, {
     variables: { battleId }
   });
 
-  const { loading: syncLoading, error: syncError, data:syncData } = useSubscription(SYNC_BATTLE, {
+  const { loading: syncLoading, error: syncError, data: syncData } = useSubscription(SYNC_BATTLE, {
     variables: { battleId }
   });
 
-  const battleData = getBattleData(loading, data, syncLoading, syncData);
+  const battleData = getBattleData(getLoading, getData, syncLoading, syncData);
 
   const secondsElapsed = getSecondsElapsed(battleData);
   const { creatureCount, round, creatures, activeCreature, focusedCreature } = battleData;
 
   useEffect(() => {
-    if (error || syncError) {
+    if (getError || syncError) {
       setErrors(true);
     }
-  }, [error, syncError]);
+  }, [getError, syncError]);
 
   return (
     <React.Fragment>
