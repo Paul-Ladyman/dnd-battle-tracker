@@ -35,7 +35,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 ## Features
 
-* Works entirely offline.
+* Core DM features work entirely offline.
 * Create a list of creatures who are involved in combat by adding a name, initiative score and health points for each one.
 * Track creature status pre- and post-battle so active conditions carry into battle and persist when its over.
 * Automatically order creatures by their initiative.
@@ -47,6 +47,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * Allowing creatures to be killed/made unconscious and making it obvious to the DM that this has happened.
 * Creatures can be added to or removed from the list at any time, even after combat has started.
 * Save and load battles in case they continue into another session.
+* Share your battle with your players so they can see the initiative order and follow along. Requires internet access.
 
 ## Credits
 
