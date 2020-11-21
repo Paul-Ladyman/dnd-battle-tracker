@@ -105,9 +105,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * treeshaking
 * rate limiting?
 
-## Bugs
-* Removing conditions sometimes doesn't sync
-
 ## Notes
 * [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)
 * [AppSync IAM auth](https://docs.aws.amazon.com/appsync/latest/devguide/security.html#aws-iam-authorization)
