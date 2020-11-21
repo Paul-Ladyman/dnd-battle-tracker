@@ -6,7 +6,7 @@ import { createAuthLink } from 'aws-appsync-auth-link';
 
 const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com';
 const uri = `https://${graphqlHost}/graphql`;
-const apiKey = 'da2-w7n25atfknagzbt37kwiwif4ou';
+const apiKey = '';
 
 const auth = {
   type: 'API_KEY',

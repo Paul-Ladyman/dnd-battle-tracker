@@ -1,9 +1,10 @@
 import { useQuery, useSubscription } from '@apollo/client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GET_BATTLE, SYNC_BATTLE } from '../graphql/operations';
 import BattleToolbar from './BattleToolbar';
 import Creatures from './Creatures';
 import Footer from './Footer';
+import Errors from './Errors';
 import { 
   newBattleState,
   getSecondsElapsed,
@@ -25,6 +26,8 @@ function getBattleData(queryDataLoading, queryData, subLoading, subData) {
 }
 
 function PlayerApp({ battleId }) {
+  const [errors, setErrors] = useState(false);
+
   const { loading, error, data } = useQuery(GET_BATTLE, {
     variables: { battleId }
   });
@@ -33,12 +36,16 @@ function PlayerApp({ battleId }) {
     variables: { battleId }
   });
 
-  if (error) return <p>Error :( {JSON.stringify(error)}</p>;
-
   const battleData = getBattleData(loading, data, syncLoading, syncData);
 
   const secondsElapsed = getSecondsElapsed(battleData);
   const { creatureCount, round, creatures, activeCreature, focusedCreature } = battleData;
+
+  useEffect(() => {
+    if (error || syncError) {
+      setErrors(true);
+    }
+  }, [error, syncError]);
 
   return (
     <React.Fragment>
@@ -49,11 +56,11 @@ function PlayerApp({ battleId }) {
           creatures={creatureCount}
           playerSession
       />
-      {/* { errors && <Errors */}
-         {/* errors={state.errors} */}
-         {/* dismissErrors={updateBattle(dismissErrors)} */}
-       {/* /> */}
-      {/* } */}
+      { errors && <Errors
+         errors={['Error synchronising with Dungeon Master']}
+         dismissErrors={() => setErrors(false)}
+       />
+      }
       <div className="main-footer-wrapper">
         <main className="main">
          <h1 className="main-title main-title__short">
