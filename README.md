@@ -102,7 +102,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 ## TODO
 * IAM role not API key
-* rate limiting?
 
 ## Notes
 * [AppSync building a client](https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-node.html)
