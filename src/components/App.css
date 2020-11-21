@@ -45,6 +45,10 @@ a:hover {
   width: 100%;
 }
 
+.main__error   {
+  padding-top: 0px;
+}
+
 .main-title {
   margin-top: 40px;
   color: #822000;

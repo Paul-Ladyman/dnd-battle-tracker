@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import './index.css';
 import DungeonMasterApp from './components/DungeonMasterApp';
 import PlayerApp from './components/PlayerApp';
+import ErrorBoundary from './components/ErrorBoundary';
 import apolloClient from './graphql/apolloClient';
 
 function getUrlParameter(name) {
@@ -17,10 +18,12 @@ const battleId = getUrlParameter('battle');
 
 const WithProvider = () => (
   <ApolloProvider client={apolloClient}>
-    {battleId ?
-      <PlayerApp battleId={battleId} /> :
-      <DungeonMasterApp />
-    }
+    <ErrorBoundary>
+      { battleId ?
+        <PlayerApp battleId={battleId} /> :
+        <DungeonMasterApp />
+      }
+    </ErrorBoundary>
   </ApolloProvider>
 )
 
