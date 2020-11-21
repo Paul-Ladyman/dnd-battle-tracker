@@ -22,7 +22,7 @@ function getBattleData(queryDataLoading, queryData, subLoading, subData) {
     return queryData.getDndbattletracker;
   }
 
-  return newBattleState();
+  return newBattleState;
 }
 
 function PlayerApp({ battleId }) {

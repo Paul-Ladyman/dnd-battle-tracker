@@ -44,7 +44,7 @@ import { hotkeys } from '../hotkeys/hotkeys';
 import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
 
 function DungeonMasterApp() { 
-  const [state, setState] = useState(newBattleState());
+  const [state, setState] = useState(newBattleState);
 
   const [createBattleMutation] = useMutation(CREATE_BATTLE);
   const [updateBattleMutation] = useMutation(UPDATE_BATTLE);

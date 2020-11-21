@@ -1,5 +1,4 @@
 import findIndex from 'lodash.findindex';
-import { nanoid } from 'nanoid';
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 import { addError } from './AppManager';
 
@@ -15,7 +14,7 @@ function sortCreatures(creatures) {
   });
 }
 
-const initialBattleState = {
+export const newBattleState = {
   creatures: [],
   creatureIdCount: 0,
   creatureCount: 0,
@@ -25,16 +24,10 @@ const initialBattleState = {
   ariaAnnouncements: [],
   errors: [],
   createCreatureErrors: {},
+  battleId: undefined,
   battleCreated: false,
   shareEnabled: false
 };
-
-export function newBattleState() {
-  return {
-    ...initialBattleState,
-    battleId: nanoid(11)
-  };
-}
 
 export function getSecondsElapsed(state) {
   if (!state.round || state.round <= 0) {
@@ -244,7 +237,7 @@ export function resetBattle(state) {
   const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
   const ariaAnnouncements = currentAriaAnnouncements.concat(['battle reset']);
   return {
-    ...initialBattleState,
+    ...newBattleState,
     battleCreated,
     shareEnabled,
     battleId,

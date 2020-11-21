@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { 
   newBattleState,
   getSecondsElapsed,
@@ -15,7 +14,6 @@ import {
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
 jest.mock('./CreatureManager');
-jest.mock('nanoid');
 
 const defaultState = {
   creatures:[
@@ -66,12 +64,10 @@ const defaultState = {
 beforeEach(() => {
   resetCreature.mockClear();
   createCreature.mockClear();
-  nanoid.mockClear();
 });
 
 describe('newBattleState', () => {
   test('returns the initial battle state', () => {
-    nanoid.mockReturnValue('123');
     const expected = {
       creatures: [],
       creatureIdCount: 0,
@@ -84,11 +80,10 @@ describe('newBattleState', () => {
       createCreatureErrors: {},
       battleCreated: false,
       shareEnabled: false,
-      battleId: '123'
+      battleId: undefined
     };
 
-    expect(newBattleState()).toEqual(expected);
-    expect(nanoid).toHaveBeenCalledWith(11);
+    expect(newBattleState).toEqual(expected);
   });
 });
 

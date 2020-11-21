@@ -1,10 +1,14 @@
+import { nanoid } from 'nanoid';
+
 export function shareBattle(state, createBattle, updateBattle, date) {
   if (!state.shareEnabled) {
     return state;
   }
 
+  const battleId = state.battleId || nanoid(11);
+
   const input = { variables: { battleinput: {
-    battleId: state.battleId,
+    battleId,
     creatureCount: state.creatureCount,
     round: state.round,
     creatures: state.creatures,
@@ -20,5 +24,6 @@ export function shareBattle(state, createBattle, updateBattle, date) {
   }
 
   createBattle(input);
-  return { ...state, battleCreated: true };
+
+  return { ...state, battleCreated: true, battleId };
 }
