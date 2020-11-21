@@ -103,7 +103,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 ## TODO
 * error handling
   * bad data from graphql
-  * failure to create/update remote battle
 * IAM role not API key
 * treeshaking
 * run Lighthouse over player view

@@ -76,3 +76,8 @@ export function addError(state, errorToAdd) {
 
   return state.errors.concat(errorToAdd);
 }
+
+export function updateErrors(state, errorToAdd) {
+  const errors = addError(state, errorToAdd);
+  return { ...state, errors };
+}

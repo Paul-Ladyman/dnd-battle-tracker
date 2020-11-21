@@ -35,7 +35,8 @@ import {
   save,
   load,
   isSaveLoadSupported,
-  dismissErrors
+  dismissErrors,
+  updateErrors
 } from '../state/AppManager';
 import { shareBattle } from '../state/SyncManager';
 import Footer from './Footer';
@@ -46,8 +47,8 @@ import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
 function DungeonMasterApp() { 
   const [state, setState] = useState(newBattleState);
 
-  const [createBattleMutation] = useMutation(CREATE_BATTLE);
-  const [updateBattleMutation] = useMutation(UPDATE_BATTLE);
+  const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
+  const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
 
   useEffect(() => {
     window.onbeforeunload = () => {
@@ -99,6 +100,12 @@ function DungeonMasterApp() {
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
     toggleCreatureLock: updateBattle(toggleCreatureLock, false)
   };
+
+  useEffect(() => {
+    if (createError || updateError) {
+      updateBattle(updateErrors, false)('Error sharing battle with players');
+    }
+  }, [createError, updateError]);
 
   const errors = state.errors && state.errors.length > 0;
 
