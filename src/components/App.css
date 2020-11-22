@@ -55,6 +55,10 @@ a:hover {
   text-align: center;
 }
 
+.sub-title {
+  text-align: center;
+}
+
 .main-title__short {
   margin-bottom: 0px;
 }

@@ -5,6 +5,7 @@ import BattleToolbar from './BattleToolbar';
 import Creatures from './Creatures';
 import Footer from './Footer';
 import Errors from './Errors';
+import Title from './Title';
 import { 
   newBattleState,
   getSecondsElapsed,
@@ -63,10 +64,10 @@ function PlayerApp({ battleId }) {
       }
       <div className="main-footer-wrapper">
         <main className="main">
-         <h1 className="main-title main-title__short">
-           D&D Battle Tracker
-         </h1>
-         <h2>Player Session {battleId}</h2>
+          <Title
+            battleId={battleId}
+            playerSession
+          />
          <Creatures
            creatures={creatures}
            activeCreature={activeCreature}

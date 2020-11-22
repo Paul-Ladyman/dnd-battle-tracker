@@ -5,7 +5,7 @@ import './App.css';
 import CreateCreatureForm from './CreateCreatureForm';
 import Creatures from './Creatures';
 import BattleToolbar from './BattleToolbar';
-import ExternalLink from './ExternalLink';
+import Title from './Title';
 import conditions from '../model/conditions';
 import {
   newBattleState,
@@ -44,7 +44,7 @@ import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
 import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
 
-function DungeonMasterApp() { 
+function DungeonMasterApp() {
   const [state, setState] = useState(newBattleState);
 
   const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
@@ -136,16 +136,10 @@ function DungeonMasterApp() {
       </div>
       <div className="main-footer-wrapper">
         <main className="main">
-         <h1 className={`main-title ${state.shareEnabled ? 'main-title__short' : ''}`}>
-           D&D Battle Tracker
-         </h1>
-         { state.shareEnabled &&
-            <h2>
-              DM Session <ExternalLink url={`/?battle=${state.battleId}`}>
-                {state.battleId}
-              </ExternalLink>
-            </h2>
-         }
+          <Title
+            shareEnabled={state.shareEnabled}
+            battleId={state.battleId}
+          />
          <CreateCreatureForm
            createCreature={updateBattle(addCreature)}
            createCreatureErrors={state.createCreatureErrors}
