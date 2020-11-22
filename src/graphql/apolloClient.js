@@ -7,19 +7,17 @@ import { CognitoIdentity } from '@aws-sdk/client-cognito-identity';
 
 const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com';
 const uri = `https://${graphqlHost}/graphql`;
+const region = 'eu-west-2';
 
 async function getCognitoAuth() {
-  const cognitoIdentity = new CognitoIdentity({
-    region: 'eu-west-2'
-  });
+  const cognitoIdentity = new CognitoIdentity({ region });
 
   const { IdentityId } = await cognitoIdentity.getId({
-    IdentityPoolId: 'eu-west-2:6cd2b2d5-c0b0-4a09-9043-d4933b3bf007'
+    IdentityPoolId: `${region}:6cd2b2d5-c0b0-4a09-9043-d4933b3bf007`
   });
 
-  const { Credentials: { AccessKeyId, SecretKey, SessionToken }, $metadata } = await cognitoIdentity.getCredentialsForIdentity({
-    IdentityId,
-    Logins: []
+  const { Credentials: { AccessKeyId, SecretKey, SessionToken } } = await cognitoIdentity.getCredentialsForIdentity({
+    IdentityId
   });
 
   return {
@@ -48,7 +46,7 @@ export default async function getApolloClient() {
   const auth = await getAuth();
   
   const httpLink = ApolloLink.from([
-     createAuthLink({ url: uri, region: 'eu-west-2', auth }), 
+     createAuthLink({ url: uri, region, auth }), 
      new HttpLink({ uri })
   ]);
   
