@@ -157,7 +157,7 @@ class CreatureWrapper extends Component {
        short={!showExpanded}
        hp={creatureHealthPoints}
        maxHp={maxHealthPoints}
-       className={showExpanded ? "expanded-creature--stat" : "collapsed-creature--health-points"}
+       className={showExpanded ? 'expanded-creature--stat' : ''}
        playerSession={playerSession}
      />
      const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
