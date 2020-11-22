@@ -1066,11 +1066,19 @@ describe('addCreature', () => {
 
 describe('toggleSync', () => {
   it('enables share if it is disabled', () => {
-    expect(toggleSync(defaultState)).toEqual({ ...defaultState, shareEnabled: true });
+    expect(toggleSync(defaultState)).toEqual({
+      ...defaultState,
+      shareEnabled: true,
+      ariaAnnouncements: ['share enabled']
+    });
   });
 
   it('disables share if it is disabled', () => {
     const state = { ...defaultState, shareEnabled: true };
-    expect(toggleSync(state)).toEqual({ ...state, shareEnabled: false });
+    expect(toggleSync(state)).toEqual({
+      ...state,
+      shareEnabled: false,
+      ariaAnnouncements: ['share disabled']
+    });
   });
 });

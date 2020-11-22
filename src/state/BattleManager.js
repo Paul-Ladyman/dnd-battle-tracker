@@ -249,5 +249,8 @@ export function resetBattle(state) {
 }
 
 export function toggleSync(state) {
-  return { ...state, shareEnabled: !state.shareEnabled };
+  const { shareEnabled, ariaAnnouncements: currentAriaAnnouncements } = state;
+  const announcement = shareEnabled ? 'share disabled' : 'share enabled';
+  const ariaAnnouncements = currentAriaAnnouncements.concat([announcement]);
+  return { ...state, shareEnabled: !shareEnabled, ariaAnnouncements };
 }
