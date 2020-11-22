@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@aws-sdk/client-cognito-identity": "^1.0.0-rc.7",
     "aws-appsync-auth-link": "^3.0.2",
     "aws-appsync-subscription-link": "^3.0.3",
     "fast-deep-equal": "^2.0.1",
