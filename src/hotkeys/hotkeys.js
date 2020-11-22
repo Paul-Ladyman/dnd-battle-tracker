@@ -1,4 +1,4 @@
-export const hotkeys =  {
+export const hotkeys = {
   nextInitiative: 'mod+shift+.',
   nextFocus: 'mod+shift+Down',
   prevFocus: 'mod+shift+Up',

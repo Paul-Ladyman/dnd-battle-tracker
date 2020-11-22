@@ -8,6 +8,8 @@ import OptionsMenuOpenIcon from './icons/OptionsMenuOpenIcon';
 import SaveIcon from './icons/SaveIcon';
 import LoadIcon from './icons/LoadIcon';
 import ResetIcon from './icons/ResetIcon';
+import ShareEnabledIcon from './icons/ShareEnabledIcon';
+import ShareDisabledIcon from './icons/ShareDisabledIcon';
 import { hotkeys } from '../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../state/AppManager';
 
@@ -24,8 +26,9 @@ class BattleToolbar extends Component {
   }
 
   componentDidMount() {
+    const { playerSession } = this.props;
     window.addEventListener('keydown', (e) => {
-      if (isHotkey(hotkeys.battlebar, e)) {
+      if (!playerSession && isHotkey(hotkeys.battlebar, e)) {
         const { disabled: nextButtonDisabled } = this.nextButton.current.attributes;
         if (nextButtonDisabled) {
           this.optionsButton.current.focus();
@@ -54,7 +57,10 @@ class BattleToolbar extends Component {
       nextInitiative,
       resetBattle,
       saveBattle,
-      loadBattle
+      loadBattle,
+      playerSession,
+      shareEnabled,
+      toggleShare
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
@@ -73,15 +79,27 @@ class BattleToolbar extends Component {
         disabled={!creaturesAdded}
       ><ResetIcon /></button>;
 
+      const ShareButton = () => {
+        const Icon = shareEnabled ? ShareEnabledIcon : ShareDisabledIcon;
+        const title = shareEnabled ? 'Disable share' : 'Enable share';
+        return (
+          <button
+            title={title}
+            className={buttonClass}
+            onClick={() => {this.toggleOptions(); toggleShare();}}
+          ><Icon /></button>
+        );
+      }
+
     return (
       <header className="battle-toolbar">
-        <button
+        {!playerSession && <button
           title={nextButtonTitle}
           className={buttonClasses}
           onClick={nextInitiative}
           ref={this.nextButton}
           disabled={!creaturesAdded}
-        >{nextButtonLabel}</button>
+        >{nextButtonLabel}</button>}
         <div className="battle-toolbar--stat">
           Initiative:
           <div className="battle-toolbar--stat-value">{initiative}</div>
@@ -98,7 +116,7 @@ class BattleToolbar extends Component {
           Time Elapsed:
           <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
         </div>
-        { isSaveLoadSupported() &&
+        { !playerSession && isSaveLoadSupported() &&
           <div className="battle-toolbar--options-container">
             <button
               title="Options Menu"
@@ -125,11 +143,12 @@ class BattleToolbar extends Component {
                 className={`${buttonClass} ${buttonClass}__load`}
                 onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
               ><LoadIcon /></button>
+              <ShareButton />
               <ResetButton />
             </div>
           </div>
         }
-        { !isSaveLoadSupported() && <ResetButton /> }
+        { !playerSession && !isSaveLoadSupported() && <ResetButton /> }
       </header>
     );
   }

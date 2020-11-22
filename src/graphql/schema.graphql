@@ -1,0 +1,74 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Condition {
+  text: String!
+  appliedAtRound: Int!
+  appliedAtSeconds: Int!
+  url: String
+}
+
+type Creature {
+  name: String!
+  initiative: Int
+  healthPoints: Int
+  maxHealthPoints: Int
+  id: Int!
+  alive: Boolean!
+  conditions: [Condition!]
+  notes: [Condition!]
+  locked: Boolean!
+}
+
+type Battle {
+  battleId: String!
+  creatureCount: Int!
+  round: Int!
+  creatures: [Creature!]
+  activeCreature: Int
+}
+
+input ConditionInput {
+  text: String!
+  appliedAtRound: Int!
+  appliedAtSeconds: Int!
+  url: String
+}
+
+input CreatureInput {
+  name: String!
+  initiative: Int
+  healthPoints: Int
+  maxHealthPoints: Int
+  id: Int!
+  alive: Boolean!
+  conditions: [ConditionInput!]
+  notes: [ConditionInput!]
+  locked: Boolean!
+}
+
+input BattleInput {
+  battleId: String!
+  creatureCount: Int!
+  round: Int!
+  creatures: [CreatureInput!]
+  activeCreature: Int
+  expdate: Int!
+}
+
+type Mutation {
+  createDndbattletracker(input: BattleInput!): Battle
+  updateDndbattletracker(input: BattleInput!): Battle
+}
+
+type Query {
+  getDndbattletracker(battleId: String!): Battle
+}
+
+type Subscription {
+  onCreateDndbattletracker(battleId: String): Battle @aws_subscribe(mutations : ["createDndbattletracker"])
+  onUpdateDndbattletracker(battleId: String): Battle @aws_subscribe(mutations : ["updateDndbattletracker"])
+}

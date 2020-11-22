@@ -8,7 +8,8 @@ import {
   setFocus,
   removeCreature,
   addCreature,
-  resetBattle
+  resetBattle,
+  toggleSync
 } from './BattleManager';
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
@@ -54,15 +55,19 @@ const defaultState = {
   round: 1,
   ariaAnnouncements: [],
   errors: [],
-  createCreatureErrors: {}
+  createCreatureErrors: {},
+  battleCreated: false,
+  shareEnabled: false,
+  battleId: '123'
 };
 
 beforeEach(() => {
+  resetCreature.mockClear();
   createCreature.mockClear();
 });
 
 describe('newBattleState', () => {
-  test('contains the initial battle state', () => {
+  test('returns the initial battle state', () => {
     const expected = {
       creatures: [],
       creatureIdCount: 0,
@@ -72,7 +77,10 @@ describe('newBattleState', () => {
       round: 0,
       ariaAnnouncements: [],
       errors: [],
-      createCreatureErrors: {}
+      createCreatureErrors: {},
+      battleCreated: false,
+      shareEnabled: false,
+      battleId: undefined
     };
 
     expect(newBattleState).toEqual(expected);
@@ -80,7 +88,23 @@ describe('newBattleState', () => {
 });
 
 describe('resetBattle', () => {
-  test('resets to the initial battle state, keeping and resetting locked creatures', () => {
+  test('resets to the initial battle state', () => {
+    const expected = {
+      creatureIdCount: 2,
+      creatureCount: 2,
+      activeCreature: undefined,
+      focusedCreature: undefined,
+      round: 0,
+      ariaAnnouncements: ['battle reset'],
+      errors: [],
+      createCreatureErrors: {}
+    };
+
+    expect(resetBattle(defaultState)).toMatchObject(expected);
+    expect(resetCreature).toHaveBeenCalledTimes(2);
+  });
+
+  test('resets the battle state, keeping and resetting locked creatures', () => {
     const resetCreature1 = {
       ...defaultState.creatures[1],
       id: 0,
@@ -97,18 +121,30 @@ describe('resetBattle', () => {
         resetCreature1,
         resetCreature2
       ],
-      creatureIdCount: 2,
-      creatureCount: 2,
-      activeCreature: undefined,
-      focusedCreature: undefined,
-      round: 0,
-      ariaAnnouncements: ['battle reset'],
-      errors: [],
-      createCreatureErrors: {}
     };
 
-    expect(resetBattle(defaultState)).toEqual(expected);
+    expect(resetBattle(defaultState)).toMatchObject(expected);
     expect(resetCreature).toHaveBeenCalledTimes(2);
+  }); 
+
+  test('resets the battle state, keeping the battleId', () => {
+    const expected = {
+      battleId: '123'
+    };
+
+    expect(resetBattle(defaultState)).toMatchObject(expected);
+  });
+
+  test('resets the battle state, keeping share enabled', () => {
+    const state = { ...defaultState, shareEnabled: true };
+    const expected = { shareEnabled: true };
+    expect(resetBattle(state)).toMatchObject(expected);
+  });
+
+  test('resets the battle state, keeping battleCreated', () => {
+    const state = { ...defaultState, battleCreated: true };
+    const expected = { battleCreated: true };
+    expect(resetBattle(state)).toMatchObject(expected);
   });
 });
 
@@ -1025,5 +1061,24 @@ describe('addCreature', () => {
     const result = addCreature(state, creature);
     expect(result.createCreatureErrors).toEqual(defaultState.createCreatureErrors);
     expect(result.errors).toEqual(defaultState.errors);
+  });
+});
+
+describe('toggleSync', () => {
+  it('enables share if it is disabled', () => {
+    expect(toggleSync(defaultState)).toEqual({
+      ...defaultState,
+      shareEnabled: true,
+      ariaAnnouncements: ['share enabled']
+    });
+  });
+
+  it('disables share if it is disabled', () => {
+    const state = { ...defaultState, shareEnabled: true };
+    expect(toggleSync(state)).toEqual({
+      ...state,
+      shareEnabled: false,
+      ariaAnnouncements: ['share disabled']
+    });
   });
 });

@@ -10,6 +10,7 @@ function CreatureNoteList({
   dismissHandler,
   round,
   secondsElapsed,
+  playerSession
 }) {
   return (
     <React.Fragment>
@@ -30,9 +31,10 @@ function CreatureNoteList({
                     className="creature-note-list--timer"
                   />
                 </div>
-              <button className="creature-note-list--button" title="Remove note" onClick={() => dismissHandler(creatureId, note)}>
+              {!playerSession && <button className="creature-note-list--button" title="Remove note" onClick={() => dismissHandler(creatureId, note)}>
                 <RemoveIcon />
               </button>
+              }
             </div>;
 
           return i === 0 ?

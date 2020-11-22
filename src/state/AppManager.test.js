@@ -1,4 +1,4 @@
-import { save, load, isSaveLoadSupported, dismissErrors, addError, addErrors } from './AppManager';
+import { save, load, isSaveLoadSupported, dismissErrors, addError, updateErrors } from './AppManager';
 import FileSystem from '../util/fileSystem';
 
 jest.mock('../util/fileSystem');
@@ -96,13 +96,38 @@ describe('load', () => {
       resolve(JSON.stringify(fileContents))
     ));
 
-    const loadedFileContents = await load(file, defaultState);
+    const loadedFileContents = await load(defaultState, file);
 
     const { calls } = FileSystem.load.mock;
     expect(calls.length).toBe(1);
     expect(calls[0][0]).toBe(file);
     const expectedFileContents = {
       ...defaultState,
+      ariaAnnouncements: ['battle loaded']
+    };
+    expect(loadedFileContents).toEqual(expectedFileContents);
+  });
+
+  it('keeps battle sharing data of current session', async () => {
+    const { ariaAnnouncements, ...fileContents } = defaultState;
+    FileSystem.load.mockReturnValue(new Promise(resolve =>
+      resolve(JSON.stringify(fileContents))
+    ));
+
+    const state = {
+      ...defaultState,
+      battleId: '123',
+      battleCreated: true,
+      shareEnabled: true
+    }
+
+    const loadedFileContents = await load(state, file);
+
+    const { calls } = FileSystem.load.mock;
+    expect(calls.length).toBe(1);
+    expect(calls[0][0]).toBe(file);
+    const expectedFileContents = {
+      ...state,
       ariaAnnouncements: ['battle loaded']
     };
     expect(loadedFileContents).toEqual(expectedFileContents);
@@ -119,7 +144,7 @@ describe('load', () => {
       resolve(JSON.stringify(fileContents))
     ));
 
-    const loadedFileContents = await load(file, state);
+    const loadedFileContents = await load(state, file);
 
     const { calls } = FileSystem.load.mock;
     expect(calls.length).toBe(1);
@@ -139,7 +164,7 @@ describe('load', () => {
       resolve(JSON.stringify(fileContents))
     ));
 
-    const results = await load(file, defaultState);
+    const results = await load(defaultState, file);
 
     const expectedState = {
       ...defaultState,
@@ -158,7 +183,7 @@ describe('load', () => {
       resolve(fileContents)
     ));
 
-    const results = await load(file, defaultState);
+    const results = await load(defaultState, file);
 
     const expectedState = {
       ...defaultState,
@@ -220,5 +245,29 @@ describe('addError', () => {
 
     const result = addError(state, 'three');
     expect(result).toEqual(errors);
+  });
+});
+
+describe('updateErrors', () => {
+  test('adds a new error to state', () => {
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two', 'three']
+    };
+
+    const result = updateErrors(state, 'four');
+    const expectedErrors = ['one', 'two', 'three', 'four'];
+    expect(result).toEqual({ ...state, errors: expectedErrors });
+  });
+
+  test('returns the existing state if an error if it exists', () => {
+    const errors = ['one', 'two', 'three'];
+    const state = {
+      ...defaultState,
+      errors
+    };
+
+    const result = updateErrors(state, 'three');
+    expect(result).toEqual(state);
   });
 });

@@ -29,13 +29,15 @@ function jsonParse(value) {
   }
 }
 
-export async function load(file, state) {
+export async function load(state, file) {
   const fileContents = await FileSystem.load(file);
   const loadedState = jsonParse(fileContents);
 
   const { valid: validSchema } = validate(loadedState, appSchema);
 
   const validLoadedState = loadedState && validSchema;
+
+  const { battleId, battleCreated, shareEnabled } = state;
 
   const newState = validLoadedState ? loadedState : state;
   const ariaAnnouncement = validLoadedState ? 'battle loaded' : 'failed to load battle';
@@ -45,6 +47,9 @@ export async function load(file, state) {
 
   return {
     ...newState,
+    battleId,
+    battleCreated,
+    shareEnabled,
     ariaAnnouncements,
     errors,
     createCreatureErrors: {}
@@ -70,4 +75,9 @@ export function addError(state, errorToAdd) {
   }
 
   return state.errors.concat(errorToAdd);
+}
+
+export function updateErrors(state, errorToAdd) {
+  const errors = addError(state, errorToAdd);
+  return { ...state, errors };
 }

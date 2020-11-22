@@ -13,7 +13,8 @@ class CreateCreatureForm extends Component {
       name: '',
       initiative: '',
       healthPoints: '',
-      multiplier: 1
+      multiplier: 1,
+      submitted: false
     };
 
     this.state = this.initialState;
@@ -34,6 +35,14 @@ class CreateCreatureForm extends Component {
         this.nameInput.current.focus();
       }
     });
+  }
+
+  componentDidUpdate() {
+    const errors = Object.keys(this.props.createCreatureErrors).length > 0;
+
+    if (this.state.submitted && !errors) {
+      this.resetForm();
+    }
   }
 
   resetForm() {
@@ -62,10 +71,8 @@ class CreateCreatureForm extends Component {
 
     const creature = {...state, healthPoints, initiative, multiplier};
 
-    const createSuccess = this.props.createCreature(creature);
-    if (createSuccess) {
-      this.resetForm();
-    }
+    this.props.createCreature(creature);
+    this.setState({...this.state, submitted: true});
   }
 
   formHandler(event) {

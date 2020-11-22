@@ -1,5 +1,4 @@
 import React from 'react';
-import HealthPoints from './HealthPoints';
 
 function commaSeparate(notes, trailing) {
   const suffix = trailing ? ',' : ''
@@ -8,13 +7,19 @@ function commaSeparate(notes, trailing) {
   }).join(', ') + suffix;
 }
 
-function CollapsedCreature({creature, creatureExpander, creatureLocker, monsterSearcher}) {
+function CollapsedCreature({
+  creature,
+  creatureExpander,
+  creatureLocker,
+  monsterSearcher,
+  healthPoints,
+  showHealth
+}) {
   const { name } = creature;
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
   const nameClasses = `collapsed-creature--name ${nameModifier}`
   const showConditions = creature.conditions.length > 0;
   const showNotes = creature.notes.length > 0;
-  const showHealth = creature.healthPoints !== undefined;
   const conditionsMarginClass = showHealth ? 'collapsed-creature--status__margin' : '';
   const notesMarginClass = showHealth || showConditions ? 'collapsed-creature--status__margin' : '';
   return (
@@ -28,12 +33,7 @@ function CollapsedCreature({creature, creatureExpander, creatureLocker, monsterS
         {creatureExpander}
       </div>
       <div className="collapsed-creature--status">
-        {showHealth && <HealthPoints
-          short
-          hp={creature.healthPoints}
-          maxHp={creature.maxHealthPoints}
-          className="collapsed-creature--health-points"
-        />}
+        {showHealth && healthPoints}
         {showConditions && 
           <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>{
             commaSeparate(creature.conditions, showNotes)

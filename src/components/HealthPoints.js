@@ -1,38 +1,43 @@
 import React from 'react';
 
-function getDamageClass(hp, maxHp) {
+function getDamageLevel(hp, maxHp) {
   const maxHpFloat = parseFloat(maxHp);
   const damagedLevel = maxHpFloat / 2.0;
   const criticalLevel = maxHpFloat / 4.0;
 
-  if (hp <= damagedLevel && hp > criticalLevel) {
-    return 'health-points--damaged';
+  if (hp === 0) {
+    return { level: 'critical', display: 'Unconscious' };
+  }
+
+  if (hp < maxHp && hp > criticalLevel) {
+    return { level: 'damaged', display: 'Damaged' };
   }
 
   if (hp <= criticalLevel) {
-    return 'health-points--critical';
+    return { level: 'critical', display: 'Critical' };
   }
 
-  return 'health-points--fine';
+  return { level: 'fine', display: 'Fine' };
 }
 
 function HealthPoints({
   short,
   hp,
   maxHp,
-  className
+  className,
+  playerSession
 }) {
-  const classes = `${getDamageClass(hp, maxHp)} ${className}`;
-  const text = short ? `${hp}HP` : hp;
-  return (
-    <React.Fragment>
-      {!short && <div className={className}><b>Max Hit Points</b> {maxHp}</div>}
-      <div className={classes}>
-        {!short && <b>Current Hit Points </b>}
-        {text}
-      </div>
-    </React.Fragment>
-  )
+  const damageLevel = getDamageLevel(hp, maxHp);
+  const classes = `health-points--${damageLevel.level} ${className}`;
+  const numericHp = short ? `${hp}HP` : hp;
+
+  return (<React.Fragment>
+    {!short && !playerSession && <div className={className}><b>Max Hit Points</b> {maxHp}</div>}
+    <div className={classes}>
+      {!short && !playerSession && <b>Current Hit Points </b>}
+      {playerSession ? `HP ${damageLevel.display}` : numericHp}
+    </div>
+  </React.Fragment>);
 }
 
 HealthPoints.defaultProps = {

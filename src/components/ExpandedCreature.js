@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CreatureNoteList from './CreatureNoteList';
-import HealthPoints from './HealthPoints';
 import { conditionDescriptions } from '../model/conditions';
 import ExternalLink from './ExternalLink';
 import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
@@ -32,11 +31,13 @@ class ExpandedCreature extends Component {
       removeNoteFromCreature,
       creatureExpander,
       creatureLocker,
-      monsterSearcher
+      monsterSearcher,
+      healthPoints,
+      showHealth,
+      playerSession
     } = this.props;
-    const { alive, name, maxHealthPoints, healthPoints, initiative, id, conditions, notes } = creature;
-    const showInitiative = initiative !== undefined;
-    const showHealth = healthPoints !== undefined;
+    const { alive, name, initiative, id, conditions, notes } = creature;
+    const showInitiative = initiative !== undefined && initiative !== null;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
@@ -61,13 +62,7 @@ class ExpandedCreature extends Component {
               </div>
             }
             <div className="expanded-creature--separator" />
-            {showHealth &&
-              <HealthPoints
-                hp={healthPoints}
-                maxHp={maxHealthPoints}
-                className="expanded-creature--stat"
-              />
-            }
+            {showHealth && healthPoints}
             {showInitiative &&
               <div className="expanded-creature--stat">
                 <b>Initiative</b> {initiative}
@@ -83,6 +78,7 @@ class ExpandedCreature extends Component {
               dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
               round={round}
               secondsElapsed={secondsElapsed}
+              playerSession={playerSession}
             />
           }
           {showNotes &&
@@ -93,10 +89,11 @@ class ExpandedCreature extends Component {
               dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
               round={round}
               secondsElapsed={secondsElapsed}
+              playerSession={playerSession}
             />
           }
         </div>
-        {!active && !this.state.removing &&
+        {!playerSession && !active && !this.state.removing &&
           <button
             aria-label={`remove ${creature.name}`}
             title="Remove creature"
@@ -106,7 +103,7 @@ class ExpandedCreature extends Component {
             <RemoveCreatureIcon />
           </button>
         }
-        {!active && this.state.removing &&
+        {!playerSession && !active && this.state.removing &&
           <button
             aria-label={`confirm remove ${creature.name}`}
             title="Confirm remove creature"

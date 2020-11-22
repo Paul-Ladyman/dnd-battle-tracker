@@ -23,7 +23,10 @@ export const newBattleState = {
   round: 0,
   ariaAnnouncements: [],
   errors: [],
-  createCreatureErrors: {}
+  createCreatureErrors: {},
+  battleId: undefined,
+  battleCreated: false,
+  shareEnabled: false
 };
 
 export function getSecondsElapsed(state) {
@@ -222,9 +225,32 @@ export function addCreature(state, creature) {
 };
 
 export function resetBattle(state) {
-  const lockedCreatures = state.creatures.filter(creature => creature.locked);
+  const {
+    creatures,
+    ariaAnnouncements: currentAriaAnnouncements,
+    battleId,
+    shareEnabled,
+    battleCreated
+  } = state;
+  const lockedCreatures = creatures.filter(creature => creature.locked);
   const creatureCount = lockedCreatures.length;
   const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
-  const ariaAnnouncements = state.ariaAnnouncements.concat(['battle reset']);
-  return {...newBattleState, creatureCount, creatureIdCount: creatureCount, creatures: resetLockedCreatures, ariaAnnouncements};
+  const ariaAnnouncements = currentAriaAnnouncements.concat(['battle reset']);
+  return {
+    ...newBattleState,
+    battleCreated,
+    shareEnabled,
+    battleId,
+    creatureCount,
+    creatureIdCount: creatureCount,
+    creatures: resetLockedCreatures,
+    ariaAnnouncements
+  };
+}
+
+export function toggleSync(state) {
+  const { shareEnabled, ariaAnnouncements: currentAriaAnnouncements } = state;
+  const announcement = shareEnabled ? 'share disabled' : 'share enabled';
+  const ariaAnnouncements = currentAriaAnnouncements.concat([announcement]);
+  return { ...state, shareEnabled: !shareEnabled, ariaAnnouncements };
 }

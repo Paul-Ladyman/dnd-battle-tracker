@@ -9,7 +9,8 @@ function Creatures({
   conditions,
   round,
   secondsElapsed,
-  creatureManagement
+  creatureManagement,
+  playerSession
 }) {
   return (
     <div className="creature-list">
@@ -27,6 +28,7 @@ function Creatures({
               secondsElapsed={secondsElapsed}
               creatureManagement={creatureManagement}
               conditions={conditions}
+              playerSession={playerSession}
             />
           </React.Fragment>
         );

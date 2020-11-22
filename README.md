@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v2.2.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v2.2.1/dnd-battle-tracker.html)
+**Latest release (v2.3.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v2.3.0/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -35,7 +35,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 ## Features
 
-* Works entirely offline.
+* Core DM features work entirely offline.
 * Create a list of creatures who are involved in combat by adding a name, initiative score and health points for each one.
 * Track creature status pre- and post-battle so active conditions carry into battle and persist when its over.
 * Automatically order creatures by their initiative.
@@ -47,12 +47,35 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * Allowing creatures to be killed/made unconscious and making it obvious to the DM that this has happened.
 * Creatures can be added to or removed from the list at any time, even after combat has started.
 * Save and load battles in case they continue into another session.
+* Share your battle with your players so they can see the initiative order and follow along. Requires internet access.
 
 ## Credits
 
-* All icons taken from [game-icons.net](https://game-icons.net/).
+* All icons taken from [game-icons.net](https://game-icons.net/) under the terms of the [Creative Commons 3.0 BY license](https://creativecommons.org/licenses/by/3.0/). See below for individual credits.
 * [Critical Role](https://www.youtube.com/channel/UCpXBGqwsBkpvcYjsJBQ7LEQ) for the inspiration.
 * This application is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC.
+
+### Icons
+
+* [Play button](https://game-icons.net/1x1/guard13007/play-button.html) icon by [Guard13007](https://guard13007.com/)
+* [Health normal](https://game-icons.net/1x1/sbed/health-normal.html) icon by [sbed](https://opengameart.org/content/95-game-icons)
+* [Hearts](https://game-icons.net/1x1/skoll/hearts.html) icon by Skoll
+* Icons by [Delapouite](https://delapouite.com/):
+  * [Hamburger menu](https://game-icons.net/1x1/delapouite/hamburger-menu.html)
+  * [Save arrow](https://game-icons.net/1x1/delapouite/save-arrow.html)
+  * [Share](https://game-icons.net/1x1/delapouite/share.html)
+  * [Broom](https://game-icons.net/1x1/delapouite/broom.html)
+  * [Padlock open](https://game-icons.net/1x1/delapouite/padlock-open.html)
+  * [Contract](https://game-icons.net/1x1/delapouite/contract.html)
+  * [Expand](https://game-icons.net/1x1/delapouite/expand.html)
+  * [Trash can](https://game-icons.net/1x1/delapouite/trash-can.html)
+  * [Pencil](https://game-icons.net/1x1/delapouite/pencil.html)
+  * [Player time](https://game-icons.net/1x1/delapouite/player-time.html)
+* Icons by [Lorc](http://lorcblog.blogspot.com/):
+  * [Magnifying glass](https://game-icons.net/1x1/lorc/magnifying-glass.html)
+  * [Crossed swords](https://game-icons.net/1x1/lorc/crossed-swords.html)
+  * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
+  * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
 
 ## Development
 
