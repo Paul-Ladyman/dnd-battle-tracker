@@ -43,7 +43,10 @@ async function getAuth() {
 }
 
 export default async function getApolloClient() {
-  const auth = await getAuth();
+  const auth = {
+    type: 'API_KEY',
+    apiKey: 'da2-w7n25atfknagzbt37kwiwif4ou'
+  };
   
   const httpLink = ApolloLink.from([
      createAuthLink({ url: uri, region, auth }), 
