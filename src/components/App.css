@@ -18,6 +18,11 @@ a {
   color: black;
 }
 
+h1 a {
+  color: #822000;
+  text-decoration: none;
+}
+
 a:hover {
   color: #822000;
 }

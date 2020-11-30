@@ -12,11 +12,9 @@ export default function Title({ shareEnabled, battleId, playerSession, error}) {
     }
 
     return (
-      <>
-        DM Session <ExternalLink url={`/?battle=${battleId}`}>
-          {battleId}
-        </ExternalLink>
-      </>
+      <ExternalLink url={`/?battle=${battleId}`}>
+        Player session link {battleId}
+      </ExternalLink>
     );
   };
 
@@ -27,7 +25,7 @@ export default function Title({ shareEnabled, battleId, playerSession, error}) {
   return (
     <>
       <h1 className={titleClasses}>
-        D&D Battle Tracker
+        <ExternalLink url="/">D&D Battle Tracker</ExternalLink>
       </h1>
       { showSubtitle && <h2 className='sub-title'><SubTitle /></h2> }
     </>
