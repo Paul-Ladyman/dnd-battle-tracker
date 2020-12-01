@@ -44,11 +44,11 @@ import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
 import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
 
-function DungeonMasterApp() {
-  const [state, setState] = useState(newBattleState);
+function DungeonMasterApp({ state, setState, shareEnabled, toggleShare, shareBattle }) {
+  // const [state, setState] = useState(newBattleState);
 
-  const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
-  const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
+  // const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
+  // const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
 
   useEffect(() => {
     window.onbeforeunload = () => {
@@ -70,8 +70,8 @@ function DungeonMasterApp() {
     });
   }, []);
 
-  const shareBattle = (shareState) =>
-    share(shareState, createBattleMutation, updateBattleMutation, new Date());
+  // const shareBattle = (shareState) =>
+    // share(shareState, createBattleMutation, updateBattleMutation, new Date());
 
   const updateBattle = (update, doShare = true) => {
     return function() {
@@ -103,11 +103,11 @@ function DungeonMasterApp() {
     toggleCreatureLock: updateBattle(toggleCreatureLock, false)
   };
 
-  useEffect(() => {
-    if (createError || updateError) {
-      updateBattle(updateErrors, false)('Error sharing battle with players');
-    }
-  }, [createError, updateError]);
+  // useEffect(() => {
+  //   if (createError || updateError) {
+  //     updateBattle(updateErrors, false)('Error sharing battle with players');
+  //   }
+  // }, [createError, updateError]);
 
   const errors = state.errors && state.errors.length > 0;
 
@@ -137,7 +137,7 @@ function DungeonMasterApp() {
       <div className="main-footer-wrapper">
         <main className="main">
           <Title
-            shareEnabled={state.shareEnabled}
+            shareEnabled={shareEnabled}
             battleId={state.battleId}
           />
          <CreateCreatureForm
