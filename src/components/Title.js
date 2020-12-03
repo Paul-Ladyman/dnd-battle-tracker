@@ -11,6 +11,10 @@ export default function Title({ shareEnabled, battleId, playerSession, error}) {
       return ( <>Player Session {battleId}</> );
     }
 
+    if (!battleId) {
+      return ( <>. . .</> );
+    }
+
     return (
       <ExternalLink url={`/?battle=${battleId}`}>
         Player session link {battleId}

@@ -27,6 +27,7 @@ function getBattleData(getLoading, getData, syncLoading, syncData) {
 }
 
 function PlayerApp({ battleId }) {
+  console.log('>>> player app');
   const [errors, setErrors] = useState(false);
 
   const { loading: getLoading, error: getError, data: getData } = useQuery(GET_BATTLE, {

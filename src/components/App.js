@@ -8,17 +8,9 @@ import {
   newBattleState,
 } from '../state/BattleManager';
 
-export default function App({ battleId }) {
+export default function App() {
   const [apolloClient, setApolloClient] = useState(undefined);
   const [state, setState] = useState(newBattleState);
-
-  if (battleId) {
-    const apolloClient = getApolloClient();
-    return (<ApolloProvider client={apolloClient}>
-      <PlayerApp battleId={battleId} /> 
-    </ApolloProvider>
-    )
-  }
 
   useEffect(() => {
     async function initApolloClient() {
@@ -26,6 +18,7 @@ export default function App({ battleId }) {
       const client = await getApolloClient();
       setApolloClient(client);
     }
+
     if (state.shareEnabled && !apolloClient) {
       initApolloClient();
     }
@@ -34,13 +27,14 @@ export default function App({ battleId }) {
   console.log(state);
 
   if (state.shareEnabled && apolloClient) {
-    return (<ApolloProvider client={apolloClient}>
-      <SharedDungeonMasterApp
-        state={state}
-        setState={setState}
-      />
-    </ApolloProvider>
-    )
+    return (
+      <ApolloProvider client={apolloClient}>
+        <SharedDungeonMasterApp
+          state={state}
+          setState={setState}
+        />
+      </ApolloProvider>
+    );
   }
 
   return (

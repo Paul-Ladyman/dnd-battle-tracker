@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 import './index.css';
 import App from './components/App';
+import PlayerApp from './components/PlayerApp';
 import ErrorBoundary from './components/ErrorBoundary';
 import getApolloClient from './graphql/apolloClient';
 
@@ -16,16 +17,27 @@ function getUrlParameter(name) {
 const battleId = getUrlParameter('battle');
 
 async function render() {
-  // const apolloClient = await getApolloClient();
-  const WithProvider = () => (
-    // <ApolloProvider client={apolloClient}>
+  const rootElement = document.getElementById('root');
+
+  if (battleId) {
+    const apolloClient = await getApolloClient();
+    const RenderPlayerApp = () => (
       <ErrorBoundary>
-        <App battleId={battleId}/>
+        <ApolloProvider client={apolloClient}>
+          <PlayerApp battleId={battleId} /> 
+        </ApolloProvider>
       </ErrorBoundary>
-    // </ApolloProvider>
-  )
-  
-  ReactDOM.render(WithProvider(), document.getElementById('root'));
+    );
+    ReactDOM.render(RenderPlayerApp(), rootElement);
+  }
+  else {
+    const RenderDmApp = () => (
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    );
+    ReactDOM.render(RenderDmApp(), rootElement);
+  }
 }
 
 render();
