@@ -44,11 +44,13 @@ import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
 import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
 
-function DungeonMasterApp({ state, setState, shareEnabled, toggleShare, shareBattle }) {
+function DungeonMasterApp({ state, setState, shareBattle }) {
   // const [state, setState] = useState(newBattleState);
 
   // const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
   // const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
+
+  console.log('>>> dm app share enabled', state.shareEnabled);
 
   useEffect(() => {
     window.onbeforeunload = () => {
@@ -137,7 +139,7 @@ function DungeonMasterApp({ state, setState, shareEnabled, toggleShare, shareBat
       <div className="main-footer-wrapper">
         <main className="main">
           <Title
-            shareEnabled={shareEnabled}
+            shareEnabled={state.shareEnabled}
             battleId={state.battleId}
           />
          <CreateCreatureForm

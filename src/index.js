@@ -16,7 +16,7 @@ function getUrlParameter(name) {
 const battleId = getUrlParameter('battle');
 
 async function render() {
-  const apolloClient = await getApolloClient();
+  // const apolloClient = await getApolloClient();
   const WithProvider = () => (
     // <ApolloProvider client={apolloClient}>
       <ErrorBoundary>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DungeonMasterApp from './DungeonMasterApp';
 import SharedDungeonMasterApp from './SharedDungeonMasterApp';
 import PlayerApp from './PlayerApp';
@@ -9,6 +9,7 @@ import {
 } from '../state/BattleManager';
 
 export default function App({ battleId }) {
+  const [apolloClient, setApolloClient] = useState(undefined);
   const [state, setState] = useState(newBattleState);
 
   if (battleId) {
@@ -19,10 +20,20 @@ export default function App({ battleId }) {
     )
   }
 
+  useEffect(() => {
+    async function initApolloClient() {
+      console.log('>> App init apolloclient');
+      const client = await getApolloClient();
+      setApolloClient(client);
+    }
+    if (state.shareEnabled && !apolloClient) {
+      initApolloClient();
+    }
+  }, [state.shareEnabled]);
+
   console.log(state);
 
-  if (state.shareEnabled) {
-    const apolloClient = getApolloClient();
+  if (state.shareEnabled && apolloClient) {
     return (<ApolloProvider client={apolloClient}>
       <SharedDungeonMasterApp
         state={state}

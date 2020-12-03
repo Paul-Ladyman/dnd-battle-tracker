@@ -5,7 +5,7 @@ import { share } from '../state/SyncManager';
 import DungeonMasterApp from './DungeonMasterApp';
 
 export default function SharedDungeonMasterApp(props) {
-  console.log('sharing');
+  console.log('sharing dm app');
   const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
   const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
 
