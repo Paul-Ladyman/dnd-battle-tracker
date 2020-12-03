@@ -13,7 +13,6 @@ export default function DungeonMasterAppWrapper() {
 
   useEffect(() => {
     async function initApolloClient() {
-      console.log('>> App init apolloclient');
       const client = await getApolloClient();
       setApolloClient(client);
     }
@@ -22,8 +21,6 @@ export default function DungeonMasterAppWrapper() {
       initApolloClient();
     }
   }, [state.shareEnabled]);
-
-  console.log(state);
 
   if (state.shareEnabled && apolloClient) {
     return (

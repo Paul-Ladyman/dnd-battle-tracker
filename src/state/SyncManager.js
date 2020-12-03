@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 
 export function share(state, createBattle, updateBattle, date) {
-  console.log('>>> syncmanager share enabled', state.shareEnabled);
   if (!state.shareEnabled) {
     return state;
   }

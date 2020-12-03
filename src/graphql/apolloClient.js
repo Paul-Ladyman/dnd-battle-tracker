@@ -43,7 +43,6 @@ async function getAuth() {
 }
 
 export default async function getApolloClient() {
-  console.log('>>> init apollo client');
   const auth = await getAuth();
   
   const httpLink = ApolloLink.from([

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
-import { useMutation } from '@apollo/client';
 import '../App.css';
 import CreateCreatureForm from '../CreateCreatureForm';
 import Creatures from '../Creatures';
@@ -8,7 +7,6 @@ import BattleToolbar from '../BattleToolbar';
 import Title from '../Title';
 import conditions from '../../model/conditions';
 import {
-  newBattleState,
   getSecondsElapsed,
   nextInitiative,
   getInitiative,
@@ -38,20 +36,11 @@ import {
   dismissErrors,
   updateErrors
 } from '../../state/AppManager';
-import { share } from '../../state/SyncManager';
 import Footer from '../Footer';
 import Errors from '../Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
-import { CREATE_BATTLE, UPDATE_BATTLE } from '../../graphql/operations';
 
-function DungeonMasterApp({ state, setState, shareBattle }) {
-  // const [state, setState] = useState(newBattleState);
-
-  // const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
-  // const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
-
-  console.log('>>> dm app share enabled', state.shareEnabled);
-
+function DungeonMasterApp({ state, setState, shareBattle, createError, updateError }) {
   useEffect(() => {
     window.onbeforeunload = () => {
       return true;
@@ -71,9 +60,6 @@ function DungeonMasterApp({ state, setState, shareBattle }) {
       }
     });
   }, []);
-
-  // const shareBattle = (shareState) =>
-    // share(shareState, createBattleMutation, updateBattleMutation, new Date());
 
   const updateBattle = (update, doShare = true) => {
     return function() {
@@ -105,11 +91,11 @@ function DungeonMasterApp({ state, setState, shareBattle }) {
     toggleCreatureLock: updateBattle(toggleCreatureLock, false)
   };
 
-  // useEffect(() => {
-  //   if (createError || updateError) {
-  //     updateBattle(updateErrors, false)('Error sharing battle with players');
-  //   }
-  // }, [createError, updateError]);
+  useEffect(() => {
+    if (createError || updateError) {
+      updateBattle(updateErrors, false)('Error sharing battle with players');
+    }
+  }, [createError, updateError]);
 
   const errors = state.errors && state.errors.length > 0;
 
