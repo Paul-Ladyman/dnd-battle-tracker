@@ -1,16 +1,16 @@
 import { useQuery, useSubscription } from '@apollo/client';
 import React, { useState, useEffect } from 'react';
-import { GET_BATTLE, SYNC_BATTLE } from '../graphql/operations';
-import BattleToolbar from './BattleToolbar';
-import Creatures from './Creatures';
-import Footer from './Footer';
-import Errors from './Errors';
-import Title from './Title';
+import { GET_BATTLE, SYNC_BATTLE } from '../../graphql/operations';
+import BattleToolbar from '../BattleToolbar';
+import Creatures from '../Creatures';
+import Footer from '../Footer';
+import Errors from '../Errors';
+import Title from '../Title';
 import { 
   newBattleState,
   getSecondsElapsed,
   getInitiative
-} from '../state/BattleManager';
+} from '../../state/BattleManager';
 
 
 // TODO abstract into SyncManager

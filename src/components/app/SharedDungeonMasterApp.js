@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
-import { share } from '../state/SyncManager';
+import { CREATE_BATTLE, UPDATE_BATTLE } from '../../graphql/operations';
+import { share } from '../../state/SyncManager';
 import DungeonMasterApp from './DungeonMasterApp';
 
 export default function SharedDungeonMasterApp({ state, setState }) {

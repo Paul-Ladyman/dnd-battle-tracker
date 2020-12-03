@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import DungeonMasterApp from './DungeonMasterApp';
 import SharedDungeonMasterApp from './SharedDungeonMasterApp';
-import PlayerApp from './PlayerApp';
-import getApolloClient from '../graphql/apolloClient';
+import getApolloClient from '../../graphql/apolloClient';
 import { ApolloProvider } from '@apollo/client';
 import {
   newBattleState,
-} from '../state/BattleManager';
+} from '../../state/BattleManager';
 
-export default function App() {
+export default function DungeonMasterAppWrapper() {
   const [apolloClient, setApolloClient] = useState(undefined);
   const [state, setState] = useState(newBattleState);
 

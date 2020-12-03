@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import { useMutation } from '@apollo/client';
-import './App.css';
-import CreateCreatureForm from './CreateCreatureForm';
-import Creatures from './Creatures';
-import BattleToolbar from './BattleToolbar';
-import Title from './Title';
-import conditions from '../model/conditions';
+import '../App.css';
+import CreateCreatureForm from '../CreateCreatureForm';
+import Creatures from '../Creatures';
+import BattleToolbar from '../BattleToolbar';
+import Title from '../Title';
+import conditions from '../../model/conditions';
 import {
   newBattleState,
   getSecondsElapsed,
@@ -19,7 +19,7 @@ import {
   addCreature,
   resetBattle,
   toggleSync
-} from '../state/BattleManager';
+} from '../../state/BattleManager';
 import {
   killCreature,
   stabalizeCreature,
@@ -30,19 +30,19 @@ import {
   addHealthToCreature,
   addInitiativeToCreature,
   toggleCreatureLock
-} from '../state/CreatureManager';
+} from '../../state/CreatureManager';
 import {
   save,
   load,
   isSaveLoadSupported,
   dismissErrors,
   updateErrors
-} from '../state/AppManager';
-import { share } from '../state/SyncManager';
-import Footer from './Footer';
-import Errors from './Errors';
-import { hotkeys } from '../hotkeys/hotkeys';
-import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
+} from '../../state/AppManager';
+import { share } from '../../state/SyncManager';
+import Footer from '../Footer';
+import Errors from '../Errors';
+import { hotkeys } from '../../hotkeys/hotkeys';
+import { CREATE_BATTLE, UPDATE_BATTLE } from '../../graphql/operations';
 
 function DungeonMasterApp({ state, setState, shareBattle }) {
   // const [state, setState] = useState(newBattleState);

@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 import './index.css';
-import App from './components/App';
-import PlayerApp from './components/PlayerApp';
+import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
+import PlayerApp from './components/app/PlayerApp';
 import ErrorBoundary from './components/ErrorBoundary';
 import getApolloClient from './graphql/apolloClient';
 
@@ -33,7 +33,7 @@ async function render() {
   else {
     const RenderDmApp = () => (
       <ErrorBoundary>
-        <App />
+        <DungeonMasterAppWrapper />
       </ErrorBoundary>
     );
     ReactDOM.render(RenderDmApp(), rootElement);
