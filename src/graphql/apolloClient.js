@@ -9,16 +9,28 @@ const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.
 const uri = `https://${graphqlHost}/graphql`;
 const region = 'eu-west-2';
 
-async function getCognitoAuth() {
-  const cognitoIdentity = new CognitoIdentity({ region });
+const cognitoIdentity = new CognitoIdentity({ region });
 
+async function getCognitoIdentity() {
   const { IdentityId } = await cognitoIdentity.getId({
     IdentityPoolId: `${region}:6cd2b2d5-c0b0-4a09-9043-d4933b3bf007`
   });
 
-  const { Credentials: { AccessKeyId, SecretKey, SessionToken } } = await cognitoIdentity.getCredentialsForIdentity({
+  return IdentityId;
+}
+
+async function getCognitoCredentials(IdentityId) {
+  const { Credentials } = await cognitoIdentity.getCredentialsForIdentity({
     IdentityId
   });
+
+  return Credentials;
+}
+
+async function getCognitoAuth() {
+  const IdentityId = await getCognitoIdentity();
+
+  const { AccessKeyId, SecretKey, SessionToken } = await getCognitoCredentials(IdentityId);
 
   return {
     type: 'AWS_IAM',

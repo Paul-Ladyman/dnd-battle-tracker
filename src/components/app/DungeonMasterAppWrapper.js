@@ -8,19 +8,36 @@ import {
 } from '../../state/BattleManager';
 
 export default function DungeonMasterAppWrapper() {
+  const [apolloInitCount, setApolloInitCount] = useState(0);
   const [apolloClient, setApolloClient] = useState(undefined);
   const [state, setState] = useState(newBattleState);
 
-  useEffect(() => {
-    async function initApolloClient() {
-      const client = await getApolloClient();
-      setApolloClient(client);
-    }
+  async function initApolloClient() {
+    console.log('>>> initApolloClient');
+    const client = await getApolloClient();
+    setApolloClient(client);
+    setApolloInitCount(apolloInitCount+1);
+  }
 
+  useEffect(() => {
     if (state.shareEnabled && !apolloClient) {
       initApolloClient();
     }
   }, [state.shareEnabled]);
+
+  useEffect(() => {
+    console.log('>>> schedule use effect');
+    if (apolloInitCount) {
+      console.log('>>> scheduling apollo refresh');
+      
+      const timer = setTimeout(() => {
+        console.log('>>> refreshing apollo client!');
+        initApolloClient();
+      }, 5000);
+
+      return () => { console.log('>>> clearing timeout'); clearTimeout(timer)};
+    }
+  }, [apolloInitCount]);
 
   if (state.shareEnabled && apolloClient) {
     return (
