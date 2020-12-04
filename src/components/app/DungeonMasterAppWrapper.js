@@ -20,20 +20,23 @@ export default function DungeonMasterAppWrapper() {
   }
 
   useEffect(() => {
-    if (state.shareEnabled && !apolloClient) {
+    if (state.shareEnabled) {
       initApolloClient();
+    }
+
+    if (!state.shareEnabled) {
+      setApolloInitCount(0);
     }
   }, [state.shareEnabled]);
 
   useEffect(() => {
-    console.log('>>> schedule use effect');
     if (apolloInitCount) {
       console.log('>>> scheduling apollo refresh');
       
       const timer = setTimeout(() => {
         console.log('>>> refreshing apollo client!');
         initApolloClient();
-      }, 5000);
+      }, 2700000);
 
       return () => { console.log('>>> clearing timeout'); clearTimeout(timer)};
     }
