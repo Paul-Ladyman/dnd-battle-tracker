@@ -4,14 +4,14 @@
   subscription: Subscription
 }
 
-type Condition {
+type Condition @aws_api_key @aws_iam {
   text: String!
   appliedAtRound: Int!
   appliedAtSeconds: Int!
   url: String
 }
 
-type Creature {
+type Creature @aws_api_key @aws_iam {
   name: String!
   initiative: Int
   healthPoints: Int
@@ -23,7 +23,7 @@ type Creature {
   locked: Boolean!
 }
 
-type Battle {
+type Battle @aws_api_key @aws_iam {
   battleId: String!
   creatureCount: Int!
   round: Int!
@@ -31,14 +31,14 @@ type Battle {
   activeCreature: Int
 }
 
-input ConditionInput {
+input ConditionInput @aws_api_key @aws_iam {
   text: String!
   appliedAtRound: Int!
   appliedAtSeconds: Int!
   url: String
 }
 
-input CreatureInput {
+input CreatureInput @aws_api_key @aws_iam {
   name: String!
   initiative: Int
   healthPoints: Int
@@ -50,7 +50,7 @@ input CreatureInput {
   locked: Boolean!
 }
 
-input BattleInput {
+input BattleInput @aws_api_key @aws_iam {
   battleId: String!
   creatureCount: Int!
   round: Int!
@@ -59,16 +59,16 @@ input BattleInput {
   expdate: Int!
 }
 
-type Mutation {
+type Mutation @aws_api_key @aws_iam {
   createDndbattletracker(input: BattleInput!): Battle
   updateDndbattletracker(input: BattleInput!): Battle
 }
 
-type Query {
+type Query @aws_api_key @aws_iam {
   getDndbattletracker(battleId: String!): Battle
 }
 
-type Subscription {
+type Subscription @aws_api_key @aws_iam {
   onCreateDndbattletracker(battleId: String): Battle @aws_subscribe(mutations : ["createDndbattletracker"])
   onUpdateDndbattletracker(battleId: String): Battle @aws_subscribe(mutations : ["updateDndbattletracker"])
 }
