@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getApolloSession } from '../../graphql/apolloClient';
+import { getApolloSession } from './apolloClient';
 import { ApolloProvider } from '@apollo/client';
 
 export default function RefreshingApolloProvider({ online, OnlineView, OfflineView, ...props }) {

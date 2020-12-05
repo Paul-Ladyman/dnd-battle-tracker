@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import RefreshingApolloProvider from './RefreshingApolloProvider';
+import RefreshingApolloProvider from '../../graphql/RefreshingApolloProvider';
 import DungeonMasterApp from './DungeonMasterApp';
 import SharedDungeonMasterApp from './SharedDungeonMasterApp';
 import {

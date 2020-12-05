@@ -1,5 +1,5 @@
 import React from 'react';
-import RefreshingApolloProvider from './RefreshingApolloProvider';
+import RefreshingApolloProvider from '../../graphql/RefreshingApolloProvider';
 import PlayerApp from './PlayerApp';
 import OnlinePlayerApp from './OnlinePlayerApp';
 
