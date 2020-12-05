@@ -1,6 +1,4 @@
-import { useQuery, useSubscription } from '@apollo/client';
 import React, { useState, useEffect } from 'react';
-import { GET_BATTLE, SYNC_BATTLE } from '../../graphql/operations';
 import BattleToolbar from '../BattleToolbar';
 import Creatures from '../Creatures';
 import Footer from '../Footer';
@@ -26,16 +24,8 @@ function getBattleData(getLoading, getData, syncLoading, syncData) {
   return newBattleState;
 }
 
-function PlayerApp({ battleId }) {
+function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, getData, syncData }) {
   const [errors, setErrors] = useState(false);
-
-  const { loading: getLoading, error: getError, data: getData } = useQuery(GET_BATTLE, {
-    variables: { battleId }
-  });
-
-  const { loading: syncLoading, error: syncError, data: syncData } = useSubscription(SYNC_BATTLE, {
-    variables: { battleId }
-  });
 
   const battleData = getBattleData(getLoading, getData, syncLoading, syncData);
 

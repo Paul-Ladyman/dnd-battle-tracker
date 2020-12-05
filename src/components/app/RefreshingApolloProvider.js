@@ -14,12 +14,10 @@ export default function RefreshingApolloProvider({ online, OnlineView, OfflineVi
   }
 
   useEffect(() => {
-    if (online) {
+    if (online)
       getClient();
-    }
-    else {
+    else
       setApolloInitCount(0);
-    }
   }, [online]);
 
   useEffect(() => {
