@@ -9,7 +9,9 @@ const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.
 const uri = `https://${graphqlHost}/graphql`;
 const region = 'eu-west-2';
 const fallbackAuth = {
-  type: 'NONE'
+  auth: {
+    type: 'NONE'
+  }
 };
 
 const cache = new InMemoryCache();
@@ -46,14 +48,9 @@ function getCredentialsObject(IdentityId, credentials) {
   };
 }
 
-async function getCognitoAuth() {
-  const IdentityId = await getCognitoIdentity();
-  const credentials = await getCognitoCredentials(IdentityId);
-  return getCredentialsObject(IdentityId, credentials);
-}
-
-async function refreshAuth(IdentityId) {
+async function getAuth() {
   try {
+    const IdentityId = await getCognitoIdentity();
     const credentials = await getCognitoCredentials(IdentityId);
     return getCredentialsObject(IdentityId, credentials);
   }
@@ -62,10 +59,10 @@ async function refreshAuth(IdentityId) {
   }
 }
 
-async function getAuth() {
+async function refreshAuth(IdentityId) {
   try {
-    const cognitoAuth = await getCognitoAuth();
-    return cognitoAuth;
+    const credentials = await getCognitoCredentials(IdentityId);
+    return getCredentialsObject(IdentityId, credentials);
   }
   catch (e) {
     return fallbackAuth;
