@@ -8,7 +8,11 @@ import { CognitoIdentity } from '@aws-sdk/client-cognito-identity';
 const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com';
 const uri = `https://${graphqlHost}/graphql`;
 const region = 'eu-west-2';
+const fallbackAuth = {
+  type: 'NONE'
+};
 
+const cache = new InMemoryCache();
 const cognitoIdentity = new CognitoIdentity({ region });
 
 async function getCognitoIdentity() {
@@ -27,19 +31,35 @@ async function getCognitoCredentials(IdentityId) {
   return Credentials;
 }
 
+function getCredentialsObject(IdentityId, credentials) {
+  const { AccessKeyId, SecretKey, SessionToken } = credentials;
+  return {
+    IdentityId,
+    auth: {
+      type: 'AWS_IAM',
+      credentials: {
+        accessKeyId: AccessKeyId,
+        secretAccessKey: SecretKey,
+        sessionToken: SessionToken
+      }
+    }
+  };
+}
+
 async function getCognitoAuth() {
   const IdentityId = await getCognitoIdentity();
+  const credentials = await getCognitoCredentials(IdentityId);
+  return getCredentialsObject(IdentityId, credentials);
+}
 
-  const { AccessKeyId, SecretKey, SessionToken } = await getCognitoCredentials(IdentityId);
-
-  return {
-    type: 'AWS_IAM',
-    credentials: {
-      accessKeyId: AccessKeyId,
-      secretAccessKey: SecretKey,
-      sessionToken: SessionToken
-    },
-  };
+async function refreshAuth(IdentityId) {
+  try {
+    const credentials = await getCognitoCredentials(IdentityId);
+    return getCredentialsObject(IdentityId, credentials);
+  }
+  catch (e) {
+    return fallbackAuth;
+  }
 }
 
 async function getAuth() {
@@ -48,20 +68,16 @@ async function getAuth() {
     return cognitoAuth;
   }
   catch (e) {
-    return {
-      type: 'NONE'
-    };
+    return fallbackAuth;
   }
 }
 
-export default async function getApolloClient() {
-  const auth = await getAuth();
-  
+function getClient(auth) {
   const httpLink = ApolloLink.from([
-     createAuthLink({ url: uri, region, auth }), 
-     new HttpLink({ uri })
+    createAuthLink({ url: uri, region, auth }), 
+    new HttpLink({ uri })
   ]);
-  
+ 
   const wsLink = createSubscriptionHandshakeLink(uri, httpLink);
   
   // The split function takes three parameters:
@@ -83,6 +99,12 @@ export default async function getApolloClient() {
   
   return new ApolloClient({
     link,
-    cache: new InMemoryCache()
+    cache
   });
+}
+
+export async function getApolloSession(identity) {
+  const authFunc = identity ? refreshAuth : getAuth;
+  const { IdentityId, auth } = await authFunc(identity);
+  return { IdentityId, client: getClient(auth) };
 }
