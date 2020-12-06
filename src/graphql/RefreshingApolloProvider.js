@@ -7,7 +7,6 @@ export default function RefreshingApolloProvider({ online, OnlineView, OfflineVi
   const [apolloSession, setApolloSession] = useState(undefined);
 
   async function getSession() {
-    console.log('>>> get apollo session');
     const identity = apolloSession ? apolloSession.IdentityId : undefined;
     const session = await getApolloSession(identity);
     setApolloSession(session);
@@ -22,9 +21,8 @@ export default function RefreshingApolloProvider({ online, OnlineView, OfflineVi
   }, [online]);
 
   useEffect(() => {
-    if (apolloInitCount) {
-      console.log('>>> refreshing session in', apolloSession.refreshAt);
-      const timer = setTimeout(() => getSession(), apolloSession.refreshAt);
+    if (apolloInitCount && apolloSession.refreshIn) {
+      const timer = setTimeout(() => getSession(), apolloSession.refreshIn);
       return () => clearTimeout(timer);
     }
   }, [apolloInitCount]);

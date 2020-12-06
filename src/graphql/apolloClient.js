@@ -39,11 +39,10 @@ function getCredentialsObject(IdentityId, credentials) {
   const expirationTime = Expiration.getTime();
   const sessionLength = expirationTime - now;
   const tenMinutes = 600000;
-  const refreshAt = sessionLength - tenMinutes;
-  console.log('>>> expiration', now, expirationTime, sessionLength, refreshAt);
+  const refreshIn = sessionLength - tenMinutes;
   return {
     IdentityId,
-    refreshAt,
+    refreshIn,
     auth: {
       type: 'AWS_IAM',
       credentials: {
@@ -109,6 +108,6 @@ function getClient(auth) {
 
 export async function getApolloSession(identity) {
   const authFunc = identity ? refreshAuth : getAuth;
-  const { IdentityId, auth, refreshAt } = await authFunc(identity);
-  return { IdentityId, refreshAt, client: getClient(auth) };
+  const { IdentityId, auth, refreshIn } = await authFunc(identity);
+  return { IdentityId, refreshIn, client: getClient(auth) };
 }
