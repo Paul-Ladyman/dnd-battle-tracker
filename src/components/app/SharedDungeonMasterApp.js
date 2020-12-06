@@ -19,8 +19,6 @@ export default function SharedDungeonMasterApp({ state, setState }) {
     setState((prevState) => handleShareError(prevState, createError, updateError));
   }, [createError, updateError]);
 
-  console.log(createError, updateError);
-
   return (
     <DungeonMasterApp
       state={state}

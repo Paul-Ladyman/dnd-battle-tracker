@@ -27,7 +27,7 @@ export default function RefreshingApolloProvider({ online, OnlineView, OfflineVi
     }
   }, [apolloInitCount]);
 
-  if (online && apolloSession) {
+  if (online && apolloSession && !apolloSession.error) {
     return (
       <ApolloProvider client={apolloSession.client}>
         <OnlineView {...props} />
@@ -36,6 +36,9 @@ export default function RefreshingApolloProvider({ online, OnlineView, OfflineVi
   }
 
   return (
-    <OfflineView {...props} />
+    <OfflineView
+      onlineError={apolloSession && apolloSession.error}
+      {...props}
+    />
   );
 }

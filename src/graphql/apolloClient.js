@@ -55,24 +55,14 @@ function getCredentialsObject(IdentityId, credentials) {
 }
 
 async function getAuth() {
-  try {
-    const IdentityId = await getCognitoIdentity();
-    const credentials = await getCognitoCredentials(IdentityId);
-    return getCredentialsObject(IdentityId, credentials);
-  }
-  catch (e) {
-    return fallbackAuth;
-  }
+  const IdentityId = await getCognitoIdentity();
+  const credentials = await getCognitoCredentials(IdentityId);
+  return getCredentialsObject(IdentityId, credentials);
 }
 
 async function refreshAuth(IdentityId) {
-  try {
-    const credentials = await getCognitoCredentials(IdentityId);
-    return getCredentialsObject(IdentityId, credentials);
-  }
-  catch (e) {
-    return fallbackAuth;
-  }
+  const credentials = await getCognitoCredentials(IdentityId);
+  return getCredentialsObject(IdentityId, credentials);
 }
 
 function getClient(auth) {
@@ -107,7 +97,12 @@ function getClient(auth) {
 }
 
 export async function getApolloSession(identity) {
-  const authFunc = identity ? refreshAuth : getAuth;
-  const { IdentityId, auth, refreshIn } = await authFunc(identity);
-  return { IdentityId, refreshIn, client: getClient(auth) };
+  try {
+    const authFunc = identity ? refreshAuth : getAuth;
+    const { IdentityId, auth, refreshIn } = await authFunc(identity);
+    return { IdentityId, refreshIn, client: getClient(auth) };
+  }
+  catch(e) {
+    return { error: true };
+  }
 }

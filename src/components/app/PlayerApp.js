@@ -24,7 +24,7 @@ function getBattleData(getLoading, getData, syncLoading, syncData) {
   return newBattleState;
 }
 
-function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, getData, syncData }) {
+function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, getData, syncData, onlineError }) {
   const [errors, setErrors] = useState(false);
 
   const battleData = getBattleData(getLoading, getData, syncLoading, syncData);
@@ -33,10 +33,10 @@ function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, get
   const { creatureCount, round, creatures, activeCreature, focusedCreature } = battleData;
 
   useEffect(() => {
-    if (getError || syncError) {
+    if (onlineError || getError || syncError) {
       setErrors(true);
     }
-  }, [getError, syncError]);
+  }, [onlineError, getError, syncError]);
 
   const loading = !getData && !syncData;
 
