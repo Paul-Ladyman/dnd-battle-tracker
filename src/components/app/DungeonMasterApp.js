@@ -33,14 +33,13 @@ import {
   save,
   load,
   isSaveLoadSupported,
-  dismissErrors,
-  updateErrors
+  dismissErrors
 } from '../../state/AppManager';
 import Footer from '../Footer';
 import Errors from '../Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 
-function DungeonMasterApp({ state, setState, shareBattle, createError, updateError }) {
+function DungeonMasterApp({ state, setState, shareBattle }) {
   useEffect(() => {
     window.onbeforeunload = () => {
       return true;
@@ -90,12 +89,6 @@ function DungeonMasterApp({ state, setState, shareBattle, createError, updateErr
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
     toggleCreatureLock: updateBattle(toggleCreatureLock, false)
   };
-
-  useEffect(() => {
-    if (createError || updateError) {
-      updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
-    }
-  }, [createError, updateError]);
 
   const errors = state.errors && state.errors.length > 0;
 

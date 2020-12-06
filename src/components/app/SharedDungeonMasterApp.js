@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_BATTLE, UPDATE_BATTLE } from '../../graphql/operations';
-import { share } from '../../state/SyncManager';
+import { share, handleShareError } from '../../state/SyncManager';
 import DungeonMasterApp from './DungeonMasterApp';
 
 export default function SharedDungeonMasterApp({ state, setState }) {
@@ -12,16 +12,20 @@ export default function SharedDungeonMasterApp({ state, setState }) {
     share(shareState, createBattleMutation, updateBattleMutation, new Date());
 
   useEffect(() => {
-    setState(shareBattle(state));
+    setState((prevState) => shareBattle(prevState));
   }, []);
+
+  useEffect(() => {
+    setState((prevState) => handleShareError(prevState, createError, updateError));
+  }, [createError, updateError]);
+
+  console.log(createError, updateError);
 
   return (
     <DungeonMasterApp
       state={state}
       setState={setState}
       shareBattle={shareBattle}
-      createError={createError}
-      updateError={updateError}
     />
   );
 }

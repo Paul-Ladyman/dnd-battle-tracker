@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { updateErrors, dismissErrors } from './AppManager';
 
 export function share(state, createBattle, updateBattle, date) {
   if (!state.shareEnabled) {
@@ -26,4 +27,17 @@ export function share(state, createBattle, updateBattle, date) {
   createBattle(input);
 
   return { ...state, battleCreated: true, battleId };
+}
+
+export function handleShareError(state, createError, updateError) {
+  if (!createError && !updateError)
+    return dismissErrors(state);
+
+  const error = 'Error sharing battle with players. Try toggling share button.';
+  const stateWithErrors = updateErrors(state, error);
+
+  if (createError)
+    return { ...stateWithErrors, battleCreated: false };
+
+  return stateWithErrors;
 }
