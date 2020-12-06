@@ -8,11 +8,6 @@ import { CognitoIdentity } from '@aws-sdk/client-cognito-identity';
 const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.com';
 const uri = `https://${graphqlHost}/graphql`;
 const region = 'eu-west-2';
-const fallbackAuth = {
-  auth: {
-    type: 'NONE'
-  }
-};
 
 const cache = new InMemoryCache();
 const cognitoIdentity = new CognitoIdentity({ region });
