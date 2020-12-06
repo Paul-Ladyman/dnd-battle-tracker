@@ -93,7 +93,7 @@ function DungeonMasterApp({ state, setState, shareBattle, createError, updateErr
 
   useEffect(() => {
     if (createError || updateError) {
-      updateBattle(updateErrors, false)('Error sharing battle with players');
+      updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
     }
   }, [createError, updateError]);
 

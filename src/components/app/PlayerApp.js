@@ -50,7 +50,7 @@ function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, get
           playerSession
       />
       { errors && <Errors
-         errors={['Error synchronising with Dungeon Master']}
+         errors={['Error synchronising with Dungeon Master. Try refreshing the page.']}
          dismissErrors={() => setErrors(false)}
        />
       }
