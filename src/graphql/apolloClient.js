@@ -34,9 +34,16 @@ async function getCognitoCredentials(IdentityId) {
 }
 
 function getCredentialsObject(IdentityId, credentials) {
-  const { AccessKeyId, SecretKey, SessionToken } = credentials;
+  const { AccessKeyId, SecretKey, SessionToken, Expiration } = credentials;
+  const now = new Date().getTime();
+  const expirationTime = Expiration.getTime();
+  const sessionLength = expirationTime - now;
+  const tenMinutes = 600000;
+  const refreshAt = sessionLength - tenMinutes;
+  console.log('>>> expiration', now, expirationTime, sessionLength, refreshAt);
   return {
     IdentityId,
+    refreshAt,
     auth: {
       type: 'AWS_IAM',
       credentials: {
@@ -102,6 +109,6 @@ function getClient(auth) {
 
 export async function getApolloSession(identity) {
   const authFunc = identity ? refreshAuth : getAuth;
-  const { IdentityId, auth } = await authFunc(identity);
-  return { IdentityId, client: getClient(auth) };
+  const { IdentityId, auth, refreshAt } = await authFunc(identity);
+  return { IdentityId, refreshAt, client: getClient(auth) };
 }
