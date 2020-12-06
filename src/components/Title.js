@@ -1,13 +1,17 @@
 import React from 'react';
 import ExternalLink from './ExternalLink';
 
-export default function Title({ shareEnabled, battleId, playerSession, error}) {
+export default function Title({ shareEnabled, battleId, playerSession, error, loading }) {
   const SubTitle = () => {
     if (error) {
       return ( <>Something went wrong!</> );
     }
 
-    if (playerSession) {
+    if (playerSession && loading) {
+      return ( <>Loading player Session {battleId}...</> );
+    }
+
+    if (playerSession && !loading) {
       return ( <>Player Session {battleId}</> );
     }
 

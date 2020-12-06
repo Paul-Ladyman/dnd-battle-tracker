@@ -38,6 +38,8 @@ function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, get
     }
   }, [getError, syncError]);
 
+  const loading = !getData && !syncData;
+
   return (
     <React.Fragment>
       <BattleToolbar
@@ -57,6 +59,7 @@ function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, get
           <Title
             battleId={battleId}
             playerSession
+            loading={loading}
           />
          <Creatures
            creatures={creatures}
