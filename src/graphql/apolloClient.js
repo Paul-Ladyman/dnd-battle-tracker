@@ -98,6 +98,6 @@ export async function getApolloSession(identity) {
     return { IdentityId, refreshIn, client: getClient(auth) };
   }
   catch(e) {
-    return { error: true };
+    return { IdentityId: identity, error: true };
   }
 }
