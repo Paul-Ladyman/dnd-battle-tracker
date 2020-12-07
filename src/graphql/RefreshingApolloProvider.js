@@ -14,10 +14,16 @@ export default function RefreshingApolloProvider({ online, OnlineView, OfflineVi
   }
 
   useEffect(() => {
-    if (online)
+    if (online) {
       getSession();
-    else
+    }
+    else {
       setApolloInitCount(0);
+      setApolloSession((prevSession) => {
+        if (!prevSession) return prevSession;
+        return { IdentityId: prevSession.IdentityId };
+      });
+    }
   }, [online]);
 
   useEffect(() => {
@@ -27,7 +33,7 @@ export default function RefreshingApolloProvider({ online, OnlineView, OfflineVi
     }
   }, [apolloInitCount]);
 
-  if (online && apolloSession && !apolloSession.error) {
+  if (online && apolloSession && apolloSession.client && !apolloSession.error) {
     return (
       <ApolloProvider client={apolloSession.client}>
         <OnlineView {...props} />
