@@ -93,6 +93,10 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
      $ npm test
 
+## Architecture
+
+![D&D Battle Tracker architecture](architecture.png)
+
 ## Release
 
 - Update the version in package.json and in the ***Download*** section of this README.
