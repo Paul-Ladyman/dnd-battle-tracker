@@ -20,6 +20,7 @@ As a new DM I found that I was frequently making mistakes during combat, such as
 
 It was clear that some automation would be helpful. There's a number of browser-based combat trackers out there at the time of writing:
 
+* [D&D Beyond](https://www.dndbeyond.com/combat-tracker)
 * [Aide D&D](https://www.aidedd.org/dnd-tracker/index.php?l=1)
 * [DHMStark](http://dhmstark.co.uk/rpgs/encounter-tracker/)
 * [Donjon](https://donjon.bin.sh/5e/initiative/)
@@ -28,6 +29,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [Kassoon](https://www.kassoon.com/dnd/combat-tracker/)
 * [Orc Pub](https://www.orcpub2.com/)
 * [Roll20](https://app.roll20.net/sessions/new)
+* [HeroMuster](https://encounters.heromuster.com/)
 
 Many of these systems are very feature rich and aim to provide tools beyond the combat tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
@@ -76,6 +78,15 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Crossed swords](https://game-icons.net/1x1/lorc/crossed-swords.html)
   * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
   * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
+
+## New Feature Ideas
+
+In no particular order a list of ideas that might make for good future features:
+
+* Hide creatures from players so they can be added to the combat initiative before they've been revealed in the story
+* Allow creature notes to be edited
+* Track which creatures have used reactions in a round - I often forget
+* Run through combat section of PHB. Ensure current implementation follows the rules and check for any new iedas
 
 ## Development
 
