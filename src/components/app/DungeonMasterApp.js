@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
-import { useMutation } from '@apollo/client';
-import './App.css';
-import CreateCreatureForm from './CreateCreatureForm';
-import Creatures from './Creatures';
-import BattleToolbar from './BattleToolbar';
-import Title from './Title';
-import conditions from '../model/conditions';
+import '../App.css';
+import CreateCreatureForm from '../CreateCreatureForm';
+import Creatures from '../Creatures';
+import BattleToolbar from '../BattleToolbar';
+import Title from '../Title';
+import conditions from '../../model/conditions';
 import {
-  newBattleState,
   getSecondsElapsed,
   nextInitiative,
   getInitiative,
@@ -19,7 +17,7 @@ import {
   addCreature,
   resetBattle,
   toggleSync
-} from '../state/BattleManager';
+} from '../../state/BattleManager';
 import {
   killCreature,
   stabalizeCreature,
@@ -30,26 +28,19 @@ import {
   addHealthToCreature,
   addInitiativeToCreature,
   toggleCreatureLock
-} from '../state/CreatureManager';
+} from '../../state/CreatureManager';
 import {
   save,
   load,
   isSaveLoadSupported,
   dismissErrors,
   updateErrors
-} from '../state/AppManager';
-import { share } from '../state/SyncManager';
-import Footer from './Footer';
-import Errors from './Errors';
-import { hotkeys } from '../hotkeys/hotkeys';
-import { CREATE_BATTLE, UPDATE_BATTLE } from '../graphql/operations';
+} from '../../state/AppManager';
+import Footer from '../Footer';
+import Errors from '../Errors';
+import { hotkeys } from '../../hotkeys/hotkeys';
 
-function DungeonMasterApp() {
-  const [state, setState] = useState(newBattleState);
-
-  const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
-  const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
-
+function DungeonMasterApp({ state, setState, shareBattle, onlineError }) {
   useEffect(() => {
     window.onbeforeunload = () => {
       return true;
@@ -70,9 +61,6 @@ function DungeonMasterApp() {
     });
   }, []);
 
-  const shareBattle = (shareState) =>
-    share(shareState, createBattleMutation, updateBattleMutation, new Date());
-
   const updateBattle = (update, doShare = true) => {
     return function() {
       setState((prevState) => {
@@ -88,6 +76,11 @@ function DungeonMasterApp() {
     setState(newState);
   }
 
+  useEffect(() => {
+    if (onlineError)
+      updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
+  }, [onlineError]);
+
   const secondsElapsed = getSecondsElapsed(state);
 
   const creatureManagement = {
@@ -102,12 +95,6 @@ function DungeonMasterApp() {
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
     toggleCreatureLock: updateBattle(toggleCreatureLock, false)
   };
-
-  useEffect(() => {
-    if (createError || updateError) {
-      updateBattle(updateErrors, false)('Error sharing battle with players');
-    }
-  }, [createError, updateError]);
 
   const errors = state.errors && state.errors.length > 0;
 

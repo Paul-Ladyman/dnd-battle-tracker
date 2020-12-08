@@ -1,7 +1,9 @@
 import { nanoid } from 'nanoid';
-import { share } from './SyncManager';
+import { share, handleShareError } from './SyncManager';
+import { updateErrors, dismissErrors } from './AppManager';
 
 jest.mock('nanoid');
+jest.mock('./AppManager');
 
 const createBattleMock = jest.fn();
 const updateBattleMock = jest.fn();
@@ -46,6 +48,8 @@ beforeEach(() => {
   createBattleMock.mockReset();
   updateBattleMock.mockReset();
   nanoid.mockReset();
+  updateErrors.mockReset();
+  dismissErrors.mockReset();
 });
 
 describe('share', () => {
@@ -89,5 +93,59 @@ describe('share', () => {
     expect(createBattleMock).toHaveBeenCalledTimes(1);
     expect(createBattleMock.mock.calls[0][0]).toEqual(expectedInput('new-id'));
     expect(updateBattleMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('handleShareError', () => {
+  it('sets an error in state and sets battleCreated to false on create battle error', () => {
+    const state = { ...defaultState, battleCreated: true };
+    const error = 'Error sharing battle with players. Try toggling share button.';
+    const stateWithErrors = { ...state, errors: [error] };
+    updateErrors.mockReturnValue(stateWithErrors);
+
+    const newState = handleShareError(state, new Error('createError'), undefined);
+
+    const expectedState = { ...stateWithErrors, battleCreated: false };
+    expect(newState).toEqual(expectedState);
+    expect(updateErrors).toHaveBeenCalledTimes(1);
+    expect(updateErrors).toHaveBeenCalledWith(state, error);
+  });
+
+  it('sets an error in state on update battle error', () => {
+    const state = { ...defaultState, battleCreated: true };
+    const error = 'Error sharing battle with players. Try toggling share button.';
+    const stateWithErrors = { ...state, errors: [error] };
+    updateErrors.mockReturnValue(stateWithErrors);
+
+    const newState = handleShareError(state, undefined, new Error('updateError'));
+
+    expect(newState).toEqual(stateWithErrors);
+    expect(updateErrors).toHaveBeenCalledTimes(1);
+    expect(updateErrors).toHaveBeenCalledWith(state, error);
+  });
+
+  it('sets an error in state and sets battleCreated to false on create and update battle error', () => {
+    const state = { ...defaultState, battleCreated: true };
+    const error = 'Error sharing battle with players. Try toggling share button.';
+    const stateWithErrors = { ...state, errors: [error] };
+    updateErrors.mockReturnValue(stateWithErrors);
+
+    const newState = handleShareError(state, new Error('createError'), new Error('updateError'));
+
+    const expectedState = { ...stateWithErrors, battleCreated: false };
+    expect(newState).toEqual(expectedState);
+    expect(updateErrors).toHaveBeenCalledTimes(1);
+    expect(updateErrors).toHaveBeenCalledWith(state, error);
+  });
+
+  it('clears errors in state if there are no errors', () => {
+    const state = { ...defaultState, errors: ['some error'] };
+    dismissErrors.mockReturnValue(defaultState);
+    const newState = handleShareError(state, undefined, undefined);
+
+    expect(newState).toEqual(defaultState);
+    expect(updateErrors).not.toHaveBeenCalled();
+    expect(dismissErrors).toHaveBeenCalledTimes(1);
+    expect(dismissErrors).toHaveBeenCalledWith(state);
   });
 });

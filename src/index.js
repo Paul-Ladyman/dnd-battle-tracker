@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from '@apollo/client';
 import './index.css';
-import DungeonMasterApp from './components/DungeonMasterApp';
-import PlayerApp from './components/PlayerApp';
+import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
+import PlayerAppWrapper from './components/app/PlayerAppWrapper';
 import ErrorBoundary from './components/ErrorBoundary';
-import getApolloClient from './graphql/apolloClient';
 
 function getUrlParameter(name) {
   const cleanName = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -17,19 +15,24 @@ function getUrlParameter(name) {
 const battleId = getUrlParameter('battle');
 
 async function render() {
-  const apolloClient = await getApolloClient();
-  const WithProvider = () => (
-    <ApolloProvider client={apolloClient}>
+  const rootElement = document.getElementById('root');
+
+  if (battleId) {
+    const RenderPlayerApp = () => (
       <ErrorBoundary>
-        { battleId ?
-          <PlayerApp battleId={battleId} /> :
-          <DungeonMasterApp />
-        }
+        <PlayerAppWrapper battleId={battleId} /> 
       </ErrorBoundary>
-    </ApolloProvider>
-  )
-  
-  ReactDOM.render(WithProvider(), document.getElementById('root'));
+    );
+    ReactDOM.render(RenderPlayerApp(), rootElement);
+  }
+  else {
+    const RenderDmApp = () => (
+      <ErrorBoundary>
+        <DungeonMasterAppWrapper />
+      </ErrorBoundary>
+    );
+    ReactDOM.render(RenderDmApp(), rootElement);
+  }
 }
 
 render();

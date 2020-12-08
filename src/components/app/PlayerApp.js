@@ -1,16 +1,14 @@
-import { useQuery, useSubscription } from '@apollo/client';
 import React, { useState, useEffect } from 'react';
-import { GET_BATTLE, SYNC_BATTLE } from '../graphql/operations';
-import BattleToolbar from './BattleToolbar';
-import Creatures from './Creatures';
-import Footer from './Footer';
-import Errors from './Errors';
-import Title from './Title';
+import BattleToolbar from '../BattleToolbar';
+import Creatures from '../Creatures';
+import Footer from '../Footer';
+import Errors from '../Errors';
+import Title from '../Title';
 import { 
   newBattleState,
   getSecondsElapsed,
   getInitiative
-} from '../state/BattleManager';
+} from '../../state/BattleManager';
 
 
 // TODO abstract into SyncManager
@@ -26,16 +24,8 @@ function getBattleData(getLoading, getData, syncLoading, syncData) {
   return newBattleState;
 }
 
-function PlayerApp({ battleId }) {
+function PlayerApp({ battleId, getLoading, syncLoading, getError, syncError, getData, syncData, onlineError }) {
   const [errors, setErrors] = useState(false);
-
-  const { loading: getLoading, error: getError, data: getData } = useQuery(GET_BATTLE, {
-    variables: { battleId }
-  });
-
-  const { loading: syncLoading, error: syncError, data: syncData } = useSubscription(SYNC_BATTLE, {
-    variables: { battleId }
-  });
 
   const battleData = getBattleData(getLoading, getData, syncLoading, syncData);
 
@@ -43,10 +33,12 @@ function PlayerApp({ battleId }) {
   const { creatureCount, round, creatures, activeCreature, focusedCreature } = battleData;
 
   useEffect(() => {
-    if (getError || syncError) {
+    if (onlineError || getError || syncError) {
       setErrors(true);
     }
-  }, [getError, syncError]);
+  }, [onlineError, getError, syncError]);
+
+  const loading = !getData && !syncData;
 
   return (
     <React.Fragment>
@@ -58,7 +50,7 @@ function PlayerApp({ battleId }) {
           playerSession
       />
       { errors && <Errors
-         errors={['Error synchronising with Dungeon Master']}
+         errors={['Error synchronising with Dungeon Master. Try refreshing the page.']}
          dismissErrors={() => setErrors(false)}
        />
       }
@@ -67,6 +59,7 @@ function PlayerApp({ battleId }) {
           <Title
             battleId={battleId}
             playerSession
+            loading={loading}
           />
          <Creatures
            creatures={creatures}
