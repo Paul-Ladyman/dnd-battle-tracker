@@ -14,7 +14,7 @@ const cognitoIdentity = new CognitoIdentity({ region });
 
 async function getCognitoIdentity() {
   const { IdentityId } = await cognitoIdentity.getId({
-    IdentityPoolId: `${region}:6cd2b2d5-c0b0-4a09-9043-d4933b3bf007`
+    IdentityPoolId: `${region}:8b62b6c4-74d5-4318-9985-775d1a36baa0`
   });
 
   return IdentityId;
