@@ -70,6 +70,7 @@ class BattleToolbar extends Component {
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
     const optionsMenuIcon = this.state.optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
     const optionsClass = this.state.optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
+    // const toggleButtonClass = this.state.optionsExpanded ? 'battle-toolbar--button__toggle--close' : 'battle-toolbar--button__toggle--open';
 
     const ResetButton = () =>
       <button
@@ -95,7 +96,7 @@ class BattleToolbar extends Component {
       <header className="battle-toolbar">
         {!playerSession && <button
           title={nextButtonTitle}
-          className={buttonClasses}
+          className={`${buttonClasses} battle-toolbar--button__progress`}
           onClick={nextInitiative}
           ref={this.nextButton}
           disabled={!creaturesAdded}
@@ -120,14 +121,14 @@ class BattleToolbar extends Component {
           <div className="battle-toolbar--options-container">
             <button
               title="Options Menu"
-              className={`${buttonClass} battle-toolbar--button__options`}
+              className={`battle-toolbar--button__toggle battle-toolbar--button__options`}
               onClick={this.toggleOptions}
               ref={this.optionsButton}
             >{optionsMenuIcon}</button>
             <div className={optionsClass}>
               <button
                 title="Save Battle"
-                className={buttonClass}
+                className={`${buttonClass} battle-toolbar--button__top`}
                 onClick={() => {this.toggleOptions(); saveBattle();}}
               ><SaveIcon /></button>
               <input
