@@ -14,7 +14,7 @@ class CreateCreatureForm extends Component {
       initiative: '',
       healthPoints: '',
       multiplier: 1,
-      submitted: false
+      submitted: false,
     };
 
     this.state = this.initialState;
@@ -51,28 +51,30 @@ class CreateCreatureForm extends Component {
   }
 
   handleChange(event) {
-    let newState = {...this.state};
+    const newState = { ...this.state };
     newState[event.target.name] = event.target.value;
     this.setState(newState);
   }
 
   createCreature() {
-    const state = this.state;
+    const { state } = this;
 
-    const healthPoints = state.healthPoints === '' ?
-      undefined :
-      parseInt(state.healthPoints);
+    const healthPoints = state.healthPoints === ''
+      ? undefined
+      : parseInt(state.healthPoints);
 
     const multiplier = parseInt(state.multiplier);
 
-    const initiative = state.initiative === '' ?
-      undefined :  
-      parseInt(state.initiative);
+    const initiative = state.initiative === ''
+      ? undefined
+      : parseInt(state.initiative);
 
-    const creature = {...state, healthPoints, initiative, multiplier};
+    const creature = {
+      ...state, healthPoints, initiative, multiplier,
+    };
 
     this.props.createCreature(creature);
-    this.setState({...this.state, submitted: true});
+    this.setState({ ...this.state, submitted: true });
   }
 
   formHandler(event) {
@@ -82,11 +84,15 @@ class CreateCreatureForm extends Component {
   }
 
   render() {
-    const { name, initiative, healthPoints, multiplier } = this.state;
-    const { nameError, initiativeError, healthError, multiplierError } = this.props.createCreatureErrors;
+    const {
+      name, initiative, healthPoints, multiplier,
+    } = this.state;
+    const {
+      nameError, initiativeError, healthError, multiplierError,
+    } = this.props.createCreatureErrors;
 
     return (
-      <form  className="create-creature-form" onKeyDown={this.formHandler}>
+      <form className="create-creature-form" onKeyDown={this.formHandler}>
         <Input
           customClasses="create-creature-form--item__text"
           enabled
@@ -98,7 +104,7 @@ class CreateCreatureForm extends Component {
           label="Creature Name"
           name="name"
           handleChange={this.handleChange}
-          RightControl={<MonsterSearcher asButton={false} search={name}/>}
+          RightControl={<MonsterSearcher asButton={false} search={name} />}
         />
         <Input
           customClasses="create-creature-form--item__number create-creature-form--item__tall"
@@ -115,7 +121,7 @@ class CreateCreatureForm extends Component {
           customClasses="create-creature-form--item__number"
           enabled
           integer
-          error={healthError && <span className="form--label__error"> > 0</span>}
+          error={healthError && <span className="form--label__error"> &gt; 0</span>}
           value={healthPoints}
           ariaLabel="create creature form. Health points (optional)"
           label="HP (optional)"
@@ -144,7 +150,7 @@ class CreateCreatureForm extends Component {
           <button type="button" className="create-creature-form--submit" title="Add creature" onClick={this.createCreature}><AddCreatureIcon /></button>
         </div>
       </form>
-    ); 
+    );
   }
 }
 
