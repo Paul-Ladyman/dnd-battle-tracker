@@ -10,10 +10,10 @@ function Footer({ playerSession, error }) {
     <div className="footer-text--shortcuts">
       <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
       <ul>
-        {Object.keys(hotkeys).map((key, i) => {
+        {Object.keys(hotkeys).map((key) => {
           const hotkey = hotkeys[key];
           return (
-            <li key={i}>
+            <li key={hotkey}>
               <b>{hotkey}</b>
               {' '}
               {hotkeyDescriptions[key]}
@@ -49,12 +49,13 @@ function Footer({ playerSession, error }) {
           D&D Battle Tracker Info
         </ExternalLink>
         &nbsp;for all versions, more info and to download the application for offline battles.
-        Track the initiative and status of all creatures involved in combat with this D&D combat tracker!
+        Track the initiative and status of all creatures involved in combat
+        with this D&D combat tracker!
       </p>
       { !error
         && (
         <>
-          <a href="https://ko-fi.com/R5R12KANF" target="_blank"><img height="36" style={{ border: '0px', height: '36px' }} src="https://cdn.ko-fi.com/cdn/kofi5.png?v=2" border="0" alt="Buy Me a Coffee at ko-fi.com" /></a>
+          <a href="https://ko-fi.com/R5R12KANF" target="_blank" rel="noreferrer"><img height="36" style={{ border: '0px', height: '36px' }} src="https://cdn.ko-fi.com/cdn/kofi5.png?v=2" border="0" alt="Buy Me a Coffee at ko-fi.com" /></a>
           <p>
             Feature ideas and general feedback welcome on
             {' '}
