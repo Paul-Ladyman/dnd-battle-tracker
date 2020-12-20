@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
 function Input({
@@ -38,8 +39,8 @@ function Input({
           {error}
         </div>
         <div className={`${inputWrapperClasses} ${inputErrorClass}`}>
-          <div onKeyDown={formHandler} id="input">
-            <input disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange} />
+          <div id="input">
+            <input disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange} onKeyDown={formHandler} />
           </div>
           {RightControl && <div className={`button ${buttonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && SubmitIcon
