@@ -27,7 +27,7 @@
     "build:index": "node ./scripts/create-index.js",
     "test": "npx jest --watch",
     "test:ci": "npx jest",
-    "lint": "npx eslint \"src/**\""
+    "lint": "npx eslint --ext js,jsx src"
   },
   "jest": {
     "moduleNameMapper": {
