@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { getApolloSession } from './apolloClient';
@@ -32,6 +33,7 @@ export default function RefreshingApolloProvider({
       const timer = setTimeout(() => getSession(), apolloSession.refreshIn);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [apolloInitCount]);
 
   if (online && apolloSession && apolloSession.client && !apolloSession.error) {
