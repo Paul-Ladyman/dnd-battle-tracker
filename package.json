@@ -25,7 +25,8 @@
     "build:react": "webpack --mode production",
     "build:bundle:html": "node ./scripts/bundle-html.js",
     "build:index": "node ./scripts/create-index.js",
-    "test": "npx jest --watch"
+    "test": "npx jest --watch",
+    "test:ci": "npx jest"
   },
   "jest": {
     "moduleNameMapper": {
