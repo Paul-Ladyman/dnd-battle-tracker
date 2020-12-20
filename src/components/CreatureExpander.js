@@ -16,6 +16,7 @@ function CreatureExpander({
       className="creature-title-button"
       title={buttonTitle}
       onClick={expandHandler}
+      type="button"
     >
       {buttonIcon}
     </button>

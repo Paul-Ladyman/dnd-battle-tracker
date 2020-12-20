@@ -13,6 +13,7 @@ function CreatureLocker({ locked, name, lockHandler }) {
       className="creature-title-button"
       title={buttonTitle}
       onClick={lockHandler}
+      type="button"
     >
       {buttonIcon}
     </button>
