@@ -43,6 +43,14 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
+  const updateBattle = (update, doShare = true) => (...args) => {
+    setState((prevState) => {
+      const newState = update(prevState, ...args);
+      if (doShare) return shareBattle(newState);
+      return newState;
+    });
+  };
+
   useEffect(() => {
     window.onbeforeunload = () => true;
 
@@ -60,14 +68,6 @@ function DungeonMasterApp({
       }
     });
   }, []);
-
-  const updateBattle = (update, doShare = true) => function () {
-    setState((prevState) => {
-      const newState = update(prevState, ...arguments);
-      if (doShare) return shareBattle(newState);
-      return newState;
-    });
-  };
 
   const loadBattle = async (file) => {
     const newState = shareBattle(await load(state, file));
