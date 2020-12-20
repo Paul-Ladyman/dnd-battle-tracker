@@ -38,13 +38,23 @@ function CreatureToolbar({
 
   const enabledModifier = enableConditions ? '' : 'input-wrapper__disabled';
   const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
+  const conditionsId = `conditions-${creature.id}`;
   return (
     <div className="creature-toolbar">
-      <button className={statusButtonClasses} aria-label={`${statusButtonTitle} ${name}`} title={statusButtonTitle} onClick={() => statusButtonFunc(id)}>{statusButtonIcon}</button>
+      <button
+        className={statusButtonClasses}
+        aria-label={`${statusButtonTitle} ${name}`}
+        title={statusButtonTitle}
+        onClick={() => statusButtonFunc(id)}
+        type="button"
+      >
+        {statusButtonIcon}
+      </button>
       <div className="creature-toolbar--dropdown">
-        <label aria-label={`add condition to ${name}`}>
+        <label htmlFor={conditionsId} aria-label={`add condition to ${name}`}>
           <div className="form--label">Add Condition</div>
           <select
+            id={conditionsId}
             className={conditionsClasses}
             disabled={!enableConditions}
             value=""
@@ -52,7 +62,12 @@ function CreatureToolbar({
             onChange={(event) => addNoteToCreature(id, event.target.value, true)}
           >
             <option>--</option>
-            {conditions.map((condition, i) => <option key={i} value={condition}>{condition}</option>)}
+            {conditions.map((condition, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <option key={i} value={condition}>
+                {condition}
+              </option>
+            ))}
           </select>
         </label>
       </div>
@@ -68,7 +83,7 @@ function CreatureToolbar({
           integer
           ariaLabel={`add initiative to ${name}`}
           label="Initiative"
-          onSubmit={(initiative) => addInitiativeToCreature(id, initiative)}
+          onSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
           SubmitIcon={<InitiativeIcon />}
         />
         )}
