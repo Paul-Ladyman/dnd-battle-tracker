@@ -95,7 +95,7 @@ describe('load', () => {
 
   it('parses the contents of a file as JSON and adds an aria announcement', async () => {
     const { ariaAnnouncements, ...fileContents } = defaultState;
-    FileSystem.load.mockReturnValue(new Promise((resolve) => resolve(JSON.stringify(fileContents))));
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const loadedFileContents = await load(defaultState, file);
 
@@ -111,7 +111,7 @@ describe('load', () => {
 
   it('keeps battle sharing data of current session', async () => {
     const { ariaAnnouncements, ...fileContents } = defaultState;
-    FileSystem.load.mockReturnValue(new Promise((resolve) => resolve(JSON.stringify(fileContents))));
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const state = {
       ...defaultState,
@@ -141,7 +141,7 @@ describe('load', () => {
     const {
       ariaAnnouncements, createCreatureErrors, errors, ...fileContents
     } = defaultState;
-    FileSystem.load.mockReturnValue(new Promise((resolve) => resolve(JSON.stringify(fileContents))));
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const loadedFileContents = await load(state, file);
 
@@ -159,7 +159,7 @@ describe('load', () => {
     expect.assertions(1);
 
     const fileContents = { fake: 'contents' };
-    FileSystem.load.mockReturnValue(new Promise((resolve) => resolve(JSON.stringify(fileContents))));
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const results = await load(defaultState, file);
 

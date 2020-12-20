@@ -31,6 +31,16 @@ function jsonParse(value) {
   }
 }
 
+export function addError(state, errorToAdd) {
+  const errorExists = find(state.errors, (error) => error === errorToAdd);
+
+  if (errorExists) {
+    return state.errors;
+  }
+
+  return state.errors.concat(errorToAdd);
+}
+
 export async function load(state, file) {
   const fileContents = await FileSystem.load(file);
   const loadedState = jsonParse(fileContents);
@@ -67,16 +77,6 @@ export function dismissErrors(state) {
     ...state,
     errors: [],
   };
-}
-
-export function addError(state, errorToAdd) {
-  const errorExists = find(state.errors, (error) => error === errorToAdd);
-
-  if (errorExists) {
-    return state.errors;
-  }
-
-  return state.errors.concat(errorToAdd);
 }
 
 export function updateErrors(state, errorToAdd) {
