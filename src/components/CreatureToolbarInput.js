@@ -12,17 +12,8 @@ class CreatureToolbarInput extends Component {
     this.submitHandler = this.submitHandler.bind(this);
   }
 
-  resetForm() {
-    this.setState({ value: '' });
-  }
-
-  submitHandler() {
-    const { value } = this.state;
-    if (value) {
-      this.resetForm();
-      const submittedValue = this.props.integer ? parseInt(value) : value;
-      this.props.onSubmit(submittedValue);
-    }
+  handleChange(event) {
+    this.setState({ value: event.target.value });
   }
 
   formHandler(event) {
@@ -32,15 +23,27 @@ class CreatureToolbarInput extends Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
+  submitHandler() {
+    const { value } = this.state;
+    if (value) {
+      const { integer, onSubmit } = this.props;
+      this.resetForm();
+      const submittedValue = integer ? parseInt(value, 10) : value;
+      onSubmit(submittedValue);
+    }
+  }
+
+  resetForm() {
+    this.setState({ value: '' });
   }
 
   render() {
+    const { value } = this.state;
     return (
       <Input
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...this.props}
-        value={this.state.value}
+        value={value}
         handleChange={this.handleChange}
         submitHandler={this.submitHandler}
         formHandler={this.formHandler}
