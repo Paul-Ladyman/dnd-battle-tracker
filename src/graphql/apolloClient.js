@@ -95,7 +95,7 @@ function getClient(auth) {
   });
 }
 
-export async function getApolloSession(identity) {
+export default async function getApolloSession(identity) {
   try {
     const authFunc = identity ? refreshAuth : getAuth;
     const { IdentityId, auth, refreshIn } = await authFunc(identity);

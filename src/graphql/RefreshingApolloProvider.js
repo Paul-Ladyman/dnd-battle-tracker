@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { getApolloSession } from './apolloClient';
+import getApolloSession from './apolloClient';
 
 export default function RefreshingApolloProvider({
   online, OnlineView, OfflineView, ...props
