@@ -39,13 +39,14 @@ class BattleToolbar extends Component {
     });
   }
 
-  toggleOptions() {
-    this.setState({ optionsExpanded: !this.state.optionsExpanded });
-  }
-
   handleUpload(loadBattle) {
     const file = this.fileSelector.current.files[0];
     loadBattle(file);
+  }
+
+  toggleOptions() {
+    const { optionsExpanded } = this.state;
+    this.setState({ optionsExpanded: !optionsExpanded });
   }
 
   render() {
@@ -68,8 +69,9 @@ class BattleToolbar extends Component {
     const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
     const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
-    const optionsMenuIcon = this.state.optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
-    const optionsClass = this.state.optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
+    const { optionsExpanded } = this.state;
+    const optionsMenuIcon = optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
+    const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
 
     const ResetButton = () => (
       <button
@@ -77,6 +79,7 @@ class BattleToolbar extends Component {
         className={`${buttonClasses} ${buttonClass}__reset`}
         onClick={() => { this.toggleOptions(); resetBattle(); }}
         disabled={!creaturesAdded}
+        type="button"
       >
         <ResetIcon />
       </button>
@@ -90,6 +93,7 @@ class BattleToolbar extends Component {
           title={title}
           className={buttonClass}
           onClick={() => { this.toggleOptions(); toggleShare(); }}
+          type="button"
         >
           <Icon />
         </button>
@@ -105,6 +109,7 @@ class BattleToolbar extends Component {
           onClick={nextInitiative}
           ref={this.nextButton}
           disabled={!creaturesAdded}
+          type="button"
         >
           {nextButtonLabel}
         </button>
@@ -133,6 +138,7 @@ class BattleToolbar extends Component {
               className={`${buttonClass} battle-toolbar--button__options`}
               onClick={this.toggleOptions}
               ref={this.optionsButton}
+              type="button"
             >
               {optionsMenuIcon}
             </button>
@@ -141,6 +147,7 @@ class BattleToolbar extends Component {
                 title="Save Battle"
                 className={buttonClass}
                 onClick={() => { this.toggleOptions(); saveBattle(); }}
+                type="button"
               >
                 <SaveIcon />
               </button>
@@ -156,6 +163,7 @@ class BattleToolbar extends Component {
                 title="Load Battle"
                 className={`${buttonClass} ${buttonClass}__load`}
                 onClick={() => { this.toggleOptions(); this.fileSelector.current.click(); }}
+                type="button"
               >
                 <LoadIcon />
               </button>
