@@ -2,7 +2,6 @@ import React from 'react';
 
 function getDamageLevel(hp, maxHp) {
   const maxHpFloat = parseFloat(maxHp);
-  const damagedLevel = maxHpFloat / 2.0;
   const criticalLevel = maxHpFloat / 4.0;
 
   if (hp === 0) {
