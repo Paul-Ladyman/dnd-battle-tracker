@@ -47,6 +47,8 @@ class ExpandedCreature extends Component {
     const nameClass = 'expanded-creature--name';
     const nameClasses = multiColumn ? `${nameClass} ${nameClass}__one-line` : nameClass;
 
+    const { removing } = this.state;
+
     return (
       <div className="expanded-creature">
         <div className={`expanded-creature--columns ${columnClassName}`}>
@@ -61,7 +63,11 @@ class ExpandedCreature extends Component {
             {!alive
               && (
               <div className="expanded-creature--status">
-                <em><ExternalLink url={conditionDescriptions.Unconscious}>Unconscious/dead</ExternalLink></em>
+                <em>
+                  <ExternalLink url={conditionDescriptions.Unconscious}>
+                    Unconscious/dead
+                  </ExternalLink>
+                </em>
               </div>
               )}
             <div className="expanded-creature--separator" />
@@ -101,24 +107,26 @@ class ExpandedCreature extends Component {
             />
             )}
         </div>
-        {!playerSession && !active && !this.state.removing
+        {!playerSession && !active && !removing
           && (
           <button
             aria-label={`remove ${creature.name}`}
             title="Remove creature"
             className="expanded-creature--remove-button"
             onClick={this.removing}
+            type="button"
           >
             <RemoveCreatureIcon />
           </button>
           )}
-        {!playerSession && !active && this.state.removing
+        {!playerSession && !active && removing
           && (
           <button
             aria-label={`confirm remove ${creature.name}`}
             title="Confirm remove creature"
             className="expanded-creature--confirm-remove-button"
             onClick={() => removeCreature(id)}
+            type="button"
           >
             <ConfirmRemoveCreatureIcon />
           </button>
