@@ -29,6 +29,7 @@ function CreatureNoteList({
           );
 
         const item = (
+          // eslint-disable-next-line react/no-array-index-key
           <div className="creature-note-list--item" key={i}>
             <div className="creature-note-list--note">
               {noteText}
@@ -42,7 +43,12 @@ function CreatureNoteList({
               />
             </div>
             {!playerSession && (
-            <button className="creature-note-list--button" title="Remove note" onClick={() => dismissHandler(creatureId, note)}>
+            <button
+              className="creature-note-list--button"
+              title="Remove note"
+              onClick={() => dismissHandler(creatureId, note)}
+              type="button"
+            >
               <RemoveIcon />
             </button>
             )}
@@ -51,6 +57,7 @@ function CreatureNoteList({
 
         return i === 0
           ? (
+            // eslint-disable-next-line react/no-array-index-key
             <div key={i}>
               <div className="creature-note-list--label">{label}</div>
               {item}
