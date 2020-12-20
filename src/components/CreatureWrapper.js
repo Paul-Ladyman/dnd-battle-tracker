@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
 import isHotkey from 'is-hotkey';
@@ -13,7 +15,10 @@ import HealthPoints from './HealthPoints';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
-    const activeConditionIndex = findIndex(creatureConditions, (activeCondition) => activeCondition.text === condition);
+    const activeConditionIndex = findIndex(
+      creatureConditions,
+      (activeCondition) => activeCondition.text === condition,
+    );
     return activeConditionIndex === -1;
   });
 }
@@ -52,31 +57,50 @@ class CreatureWrapper extends Component {
     this.focusHandler = this.focusHandler.bind(this);
   }
 
-  expand() {
-    this.setState({ ...this.state, expanded: true });
-  }
-
-  collapse() {
-    this.setState({ ...this.state, expanded: false });
-  }
-
   /*
    * Prevent Creature rerendering when it has not been updated.
    * Otherwise we would always scroll to the active creature when another creature
    * is updated.
    */
   shouldComponentUpdate(nextProps, nextState) {
-    const shouldUpdate = !equal(nextProps.creature, this.props.creature)
-      || nextProps.active !== this.props.active
-      || nextProps.focused !== this.props.focused
-      || nextState.expanded !== this.state.expanded
-      || nextProps.round !== this.props.round;
+    const {
+      creature,
+      active,
+      focused,
+      round,
+    } = this.props;
+
+    const {
+      expanded,
+    } = this.state;
+
+    const shouldUpdate = !equal(nextProps.creature, creature)
+      || nextProps.active !== active
+      || nextProps.focused !== focused
+      || nextState.expanded !== expanded
+      || nextProps.round !== round;
 
     return shouldUpdate;
   }
 
+  componentDidUpdate() {
+    const { focused } = this.props;
+    if (focused) {
+      this.creatureRef.current.focus();
+    }
+  }
+
   getExpandCollapseFunc() {
-    return this.state.expanded ? this.collapse : this.expand;
+    const { expanded } = this.state;
+    return expanded ? this.collapse : this.expand;
+  }
+
+  collapse() {
+    this.setState((prevState) => ({ ...prevState, expanded: false }));
+  }
+
+  expand() {
+    this.setState((prevState) => ({ ...prevState, expanded: true }));
   }
 
   creatureKeyHandler(event) {
@@ -119,32 +143,28 @@ class CreatureWrapper extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const { focused } = this.props;
-    if (focused) {
-      this.creatureRef.current.focus();
-    }
-  }
-
   render() {
     const {
-      creature, active, conditions, creatureManagement, playerSession,
+      creature, active, conditions, creatureManagement, playerSession, round, secondsElapsed,
     } = this.props;
+
     const {
       name, id, locked, alive, healthPoints: creatureHealthPoints, maxHealthPoints,
     } = creature;
 
+    const { expanded } = this.state;
+
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = alive ? '' : 'creature-wrapper__dead';
-    const expandedModifier = this.state.expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
+    const expandedModifier = expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
     const classes = `creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
-    const showExpanded = active || this.state.expanded;
-    const creatureAriaLabel = getCreatureAriaLabel(creature, active, this.state.expanded);
+    const showExpanded = active || expanded;
+    const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
     const creatureExpander = (
       <CreatureExpander
         active={active}
-        expanded={this.state.expanded}
+        expanded={expanded}
         name={name}
         expandHandler={this.expandCreatureHandler}
       />
@@ -184,8 +204,8 @@ class CreatureWrapper extends Component {
               <ExpandedCreature
                 creature={creature}
                 active={active}
-                round={this.props.round}
-                secondsElapsed={this.props.secondsElapsed}
+                round={round}
+                secondsElapsed={secondsElapsed}
                 removeCreature={removeCreature}
                 removeNoteFromCreature={removeNoteFromCreature}
                 creatureExpander={creatureExpander}
