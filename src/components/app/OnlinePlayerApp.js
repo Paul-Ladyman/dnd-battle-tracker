@@ -5,11 +5,11 @@ import PlayerApp from './PlayerApp';
 
 export default function OnlinePlayerApp({ battleId }) {
   const { loading: getLoading, error: getError, data: getData } = useQuery(GET_BATTLE, {
-    variables: { battleId }
+    variables: { battleId },
   });
 
   const { loading: syncLoading, error: syncError, data: syncData } = useSubscription(SYNC_BATTLE, {
-    variables: { battleId }
+    variables: { battleId },
   });
 
   return (

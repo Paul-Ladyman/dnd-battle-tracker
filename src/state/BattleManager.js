@@ -3,15 +3,11 @@ import { createCreature, validateCreature, resetCreature } from './CreatureManag
 import { addError } from './AppManager';
 
 function findCreatureIndex(creatures, creature) {
-  return findIndex(creatures, ({id}) => {
-    return creature.id === id;
-  });
+  return findIndex(creatures, ({ id }) => creature.id === id);
 }
 
 function sortCreatures(creatures) {
-  return creatures.sort((creatureA, creatureB) => {
-    return creatureB.initiative - creatureA.initiative;
-  });
+  return creatures.sort((creatureA, creatureB) => creatureB.initiative - creatureA.initiative);
 }
 
 export const newBattleState = {
@@ -26,7 +22,7 @@ export const newBattleState = {
   createCreatureErrors: {},
   battleId: undefined,
   battleCreated: false,
-  shareEnabled: false
+  shareEnabled: false,
 };
 
 export function getSecondsElapsed(state) {
@@ -34,27 +30,27 @@ export function getSecondsElapsed(state) {
     return 0;
   }
   return (state.round - 1) * 6;
-};
+}
 
 export function nextInitiative(state) {
   if (state.creatures.length === 0) {
     return state;
   }
-  
-  const creaturesWithoutInitiative = state.creatures.filter(creature => creature.initiative === undefined);
+
+  const creaturesWithoutInitiative = state.creatures.filter((creature) => creature.initiative === undefined);
   if (creaturesWithoutInitiative.length > 0) {
     const { name } = creaturesWithoutInitiative[0];
     const ariaAnnouncements = state.ariaAnnouncements.concat(`Cannot continue battle. ${name} has no initiative.`);
-    const errors = addError({...state, errors: []}, `Cannot continue battle; ${name} has no initiative.`);
-    return {...state, ariaAnnouncements, errors};
+    const errors = addError({ ...state, errors: [] }, `Cannot continue battle; ${name} has no initiative.`);
+    return { ...state, ariaAnnouncements, errors };
   }
 
   const initialActiveCreature = state.creatures[state.activeCreature];
   const sortedCreatures = sortCreatures(state.creatures);
 
-  const currentlyActiveCreature = state.round > 0 ? 
-    findCreatureIndex(sortedCreatures, initialActiveCreature) :
-    state.activeCreature;
+  const currentlyActiveCreature = state.round > 0
+    ? findCreatureIndex(sortedCreatures, initialActiveCreature)
+    : state.activeCreature;
 
   let activeCreature = 0;
   let round = 1;
@@ -65,7 +61,7 @@ export function nextInitiative(state) {
 
     if (activeCreature === state.creatureCount) {
       activeCreature = 0;
-      round = round + 1;
+      round += 1;
     }
   }
 
@@ -77,8 +73,10 @@ export function nextInitiative(state) {
   }
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
-  return {...state, creatures: sortedCreatures, round, activeCreature, focusedCreature: activeCreature, ariaAnnouncements, errors: []};
-};
+  return {
+    ...state, creatures: sortedCreatures, round, activeCreature, focusedCreature: activeCreature, ariaAnnouncements, errors: [],
+  };
+}
 
 export function nextFocus(state) {
   if (state.creatures.length === 0) {
@@ -90,12 +88,12 @@ export function nextFocus(state) {
   if (state.focusedCreature !== undefined) {
     focusedCreature = state.focusedCreature + 1;
   }
-  
+
   if (focusedCreature === state.creatureCount) {
     focusedCreature = 0;
   }
 
-  return {...state, focusedCreature};
+  return { ...state, focusedCreature };
 }
 
 export function prevFocus(state) {
@@ -109,7 +107,7 @@ export function prevFocus(state) {
     focusedCreature = state.creatureCount - 1;
   }
 
-  return {...state, focusedCreature};
+  return { ...state, focusedCreature };
 }
 
 export function setFocus(state, creature) {
@@ -117,7 +115,7 @@ export function setFocus(state, creature) {
   if (focusedCreature === -1) {
     focusedCreature = 0;
   }
-  return {...state, focusedCreature};
+  return { ...state, focusedCreature };
 }
 
 export function getInitiative(state) {
@@ -130,17 +128,15 @@ export function getInitiative(state) {
   }
 
   return state.creatures[state.activeCreature].name;
-};
+}
 
 export function removeCreature(state, creatureId) {
-  if (state.creatures === undefined ||
-    state.creatureCount === undefined) {
+  if (state.creatures === undefined
+    || state.creatureCount === undefined) {
     return state;
   }
 
-  const creatures = state.creatures.filter(({id}) => {
-    return creatureId !== id;
-  });
+  const creatures = state.creatures.filter(({ id }) => creatureId !== id);
 
   let creatureCount;
   let activeCreature;
@@ -153,9 +149,9 @@ export function removeCreature(state, creatureId) {
 
     if (state.activeCreature) {
       const currentlyActiveCreature = state.creatures[state.activeCreature];
-      activeCreature = currentlyActiveCreature.id === creatureId ?
-        state.activeCreature :
-        findCreatureIndex(creatures, currentlyActiveCreature);
+      activeCreature = currentlyActiveCreature.id === creatureId
+        ? state.activeCreature
+        : findCreatureIndex(creatures, currentlyActiveCreature);
     } else {
       activeCreature = state.activeCreature;
     }
@@ -163,20 +159,22 @@ export function removeCreature(state, creatureId) {
 
   const ariaAnnouncement = 'creature removed from battle';
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
-  return {...state, creatures, creatureCount, activeCreature, ariaAnnouncements};
-};
+  return {
+    ...state, creatures, creatureCount, activeCreature, ariaAnnouncements,
+  };
+}
 
 function createCreatures(creatureIdCount, creatures, creature, multiplier) {
   if (multiplier <= 1) {
-    return [ createCreature(creatureIdCount, creature) ];
+    return [createCreature(creatureIdCount, creature)];
   }
 
   const groupRegex = new RegExp(`^${creature.name.toLowerCase()}\\s*#(\\d*)$`);
-  const groupMatch = _ => _.name.toLowerCase().match(groupRegex);
+  const groupMatch = (_) => _.name.toLowerCase().match(groupRegex);
 
   const groupIndexes = creatures
-    .filter(_ => groupMatch(_) !== null)
-    .map(_ => parseInt(groupMatch(_)[1]))
+    .filter((_) => groupMatch(_) !== null)
+    .map((_) => parseInt(groupMatch(_)[1]))
     .sort((a, b) => a - b);
 
   const groupSize = groupIndexes.length;
@@ -194,26 +192,28 @@ export function addCreature(state, creature) {
   const creatureMultiplier = multiplier || 1;
 
   const { name, initiative, healthPoints } = creatureStats;
-  const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier); 
+  const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier);
 
   if (createCreatureErrors) {
     const createCreatureErrorMessages = Object.keys(createCreatureErrors)
-      .filter(error => createCreatureErrors[error])
-      .map(error => createCreatureErrors[error])
+      .filter((error) => createCreatureErrors[error])
+      .map((error) => createCreatureErrors[error])
       .join('. ');
 
     const ariaAnnouncements = state.ariaAnnouncements.concat(`Failed to create creature. ${createCreatureErrorMessages}`);
     const errors = addError(state, 'Failed to create creature. Create creature form is invalid.');
-    return {...state, ariaAnnouncements, errors, createCreatureErrors};
+    return {
+      ...state, ariaAnnouncements, errors, createCreatureErrors,
+    };
   }
 
   const newCreatures = createCreatures(state.creatureIdCount, state.creatures, creatureStats, creatureMultiplier);
   const creatures = sortCreatures([...state.creatures, ...newCreatures]);
   const currentlyActiveCreature = state.creatures[state.activeCreature];
 
-  const activeCreature = state.round > 0 ? 
-    findCreatureIndex(creatures, currentlyActiveCreature) :
-    state.activeCreature;
+  const activeCreature = state.round > 0
+    ? findCreatureIndex(creatures, currentlyActiveCreature)
+    : state.activeCreature;
 
   const creatureCount = state.creatureCount + creatureMultiplier;
   const creatureIdCount = state.creatureIdCount + creatureMultiplier;
@@ -221,8 +221,10 @@ export function addCreature(state, creature) {
   const ariaAnnouncement = newCreatures.length > 1 ? 'creatures added' : `${newCreatures[0].name} added`;
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
-  return {...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements, createCreatureErrors: {}, errors: []};
-};
+  return {
+    ...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements, createCreatureErrors: {}, errors: [],
+  };
+}
 
 export function resetBattle(state) {
   const {
@@ -230,9 +232,9 @@ export function resetBattle(state) {
     ariaAnnouncements: currentAriaAnnouncements,
     battleId,
     shareEnabled,
-    battleCreated
+    battleCreated,
   } = state;
-  const lockedCreatures = creatures.filter(creature => creature.locked);
+  const lockedCreatures = creatures.filter((creature) => creature.locked);
   const creatureCount = lockedCreatures.length;
   const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
   const ariaAnnouncements = currentAriaAnnouncements.concat(['battle reset']);
@@ -244,7 +246,7 @@ export function resetBattle(state) {
     creatureCount,
     creatureIdCount: creatureCount,
     creatures: resetLockedCreatures,
-    ariaAnnouncements
+    ariaAnnouncements,
   };
 }
 

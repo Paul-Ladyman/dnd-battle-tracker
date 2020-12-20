@@ -11,7 +11,7 @@ class ExpandedCreature extends Component {
     super(props);
 
     this.state = {
-      removing: false
+      removing: false,
     };
 
     this.removing = this.removing.bind(this);
@@ -21,7 +21,7 @@ class ExpandedCreature extends Component {
     this.setState({ removing: true });
   }
 
-  render () {
+  render() {
     const {
       creature,
       active,
@@ -34,9 +34,11 @@ class ExpandedCreature extends Component {
       monsterSearcher,
       healthPoints,
       showHealth,
-      playerSession
+      playerSession,
     } = this.props;
-    const { alive, name, initiative, id, conditions, notes } = creature;
+    const {
+      alive, name, initiative, id, conditions, notes,
+    } = creature;
     const showInitiative = initiative !== undefined && initiative !== null;
     const showConditions = conditions.length > 0;
     const showNotes = notes.length > 0;
@@ -56,21 +58,26 @@ class ExpandedCreature extends Component {
               {creatureExpander}
               {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
             </div>
-            {!alive &&
+            {!alive
+              && (
               <div className="expanded-creature--status">
-                <em><ExternalLink url={conditionDescriptions.Unconscious} >Unconscious/dead</ExternalLink></em>
+                <em><ExternalLink url={conditionDescriptions.Unconscious}>Unconscious/dead</ExternalLink></em>
               </div>
-            }
+              )}
             <div className="expanded-creature--separator" />
             {showHealth && healthPoints}
-            {showInitiative &&
+            {showInitiative
+              && (
               <div className="expanded-creature--stat">
-                <b>Initiative</b> {initiative}
+                <b>Initiative</b>
+                {' '}
+                {initiative}
               </div>
-            }
+              )}
             { (showHealth || showInitiative) && <div className="expanded-creature--separator" /> }
           </div>
-          {showConditions &&
+          {showConditions
+            && (
             <CreatureNoteList
               creatureId={id}
               label="Conditions"
@@ -80,8 +87,9 @@ class ExpandedCreature extends Component {
               secondsElapsed={secondsElapsed}
               playerSession={playerSession}
             />
-          }
-          {showNotes &&
+            )}
+          {showNotes
+            && (
             <CreatureNoteList
               creatureId={id}
               label="Notes"
@@ -91,9 +99,10 @@ class ExpandedCreature extends Component {
               secondsElapsed={secondsElapsed}
               playerSession={playerSession}
             />
-          }
+            )}
         </div>
-        {!playerSession && !active && !this.state.removing &&
+        {!playerSession && !active && !this.state.removing
+          && (
           <button
             aria-label={`remove ${creature.name}`}
             title="Remove creature"
@@ -102,8 +111,9 @@ class ExpandedCreature extends Component {
           >
             <RemoveCreatureIcon />
           </button>
-        }
-        {!playerSession && !active && this.state.removing &&
+          )}
+        {!playerSession && !active && this.state.removing
+          && (
           <button
             aria-label={`confirm remove ${creature.name}`}
             title="Confirm remove creature"
@@ -112,8 +122,8 @@ class ExpandedCreature extends Component {
           >
             <ConfirmRemoveCreatureIcon />
           </button>
-        }
-        {active && <div style={{height: '43px'}}></div>}
+          )}
+        {active && <div style={{ height: '43px' }} />}
       </div>
     );
   }

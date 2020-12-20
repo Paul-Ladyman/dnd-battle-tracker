@@ -7,10 +7,10 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 function getUrlParameter(name) {
   const cleanName = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  const regex = new RegExp('[\\?&]' + cleanName + '=([^&#]*)');
+  const regex = new RegExp(`[\\?&]${cleanName}=([^&#]*)`);
   const results = regex.exec(location.search);
   return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
-};
+}
 
 const battleId = getUrlParameter('battle');
 
@@ -20,12 +20,11 @@ async function render() {
   if (battleId) {
     const RenderPlayerApp = () => (
       <ErrorBoundary>
-        <PlayerAppWrapper battleId={battleId} /> 
+        <PlayerAppWrapper battleId={battleId} />
       </ErrorBoundary>
     );
     ReactDOM.render(RenderPlayerApp(), rootElement);
-  }
-  else {
+  } else {
     const RenderDmApp = () => (
       <ErrorBoundary>
         <DungeonMasterAppWrapper />

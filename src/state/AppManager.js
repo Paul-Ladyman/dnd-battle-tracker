@@ -5,7 +5,9 @@ import FileSystem from '../util/fileSystem';
 const appSchema = require('../resources/app-schema.json');
 
 export function save(state) {
-  const { ariaAnnouncements, errors, createCreatureErrors, ...stateToSave } = state;
+  const {
+    ariaAnnouncements, errors, createCreatureErrors, ...stateToSave
+  } = state;
   const now = new Date(Date.now());
   const dateSuffix = `${now.getDate()}_${now.getMonth()}_${now.getFullYear()}`;
   const timeSuffix = `${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`;
@@ -17,7 +19,7 @@ export function save(state) {
   const newAriaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
   return {
     ...state,
-    ariaAnnouncements: newAriaAnnouncements
+    ariaAnnouncements: newAriaAnnouncements,
   };
 }
 
@@ -52,7 +54,7 @@ export async function load(state, file) {
     shareEnabled,
     ariaAnnouncements,
     errors,
-    createCreatureErrors: {}
+    createCreatureErrors: {},
   };
 }
 
@@ -63,12 +65,12 @@ export function isSaveLoadSupported() {
 export function dismissErrors(state) {
   return {
     ...state,
-    errors: []
+    errors: [],
   };
 }
 
 export function addError(state, errorToAdd) {
-  const errorExists = find(state.errors, error => error === errorToAdd);
+  const errorExists = find(state.errors, (error) => error === errorToAdd);
 
   if (errorExists) {
     return state.errors;

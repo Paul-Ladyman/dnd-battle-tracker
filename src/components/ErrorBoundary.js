@@ -16,16 +16,16 @@ export default class ErrorBoundary extends React.Component {
       return (
         <div className="main-footer-wrapper">
           <main className="main main__error">
-          <h1 className="main-title main-title__short">
-            D&D Battle Tracker
-          </h1>
-          <h2>Something went wrong!</h2>
+            <h1 className="main-title main-title__short">
+              D&D Battle Tracker
+            </h1>
+            <h2>Something went wrong!</h2>
           </main>
-          <Footer error/>
+          <Footer error />
         </div>
       );
     }
 
-    return this.props.children; 
+    return this.props.children;
   }
 }

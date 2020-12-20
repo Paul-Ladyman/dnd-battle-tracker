@@ -7,7 +7,7 @@ export default function Errors({ errors, dismissErrors }) {
       <div className="error-bar--errors">
         {errors.map((error, i) => {
           const isLast = i === errors.length - 1;
-          const classes = isLast ? 'error-bar--error error-bar--error__last' : 'error-bar--error'
+          const classes = isLast ? 'error-bar--error error-bar--error__last' : 'error-bar--error';
           return (
             <div className={classes} key={`error-${i}`}>
               {error}
@@ -15,7 +15,7 @@ export default function Errors({ errors, dismissErrors }) {
           );
         })}
       </div>
-      <button className="error-bar--dismiss" title="Dismiss errors" onClick={dismissErrors} >
+      <button className="error-bar--dismiss" title="Dismiss errors" onClick={dismissErrors}>
         <RemoveIcon fill="black" />
       </button>
     </div>

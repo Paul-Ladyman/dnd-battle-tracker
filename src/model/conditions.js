@@ -13,7 +13,7 @@ export const conditionDescriptions = {
   Prone: 'https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Prone',
   Restrained: 'https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Restrained',
   Stunned: 'https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Stunned',
-  Unconscious: 'https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Unconscious'
+  Unconscious: 'https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Unconscious',
 };
 
 export default [
@@ -30,5 +30,5 @@ export default [
   'Poisoned',
   'Prone',
   'Restrained',
-  'Stunned'
+  'Stunned',
 ];

@@ -9,16 +9,16 @@ const createBattleMock = jest.fn();
 const updateBattleMock = jest.fn();
 
 const defaultState = {
-  creatures:[
+  creatures: [
     {
       name: 'Wellby',
       initiative: 13,
       id: 0,
-      alive:true,
+      alive: true,
       conditions: [],
       notes: [],
-      locked: false
-    }
+      locked: false,
+    },
   ],
   creatureIdCount: 3,
   creatureCount: 3,
@@ -30,19 +30,23 @@ const defaultState = {
   createCreatureErrors: {},
   battleId: '123',
   battleCreated: false,
-  shareEnabled: true
+  shareEnabled: true,
 };
 
 const date = new Date(1605815493000);
 
-const expectedInput = (battleId) => ({ variables: { battleinput: {
-  battleId: battleId || defaultState.battleId,
-  creatureCount: defaultState.creatureCount,
-  round: defaultState.round,
-  creatures: defaultState.creatures,
-  activeCreature: defaultState.activeCreature,
-  expdate: 1605901893
-}}});
+const expectedInput = (battleId) => ({
+  variables: {
+    battleinput: {
+      battleId: battleId || defaultState.battleId,
+      creatureCount: defaultState.creatureCount,
+      round: defaultState.round,
+      creatures: defaultState.creatures,
+      activeCreature: defaultState.activeCreature,
+      expdate: 1605901893,
+    },
+  },
+});
 
 beforeEach(() => {
   createBattleMock.mockReset();
@@ -87,7 +91,7 @@ describe('share', () => {
     const state = { ...defaultState, battleId: undefined };
     const newState = share(state, createBattleMock, updateBattleMock, date);
 
-    const expectedState = { ...defaultState, battleCreated: true, battleId: 'new-id'}
+    const expectedState = { ...defaultState, battleCreated: true, battleId: 'new-id' };
 
     expect(newState).toEqual(expectedState);
     expect(createBattleMock).toHaveBeenCalledTimes(1);

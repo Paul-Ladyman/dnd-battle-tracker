@@ -10,7 +10,7 @@ function Creatures({
   round,
   secondsElapsed,
   creatureManagement,
-  playerSession
+  playerSession,
 }) {
   return (
     <div className="creature-list">

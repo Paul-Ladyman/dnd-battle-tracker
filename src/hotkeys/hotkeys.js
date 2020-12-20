@@ -8,12 +8,12 @@ export const hotkeys = {
   battlebar: 'alt+shift+l',
 };
 
-export const hotkeyDescriptions =  {
+export const hotkeyDescriptions = {
   nextInitiative: 'Advance to the next creature in the initiative order.',
   nextFocus: 'Move focus to next creature.',
   prevFocus: 'Move focus to prev creature.',
   focusCreature: 'Move focus from creature toolbar to creature.',
   focusCreatureToolbar: 'Move focus from creature to creature toolbar.',
   createCreature: 'Move focus to create creature form.',
-  battlebar: 'Move focus to battle toolbar.'
+  battlebar: 'Move focus to battle toolbar.',
 };

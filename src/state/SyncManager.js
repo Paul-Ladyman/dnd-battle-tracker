@@ -8,14 +8,18 @@ export function share(state, createBattle, updateBattle, date) {
 
   const battleId = state.battleId || nanoid(11);
 
-  const input = { variables: { battleinput: {
-    battleId,
-    creatureCount: state.creatureCount,
-    round: state.round,
-    creatures: state.creatures,
-    activeCreature: state.activeCreature,
-    expdate: Math.floor(date.getTime()/1000.0) + 86400
-  }}};
+  const input = {
+    variables: {
+      battleinput: {
+        battleId,
+        creatureCount: state.creatureCount,
+        round: state.round,
+        creatures: state.creatures,
+        activeCreature: state.activeCreature,
+        expdate: Math.floor(date.getTime() / 1000.0) + 86400,
+      },
+    },
+  };
 
   const { battleCreated } = state;
 
@@ -30,14 +34,12 @@ export function share(state, createBattle, updateBattle, date) {
 }
 
 export function handleShareError(state, createError, updateError) {
-  if (!createError && !updateError)
-    return dismissErrors(state);
+  if (!createError && !updateError) return dismissErrors(state);
 
   const error = 'Error sharing battle with players. Try toggling share button.';
   const stateWithErrors = updateErrors(state, error);
 
-  if (createError)
-    return { ...stateWithErrors, battleCreated: false };
+  if (createError) return { ...stateWithErrors, battleCreated: false };
 
   return stateWithErrors;
 }

@@ -4,7 +4,7 @@ import Input from './Input';
 class CreatureToolbarInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = { value: '' };
 
     this.formHandler = this.formHandler.bind(this);
     this.resetForm = this.resetForm.bind(this);
@@ -13,7 +13,7 @@ class CreatureToolbarInput extends Component {
   }
 
   resetForm() {
-    this.setState({value: ''});
+    this.setState({ value: '' });
   }
 
   submitHandler() {
@@ -33,7 +33,7 @@ class CreatureToolbarInput extends Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
   render() {
@@ -53,7 +53,7 @@ CreatureToolbarInput.defaultProps = {
   integer: false,
   enabled: true,
   min: undefined,
-  customClasses: ''
+  customClasses: '',
 };
 
 export default CreatureToolbarInput;

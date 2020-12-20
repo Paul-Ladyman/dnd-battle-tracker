@@ -1,10 +1,8 @@
 import React from 'react';
 
 function commaSeparate(notes, trailing) {
-  const suffix = trailing ? ',' : ''
-  return notes.map((note) => {
-    return `${note.text[0].toUpperCase()}${note.text.substring(1)}`;
-  }).join(', ') + suffix;
+  const suffix = trailing ? ',' : '';
+  return notes.map((note) => `${note.text[0].toUpperCase()}${note.text.substring(1)}`).join(', ') + suffix;
 }
 
 function CollapsedCreature({
@@ -13,11 +11,11 @@ function CollapsedCreature({
   creatureLocker,
   monsterSearcher,
   healthPoints,
-  showHealth
+  showHealth,
 }) {
   const { name } = creature;
   const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
-  const nameClasses = `collapsed-creature--name ${nameModifier}`
+  const nameClasses = `collapsed-creature--name ${nameModifier}`;
   const showConditions = creature.conditions.length > 0;
   const showNotes = creature.notes.length > 0;
   const conditionsMarginClass = showHealth ? 'collapsed-creature--status__margin' : '';
@@ -34,16 +32,22 @@ function CollapsedCreature({
       </div>
       <div className="collapsed-creature--status">
         {showHealth && healthPoints}
-        {showConditions && 
-          <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>{
+        {showConditions
+          && (
+          <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>
+            {
             commaSeparate(creature.conditions, showNotes)
-          }</div>
-        }
-        {showNotes && 
-          <div className={`collapsed-creature--notes ${notesMarginClass}`}>{
+          }
+          </div>
+          )}
+        {showNotes
+          && (
+          <div className={`collapsed-creature--notes ${notesMarginClass}`}>
+            {
             commaSeparate(creature.notes, false)
-          }</div>
-        }
+          }
+          </div>
+          )}
       </div>
     </div>
   );

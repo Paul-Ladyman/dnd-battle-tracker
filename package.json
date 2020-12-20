@@ -26,7 +26,8 @@
     "build:bundle:html": "node ./scripts/bundle-html.js",
     "build:index": "node ./scripts/create-index.js",
     "test": "npx jest --watch",
-    "test:ci": "npx jest"
+    "test:ci": "npx jest",
+    "lint": "npx eslint \"src/**\""
   },
   "jest": {
     "moduleNameMapper": {

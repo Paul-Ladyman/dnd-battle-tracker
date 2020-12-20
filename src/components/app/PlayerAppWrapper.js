@@ -6,7 +6,7 @@ import OnlinePlayerApp from './OnlinePlayerApp';
 export default function PlayerAppWrapper(props) {
   return (
     <RefreshingApolloProvider
-      online={true}
+      online
       OnlineView={OnlinePlayerApp}
       OfflineView={PlayerApp}
       {...props}
