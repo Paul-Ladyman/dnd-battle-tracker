@@ -8,7 +8,7 @@
     "aws-appsync-auth-link": "^3.0.2",
     "aws-appsync-subscription-link": "^3.0.3",
     "fast-deep-equal": "^2.0.1",
-    "file-saver": "^2.0.2",
+    "file-saver": "^2.0.5",
     "graphql": "^15.4.0",
     "is-hotkey": "^0.1.6",
     "jsonschema": "^1.2.5",
