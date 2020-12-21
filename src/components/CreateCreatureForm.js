@@ -145,7 +145,7 @@ class CreateCreatureForm extends Component {
             required
             min="1"
             max="50"
-            error={multiplierError && <span className="form--label__error"> * 1 - 50</span>}
+            error={multiplierError && <span className="form--label__error"> 1 - 50</span>}
             value={multiplier}
             ariaLabel="create creature form. Multiplier (required)"
             label="Multiply"
