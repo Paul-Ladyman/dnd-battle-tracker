@@ -7,7 +7,6 @@ import BattleToolbar from '../BattleToolbar';
 import Title from '../Title';
 import conditions from '../../model/conditions';
 import {
-  getSecondsElapsed,
   nextInitiative,
   getInitiative,
   nextFocus,
@@ -16,8 +15,9 @@ import {
   removeCreature,
   addCreature,
   resetBattle,
-  toggleSync
+  toggleSync,
 } from '../../state/BattleManager';
+import getSecondsElapsed from '../../state/TimeManager';
 import {
   killCreature,
   stabalizeCreature,
@@ -27,24 +27,32 @@ import {
   removeNoteFromCreature,
   addHealthToCreature,
   addInitiativeToCreature,
-  toggleCreatureLock
+  toggleCreatureLock,
 } from '../../state/CreatureManager';
 import {
   save,
   load,
   isSaveLoadSupported,
   dismissErrors,
-  updateErrors
+  updateErrors,
 } from '../../state/AppManager';
 import Footer from '../Footer';
 import Errors from '../Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 
-function DungeonMasterApp({ state, setState, shareBattle, onlineError }) {
+function DungeonMasterApp({
+  state, setState, shareBattle, onlineError,
+}) {
+  const updateBattle = (update, doShare = true) => (...args) => {
+    setState((prevState) => {
+      const newState = update(prevState, ...args);
+      if (doShare) return shareBattle(newState);
+      return newState;
+    });
+  };
+
   useEffect(() => {
-    window.onbeforeunload = () => {
-      return true;
-    };
+    window.onbeforeunload = () => true;
 
     window.addEventListener('keydown', (e) => {
       if (isHotkey(hotkeys.nextInitiative, e)) {
@@ -61,24 +69,13 @@ function DungeonMasterApp({ state, setState, shareBattle, onlineError }) {
     });
   }, []);
 
-  const updateBattle = (update, doShare = true) => {
-    return function() {
-      setState((prevState) => {
-        const newState = update(prevState, ...arguments);
-        if (doShare) return shareBattle(newState);
-        return newState;
-      });
-    };
-  };
-
   const loadBattle = async (file) => {
     const newState = shareBattle(await load(state, file));
     setState(newState);
-  }
+  };
 
   useEffect(() => {
-    if (onlineError)
-      updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
+    if (onlineError) updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
   }, [onlineError]);
 
   const secondsElapsed = getSecondsElapsed(state);
@@ -93,13 +90,13 @@ function DungeonMasterApp({ state, setState, shareBattle, onlineError }) {
     removeCreature: updateBattle(removeCreature),
     addNoteToCreature: updateBattle(addNoteToCreature),
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
-    toggleCreatureLock: updateBattle(toggleCreatureLock, false)
+    toggleCreatureLock: updateBattle(toggleCreatureLock, false),
   };
 
   const errors = state.errors && state.errors.length > 0;
 
   return (
-    <React.Fragment>
+    <>
       <BattleToolbar
         initiative={getInitiative(state)}
         round={state.round}
@@ -113,12 +110,13 @@ function DungeonMasterApp({ state, setState, shareBattle, onlineError }) {
         shareEnabled={state.shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
       />
-      { errors && <Errors
-          errors={state.errors}
-          dismissErrors={updateBattle(dismissErrors, false)}
-        />
-       }
-      <div className="aria-announcements" role='region' aria-live="assertive">
+      { errors && (
+      <Errors
+        errors={state.errors}
+        dismissErrors={updateBattle(dismissErrors, false)}
+      />
+      )}
+      <div className="aria-announcements" role="region" aria-live="assertive">
         {state.ariaAnnouncements}
       </div>
       <div className="main-footer-wrapper">
@@ -127,24 +125,24 @@ function DungeonMasterApp({ state, setState, shareBattle, onlineError }) {
             shareEnabled={state.shareEnabled}
             battleId={state.battleId}
           />
-         <CreateCreatureForm
-           createCreature={updateBattle(addCreature)}
-           createCreatureErrors={state.createCreatureErrors}
-         />
-         <Creatures
-           creatures={state.creatures}
-           activeCreature={state.activeCreature}
-           focusedCreature={state.focusedCreature}
-           setFocus={updateBattle(setFocus, false)}
-           conditions={conditions}
-           round={state.round}
-           secondsElapsed={secondsElapsed}
-           creatureManagement={creatureManagement}
+          <CreateCreatureForm
+            createCreature={updateBattle(addCreature)}
+            createCreatureErrors={state.createCreatureErrors}
+          />
+          <Creatures
+            creatures={state.creatures}
+            activeCreature={state.activeCreature}
+            focusedCreature={state.focusedCreature}
+            setFocus={updateBattle(setFocus, false)}
+            conditions={conditions}
+            round={state.round}
+            secondsElapsed={secondsElapsed}
+            creatureManagement={creatureManagement}
           />
         </main>
-        <Footer/>
-       </div>
-    </React.Fragment>
+        <Footer />
+      </div>
+    </>
   );
 }
 

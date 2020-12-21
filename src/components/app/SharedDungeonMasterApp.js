@@ -8,8 +8,12 @@ export default function SharedDungeonMasterApp({ state, setState }) {
   const [createBattleMutation, { error: createError }] = useMutation(CREATE_BATTLE);
   const [updateBattleMutation, { error: updateError }] = useMutation(UPDATE_BATTLE);
 
-  const shareBattle = (shareState) =>
-    share(shareState, createBattleMutation, updateBattleMutation, new Date());
+  const shareBattle = (shareState) => share(
+    shareState,
+    createBattleMutation,
+    updateBattleMutation,
+    new Date(),
+  );
 
   useEffect(() => {
     setState((prevState) => shareBattle(prevState));

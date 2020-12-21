@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v2.5.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v2.5.0/dnd-battle-tracker.html)
+**Latest release (v2.5.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v2.5.1/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -87,6 +87,10 @@ In no particular order a list of ideas that might make for good future features:
 * Allow creature notes to be edited
 * Track which creatures have used reactions in a round - I often forget
 * Run through combat section of PHB. Ensure current implementation follows the rules and check for any new iedas
+
+## Bugs
+
+* Resetting battle does not clear initiative in player session
 
 ## Development
 

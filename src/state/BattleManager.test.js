@@ -1,6 +1,5 @@
-import { 
+import {
   newBattleState,
-  getSecondsElapsed,
   nextInitiative,
   getInitiative,
   nextFocus,
@@ -9,21 +8,21 @@ import {
   removeCreature,
   addCreature,
   resetBattle,
-  toggleSync
+  toggleSync,
 } from './BattleManager';
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
 jest.mock('./CreatureManager');
 
 const defaultState = {
-  creatures:[
+  creatures: [
     {
       name: 'Wellby',
       initiative: 13,
       id: 0,
-      alive:true,
+      alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     },
     {
       name: 'Goblin #1',
@@ -34,7 +33,7 @@ const defaultState = {
       alive: true,
       conditions: [],
       notes: [],
-      locked: true
+      locked: true,
     },
     {
       name: 'Goblin #2',
@@ -45,8 +44,8 @@ const defaultState = {
       alive: true,
       conditions: [],
       notes: [],
-      locked: true
-    }
+      locked: true,
+    },
   ],
   creatureIdCount: 3,
   creatureCount: 3,
@@ -58,7 +57,7 @@ const defaultState = {
   createCreatureErrors: {},
   battleCreated: false,
   shareEnabled: false,
-  battleId: '123'
+  battleId: '123',
 };
 
 beforeEach(() => {
@@ -80,7 +79,7 @@ describe('newBattleState', () => {
       createCreatureErrors: {},
       battleCreated: false,
       shareEnabled: false,
-      battleId: undefined
+      battleId: undefined,
     };
 
     expect(newBattleState).toEqual(expected);
@@ -97,7 +96,7 @@ describe('resetBattle', () => {
       round: 0,
       ariaAnnouncements: ['battle reset'],
       errors: [],
-      createCreatureErrors: {}
+      createCreatureErrors: {},
     };
 
     expect(resetBattle(defaultState)).toMatchObject(expected);
@@ -108,28 +107,28 @@ describe('resetBattle', () => {
     const resetCreature1 = {
       ...defaultState.creatures[1],
       id: 0,
-      initiative: undefined
+      initiative: undefined,
     };
     const resetCreature2 = {
       ...defaultState.creatures[2],
       id: 1,
-      initiative: undefined
+      initiative: undefined,
     };
     resetCreature.mockReturnValueOnce(resetCreature1).mockReturnValueOnce(resetCreature2);
     const expected = {
       creatures: [
         resetCreature1,
-        resetCreature2
+        resetCreature2,
       ],
     };
 
     expect(resetBattle(defaultState)).toMatchObject(expected);
     expect(resetCreature).toHaveBeenCalledTimes(2);
-  }); 
+  });
 
   test('resets the battle state, keeping the battleId', () => {
     const expected = {
-      battleId: '123'
+      battleId: '123',
     };
 
     expect(resetBattle(defaultState)).toMatchObject(expected);
@@ -148,60 +147,20 @@ describe('resetBattle', () => {
   });
 });
 
-describe('getSecondsElapsed', () => {
-  test('returns the seconds elapsed up to but not including the current round', () => {
-    const state = {
-      round: 2
-    };
-    const result = getSecondsElapsed(state);
-    expect(result).toBe(6);
-  });
-
-  test('returns 0 seconds for round 1', () => {
-    const state = {
-      round: 1
-    };
-    const result = getSecondsElapsed(state);
-    expect(result).toBe(0);
-  });
-
-  test('returns 0 seconds for round 0', () => {
-    const state = {
-      round: 0
-    };
-    const result = getSecondsElapsed(state);
-    expect(result).toBe(0);
-  });
-
-  test('returns 0 seconds for an invalid round', () => {
-    const state = {
-      round: -1
-    };
-    const result = getSecondsElapsed(state);
-    expect(result).toBe(0);
-  });
-
-  test('returns 0 seconds when round is not specified', () => {
-    const state = {};
-    const result = getSecondsElapsed(state);
-    expect(result).toBe(0);
-  });
-});
-
 describe('nextInitiative', () => {
   test('it starts the first round with the first creature in the list', () => {
     const state = {
       ...defaultState,
       round: 0,
       activeCreature: undefined,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...defaultState,
       round: 1,
       activeCreature: 0,
       focusedCreature: 0,
-      ariaAnnouncements: ['its Wellby\'s go']
+      ariaAnnouncements: ['its Wellby\'s go'],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -219,12 +178,12 @@ describe('nextInitiative', () => {
           id: 3,
           alive: true,
           conditions: [],
-          notes: []
-        }
+          notes: [],
+        },
       ],
       round: 0,
       activeCreature: undefined,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...defaultState,
@@ -237,14 +196,14 @@ describe('nextInitiative', () => {
           id: 3,
           alive: true,
           conditions: [],
-          notes: []
+          notes: [],
         },
-        ...defaultState.creatures
+        ...defaultState.creatures,
       ],
       round: 1,
       activeCreature: 0,
       focusedCreature: 0,
-      ariaAnnouncements: ['its Droop\'s go']
+      ariaAnnouncements: ['its Droop\'s go'],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -255,21 +214,21 @@ describe('nextInitiative', () => {
       creatures: [
         {
           ...defaultState.creatures[0],
-          alive: false
+          alive: false,
         },
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
       round: 0,
       activeCreature: undefined,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...state,
       round: 1,
       activeCreature: 0,
       focusedCreature: 0,
-      ariaAnnouncements: ['its Wellby\'s go. Wellby is dead/unconscious']
+      ariaAnnouncements: ['its Wellby\'s go. Wellby is dead/unconscious'],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -279,7 +238,7 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 0,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
 
     const expected = {
@@ -287,7 +246,7 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 1,
       focusedCreature: 1,
-      ariaAnnouncements: ['its Goblin #1\'s go']
+      ariaAnnouncements: ['its Goblin #1\'s go'],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -306,12 +265,12 @@ describe('nextInitiative', () => {
           id: 3,
           alive: true,
           conditions: [],
-          notes: []
-        }
+          notes: [],
+        },
       ],
       round: 1,
       activeCreature: 0,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
 
     const expected = {
@@ -325,14 +284,14 @@ describe('nextInitiative', () => {
           id: 3,
           alive: true,
           conditions: [],
-          notes: []
+          notes: [],
         },
-        ...defaultState.creatures
+        ...defaultState.creatures,
       ],
       round: 1,
       activeCreature: 2,
       focusedCreature: 2,
-      ariaAnnouncements: ['its Goblin #1\'s go']
+      ariaAnnouncements: ['its Goblin #1\'s go'],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -343,7 +302,7 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 0,
-      focusedCreature: 2
+      focusedCreature: 2,
     };
 
     const expected = {
@@ -351,7 +310,7 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 1,
       focusedCreature: 1,
-      ariaAnnouncements: ['its Goblin #1\'s go']
+      ariaAnnouncements: ['its Goblin #1\'s go'],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -362,7 +321,7 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 2,
-      focusedCreature: 2
+      focusedCreature: 2,
     };
 
     const expected = {
@@ -370,7 +329,7 @@ describe('nextInitiative', () => {
       round: 2,
       activeCreature: 0,
       focusedCreature: 0,
-      ariaAnnouncements: ['its Wellby\'s go']
+      ariaAnnouncements: ['its Wellby\'s go'],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -380,7 +339,7 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       creatures: [],
-      ariaAnnouncements: []
+      ariaAnnouncements: [],
     };
 
     expect(nextInitiative(state)).toEqual(state);
@@ -398,12 +357,12 @@ describe('nextInitiative', () => {
           id: 3,
           alive: true,
           conditions: [],
-          notes: []
-        }
+          notes: [],
+        },
       ],
       round: 0,
       activeCreature: undefined,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...state,
@@ -425,13 +384,13 @@ describe('nextInitiative', () => {
           id: 3,
           alive: true,
           conditions: [],
-          notes: []
-        }
+          notes: [],
+        },
       ],
       errors: ['some error'],
       round: 0,
       activeCreature: undefined,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...state,
@@ -454,13 +413,13 @@ describe('nextInitiative', () => {
           id: 3,
           alive: true,
           conditions: [],
-          notes: []
-        }
+          notes: [],
+        },
       ],
       errors: ['some error'],
       round: 0,
       activeCreature: undefined,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...state,
@@ -468,7 +427,7 @@ describe('nextInitiative', () => {
       activeCreature: 0,
       focusedCreature: 0,
       errors: [],
-      ariaAnnouncements: ['its Wellby\'s go']
+      ariaAnnouncements: ['its Wellby\'s go'],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -482,16 +441,16 @@ describe('getInitiative', () => {
   test('it returns an empty string if there are no creatures', () => {
     const state = {
       ...defaultState,
-      creatures: []
-    }
+      creatures: [],
+    };
     expect(getInitiative(state)).toEqual('');
   });
 
   test('it returns an empty string if the battle has not started', () => {
     const state = {
       ...defaultState,
-      round: 0
-    }
+      round: 0,
+    };
     expect(getInitiative(state)).toEqual('');
   });
 });
@@ -500,11 +459,11 @@ describe('nextFocus', () => {
   test('it starts with the first creature in the list', () => {
     const state = {
       ...defaultState,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...defaultState,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
     expect(nextFocus(state)).toEqual(expected);
   });
@@ -512,12 +471,12 @@ describe('nextFocus', () => {
   test('it advances the focused creature by 1', () => {
     const state = {
       ...defaultState,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
 
     const expected = {
       ...defaultState,
-      focusedCreature: 1
+      focusedCreature: 1,
     };
 
     expect(nextFocus(state)).toEqual(expected);
@@ -526,12 +485,12 @@ describe('nextFocus', () => {
   test('it starts at the first creature after all creatures have been focused', () => {
     const state = {
       ...defaultState,
-      focusedCreature: 2
+      focusedCreature: 2,
     };
 
     const expected = {
       ...defaultState,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
 
     expect(nextFocus(state)).toEqual(expected);
@@ -540,7 +499,7 @@ describe('nextFocus', () => {
   test('it does nothing if there are no creatures', () => {
     const state = {
       ...defaultState,
-      creatures: []
+      creatures: [],
     };
 
     expect(nextFocus(state)).toEqual(state);
@@ -551,11 +510,11 @@ describe('prevFocus', () => {
   test('it starts with the last creature in the list', () => {
     const state = {
       ...defaultState,
-      focusedCreature: undefined
+      focusedCreature: undefined,
     };
     const expected = {
       ...defaultState,
-      focusedCreature: 2
+      focusedCreature: 2,
     };
     expect(prevFocus(state)).toEqual(expected);
   });
@@ -563,12 +522,12 @@ describe('prevFocus', () => {
   test('it reduces the focused creature by 1', () => {
     const state = {
       ...defaultState,
-      focusedCreature: 1
+      focusedCreature: 1,
     };
 
     const expected = {
       ...defaultState,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
 
     expect(prevFocus(state)).toEqual(expected);
@@ -577,12 +536,12 @@ describe('prevFocus', () => {
   test('it returns to the last creature after all creatures have been focused in reverse', () => {
     const state = {
       ...defaultState,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
 
     const expected = {
       ...defaultState,
-      focusedCreature: 2
+      focusedCreature: 2,
     };
 
     expect(prevFocus(state)).toEqual(expected);
@@ -591,7 +550,7 @@ describe('prevFocus', () => {
   test('it does nothing if there are no creatures', () => {
     const state = {
       ...defaultState,
-      creatures: []
+      creatures: [],
     };
 
     expect(prevFocus(state)).toEqual(state);
@@ -602,7 +561,7 @@ describe('setFocus', () => {
   it('sets the focus to the index of the creature provided', () => {
     const expected = {
       ...defaultState,
-      focusedCreature: 2
+      focusedCreature: 2,
     };
 
     expect(setFocus(defaultState, defaultState.creatures[2])).toEqual(expected);
@@ -611,10 +570,10 @@ describe('setFocus', () => {
   it('sets the focus to the first creature if the provided creature does not exist', () => {
     const expected = {
       ...defaultState,
-      focusedCreature: 0
+      focusedCreature: 0,
     };
 
-    expect(setFocus(defaultState, {id: 3})).toEqual(expected);
+    expect(setFocus(defaultState, { id: 3 })).toEqual(expected);
   });
 });
 
@@ -623,18 +582,18 @@ describe('removeCreature', () => {
     const state = {
       ...defaultState,
       activeCreature: undefined,
-      round: 0
+      round: 0,
     };
 
     const expected = {
       ...state,
       creatures: [
         state.creatures[0],
-        state.creatures[2]
+        state.creatures[2],
       ],
       creatureCount: 2,
       activeCreature: undefined,
-      ariaAnnouncements: ['creature removed from battle']
+      ariaAnnouncements: ['creature removed from battle'],
     };
 
     const result = removeCreature(state, 1);
@@ -644,18 +603,18 @@ describe('removeCreature', () => {
   test('returns the new state when the first creature is active', () => {
     const state = {
       ...defaultState,
-      activeCreature: 0
+      activeCreature: 0,
     };
 
     const expected = {
       ...state,
       creatures: [
         state.creatures[0],
-        state.creatures[2]
+        state.creatures[2],
       ],
       creatureCount: 2,
       activeCreature: 0,
-      ariaAnnouncements: ['creature removed from battle']
+      ariaAnnouncements: ['creature removed from battle'],
     };
     const result = removeCreature(state, 1);
     expect(result).toEqual(expected);
@@ -666,26 +625,26 @@ describe('removeCreature', () => {
       ...defaultState,
       creatures: [
         defaultState.creatures[1],
-        defaultState.creatures[2]
+        defaultState.creatures[2],
       ],
       creatureCount: 2,
       activeCreature: 0,
-      ariaAnnouncements: ['creature removed from battle']
+      ariaAnnouncements: ['creature removed from battle'],
     };
     const result = removeCreature(defaultState, 0);
     expect(result).toEqual(expected);
   });
-  
+
   test('returns the new state when the active creature is removed', () => {
     const expected = {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
-        defaultState.creatures[2]
+        defaultState.creatures[2],
       ],
       creatureCount: 2,
       activeCreature: 1,
-      ariaAnnouncements: ['creature removed from battle']
+      ariaAnnouncements: ['creature removed from battle'],
     };
     const result = removeCreature(defaultState, 1);
     expect(result).toEqual(expected);
@@ -696,11 +655,11 @@ describe('removeCreature', () => {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
-        defaultState.creatures[1]
+        defaultState.creatures[1],
       ],
       creatureCount: 2,
       activeCreature: 1,
-      ariaAnnouncements: ['creature removed from battle']
+      ariaAnnouncements: ['creature removed from battle'],
     };
     const result = removeCreature(defaultState, 2);
     expect(result).toEqual(expected);
@@ -710,24 +669,24 @@ describe('removeCreature', () => {
     const state = {
       ...defaultState,
       creatures: [
-        defaultState.creatures[0]
+        defaultState.creatures[0],
       ],
       activeCreature: 0,
-      creatureCount: 1
+      creatureCount: 1,
     };
     const expected = {
       ...state,
       creatures: [],
       creatureCount: 0,
       activeCreature: undefined,
-      ariaAnnouncements: ['creature removed from battle']
+      ariaAnnouncements: ['creature removed from battle'],
     };
     const result = removeCreature(state, 0);
     expect(result).toEqual(expected);
   });
 
   test('returns the current state if it is not valid', () => {
-    const state = { not: 'valid'};
+    const state = { not: 'valid' };
     const result = removeCreature(state, 0);
     expect(result).toEqual(state);
   });
@@ -738,7 +697,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: 9,
-      healthPoints: 10
+      healthPoints: 10,
     };
 
     const createdCreature = {
@@ -749,7 +708,7 @@ describe('addCreature', () => {
       id: 3,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     };
 
     createCreature.mockReturnValue(createdCreature);
@@ -760,11 +719,11 @@ describe('addCreature', () => {
         defaultState.creatures[0],
         defaultState.creatures[1],
         defaultState.creatures[2],
-        createdCreature
+        createdCreature,
       ],
       creatureCount: 4,
       creatureIdCount: 4,
-      ariaAnnouncements: ['name added']
+      ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
@@ -775,7 +734,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: 5,
-      healthPoints: 10
+      healthPoints: 10,
     };
 
     const createdCreature = {
@@ -786,7 +745,7 @@ describe('addCreature', () => {
       id: 3,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     };
 
     createCreature.mockReturnValue(createdCreature);
@@ -797,11 +756,11 @@ describe('addCreature', () => {
         defaultState.creatures[0],
         defaultState.creatures[1],
         defaultState.creatures[2],
-        createdCreature
+        createdCreature,
       ],
       creatureCount: 4,
       creatureIdCount: 4,
-      ariaAnnouncements: ['name added']
+      ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
@@ -812,7 +771,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: 15,
-      healthPoints: 10
+      healthPoints: 10,
     };
 
     const createdCreature = {
@@ -823,7 +782,7 @@ describe('addCreature', () => {
       id: 3,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     };
 
     createCreature.mockReturnValue(createdCreature);
@@ -834,12 +793,12 @@ describe('addCreature', () => {
         createdCreature,
         defaultState.creatures[0],
         defaultState.creatures[1],
-        defaultState.creatures[2]
+        defaultState.creatures[2],
       ],
       creatureCount: 4,
       creatureIdCount: 4,
       activeCreature: 2,
-      ariaAnnouncements: ['name added']
+      ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
@@ -850,7 +809,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: 15,
-      healthPoints: 10
+      healthPoints: 10,
     };
 
     const createdCreature = {
@@ -861,7 +820,7 @@ describe('addCreature', () => {
       id: 3,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     };
 
     createCreature.mockReturnValue(createdCreature);
@@ -869,8 +828,8 @@ describe('addCreature', () => {
     const state = {
       ...defaultState,
       round: 0,
-      activeCreature: 0
-    }
+      activeCreature: 0,
+    };
 
     const expectedState = {
       ...state,
@@ -878,11 +837,11 @@ describe('addCreature', () => {
         createdCreature,
         defaultState.creatures[0],
         defaultState.creatures[1],
-        defaultState.creatures[2]
+        defaultState.creatures[2],
       ],
       creatureCount: 4,
       creatureIdCount: 4,
-      ariaAnnouncements: ['name added']
+      ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
@@ -894,7 +853,7 @@ describe('addCreature', () => {
       name: 'name',
       initiative: 9,
       healthPoints: 10,
-      multiplier: 2
+      multiplier: 2,
     };
 
     const createdCreature = {
@@ -905,7 +864,7 @@ describe('addCreature', () => {
       id: 3,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     };
     const createdCreature2 = { ...createdCreature, name: 'name #2', id: 4 };
 
@@ -920,15 +879,15 @@ describe('addCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
         createdCreature,
-        createdCreature2
+        createdCreature2,
       ],
       creatureCount: 5,
       creatureIdCount: 5,
-      ariaAnnouncements: ['creatures added']
+      ariaAnnouncements: ['creatures added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature.mock.calls.length).toBe(2)
+    expect(createCreature.mock.calls.length).toBe(2);
     const expectedCreature1 = {
       name: 'name',
       number: 1,
@@ -950,7 +909,7 @@ describe('addCreature', () => {
       name: 'Goblin',
       initiative: 9,
       healthPoints: 10,
-      multiplier: 2
+      multiplier: 2,
     };
 
     const createdCreature = {
@@ -961,7 +920,7 @@ describe('addCreature', () => {
       id: 5,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     };
     const createdCreature2 = { ...createdCreature, name: 'goblin #6', id: 6 };
 
@@ -977,7 +936,7 @@ describe('addCreature', () => {
       id: 3,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     };
     const initialCreature2 = { ...initialCreature, name: 'goblin#4', id: 4 };
 
@@ -986,26 +945,26 @@ describe('addCreature', () => {
       creatures: [
         initialCreature,
         initialCreature2,
-        ...defaultState.creatures
+        ...defaultState.creatures,
       ],
       creatureCount: 5,
       creatureIdCount: 5,
-    }
+    };
 
     const expectedState = {
       ...initialState,
       creatures: [
         ...initialState.creatures,
         createdCreature,
-        createdCreature2
+        createdCreature2,
       ],
       creatureCount: 7,
       creatureIdCount: 7,
-      ariaAnnouncements: ['creatures added']
+      ariaAnnouncements: ['creatures added'],
     };
 
     expect(addCreature(initialState, creature)).toEqual(expectedState);
-    expect(createCreature.mock.calls.length).toBe(2)
+    expect(createCreature.mock.calls.length).toBe(2);
     const expectedCreature1 = {
       name: 'Goblin',
       number: 5,
@@ -1027,16 +986,16 @@ describe('addCreature', () => {
       name: '',
       initiative: 9,
       healthPoints: 10,
-      multiplier: 2
+      multiplier: 2,
     };
 
-    validateCreature.mockReturnValue({nameError: 'some error'});
+    validateCreature.mockReturnValue({ nameError: 'some error' });
 
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['Failed to create creature. some error'],
       errors: ['Failed to create creature. Create creature form is invalid.'],
-      createCreatureErrors: {nameError: 'some error'}
+      createCreatureErrors: { nameError: 'some error' },
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
@@ -1047,16 +1006,16 @@ describe('addCreature', () => {
       name: 'name',
       initiative: 9,
       healthPoints: 10,
-      multiplier: 2
+      multiplier: 2,
     };
 
     validateCreature.mockReturnValue(undefined);
 
     const state = {
       ...defaultState,
-      createCreatureErrors: {nameError: 'some error'},
-      errors: ['create creature error']
-    }
+      createCreatureErrors: { nameError: 'some error' },
+      errors: ['create creature error'],
+    };
 
     const result = addCreature(state, creature);
     expect(result.createCreatureErrors).toEqual(defaultState.createCreatureErrors);
@@ -1069,7 +1028,7 @@ describe('toggleSync', () => {
     expect(toggleSync(defaultState)).toEqual({
       ...defaultState,
       shareEnabled: true,
-      ariaAnnouncements: ['share enabled']
+      ariaAnnouncements: ['share enabled'],
     });
   });
 
@@ -1078,7 +1037,7 @@ describe('toggleSync', () => {
     expect(toggleSync(state)).toEqual({
       ...state,
       shareEnabled: false,
-      ariaAnnouncements: ['share disabled']
+      ariaAnnouncements: ['share disabled'],
     });
   });
 });

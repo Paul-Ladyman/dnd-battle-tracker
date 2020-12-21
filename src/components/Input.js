@@ -1,32 +1,33 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
 function Input({
-    integer,
-    enabled,
-    error,
-    required,
-    inputRef,
-    SubmitIcon,
-    RightControl,
-    customClasses,
-    ariaLabel,
-    label,
-    name,
-    min,
-    max,
-    value,
-    submitHandler,
-    handleChange,
-    formHandler
+  integer,
+  enabled,
+  error,
+  required,
+  inputRef,
+  SubmitIcon,
+  RightControl,
+  customClasses,
+  ariaLabel,
+  label,
+  name,
+  min,
+  max,
+  value,
+  submitHandler,
+  handleChange,
+  formHandler,
 }) {
-  const type = integer ? "number" : "text";
+  const type = integer ? 'number' : 'text';
   const numberModifier = integer ? 'input--number' : '';
   const disabledModifier = enabled ? '' : 'input-wrapper__disabled';
   const inputWrapperClass = 'input-wrapper';
-  const noButtonModifier = `input-wrapper__no-button`;
-  const inputWrapperClasses = SubmitIcon || RightControl ?
-    `${inputWrapperClass} ${disabledModifier}` :
-    `${inputWrapperClass} ${noButtonModifier} ${disabledModifier}`;
+  const noButtonModifier = 'input-wrapper__no-button';
+  const inputWrapperClasses = SubmitIcon || RightControl
+    ? `${inputWrapperClass} ${disabledModifier}`
+    : `${inputWrapperClass} ${noButtonModifier} ${disabledModifier}`;
   const buttonClasses = enabled ? 'input--submit' : 'input--submit input--submit__disabled';
   const inputErrorClass = error ? 'input__error' : '';
 
@@ -38,13 +39,12 @@ function Input({
           {error}
         </div>
         <div className={`${inputWrapperClasses} ${inputErrorClass}`}>
-          <div onKeyDown={formHandler} id="input">
-            <input disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange}/>
+          <div id="input">
+            <input disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange} onKeyDown={formHandler} />
           </div>
-          {RightControl && <div className={`button ${buttonClasses}`} style={{display: 'flex', justifyContent: 'center'}}>{RightControl}</div>}
-          {!RightControl && SubmitIcon &&
-            <button disabled={!enabled} type="button" className={buttonClasses} title={label} onClick={submitHandler}>{SubmitIcon}</button>
-          }
+          {RightControl && <div className={`button ${buttonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
+          {!RightControl && SubmitIcon
+            && <button disabled={!enabled} type="button" className={buttonClasses} title={label} onClick={submitHandler}>{SubmitIcon}</button>}
         </div>
       </label>
     </div>
