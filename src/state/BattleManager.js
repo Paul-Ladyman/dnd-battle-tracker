@@ -30,7 +30,9 @@ export function nextInitiative(state) {
     return state;
   }
 
-  const creaturesWithoutInitiative = state.creatures.filter((creature) => creature.initiative === undefined);
+  const creaturesWithoutInitiative = state.creatures.filter(
+    (creature) => creature.initiative === undefined,
+  );
   if (creaturesWithoutInitiative.length > 0) {
     const { name } = creaturesWithoutInitiative[0];
     const ariaAnnouncements = state.ariaAnnouncements.concat(`Cannot continue battle. ${name} has no initiative.`);
@@ -67,7 +69,13 @@ export function nextInitiative(state) {
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
   return {
-    ...state, creatures: sortedCreatures, round, activeCreature, focusedCreature: activeCreature, ariaAnnouncements, errors: [],
+    ...state,
+    creatures: sortedCreatures,
+    round,
+    activeCreature,
+    focusedCreature: activeCreature,
+    ariaAnnouncements,
+    errors: [],
   };
 }
 
@@ -167,7 +175,7 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
 
   const groupIndexes = creatures
     .filter((_) => groupMatch(_) !== null)
-    .map((_) => parseInt(groupMatch(_)[1]))
+    .map((_) => parseInt(groupMatch(_)[1], 10))
     .sort((a, b) => a - b);
 
   const groupSize = groupIndexes.length;
@@ -200,7 +208,12 @@ export function addCreature(state, creature) {
     };
   }
 
-  const newCreatures = createCreatures(state.creatureIdCount, state.creatures, creatureStats, creatureMultiplier);
+  const newCreatures = createCreatures(
+    state.creatureIdCount,
+    state.creatures,
+    creatureStats,
+    creatureMultiplier,
+  );
   const creatures = sortCreatures([...state.creatures, ...newCreatures]);
   const currentlyActiveCreature = state.creatures[state.activeCreature];
 
@@ -215,7 +228,14 @@ export function addCreature(state, creature) {
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
 
   return {
-    ...state, creatures, creatureCount, creatureIdCount, activeCreature, ariaAnnouncements, createCreatureErrors: {}, errors: [],
+    ...state,
+    creatures,
+    creatureCount,
+    creatureIdCount,
+    activeCreature,
+    ariaAnnouncements,
+    createCreatureErrors: {},
+    errors: [],
   };
 }
 
