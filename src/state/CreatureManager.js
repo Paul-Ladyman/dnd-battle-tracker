@@ -102,7 +102,7 @@ export function createCreature(creatureId, {
 
 export function validateCreature(name, initiative, healthPoints, multiplier) {
   const nameError = name === '';
-  const initiativeError = initiative !== undefined && isNaN(initiative);
+  const initiativeError = initiative !== undefined && Number.isNaN(initiative);
   const healthError = healthPoints <= 0;
   const multiplierError = multiplier <= 0 || multiplier > 50;
 
@@ -175,7 +175,12 @@ export function addHealthToCreature(state, creatureId, health) {
   }
 
   const ariaAnnouncement = `${creature.name}'s health is ${healthPoints}, max health is ${health}`;
-  return updateCreature(state, creatureId, { healthPoints, maxHealthPoints: health }, ariaAnnouncement);
+  return updateCreature(
+    state,
+    creatureId,
+    { healthPoints, maxHealthPoints: health },
+    ariaAnnouncement,
+  );
 }
 
 export function addInitiativeToCreature(state, creatureId, initiative) {
@@ -198,7 +203,9 @@ export function toggleCreatureLock(state, creatureId) {
 
 export function resetCreature(id, creature) {
   const notes = creature.notes.map((note) => ({ ...note, appliedAtRound: 0, appliedAtSeconds: 0 }));
-  const conditions = creature.conditions.map((condition) => ({ ...condition, appliedAtRound: 0, appliedAtSeconds: 0 }));
+  const conditions = creature.conditions.map(
+    (condition) => ({ ...condition, appliedAtRound: 0, appliedAtSeconds: 0 }),
+  );
   return {
     ...creature,
     id,
