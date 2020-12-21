@@ -7,7 +7,6 @@ import BattleToolbar from '../BattleToolbar';
 import Title from '../Title';
 import conditions from '../../model/conditions';
 import {
-  getSecondsElapsed,
   nextInitiative,
   getInitiative,
   nextFocus,
@@ -18,6 +17,7 @@ import {
   resetBattle,
   toggleSync,
 } from '../../state/BattleManager';
+import getSecondsElapsed from '../../state/TimeManager';
 import {
   killCreature,
   stabalizeCreature,

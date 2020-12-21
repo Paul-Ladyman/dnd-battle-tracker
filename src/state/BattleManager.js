@@ -25,13 +25,6 @@ export const newBattleState = {
   shareEnabled: false,
 };
 
-export function getSecondsElapsed(state) {
-  if (!state.round || state.round <= 0) {
-    return 0;
-  }
-  return (state.round - 1) * 6;
-}
-
 export function nextInitiative(state) {
   if (state.creatures.length === 0) {
     return state;

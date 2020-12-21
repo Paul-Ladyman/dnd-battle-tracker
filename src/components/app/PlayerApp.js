@@ -6,9 +6,9 @@ import Errors from '../Errors';
 import Title from '../Title';
 import {
   newBattleState,
-  getSecondsElapsed,
   getInitiative,
 } from '../../state/BattleManager';
+import getSecondsElapsed from '../../state/TimeManager';
 
 // TODO abstract into SyncManager
 function getBattleData(getLoading, getData, syncLoading, syncData) {

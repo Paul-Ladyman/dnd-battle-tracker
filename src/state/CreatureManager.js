@@ -1,6 +1,6 @@
 import findIndex from 'lodash.findindex';
 import find from 'lodash.find';
-import { getSecondsElapsed } from './BattleManager';
+import getSecondsElapsed from './TimeManager';
 import { conditionDescriptions } from '../model/conditions';
 
 function findCreature(creatures, creatureId) {
