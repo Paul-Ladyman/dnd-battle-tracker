@@ -824,7 +824,6 @@ describe('resetCreatures', () => {
       maxHealthPoints: 10,
       id: 1,
       alive: true,
-      conditions: [],
       notes: [{ text: 'Exhaustion', appliedAtRound: 1, appliedAtSeconds: 6 }],
       conditions: [{
         text: 'Exhaustion', appliedAtRound: 1, appliedAtSeconds: 6, url: 'someurl',
