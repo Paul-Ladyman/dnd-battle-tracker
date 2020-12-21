@@ -14,7 +14,7 @@ function getRound(startRound, endRound) {
     }
 
     if (startRound === 0) {
-      return endRound - startRound -1;
+      return endRound - startRound - 1;
     }
 
     return endRound - startRound;
@@ -22,12 +22,12 @@ function getRound(startRound, endRound) {
   return startRound;
 }
 
-function Timer ({
+function Timer({
   startRound,
   endRound,
   startTime,
   endTime,
-  className
+  className,
 }) {
   const time = getTime(startTime, endTime);
   const round = getRound(startRound, endRound);
@@ -50,7 +50,7 @@ function Timer ({
 Timer.defaultProps = {
   startRound: undefined,
   endRound: undefined,
-  endTime: undefined
+  endTime: undefined,
 };
 
 export default Timer;

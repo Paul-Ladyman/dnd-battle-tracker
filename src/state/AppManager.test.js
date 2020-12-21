@@ -1,17 +1,19 @@
-import { save, load, isSaveLoadSupported, dismissErrors, addError, updateErrors } from './AppManager';
+import {
+  save, load, isSaveLoadSupported, dismissErrors, addError, updateErrors,
+} from './AppManager';
 import FileSystem from '../util/fileSystem';
 
 jest.mock('../util/fileSystem');
 
 const defaultState = {
-  creatures:[
+  creatures: [
     {
       name: 'Wellby',
       initiative: 13,
       id: 0,
-      alive:true,
+      alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     },
     {
       name: 'Goblin',
@@ -21,7 +23,7 @@ const defaultState = {
       id: 1,
       alive: true,
       conditions: [],
-      notes: []
+      notes: [],
     },
     {
       name: 'Goblin 2',
@@ -31,8 +33,8 @@ const defaultState = {
       id: 2,
       alive: true,
       conditions: [],
-      notes: []
-    }
+      notes: [],
+    },
   ],
   creatureIdCount: 3,
   creatureCount: 3,
@@ -41,9 +43,8 @@ const defaultState = {
   round: 1,
   ariaAnnouncements: [],
   errors: [],
-  createCreatureErrors: {}
+  createCreatureErrors: {},
 };
-
 
 beforeEach(() => {
   FileSystem.save.mockReset();
@@ -57,7 +58,9 @@ describe('save', () => {
     const { calls } = FileSystem.save.mock;
     expect(calls.length).toBe(1);
     const fileContents = JSON.parse(calls[0][2]);
-    const { ariaAnnouncements, errors, createCreatureErrors, ...expectedFileContents } = defaultState;
+    const {
+      ariaAnnouncements, errors, createCreatureErrors, ...expectedFileContents
+    } = defaultState;
     expect(fileContents).toEqual(expectedFileContents);
   });
 
@@ -79,7 +82,7 @@ describe('save', () => {
   it('sets an aria announcement in the app state', () => {
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['battle saved']
+      ariaAnnouncements: ['battle saved'],
     };
     expect(save(defaultState)).toEqual(expectedState);
   });
@@ -87,14 +90,12 @@ describe('save', () => {
 
 describe('load', () => {
   const file = {
-    name: 'fileName'
+    name: 'fileName',
   };
 
   it('parses the contents of a file as JSON and adds an aria announcement', async () => {
     const { ariaAnnouncements, ...fileContents } = defaultState;
-    FileSystem.load.mockReturnValue(new Promise(resolve =>
-      resolve(JSON.stringify(fileContents))
-    ));
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const loadedFileContents = await load(defaultState, file);
 
@@ -103,23 +104,21 @@ describe('load', () => {
     expect(calls[0][0]).toBe(file);
     const expectedFileContents = {
       ...defaultState,
-      ariaAnnouncements: ['battle loaded']
+      ariaAnnouncements: ['battle loaded'],
     };
     expect(loadedFileContents).toEqual(expectedFileContents);
   });
 
   it('keeps battle sharing data of current session', async () => {
     const { ariaAnnouncements, ...fileContents } = defaultState;
-    FileSystem.load.mockReturnValue(new Promise(resolve =>
-      resolve(JSON.stringify(fileContents))
-    ));
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const state = {
       ...defaultState,
       battleId: '123',
       battleCreated: true,
-      shareEnabled: true
-    }
+      shareEnabled: true,
+    };
 
     const loadedFileContents = await load(state, file);
 
@@ -128,7 +127,7 @@ describe('load', () => {
     expect(calls[0][0]).toBe(file);
     const expectedFileContents = {
       ...state,
-      ariaAnnouncements: ['battle loaded']
+      ariaAnnouncements: ['battle loaded'],
     };
     expect(loadedFileContents).toEqual(expectedFileContents);
   });
@@ -137,12 +136,12 @@ describe('load', () => {
     const state = {
       ...defaultState,
       errors: ['an error'],
-      createCreatureErrors: {some: 'error'}
+      createCreatureErrors: { some: 'error' },
     };
-    const { ariaAnnouncements, createCreatureErrors, errors, ...fileContents } = defaultState;
-    FileSystem.load.mockReturnValue(new Promise(resolve =>
-      resolve(JSON.stringify(fileContents))
-    ));
+    const {
+      ariaAnnouncements, createCreatureErrors, errors, ...fileContents
+    } = defaultState;
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const loadedFileContents = await load(state, file);
 
@@ -151,7 +150,7 @@ describe('load', () => {
     expect(calls[0][0]).toBe(file);
     const expectedFileContents = {
       ...defaultState,
-      ariaAnnouncements: ['battle loaded']
+      ariaAnnouncements: ['battle loaded'],
     };
     expect(loadedFileContents).toEqual(expectedFileContents);
   });
@@ -160,35 +159,31 @@ describe('load', () => {
     expect.assertions(1);
 
     const fileContents = { fake: 'contents' };
-    FileSystem.load.mockReturnValue(new Promise(resolve =>
-      resolve(JSON.stringify(fileContents))
-    ));
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const results = await load(defaultState, file);
 
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file "fileName" was invalid.']
+      errors: ['Failed to load battle. The file "fileName" was invalid.'],
     };
 
     expect(results).toEqual(expectedState);
   });
-  
+
   it('sets an error in app state if the loaded file contents are not JSON', async () => {
     expect.assertions(1);
 
     const fileContents = 'not JSON';
-    FileSystem.load.mockReturnValue(new Promise(resolve =>
-      resolve(fileContents)
-    ));
+    FileSystem.load.mockReturnValue(new Promise((resolve) => resolve(fileContents)));
 
     const results = await load(defaultState, file);
 
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file "fileName" was invalid.']
+      errors: ['Failed to load battle. The file "fileName" was invalid.'],
     };
 
     expect(results).toEqual(expectedState);
@@ -211,7 +206,7 @@ describe('dismissErrors', () => {
   it('resets errors to an empty array', () => {
     const state = {
       ...defaultState,
-      errors: ['one', 'two', 'three']
+      errors: ['one', 'two', 'three'],
     };
 
     const result = dismissErrors(state);
@@ -228,7 +223,7 @@ describe('addError', () => {
   test('adds a new error', () => {
     const state = {
       ...defaultState,
-      errors: ['one', 'two', 'three']
+      errors: ['one', 'two', 'three'],
     };
 
     const result = addError(state, 'four');
@@ -240,7 +235,7 @@ describe('addError', () => {
     const errors = ['one', 'two', 'three'];
     const state = {
       ...defaultState,
-      errors
+      errors,
     };
 
     const result = addError(state, 'three');
@@ -252,7 +247,7 @@ describe('updateErrors', () => {
   test('adds a new error to state', () => {
     const state = {
       ...defaultState,
-      errors: ['one', 'two', 'three']
+      errors: ['one', 'two', 'three'],
     };
 
     const result = updateErrors(state, 'four');
@@ -264,7 +259,7 @@ describe('updateErrors', () => {
     const errors = ['one', 'two', 'three'];
     const state = {
       ...defaultState,
-      errors
+      errors,
     };
 
     const result = updateErrors(state, 'three');

@@ -1,7 +1,7 @@
 import FileSaver from 'file-saver';
 
 function save(fileName, fileType, fileContents) {
-  const blob = new Blob([fileContents], {type : fileType});
+  const blob = new Blob([fileContents], { type: fileType });
   FileSaver.saveAs(blob, fileName);
 }
 

@@ -8,16 +8,20 @@ function MonsterSearcher({ search, asButton }) {
   const encodedSearch = encodeURIComponent(rawSearch);
   const className = asButton ? 'button creature-title-button' : '';
 
-  return (<ExternalLink
-    url={`https://www.dndbeyond.com/monsters?filter-search=${encodedSearch}&sort=cr`} 
-    className={className}
-    ariaLabel={`Search ${rawSearch} on D&D Beyond`}
-    title="D&D Beyond Monster Search"
-  ><MonsterSearchIcon /></ExternalLink>);
+  return (
+    <ExternalLink
+      url={`https://www.dndbeyond.com/monsters?filter-search=${encodedSearch}&sort=cr`}
+      className={className}
+      ariaLabel={`Search ${rawSearch} on D&D Beyond`}
+      title="D&D Beyond Monster Search"
+    >
+      <MonsterSearchIcon />
+    </ExternalLink>
+  );
 }
 
 MonsterSearcher.defaultProps = {
-  asButton: true
-}
+  asButton: true,
+};
 
 export default MonsterSearcher;

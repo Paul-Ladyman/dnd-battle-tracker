@@ -14,7 +14,7 @@ export default function DungeonMasterAppWrapper() {
       online={state.shareEnabled}
       OnlineView={SharedDungeonMasterApp}
       OfflineView={DungeonMasterApp}
-      shareBattle={(state) => state}
+      shareBattle={(sharedState) => sharedState}
       state={state}
       setState={setState}
     />
