@@ -13,8 +13,7 @@ export default function Title({
       return (
         <>
           Loading player Session
-          {battleId}
-          ...
+          {` ${battleId} ...`}
         </>
       );
     }
@@ -23,7 +22,7 @@ export default function Title({
       return (
         <>
           Player Session
-          {battleId}
+          {` ${battleId}`}
         </>
       );
     }
@@ -35,8 +34,7 @@ export default function Title({
     return (
       <ExternalLink url={`/?battle=${battleId}`}>
         Player session link
-        {' '}
-        {battleId}
+        {` ${battleId}`}
       </ExternalLink>
     );
   };
