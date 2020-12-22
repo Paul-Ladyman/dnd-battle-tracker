@@ -105,7 +105,7 @@ class BattleToolbar extends Component {
         {!playerSession && (
         <button
           title={nextButtonTitle}
-          className={buttonClasses}
+          className={`${buttonClasses} battle-toolbar--button__progress`}
           onClick={nextInitiative}
           ref={this.nextButton}
           disabled={!creaturesAdded}
@@ -135,7 +135,7 @@ class BattleToolbar extends Component {
           <div className="battle-toolbar--options-container">
             <button
               title="Options Menu"
-              className={`${buttonClass} battle-toolbar--button__options`}
+              className={`battle-toolbar--button__toggle battle-toolbar--button__options`}
               onClick={this.toggleOptions}
               ref={this.optionsButton}
               type="button"
@@ -145,7 +145,7 @@ class BattleToolbar extends Component {
             <div className={optionsClass}>
               <button
                 title="Save Battle"
-                className={buttonClass}
+                className={`${buttonClass} battle-toolbar--button__top`}
                 onClick={() => { this.toggleOptions(); saveBattle(); }}
                 type="button"
               >
