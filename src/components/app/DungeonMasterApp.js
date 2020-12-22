@@ -51,22 +51,26 @@ function DungeonMasterApp({
     });
   };
 
+  const hotKeyHandler = (e) => {
+    if (isHotkey(hotkeys.nextInitiative, e)) {
+      updateBattle(nextInitiative)();
+    }
+
+    if (isHotkey(hotkeys.nextFocus, e)) {
+      updateBattle(nextFocus, false)();
+    }
+
+    if (isHotkey(hotkeys.prevFocus, e)) {
+      updateBattle(prevFocus, false)();
+    }
+  };
+
   useEffect(() => {
     window.onbeforeunload = () => true;
 
-    window.addEventListener('keydown', (e) => {
-      if (isHotkey(hotkeys.nextInitiative, e)) {
-        updateBattle(nextInitiative)();
-      }
+    window.addEventListener('keydown', hotKeyHandler);
 
-      if (isHotkey(hotkeys.nextFocus, e)) {
-        updateBattle(nextFocus, false)();
-      }
-
-      if (isHotkey(hotkeys.prevFocus, e)) {
-        updateBattle(prevFocus, false)();
-      }
-    });
+    return () => window.removeEventListener('keydown', hotKeyHandler);
   }, []);
 
   const loadBattle = async (file) => {
