@@ -76,7 +76,7 @@ class BattleToolbar extends Component {
     const ResetButton = () => (
       <button
         title="Reset Battle"
-        className={`${buttonClasses} ${buttonClass}__reset`}
+        className={`${buttonClasses} ${buttonClass}__option`}
         onClick={() => { this.toggleOptions(); resetBattle(); }}
         disabled={!creaturesAdded}
         type="button"
@@ -91,7 +91,7 @@ class BattleToolbar extends Component {
       return (
         <button
           title={title}
-          className={buttonClass}
+          className={`${buttonClass} ${buttonClass}__option`}
           onClick={() => { this.toggleOptions(); toggleShare(); }}
           type="button"
         >
@@ -105,7 +105,7 @@ class BattleToolbar extends Component {
         {!playerSession && (
         <button
           title={nextButtonTitle}
-          className={`${buttonClasses} battle-toolbar--button__progress`}
+          className={buttonClasses}
           onClick={nextInitiative}
           ref={this.nextButton}
           disabled={!creaturesAdded}
@@ -135,7 +135,7 @@ class BattleToolbar extends Component {
           <div className="battle-toolbar--options-container">
             <button
               title="Options Menu"
-              className={`battle-toolbar--button__toggle battle-toolbar--button__options`}
+              className={buttonClass}
               onClick={this.toggleOptions}
               ref={this.optionsButton}
               type="button"
@@ -145,7 +145,7 @@ class BattleToolbar extends Component {
             <div className={optionsClass}>
               <button
                 title="Save Battle"
-                className={`${buttonClass} battle-toolbar--button__top`}
+                className={buttonClass}
                 onClick={() => { this.toggleOptions(); saveBattle(); }}
                 type="button"
               >
@@ -161,7 +161,7 @@ class BattleToolbar extends Component {
               />
               <button
                 title="Load Battle"
-                className={`${buttonClass} ${buttonClass}__load`}
+                className={`${buttonClass} ${buttonClass}__option ${buttonClass}__load`}
                 onClick={() => { this.toggleOptions(); this.fileSelector.current.click(); }}
                 type="button"
               >

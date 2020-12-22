@@ -177,22 +177,11 @@ input[type="number"] {
 .battle-toolbar--button {
   padding: 4px;
   height: 40px;
-  margin-top: 25px;
-}
-
-.battle-toolbar--button__top, .battle-toolbar--button__progress {
-  margin-top: 5px !important;
-}
-
-.battle-toolbar--button__toggle {
-  padding: 4px;
-  height: 40px;
   margin-top: 5px;
 }
 
-.battle-toolbar--button__reset {
-  padding-bottom: 2px;
-  padding-top: 0;
+.battle-toolbar--button__option {
+  margin-top: 25px;
 }
 
 .battle-toolbar--button__load {
@@ -209,8 +198,7 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40px;  
-  height: 100%;
+  width: 40px;
 }
 
 .battle-toolbar--options-dropdown {
@@ -222,11 +210,7 @@ input[type="number"] {
   box-shadow: 0 5px 5px #979AA4;
   padding: 10px 10px;
   background: #ebe2d3;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
   margin-top: 10px;
-  height: 314px;
 }
 
 /* Input */
