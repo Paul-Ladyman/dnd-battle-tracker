@@ -3,7 +3,7 @@ import ExpandIcon from './icons/ExpandIcon';
 import CollapseIcon from './icons/CollapseIcon';
 
 function CreatureExpander({
-  active, expanded, name, expandHandler,
+  classes, active, expanded, name, expandHandler,
 }) {
   const buttonTitle = expanded ? 'Collapse creature' : 'Expand creature';
   const buttonIcon = expanded ? <CollapseIcon /> : <ExpandIcon />;
@@ -13,12 +13,13 @@ function CreatureExpander({
     && (
     <button
       aria-label={buttonAriaLabel}
-      className="creature-title-button"
+      className={`creature-expander-button ${classes}`}
       title={buttonTitle}
       onClick={expandHandler}
       type="button"
     >
-      {buttonIcon}
+      {name}
+      <div className="creature-expander-icon">{buttonIcon}</div>
     </button>
     )
   );

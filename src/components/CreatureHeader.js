@@ -17,6 +17,7 @@ export default function CreatureHeader({
 }) {
   const creatureExpander = (
     <CreatureExpander
+      classes={classes}
       active={active}
       expanded={expanded}
       name={name}
@@ -34,10 +35,9 @@ export default function CreatureHeader({
 
   return (
     <div className="creature-title">
-      <h2 className={classes}>{name}</h2>
+      <h2 className="creature-header">{creatureExpander}</h2>
       {monsterSearcher}
       {creatureLocker}
-      {creatureExpander}
       {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
     </div>
   );
