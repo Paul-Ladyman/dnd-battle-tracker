@@ -8,10 +8,8 @@ import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
 import { hotkeys } from '../hotkeys/hotkeys';
-import CreatureExpander from './CreatureExpander';
-import CreatureLocker from './CreatureLocker';
-import MonsterSearcher from './MonsterSearcher';
 import HealthPoints from './HealthPoints';
+import CreatureHeader from './CreatureHeader';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
@@ -161,22 +159,7 @@ class CreatureWrapper extends Component {
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
-    const creatureExpander = (
-      <CreatureExpander
-        active={active}
-        expanded={expanded}
-        name={name}
-        expandHandler={this.expandCreatureHandler}
-      />
-    );
-    const creatureLocker = !playerSession && (
-    <CreatureLocker
-      locked={locked}
-      name={name}
-      lockHandler={() => creatureManagement.toggleCreatureLock(id)}
-    />
-    );
-    const monsterSearcher = !playerSession && <MonsterSearcher search={name} />;
+
     const healthPoints = (
       <HealthPoints
         short={!showExpanded}
@@ -187,6 +170,18 @@ class CreatureWrapper extends Component {
       />
     );
     const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
+
+    const creatureHeader = (headerClasses) => (
+      <CreatureHeader
+        classes={headerClasses}
+        name={name}
+        active={active}
+        locked={locked}
+        lockHandler={() => creatureManagement.toggleCreatureLock(id)}
+        expanded={expanded}
+        expandHandler={this.expandCreatureHandler}
+      />
+    );
 
     return (
       <>
@@ -202,15 +197,13 @@ class CreatureWrapper extends Component {
           {showExpanded
             ? (
               <ExpandedCreature
+                header={creatureHeader}
                 creature={creature}
                 active={active}
                 round={round}
                 secondsElapsed={secondsElapsed}
                 removeCreature={removeCreature}
                 removeNoteFromCreature={removeNoteFromCreature}
-                creatureExpander={creatureExpander}
-                creatureLocker={creatureLocker}
-                monsterSearcher={monsterSearcher}
                 healthPoints={healthPoints}
                 showHealth={showHealth}
                 playerSession={playerSession}
@@ -218,10 +211,8 @@ class CreatureWrapper extends Component {
             )
             : (
               <CollapsedCreature
+                header={creatureHeader}
                 creature={creature}
-                creatureExpander={creatureExpander}
-                creatureLocker={creatureLocker}
-                monsterSearcher={monsterSearcher}
                 healthPoints={healthPoints}
                 showHealth={showHealth}
               />

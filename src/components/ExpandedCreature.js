@@ -4,7 +4,6 @@ import { conditionDescriptions } from '../model/conditions';
 import ExternalLink from './ExternalLink';
 import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
 import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';
-import ActiveCreatureIcon from './icons/ActiveCreatureIcon';
 
 class ExpandedCreature extends Component {
   constructor(props) {
@@ -23,21 +22,19 @@ class ExpandedCreature extends Component {
 
   render() {
     const {
+      header,
       creature,
       active,
       round,
       secondsElapsed,
       removeCreature,
       removeNoteFromCreature,
-      creatureExpander,
-      creatureLocker,
-      monsterSearcher,
       healthPoints,
       showHealth,
       playerSession,
     } = this.props;
     const {
-      alive, name, initiative, id, conditions, notes,
+      alive, initiative, id, conditions, notes,
     } = creature;
     const showInitiative = initiative !== undefined && initiative !== null;
     const showConditions = conditions.length > 0;
@@ -53,13 +50,7 @@ class ExpandedCreature extends Component {
       <div className="expanded-creature">
         <div className={`expanded-creature--columns ${columnClassName}`}>
           <div>
-            <div className="creature-title">
-              <h2 className={nameClasses}>{name}</h2>
-              {monsterSearcher}
-              {creatureLocker}
-              {creatureExpander}
-              {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
-            </div>
+            {header(nameClasses)}
             {!alive
               && (
               <div className="expanded-creature--status">
