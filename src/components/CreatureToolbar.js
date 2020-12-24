@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
 import StabalizeIcon from './icons/StabalizeIcon';
 import KillIcon from './icons/KillIcon';
@@ -12,7 +12,9 @@ function CreatureToolbar({
   creature,
   conditions,
   creatureManagement,
+  focused,
 }) {
+  const buttonRef = useRef(null);
   const {
     killCreature,
     stabalizeCreature,
@@ -39,6 +41,13 @@ function CreatureToolbar({
   const enabledModifier = enableConditions ? '' : 'input-wrapper__disabled';
   const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
   const conditionsId = `conditions-${creature.id}`;
+
+  useEffect(() => {
+    if (focused) {
+      buttonRef.current.focus();
+    }
+  }, [focused]);
+
   return (
     <div className="creature-toolbar">
       <button
@@ -47,6 +56,7 @@ function CreatureToolbar({
         title={statusButtonTitle}
         onClick={() => statusButtonFunc(id)}
         type="button"
+        ref={buttonRef}
       >
         {statusButtonIcon}
       </button>

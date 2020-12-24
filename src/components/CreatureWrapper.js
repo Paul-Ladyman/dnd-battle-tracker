@@ -1,13 +1,9 @@
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
-import isHotkey from 'is-hotkey';
 import findIndex from 'lodash.findindex';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
-import { hotkeys } from '../hotkeys/hotkeys';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 
@@ -43,14 +39,6 @@ class CreatureWrapper extends Component {
       expanded: false,
     };
 
-    this.creatureRef = React.createRef();
-    this.creatureToolbarRef = React.createRef();
-
-    this.expand = this.expand.bind(this);
-    this.collapse = this.collapse.bind(this);
-    this.creatureKeyHandler = this.creatureKeyHandler.bind(this);
-    this.creatureToolbarKeyHandler = this.creatureToolbarKeyHandler.bind(this);
-    this.getExpandCollapseFunc = this.getExpandCollapseFunc.bind(this);
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
   }
@@ -65,6 +53,7 @@ class CreatureWrapper extends Component {
       creature,
       active,
       focused,
+      toolbarFocused,
       round,
     } = this.props;
 
@@ -75,67 +64,20 @@ class CreatureWrapper extends Component {
     const shouldUpdate = !equal(nextProps.creature, creature)
       || nextProps.active !== active
       || nextProps.focused !== focused
+      || nextProps.toolbarFocused !== toolbarFocused
       || nextState.expanded !== expanded
       || nextProps.round !== round;
 
     return shouldUpdate;
   }
 
-  componentDidUpdate() {
-    const { focused } = this.props;
-    if (focused) {
-      this.creatureRef.current.focus();
-    }
-  }
-
-  getExpandCollapseFunc() {
-    const { expanded } = this.state;
-    return expanded ? this.collapse : this.expand;
-  }
-
-  collapse() {
-    this.setState((prevState) => ({ ...prevState, expanded: false }));
-  }
-
-  expand() {
-    this.setState((prevState) => ({ ...prevState, expanded: true }));
-  }
-
-  creatureKeyHandler(event) {
-    const targetId = event.target.getAttribute('id');
-    if (event.keyCode === 13 && targetId === 'creature-wrapper') {
-      this.getExpandCollapseFunc()();
-    }
-
-    const { playerSession } = this.props;
-
-    if (!playerSession && isHotkey(hotkeys.focusCreatureToolbar, event)) {
-      this.creatureToolbarRef.current.focus();
-    }
-  }
-
-  creatureToolbarKeyHandler(event) {
-    const { playerSession } = this.props;
-    if (!playerSession && isHotkey(hotkeys.focusCreature, event)) {
-      this.creatureRef.current.focus();
-    }
-  }
-
   expandCreatureHandler() {
-    this.getExpandCollapseFunc()();
-    const { playerSession } = this.props;
-    if (playerSession) {
-      this.creatureRef.current.focus();
-    } else {
-      const { setFocus, creature } = this.props;
-      setFocus(creature);
-    }
+    this.setState((prevState) => ({ ...prevState, expanded: !prevState.expanded }));
   }
 
-  focusHandler(event) {
-    const targetId = event.target.getAttribute('id');
-    const { playerSession } = this.props;
-    if (!playerSession && targetId === 'creature-wrapper') {
+  focusHandler() {
+    const { playerSession, focused } = this.props;
+    if (!playerSession && !focused) {
       const { setFocus, creature } = this.props;
       setFocus(creature);
     }
@@ -143,7 +85,15 @@ class CreatureWrapper extends Component {
 
   render() {
     const {
-      creature, active, conditions, creatureManagement, playerSession, round, secondsElapsed,
+      creature,
+      active,
+      conditions,
+      creatureManagement,
+      playerSession,
+      round,
+      secondsElapsed,
+      focused,
+      toolbarFocused,
     } = this.props;
 
     const {
@@ -180,6 +130,7 @@ class CreatureWrapper extends Component {
         lockHandler={() => creatureManagement.toggleCreatureLock(id)}
         expanded={expanded}
         expandHandler={this.expandCreatureHandler}
+        focused={focused && !toolbarFocused}
       />
     );
 
@@ -188,12 +139,10 @@ class CreatureWrapper extends Component {
         <section
           className={classes}
           id="creature-wrapper"
-          ref={this.creatureRef}
-          tabIndex="0"
           aria-label={creatureAriaLabel}
-          onKeyDown={this.creatureKeyHandler}
           onFocus={this.focusHandler}
         >
+          {creatureHeader('collapsed-creature--name')}
           {showExpanded
             ? (
               <ExpandedCreature
@@ -220,15 +169,13 @@ class CreatureWrapper extends Component {
         </section>
         { !playerSession && (
         <section
-          tabIndex="0"
           aria-label={`${name} toolbar`}
-          ref={this.creatureToolbarRef}
-          onKeyDown={this.creatureToolbarKeyHandler}
         >
           <CreatureToolbar
             creature={creature}
             conditions={getAvailableConditions(conditions, creature.conditions)}
             creatureManagement={creatureManagement}
+            focused={focused && toolbarFocused}
           />
         </section>
         )}

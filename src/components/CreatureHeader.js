@@ -13,7 +13,7 @@ export default function CreatureHeader({
   lockHandler,
   expanded,
   expandHandler,
-
+  focused,
 }) {
   const creatureExpander = (
     <CreatureExpander
@@ -22,6 +22,7 @@ export default function CreatureHeader({
       expanded={expanded}
       name={name}
       expandHandler={expandHandler}
+      focused={focused}
     />
   );
   const creatureLocker = !playerSession && (

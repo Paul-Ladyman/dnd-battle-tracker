@@ -50,7 +50,7 @@ class ExpandedCreature extends Component {
       <div className="expanded-creature">
         <div className={`expanded-creature--columns ${columnClassName}`}>
           <div>
-            {header(nameClasses)}
+            {/* {header(nameClasses)} */}
             {!alive
               && (
               <div className="expanded-creature--status">
