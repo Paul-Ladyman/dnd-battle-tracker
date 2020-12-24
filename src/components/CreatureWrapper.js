@@ -94,6 +94,7 @@ class CreatureWrapper extends Component {
       secondsElapsed,
       focused,
       toolbarFocused,
+      setToolbarFocus,
     } = this.props;
 
     const {
@@ -170,6 +171,7 @@ class CreatureWrapper extends Component {
         { !playerSession && (
         <section
           aria-label={`${name} toolbar`}
+          onFocus={setToolbarFocus}
         >
           <CreatureToolbar
             creature={creature}

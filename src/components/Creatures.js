@@ -17,12 +17,10 @@ function Creatures({
   const [toolbarFocused, setToolbarFocused] = useState(false);
 
   const hotKeyHandler = (event) => {
-    if (isHotkey(hotkeys.focusCreatureToolbar, event)) {
-      setToolbarFocused(true);
-    }
-
-    if (isHotkey(hotkeys.focusCreature, event)) {
-      setToolbarFocused(false);
+    const focusToolbar = isHotkey(hotkeys.focusCreatureToolbar, event);
+    const focusCreature = isHotkey(hotkeys.focusCreature, event);
+    if (focusToolbar || focusCreature) {
+      setToolbarFocused((prevToolbarFocused) => !prevToolbarFocused);
     }
   };
 
@@ -47,6 +45,7 @@ function Creatures({
               focused={focused}
               toolbarFocused={toolbarFocused}
               setFocus={setFocus}
+              setToolbarFocus={() => setToolbarFocused(true)}
               round={round}
               secondsElapsed={secondsElapsed}
               creatureManagement={creatureManagement}
