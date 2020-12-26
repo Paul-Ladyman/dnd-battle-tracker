@@ -41,6 +41,7 @@ class CreatureWrapper extends Component {
 
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
+    this.hasBrowserFocus = this.hasBrowserFocus.bind(this);
   }
 
   /*
@@ -75,12 +76,24 @@ class CreatureWrapper extends Component {
     this.setState((prevState) => ({ ...prevState, expanded: !prevState.expanded }));
   }
 
-  focusHandler() {
-    const { playerSession, focused } = this.props;
-    if (!playerSession && !focused) {
-      const { setFocus, creature } = this.props;
-      setFocus(creature);
+  focusHandler(toolbar) {
+    const { playerSession } = this.props;
+    if (!playerSession) {
+      const { focused, setToolbarFocus } = this.props;
+      setToolbarFocus(toolbar);
+      if (!focused) {
+        const { setFocus, creature } = this.props;
+        setFocus(creature);
+      }
     }
+  }
+
+  hasBrowserFocus(selector) {
+    const { creature: { id } } = this.props;
+    const focusedElement = document.activeElement.closest(selector);
+    const focusedDataId = focusedElement && focusedElement.getAttribute('data-creature-id');
+    const focusedId = parseInt(focusedDataId, 10);
+    return focusedId === id;
   }
 
   render() {
@@ -94,12 +107,14 @@ class CreatureWrapper extends Component {
       secondsElapsed,
       focused,
       toolbarFocused,
-      setToolbarFocus,
     } = this.props;
 
     const {
       name, id, locked, alive, healthPoints: creatureHealthPoints, maxHealthPoints,
     } = creature;
+
+    const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
+    const toolbarAlreadyFocused = this.hasBrowserFocus('#creature-toolbar');
 
     const { expanded } = this.state;
 
@@ -131,7 +146,7 @@ class CreatureWrapper extends Component {
         lockHandler={() => creatureManagement.toggleCreatureLock(id)}
         expanded={expanded}
         expandHandler={this.expandCreatureHandler}
-        focused={focused && !toolbarFocused}
+        focused={focused && !toolbarFocused && !alreadyFocused}
       />
     );
 
@@ -141,7 +156,8 @@ class CreatureWrapper extends Component {
           className={classes}
           id="creature-wrapper"
           aria-label={creatureAriaLabel}
-          onFocus={this.focusHandler}
+          onFocus={() => this.focusHandler(false)}
+          data-creature-id={id}
         >
           {creatureHeader('collapsed-creature--name')}
           {showExpanded
@@ -169,17 +185,19 @@ class CreatureWrapper extends Component {
             )}
         </section>
         { !playerSession && (
-        <section
-          aria-label={`${name} toolbar`}
-          onFocus={setToolbarFocus}
-        >
-          <CreatureToolbar
-            creature={creature}
-            conditions={getAvailableConditions(conditions, creature.conditions)}
-            creatureManagement={creatureManagement}
-            focused={focused && toolbarFocused}
-          />
-        </section>
+          <section
+            aria-label={`${name} toolbar`}
+            id="creature-toolbar"
+            data-creature-id={id}
+            onFocus={() => this.focusHandler(true)}
+          >
+            <CreatureToolbar
+              creature={creature}
+              conditions={getAvailableConditions(conditions, creature.conditions)}
+              creatureManagement={creatureManagement}
+              focused={focused && toolbarFocused && !toolbarAlreadyFocused}
+            />
+          </section>
         )}
       </>
     );

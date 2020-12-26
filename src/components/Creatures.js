@@ -45,7 +45,7 @@ function Creatures({
               focused={focused}
               toolbarFocused={toolbarFocused}
               setFocus={setFocus}
-              setToolbarFocus={() => setToolbarFocused(true)}
+              setToolbarFocus={setToolbarFocused}
               round={round}
               secondsElapsed={secondsElapsed}
               creatureManagement={creatureManagement}
