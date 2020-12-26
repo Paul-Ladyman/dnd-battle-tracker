@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import ExpandIcon from './icons/ExpandIcon';
 import CollapseIcon from './icons/CollapseIcon';
+import ActiveCreatureIcon from './icons/ActiveCreatureIcon';
 
 function CreatureExpander({
   classes, active, expanded, name, expandHandler, focused,
@@ -16,8 +17,7 @@ function CreatureExpander({
     }
   }, [focused]);
 
-  return (!active
-    && (
+  return (
     <button
       aria-label={buttonAriaLabel}
       className={`creature-expander-button ${classes}`}
@@ -25,11 +25,12 @@ function CreatureExpander({
       onClick={expandHandler}
       type="button"
       ref={buttonRef}
+      disabled={active}
     >
       {name}
-      <div className="creature-expander-icon">{buttonIcon}</div>
+      {!active && <div className="creature-expander-icon">{buttonIcon}</div>}
+      {active && <ActiveCreatureIcon className="creature-expander-icon" />}
     </button>
-    )
   );
 }
 

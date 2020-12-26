@@ -1,5 +1,4 @@
 import React from 'react';
-import ActiveCreatureIcon from './icons/ActiveCreatureIcon';
 import CreatureExpander from './CreatureExpander';
 import CreatureLocker from './CreatureLocker';
 import MonsterSearcher from './MonsterSearcher';
@@ -22,7 +21,7 @@ export default function CreatureHeader({
       expanded={expanded}
       name={name}
       expandHandler={expandHandler}
-      focused={focused}
+      focused={focused && !active}
     />
   );
   const creatureLocker = !playerSession && (
@@ -32,14 +31,18 @@ export default function CreatureHeader({
     lockHandler={lockHandler}
   />
   );
-  const monsterSearcher = !playerSession && <MonsterSearcher search={name} />;
+  const monsterSearcher = !playerSession && (
+    <MonsterSearcher
+      search={name}
+      focused={focused && active}
+    />
+  );
 
   return (
     <div className="creature-title">
       <h2 className="creature-header">{creatureExpander}</h2>
       {monsterSearcher}
       {creatureLocker}
-      {active && <ActiveCreatureIcon className="expanded-creature--active-icon" />}
     </div>
   );
 }

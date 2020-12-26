@@ -551,10 +551,6 @@ input[type=number].input {
   margin-bottom: 35px;
 }
 
-.expanded-creature--active-icon {
-  margin-left: 10px;
-}
-
 .expanded-creature--stat {
   margin-bottom: 10px;
   color: #822000;
