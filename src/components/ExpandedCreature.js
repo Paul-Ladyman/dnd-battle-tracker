@@ -22,7 +22,6 @@ class ExpandedCreature extends Component {
 
   render() {
     const {
-      header,
       creature,
       active,
       round,

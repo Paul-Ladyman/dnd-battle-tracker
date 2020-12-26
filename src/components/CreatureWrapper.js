@@ -137,19 +137,6 @@ class CreatureWrapper extends Component {
     );
     const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
 
-    const creatureHeader = (headerClasses) => (
-      <CreatureHeader
-        classes={headerClasses}
-        name={name}
-        active={active}
-        locked={locked}
-        lockHandler={() => creatureManagement.toggleCreatureLock(id)}
-        expanded={expanded}
-        expandHandler={this.expandCreatureHandler}
-        focused={focused && !toolbarFocused && !alreadyFocused}
-      />
-    );
-
     return (
       <>
         <section
@@ -159,11 +146,18 @@ class CreatureWrapper extends Component {
           onFocus={() => this.focusHandler(false)}
           data-creature-id={id}
         >
-          {creatureHeader('collapsed-creature--name')}
+          <CreatureHeader
+            creature={creature}
+            active={active}
+            locked={locked}
+            lockHandler={() => creatureManagement.toggleCreatureLock(id)}
+            expanded={expanded}
+            expandHandler={this.expandCreatureHandler}
+            focused={focused && !toolbarFocused && !alreadyFocused}
+          />
           {showExpanded
             ? (
               <ExpandedCreature
-                header={creatureHeader}
                 creature={creature}
                 active={active}
                 round={round}
@@ -177,7 +171,6 @@ class CreatureWrapper extends Component {
             )
             : (
               <CollapsedCreature
-                header={creatureHeader}
                 creature={creature}
                 healthPoints={healthPoints}
                 showHealth={showHealth}

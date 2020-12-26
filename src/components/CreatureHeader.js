@@ -4,8 +4,7 @@ import CreatureLocker from './CreatureLocker';
 import MonsterSearcher from './MonsterSearcher';
 
 export default function CreatureHeader({
-  classes,
-  name,
+  creature,
   active,
   playerSession,
   locked,
@@ -14,6 +13,20 @@ export default function CreatureHeader({
   expandHandler,
   focused,
 }) {
+  const {
+    alive, conditions, notes, name,
+  } = creature;
+  const nameClass = 'creature-name';
+  const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
+  const collapsedNameClasses = `${nameClass} ${nameModifier}`;
+
+  const showConditions = conditions.length > 0;
+  const showNotes = notes.length > 0;
+  const multiColumn = showConditions || showNotes;
+  const expandedNameClasses = multiColumn ? `${nameClass} ${nameClass}__one-line` : nameClass;
+
+  const classes = expanded ? expandedNameClasses : collapsedNameClasses;
+
   const creatureExpander = (
     <CreatureExpander
       classes={classes}

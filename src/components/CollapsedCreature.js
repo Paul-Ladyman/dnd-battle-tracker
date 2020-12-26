@@ -6,7 +6,6 @@ function commaSeparate(notes, trailing) {
 }
 
 function CollapsedCreature({
-  header,
   creature,
   healthPoints,
   showHealth,

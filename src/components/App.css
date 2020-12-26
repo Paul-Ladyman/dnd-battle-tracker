@@ -525,19 +525,21 @@ input[type=number].input {
   width: 100%;
 }
 
-.expanded-creature--name {
+.creature-name {
   font-weight: bold;
   font-size: 28px;
-  text-transform: capitalize;
   color: #822000;
+  text-align: left;
+  text-transform: capitalize;
+  background: transparent;
 }
 
-.expanded-creature--name__one-line {
+/* .creature-name__one-line {
   display: block;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
+} */
 
 @media only screen and (max-width: 768px) {
   .expanded-creature--name {
@@ -630,14 +632,6 @@ input[type=number].input {
 
 .collapsed-creature--status__margin {
   margin-left: 5px;
-}
-
-.collapsed-creature--name {
-  font-weight: bold;
-  font-size: 28px;
-  color: #822000;
-  text-align: left;
-  text-transform: capitalize;
 }
 
 .collapsed-creature--name__dead {
