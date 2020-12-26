@@ -27,7 +27,7 @@ function CreatureExpander({
       ref={buttonRef}
       disabled={active}
     >
-      {name}
+      <div>{name}</div>
       {!active && <div className="creature-expander-icon">{buttonIcon}</div>}
       {active && <ActiveCreatureIcon className="creature-expander-icon" />}
     </button>

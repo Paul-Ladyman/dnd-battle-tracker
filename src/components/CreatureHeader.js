@@ -3,6 +3,15 @@ import CreatureExpander from './CreatureExpander';
 import CreatureLocker from './CreatureLocker';
 import MonsterSearcher from './MonsterSearcher';
 
+function getName(expanded, active, name) {
+  const maxLength = 22;
+  if ((!expanded && !active) || name.length < maxLength) {
+    return name;
+  }
+
+  return `${name.slice(0, maxLength)} ...`;
+}
+
 export default function CreatureHeader({
   creature,
   active,
@@ -32,7 +41,7 @@ export default function CreatureHeader({
       classes={classes}
       active={active}
       expanded={expanded}
-      name={name}
+      name={getName(expanded, active, name)}
       expandHandler={expandHandler}
       focused={focused && !active}
     />
