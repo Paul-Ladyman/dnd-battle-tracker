@@ -17,8 +17,6 @@ export default function ExpandedCreature({
     alive, initiative, id, conditions, notes,
   } = creature;
   const showInitiative = initiative !== undefined && initiative !== null;
-  const showConditions = conditions.length > 0;
-  const showNotes = notes.length > 0;
 
   return (
     <>
@@ -45,30 +43,24 @@ export default function ExpandedCreature({
           )}
         { (showHealth || showInitiative) && <div className="expanded-creature--separator" /> }
       </div>
-      {showConditions
-        && (
-        <CreatureNoteList
-          creatureId={id}
-          label="Conditions"
-          noteList={conditions}
-          dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
-          round={round}
-          secondsElapsed={secondsElapsed}
-          playerSession={playerSession}
-        />
-        )}
-      {showNotes
-        && (
-        <CreatureNoteList
-          creatureId={id}
-          label="Notes"
-          noteList={notes}
-          dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
-          round={round}
-          secondsElapsed={secondsElapsed}
-          playerSession={playerSession}
-        />
-        )}
+      <CreatureNoteList
+        creatureId={id}
+        label="Conditions"
+        noteList={conditions}
+        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
+        round={round}
+        secondsElapsed={secondsElapsed}
+        playerSession={playerSession}
+      />
+      <CreatureNoteList
+        creatureId={id}
+        label="Notes"
+        noteList={notes}
+        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
+        round={round}
+        secondsElapsed={secondsElapsed}
+        playerSession={playerSession}
+      />
       {active && <div style={{ height: '43px' }} />}
     </>
   );

@@ -23,18 +23,13 @@ export default function CreatureHeader({
   focused,
 }) {
   const {
-    alive, conditions, notes, name,
+    alive, name,
   } = creature;
   const nameClass = 'creature-name';
   const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
   const collapsedNameClasses = `${nameClass} ${nameModifier}`;
 
-  const showConditions = conditions.length > 0;
-  const showNotes = notes.length > 0;
-  const multiColumn = showConditions || showNotes;
-  const expandedNameClasses = multiColumn ? `${nameClass} ${nameClass}__one-line` : nameClass;
-
-  const classes = expanded ? expandedNameClasses : collapsedNameClasses;
+  const classes = expanded ? nameClass : collapsedNameClasses;
 
   const creatureExpander = (
     <CreatureExpander

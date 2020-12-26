@@ -521,10 +521,6 @@ input[type=number].input {
   margin-left: 10px;
 }
 
-/* .expanded-creature {
-  width: 100%;
-} */
-
 .creature-name {
   font-weight: bold;
   font-size: 28px;
@@ -533,13 +529,6 @@ input[type=number].input {
   text-transform: capitalize;
   background: transparent;
 }
-
-/* .creature-name__one-line {
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-} */
 
 @media only screen and (max-width: 768px) {
   .expanded-creature--name {

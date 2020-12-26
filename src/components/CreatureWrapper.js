@@ -37,9 +37,7 @@ function getColumnClasses(showExpanded, conditions, notes) {
     return '';
   }
 
-  const showConditions = conditions.length > 0;
-  const showNotes = notes.length > 0;
-  const multiColumn = showConditions || showNotes;
+  const multiColumn = conditions.length > 0 || notes.length > 0;
   const baseClass = 'expanded-creature--columns';
   return multiColumn ? `${baseClass} ${baseClass}__wide` : `${baseClass} ${baseClass}__normal`;
 }
