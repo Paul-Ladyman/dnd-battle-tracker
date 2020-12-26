@@ -4,6 +4,7 @@ import { conditionDescriptions } from '../model/conditions';
 import ExternalLink from './ExternalLink';
 import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
 import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';
+import CreatureRemover from './CreatureRemover';
 
 class ExpandedCreature extends Component {
   constructor(props) {
@@ -40,16 +41,13 @@ class ExpandedCreature extends Component {
     const showNotes = notes.length > 0;
     const multiColumn = showConditions || showNotes;
     const columnClassName = multiColumn ? 'expanded-creature--columns__wide' : 'expanded-creature--columns__normal';
-    const nameClass = 'expanded-creature--name';
-    const nameClasses = multiColumn ? `${nameClass} ${nameClass}__one-line` : nameClass;
 
     const { removing } = this.state;
 
     return (
-      <div className="expanded-creature">
+      <>
         <div className={`expanded-creature--columns ${columnClassName}`}>
           <div>
-            {/* {header(nameClasses)} */}
             {!alive
               && (
               <div className="expanded-creature--status">
@@ -97,32 +95,14 @@ class ExpandedCreature extends Component {
             />
             )}
         </div>
-        {!playerSession && !active && !removing
-          && (
-          <button
-            aria-label={`remove ${creature.name}`}
-            title="Remove creature"
-            className="expanded-creature--remove-button"
-            onClick={this.removing}
-            type="button"
-          >
-            <RemoveCreatureIcon />
-          </button>
-          )}
-        {!playerSession && !active && removing
-          && (
-          <button
-            aria-label={`confirm remove ${creature.name}`}
-            title="Confirm remove creature"
-            className="expanded-creature--confirm-remove-button"
-            onClick={() => removeCreature(id)}
-            type="button"
-          >
-            <ConfirmRemoveCreatureIcon />
-          </button>
-          )}
+        <CreatureRemover
+          playerSession={playerSession}
+          active={active}
+          creature={creature}
+          removeCreature={removeCreature}
+        />
         {active && <div style={{ height: '43px' }} />}
-      </div>
+      </>
     );
   }
 }

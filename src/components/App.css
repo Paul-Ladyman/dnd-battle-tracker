@@ -521,9 +521,9 @@ input[type=number].input {
   margin-left: 10px;
 }
 
-.expanded-creature {
+/* .expanded-creature {
   width: 100%;
-}
+} */
 
 .creature-name {
   font-weight: bold;

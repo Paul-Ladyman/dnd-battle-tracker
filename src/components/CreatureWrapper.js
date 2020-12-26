@@ -120,8 +120,7 @@ class CreatureWrapper extends Component {
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = alive ? '' : 'creature-wrapper__dead';
-    const expandedModifier = expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
-    const classes = `creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
+    const classes = `creature-wrapper ${activeModifier} ${aliveModifier}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
