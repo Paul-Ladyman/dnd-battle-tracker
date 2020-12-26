@@ -6,6 +6,7 @@ import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
+import CreatureRemover from './CreatureRemover';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
@@ -29,6 +30,18 @@ function getCreatureAriaLabel(creature, active, expanded) {
   }
 
   return label;
+}
+
+function getColumnClasses(showExpanded, conditions, notes) {
+  if (!showExpanded) {
+    return '';
+  }
+
+  const showConditions = conditions.length > 0;
+  const showNotes = notes.length > 0;
+  const multiColumn = showConditions || showNotes;
+  const baseClass = 'expanded-creature--columns';
+  return multiColumn ? `${baseClass} ${baseClass}__wide` : `${baseClass} ${baseClass}__normal`;
 }
 
 class CreatureWrapper extends Component {
@@ -110,7 +123,14 @@ class CreatureWrapper extends Component {
     } = this.props;
 
     const {
-      name, id, locked, alive, healthPoints: creatureHealthPoints, maxHealthPoints,
+      name,
+      id,
+      locked,
+      alive,
+      healthPoints: creatureHealthPoints,
+      maxHealthPoints,
+      notes,
+      conditions: creatureConditions,
     } = creature;
 
     const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
@@ -145,36 +165,48 @@ class CreatureWrapper extends Component {
           onFocus={() => this.focusHandler(false)}
           data-creature-id={id}
         >
-          <CreatureHeader
-            creature={creature}
-            active={active}
-            locked={locked}
-            lockHandler={() => creatureManagement.toggleCreatureLock(id)}
-            expanded={expanded}
-            expandHandler={this.expandCreatureHandler}
-            focused={focused && !toolbarFocused && !alreadyFocused}
-          />
-          {showExpanded
-            ? (
-              <ExpandedCreature
-                creature={creature}
-                active={active}
-                round={round}
-                secondsElapsed={secondsElapsed}
-                removeCreature={removeCreature}
-                removeNoteFromCreature={removeNoteFromCreature}
-                healthPoints={healthPoints}
-                showHealth={showHealth}
-                playerSession={playerSession}
-              />
-            )
-            : (
-              <CollapsedCreature
-                creature={creature}
-                healthPoints={healthPoints}
-                showHealth={showHealth}
-              />
-            )}
+          <div className={getColumnClasses(showExpanded, creatureConditions, notes)}>
+            <CreatureHeader
+              creature={creature}
+              active={active}
+              locked={locked}
+              lockHandler={() => creatureManagement.toggleCreatureLock(id)}
+              expanded={expanded}
+              expandHandler={this.expandCreatureHandler}
+              focused={focused && !toolbarFocused && !alreadyFocused}
+            />
+            {showExpanded
+              ? (
+                <>
+                  <ExpandedCreature
+                    creature={creature}
+                    active={active}
+                    round={round}
+                    secondsElapsed={secondsElapsed}
+                    removeCreature={removeCreature}
+                    removeNoteFromCreature={removeNoteFromCreature}
+                    healthPoints={healthPoints}
+                    showHealth={showHealth}
+                    playerSession={playerSession}
+                  />
+                </>
+              )
+              : (
+                <CollapsedCreature
+                  creature={creature}
+                  healthPoints={healthPoints}
+                  showHealth={showHealth}
+                />
+              )}
+          </div>
+          {showExpanded && (
+            <CreatureRemover
+              playerSession={playerSession}
+              active={active}
+              creature={creature}
+              removeCreature={removeCreature}
+            />
+          )}
         </section>
         { !playerSession && (
           <section
