@@ -29,7 +29,7 @@ function CreatureExpander({
       onClick={expandHandler}
       type="button"
       ref={buttonRef}
-      disabled={active}
+      aria-disabled={active}
     >
       {name}
       {!active && <div className="creature-expander-icon">{buttonIcon}</div>}

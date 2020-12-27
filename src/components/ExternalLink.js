@@ -1,16 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 function ExternalLink({
-  url, children, className, title, ariaLabel, focused,
+  url, children, className, title, ariaLabel,
 }) {
-  const anchorRef = useRef(null);
-
-  useEffect(() => {
-    if (focused) {
-      anchorRef.current.focus();
-    }
-  }, [focused]);
-
   return (
     <a
       title={title}
@@ -19,7 +11,6 @@ function ExternalLink({
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      ref={anchorRef}
     >
       {children}
     </a>

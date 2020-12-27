@@ -479,7 +479,7 @@ input[type=number].input {
 
 .creature-title {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   margin-bottom: 5px;
 }
 
@@ -506,8 +506,9 @@ input[type=number].input {
 }
 
 .creature-header {
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 8px;
 }
 
 .creature-expander-button {
@@ -532,6 +533,7 @@ input[type=number].input {
   text-align: left;
   text-transform: capitalize;
   background: transparent;
+  height: 35px;
 }
 
 @media only screen and (max-width: 768px) {

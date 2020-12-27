@@ -174,7 +174,7 @@ class CreatureWrapper extends Component {
               lockHandler={() => creatureManagement.toggleCreatureLock(id)}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
-              focused={focused && !toolbarFocused && (active || !alreadyFocused)}
+              focused={focused && !toolbarFocused && !alreadyFocused}
               multiColumn={multiColumn}
               playerSession={playerSession}
             />

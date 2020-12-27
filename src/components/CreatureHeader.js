@@ -39,7 +39,7 @@ export default function CreatureHeader({
       expanded={expanded}
       name={getName(expanded, active, name, multiColumn)}
       expandHandler={expandHandler}
-      focused={focused && !active}
+      focused={focused}
     />
   );
   const creatureLocker = !playerSession && (
@@ -52,7 +52,6 @@ export default function CreatureHeader({
   const monsterSearcher = !playerSession && (
     <MonsterSearcher
       search={name}
-      focused={focused && active}
     />
   );
 
