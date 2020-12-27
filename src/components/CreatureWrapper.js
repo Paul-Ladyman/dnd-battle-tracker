@@ -1,17 +1,12 @@
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
-import isHotkey from 'is-hotkey';
 import findIndex from 'lodash.findindex';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
-import { hotkeys } from '../hotkeys/hotkeys';
-import CreatureExpander from './CreatureExpander';
-import CreatureLocker from './CreatureLocker';
-import MonsterSearcher from './MonsterSearcher';
 import HealthPoints from './HealthPoints';
+import CreatureHeader from './CreatureHeader';
+import CreatureRemover from './CreatureRemover';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
@@ -37,6 +32,15 @@ function getCreatureAriaLabel(creature, active, expanded) {
   return label;
 }
 
+function getColumnClasses(showExpanded, multiColumn) {
+  if (!showExpanded) {
+    return '';
+  }
+
+  const baseClass = 'expanded-creature--columns';
+  return multiColumn ? `${baseClass} ${baseClass}__wide` : `${baseClass} ${baseClass}__normal`;
+}
+
 class CreatureWrapper extends Component {
   constructor(props) {
     super(props);
@@ -45,16 +49,9 @@ class CreatureWrapper extends Component {
       expanded: false,
     };
 
-    this.creatureRef = React.createRef();
-    this.creatureToolbarRef = React.createRef();
-
-    this.expand = this.expand.bind(this);
-    this.collapse = this.collapse.bind(this);
-    this.creatureKeyHandler = this.creatureKeyHandler.bind(this);
-    this.creatureToolbarKeyHandler = this.creatureToolbarKeyHandler.bind(this);
-    this.getExpandCollapseFunc = this.getExpandCollapseFunc.bind(this);
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
+    this.hasBrowserFocus = this.hasBrowserFocus.bind(this);
   }
 
   /*
@@ -67,6 +64,7 @@ class CreatureWrapper extends Component {
       creature,
       active,
       focused,
+      toolbarFocused,
       round,
     } = this.props;
 
@@ -77,106 +75,73 @@ class CreatureWrapper extends Component {
     const shouldUpdate = !equal(nextProps.creature, creature)
       || nextProps.active !== active
       || nextProps.focused !== focused
+      || nextProps.toolbarFocused !== toolbarFocused
       || nextState.expanded !== expanded
       || nextProps.round !== round;
 
     return shouldUpdate;
   }
 
-  componentDidUpdate() {
-    const { focused } = this.props;
-    if (focused) {
-      this.creatureRef.current.focus();
-    }
-  }
-
-  getExpandCollapseFunc() {
-    const { expanded } = this.state;
-    return expanded ? this.collapse : this.expand;
-  }
-
-  collapse() {
-    this.setState((prevState) => ({ ...prevState, expanded: false }));
-  }
-
-  expand() {
-    this.setState((prevState) => ({ ...prevState, expanded: true }));
-  }
-
-  creatureKeyHandler(event) {
-    const targetId = event.target.getAttribute('id');
-    if (event.keyCode === 13 && targetId === 'creature-wrapper') {
-      this.getExpandCollapseFunc()();
-    }
-
-    const { playerSession } = this.props;
-
-    if (!playerSession && isHotkey(hotkeys.focusCreatureToolbar, event)) {
-      this.creatureToolbarRef.current.focus();
-    }
-  }
-
-  creatureToolbarKeyHandler(event) {
-    const { playerSession } = this.props;
-    if (!playerSession && isHotkey(hotkeys.focusCreature, event)) {
-      this.creatureRef.current.focus();
-    }
-  }
-
   expandCreatureHandler() {
-    this.getExpandCollapseFunc()();
+    this.setState((prevState) => ({ ...prevState, expanded: !prevState.expanded }));
+  }
+
+  focusHandler(toolbar) {
     const { playerSession } = this.props;
-    if (playerSession) {
-      this.creatureRef.current.focus();
-    } else {
-      const { setFocus, creature } = this.props;
-      setFocus(creature);
+    if (!playerSession) {
+      const { focused, setToolbarFocus } = this.props;
+      setToolbarFocus(toolbar);
+      if (!focused) {
+        const { setFocus, creature } = this.props;
+        setFocus(creature);
+      }
     }
   }
 
-  focusHandler(event) {
-    const targetId = event.target.getAttribute('id');
-    const { playerSession } = this.props;
-    if (!playerSession && targetId === 'creature-wrapper') {
-      const { setFocus, creature } = this.props;
-      setFocus(creature);
-    }
+  hasBrowserFocus(selector) {
+    const { creature: { id } } = this.props;
+    const focusedElement = document.activeElement.closest(selector);
+    const focusedDataId = focusedElement && focusedElement.getAttribute('data-creature-id');
+    const focusedId = parseInt(focusedDataId, 10);
+    return focusedId === id;
   }
 
   render() {
     const {
-      creature, active, conditions, creatureManagement, playerSession, round, secondsElapsed,
+      creature,
+      active,
+      conditions,
+      creatureManagement,
+      playerSession,
+      round,
+      secondsElapsed,
+      focused,
+      toolbarFocused,
     } = this.props;
 
     const {
-      name, id, locked, alive, healthPoints: creatureHealthPoints, maxHealthPoints,
+      name,
+      id,
+      locked,
+      alive,
+      healthPoints: creatureHealthPoints,
+      maxHealthPoints,
+      notes,
+      conditions: creatureConditions,
     } = creature;
+
+    const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
+    const toolbarAlreadyFocused = this.hasBrowserFocus('#creature-toolbar');
 
     const { expanded } = this.state;
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
     const aliveModifier = alive ? '' : 'creature-wrapper__dead';
-    const expandedModifier = expanded ? 'creature-wrapper__expanded' : 'creature-wrapper__collapsed';
-    const classes = `creature-wrapper ${activeModifier} ${aliveModifier} ${expandedModifier}`;
+    const classes = `creature-wrapper ${activeModifier} ${aliveModifier}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
-    const creatureExpander = (
-      <CreatureExpander
-        active={active}
-        expanded={expanded}
-        name={name}
-        expandHandler={this.expandCreatureHandler}
-      />
-    );
-    const creatureLocker = !playerSession && (
-    <CreatureLocker
-      locked={locked}
-      name={name}
-      lockHandler={() => creatureManagement.toggleCreatureLock(id)}
-    />
-    );
-    const monsterSearcher = !playerSession && <MonsterSearcher search={name} />;
+
     const healthPoints = (
       <HealthPoints
         short={!showExpanded}
@@ -188,58 +153,76 @@ class CreatureWrapper extends Component {
     );
     const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
 
+    const multiColumn = creatureConditions.length > 0 || notes.length > 0;
+
+    const showCreatureRemover = showExpanded && !playerSession && !active;
+
     return (
       <>
         <section
           className={classes}
           id="creature-wrapper"
-          ref={this.creatureRef}
-          tabIndex="0"
           aria-label={creatureAriaLabel}
-          onKeyDown={this.creatureKeyHandler}
-          onFocus={this.focusHandler}
+          onFocus={() => this.focusHandler(false)}
+          data-creature-id={id}
         >
-          {showExpanded
-            ? (
-              <ExpandedCreature
-                creature={creature}
-                active={active}
-                round={round}
-                secondsElapsed={secondsElapsed}
-                removeCreature={removeCreature}
-                removeNoteFromCreature={removeNoteFromCreature}
-                creatureExpander={creatureExpander}
-                creatureLocker={creatureLocker}
-                monsterSearcher={monsterSearcher}
-                healthPoints={healthPoints}
-                showHealth={showHealth}
-                playerSession={playerSession}
-              />
-            )
-            : (
-              <CollapsedCreature
-                creature={creature}
-                creatureExpander={creatureExpander}
-                creatureLocker={creatureLocker}
-                monsterSearcher={monsterSearcher}
-                healthPoints={healthPoints}
-                showHealth={showHealth}
-              />
-            )}
+          <div className={getColumnClasses(showExpanded, multiColumn)}>
+            <CreatureHeader
+              creature={creature}
+              active={active}
+              locked={locked}
+              lockHandler={() => creatureManagement.toggleCreatureLock(id)}
+              expanded={expanded}
+              expandHandler={this.expandCreatureHandler}
+              focused={focused && !toolbarFocused && !alreadyFocused}
+              multiColumn={multiColumn}
+              playerSession={playerSession}
+            />
+            {showExpanded
+              ? (
+                <>
+                  <ExpandedCreature
+                    creature={creature}
+                    active={active}
+                    round={round}
+                    secondsElapsed={secondsElapsed}
+                    removeCreature={removeCreature}
+                    removeNoteFromCreature={removeNoteFromCreature}
+                    healthPoints={healthPoints}
+                    showHealth={showHealth}
+                    playerSession={playerSession}
+                  />
+                </>
+              )
+              : (
+                <CollapsedCreature
+                  creature={creature}
+                  healthPoints={healthPoints}
+                  showHealth={showHealth}
+                />
+              )}
+          </div>
+          {showCreatureRemover && (
+            <CreatureRemover
+              creature={creature}
+              removeCreature={removeCreature}
+            />
+          )}
         </section>
         { !playerSession && (
-        <section
-          tabIndex="0"
-          aria-label={`${name} toolbar`}
-          ref={this.creatureToolbarRef}
-          onKeyDown={this.creatureToolbarKeyHandler}
-        >
-          <CreatureToolbar
-            creature={creature}
-            conditions={getAvailableConditions(conditions, creature.conditions)}
-            creatureManagement={creatureManagement}
-          />
-        </section>
+          <section
+            aria-label={`${name} toolbar`}
+            id="creature-toolbar"
+            data-creature-id={id}
+            onFocus={() => this.focusHandler(true)}
+          >
+            <CreatureToolbar
+              creature={creature}
+              conditions={getAvailableConditions(conditions, creature.conditions)}
+              creatureManagement={creatureManagement}
+              focused={focused && toolbarFocused && !toolbarAlreadyFocused}
+            />
+          </section>
         )}
       </>
     );

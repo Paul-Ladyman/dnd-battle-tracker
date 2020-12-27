@@ -479,7 +479,7 @@ input[type=number].input {
 
 .creature-title {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   margin-bottom: 5px;
 }
 
@@ -505,24 +505,35 @@ input[type=number].input {
   background-color: lightgrey;
 }
 
-.expanded-creature {
-  width: 100%;
+.creature-header {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 8px;
 }
 
-.expanded-creature--name {
+.creature-expander-button {
+  border: none;
+  box-shadow: none;
+  padding: 0px;
+  display: flex;
+}
+
+.creature-expander-button__disabled {
+  cursor: auto;
+}
+
+.creature-expander-icon {
+  margin-left: 10px;
+}
+
+.creature-name {
   font-weight: bold;
   font-size: 28px;
-  text-transform: capitalize;
   color: #822000;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-
-.expanded-creature--name__one-line {
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
+  background: transparent;
+  height: 35px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -535,10 +546,6 @@ input[type=number].input {
 .expanded-creature--status {
   margin-top: 4px;
   margin-bottom: 35px;
-}
-
-.expanded-creature--active-icon {
-  margin-left: 10px;
 }
 
 .expanded-creature--stat {
@@ -620,16 +627,6 @@ input[type=number].input {
 
 .collapsed-creature--status__margin {
   margin-left: 5px;
-}
-
-.collapsed-creature--name {
-  font-weight: bold;
-  font-size: 28px;
-  color: #822000;
-  text-align: left;
-  text-transform: capitalize;
-  margin-top: 4px;
-  margin-bottom: 4px;
 }
 
 .collapsed-creature--name__dead {
