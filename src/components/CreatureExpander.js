@@ -21,15 +21,22 @@ function CreatureExpander({
     }
   }, [focused]);
 
+  const onClick = () => {
+    if (!active) {
+      expandHandler();
+    }
+  };
+
   return (
     <button
       aria-label={buttonAriaLabel}
       className={className}
       title={buttonTitle}
-      onClick={expandHandler}
+      onClick={onClick}
       type="button"
       ref={buttonRef}
       aria-disabled={active}
+      aria-expanded={expanded}
     >
       {name}
       {!active && <div className="creature-expander-icon">{buttonIcon}</div>}
