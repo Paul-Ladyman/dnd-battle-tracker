@@ -82,6 +82,13 @@ class CreatureWrapper extends Component {
     return shouldUpdate;
   }
 
+  componentDidUpdate(prevProps) {
+    const { active, setToolbarFocus } = this.props;
+    if (active && prevProps.active === false) {
+      setToolbarFocus(false);
+    }
+  }
+
   expandCreatureHandler() {
     this.setState((prevState) => ({ ...prevState, expanded: !prevState.expanded }));
   }

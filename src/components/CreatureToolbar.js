@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
 import StabalizeIcon from './icons/StabalizeIcon';
 import KillIcon from './icons/KillIcon';
@@ -42,7 +42,7 @@ function CreatureToolbar({
   const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
   const conditionsId = `conditions-${creature.id}`;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (focused) {
       buttonRef.current.focus();
     }
