@@ -10,15 +10,12 @@ function CollapsedCreature({
   healthPoints,
   showHealth,
 }) {
-  const nameModifier = creature.alive ? '' : 'collapsed-creature--name__dead';
-  const nameClasses = `collapsed-creature--name ${nameModifier}`;
   const showConditions = creature.conditions.length > 0;
   const showNotes = creature.notes.length > 0;
   const conditionsMarginClass = showHealth ? 'collapsed-creature--status__margin' : '';
   const notesMarginClass = showHealth || showConditions ? 'collapsed-creature--status__margin' : '';
   return (
     <div className="collapsed-creature">
-      {/* {header(nameClasses)} */}
       <div className="collapsed-creature--status">
         {showHealth && healthPoints}
         {showConditions
