@@ -11,6 +11,10 @@ function CreatureExpander({
   const buttonIcon = expanded ? <CollapseIcon /> : <ExpandIcon />;
   const buttonAriaLabel = expanded ? `collapse ${name}` : `expand ${name}`;
 
+  const baseClass = 'creature-expander-button';
+  const modifierClass = active ? `${baseClass}__disabled` : '';
+  const className = `${baseClass} ${modifierClass} ${classes}`;
+
   useEffect(() => {
     if (focused) {
       buttonRef.current.focus();
@@ -20,7 +24,7 @@ function CreatureExpander({
   return (
     <button
       aria-label={buttonAriaLabel}
-      className={`creature-expander-button ${classes}`}
+      className={className}
       title={buttonTitle}
       onClick={expandHandler}
       type="button"

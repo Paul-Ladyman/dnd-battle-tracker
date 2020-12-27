@@ -517,6 +517,10 @@ input[type=number].input {
   display: flex;
 }
 
+.creature-expander-button__disabled {
+  cursor: auto;
+}
+
 .creature-expander-icon {
   margin-left: 10px;
 }
