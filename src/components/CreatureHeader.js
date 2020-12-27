@@ -3,9 +3,9 @@ import CreatureExpander from './CreatureExpander';
 import CreatureLocker from './CreatureLocker';
 import MonsterSearcher from './MonsterSearcher';
 
-function getName(expanded, active, name) {
+function getName(expanded, active, name, multiColumn) {
   const maxLength = 22;
-  if ((!expanded && !active) || name.length < maxLength) {
+  if ((!expanded && !active) || !multiColumn || name.length < maxLength) {
     return name;
   }
 
@@ -21,6 +21,7 @@ export default function CreatureHeader({
   expanded,
   expandHandler,
   focused,
+  multiColumn,
 }) {
   const {
     alive, name,
@@ -36,7 +37,7 @@ export default function CreatureHeader({
       classes={classes}
       active={active}
       expanded={expanded}
-      name={getName(expanded, active, name)}
+      name={getName(expanded, active, name, multiColumn)}
       expandHandler={expandHandler}
       focused={focused && !active}
     />

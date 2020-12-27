@@ -32,12 +32,11 @@ function getCreatureAriaLabel(creature, active, expanded) {
   return label;
 }
 
-function getColumnClasses(showExpanded, conditions, notes) {
+function getColumnClasses(showExpanded, multiColumn) {
   if (!showExpanded) {
     return '';
   }
 
-  const multiColumn = conditions.length > 0 || notes.length > 0;
   const baseClass = 'expanded-creature--columns';
   return multiColumn ? `${baseClass} ${baseClass}__wide` : `${baseClass} ${baseClass}__normal`;
 }
@@ -154,6 +153,8 @@ class CreatureWrapper extends Component {
     );
     const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
 
+    const multiColumn = creatureConditions.length > 0 || notes.length > 0;
+
     return (
       <>
         <section
@@ -163,7 +164,7 @@ class CreatureWrapper extends Component {
           onFocus={() => this.focusHandler(false)}
           data-creature-id={id}
         >
-          <div className={getColumnClasses(showExpanded, creatureConditions, notes)}>
+          <div className={getColumnClasses(showExpanded, multiColumn)}>
             <CreatureHeader
               creature={creature}
               active={active}
@@ -172,6 +173,7 @@ class CreatureWrapper extends Component {
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && !alreadyFocused}
+              multiColumn={multiColumn}
             />
             {showExpanded
               ? (
