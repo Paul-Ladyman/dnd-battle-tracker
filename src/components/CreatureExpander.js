@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import ExpandIcon from './icons/ExpandIcon';
 import CollapseIcon from './icons/CollapseIcon';
 import ActiveCreatureIcon from './icons/ActiveCreatureIcon';
@@ -15,7 +15,7 @@ function CreatureExpander({
   const modifierClass = active ? `${baseClass}__disabled` : '';
   const className = `${baseClass} ${modifierClass} ${classes}`;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (focused) {
       buttonRef.current.focus();
     }
