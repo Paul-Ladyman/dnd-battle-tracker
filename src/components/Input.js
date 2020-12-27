@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
 function Input({
@@ -19,6 +18,7 @@ function Input({
   submitHandler,
   handleChange,
   formHandler,
+  inputId,
 }) {
   const type = integer ? 'number' : 'text';
   const numberModifier = integer ? 'input--number' : '';
@@ -33,14 +33,14 @@ function Input({
 
   return (
     <div className={`input--form ${numberModifier} ${customClasses}`}>
-      <label aria-label={ariaLabel}>
+      <label aria-label={ariaLabel} htmlFor={inputId}>
         <div className="form--label">
           {label}
           {error}
         </div>
         <div className={`${inputWrapperClasses} ${inputErrorClass}`}>
           <div id="input">
-            <input disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange} onKeyDown={formHandler} />
+            <input id={inputId} disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange} onKeyDown={formHandler} />
           </div>
           {RightControl && <div className={`button ${buttonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && SubmitIcon
