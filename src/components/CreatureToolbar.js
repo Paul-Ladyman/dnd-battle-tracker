@@ -86,6 +86,7 @@ function CreatureToolbar({
         label="Add Note"
         onSubmit={(note) => addNoteToCreature(id, note, false)}
         SubmitIcon={<AddNoteIcon />}
+        inputId={`notes-${id}`}
       />
       {enableInitiative
         && (
@@ -95,6 +96,7 @@ function CreatureToolbar({
           label="Initiative"
           onSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
           SubmitIcon={<InitiativeIcon />}
+          inputId={`initiative-${id}`}
         />
         )}
       {enableHealthItems
@@ -108,6 +110,7 @@ function CreatureToolbar({
             label="Damage"
             onSubmit={(damage) => damageCreature(id, damage)}
             SubmitIcon={<DamageIcon />}
+            inputId={`damage-${id}`}
           />
           <CreatureToolbarInput
             customClasses={enableInitiative ? 'creature-toolbar--last' : ''}
@@ -118,6 +121,7 @@ function CreatureToolbar({
             label="Heal"
             onSubmit={(heal) => healCreature(id, heal)}
             SubmitIcon={<HealIcon />}
+            inputId={`heal-${id}`}
           />
         </>
         )}
@@ -132,6 +136,7 @@ function CreatureToolbar({
           label="Add Max HP"
           onSubmit={(health) => addHealthToCreature(id, health)}
           SubmitIcon={<AddHpIcon />}
+          inputId={`max-health-${id}`}
         />
         )}
     </div>

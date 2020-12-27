@@ -110,6 +110,7 @@ class CreateCreatureForm extends Component {
           handleChange={this.handleChange}
           RightControl={<MonsterSearcher asButton={false} search={name} />}
           formHandler={this.formHandler}
+          inputId="create-creature-form-name"
         />
         <Input
           customClasses="create-creature-form--item__number create-creature-form--item__tall"
@@ -122,6 +123,7 @@ class CreateCreatureForm extends Component {
           name="initiative"
           handleChange={this.handleChange}
           formHandler={this.formHandler}
+          inputId="create-creature-form-initiative"
         />
         <Input
           customClasses="create-creature-form--item__number"
@@ -135,6 +137,7 @@ class CreateCreatureForm extends Component {
           name="healthPoints"
           handleChange={this.handleChange}
           formHandler={this.formHandler}
+          inputId="create-creature-form-health"
         />
         <div className="create-creature-form--multiplier-wrapper">
           <span className="create-creature-form--multiplier-symbol">x</span>
@@ -152,6 +155,7 @@ class CreateCreatureForm extends Component {
             name="multiplier"
             handleChange={this.handleChange}
             formHandler={this.formHandler}
+            inputId="create-creature-form-multiplier"
           />
         </div>
         <div className="create-creature-form--item__submit">
