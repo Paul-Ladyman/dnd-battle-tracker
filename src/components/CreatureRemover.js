@@ -3,8 +3,6 @@ import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
 import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';
 
 export default function CreatureRemover({
-  playerSession,
-  active,
   creature,
   removeCreature,
 }) {
@@ -13,7 +11,7 @@ export default function CreatureRemover({
 
   return (
     <>
-      {!playerSession && !active && !removing
+      {!removing
       && (
       <button
         aria-label={`remove ${name}`}
@@ -25,7 +23,7 @@ export default function CreatureRemover({
         <RemoveCreatureIcon />
       </button>
       )}
-      {!playerSession && !active && removing
+      {removing
       && (
       <button
         aria-label={`confirm remove ${creature.name}`}

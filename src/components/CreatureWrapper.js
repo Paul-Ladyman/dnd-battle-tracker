@@ -155,6 +155,8 @@ class CreatureWrapper extends Component {
 
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
 
+    const showCreatureRemover = showExpanded && !playerSession && !active;
+
     return (
       <>
         <section
@@ -174,6 +176,7 @@ class CreatureWrapper extends Component {
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && (active || !alreadyFocused)}
               multiColumn={multiColumn}
+              playerSession={playerSession}
             />
             {showExpanded
               ? (
@@ -199,10 +202,8 @@ class CreatureWrapper extends Component {
                 />
               )}
           </div>
-          {showExpanded && (
+          {showCreatureRemover && (
             <CreatureRemover
-              playerSession={playerSession}
-              active={active}
               creature={creature}
               removeCreature={removeCreature}
             />
