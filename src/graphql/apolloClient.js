@@ -14,7 +14,6 @@ const region = 'eu-west-2';
 const cache = new InMemoryCache();
 const cognitoIdentity = new CognitoIdentity({
   region,
-  credentials: () => Promise.resolve({}), // Temporary fix for https://github.com/aws/aws-sdk-js-v3/issues/1798
 });
 
 async function getCognitoIdentity() {
