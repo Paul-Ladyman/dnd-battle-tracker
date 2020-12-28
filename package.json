@@ -7,13 +7,10 @@
     "@aws-sdk/client-cognito-identity": "^3.1.0",
     "aws-appsync-auth-link": "^3.0.2",
     "aws-appsync-subscription-link": "^3.0.3",
-    "fast-deep-equal": "^3.1.3",
     "file-saver": "^2.0.5",
     "graphql": "^15.4.0",
     "is-hotkey": "^0.2.0",
     "jsonschema": "^1.4.0",
-    "lodash.find": "^4.6.0",
-    "lodash.findindex": "^4.6.0",
     "nanoid": "^3.1.20",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -27,8 +24,15 @@
     "build:index": "node ./scripts/create-index.js",
     "test": "npx jest --watch",
     "test:ci": "npx jest",
-    "lint": "npx eslint --ext js,jsx src"
+    "lint": "npx eslint --ext js,jsx src",
+    "size": "npm run build && size-limit"
   },
+  "size-limit": [
+    {
+      "limit": "300 kb",
+      "path": "dist/dnd-battle-tracker.html"
+    }
+  ],
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
@@ -48,6 +52,7 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "@size-limit/preset-app": "^4.9.1",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.1.5",
@@ -63,6 +68,7 @@
     "jest": "^26.6.3",
     "mini-css-extract-plugin": "^1.3.3",
     "mustache": "^4.1.0",
+    "size-limit": "^4.9.1",
     "webpack": "^5.11.0",
     "webpack-cli": "^4.3.0",
     "webpack-dev-server": "^3.11.0"

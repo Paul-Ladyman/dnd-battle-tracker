@@ -1,5 +1,4 @@
 import { validate } from 'jsonschema';
-import find from 'lodash.find';
 import FileSystem from '../util/fileSystem';
 
 const appSchema = require('../resources/app-schema.json');
@@ -32,7 +31,7 @@ function jsonParse(value) {
 }
 
 export function addError(state, errorToAdd) {
-  const errorExists = find(state.errors, (error) => error === errorToAdd);
+  const errorExists = state.errors.find((error) => error === errorToAdd);
 
   if (errorExists) {
     return state.errors;
