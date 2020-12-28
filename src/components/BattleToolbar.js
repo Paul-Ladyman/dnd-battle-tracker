@@ -45,7 +45,7 @@ function BattleToolbar({
   useEffect(() => {
     window.addEventListener('keydown', hotKeyHandler);
     return () => window.removeEventListener('keydown', hotKeyHandler);
-  });
+  }, []);
 
   const handleUpload = () => {
     const file = fileSelector.current.files[0];
