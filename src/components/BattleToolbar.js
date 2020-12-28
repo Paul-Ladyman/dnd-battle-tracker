@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import isHotkey from 'is-hotkey';
 import Timer from './Timer';
 import StartBattleIcon from './icons/StartBattleIcon';
@@ -13,169 +13,159 @@ import ShareDisabledIcon from './icons/ShareDisabledIcon';
 import { hotkeys } from '../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../state/AppManager';
 
-class BattleToolbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { optionsExpanded: false };
-    this.nextButton = React.createRef();
-    this.optionsButton = React.createRef();
-    this.fileSelector = React.createRef();
+function BattleToolbar({
+  initiative,
+  round,
+  secondsElapsed,
+  creatures,
+  nextInitiative,
+  resetBattle,
+  saveBattle,
+  loadBattle,
+  playerSession,
+  shareEnabled,
+  toggleShare,
+}) {
+  const [optionsExpanded, setOptionsExpanded] = useState(false);
+  const nextButton = useRef(null);
+  const optionsButton = useRef(null);
+  const fileSelector = useRef(null);
 
-    this.toggleOptions = this.toggleOptions.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
-  }
-
-  componentDidMount() {
-    const { playerSession } = this.props;
-    window.addEventListener('keydown', (e) => {
-      if (!playerSession && isHotkey(hotkeys.battlebar, e)) {
-        const { disabled: nextButtonDisabled } = this.nextButton.current.attributes;
-        if (nextButtonDisabled) {
-          this.optionsButton.current.focus();
-        } else {
-          this.nextButton.current.focus();
-        }
+  const hotKeyHandler = (e) => {
+    if (!playerSession && isHotkey(hotkeys.battlebar, e)) {
+      const { disabled: nextButtonDisabled } = nextButton.current.attributes;
+      if (nextButtonDisabled) {
+        optionsButton.current.focus();
+      } else {
+        nextButton.current.focus();
       }
-    });
-  }
+    }
+  };
 
-  handleUpload(loadBattle) {
-    const file = this.fileSelector.current.files[0];
+  useEffect(() => {
+    window.addEventListener('keydown', hotKeyHandler);
+    return () => window.removeEventListener('keydown', hotKeyHandler);
+  }, []);
+
+  const handleUpload = () => {
+    const file = fileSelector.current.files[0];
     loadBattle(file);
-  }
+  };
 
-  toggleOptions() {
-    const { optionsExpanded } = this.state;
-    this.setState({ optionsExpanded: !optionsExpanded });
-  }
+  const toggleOptions = () => {
+    setOptionsExpanded((prevOptionsExpanded) => !prevOptionsExpanded);
+  };
 
-  render() {
-    const {
-      initiative,
-      round,
-      secondsElapsed,
-      creatures,
-      nextInitiative,
-      resetBattle,
-      saveBattle,
-      loadBattle,
-      playerSession,
-      shareEnabled,
-      toggleShare,
-    } = this.props;
+  const buttonClass = 'battle-toolbar--button';
+  const creaturesAdded = creatures > 0;
+  const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
+  const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
+  const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
+  const optionsMenuIcon = optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
+  const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
 
-    const buttonClass = 'battle-toolbar--button';
-    const creaturesAdded = creatures > 0;
-    const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
-    const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
-    const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
-    const { optionsExpanded } = this.state;
-    const optionsMenuIcon = optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
-    const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
+  const ResetButton = () => (
+    <button
+      title="Reset Battle"
+      className={`${buttonClasses} ${buttonClass}__option`}
+      onClick={() => { toggleOptions(); resetBattle(); }}
+      disabled={!creaturesAdded}
+      type="button"
+    >
+      <ResetIcon />
+    </button>
+  );
 
-    const ResetButton = () => (
+  const ShareButton = () => {
+    const Icon = shareEnabled ? ShareEnabledIcon : ShareDisabledIcon;
+    const title = shareEnabled ? 'Disable share' : 'Enable share';
+    return (
       <button
-        title="Reset Battle"
-        className={`${buttonClasses} ${buttonClass}__option`}
-        onClick={() => { this.toggleOptions(); resetBattle(); }}
+        title={title}
+        className={`${buttonClass} ${buttonClass}__option`}
+        onClick={() => { toggleOptions(); toggleShare(); }}
+        type="button"
+      >
+        <Icon />
+      </button>
+    );
+  };
+
+  return (
+    <header className="battle-toolbar">
+      {!playerSession && (
+      <button
+        title={nextButtonTitle}
+        className={buttonClasses}
+        onClick={nextInitiative}
+        ref={nextButton}
         disabled={!creaturesAdded}
         type="button"
       >
-        <ResetIcon />
+        {nextButtonLabel}
       </button>
-    );
-
-    const ShareButton = () => {
-      const Icon = shareEnabled ? ShareEnabledIcon : ShareDisabledIcon;
-      const title = shareEnabled ? 'Disable share' : 'Enable share';
-      return (
-        <button
-          title={title}
-          className={`${buttonClass} ${buttonClass}__option`}
-          onClick={() => { this.toggleOptions(); toggleShare(); }}
-          type="button"
-        >
-          <Icon />
-        </button>
-      );
-    };
-
-    return (
-      <header className="battle-toolbar">
-        {!playerSession && (
-        <button
-          title={nextButtonTitle}
-          className={buttonClasses}
-          onClick={nextInitiative}
-          ref={this.nextButton}
-          disabled={!creaturesAdded}
-          type="button"
-        >
-          {nextButtonLabel}
-        </button>
-        )}
-        <div className="battle-toolbar--stat">
-          Initiative:
-          <div className="battle-toolbar--stat-value">{initiative}</div>
-        </div>
-        <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
-          Creatures:
-          <div className="battle-toolbar--stat-value">{creatures}</div>
-        </div>
-        <div className="battle-toolbar--stat battle-toolbar--stat__extra1">
-          Round:
-          <div className="battle-toolbar--stat-value">{round}</div>
-        </div>
-        <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
-          Time Elapsed:
-          <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
-        </div>
-        { !playerSession && isSaveLoadSupported()
-          && (
-          <div className="battle-toolbar--options-container">
+      )}
+      <div className="battle-toolbar--stat">
+        Initiative:
+        <div className="battle-toolbar--stat-value">{initiative}</div>
+      </div>
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
+        Creatures:
+        <div className="battle-toolbar--stat-value">{creatures}</div>
+      </div>
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra1">
+        Round:
+        <div className="battle-toolbar--stat-value">{round}</div>
+      </div>
+      <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
+        Time Elapsed:
+        <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
+      </div>
+      { !playerSession && isSaveLoadSupported()
+        && (
+        <div className="battle-toolbar--options-container">
+          <button
+            title="Options Menu"
+            className={buttonClass}
+            onClick={toggleOptions}
+            ref={optionsButton}
+            type="button"
+          >
+            {optionsMenuIcon}
+          </button>
+          <div className={optionsClass}>
             <button
-              title="Options Menu"
+              title="Save Battle"
               className={buttonClass}
-              onClick={this.toggleOptions}
-              ref={this.optionsButton}
+              onClick={() => { toggleOptions(); saveBattle(); }}
               type="button"
             >
-              {optionsMenuIcon}
+              <SaveIcon />
             </button>
-            <div className={optionsClass}>
-              <button
-                title="Save Battle"
-                className={buttonClass}
-                onClick={() => { this.toggleOptions(); saveBattle(); }}
-                type="button"
-              >
-                <SaveIcon />
-              </button>
-              <input
-                type="file"
-                className="hidden"
-                accept="application/json"
-                ref={this.fileSelector}
-                onChange={() => this.handleUpload(loadBattle)}
-                value=""
-              />
-              <button
-                title="Load Battle"
-                className={`${buttonClass} ${buttonClass}__option ${buttonClass}__load`}
-                onClick={() => { this.toggleOptions(); this.fileSelector.current.click(); }}
-                type="button"
-              >
-                <LoadIcon />
-              </button>
-              <ShareButton />
-              <ResetButton />
-            </div>
+            <input
+              type="file"
+              className="hidden"
+              accept="application/json"
+              ref={fileSelector}
+              onChange={() => handleUpload(loadBattle)}
+              value=""
+            />
+            <button
+              title="Load Battle"
+              className={`${buttonClass} ${buttonClass}__option ${buttonClass}__load`}
+              onClick={() => { toggleOptions(); fileSelector.current.click(); }}
+              type="button"
+            >
+              <LoadIcon />
+            </button>
+            <ShareButton />
+            <ResetButton />
           </div>
-          )}
-        { !playerSession && !isSaveLoadSupported() && <ResetButton /> }
-      </header>
-    );
-  }
+        </div>
+        )}
+      { !playerSession && !isSaveLoadSupported() && <ResetButton /> }
+    </header>
+  );
 }
 
 export default BattleToolbar;
