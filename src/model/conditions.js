@@ -31,4 +31,5 @@ export default [
   'Prone',
   'Restrained',
   'Stunned',
+  'Unconscious',
 ];

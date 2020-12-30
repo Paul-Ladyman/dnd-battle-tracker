@@ -58,13 +58,20 @@ const defaultState = {
 };
 
 describe('killCreature', () => {
-  test('it kills a creature', () => {
+  const expectedConditions = [{
+    text: 'Unconscious',
+    appliedAtRound: 1,
+    appliedAtSeconds: 0,
+    url: conditionDescriptions.Unconscious,
+  }];
+  test('it kills a creature and adds the unconscious condition', () => {
     const expected = {
       ...defaultState,
       creatures: [
         {
           ...defaultState.creatures[0],
           alive: false,
+          conditions: expectedConditions,
         },
         defaultState.creatures[1],
         defaultState.creatures[2],
@@ -85,6 +92,7 @@ describe('killCreature', () => {
           ...defaultState.creatures[1],
           alive: false,
           healthPoints: 0,
+          conditions: expectedConditions,
         },
         defaultState.creatures[2],
       ],
@@ -210,6 +218,12 @@ describe('damageCreature', () => {
   });
 
   test('it kills a creature if it drops to 0 health points', () => {
+    const expectedConditions = [{
+      text: 'Unconscious',
+      appliedAtRound: 1,
+      appliedAtSeconds: 0,
+      url: conditionDescriptions.Unconscious,
+    }];
     const expected = {
       ...defaultState,
       creatures: [
@@ -218,6 +232,7 @@ describe('damageCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
+          conditions: expectedConditions,
         },
         defaultState.creatures[2],
       ],

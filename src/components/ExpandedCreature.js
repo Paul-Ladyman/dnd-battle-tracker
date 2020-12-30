@@ -1,7 +1,5 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
-import { conditionDescriptions } from '../model/conditions';
-import ExternalLink from './ExternalLink';
 
 export default function ExpandedCreature({
   creature,
@@ -24,11 +22,7 @@ export default function ExpandedCreature({
         {!alive
           && (
           <div className="expanded-creature--status">
-            <em>
-              <ExternalLink url={conditionDescriptions.Unconscious}>
-                Unconscious/dead
-              </ExternalLink>
-            </em>
+            <em>dying/dead</em>
           </div>
           )}
         <div className="expanded-creature--separator" />

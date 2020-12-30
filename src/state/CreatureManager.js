@@ -17,11 +17,35 @@ function updateCreature(state, id, updates, announcement) {
   return { ...state, creatures: newCreatures, ariaAnnouncements };
 }
 
+function createNote(state, text, isCondition) {
+  const note = {
+    text,
+    appliedAtRound: state.round,
+    appliedAtSeconds: getSecondsElapsed(state),
+  };
+
+  if (isCondition) {
+    return {
+      ...note,
+      url: conditionDescriptions[note.text],
+    };
+  }
+
+  return note;
+}
+
 export function killCreature(state, creatureId) {
   const creature = findCreature(state.creatures, creatureId);
   const healthPoints = creature.healthPoints === undefined ? undefined : 0;
   const ariaAnnouncement = `${creature.name} killed/made unconscious`;
-  return updateCreature(state, creatureId, { alive: false, healthPoints }, ariaAnnouncement);
+  const unconsciousCondition = createNote(state, 'Unconscious', true);
+  const conditions = [...creature.conditions, unconsciousCondition];
+  return updateCreature(
+    state,
+    creatureId,
+    { alive: false, healthPoints, conditions },
+    ariaAnnouncement,
+  );
 }
 
 export function stabalizeCreature(state, creatureId) {
