@@ -1,15 +1,13 @@
-import findIndex from 'lodash.findindex';
-import find from 'lodash.find';
 import getSecondsElapsed from './TimeManager';
 import { conditionDescriptions } from '../model/conditions';
 
 function findCreature(creatures, creatureId) {
-  return find(creatures, ({ id }) => creatureId === id);
+  return creatures.find(({ id }) => creatureId === id);
 }
 
 function updateCreature(state, id, updates, announcement) {
   const newCreatures = [...state.creatures];
-  const creatureIndex = findIndex(newCreatures, (creature) => creature.id === id);
+  const creatureIndex = newCreatures.findIndex((creature) => creature.id === id);
   const existingCreature = newCreatures[creatureIndex];
   newCreatures[creatureIndex] = { ...existingCreature, ...updates };
 

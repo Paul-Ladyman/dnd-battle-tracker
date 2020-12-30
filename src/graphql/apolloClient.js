@@ -1,8 +1,7 @@
 import {
-  ApolloClient, InMemoryCache, split, HttpLink, ApolloLink,
+  ApolloClient, InMemoryCache, ApolloLink,
 } from '@apollo/client';
 
-import { getMainDefinition } from '@apollo/client/utilities';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import { createAuthLink } from 'aws-appsync-auth-link';
 import { CognitoIdentity } from '@aws-sdk/client-cognito-identity';
@@ -67,29 +66,10 @@ async function refreshAuth(IdentityId) {
 }
 
 function getClient(auth) {
-  const httpLink = ApolloLink.from([
+  const link = ApolloLink.from([
     createAuthLink({ url: uri, region, auth }),
-    new HttpLink({ uri }),
+    createSubscriptionHandshakeLink({ url: uri, region, auth }),
   ]);
-
-  const wsLink = createSubscriptionHandshakeLink(uri, httpLink);
-
-  // The split function takes three parameters:
-  //
-  // * A function that's called for each operation to execute
-  // * The Link to use for an operation if the function returns a "truthy" value
-  // * The Link to use for an operation if the function returns a "falsy" value
-  const link = split(
-    ({ query }) => {
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === 'OperationDefinition'
-        && definition.operation === 'subscription'
-      );
-    },
-    wsLink,
-    httpLink,
-  );
 
   return new ApolloClient({
     link,

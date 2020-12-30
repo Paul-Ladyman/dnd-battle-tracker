@@ -5,8 +5,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   resolve: {
-    fallback: { url: false, util: false }
-  }, 
+    fallback: { url: false, util: false },
+  },
   optimization: {
     minimizer: [
       new TerserPlugin({

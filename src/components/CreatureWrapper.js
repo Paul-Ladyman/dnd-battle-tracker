@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import equal from 'fast-deep-equal';
-import findIndex from 'lodash.findindex';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
@@ -10,8 +8,7 @@ import CreatureRemover from './CreatureRemover';
 
 function getAvailableConditions(allConditions, creatureConditions) {
   return allConditions.filter((condition) => {
-    const activeConditionIndex = findIndex(
-      creatureConditions,
+    const activeConditionIndex = creatureConditions.findIndex(
       (activeCondition) => activeCondition.text === condition,
     );
     return activeConditionIndex === -1;
@@ -72,7 +69,7 @@ class CreatureWrapper extends Component {
       expanded,
     } = this.state;
 
-    const shouldUpdate = !equal(nextProps.creature, creature)
+    const shouldUpdate = JSON.stringify(nextProps.creature) !== JSON.stringify(creature)
       || nextProps.active !== active
       || nextProps.focused !== focused
       || nextProps.toolbarFocused !== toolbarFocused
