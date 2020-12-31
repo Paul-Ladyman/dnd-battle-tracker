@@ -5,7 +5,7 @@ function getDamageLevel(hp, maxHp) {
   const criticalLevel = maxHpFloat / 4.0;
 
   if (hp === 0) {
-    return { level: 'critical', display: 'Unconscious' };
+    return { level: 'critical', display: '0' };
   }
 
   if (hp < maxHp && hp > criticalLevel) {
@@ -28,7 +28,8 @@ function HealthPoints({
 }) {
   const damageLevel = getDamageLevel(hp, maxHp);
   const classes = `health-points--${damageLevel.level} ${className}`;
-  const numericHp = short ? `${hp}HP` : hp;
+  const hpLabel = playerSession ? 'Hit Points' : 'Current Hit Points';
+  const hpDisplay = playerSession ? damageLevel.display : hp;
 
   return (
     <>
@@ -40,8 +41,14 @@ function HealthPoints({
       </div>
       )}
       <div className={classes}>
-        {!short && !playerSession && <b>Current Hit Points </b>}
-        {playerSession ? `HP ${damageLevel.display}` : numericHp}
+        {short && `HP ${hpDisplay}`}
+        {!short && (
+          <>
+            <b>{hpLabel}</b>
+            {' '}
+            {hpDisplay}
+          </>
+        )}
       </div>
     </>
   );

@@ -658,7 +658,7 @@ input[type=number].input {
 .creature-note-list--label {
   font-size: 22px;
   color: #822000;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #822000;
   width: 85%;
   margin-bottom: 10px;
 }
@@ -707,17 +707,14 @@ input[type=number].input {
 
 .health-points--fine {
   color: #004D00;
-  font-weight: bold;
 }
 
 .health-points--damaged {
   color: black;
-  font-weight: bold;
 }
 
 .health-points--critical {
   color: #822000;
-  font-weight: bold;
 }
 
 /* Footer */
