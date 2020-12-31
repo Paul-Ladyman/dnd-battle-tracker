@@ -18,7 +18,7 @@ function CollapsedCreature({
     <div className="collapsed-creature">
       <div className="collapsed-creature--status">
         {showHealth && healthPoints}
-        {(showConditions || showNotes) && ','}
+        {showHealth && (showConditions || showNotes) && ','}
         {showConditions
           && (
           <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>
