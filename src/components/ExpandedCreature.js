@@ -45,6 +45,7 @@ export default function ExpandedCreature({
         round={round}
         secondsElapsed={secondsElapsed}
         playerSession={playerSession}
+        isConditionList
       />
       <CreatureNoteList
         creatureId={id}

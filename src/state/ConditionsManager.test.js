@@ -1,4 +1,9 @@
-import { allConditions, addCondition, removeCondition, getAvailableConditions } from './ConditionsManager';
+import {
+  allConditions,
+  addCondition,
+  removeCondition,
+  getAvailableConditions,
+} from './ConditionsManager';
 import getSecondsElapsed from './TimeManager';
 
 jest.mock('./TimeManager');

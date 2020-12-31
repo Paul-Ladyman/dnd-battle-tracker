@@ -1,7 +1,6 @@
 import React from 'react';
-import Timer from './Timer';
-import ExternalLink from './ExternalLink';
-import RemoveIcon from './icons/RemoveIcon';
+import Condition from './Condition';
+import Note from './Note';
 
 function CreatureNoteList({
   creatureId,
@@ -11,60 +10,50 @@ function CreatureNoteList({
   round,
   secondsElapsed,
   playerSession,
+  isConditionList,
 }) {
+  if (noteList.length === 0) {
+    return (<></>);
+  }
+
+  const renderCondition = (condition) => (
+    <Condition
+      condition={condition}
+      round={round}
+      secondsElapsed={secondsElapsed}
+      playerSession={playerSession}
+      dismissHandler={dismissHandler}
+      creatureId={creatureId}
+      key={condition.id}
+    />
+  );
+
+  const renderNote = (note, number) => (
+    <Note
+      note={note}
+      number={number}
+      round={round}
+      secondsElapsed={secondsElapsed}
+      playerSession={playerSession}
+      dismissHandler={dismissHandler}
+      creatureId={creatureId}
+      key={`${creatureId}-note-${number}`}
+    />
+  );
+
+  const firstNote = noteList[0];
+  const otherNotes = noteList.slice(1);
+  const labelKey = isConditionList ? `first-condition-${creatureId}` : `first-note-${creatureId}`;
+
   return (
     <>
-      {noteList.map((note, i) => {
-        const noteText = note.url
-          ? <b><ExternalLink url={note.url}>{note.text}</ExternalLink></b>
-          : (
-            <span>
-              <b>
-                {i + 1}
-                .
-              </b>
-              {' '}
-              {`${note.text[0].toUpperCase()}${note.text.substring(1)}`}
-            </span>
-          );
-
-        const item = (
-          // eslint-disable-next-line react/no-array-index-key
-          <div className="creature-note-list--item" key={i}>
-            <div className="creature-note-list--note">
-              {noteText}
-              .
-              <Timer
-                startRound={note.appliedAtRound}
-                endRound={round}
-                startTime={note.appliedAtSeconds}
-                endTime={secondsElapsed}
-                className="creature-note-list--timer"
-              />
-            </div>
-            {!playerSession && (
-            <button
-              className="creature-note-list--button"
-              title="Remove note"
-              onClick={() => dismissHandler(creatureId, note)}
-              type="button"
-            >
-              <RemoveIcon />
-            </button>
-            )}
-          </div>
-        );
-
-        return i === 0
-          ? (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={i}>
-              <div className="creature-note-list--label">{label}</div>
-              {item}
-            </div>
-          )
-          : item;
-      })}
+      <div key={labelKey}>
+        <div className="creature-note-list--label">{label}</div>
+        {isConditionList ? renderCondition(firstNote) : renderNote(firstNote, 1)}
+      </div>
+      {otherNotes.map((note, i) => (
+        isConditionList ? renderCondition(note) : renderNote(note, i + 2)
+      ))}
     </>
   );
 }
