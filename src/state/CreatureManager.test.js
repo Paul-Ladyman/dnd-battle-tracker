@@ -14,6 +14,9 @@ import {
   getRawName,
 } from './CreatureManager';
 import conditions, { conditionDescriptions } from '../model/conditions';
+import { addCondition } from './ConditionsManager';
+
+jest.mock('./ConditionsManager');
 
 const defaultState = {
   creatures: [
@@ -57,13 +60,14 @@ const defaultState = {
   createCreatureErrors: {},
 };
 
+const expectedConditions = [{ text: 'Unconscious' }];
+
+beforeEach(() => {
+  jest.resetAllMocks();
+  addCondition.mockReturnValue(expectedConditions);
+});
+
 describe('killCreature', () => {
-  const expectedConditions = [{
-    text: 'Unconscious',
-    appliedAtRound: 1,
-    appliedAtSeconds: 0,
-    url: conditionDescriptions.Unconscious,
-  }];
   test('it kills a creature and adds the unconscious condition', () => {
     const expected = {
       ...defaultState,
@@ -81,6 +85,8 @@ describe('killCreature', () => {
 
     const result = killCreature(defaultState, 0);
     expect(result).toEqual(expected);
+    expect(addCondition).toHaveBeenCalledTimes(1);
+    expect(addCondition).toHaveBeenCalledWith('Unconscious', defaultState.creatures[0], 1);
   });
 
   test('it kills a creature and sets its health points to 0 if it has them', () => {
@@ -218,12 +224,6 @@ describe('damageCreature', () => {
   });
 
   test('it kills a creature if it drops to 0 health points', () => {
-    const expectedConditions = [{
-      text: 'Unconscious',
-      appliedAtRound: 1,
-      appliedAtSeconds: 0,
-      url: conditionDescriptions.Unconscious,
-    }];
     const expected = {
       ...defaultState,
       creatures: [
@@ -251,6 +251,7 @@ describe('damageCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
+          conditions: expectedConditions,
         },
         defaultState.creatures[2],
       ],

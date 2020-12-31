@@ -1,4 +1,5 @@
 import getSecondsElapsed from './TimeManager';
+import { allConditions, addCondition } from './ConditionsManager';
 import { conditionDescriptions } from '../model/conditions';
 
 function findCreature(creatures, creatureId) {
@@ -17,33 +18,15 @@ function updateCreature(state, id, updates, announcement) {
   return { ...state, creatures: newCreatures, ariaAnnouncements };
 }
 
-function createNote(state, text, isCondition) {
-  const note = {
-    text,
-    appliedAtRound: state.round,
-    appliedAtSeconds: getSecondsElapsed(state),
-  };
-
-  if (isCondition) {
-    return {
-      ...note,
-      url: conditionDescriptions[note.text],
-    };
-  }
-
-  return note;
-}
-
 export function killCreature(state, creatureId) {
   const creature = findCreature(state.creatures, creatureId);
   const healthPoints = creature.healthPoints === undefined ? undefined : 0;
   const ariaAnnouncement = `${creature.name} killed/made unconscious`;
-  const unconsciousCondition = createNote(state, 'Unconscious', true);
-  const conditions = [...creature.conditions, unconsciousCondition];
+  const newConditions = addCondition(allConditions.Unconscious, creature, state.round);
   return updateCreature(
     state,
     creatureId,
-    { alive: false, healthPoints, conditions },
+    { alive: false, healthPoints, conditions: newConditions },
     ariaAnnouncement,
   );
 }
@@ -66,14 +49,15 @@ export function damageCreature(state, creatureId, damage) {
   }
 
   let healthPoints = creature.healthPoints - damage;
-  let { alive } = creature;
+  let { alive, conditions } = creature;
   if (healthPoints <= 0) {
     healthPoints = 0;
     alive = false;
+    conditions = addCondition(allConditions.Unconscious, creature, state.round);
   }
 
   const ariaAnnouncement = `damaged ${creature.name} by ${damage}. ${creature.name}'s health is ${healthPoints}`;
-  return updateCreature(state, creatureId, { alive, healthPoints }, ariaAnnouncement);
+  return updateCreature(state, creatureId, { alive, healthPoints, conditions }, ariaAnnouncement);
 }
 
 export function healCreature(state, creatureId, health) {
