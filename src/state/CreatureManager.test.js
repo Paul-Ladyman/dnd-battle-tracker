@@ -505,14 +505,7 @@ describe('addNoteToCreature', () => {
       round: 2,
     };
 
-    const result = addNoteToCreature(state, 1, conditions[0], true);
-
-    const expectedCondition = {
-      text: conditions[0],
-      appliedAtRound: 2,
-      appliedAtSeconds: 6,
-      url: conditionDescriptions.Blinded,
-    };
+    const result = addNoteToCreature(state, 1, 'Unconscious', true);
 
     const expectedState = {
       ...state,
@@ -520,46 +513,15 @@ describe('addNoteToCreature', () => {
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          conditions: [
-            expectedCondition,
-          ],
+          conditions: expectedConditions,
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Blinded condition added to Goblin'],
+      ariaAnnouncements: ['Unconscious condition added to Goblin'],
     };
     expect(result).toEqual(expectedState);
-  });
-
-  test('it does not add a URL to a condition if no URL is known', () => {
-    const state = {
-      ...defaultState,
-      round: 2,
-    };
-
-    const result = addNoteToCreature(state, 1, 'unknown', true);
-
-    const expectedCondition = {
-      text: 'unknown',
-      appliedAtRound: 2,
-      appliedAtSeconds: 6,
-    };
-
-    const expectedState = {
-      ...state,
-      creatures: [
-        defaultState.creatures[0],
-        {
-          ...defaultState.creatures[1],
-          conditions: [
-            expectedCondition,
-          ],
-        },
-        defaultState.creatures[2],
-      ],
-      ariaAnnouncements: ['unknown condition added to Goblin'],
-    };
-    expect(result).toEqual(expectedState);
+    expect(addCondition).toHaveBeenCalledTimes(1);
+    expect(addCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1], 2);
   });
 });
 

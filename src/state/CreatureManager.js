@@ -1,6 +1,5 @@
 import getSecondsElapsed from './TimeManager';
 import { allConditions, addCondition } from './ConditionsManager';
-import { conditionDescriptions } from '../model/conditions';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({ id }) => creatureId === id);
@@ -126,24 +125,19 @@ export function validateCreature(name, initiative, healthPoints, multiplier) {
 
 export function addNoteToCreature(state, creatureId, text, isCondition) {
   const creature = findCreature(state.creatures, creatureId);
+
+  if (isCondition) {
+    const ariaAnnouncement = `${text} condition added to ${creature.name}`;
+    const conditions = addCondition(text, creature, state.round);
+    return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
+  }
+
   const note = {
     text,
     appliedAtRound: state.round,
     appliedAtSeconds: getSecondsElapsed(state),
   };
-
-  if (isCondition) {
-    const condition = {
-      ...note,
-      url: conditionDescriptions[note.text],
-    };
-    const conditions = [...creature.conditions, condition];
-    const ariaAnnouncement = `${note.text} condition added to ${creature.name}`;
-    return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
-  }
-
   const notes = [...creature.notes, note];
-
   const ariaAnnouncement = `note added to ${creature.name}`;
   return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
