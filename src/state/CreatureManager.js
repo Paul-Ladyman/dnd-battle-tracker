@@ -222,11 +222,7 @@ export function resetCreature(id, creature) {
 export function isCreatureStable(creature) {
   const { alive, healthPoints, conditions } = creature;
 
-  if (!alive) {
-    return false;
-  }
-
-  if (healthPoints > 0) {
+  if (!alive || healthPoints > 0) {
     return false;
   }
 
