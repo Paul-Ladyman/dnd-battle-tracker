@@ -76,7 +76,7 @@ export function healCreature(state, creatureId, health) {
   }
 
   let { alive, conditions } = creature;
-  if (healthPoints > 0) {
+  if (creature.healthPoints === 0 && healthPoints > 0) {
     alive = true;
     conditions = removeCondition(allConditions.Unconscious, creature);
   }
@@ -217,4 +217,22 @@ export function resetCreature(id, creature) {
     notes,
     conditions,
   };
+}
+
+export function isCreatureStable(creature) {
+  const { alive, healthPoints, conditions } = creature;
+
+  if (!alive) {
+    return false;
+  }
+
+  if (healthPoints > 0) {
+    return false;
+  }
+
+  const isUnconscious = conditions.findIndex(
+    ({ text }) => text === allConditions.Unconscious,
+  ) > -1;
+
+  return healthPoints === 0 || isUnconscious;
 }
