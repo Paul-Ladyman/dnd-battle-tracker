@@ -77,4 +77,14 @@ describe('addCondition', () => {
     expect(result).toEqual(creature.conditions);
     expect(getSecondsElapsed).not.toHaveBeenCalled();
   });
+
+  it('does not add an unknown condition', () => {
+    const creature = {
+      conditions: [],
+      id: 0,
+    };
+    const result = addCondition('Unknown', creature, round);
+    expect(result).toEqual(creature.conditions);
+    expect(getSecondsElapsed).not.toHaveBeenCalled();
+  });
 });

@@ -104,7 +104,13 @@ function conditionExists(newConditionId, existingConditions) {
 
 export function addCondition(conditionToAdd, creature, round) {
   const { conditions: existingConditions, id: creatureId } = creature;
-  const { text, url, id } = conditionData[conditionToAdd];
+  const conditionDataToAdd = conditionData[conditionToAdd];
+
+  if (!conditionDataToAdd) {
+    return existingConditions;
+  }
+
+  const { text, url, id } = conditionDataToAdd;
   const newConditionId = `${id}-${creatureId}`;
 
   if (conditionExists(newConditionId, existingConditions)) {
