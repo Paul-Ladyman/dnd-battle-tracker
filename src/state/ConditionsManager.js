@@ -127,4 +127,6 @@ export function addCondition(conditionToAdd, creature, round) {
   return [...existingConditions, newCondition];
 }
 
-export function removeCondition() {}
+export function removeCondition(conditionToRemove, creature) {
+  return creature.conditions.filter(({ text }) => text !== conditionToRemove);
+}

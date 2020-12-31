@@ -1,5 +1,5 @@
 import getSecondsElapsed from './TimeManager';
-import { allConditions, addCondition } from './ConditionsManager';
+import { allConditions, addCondition, removeCondition } from './ConditionsManager';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({ id }) => creatureId === id);
@@ -75,13 +75,14 @@ export function healCreature(state, creatureId, health) {
     healthPoints = creature.maxHealthPoints;
   }
 
-  let { alive } = creature;
+  let { alive, conditions } = creature;
   if (healthPoints > 0) {
     alive = true;
+    conditions = removeCondition(allConditions.Unconscious, creature);
   }
 
   const ariaAnnouncement = `healed ${creature.name} by ${health}. ${creature.name}'s health is ${healthPoints}`;
-  return updateCreature(state, creatureId, { alive, healthPoints }, ariaAnnouncement);
+  return updateCreature(state, creatureId, { alive, healthPoints, conditions }, ariaAnnouncement);
 }
 
 export function getRawName(name) {
@@ -144,19 +145,22 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
 
 export function removeNoteFromCreature(state, creatureId, note, isCondition) {
   const creature = findCreature(state.creatures, creatureId);
-  const notesList = isCondition ? creature.conditions : creature.notes;
-  const notes = notesList.filter(({ text, appliedAtRound, appliedAtSeconds }) => {
+
+  if (isCondition) {
+    const conditions = removeCondition(note.text, creature);
+    const ariaAnnouncement = `${note.text} condition removed from ${creature.name}`;
+    return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
+  }
+
+  const notes = creature.notes.filter(({ text, appliedAtRound, appliedAtSeconds }) => {
     const notesAreEqual = text === note.text
       && appliedAtRound === note.appliedAtRound
       && appliedAtSeconds === note.appliedAtSeconds;
 
     return !notesAreEqual;
   });
-  const newNotes = isCondition ? { conditions: notes } : { notes };
-  const ariaAnnouncement = isCondition
-    ? `${note.text} condition removed from ${creature.name}`
-    : `note removed from ${creature.name}`;
-  return updateCreature(state, creatureId, newNotes, ariaAnnouncement);
+  const ariaAnnouncement = `note removed from ${creature.name}`;
+  return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
 
 export function addHealthToCreature(state, creatureId, health) {

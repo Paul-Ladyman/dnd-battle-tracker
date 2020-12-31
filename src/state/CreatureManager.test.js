@@ -13,8 +13,7 @@ import {
   resetCreature,
   getRawName,
 } from './CreatureManager';
-import conditions, { conditionDescriptions } from '../model/conditions';
-import { addCondition } from './ConditionsManager';
+import { addCondition, removeCondition } from './ConditionsManager';
 
 jest.mock('./ConditionsManager');
 
@@ -60,11 +59,12 @@ const defaultState = {
   createCreatureErrors: {},
 };
 
-const expectedConditions = [{ text: 'Unconscious' }];
+const unconsciousCondition = [{ text: 'Unconscious' }];
 
 beforeEach(() => {
   jest.resetAllMocks();
-  addCondition.mockReturnValue(expectedConditions);
+  addCondition.mockReturnValue(unconsciousCondition);
+  removeCondition.mockReturnValue([]);
 });
 
 describe('killCreature', () => {
@@ -75,7 +75,7 @@ describe('killCreature', () => {
         {
           ...defaultState.creatures[0],
           alive: false,
-          conditions: expectedConditions,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[1],
         defaultState.creatures[2],
@@ -98,7 +98,7 @@ describe('killCreature', () => {
           ...defaultState.creatures[1],
           alive: false,
           healthPoints: 0,
-          conditions: expectedConditions,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -232,7 +232,7 @@ describe('damageCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
-          conditions: expectedConditions,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -251,7 +251,7 @@ describe('damageCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
-          conditions: expectedConditions,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -321,7 +321,7 @@ describe('healCreature', () => {
     expect(healCreature(state, 1, 10)).toEqual(expectedState);
   });
 
-  test('it stabalizes a creature if it was dead', () => {
+  test('it stabalizes a creature if it was dead and removes the unconscious condition', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -330,6 +330,7 @@ describe('healCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -350,6 +351,8 @@ describe('healCreature', () => {
     };
 
     expect(healCreature(state, 1, 1)).toEqual(expected);
+    expect(removeCondition).toHaveBeenCalledTimes(1);
+    expect(removeCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1]);
   });
 });
 
@@ -513,7 +516,7 @@ describe('addNoteToCreature', () => {
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          conditions: expectedConditions,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -661,6 +664,8 @@ describe('removeNoteFromCreature', () => {
     const result = removeNoteFromCreature(state, 1, condition, true);
 
     expect(result).toEqual(expectedState);
+    expect(removeCondition).toHaveBeenCalledTimes(1);
+    expect(removeCondition).toHaveBeenCalledWith(condition.text, state.creatures[1]);
   });
 });
 
