@@ -130,3 +130,12 @@ export function addCondition(conditionToAdd, creature, round) {
 export function removeCondition(conditionToRemove, creature) {
   return creature.conditions.filter(({ text }) => text !== conditionToRemove);
 }
+
+export function getAvailableConditions(creature) {
+  return Object.values(allConditions).filter((condition) => {
+    const activeConditionIndex = creature.conditions.findIndex(
+      (activeCondition) => activeCondition.text === condition,
+    );
+    return activeConditionIndex === -1;
+  });
+}

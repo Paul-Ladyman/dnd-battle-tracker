@@ -5,15 +5,7 @@ import CreatureToolbar from './CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from './CreatureRemover';
-
-function getAvailableConditions(allConditions, creatureConditions) {
-  return allConditions.filter((condition) => {
-    const activeConditionIndex = creatureConditions.findIndex(
-      (activeCondition) => activeCondition.text === condition,
-    );
-    return activeConditionIndex === -1;
-  });
-}
+import { getAvailableConditions } from '../state/ConditionsManager';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
@@ -114,7 +106,6 @@ class CreatureWrapper extends Component {
     const {
       creature,
       active,
-      conditions,
       creatureManagement,
       playerSession,
       round,
@@ -222,7 +213,7 @@ class CreatureWrapper extends Component {
           >
             <CreatureToolbar
               creature={creature}
-              conditions={getAvailableConditions(conditions, creature.conditions)}
+              conditions={getAvailableConditions(creature)}
               creatureManagement={creatureManagement}
               focused={focused && toolbarFocused && !toolbarAlreadyFocused}
             />

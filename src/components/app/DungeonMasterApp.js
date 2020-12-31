@@ -5,7 +5,6 @@ import CreateCreatureForm from '../CreateCreatureForm';
 import Creatures from '../Creatures';
 import BattleToolbar from '../BattleToolbar';
 import Title from '../Title';
-import conditions from '../../model/conditions';
 import {
   nextInitiative,
   getInitiative,
@@ -138,7 +137,6 @@ function DungeonMasterApp({
             activeCreature={state.activeCreature}
             focusedCreature={state.focusedCreature}
             setFocus={updateBattle(setFocus, false)}
-            conditions={conditions}
             round={state.round}
             secondsElapsed={secondsElapsed}
             creatureManagement={creatureManagement}
