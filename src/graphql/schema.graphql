@@ -8,6 +8,14 @@ type Condition @aws_api_key @aws_iam {
   text: String!
   appliedAtRound: Int!
   appliedAtSeconds: Int!
+  url: String!
+  id: String
+}
+
+type Note @aws_api_key @aws_iam {
+  text: String!
+  appliedAtRound: Int!
+  appliedAtSeconds: Int!
   url: String
 }
 
@@ -19,7 +27,7 @@ type Creature @aws_api_key @aws_iam {
   id: Int!
   alive: Boolean!
   conditions: [Condition!]
-  notes: [Condition!]
+  notes: [Note!]
   locked: Boolean!
 }
 
@@ -35,6 +43,14 @@ input ConditionInput @aws_api_key @aws_iam {
   text: String!
   appliedAtRound: Int!
   appliedAtSeconds: Int!
+  url: String!
+  id: String
+}
+
+input NoteInput @aws_api_key @aws_iam {
+  text: String!
+  appliedAtRound: Int!
+  appliedAtSeconds: Int!
   url: String
 }
 
@@ -46,7 +62,7 @@ input CreatureInput @aws_api_key @aws_iam {
   id: Int!
   alive: Boolean!
   conditions: [ConditionInput!]
-  notes: [ConditionInput!]
+  notes: [NoteInput!]
   locked: Boolean!
 }
 
