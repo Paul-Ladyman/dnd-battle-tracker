@@ -30,7 +30,7 @@ export default function CreatureHeader({
   const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
   const collapsedNameClasses = `${nameClass} ${nameModifier}`;
 
-  const classes = expanded ? nameClass : collapsedNameClasses;
+  const classes = (expanded || active) ? nameClass : collapsedNameClasses;
 
   const creatureExpander = (
     <CreatureExpander
