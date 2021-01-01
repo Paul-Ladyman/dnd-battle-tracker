@@ -1,10 +1,17 @@
 import { gql } from '@apollo/client';
 
-const Note = `{
+const Condition = `{
   text
   appliedAtRound
   appliedAtSeconds
   url
+  id
+}`;
+
+const Note = `{
+  text
+  appliedAtRound
+  appliedAtSeconds
 }`;
 
 const Battle = `{
@@ -18,7 +25,7 @@ const Battle = `{
     healthPoints
     maxHealthPoints
     alive
-    conditions ${Note}
+    conditions ${Condition}
     notes ${Note}
   }
   activeCreature

@@ -72,9 +72,8 @@ function CreatureToolbar({
             onChange={(event) => addNoteToCreature(id, event.target.value, true)}
           >
             <option>--</option>
-            {conditions.map((condition, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <option key={i} value={condition}>
+            {conditions.map((condition) => (
+              <option key={`${conditionsId}-${condition}`} value={condition}>
                 {condition}
               </option>
             ))}

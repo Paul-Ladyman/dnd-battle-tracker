@@ -12,8 +12,11 @@ import {
   toggleCreatureLock,
   resetCreature,
   getRawName,
+  isCreatureStable,
 } from './CreatureManager';
-import conditions, { conditionDescriptions } from '../model/conditions';
+import { addCondition, removeCondition } from './ConditionsManager';
+
+jest.mock('./ConditionsManager');
 
 const defaultState = {
   creatures: [
@@ -57,14 +60,23 @@ const defaultState = {
   createCreatureErrors: {},
 };
 
+const unconsciousCondition = [{ text: 'Unconscious' }];
+
+beforeEach(() => {
+  jest.resetAllMocks();
+  addCondition.mockReturnValue(unconsciousCondition);
+  removeCondition.mockReturnValue([]);
+});
+
 describe('killCreature', () => {
-  test('it kills a creature', () => {
+  test('it kills a creature and adds the unconscious condition', () => {
     const expected = {
       ...defaultState,
       creatures: [
         {
           ...defaultState.creatures[0],
           alive: false,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[1],
         defaultState.creatures[2],
@@ -74,6 +86,8 @@ describe('killCreature', () => {
 
     const result = killCreature(defaultState, 0);
     expect(result).toEqual(expected);
+    expect(addCondition).toHaveBeenCalledTimes(1);
+    expect(addCondition).toHaveBeenCalledWith('Unconscious', defaultState.creatures[0], 1);
   });
 
   test('it kills a creature and sets its health points to 0 if it has them', () => {
@@ -85,6 +99,7 @@ describe('killCreature', () => {
           ...defaultState.creatures[1],
           alive: false,
           healthPoints: 0,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -218,6 +233,7 @@ describe('damageCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -236,6 +252,7 @@ describe('damageCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -305,7 +322,7 @@ describe('healCreature', () => {
     expect(healCreature(state, 1, 10)).toEqual(expectedState);
   });
 
-  test('it stabalizes a creature if it was dead', () => {
+  test('it stabalizes a creature if it was dead and removes the unconscious condition', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -314,6 +331,7 @@ describe('healCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
@@ -334,6 +352,70 @@ describe('healCreature', () => {
     };
 
     expect(healCreature(state, 1, 1)).toEqual(expected);
+    expect(removeCondition).toHaveBeenCalledTimes(1);
+    expect(removeCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1]);
+  });
+
+  test('heals a stable creature and removes the unconscious condition', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 0,
+          conditions: unconsciousCondition,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 1,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['healed Goblin by 1. Goblin\'s health is 1'],
+    };
+
+    expect(healCreature(state, 1, 1)).toEqual(expected);
+    expect(removeCondition).toHaveBeenCalledTimes(1);
+    expect(removeCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1]);
+  });
+
+  test('does not remove the unconscious condition if the creature was not dead', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5,
+          conditions: unconsciousCondition,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          conditions: unconsciousCondition,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['healed Goblin by 5. Goblin\'s health is 10'],
+    };
+
+    expect(healCreature(state, 1, 5)).toEqual(expectedState);
   });
 });
 
@@ -489,14 +571,7 @@ describe('addNoteToCreature', () => {
       round: 2,
     };
 
-    const result = addNoteToCreature(state, 1, conditions[0], true);
-
-    const expectedCondition = {
-      text: conditions[0],
-      appliedAtRound: 2,
-      appliedAtSeconds: 6,
-      url: conditionDescriptions.Blinded,
-    };
+    const result = addNoteToCreature(state, 1, 'Unconscious', true);
 
     const expectedState = {
       ...state,
@@ -504,46 +579,15 @@ describe('addNoteToCreature', () => {
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          conditions: [
-            expectedCondition,
-          ],
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Blinded condition added to Goblin'],
+      ariaAnnouncements: ['Unconscious condition added to Goblin'],
     };
     expect(result).toEqual(expectedState);
-  });
-
-  test('it does not add a URL to a condition if no URL is known', () => {
-    const state = {
-      ...defaultState,
-      round: 2,
-    };
-
-    const result = addNoteToCreature(state, 1, 'unknown', true);
-
-    const expectedCondition = {
-      text: 'unknown',
-      appliedAtRound: 2,
-      appliedAtSeconds: 6,
-    };
-
-    const expectedState = {
-      ...state,
-      creatures: [
-        defaultState.creatures[0],
-        {
-          ...defaultState.creatures[1],
-          conditions: [
-            expectedCondition,
-          ],
-        },
-        defaultState.creatures[2],
-      ],
-      ariaAnnouncements: ['unknown condition added to Goblin'],
-    };
-    expect(result).toEqual(expectedState);
+    expect(addCondition).toHaveBeenCalledTimes(1);
+    expect(addCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1], 2);
   });
 });
 
@@ -683,6 +727,8 @@ describe('removeNoteFromCreature', () => {
     const result = removeNoteFromCreature(state, 1, condition, true);
 
     expect(result).toEqual(expectedState);
+    expect(removeCondition).toHaveBeenCalledTimes(1);
+    expect(removeCondition).toHaveBeenCalledWith(condition.text, state.creatures[1]);
   });
 });
 
@@ -841,5 +887,69 @@ describe('resetCreatures', () => {
     };
     const result = resetCreature(0, creature);
     expect(result).toEqual(expectedCreature);
+  });
+});
+
+describe('isCreatureStable', () => {
+  it('returns true if the creature is alive on 0 HP', () => {
+    const creature = {
+      alive: true,
+      healthPoints: 0,
+      conditions: [],
+    };
+
+    expect(isCreatureStable(creature)).toBe(true);
+  });
+
+  it('returns true if the creature is alive without HP but is unconscious', () => {
+    const creature = {
+      alive: true,
+      conditions: [{
+        text: 'Unconscious',
+      }],
+    };
+
+    expect(isCreatureStable(creature)).toBe(true);
+  });
+
+  it('returns false if the creature is alive but is unconscious', () => {
+    const creature = {
+      alive: true,
+      healthPoints: 1,
+      conditions: [{
+        text: 'Unconscious',
+      }],
+    };
+
+    expect(isCreatureStable(creature)).toBe(false);
+  });
+
+  it('returns false if the creature is alive and conscious', () => {
+    const creature = {
+      alive: true,
+      healthPoints: 1,
+      conditions: [],
+    };
+
+    expect(isCreatureStable(creature)).toBe(false);
+  });
+
+  it('returns false if the creature is alive without HP and conscious', () => {
+    const creature = {
+      alive: true,
+      conditions: [],
+    };
+
+    expect(isCreatureStable(creature)).toBe(false);
+  });
+
+  it('returns false if the creature is dead', () => {
+    const creature = {
+      alive: false,
+      healthPoints: 0,
+      conditions: [],
+    };
+
+    expect(isCreatureStable(creature)).toBe(false);
   });
 });

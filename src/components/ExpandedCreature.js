@@ -1,7 +1,6 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
-import { conditionDescriptions } from '../model/conditions';
-import ExternalLink from './ExternalLink';
+import { isCreatureStable } from '../state/CreatureManager';
 
 export default function ExpandedCreature({
   creature,
@@ -21,16 +20,16 @@ export default function ExpandedCreature({
   return (
     <>
       <div>
-        {!alive
-          && (
+        {!alive && (
           <div className="expanded-creature--status">
-            <em>
-              <ExternalLink url={conditionDescriptions.Unconscious}>
-                Unconscious/dead
-              </ExternalLink>
-            </em>
+            <em>Dying/dead</em>
           </div>
-          )}
+        )}
+        {isCreatureStable(creature) && (
+          <div className="expanded-creature--status">
+            <em>Stable</em>
+          </div>
+        )}
         <div className="expanded-creature--separator" />
         {showHealth && healthPoints}
         {showInitiative
@@ -51,6 +50,7 @@ export default function ExpandedCreature({
         round={round}
         secondsElapsed={secondsElapsed}
         playerSession={playerSession}
+        isConditionList
       />
       <CreatureNoteList
         creatureId={id}

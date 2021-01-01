@@ -8,7 +8,6 @@ function Creatures({
   activeCreature,
   focusedCreature,
   setFocus,
-  conditions,
   round,
   secondsElapsed,
   creatureManagement,
@@ -49,7 +48,6 @@ function Creatures({
               round={round}
               secondsElapsed={secondsElapsed}
               creatureManagement={creatureManagement}
-              conditions={conditions}
               playerSession={playerSession}
             />
           </React.Fragment>
