@@ -217,7 +217,6 @@ input[type="number"] {
 
 .input--form {
   width: 100%;
-  height: 100%;
   grid-column: span 8;
   display: flex;
   flex-direction: column;
