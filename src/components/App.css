@@ -178,14 +178,11 @@ input[type="number"] {
   padding: 4px;
   height: 40px;
   margin-top: 5px;
+  display: grid;
 }
 
 .battle-toolbar--button__option {
   margin-top: 25px;
-}
-
-.battle-toolbar--button__load {
-  padding-bottom: 0;
 }
 
 .battle-toolbar--button__disabled {
