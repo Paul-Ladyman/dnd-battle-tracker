@@ -152,7 +152,7 @@ function BattleToolbar({
             />
             <button
               title="Load Battle"
-              className={`${buttonClass} ${buttonClass}__option ${buttonClass}__load`}
+              className={`${buttonClass} ${buttonClass}__option`}
               onClick={() => { toggleOptions(); fileSelector.current.click(); }}
               type="button"
             >
