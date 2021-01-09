@@ -19,8 +19,8 @@ function Input({
   formHandler,
   inputId,
 }) {
-  const { leftEnabled, LeftSubmitIcon } = leftControls;
-  const { rightEnabled, RightSubmitIcon, RightControl } = rightControls;
+  const { leftEnabled, LeftSubmitIcon, leftTitle } = leftControls;
+  const { rightEnabled, RightSubmitIcon, RightControl, rightTitle } = rightControls;
 
   const type = integer ? 'number' : 'text';
   const numberModifier = integer ? 'input--number' : '';
@@ -48,7 +48,7 @@ function Input({
           {error}
         </div>
         <div className={`input-wrapper ${inputErrorClass}`}>
-          {LeftSubmitIcon && <button disabled={leftDisabled} type="button" className={leftButtonClasses} title={label} onClick={submitHandler}>{LeftSubmitIcon}</button>}
+          {LeftSubmitIcon && <button disabled={leftDisabled} type="button" className={leftButtonClasses} title={leftTitle} onClick={submitHandler}>{LeftSubmitIcon}</button>}
           <input
             id={inputId}
             required={required}
@@ -64,7 +64,7 @@ function Input({
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon
-            && <button disabled={rightDisabled} type="button" className={rightButtonClasses} title={label} onClick={submitHandler}>{RightSubmitIcon}</button>}
+            && <button disabled={rightDisabled} type="button" className={rightButtonClasses} title={rightTitle} onClick={submitHandler}>{RightSubmitIcon}</button>}
         </div>
       </label>
     </div>
