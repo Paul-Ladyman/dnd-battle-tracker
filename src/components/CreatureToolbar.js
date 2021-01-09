@@ -84,7 +84,9 @@ function CreatureToolbar({
         ariaLabel={`add note to ${name}`}
         label="Add Note"
         onSubmit={(note) => addNoteToCreature(id, note, false)}
-        RightSubmitIcon={<AddNoteIcon />}
+        rightControls={{
+          RightSubmitIcon: <AddNoteIcon />,
+        }}
         inputId={`notes-${id}`}
       />
       {enableInitiative
@@ -94,7 +96,9 @@ function CreatureToolbar({
           ariaLabel={`add initiative to ${name}`}
           label="Initiative"
           onSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
-          RightSubmitIcon={<InitiativeIcon />}
+          rightControls={{
+            RightSubmitIcon: <InitiativeIcon />,
+          }}
           inputId={`initiative-${id}`}
         />
         )}
@@ -108,8 +112,14 @@ function CreatureToolbar({
             ariaLabel={`damage ${name}`}
             label="Damage"
             onSubmit={(damage) => damageCreature(id, damage)}
-            LeftSubmitIcon={<DamageIcon />}
-            RightSubmitIcon={<HealIcon />}
+            leftControls={{
+              leftEnabled: enableDamage,
+              LeftSubmitIcon: <DamageIcon />,
+            }}
+            rightControls={{
+              rightEnabled: enableHeal,
+              RightSubmitIcon: <HealIcon />,
+            }}
             inputId={`damage-${id}`}
           />
         </>
@@ -124,7 +134,9 @@ function CreatureToolbar({
           ariaLabel={`add max hp ${name}`}
           label="Add Max HP"
           onSubmit={(health) => addHealthToCreature(id, health)}
-          RightSubmitIcon={<AddHpIcon />}
+          rightControls={{
+            RightSubmitIcon: <AddHpIcon />,
+          }}
           inputId={`max-health-${id}`}
         />
         )}

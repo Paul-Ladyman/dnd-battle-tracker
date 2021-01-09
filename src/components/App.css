@@ -247,32 +247,41 @@ input[type="number"] {
   border-bottom-right-radius: 0;
 }
 
+.input__button-right-disabled {
+  border-right: 2px dotted #822000;
+}
+
 .input__button-left {
   border-left: 2px solid #822000;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.input-wrapper__disabled {
-  background-color: transparent;
-  border: 2px dashed #822000;
-}
-
-.input-wrapper__disabled #input {
-  background-color: transparent;
-  border-right: none;
+.input__button-left-disabled {
+  border-left: 2px dotted #822000;
 }
 
 .input--submit {
   padding: 5px;
   background: transparent;
+  background: #EBE1AD;
   border: none;
   box-shadow: none;
-  width: 55px;
+}
+
+.input--submit__left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input--submit__right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .input--submit__disabled {
   cursor: default;
+  background: #f5f1ea;
 }
 
 .input__error {
