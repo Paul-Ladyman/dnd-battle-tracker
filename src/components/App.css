@@ -337,10 +337,6 @@ input[type="number"] {
  * on the smallest portrait screens.
  */
 @media only screen and (max-width: 436px) and (orientation: portrait) {
-  .creature-toolbar--button {
-    grid-column: 2 / span 2;
-  }
-
   .creature-toolbar--last {
     grid-column: 3 / span 4;
   }
