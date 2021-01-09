@@ -232,19 +232,25 @@ input[type="number"] {
   height: 40px;
 }
 
-.input-wrapper #input {
+.input {
   width: 100%;
   background: white;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-right: 2px solid #822000;
+  border-radius: 15px;
   overflow: hidden;
+  border: none;
+  padding: 0 5px;
 }
 
-.input-wrapper__no-button #input {
-  border-right: none;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+.input__button-right {
+  border-right: 2px solid #822000;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input__button-left {
+  border-left: 2px solid #822000;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .input-wrapper__disabled {
@@ -257,22 +263,8 @@ input[type="number"] {
   border-right: none;
 }
 
-.input {
-  width: 95%;
-  height: 35px;
-  background: transparent;
-  border: none;
-  margin-left: 5px;
-  padding: 2px;
-  padding-right: 0;
-}
-
-input[type=number].input {
-  width: 85%;
-}
-
 .input--submit {
-  padding: 5px 3px 0 0;
+  padding: 5px;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -370,7 +362,6 @@ input[type=number].input {
 }
 
 .create-creature-form--multiplier-wrapper input {
-  margin-left: 2px;
   font-weight: 700;
 }
 

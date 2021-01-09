@@ -6,7 +6,8 @@ function Input({
   error,
   required,
   inputRef,
-  SubmitIcon,
+  LeftSubmitIcon,
+  RightSubmitIcon,
   RightControl,
   customClasses,
   ariaLabel,
@@ -23,13 +24,13 @@ function Input({
   const type = integer ? 'number' : 'text';
   const numberModifier = integer ? 'input--number' : '';
   const disabledModifier = enabled ? '' : 'input-wrapper__disabled';
-  const inputWrapperClass = 'input-wrapper';
-  const noButtonModifier = 'input-wrapper__no-button';
-  const inputWrapperClasses = SubmitIcon || RightControl
-    ? `${inputWrapperClass} ${disabledModifier}`
-    : `${inputWrapperClass} ${noButtonModifier} ${disabledModifier}`;
+  const inputWrapperClasses = `input-wrapper ${disabledModifier}`;
   const buttonClasses = enabled ? 'input--submit' : 'input--submit input--submit__disabled';
   const inputErrorClass = error ? 'input__error' : '';
+
+  const inputClassRightModifier = RightSubmitIcon || RightControl ? 'input__button-right' : '';
+  const inputClassLeftModifier = LeftSubmitIcon ? 'input__button-left' : '';
+  const inputClasses = `input ${inputClassLeftModifier} ${inputClassRightModifier}`;
 
   return (
     <div className={`input--form ${numberModifier} ${customClasses}`}>
@@ -39,12 +40,24 @@ function Input({
           {error}
         </div>
         <div className={`${inputWrapperClasses} ${inputErrorClass}`}>
-          <div id="input">
-            <input id={inputId} disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange} onKeyDown={formHandler} />
-          </div>
+          {LeftSubmitIcon && <button disabled={!enabled} type="button" className={buttonClasses} title={label} onClick={submitHandler}>{LeftSubmitIcon}</button>}
+          <input
+            id={inputId}
+            disabled={!enabled}
+            required={required}
+            className={inputClasses}
+            ref={inputRef}
+            name={name}
+            type={type}
+            min={min}
+            max={max}
+            value={value}
+            onChange={handleChange}
+            onKeyDown={formHandler}
+          />
           {RightControl && <div className={`button ${buttonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
-          {!RightControl && SubmitIcon
-            && <button disabled={!enabled} type="button" className={buttonClasses} title={label} onClick={submitHandler}>{SubmitIcon}</button>}
+          {!RightControl && RightSubmitIcon
+            && <button disabled={!enabled} type="button" className={buttonClasses} title={label} onClick={submitHandler}>{RightSubmitIcon}</button>}
         </div>
       </label>
     </div>
