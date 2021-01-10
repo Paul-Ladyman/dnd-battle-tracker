@@ -2,12 +2,11 @@ import React from 'react';
 
 function Input({
   integer,
-  enabled,
   error,
   required,
   inputRef,
-  SubmitIcon,
-  RightControl,
+  leftControls,
+  rightControls,
   customClasses,
   ariaLabel,
   label,
@@ -20,16 +19,38 @@ function Input({
   formHandler,
   inputId,
 }) {
+  const {
+    leftEnabled,
+    LeftSubmitIcon,
+    leftTitle,
+  } = leftControls;
+  const {
+    rightEnabled,
+    RightSubmitIcon,
+    RightControl,
+    rightTitle,
+  } = rightControls;
+
   const type = integer ? 'number' : 'text';
   const numberModifier = integer ? 'input--number' : '';
-  const disabledModifier = enabled ? '' : 'input-wrapper__disabled';
-  const inputWrapperClass = 'input-wrapper';
-  const noButtonModifier = 'input-wrapper__no-button';
-  const inputWrapperClasses = SubmitIcon || RightControl
-    ? `${inputWrapperClass} ${disabledModifier}`
-    : `${inputWrapperClass} ${noButtonModifier} ${disabledModifier}`;
-  const buttonClasses = enabled ? 'input--submit' : 'input--submit input--submit__disabled';
+
   const inputErrorClass = error ? 'input__error' : '';
+
+  const leftDisabled = leftEnabled === false;
+  const rightDisabled = rightEnabled === false;
+
+  const buttonClass = 'input--submit';
+  const leftButtonClasses = leftDisabled ? `${buttonClass} ${buttonClass}__left ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__left`;
+  const rightButtonClasses = rightDisabled ? `${buttonClass} ${buttonClass}__right ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__right`;
+
+  const inputClassRightModifier = RightSubmitIcon || RightControl ? 'input__button-right' : '';
+  const inputClassLeftModifier = LeftSubmitIcon ? 'input__button-left' : '';
+  const inputClassLeftEnabled = leftDisabled ? 'input__button-left-disabled' : '';
+  const inputClassRightEnabled = rightDisabled ? 'input__button-right-disabled' : '';
+  const inputClasses = `input ${inputClassLeftModifier} ${inputClassLeftEnabled} ${inputClassRightModifier} ${inputClassRightEnabled}`;
+
+  const leftSubmit = () => submitHandler(true);
+  const rightSubmit = () => submitHandler(false);
 
   return (
     <div className={`input--form ${numberModifier} ${customClasses}`}>
@@ -38,17 +59,33 @@ function Input({
           {label}
           {error}
         </div>
-        <div className={`${inputWrapperClasses} ${inputErrorClass}`}>
-          <div id="input">
-            <input id={inputId} disabled={!enabled} required={required} className="input" ref={inputRef} name={name} type={type} min={min} max={max} value={value} onChange={handleChange} onKeyDown={formHandler} />
-          </div>
-          {RightControl && <div className={`button ${buttonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
-          {!RightControl && SubmitIcon
-            && <button disabled={!enabled} type="button" className={buttonClasses} title={label} onClick={submitHandler}>{SubmitIcon}</button>}
+        <div className={`input-wrapper ${inputErrorClass}`}>
+          {LeftSubmitIcon && <button disabled={leftDisabled} type="button" className={leftButtonClasses} title={leftTitle} onClick={leftSubmit}>{LeftSubmitIcon}</button>}
+          <input
+            id={inputId}
+            required={required}
+            className={inputClasses}
+            ref={inputRef}
+            name={name}
+            type={type}
+            min={min}
+            max={max}
+            value={value}
+            onChange={handleChange}
+            onKeyDown={formHandler}
+          />
+          {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
+          {!RightControl && RightSubmitIcon
+            && <button disabled={rightDisabled} type="button" className={rightButtonClasses} title={rightTitle} onClick={rightSubmit}>{RightSubmitIcon}</button>}
         </div>
       </label>
     </div>
   );
 }
+
+Input.defaultProps = {
+  leftControls: {},
+  rightControls: {},
+};
 
 export default Input;

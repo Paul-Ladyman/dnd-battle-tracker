@@ -7,6 +7,7 @@ import HealIcon from './icons/HealIcon';
 import DamageIcon from './icons/DamageIcon';
 import InitiativeIcon from './icons/InitiativeIcon';
 import AddHpIcon from './icons/AddHpIcon';
+import { hotkeys } from '../hotkeys/hotkeys';
 
 function CreatureToolbar({
   creature,
@@ -38,8 +39,7 @@ function CreatureToolbar({
   const enableConditions = conditions.length > 0;
   const enableInitiative = initiative === undefined;
 
-  const enabledModifier = enableConditions ? '' : 'input-wrapper__disabled';
-  const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
+  const conditionsClasses = 'form--input creature-toolbar--select creature-toolbar--dropdown';
   const conditionsId = `conditions-${creature.id}`;
 
   useLayoutEffect(() => {
@@ -60,6 +60,64 @@ function CreatureToolbar({
       >
         {statusButtonIcon}
       </button>
+      {enableHealthItems
+        && (
+        <>
+          <CreatureToolbarInput
+            integer
+            min={1}
+            enabled={enableDamage}
+            ariaLabel={`damage or heal ${name}`}
+            label="Damage/Heal"
+            leftSubmit={(damage) => damageCreature(id, damage)}
+            leftHotkey={hotkeys.damageCreature}
+            leftControls={{
+              leftTitle: 'Damage',
+              leftEnabled: enableDamage,
+              LeftSubmitIcon: <DamageIcon />,
+            }}
+            rightSubmit={(health) => healCreature(id, health)}
+            rightHotkey={hotkeys.healCreature}
+            rightControls={{
+              rightTitle: 'Heal',
+              rightEnabled: enableHeal,
+              RightSubmitIcon: <HealIcon />,
+            }}
+            inputId={`damage-${id}`}
+          />
+        </>
+        )}
+      {!enableHealthItems
+        && (
+        <CreatureToolbarInput
+          integer
+          name="creature-toolbar-maxhp"
+          min={1}
+          ariaLabel={`add max hp ${name}`}
+          label="Add Max HP"
+          rightSubmit={(health) => addHealthToCreature(id, health)}
+          rightControls={{
+            rightTitle: 'Add Max HP',
+            RightSubmitIcon: <AddHpIcon />,
+          }}
+          inputId={`max-health-${id}`}
+        />
+        )}
+      {enableInitiative
+        && (
+        <CreatureToolbarInput
+          customClasses="creature-toolbar--last"
+          integer
+          ariaLabel={`add initiative to ${name}`}
+          label="Initiative"
+          rightSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
+          rightControls={{
+            rightTitle: 'Initiative',
+            RightSubmitIcon: <InitiativeIcon />,
+          }}
+          inputId={`initiative-${id}`}
+        />
+        )}
       <div className="creature-toolbar--dropdown">
         <label htmlFor={conditionsId} aria-label={`add condition to ${name}`}>
           <div className="form--label">Add Condition</div>
@@ -83,61 +141,13 @@ function CreatureToolbar({
       <CreatureToolbarInput
         ariaLabel={`add note to ${name}`}
         label="Add Note"
-        onSubmit={(note) => addNoteToCreature(id, note, false)}
-        SubmitIcon={<AddNoteIcon />}
+        rightSubmit={(note) => addNoteToCreature(id, note, false)}
+        rightControls={{
+          rightTitle: 'Add Note',
+          RightSubmitIcon: <AddNoteIcon />,
+        }}
         inputId={`notes-${id}`}
       />
-      {enableInitiative
-        && (
-        <CreatureToolbarInput
-          integer
-          ariaLabel={`add initiative to ${name}`}
-          label="Initiative"
-          onSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
-          SubmitIcon={<InitiativeIcon />}
-          inputId={`initiative-${id}`}
-        />
-        )}
-      {enableHealthItems
-        && (
-        <>
-          <CreatureToolbarInput
-            integer
-            min={1}
-            enabled={enableDamage}
-            ariaLabel={`damage ${name}`}
-            label="Damage"
-            onSubmit={(damage) => damageCreature(id, damage)}
-            SubmitIcon={<DamageIcon />}
-            inputId={`damage-${id}`}
-          />
-          <CreatureToolbarInput
-            customClasses={enableInitiative ? 'creature-toolbar--last' : ''}
-            integer
-            min={1}
-            enabled={enableHeal}
-            ariaLabel={`heal ${name}`}
-            label="Heal"
-            onSubmit={(heal) => healCreature(id, heal)}
-            SubmitIcon={<HealIcon />}
-            inputId={`heal-${id}`}
-          />
-        </>
-        )}
-      {!enableHealthItems
-        && (
-        <CreatureToolbarInput
-          customClasses={enableInitiative ? '' : 'creature-toolbar--last'}
-          integer
-          name="creature-toolbar-maxhp"
-          min={1}
-          ariaLabel={`add max hp ${name}`}
-          label="Add Max HP"
-          onSubmit={(health) => addHealthToCreature(id, health)}
-          SubmitIcon={<AddHpIcon />}
-          inputId={`max-health-${id}`}
-        />
-        )}
     </div>
   );
 }

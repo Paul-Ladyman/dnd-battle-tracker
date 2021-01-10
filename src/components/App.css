@@ -219,6 +219,12 @@ input[type="number"] {
   flex-direction: column;
 }
 
+@media only screen and (max-width: 825px) {
+  .input--form {
+    grid-column: span 6;
+  }
+}
+
 .input--number {
   grid-column: span 4;
 }
@@ -227,60 +233,61 @@ input[type="number"] {
   display: flex;
   border: 2px solid #822000;
   border-radius: 15px;
-  background: #EBE1AD;
   box-shadow: 0 0 5px #979aa4;
   height: 40px;
 }
 
-.input-wrapper #input {
-  width: 100%;
-  background: white;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-right: 2px solid #822000;
-  overflow: hidden;
-}
-
-.input-wrapper__no-button #input {
-  border-right: none;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-}
-
-.input-wrapper__disabled {
-  background-color: transparent;
-  border: 2px dashed #822000;
-}
-
-.input-wrapper__disabled #input {
-  background-color: transparent;
-  border-right: none;
-}
-
 .input {
-  width: 95%;
-  height: 35px;
-  background: transparent;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
   border: none;
-  margin-left: 5px;
-  padding: 2px;
-  padding-right: 0;
+  padding: 0 5px;
 }
 
-input[type=number].input {
-  width: 85%;
+.input__button-right {
+  border-right: 2px solid #822000;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input__button-right-disabled {
+  border-right: 2px dotted #822000;
+}
+
+.input__button-left {
+  border-left: 2px solid #822000;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input__button-left-disabled {
+  border-left: 2px dotted #822000;
 }
 
 .input--submit {
-  padding: 5px 3px 0 0;
-  background: transparent;
+  padding: 5px;
+  background: #EBE1AD;
   border: none;
   box-shadow: none;
-  width: 55px;
+  margin: 0;
+}
+
+.input--submit__left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input--submit__right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .input--submit__disabled {
   cursor: default;
+  background: #f5f1ea;
 }
 
 .input__error {
@@ -305,11 +312,9 @@ input[type=number].input {
 }
 
 .creature-toolbar--button {
-  padding: 4px;
-  display: flex;
-  margin-top: 22px;
+  padding: 5px;
+  margin-top: 23px;
   grid-column: span 2;
-  padding-left: 10px;
 }
 
 .creature-toolbar--button__dead {
@@ -328,20 +333,6 @@ input[type=number].input {
 @media only screen and (max-width: 768px) {
   .creature-toolbar {
     justify-content: center;
-  }
-}
-
-/*
- * Ensure the first and last rows of the creature toolbar are centered
- * on the smallest portrait screens.
- */
-@media only screen and (max-width: 436px) and (orientation: portrait) {
-  .creature-toolbar--button {
-    grid-column: 2 / span 2;
-  }
-
-  .creature-toolbar--last {
-    grid-column: 3 / span 4;
   }
 }
 
@@ -370,7 +361,6 @@ input[type=number].input {
 }
 
 .create-creature-form--multiplier-wrapper input {
-  margin-left: 2px;
   font-weight: 700;
 }
 
@@ -475,7 +465,7 @@ input[type=number].input {
 
 .creature-title {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 5px;
 }
 
@@ -529,7 +519,6 @@ input[type=number].input {
   text-align: left;
   text-transform: capitalize;
   background: transparent;
-  height: 35px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -579,25 +568,25 @@ input[type=number].input {
   }
 }
 
-.expanded-creature--columns__wide {
+.creature--columns__wide {
   column-count: 2;
 }
 
-.expanded-creature--columns__normal {
+.creature--columns__normal {
   column-count: 1;
 }
 
-.expanded-creature--columns {
+.creature--columns {
   margin-bottom: 15px;
 }
 
 @media only screen and (max-width: 768px) {
-  .expanded-creature--columns__wide {
+  .creature--columns__wide {
     column-count: 1;
   }
 }
 
-.expanded-creature--columns > * {
+.creature--columns > * {
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;

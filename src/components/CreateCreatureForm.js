@@ -89,7 +89,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     <form className="create-creature-form">
       <Input
         customClasses="create-creature-form--item__text"
-        enabled
         required
         error={nameError && <span className="form--label__error"> *</span>}
         inputRef={nameInput}
@@ -98,13 +97,15 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         label="Creature Name"
         name="name"
         handleChange={handleChange}
-        RightControl={<MonsterSearcher asButton={false} search={name} />}
+        rightControls={{
+          rightEnabled: true,
+          RightControl: <MonsterSearcher asButton={false} search={name} />,
+        }}
         formHandler={formHandler}
         inputId="create-creature-form-name"
       />
       <Input
         customClasses="create-creature-form--item__number create-creature-form--item__tall"
-        enabled
         error={initiativeError}
         integer
         value={initiative}
@@ -117,7 +118,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
       />
       <Input
         customClasses="create-creature-form--item__number"
-        enabled
         integer
         error={healthError && <span className="form--label__error"> &gt; 0</span>}
         value={healthPoints}
@@ -133,7 +133,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         <span className="create-creature-form--multiplier-symbol">x</span>
         <Input
           customClasses="create-creature-form--item__multiplier"
-          enabled
           integer
           required
           min="1"

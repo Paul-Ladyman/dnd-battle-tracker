@@ -1,55 +1,53 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import isHotkey from 'is-hotkey';
 import Input from './Input';
 
-class CreatureToolbarInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: '' };
+export default function CreatureToolbarInput(props) {
+  const [value, setValue] = useState('');
 
-    this.formHandler = this.formHandler.bind(this);
-    this.resetForm = this.resetForm.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
-  }
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
+  const resetForm = () => {
+    setValue('');
+  };
 
-  formHandler(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      this.submitHandler();
-    }
-  }
-
-  submitHandler() {
-    const { value } = this.state;
+  const submitHandler = (isLeftSubmit) => {
     if (value) {
-      const { integer, onSubmit } = this.props;
-      this.resetForm();
+      const { integer, leftSubmit, rightSubmit } = props;
+      resetForm();
       const submittedValue = integer ? parseInt(value, 10) : value;
-      onSubmit(submittedValue);
+      const func = isLeftSubmit ? leftSubmit : rightSubmit;
+      func(submittedValue);
     }
-  }
+  };
 
-  resetForm() {
-    this.setState({ value: '' });
-  }
+  const formHandler = (event) => {
+    const { leftHotkey, rightHotkey } = props;
+    const isLeftHotkey = leftHotkey && isHotkey(leftHotkey, event);
+    const isRightHotkey = rightHotkey && isHotkey(rightHotkey, event);
+    const isEnter = isHotkey('enter', event);
 
-  render() {
-    const { value } = this.state;
-    return (
-      <Input
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...this.props}
-        value={value}
-        handleChange={this.handleChange}
-        submitHandler={this.submitHandler}
-        formHandler={this.formHandler}
-      />
-    );
-  }
+    if (isLeftHotkey) {
+      event.preventDefault();
+      submitHandler(true);
+    } else if (isRightHotkey || isEnter) {
+      event.preventDefault();
+      submitHandler(false);
+    }
+  };
+
+  return (
+    <Input
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      value={value}
+      handleChange={handleChange}
+      submitHandler={submitHandler}
+      formHandler={formHandler}
+    />
+  );
 }
 
 CreatureToolbarInput.defaultProps = {
@@ -58,5 +56,3 @@ CreatureToolbarInput.defaultProps = {
   min: undefined,
   customClasses: '',
 };
-
-export default CreatureToolbarInput;

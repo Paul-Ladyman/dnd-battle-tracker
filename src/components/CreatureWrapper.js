@@ -22,11 +22,11 @@ function getCreatureAriaLabel(creature, active, expanded) {
 }
 
 function getColumnClasses(showExpanded, multiColumn) {
+  const baseClass = 'creature--columns';
   if (!showExpanded) {
-    return '';
+    return `${baseClass}__normal`;
   }
 
-  const baseClass = 'expanded-creature--columns';
   return multiColumn ? `${baseClass} ${baseClass}__wide` : `${baseClass} ${baseClass}__normal`;
 }
 
