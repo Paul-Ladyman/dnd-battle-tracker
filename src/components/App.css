@@ -465,7 +465,7 @@ input[type="number"] {
 
 .creature-title {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 5px;
 }
 
@@ -519,7 +519,6 @@ input[type="number"] {
   text-align: left;
   text-transform: capitalize;
   background: transparent;
-  height: 35px;
 }
 
 @media only screen and (max-width: 768px) {
