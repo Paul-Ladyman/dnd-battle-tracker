@@ -233,13 +233,13 @@ input[type="number"] {
   display: flex;
   border: 2px solid #822000;
   border-radius: 15px;
-  background: #EBE1AD;
   box-shadow: 0 0 5px #979aa4;
   height: 40px;
 }
 
 .input {
   width: 100%;
+  height: 100%;
   background: white;
   border-radius: 15px;
   overflow: hidden;
@@ -269,10 +269,10 @@ input[type="number"] {
 
 .input--submit {
   padding: 5px;
-  background: transparent;
   background: #EBE1AD;
   border: none;
   box-shadow: none;
+  margin: 0;
 }
 
 .input--submit__left {

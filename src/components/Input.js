@@ -20,7 +20,12 @@ function Input({
   inputId,
 }) {
   const { leftEnabled, LeftSubmitIcon, leftTitle } = leftControls;
-  const { rightEnabled, RightSubmitIcon, RightControl, rightTitle } = rightControls;
+  const {
+    rightEnabled,
+    RightSubmitIcon,
+    RightControl,
+    rightTitle,
+  } = rightControls;
 
   const type = integer ? 'number' : 'text';
   const numberModifier = integer ? 'input--number' : '';
@@ -31,8 +36,8 @@ function Input({
   const rightDisabled = rightEnabled === false;
 
   const buttonClass = 'input--submit';
-  const leftButtonClasses = leftDisabled ? `${buttonClass} input--submit__left ${buttonClass}__disabled` : buttonClass;
-  const rightButtonClasses = rightDisabled ? `${buttonClass} input--submit__right ${buttonClass}__disabled` : buttonClass;
+  const leftButtonClasses = leftDisabled ? `${buttonClass} ${buttonClass}__left ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__left`;
+  const rightButtonClasses = rightDisabled ? `${buttonClass} ${buttonClass}__right ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__right`;
 
   const inputClassRightModifier = RightSubmitIcon || RightControl ? 'input__button-right' : '';
   const inputClassLeftModifier = LeftSubmitIcon ? 'input__button-left' : '';
