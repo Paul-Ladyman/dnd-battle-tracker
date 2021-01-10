@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import isHotkey from 'is-hotkey';
 import Input from './Input';
+import { hotkeys } from '../hotkeys/hotkeys';
 
 class CreatureToolbarInput extends Component {
   constructor(props) {
@@ -17,19 +19,25 @@ class CreatureToolbarInput extends Component {
   }
 
   formHandler(event) {
-    if (event.keyCode === 13) {
+    console.log('>>> hotkey', isHotkey(hotkeys.damageCreature, event));
+    if (isHotkey(hotkeys.healCreature, event)) {
       event.preventDefault();
-      this.submitHandler();
+      this.submitHandler(false);
+    } else if (isHotkey(hotkeys.damageCreature, event)) {
+      event.preventDefault();
+      this.submitHandler(true);
     }
   }
 
-  submitHandler() {
+  submitHandler(isLeftSubmit) {
     const { value } = this.state;
     if (value) {
-      const { integer, onSubmit } = this.props;
+      const { integer, leftSubmit, rightSubmit } = this.props;
       this.resetForm();
       const submittedValue = integer ? parseInt(value, 10) : value;
-      onSubmit(submittedValue);
+      console.log('>>> left submit?', isLeftSubmit, leftSubmit);
+      const func = isLeftSubmit ? leftSubmit : rightSubmit;
+      func(submittedValue);
     }
   }
 

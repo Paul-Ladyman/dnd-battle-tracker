@@ -6,6 +6,8 @@ export const hotkeys = {
   focusCreatureToolbar: 'mod+shift+Right',
   createCreature: 'alt+shift+k',
   battlebar: 'alt+shift+l',
+  healCreature: 'shift+enter',
+  damageCreature: 'enter',
 };
 
 export const hotkeyDescriptions = {
@@ -16,4 +18,6 @@ export const hotkeyDescriptions = {
   focusCreatureToolbar: 'Move focus from creature to creature toolbar.',
   createCreature: 'Move focus to create creature form.',
   battlebar: 'Move focus to battle toolbar.',
+  healCreature: 'Heal a creature whilst using the Damage/Heal tool.',
+  damageCreature: 'Damage a creature whilst using the Damage/Heal tool.',
 };

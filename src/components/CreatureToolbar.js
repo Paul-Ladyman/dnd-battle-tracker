@@ -69,12 +69,13 @@ function CreatureToolbar({
             enabled={enableDamage}
             ariaLabel={`damage or heal ${name}`}
             label="Damage/Heal"
-            onSubmit={(damage) => damageCreature(id, damage)}
+            leftSubmit={(damage) => damageCreature(id, damage)}
             leftControls={{
               leftTitle: 'Damage',
               leftEnabled: enableDamage,
               LeftSubmitIcon: <DamageIcon />,
             }}
+            rightSubmit={(health) => healCreature(id, health)}
             rightControls={{
               rightTitle: 'Heal',
               rightEnabled: enableHeal,

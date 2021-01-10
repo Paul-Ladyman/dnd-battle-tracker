@@ -19,7 +19,11 @@ function Input({
   formHandler,
   inputId,
 }) {
-  const { leftEnabled, LeftSubmitIcon, leftTitle } = leftControls;
+  const {
+    leftEnabled,
+    LeftSubmitIcon,
+    leftTitle,
+  } = leftControls;
   const {
     rightEnabled,
     RightSubmitIcon,
@@ -45,6 +49,9 @@ function Input({
   const inputClassRightEnabled = rightDisabled ? 'input__button-right-disabled' : '';
   const inputClasses = `input ${inputClassLeftModifier} ${inputClassLeftEnabled} ${inputClassRightModifier} ${inputClassRightEnabled}`;
 
+  const leftSubmit = () => submitHandler(true);
+  const rightSubmit = () => submitHandler(false);
+
   return (
     <div className={`input--form ${numberModifier} ${customClasses}`}>
       <label aria-label={ariaLabel} htmlFor={inputId}>
@@ -53,7 +60,7 @@ function Input({
           {error}
         </div>
         <div className={`input-wrapper ${inputErrorClass}`}>
-          {LeftSubmitIcon && <button disabled={leftDisabled} type="button" className={leftButtonClasses} title={leftTitle} onClick={submitHandler}>{LeftSubmitIcon}</button>}
+          {LeftSubmitIcon && <button disabled={leftDisabled} type="button" className={leftButtonClasses} title={leftTitle} onClick={leftSubmit}>{LeftSubmitIcon}</button>}
           <input
             id={inputId}
             required={required}
@@ -69,7 +76,7 @@ function Input({
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon
-            && <button disabled={rightDisabled} type="button" className={rightButtonClasses} title={rightTitle} onClick={submitHandler}>{RightSubmitIcon}</button>}
+            && <button disabled={rightDisabled} type="button" className={rightButtonClasses} title={rightTitle} onClick={rightSubmit}>{RightSubmitIcon}</button>}
         </div>
       </label>
     </div>
