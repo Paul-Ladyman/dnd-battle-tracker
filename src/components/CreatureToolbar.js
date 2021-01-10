@@ -100,6 +100,21 @@ function CreatureToolbar({
           inputId={`max-health-${id}`}
         />
         )}
+      {enableInitiative
+        && (
+        <CreatureToolbarInput
+          customClasses="creature-toolbar--last"
+          integer
+          ariaLabel={`add initiative to ${name}`}
+          label="Initiative"
+          onSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
+          rightControls={{
+            rightTitle: 'Initiative',
+            RightSubmitIcon: <InitiativeIcon />,
+          }}
+          inputId={`initiative-${id}`}
+        />
+        )}
       <div className="creature-toolbar--dropdown">
         <label htmlFor={conditionsId} aria-label={`add condition to ${name}`}>
           <div className="form--label">Add Condition</div>
@@ -130,21 +145,6 @@ function CreatureToolbar({
         }}
         inputId={`notes-${id}`}
       />
-      {enableInitiative
-        && (
-        <CreatureToolbarInput
-          customClasses="creature-toolbar--last"
-          integer
-          ariaLabel={`add initiative to ${name}`}
-          label="Initiative"
-          onSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
-          rightControls={{
-            rightTitle: 'Initiative',
-            RightSubmitIcon: <InitiativeIcon />,
-          }}
-          inputId={`initiative-${id}`}
-        />
-        )}
     </div>
   );
 }

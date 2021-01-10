@@ -219,6 +219,12 @@ input[type="number"] {
   flex-direction: column;
 }
 
+@media only screen and (max-width: 825px) {
+  .input--form {
+    grid-column: span 6;
+  }
+}
+
 .input--number {
   grid-column: span 4;
 }
@@ -329,16 +335,6 @@ input[type="number"] {
 @media only screen and (max-width: 768px) {
   .creature-toolbar {
     justify-content: center;
-  }
-}
-
-/*
- * Ensure the first and last rows of the creature toolbar are centered
- * on the smallest portrait screens.
- */
-@media only screen and (max-width: 436px) and (orientation: portrait) {
-  .creature-toolbar--last {
-    grid-column: 3 / span 4;
   }
 }
 
