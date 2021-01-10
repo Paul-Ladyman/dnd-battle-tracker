@@ -568,25 +568,25 @@ input[type="number"] {
   }
 }
 
-.expanded-creature--columns__wide {
+.creature--columns__wide {
   column-count: 2;
 }
 
-.expanded-creature--columns__normal {
+.creature--columns__normal {
   column-count: 1;
 }
 
-.expanded-creature--columns {
+.creature--columns {
   margin-bottom: 15px;
 }
 
 @media only screen and (max-width: 768px) {
-  .expanded-creature--columns__wide {
+  .creature--columns__wide {
     column-count: 1;
   }
 }
 
-.expanded-creature--columns > * {
+.creature--columns > * {
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
