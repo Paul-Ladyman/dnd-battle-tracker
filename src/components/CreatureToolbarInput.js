@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import isHotkey from 'is-hotkey';
 import Input from './Input';
-import { hotkeys } from '../hotkeys/hotkeys';
 
 export default function CreatureToolbarInput(props) {
   const [value, setValue] = useState('');
@@ -25,12 +24,17 @@ export default function CreatureToolbarInput(props) {
   };
 
   const formHandler = (event) => {
-    if (isHotkey(hotkeys.healCreature, event)) {
-      event.preventDefault();
-      submitHandler(false);
-    } else if (isHotkey(hotkeys.damageCreature, event)) {
+    const { leftHotkey, rightHotkey } = props;
+    const isLeftHotkey = leftHotkey && isHotkey(leftHotkey, event);
+    const isRightHotkey = rightHotkey && isHotkey(rightHotkey, event);
+    const isEnter = isHotkey('enter', event);
+
+    if (isLeftHotkey) {
       event.preventDefault();
       submitHandler(true);
+    } else if (isRightHotkey || isEnter) {
+      event.preventDefault();
+      submitHandler(false);
     }
   };
 

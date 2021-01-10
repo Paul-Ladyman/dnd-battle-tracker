@@ -7,6 +7,7 @@ import HealIcon from './icons/HealIcon';
 import DamageIcon from './icons/DamageIcon';
 import InitiativeIcon from './icons/InitiativeIcon';
 import AddHpIcon from './icons/AddHpIcon';
+import { hotkeys } from '../hotkeys/hotkeys';
 
 function CreatureToolbar({
   creature,
@@ -38,8 +39,7 @@ function CreatureToolbar({
   const enableConditions = conditions.length > 0;
   const enableInitiative = initiative === undefined;
 
-  const enabledModifier = enableConditions ? '' : 'input-wrapper__disabled';
-  const conditionsClasses = `form--input creature-toolbar--select creature-toolbar--dropdown ${enabledModifier}`;
+  const conditionsClasses = 'form--input creature-toolbar--select creature-toolbar--dropdown';
   const conditionsId = `conditions-${creature.id}`;
 
   useLayoutEffect(() => {
@@ -70,12 +70,14 @@ function CreatureToolbar({
             ariaLabel={`damage or heal ${name}`}
             label="Damage/Heal"
             leftSubmit={(damage) => damageCreature(id, damage)}
+            leftHotkey={hotkeys.damageCreature}
             leftControls={{
               leftTitle: 'Damage',
               leftEnabled: enableDamage,
               LeftSubmitIcon: <DamageIcon />,
             }}
             rightSubmit={(health) => healCreature(id, health)}
+            rightHotkey={hotkeys.healCreature}
             rightControls={{
               rightTitle: 'Heal',
               rightEnabled: enableHeal,
@@ -93,7 +95,7 @@ function CreatureToolbar({
           min={1}
           ariaLabel={`add max hp ${name}`}
           label="Add Max HP"
-          onSubmit={(health) => addHealthToCreature(id, health)}
+          rightSubmit={(health) => addHealthToCreature(id, health)}
           rightControls={{
             rightTitle: 'Add Max HP',
             RightSubmitIcon: <AddHpIcon />,
@@ -108,7 +110,7 @@ function CreatureToolbar({
           integer
           ariaLabel={`add initiative to ${name}`}
           label="Initiative"
-          onSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
+          rightSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
           rightControls={{
             rightTitle: 'Initiative',
             RightSubmitIcon: <InitiativeIcon />,
@@ -139,7 +141,7 @@ function CreatureToolbar({
       <CreatureToolbarInput
         ariaLabel={`add note to ${name}`}
         label="Add Note"
-        onSubmit={(note) => addNoteToCreature(id, note, false)}
+        rightSubmit={(note) => addNoteToCreature(id, note, false)}
         rightControls={{
           rightTitle: 'Add Note',
           RightSubmitIcon: <AddNoteIcon />,
