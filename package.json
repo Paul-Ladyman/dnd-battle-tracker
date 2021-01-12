@@ -55,7 +55,7 @@
     "@size-limit/preset-app": "^4.9.1",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
-    "css-minimizer-webpack-plugin": "^1.1.5",
+    "css-minimizer-webpack-plugin": "^1.2.0",
     "eslint": "^7.17.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
