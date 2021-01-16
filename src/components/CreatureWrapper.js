@@ -131,7 +131,7 @@ class CreatureWrapper extends Component {
     const { expanded } = this.state;
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
-    const aliveModifier = alive ? '' : 'creature-wrapper__dead';
+    const aliveModifier = creatureHealthPoints > 0 ? '' : 'creature-wrapper__dead';
     const classes = `creature-wrapper ${activeModifier} ${aliveModifier}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
@@ -152,6 +152,11 @@ class CreatureWrapper extends Component {
 
     const showCreatureRemover = showExpanded && !playerSession && !active;
 
+    const healthPercentage = Math.ceil((creatureHealthPoints / maxHealthPoints) * 100);
+    const leftColourPercentage = healthPercentage;
+    const rightColourPercentage = healthPercentage >= 85 ? 100 : healthPercentage + 15;
+    const healthBarStyle = { backgroundImage: `linear-gradient(to right, #EBE1AD ${leftColourPercentage}%, lightgrey ${rightColourPercentage}%)` };
+
     return (
       <>
         <section
@@ -160,6 +165,7 @@ class CreatureWrapper extends Component {
           aria-label={creatureAriaLabel}
           onFocus={() => this.focusHandler(false)}
           data-creature-id={id}
+          style={creatureHealthPoints > 0 ? healthBarStyle : undefined}
         >
           <div className={getColumnClasses(showExpanded, multiColumn)}>
             <CreatureHeader
