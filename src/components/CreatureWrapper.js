@@ -6,6 +6,7 @@ import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from './CreatureRemover';
 import { getAvailableConditions } from '../state/ConditionsManager';
+import { getHealthBar } from '../display/displayLogic';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
@@ -118,7 +119,6 @@ class CreatureWrapper extends Component {
       name,
       id,
       locked,
-      alive,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
       notes,
@@ -131,8 +131,7 @@ class CreatureWrapper extends Component {
     const { expanded } = this.state;
 
     const activeModifier = active ? 'creature-wrapper__active ' : '';
-    const aliveModifier = creatureHealthPoints > 0 ? '' : 'creature-wrapper__dead';
-    const classes = `creature-wrapper ${activeModifier} ${aliveModifier}`;
+    const classes = `creature-wrapper ${activeModifier}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const { removeCreature, removeNoteFromCreature } = creatureManagement;
@@ -152,10 +151,7 @@ class CreatureWrapper extends Component {
 
     const showCreatureRemover = showExpanded && !playerSession && !active;
 
-    const healthPercentage = Math.ceil((creatureHealthPoints / maxHealthPoints) * 100);
-    const leftColourPercentage = healthPercentage;
-    const rightColourPercentage = healthPercentage >= 85 ? 100 : healthPercentage + 15;
-    const healthBarStyle = { backgroundImage: `linear-gradient(to right, #EBE1AD ${leftColourPercentage}%, lightgrey ${rightColourPercentage}%)` };
+    const [leftPercentage, rightPercentage] = getHealthBar(creatureHealthPoints, maxHealthPoints);
 
     return (
       <>
@@ -165,7 +161,7 @@ class CreatureWrapper extends Component {
           aria-label={creatureAriaLabel}
           onFocus={() => this.focusHandler(false)}
           data-creature-id={id}
-          style={creatureHealthPoints > 0 ? healthBarStyle : undefined}
+          style={{ backgroundImage: `linear-gradient(to right, #EBE1AD ${leftPercentage}%, lightgrey ${rightPercentage}%)` }}
         >
           <div className={getColumnClasses(showExpanded, multiColumn)}>
             <CreatureHeader

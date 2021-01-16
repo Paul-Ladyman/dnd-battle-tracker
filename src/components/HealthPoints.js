@@ -1,5 +1,5 @@
 import React from 'react';
-import getDamageLevel from '../display/displayLogic';
+import { getDamageLevel } from '../display/displayLogic';
 
 function HealthPoints({
   short,
@@ -8,10 +8,10 @@ function HealthPoints({
   className,
   playerSession,
 }) {
-  const damageLevel = getDamageLevel(hp, maxHp);
-  const classes = `health-points--${damageLevel.level} ${className}`;
+  const { level, display } = getDamageLevel(hp, maxHp);
+  const classes = `health-points--${level} ${className}`;
   const hpLabel = playerSession ? 'Hit Points' : 'Current Hit Points';
-  const hpDisplay = playerSession ? damageLevel.display : hp;
+  const hpDisplay = playerSession ? display : hp;
 
   return (
     <>
