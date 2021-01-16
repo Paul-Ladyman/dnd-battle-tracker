@@ -1,12 +1,12 @@
 export default function getDamageLevel(hp, maxHp) {
-  const criticalLevel = maxHp / 4;
+  const criticalLevel = maxHp / 2;
 
   if (hp === 0) {
-    return { level: 'critical', display: '0' };
+    return { level: 'injured', display: '0' };
   }
 
-  if (hp <= criticalLevel) {
-    return { level: 'critical', display: 'Critical' };
+  if (hp < criticalLevel) {
+    return { level: 'injured', display: 'Injured' };
   }
 
   if (hp < maxHp) {

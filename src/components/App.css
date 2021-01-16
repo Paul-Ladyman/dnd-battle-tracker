@@ -698,7 +698,7 @@ input[type="number"] {
   color: black;
 }
 
-.health-points--critical {
+.health-points--injured {
   color: #822000;
 }
 
