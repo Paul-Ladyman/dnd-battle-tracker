@@ -1,23 +1,5 @@
 import React from 'react';
-
-function getDamageLevel(hp, maxHp) {
-  const maxHpFloat = parseFloat(maxHp);
-  const criticalLevel = Math.ceil(maxHpFloat / 4.0);
-
-  if (hp === 0) {
-    return { level: 'critical', display: '0' };
-  }
-
-  if (hp < maxHp && hp > criticalLevel) {
-    return { level: 'damaged', display: 'Damaged' };
-  }
-
-  if (hp <= criticalLevel) {
-    return { level: 'critical', display: 'Critical' };
-  }
-
-  return { level: 'fine', display: 'Fine' };
-}
+import getDamageLevel from '../display/displayLogic';
 
 function HealthPoints({
   short,
