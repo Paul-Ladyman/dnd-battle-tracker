@@ -37,9 +37,15 @@ describe('getDamageLevel', () => {
     expect(damageLevel).toEqual(expectedDamageLevel);
   });
 
-  it('returns injured if the creature has 1 health left', () => {
-    const damageLevel = getDamageLevel(1, 8);
+  it('returns injured if the creature is at quarter health', () => {
+    const damageLevel = getDamageLevel(2, 8);
     const expectedDamageLevel = { level: 'injured', display: 'Injured' };
+    expect(damageLevel).toEqual(expectedDamageLevel);
+  });
+
+  it('returns injured and displays badly injured if the creature is below quarter health', () => {
+    const damageLevel = getDamageLevel(1, 8);
+    const expectedDamageLevel = { level: 'injured', display: 'Badly injured' };
     expect(damageLevel).toEqual(expectedDamageLevel);
   });
 
@@ -57,13 +63,13 @@ describe('getDamageLevel', () => {
 
   it('returns if the creature has negative max health', () => {
     const damageLevel = getDamageLevel(-1, -1);
-    const expectedDamageLevel = { level: 'injured', display: 'Injured' };
+    const expectedDamageLevel = { level: 'injured', display: 'Badly injured' };
     expect(damageLevel).toEqual(expectedDamageLevel);
   });
 
-  it('returns injured if the creature has negative health', () => {
+  it('returns injured and displays Badly injured if the creature has negative health', () => {
     const damageLevel = getDamageLevel(-1, 8);
-    const expectedDamageLevel = { level: 'injured', display: 'Injured' };
+    const expectedDamageLevel = { level: 'injured', display: 'Badly injured' };
     expect(damageLevel).toEqual(expectedDamageLevel);
   });
 });
