@@ -54,7 +54,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 ## Credits
 
 * All icons taken from [game-icons.net](https://game-icons.net/) under the terms of the [Creative Commons 3.0 BY license](https://creativecommons.org/licenses/by/3.0/). See below for individual credits.
-* Fonts provided by [Google Fonts](https://fonts.google.com/). See below for individual credits.
+* Fonts provided by [Google Fonts](https://fonts.google.com/) under the terms of the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See below for individual credits.
 * [Critical Role](https://www.youtube.com/channel/UCpXBGqwsBkpvcYjsJBQ7LEQ) for the inspiration.
 * This application is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC.
 
