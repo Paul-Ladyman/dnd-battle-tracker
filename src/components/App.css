@@ -377,7 +377,8 @@ input[type="number"] {
 } 
 
 .create-creature-form--item__tall {
-  margin-top: -22px;
+  margin-top: -18px;
+  line-height: 20px;
 }
 
 .create-creature-form--submit {
