@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v2.8.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v2.8.1/dnd-battle-tracker.html)
+**Latest release (v2.9.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v2.9.0/dnd-battle-tracker.html)
 
 ## Motivation
 
@@ -54,6 +54,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 ## Credits
 
 * All icons taken from [game-icons.net](https://game-icons.net/) under the terms of the [Creative Commons 3.0 BY license](https://creativecommons.org/licenses/by/3.0/). See below for individual credits.
+* Fonts provided by [Google Fonts](https://fonts.google.com/). See below for individual credits.
 * [Critical Role](https://www.youtube.com/channel/UCpXBGqwsBkpvcYjsJBQ7LEQ) for the inspiration.
 * This application is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC.
 
@@ -78,6 +79,11 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Crossed swords](https://game-icons.net/1x1/lorc/crossed-swords.html)
   * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
   * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
+
+### Fonts
+
+* [Open Sans](https://fonts.google.com/specimen/Open+Sans) font by Steve Matteson
+* [IM Fell Great Primer SC](https://fonts.google.com/specimen/IM+Fell+Great+Primer+SC) font by Igino Marini
 
 ## Development
 
