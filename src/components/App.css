@@ -18,6 +18,11 @@ a {
   color: black;
 }
 
+h1 {
+  font-family: "IM Fell Great Primer SC";
+  font-variant: small-caps;
+}
+
 h1 a {
   color: #822000;
   text-decoration: none;
@@ -372,7 +377,7 @@ input[type="number"] {
 } 
 
 .create-creature-form--item__tall {
-  margin-top: -18px;
+  margin-top: -22px;
 }
 
 .create-creature-form--submit {
@@ -508,6 +513,8 @@ input[type="number"] {
 }
 
 .creature-name {
+  font-family: "IM Fell Great Primer SC";
+  font-variant: small-caps;
   font-weight: bold;
   font-size: 28px;
   color: #822000;
