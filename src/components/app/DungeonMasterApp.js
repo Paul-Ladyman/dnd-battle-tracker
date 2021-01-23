@@ -19,6 +19,7 @@ import {
 import {
   removeCreature,
   addCreature,
+  getCreatureList,
 } from '../../state/CreatureListManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import {
@@ -105,6 +106,7 @@ function DungeonMasterApp({
   const errors = state.errors && state.errors.length > 0;
 
   const [activeCreatureName, activeCreatureIndex] = getInitiative(state);
+  const creatures = getCreatureList(state);
 
   return (
     <>
@@ -141,7 +143,7 @@ function DungeonMasterApp({
             createCreatureErrors={state.createCreatureErrors}
           />
           <Creatures
-            creatures={state.creatures}
+            creatures={creatures}
             activeCreature={activeCreatureIndex}
             focusedCreature={state.focusedCreature}
             setFocus={updateBattle(setFocus, false)}

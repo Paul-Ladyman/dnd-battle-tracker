@@ -112,3 +112,11 @@ export function addCreature(state, creature) {
     errors: [],
   };
 }
+
+export function getCreatureList(state, playerSession = false) {
+  if (!playerSession) {
+    return state.creatures;
+  }
+
+  return state.creatures.filter(({ shared }) => shared);
+}

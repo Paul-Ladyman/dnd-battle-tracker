@@ -1,5 +1,5 @@
 import { createCreature, validateCreature } from './CreatureManager';
-import { removeCreature, addCreature } from './CreatureListManager';
+import { removeCreature, addCreature, getCreatureList } from './CreatureListManager';
 
 jest.mock('./CreatureManager');
 
@@ -17,6 +17,8 @@ const defaultState = {
       alive: true,
       conditions: [],
       notes: [],
+      locked: true,
+      shared: true,
     },
     {
       name: 'Goblin #1',
@@ -28,6 +30,7 @@ const defaultState = {
       conditions: [],
       notes: [],
       locked: true,
+      shared: false,
     },
     {
       name: 'Goblin #2',
@@ -39,6 +42,7 @@ const defaultState = {
       conditions: [],
       notes: [],
       locked: true,
+      shared: true,
     },
   ],
   creatureIdCount: 3,
@@ -497,5 +501,19 @@ describe('addCreature', () => {
     const result = addCreature(state, creature);
     expect(result.createCreatureErrors).toEqual(defaultState.createCreatureErrors);
     expect(result.errors).toEqual(defaultState.errors);
+  });
+});
+
+describe('getCreatureList', () => {
+  it('returns the creature list', () => {
+    expect(getCreatureList(defaultState)).toEqual(defaultState.creatures);
+  });
+
+  it('returns only shared creatures for a player session', () => {
+    const expectedCreatures = [
+      defaultState.creatures[0],
+      defaultState.creatures[2],
+    ];
+    expect(getCreatureList(defaultState, true)).toEqual(expectedCreatures);
   });
 });
