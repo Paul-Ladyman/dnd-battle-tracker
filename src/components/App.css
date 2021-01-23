@@ -492,6 +492,12 @@ input[type="number"] {
   }
 }
 
+@media only screen and (max-width: 280px) {
+  .creature-wrapper {
+    padding: 10px 0;
+  }
+}
+
 .creature-header {
   margin-top: 0;
   margin-bottom: 0;

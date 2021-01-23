@@ -2,6 +2,7 @@ import React from 'react';
 import CreatureExpander from '../buttons/CreatureExpander';
 import CreatureLocker from '../buttons/CreatureLocker';
 import MonsterSearcher from '../buttons/MonsterSearcher';
+import CreatureSharer from '../buttons/CreatureSharer';
 
 function getName(expanded, active, name, multiColumn) {
   const maxLength = 22;
@@ -42,13 +43,23 @@ export default function CreatureHeader({
       focused={focused}
     />
   );
+
   const creatureLocker = !playerSession && (
-  <CreatureLocker
-    locked={locked}
-    name={name}
-    lockHandler={lockHandler}
-  />
+    <CreatureLocker
+      locked={locked}
+      name={name}
+      lockHandler={lockHandler}
+    />
   );
+
+  const creatureSharer = !playerSession && (
+    <CreatureSharer
+      shared={locked}
+      name={name}
+      shareHandler={lockHandler}
+    />
+  );
+
   const monsterSearcher = !playerSession && (
     <MonsterSearcher
       search={name}
@@ -60,6 +71,7 @@ export default function CreatureHeader({
       <h2 className="creature-header">{creatureExpander}</h2>
       {monsterSearcher}
       {creatureLocker}
+      {creatureSharer}
     </div>
   );
 }
