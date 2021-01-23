@@ -8,6 +8,15 @@ function sortCreatures(creatures) {
   return creatures.sort((creatureA, creatureB) => creatureB.initiative - creatureA.initiative);
 }
 
+export function sortByInitiative(creatures, activeCreature, round) {
+  const initialActiveCreature = creatures[activeCreature];
+  const sortedCreatures = sortCreatures(creatures);
+  const currentlyActiveCreature = round > 0
+    ? findCreatureIndex(sortedCreatures, initialActiveCreature)
+    : activeCreature;
+  return [sortedCreatures, currentlyActiveCreature];
+}
+
 export function nextInitiative(state) {
   if (state.creatures.length === 0) {
     return state;
@@ -23,12 +32,10 @@ export function nextInitiative(state) {
     return { ...state, ariaAnnouncements, errors };
   }
 
-  const initialActiveCreature = state.creatures[state.activeCreature];
-  const sortedCreatures = sortCreatures(state.creatures);
-
-  const currentlyActiveCreature = state.round > 0
-    ? findCreatureIndex(sortedCreatures, initialActiveCreature)
-    : state.activeCreature;
+  const [
+    sortedCreatures,
+    currentlyActiveCreature,
+  ] = sortByInitiative(state.creatures, state.activeCreature, state.round);
 
   let activeCreature = 0;
   let round = 1;

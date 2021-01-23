@@ -1,12 +1,9 @@
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
+import { sortByInitiative } from './InitiativeManager';
 import { addError } from './AppManager';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({ id }) => creature.id === id);
-}
-
-function sortCreatures(creatures) {
-  return creatures.sort((creatureA, creatureB) => creatureB.initiative - creatureA.initiative);
 }
 
 export const newBattleState = {
@@ -147,12 +144,11 @@ export function addCreature(state, creature) {
     creatureStats,
     creatureMultiplier,
   );
-  const creatures = sortCreatures([...state.creatures, ...newCreatures]);
-  const currentlyActiveCreature = state.creatures[state.activeCreature];
 
-  const activeCreature = state.round > 0
-    ? findCreatureIndex(creatures, currentlyActiveCreature)
-    : state.activeCreature;
+  const [
+    creatures,
+    activeCreature,
+  ] = sortByInitiative([...state.creatures, ...newCreatures], state.activeCreature, state.round);
 
   const creatureCount = state.creatureCount + creatureMultiplier;
   const creatureIdCount = state.creatureIdCount + creatureMultiplier;

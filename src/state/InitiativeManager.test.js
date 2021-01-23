@@ -1,6 +1,7 @@
 import {
   nextInitiative,
   getInitiative,
+  sortByInitiative,
 } from './InitiativeManager';
 
 const defaultState = {
@@ -354,5 +355,58 @@ describe('getInitiative', () => {
       round: 0,
     };
     expect(getInitiative(state)).toEqual('');
+  });
+});
+
+describe('sortByInitiative', () => {
+  it('sorts out of order creatures by their initiative, maintaining the active creature', () => {
+    const creatures = [
+      {
+        ...defaultState.creatures[0],
+        initiative: 1,
+      },
+      {
+        ...defaultState.creatures[1],
+        initiative: 3,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiative: 2,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[1],
+      creatures[2],
+      creatures[0],
+    ];
+
+    expect(sortByInitiative(creatures, 1, 1)).toEqual([expectedCreatures, 0]);
+  });
+
+  it('does not change the active creature after sorting if combat as not started yet', () => {
+    const creatures = [
+      {
+        ...defaultState.creatures[0],
+        initiative: 1,
+      },
+      {
+        ...defaultState.creatures[1],
+        initiative: 3,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiative: 2,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[1],
+      creatures[2],
+      creatures[0],
+    ];
+
+    const result = sortByInitiative(expectedCreatures, undefined, 0);
+    expect(result).toEqual([expectedCreatures, undefined]);
   });
 });
