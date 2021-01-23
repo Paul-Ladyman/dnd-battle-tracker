@@ -69,10 +69,32 @@ export function nextInitiative(state) {
   };
 }
 
-export function getInitiative(state) {
+function findPreviousSharedCreature(creatures, startingIndex, currentIndex = startingIndex) {
+  const { name, shared } = creatures[currentIndex];
+
+  if (shared) {
+    return [name, currentIndex];
+  }
+
+  const lastIndex = creatures.length - 1;
+  const previousIndex = currentIndex - 1;
+  const previousCreatureIndex = previousIndex < 0 ? lastIndex : previousIndex;
+
+  if (previousCreatureIndex === startingIndex) {
+    return ['', undefined];
+  }
+
+  return findPreviousSharedCreature(creatures, startingIndex, previousCreatureIndex);
+}
+
+export function getInitiative(state, playerSession) {
   const { creatures, round, activeCreature } = state;
   if (creatures.length === 0 || round === 0) {
     return ['', undefined];
+  }
+
+  if (playerSession) {
+    return findPreviousSharedCreature(creatures, activeCreature);
   }
 
   const { name } = creatures[activeCreature];

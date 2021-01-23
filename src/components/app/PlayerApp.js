@@ -30,7 +30,7 @@ function PlayerApp({
 
   const secondsElapsed = getSecondsElapsed(battleData);
   const {
-    creatureCount, round, creatures, activeCreature, focusedCreature,
+    creatureCount, round, creatures, focusedCreature,
   } = battleData;
 
   useEffect(() => {
@@ -41,10 +41,12 @@ function PlayerApp({
 
   const loading = !getData && !syncData;
 
+  const [activeCreatureName, activeCreatureIndex] = getInitiative(battleData, true);
+
   return (
     <>
       <BattleToolbar
-        initiative={getInitiative(battleData)}
+        initiative={activeCreatureName}
         round={round}
         secondsElapsed={secondsElapsed}
         creatures={creatureCount}
@@ -65,7 +67,7 @@ function PlayerApp({
           />
           <Creatures
             creatures={creatures}
-            activeCreature={activeCreature}
+            activeCreature={activeCreatureIndex}
             focusedCreature={focusedCreature}
             round={round}
             secondsElapsed={secondsElapsed}
