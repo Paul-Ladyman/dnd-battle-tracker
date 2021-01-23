@@ -9,8 +9,6 @@ import {
   nextFocus,
   prevFocus,
   setFocus,
-  removeCreature,
-  addCreature,
   resetBattle,
   toggleSync,
 } from '../../state/BattleManager';
@@ -18,6 +16,10 @@ import {
   nextInitiative,
   getInitiative,
 } from '../../state/InitiativeManager';
+import {
+  removeCreature,
+  addCreature,
+} from '../../state/CreatureListManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import {
   killCreature,
