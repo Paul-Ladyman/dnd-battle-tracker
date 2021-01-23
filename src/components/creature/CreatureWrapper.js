@@ -4,9 +4,9 @@ import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
-import CreatureRemover from './CreatureRemover';
-import { getAvailableConditions } from '../state/ConditionsManager';
-import { getHealthBar } from '../display/displayLogic';
+import CreatureRemover from '../buttons/CreatureRemover';
+import { getAvailableConditions } from '../../state/ConditionsManager';
+import { getHealthBar } from '../../display/displayLogic';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;

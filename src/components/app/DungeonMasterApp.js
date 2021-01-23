@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
-import CreateCreatureForm from '../CreateCreatureForm';
-import Creatures from '../Creatures';
-import BattleToolbar from '../BattleToolbar';
-import Title from '../Title';
+import CreateCreatureForm from '../page/CreateCreatureForm';
+import Creatures from '../page/Creatures';
+import BattleToolbar from '../page/BattleToolbar';
+import Title from '../page/Title';
 import {
   nextInitiative,
   getInitiative,
@@ -35,8 +35,8 @@ import {
   dismissErrors,
   updateErrors,
 } from '../../state/AppManager';
-import Footer from '../Footer';
-import Errors from '../Errors';
+import Footer from '../page/Footer';
+import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 
 function DungeonMasterApp({

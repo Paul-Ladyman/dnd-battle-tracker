@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
-import CreatureWrapper from './CreatureWrapper';
-import { hotkeys } from '../hotkeys/hotkeys';
+import CreatureWrapper from '../creature/CreatureWrapper';
+import { hotkeys } from '../../hotkeys/hotkeys';
 
 function Creatures({
   creatures,

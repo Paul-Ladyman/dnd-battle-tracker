@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import isHotkey from 'is-hotkey';
 import Timer from './Timer';
-import StartBattleIcon from './icons/StartBattleIcon';
-import NextInitiativeIcon from './icons/NextInitiativeIcon';
-import OptionsMenuClosedIcon from './icons/OptionsMenuClosedIcon';
-import OptionsMenuOpenIcon from './icons/OptionsMenuOpenIcon';
-import SaveIcon from './icons/SaveIcon';
-import LoadIcon from './icons/LoadIcon';
-import ResetIcon from './icons/ResetIcon';
-import ShareEnabledIcon from './icons/ShareEnabledIcon';
-import ShareDisabledIcon from './icons/ShareDisabledIcon';
-import { hotkeys } from '../hotkeys/hotkeys';
-import { isSaveLoadSupported } from '../state/AppManager';
+import StartBattleIcon from '../icons/StartBattleIcon';
+import NextInitiativeIcon from '../icons/NextInitiativeIcon';
+import OptionsMenuClosedIcon from '../icons/OptionsMenuClosedIcon';
+import OptionsMenuOpenIcon from '../icons/OptionsMenuOpenIcon';
+import SaveIcon from '../icons/SaveIcon';
+import LoadIcon from '../icons/LoadIcon';
+import ResetIcon from '../icons/ResetIcon';
+import ShareEnabledIcon from '../icons/ShareEnabledIcon';
+import ShareDisabledIcon from '../icons/ShareDisabledIcon';
+import { hotkeys } from '../../hotkeys/hotkeys';
+import { isSaveLoadSupported } from '../../state/AppManager';
 
 function BattleToolbar({
   initiative,

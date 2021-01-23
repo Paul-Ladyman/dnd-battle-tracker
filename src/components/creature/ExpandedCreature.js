@@ -1,6 +1,6 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
-import { isCreatureStable } from '../state/CreatureManager';
+import { isCreatureStable } from '../../state/CreatureManager';
 
 export default function ExpandedCreature({
   creature,

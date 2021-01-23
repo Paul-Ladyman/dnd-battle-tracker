@@ -1,10 +1,10 @@
 import React from 'react';
-import Timer from './Timer';
-import ExternalLink from './ExternalLink';
-import RemoveIcon from './icons/RemoveIcon';
+import Timer from '../page/Timer';
+import RemoveIcon from '../icons/RemoveIcon';
 
-export default function Condition({
-  condition,
+export default function Note({
+  note,
+  number,
   round,
   secondsElapsed,
   playerSession,
@@ -14,12 +14,19 @@ export default function Condition({
   return (
     <div className="creature-note-list--item">
       <div className="creature-note-list--note">
-        <b><ExternalLink url={condition.url}>{condition.text}</ExternalLink></b>
+        <span>
+          <b>
+            {number}
+            .
+          </b>
+          {' '}
+          {`${note.text[0].toUpperCase()}${note.text.substring(1)}`}
+        </span>
         .
         <Timer
-          startRound={condition.appliedAtRound}
+          startRound={note.appliedAtRound}
           endRound={round}
-          startTime={condition.appliedAtSeconds}
+          startTime={note.appliedAtSeconds}
           endTime={secondsElapsed}
           className="creature-note-list--timer"
         />
@@ -28,7 +35,7 @@ export default function Condition({
       <button
         className="creature-note-list--button"
         title="Remove note"
-        onClick={() => dismissHandler(creatureId, condition)}
+        onClick={() => dismissHandler(creatureId, note)}
         type="button"
       >
         <RemoveIcon />

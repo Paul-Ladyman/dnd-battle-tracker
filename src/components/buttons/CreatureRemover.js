@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import RemoveCreatureIcon from './icons/RemoveCreatureIcon';
-import ConfirmRemoveCreatureIcon from './icons/ConfirmRemoveCreatureIcon';
+import RemoveCreatureIcon from '../icons/RemoveCreatureIcon';
+import ConfirmRemoveCreatureIcon from '../icons/ConfirmRemoveCreatureIcon';
 
 export default function CreatureRemover({
   creature,

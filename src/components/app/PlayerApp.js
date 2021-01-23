@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import BattleToolbar from '../BattleToolbar';
-import Creatures from '../Creatures';
-import Footer from '../Footer';
-import Errors from '../Errors';
-import Title from '../Title';
+import BattleToolbar from '../page/BattleToolbar';
+import Creatures from '../page/Creatures';
+import Footer from '../page/Footer';
+import Errors from '../error/Errors';
+import Title from '../page/Title';
 import {
   newBattleState,
   getInitiative,

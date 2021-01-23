@@ -1,7 +1,7 @@
 import React from 'react';
 import ExternalLink from './ExternalLink';
-import packageInfo from '../../package.json';
-import { hotkeys, hotkeyDescriptions } from '../hotkeys/hotkeys';
+import packageInfo from '../../../package.json';
+import { hotkeys, hotkeyDescriptions } from '../../hotkeys/hotkeys';
 
 function Footer({ playerSession, error }) {
   const { version } = packageInfo;

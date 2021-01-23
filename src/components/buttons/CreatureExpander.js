@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import ExpandIcon from './icons/ExpandIcon';
-import CollapseIcon from './icons/CollapseIcon';
-import ActiveCreatureIcon from './icons/ActiveCreatureIcon';
+import ExpandIcon from '../icons/ExpandIcon';
+import CollapseIcon from '../icons/CollapseIcon';
+import ActiveCreatureIcon from '../icons/ActiveCreatureIcon';
 
 function CreatureExpander({
   classes, active, expanded, name, expandHandler, focused,

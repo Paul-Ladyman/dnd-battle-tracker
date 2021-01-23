@@ -1,7 +1,7 @@
 import React from 'react';
-import CreatureExpander from './CreatureExpander';
-import CreatureLocker from './CreatureLocker';
-import MonsterSearcher from './MonsterSearcher';
+import CreatureExpander from '../buttons/CreatureExpander';
+import CreatureLocker from '../buttons/CreatureLocker';
+import MonsterSearcher from '../buttons/MonsterSearcher';
 
 function getName(expanded, active, name, multiColumn) {
   const maxLength = 22;
