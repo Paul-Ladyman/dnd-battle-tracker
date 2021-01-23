@@ -6,8 +6,6 @@ import Creatures from '../page/Creatures';
 import BattleToolbar from '../page/BattleToolbar';
 import Title from '../page/Title';
 import {
-  nextInitiative,
-  getInitiative,
   nextFocus,
   prevFocus,
   setFocus,
@@ -16,6 +14,10 @@ import {
   resetBattle,
   toggleSync,
 } from '../../state/BattleManager';
+import {
+  nextInitiative,
+  getInitiative,
+} from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import {
   killCreature,

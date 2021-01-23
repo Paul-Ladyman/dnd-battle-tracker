@@ -4,10 +4,8 @@ import Creatures from '../page/Creatures';
 import Footer from '../page/Footer';
 import Errors from '../error/Errors';
 import Title from '../page/Title';
-import {
-  newBattleState,
-  getInitiative,
-} from '../../state/BattleManager';
+import { newBattleState } from '../../state/BattleManager';
+import { getInitiative } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
 
 // TODO abstract into SyncManager
