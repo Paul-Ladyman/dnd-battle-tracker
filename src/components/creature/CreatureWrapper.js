@@ -119,6 +119,7 @@ class CreatureWrapper extends Component {
       name,
       id,
       locked,
+      shared,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
       notes,
@@ -134,7 +135,12 @@ class CreatureWrapper extends Component {
     const classes = `creature-wrapper ${activeModifier}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
-    const { removeCreature, removeNoteFromCreature } = creatureManagement;
+    const {
+      removeCreature,
+      removeNoteFromCreature,
+      toggleCreatureLock,
+      toggleCreatureShare,
+    } = creatureManagement;
 
     const healthPoints = (
       <HealthPoints
@@ -168,7 +174,9 @@ class CreatureWrapper extends Component {
               creature={creature}
               active={active}
               locked={locked}
-              lockHandler={() => creatureManagement.toggleCreatureLock(id)}
+              lockHandler={() => toggleCreatureLock(id)}
+              shared={shared}
+              shareHandler={() => toggleCreatureShare(id)}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && !alreadyFocused}

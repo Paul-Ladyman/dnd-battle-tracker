@@ -19,6 +19,8 @@ export default function CreatureHeader({
   playerSession,
   locked,
   lockHandler,
+  shared,
+  shareHandler,
   expanded,
   expandHandler,
   focused,
@@ -54,9 +56,9 @@ export default function CreatureHeader({
 
   const creatureSharer = !playerSession && (
     <CreatureSharer
-      shared={locked}
+      shared={shared}
       name={name}
-      shareHandler={lockHandler}
+      shareHandler={shareHandler}
     />
   );
 

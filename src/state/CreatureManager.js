@@ -103,6 +103,7 @@ export function createCreature(creatureId, {
     conditions: [],
     notes: [],
     locked: false,
+    shared: true,
   };
 }
 
@@ -203,6 +204,13 @@ export function toggleCreatureLock(state, creatureId) {
   const newState = creature.locked ? 'unlocked' : 'locked';
   const ariaAnnouncement = `${creature.name} is ${newState}`;
   return updateCreature(state, creatureId, { locked: !creature.locked }, ariaAnnouncement);
+}
+
+export function toggleCreatureShare(state, creatureId) {
+  const creature = findCreature(state.creatures, creatureId);
+  const newState = creature.shared ? 'not shared' : 'shared';
+  const ariaAnnouncement = `${creature.name} is ${newState}`;
+  return updateCreature(state, creatureId, { shared: !creature.shared }, ariaAnnouncement);
 }
 
 export function resetCreature(id, creature) {

@@ -27,6 +27,7 @@ import {
   addHealthToCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
+  toggleCreatureShare,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -94,6 +95,7 @@ function DungeonMasterApp({
     addNoteToCreature: updateBattle(addNoteToCreature),
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
     toggleCreatureLock: updateBattle(toggleCreatureLock, false),
+    toggleCreatureShare: updateBattle(toggleCreatureShare),
   };
 
   const errors = state.errors && state.errors.length > 0;
