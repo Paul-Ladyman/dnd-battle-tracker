@@ -102,10 +102,12 @@ function DungeonMasterApp({
 
   const errors = state.errors && state.errors.length > 0;
 
+  const [activeCreatureName, activeCreatureIndex] = getInitiative(state);
+
   return (
     <>
       <BattleToolbar
-        initiative={getInitiative(state)}
+        initiative={activeCreatureName}
         round={state.round}
         secondsElapsed={secondsElapsed}
         creatures={state.creatureCount}
@@ -138,7 +140,7 @@ function DungeonMasterApp({
           />
           <Creatures
             creatures={state.creatures}
-            activeCreature={state.activeCreature}
+            activeCreature={activeCreatureIndex}
             focusedCreature={state.focusedCreature}
             setFocus={updateBattle(setFocus, false)}
             round={state.round}

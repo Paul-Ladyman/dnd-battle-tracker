@@ -70,13 +70,12 @@ export function nextInitiative(state) {
 }
 
 export function getInitiative(state) {
-  if (state.creatures.length === 0) {
-    return '';
+  const { creatures, round, activeCreature } = state;
+  if (creatures.length === 0 || round === 0) {
+    return ['', undefined];
   }
 
-  if (state.round === 0) {
-    return '';
-  }
+  const { name } = creatures[activeCreature];
 
-  return state.creatures[state.activeCreature].name;
+  return [name, activeCreature];
 }

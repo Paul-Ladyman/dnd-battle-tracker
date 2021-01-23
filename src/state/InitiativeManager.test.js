@@ -337,24 +337,24 @@ describe('nextInitiative', () => {
 });
 
 describe('getInitiative', () => {
-  test('it gets the name of the currently active creature', () => {
-    expect(getInitiative(defaultState)).toEqual('Goblin #1');
+  test('it gets the name and position of the currently active creature', () => {
+    expect(getInitiative(defaultState)).toEqual(['Goblin #1', 1]);
   });
 
-  test('it returns an empty string if there are no creatures', () => {
+  test('it returns no name and position if there are no creatures', () => {
     const state = {
       ...defaultState,
       creatures: [],
     };
-    expect(getInitiative(state)).toEqual('');
+    expect(getInitiative(state)).toEqual(['', undefined]);
   });
 
-  test('it returns an empty string if the battle has not started', () => {
+  test('it returns no name and position if the battle has not started', () => {
     const state = {
       ...defaultState,
       round: 0,
     };
-    expect(getInitiative(state)).toEqual('');
+    expect(getInitiative(state)).toEqual(['', undefined]);
   });
 });
 
