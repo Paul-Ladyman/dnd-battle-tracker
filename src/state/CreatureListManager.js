@@ -113,6 +113,7 @@ export function addCreature(state, creature) {
   };
 }
 
+// TODO is this needed?
 export function getCreatureList(state, playerSession = false) {
   if (!playerSession) {
     return state.creatures;

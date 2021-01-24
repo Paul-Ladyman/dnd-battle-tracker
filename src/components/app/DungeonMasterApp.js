@@ -105,7 +105,7 @@ function DungeonMasterApp({
 
   const errors = state.errors && state.errors.length > 0;
 
-  const [activeCreatureName, activeCreatureIndex] = getInitiative(state);
+  const [activeCreatureName, activeCreatureId] = getInitiative(state);
   const creatures = getCreatureList(state);
 
   return (
@@ -144,7 +144,7 @@ function DungeonMasterApp({
           />
           <Creatures
             creatures={creatures}
-            activeCreature={activeCreatureIndex}
+            activeCreatureId={activeCreatureId}
             focusedCreature={state.focusedCreature}
             setFocus={updateBattle(setFocus, false)}
             round={state.round}

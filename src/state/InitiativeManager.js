@@ -70,10 +70,10 @@ export function nextInitiative(state) {
 }
 
 function findPreviousSharedCreature(creatures, startingIndex, currentIndex = startingIndex) {
-  const { name, shared } = creatures[currentIndex];
+  const { name, shared, id } = creatures[currentIndex];
 
   if (shared) {
-    return [name, currentIndex];
+    return [name, id];
   }
 
   const lastIndex = creatures.length - 1;
@@ -97,7 +97,7 @@ export function getInitiative(state, playerSession) {
     return findPreviousSharedCreature(creatures, activeCreature);
   }
 
-  const { name } = creatures[activeCreature];
+  const { name, id } = creatures[activeCreature];
 
-  return [name, activeCreature];
+  return [name, id];
 }

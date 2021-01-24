@@ -9,7 +9,7 @@ const defaultState = {
     {
       name: 'Wellby',
       initiative: 13,
-      id: 0,
+      id: 1,
       alive: true,
       conditions: [],
       notes: [],
@@ -21,7 +21,7 @@ const defaultState = {
       initiative: 12,
       healthPoints: 10,
       maxHealthPoints: 10,
-      id: 1,
+      id: 2,
       alive: true,
       conditions: [],
       notes: [],
@@ -33,7 +33,7 @@ const defaultState = {
       initiative: 12,
       healthPoints: 10,
       maxHealthPoints: 10,
-      id: 2,
+      id: 3,
       alive: true,
       conditions: [],
       notes: [],
@@ -341,15 +341,15 @@ describe('nextInitiative', () => {
 });
 
 describe('getInitiative', () => {
-  it('gets the name and position of the currently active creature for a DM session', () => {
-    expect(getInitiative(defaultState)).toEqual(['Goblin #1', 1]);
+  it('gets the name and id of the currently active creature for a DM session', () => {
+    expect(getInitiative(defaultState)).toEqual(['Goblin #1', 2]);
   });
 
-  it('gets the name and position of the currently active creature for a player session', () => {
-    expect(getInitiative(defaultState, true)).toEqual(['Goblin #1', 1]);
+  it('gets the name and id of the currently active creature for a player session', () => {
+    expect(getInitiative(defaultState, true)).toEqual(['Goblin #1', 2]);
   });
 
-  it('gets the name and position of the currently active creature if it is not shared for a DM session', () => {
+  it('gets the name and id of the currently active creature if it is not shared for a DM session', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -361,10 +361,10 @@ describe('getInitiative', () => {
         defaultState.creatures[2],
       ],
     };
-    expect(getInitiative(state, false)).toEqual(['Goblin #1', 1]);
+    expect(getInitiative(state, false)).toEqual(['Goblin #1', 2]);
   });
 
-  it('gets the name and position of the previously active creature if the current one is not shared for a player session', () => {
+  it('gets the name and id of the previously active creature if the current one is not shared for a player session', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -376,7 +376,7 @@ describe('getInitiative', () => {
         defaultState.creatures[2],
       ],
     };
-    expect(getInitiative(state, true)).toEqual(['Wellby', 0]);
+    expect(getInitiative(state, true)).toEqual(['Wellby', 1]);
   });
 
   it('reverses through the creatures if the active creature is not shared until it finds one that is for a player session', () => {
@@ -394,10 +394,10 @@ describe('getInitiative', () => {
         defaultState.creatures[2],
       ],
     };
-    expect(getInitiative(state, true)).toEqual(['Goblin #2', 2]);
+    expect(getInitiative(state, true)).toEqual(['Goblin #2', 3]);
   });
 
-  it('returns no name and position if there are no shared creatures for a player session', () => {
+  it('returns no name and id if there are no shared creatures for a player session', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -418,7 +418,7 @@ describe('getInitiative', () => {
     expect(getInitiative(state, true)).toEqual(['', undefined]);
   });
 
-  it('returns no name and position if there are no creatures', () => {
+  it('returns no name and id if there are no creatures', () => {
     const state = {
       ...defaultState,
       creatures: [],
@@ -426,7 +426,7 @@ describe('getInitiative', () => {
     expect(getInitiative(state)).toEqual(['', undefined]);
   });
 
-  it('returns no name and position if the battle has not started', () => {
+  it('returns no name and id if the battle has not started', () => {
     const state = {
       ...defaultState,
       round: 0,
