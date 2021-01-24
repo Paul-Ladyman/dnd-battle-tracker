@@ -80,35 +80,20 @@ export function nextInitiative(state) {
   };
 }
 
-function findPreviousSharedCreature(creatures, startingIndex, currentIndex = startingIndex) {
-  const { name, shared, id } = creatures[currentIndex];
-
-  if (shared) {
-    return [name, id];
-  }
-
-  const lastIndex = creatures.length - 1;
-  const previousIndex = currentIndex - 1;
-  const previousCreatureIndex = previousIndex < 0 ? lastIndex : previousIndex;
-
-  if (previousCreatureIndex === startingIndex) {
-    return ['', undefined];
-  }
-
-  return findPreviousSharedCreature(creatures, startingIndex, previousCreatureIndex);
-}
-
 export function getInitiative(state, playerSession) {
-  const { creatures, round, activeCreature } = state;
-  if (creatures.length === 0 || round === 0) {
-    return ['', undefined];
+  const {
+    creatures,
+    activeCreature,
+    sharedActiveCreature,
+  } = state;
+
+  const activeCreatureIndex = playerSession ? sharedActiveCreature : activeCreature;
+
+  if (activeCreatureIndex === null || activeCreatureIndex === undefined) {
+    return ['', null];
   }
 
-  if (playerSession) {
-    return findPreviousSharedCreature(creatures, activeCreature);
-  }
-
-  const { name, id } = creatures[activeCreature];
+  const { name, id } = creatures[activeCreatureIndex];
 
   return [name, id];
 }
