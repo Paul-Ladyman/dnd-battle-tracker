@@ -67,6 +67,7 @@ describe('newBattleState', () => {
       creatureIdCount: 0,
       creatureCount: 0,
       activeCreature: undefined,
+      sharedActiveCreature: null,
       focusedCreature: undefined,
       round: 0,
       ariaAnnouncements: [],

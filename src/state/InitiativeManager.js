@@ -38,16 +38,26 @@ export function nextInitiative(state) {
   ] = sortByInitiative(state.creatures, state.activeCreature, state.round);
 
   let activeCreature = 0;
+  let sharedActiveCreature = 0;
   let round = 1;
 
   if (state.round > 0) {
     activeCreature = currentlyActiveCreature + 1;
+    sharedActiveCreature = activeCreature;
     round = state.round;
 
     if (activeCreature === state.creatureCount) {
       activeCreature = 0;
+      sharedActiveCreature = 0;
       round += 1;
     }
+  }
+
+  const { sharedActiveCreature: previousSharedActiveCreature } = state;
+  const { shared: nextCreatureIsShared } = state.creatures[sharedActiveCreature];
+
+  if (!nextCreatureIsShared) {
+    sharedActiveCreature = previousSharedActiveCreature;
   }
 
   const { name, alive } = state.creatures[activeCreature];
@@ -63,6 +73,7 @@ export function nextInitiative(state) {
     creatures: sortedCreatures,
     round,
     activeCreature,
+    sharedActiveCreature,
     focusedCreature: activeCreature,
     ariaAnnouncements,
     errors: [],

@@ -3,67 +3,48 @@ import {
   getInitiative,
   sortByInitiative,
 } from './InitiativeManager';
+import defaultState from '../../test/fixtures/battle';
 
-const defaultState = {
-  creatures: [
-    {
-      name: 'Wellby',
-      initiative: 13,
-      id: 1,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: true,
-      shared: true,
-    },
-    {
-      name: 'Goblin #1',
-      initiative: 12,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 2,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: true,
-      shared: true,
-    },
-    {
-      name: 'Goblin #2',
-      initiative: 12,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 3,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: true,
-      shared: true,
-    },
-  ],
-  creatureIdCount: 3,
-  creatureCount: 3,
-  activeCreature: 1,
-  focusedCreature: 1,
-  round: 1,
-  ariaAnnouncements: [],
-  errors: [],
-  createCreatureErrors: {},
-  battleCreated: false,
-  shareEnabled: false,
-  battleId: '123',
+const droop = {
+  name: 'Droop',
+  initiative: 15,
+  healthPoints: 10,
+  maxHealthPoints: 10,
+  id: 3,
+  alive: true,
+  conditions: [],
+  notes: [],
+  shared: true,
 };
 
 describe('nextInitiative', () => {
-  test('it starts the first round with the first creature in the list', () => {
-    const state = {
-      ...defaultState,
-      round: 0,
-      activeCreature: undefined,
-      focusedCreature: undefined,
-    };
+  it('starts the first round with the first creature in the list', () => {
     const expected = {
       ...defaultState,
+      round: 1,
+      activeCreature: 0,
+      sharedActiveCreature: 0,
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Wellby\'s go'],
+    };
+    expect(nextInitiative(defaultState)).toEqual(expected);
+  });
+
+  it('does not advance the shared active creature on the first round if the first creature is not shared', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          shared: false,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+    };
+    const expected = {
+      ...state,
+
       round: 1,
       activeCreature: 0,
       focusedCreature: 0,
@@ -72,50 +53,30 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('it sorts creatures by their initiative', () => {
+  it('sorts creatures by their initiative', () => {
     const state = {
       ...defaultState,
       creatures: [
         ...defaultState.creatures,
-        {
-          name: 'Droop',
-          initiative: 15,
-          healthPoints: 10,
-          maxHealthPoints: 10,
-          id: 3,
-          alive: true,
-          conditions: [],
-          notes: [],
-        },
+        droop,
       ],
-      round: 0,
-      activeCreature: undefined,
-      focusedCreature: undefined,
     };
     const expected = {
       ...defaultState,
       creatures: [
-        {
-          name: 'Droop',
-          initiative: 15,
-          healthPoints: 10,
-          maxHealthPoints: 10,
-          id: 3,
-          alive: true,
-          conditions: [],
-          notes: [],
-        },
+        droop,
         ...defaultState.creatures,
       ],
       round: 1,
       activeCreature: 0,
+      sharedActiveCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Droop\'s go'],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('announces if the active creature is dead', () => {
+  it('announces if the active creature is dead', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -126,25 +87,24 @@ describe('nextInitiative', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      round: 0,
-      activeCreature: undefined,
-      focusedCreature: undefined,
     };
     const expected = {
       ...state,
       round: 1,
       activeCreature: 0,
+      sharedActiveCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go. Wellby is dead/unconscious'],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('it advances the active creature by 1', () => {
+  it('advances the active creature by 1', () => {
     const state = {
       ...defaultState,
       round: 1,
       activeCreature: 0,
+      sharedActiveCreature: 0,
       focusedCreature: 0,
     };
 
@@ -152,6 +112,7 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 1,
+      sharedActiveCreature: 1,
       focusedCreature: 1,
       ariaAnnouncements: ['its Goblin #1\'s go'],
     };
@@ -159,44 +120,57 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('it advances the active creature by 1 after sorting creatures', () => {
+  it('does not advance the shared active creature if the next creature is not shared', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          shared: false,
+        },
+        defaultState.creatures[2],
+      ],
+      round: 1,
+      activeCreature: 0,
+      sharedActiveCreature: 0,
+      focusedCreature: 0,
+    };
+
+    const expected = {
+      ...state,
+      round: 1,
+      activeCreature: 1,
+      sharedActiveCreature: 0,
+      focusedCreature: 1,
+      ariaAnnouncements: ['its Goblin #1\'s go'],
+    };
+
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  it('advances the active creature by 1 after sorting creatures', () => {
     const state = {
       ...defaultState,
       creatures: [
         ...defaultState.creatures,
-        {
-          name: 'Droop',
-          initiative: 15,
-          healthPoints: 10,
-          maxHealthPoints: 10,
-          id: 3,
-          alive: true,
-          conditions: [],
-          notes: [],
-        },
+        droop,
       ],
       round: 1,
       activeCreature: 0,
+      sharedActiveCreature: 0,
       focusedCreature: 0,
     };
 
     const expected = {
       ...defaultState,
       creatures: [
-        {
-          name: 'Droop',
-          initiative: 15,
-          healthPoints: 10,
-          maxHealthPoints: 10,
-          id: 3,
-          alive: true,
-          conditions: [],
-          notes: [],
-        },
+        droop,
         ...defaultState.creatures,
       ],
       round: 1,
       activeCreature: 2,
+      sharedActiveCreature: 2,
       focusedCreature: 2,
       ariaAnnouncements: ['its Goblin #1\'s go'],
     };
@@ -204,11 +178,12 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('it resets the focused creature if it has been changed', () => {
+  it('resets the focused creature if it has been changed', () => {
     const state = {
       ...defaultState,
       round: 1,
       activeCreature: 0,
+      sharedActiveCreature: 0,
       focusedCreature: 2,
     };
 
@@ -216,6 +191,7 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 1,
+      sharedActiveCreature: 1,
       focusedCreature: 1,
       ariaAnnouncements: ['its Goblin #1\'s go'],
     };
@@ -223,11 +199,12 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  test('it starts at the top of the next round after all creatures have had their go', () => {
+  it('starts at the top of the next round after all creatures have had their turn', () => {
     const state = {
       ...defaultState,
       round: 1,
       activeCreature: 2,
+      sharedActiveCreature: 2,
       focusedCreature: 2,
     };
 
@@ -235,6 +212,36 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 2,
       activeCreature: 0,
+      sharedActiveCreature: 0,
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Wellby\'s go'],
+    };
+
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  it('does not restart the shared active creature if the first creature is not shared', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          shared: false,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      round: 1,
+      activeCreature: 2,
+      sharedActiveCreature: 2,
+      focusedCreature: 2,
+    };
+
+    const expected = {
+      ...state,
+      round: 2,
+      activeCreature: 0,
+      sharedActiveCreature: 2,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go'],
     };
@@ -267,9 +274,6 @@ describe('nextInitiative', () => {
           notes: [],
         },
       ],
-      round: 0,
-      activeCreature: undefined,
-      focusedCreature: undefined,
     };
     const expected = {
       ...state,
@@ -295,9 +299,6 @@ describe('nextInitiative', () => {
         },
       ],
       errors: ['some error'],
-      round: 0,
-      activeCreature: undefined,
-      focusedCreature: undefined,
     };
     const expected = {
       ...state,
@@ -324,14 +325,12 @@ describe('nextInitiative', () => {
         },
       ],
       errors: ['some error'],
-      round: 0,
-      activeCreature: undefined,
-      focusedCreature: undefined,
     };
     const expected = {
       ...state,
       round: 1,
       activeCreature: 0,
+      sharedActiveCreature: 0,
       focusedCreature: 0,
       errors: [],
       ariaAnnouncements: ['its Wellby\'s go'],
@@ -342,11 +341,21 @@ describe('nextInitiative', () => {
 
 describe('getInitiative', () => {
   it('gets the name and id of the currently active creature for a DM session', () => {
-    expect(getInitiative(defaultState)).toEqual(['Goblin #1', 2]);
+    const state = {
+      ...defaultState,
+      activeCreature: 1,
+      round: 1,
+    };
+    expect(getInitiative(state)).toEqual(['Goblin #1', 2]);
   });
 
   it('gets the name and id of the currently active creature for a player session', () => {
-    expect(getInitiative(defaultState, true)).toEqual(['Goblin #1', 2]);
+    const state = {
+      ...defaultState,
+      activeCreature: 1,
+      round: 1,
+    };
+    expect(getInitiative(state, true)).toEqual(['Goblin #1', 2]);
   });
 
   it('gets the name and id of the currently active creature if it is not shared for a DM session', () => {
@@ -360,6 +369,8 @@ describe('getInitiative', () => {
         },
         defaultState.creatures[2],
       ],
+      activeCreature: 1,
+      round: 1,
     };
     expect(getInitiative(state, false)).toEqual(['Goblin #1', 2]);
   });
@@ -375,6 +386,8 @@ describe('getInitiative', () => {
         },
         defaultState.creatures[2],
       ],
+      activeCreature: 1,
+      round: 1,
     };
     expect(getInitiative(state, true)).toEqual(['Wellby', 1]);
   });
@@ -393,6 +406,8 @@ describe('getInitiative', () => {
         },
         defaultState.creatures[2],
       ],
+      activeCreature: 1,
+      round: 1,
     };
     expect(getInitiative(state, true)).toEqual(['Goblin #2', 3]);
   });
