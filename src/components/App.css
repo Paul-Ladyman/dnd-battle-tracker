@@ -13,6 +13,12 @@ button, .button {
   box-shadow: 0 0 5px #979AA4;
 }
 
+.button__disabled {
+  background-color: transparent;
+  cursor: auto;
+  border: 2px dashed #822000;
+}
+
 a {
   text-decoration-color: #822000;
   color: black;
@@ -188,12 +194,6 @@ input[type="number"] {
 
 .battle-toolbar--button__option {
   margin-top: 25px;
-}
-
-.battle-toolbar--button__disabled {
-  background-color: transparent;
-  cursor: auto;
-  border: 2px dashed #822000;
 }
 
 .battle-toolbar--options-container {

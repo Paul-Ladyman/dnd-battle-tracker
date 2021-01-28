@@ -58,7 +58,7 @@ function BattleToolbar({
 
   const buttonClass = 'battle-toolbar--button';
   const creaturesAdded = creatures > 0;
-  const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
+  const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
   const optionsMenuIcon = optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;

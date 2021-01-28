@@ -59,6 +59,7 @@ export default function CreatureHeader({
       shared={shared}
       name={name}
       shareHandler={shareHandler}
+      disabled={active && shared}
     />
   );
 
