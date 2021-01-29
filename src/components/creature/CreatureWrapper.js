@@ -143,7 +143,8 @@ class CreatureWrapper extends Component {
 
     const { expanded } = this.state;
 
-    const classes = `creature-wrapper ${getActiveClassModifier(active, shared)}`;
+    const activeClassModifier = active ? 'creature-wrapper__active' : '';
+    const classes = `creature-wrapper ${activeClassModifier}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
@@ -199,7 +200,7 @@ class CreatureWrapper extends Component {
                 <>
                   <ExpandedCreature
                     creature={creature}
-                    active={active}
+                    shared={shared}
                     round={round}
                     secondsElapsed={secondsElapsed}
                     removeCreature={removeCreature}
