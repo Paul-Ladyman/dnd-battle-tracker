@@ -61,7 +61,6 @@ export default function ExpandedCreature({
         secondsElapsed={secondsElapsed}
         playerSession={playerSession}
       />
-      {active && <div style={{ height: '43px' }} />}
     </>
   );
 }

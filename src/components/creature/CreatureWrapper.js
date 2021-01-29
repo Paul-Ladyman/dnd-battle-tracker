@@ -8,6 +8,18 @@ import CreatureRemover from '../buttons/CreatureRemover';
 import { getAvailableConditions } from '../../state/ConditionsManager';
 import { getHealthBar } from '../../display/displayLogic';
 
+function getActiveClassModifier(active, shared) {
+  if (!active) {
+    return '';
+  }
+
+  if (!shared) {
+    return 'creature-wrapper__active-not-shared';
+  }
+
+  return 'creature-wrapper__active';
+}
+
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
   let label = name;
@@ -131,8 +143,7 @@ class CreatureWrapper extends Component {
 
     const { expanded } = this.state;
 
-    const activeModifier = active ? 'creature-wrapper__active ' : '';
-    const classes = `creature-wrapper ${activeModifier}`;
+    const classes = `creature-wrapper ${getActiveClassModifier(active, shared)}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
@@ -155,7 +166,7 @@ class CreatureWrapper extends Component {
 
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
 
-    const showCreatureRemover = showExpanded && !playerSession && !active;
+    const showCreatureRemover = showExpanded && !playerSession;
 
     const [leftPercentage, rightPercentage] = getHealthBar(creatureHealthPoints, maxHealthPoints);
 
@@ -211,6 +222,7 @@ class CreatureWrapper extends Component {
             <CreatureRemover
               creature={creature}
               removeCreature={removeCreature}
+              disabled={active}
             />
           )}
         </section>
