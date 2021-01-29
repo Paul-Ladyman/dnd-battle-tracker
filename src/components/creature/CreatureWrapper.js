@@ -8,18 +8,6 @@ import CreatureRemover from '../buttons/CreatureRemover';
 import { getAvailableConditions } from '../../state/ConditionsManager';
 import { getHealthBar } from '../../display/displayLogic';
 
-function getActiveClassModifier(active, shared) {
-  if (!active) {
-    return '';
-  }
-
-  if (!shared) {
-    return 'creature-wrapper__active-not-shared';
-  }
-
-  return 'creature-wrapper__active';
-}
-
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
   let label = name;
@@ -136,6 +124,7 @@ class CreatureWrapper extends Component {
       maxHealthPoints,
       notes,
       conditions: creatureConditions,
+      alive,
     } = creature;
 
     const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
@@ -169,7 +158,10 @@ class CreatureWrapper extends Component {
 
     const showCreatureRemover = showExpanded && !playerSession;
 
-    const [leftPercentage, rightPercentage] = getHealthBar(creatureHealthPoints, maxHealthPoints);
+    const [
+      leftPercentage,
+      rightPercentage,
+    ] = getHealthBar(creatureHealthPoints, maxHealthPoints, alive);
 
     return (
       <>

@@ -21,7 +21,11 @@ export function getDamageLevel(hp, maxHp) {
   return { level: 'fine', display: 'Fine' };
 }
 
-export function getHealthBar(hp, maxHp) {
+export function getHealthBar(hp, maxHp, alive) {
+  if (!alive) {
+    return [0, 0];
+  }
+
   if (hp === undefined || hp === null) {
     return [100, 100];
   }
