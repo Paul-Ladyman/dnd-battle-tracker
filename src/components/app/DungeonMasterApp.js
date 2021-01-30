@@ -105,8 +105,8 @@ function DungeonMasterApp({
 
   const errors = state.errors && state.errors.length > 0;
 
-  const [activeCreatureName, activeCreatureId] = getInitiative(state);
-  const creatures = getCreatureList(state);
+  const [activeCreatureName, activeCreatureId] = getInitiative(state, true);
+  const [creatures, creatureCount] = getCreatureList(state, true);
 
   return (
     <>
@@ -114,7 +114,7 @@ function DungeonMasterApp({
         initiative={activeCreatureName}
         round={state.round}
         secondsElapsed={secondsElapsed}
-        creatures={state.creatureCount}
+        creatureCount={creatureCount}
         nextInitiative={updateBattle(nextInitiative)}
         resetBattle={updateBattle(resetBattle)}
         saveBattle={updateBattle(save, false)}

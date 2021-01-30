@@ -17,7 +17,7 @@ function BattleToolbar({
   initiative,
   round,
   secondsElapsed,
-  creatures,
+  creatureCount,
   nextInitiative,
   resetBattle,
   saveBattle,
@@ -57,7 +57,7 @@ function BattleToolbar({
   };
 
   const buttonClass = 'battle-toolbar--button';
-  const creaturesAdded = creatures > 0;
+  const creaturesAdded = creatureCount > 0;
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
@@ -111,7 +111,7 @@ function BattleToolbar({
       </div>
       <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
         Creatures:
-        <div className="battle-toolbar--stat-value">{creatures}</div>
+        <div className="battle-toolbar--stat-value">{creatureCount}</div>
       </div>
       <div className="battle-toolbar--stat battle-toolbar--stat__extra1">
         Round:

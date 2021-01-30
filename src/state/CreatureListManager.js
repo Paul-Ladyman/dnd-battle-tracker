@@ -115,8 +115,10 @@ export function addCreature(state, creature) {
 
 export function getCreatureList(state, playerSession = false) {
   if (!playerSession) {
-    return state.creatures;
+    const { creatures } = state;
+    return [creatures, creatures.length];
   }
 
-  return state.creatures.filter(({ shared }) => shared);
+  const sharedCreatures = state.creatures.filter(({ shared }) => shared);
+  return [sharedCreatures, sharedCreatures.length];
 }

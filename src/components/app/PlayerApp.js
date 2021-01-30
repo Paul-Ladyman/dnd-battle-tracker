@@ -7,6 +7,7 @@ import Title from '../page/Title';
 import { newBattleState } from '../../state/BattleManager';
 import { getInitiative } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
+import { getCreatureList } from '../../state/CreatureListManager';
 
 // TODO abstract into SyncManager
 function getBattleData(getLoading, getData, syncLoading, syncData) {
@@ -30,7 +31,7 @@ function PlayerApp({
 
   const secondsElapsed = getSecondsElapsed(battleData);
   const {
-    creatureCount, round, creatures, focusedCreature,
+    round, focusedCreature,
   } = battleData;
 
   useEffect(() => {
@@ -42,6 +43,7 @@ function PlayerApp({
   const loading = !getData && !syncData;
 
   const [activeCreatureName, activeCreatureIndex] = getInitiative(battleData, true);
+  const [creatures, creatureCount] = getCreatureList(battleData, true);
 
   return (
     <>

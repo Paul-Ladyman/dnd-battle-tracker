@@ -505,8 +505,9 @@ describe('addCreature', () => {
 });
 
 describe('getCreatureList', () => {
-  it('returns the creature list', () => {
-    expect(getCreatureList(defaultState)).toEqual(defaultState.creatures);
+  it('returns the creature list and creature count', () => {
+    const expected = [defaultState.creatures, 3];
+    expect(getCreatureList(defaultState)).toEqual(expected);
   });
 
   it('returns only shared creatures for a player session', () => {
@@ -514,6 +515,7 @@ describe('getCreatureList', () => {
       defaultState.creatures[0],
       defaultState.creatures[2],
     ];
-    expect(getCreatureList(defaultState, true)).toEqual(expectedCreatures);
+    const expected = [expectedCreatures, 2];
+    expect(getCreatureList(defaultState, true)).toEqual(expected);
   });
 });
