@@ -7,53 +7,9 @@ import {
   toggleSync,
 } from './BattleManager';
 import { resetCreature } from './CreatureManager';
+import defaultState from '../../test/fixtures/battle';
 
 jest.mock('./CreatureManager');
-
-const defaultState = {
-  creatures: [
-    {
-      name: 'Wellby',
-      initiative: 13,
-      id: 0,
-      alive: true,
-      conditions: [],
-      notes: [],
-    },
-    {
-      name: 'Goblin #1',
-      initiative: 12,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 1,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: true,
-    },
-    {
-      name: 'Goblin #2',
-      initiative: 12,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 2,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: true,
-    },
-  ],
-  creatureIdCount: 3,
-  activeCreature: 1,
-  focusedCreature: 1,
-  round: 1,
-  ariaAnnouncements: [],
-  errors: [],
-  createCreatureErrors: {},
-  battleCreated: false,
-  shareEnabled: false,
-  battleId: '123',
-};
 
 beforeEach(() => {
   resetCreature.mockClear();
@@ -68,6 +24,7 @@ describe('newBattleState', () => {
       sharedActiveCreature: null,
       focusedCreature: undefined,
       round: 0,
+      sharedRound: 0,
       ariaAnnouncements: [],
       errors: [],
       createCreatureErrors: {},
@@ -85,8 +42,10 @@ describe('resetBattle', () => {
     const expected = {
       creatureIdCount: 2,
       activeCreature: undefined,
+      sharedActiveCreature: null,
       focusedCreature: undefined,
       round: 0,
+      sharedRound: 0,
       ariaAnnouncements: ['battle reset'],
       errors: [],
       createCreatureErrors: {},

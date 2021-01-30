@@ -347,7 +347,7 @@ describe('getInitiative', () => {
       sharedActiveCreature: 0,
       round: 1,
     };
-    expect(getInitiative(state)).toEqual(['Goblin #1', 2]);
+    expect(getInitiative(state)).toEqual(['Goblin #1', 1]);
   });
 
   it('gets the name and id of the currently active creature for a player session', () => {
@@ -357,7 +357,7 @@ describe('getInitiative', () => {
       sharedActiveCreature: 0,
       round: 1,
     };
-    expect(getInitiative(state, true)).toEqual(['Wellby', 1]);
+    expect(getInitiative(state, true)).toEqual(['Wellby', 0]);
   });
 
   it('returns no name and id if a shared active creature has not yet been assigned', () => {

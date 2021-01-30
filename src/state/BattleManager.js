@@ -11,6 +11,7 @@ export const newBattleState = {
   sharedActiveCreature: null,
   focusedCreature: undefined,
   round: 0,
+  sharedRound: 0,
   ariaAnnouncements: [],
   errors: [],
   createCreatureErrors: {},
