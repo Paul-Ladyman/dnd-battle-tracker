@@ -21,7 +21,6 @@ const defaultState = {
     },
   ],
   creatureIdCount: 3,
-  creatureCount: 3,
   activeCreature: 1,
   focusedCreature: 0,
   round: 1,
@@ -39,7 +38,6 @@ const expectedInput = (battleId) => ({
   variables: {
     battleinput: {
       battleId: battleId || defaultState.battleId,
-      creatureCount: defaultState.creatureCount,
       round: defaultState.round,
       creatures: defaultState.creatures,
       activeCreature: defaultState.activeCreature,
