@@ -7,36 +7,29 @@ function findCreatureIndex(creatures, creature) {
 }
 
 export function removeCreature(state, creatureId) {
-  if (state.creatures === undefined
-    || state.creatureCount === undefined) {
+  if (state.creatures === undefined) {
     return state;
   }
 
   const creatures = state.creatures.filter(({ id }) => creatureId !== id);
 
-  let creatureCount;
   let activeCreature;
 
   if (creatures.length === 0) {
-    creatureCount = 0;
     activeCreature = undefined;
+  } else if (state.activeCreature) {
+    const currentlyActiveCreature = state.creatures[state.activeCreature];
+    activeCreature = currentlyActiveCreature.id === creatureId
+      ? state.activeCreature
+      : findCreatureIndex(creatures, currentlyActiveCreature);
   } else {
-    creatureCount = state.creatureCount - 1;
-
-    if (state.activeCreature) {
-      const currentlyActiveCreature = state.creatures[state.activeCreature];
-      activeCreature = currentlyActiveCreature.id === creatureId
-        ? state.activeCreature
-        : findCreatureIndex(creatures, currentlyActiveCreature);
-    } else {
-      activeCreature = state.activeCreature;
-    }
+    activeCreature = state.activeCreature;
   }
 
   const ariaAnnouncement = 'creature removed from battle';
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
   return {
-    ...state, creatures, creatureCount, activeCreature, ariaAnnouncements,
+    ...state, creatures, activeCreature, ariaAnnouncements,
   };
 }
 
@@ -95,7 +88,6 @@ export function addCreature(state, creature) {
     activeCreature,
   ] = sortByInitiative([...state.creatures, ...newCreatures], state.activeCreature, state.round);
 
-  const creatureCount = state.creatureCount + creatureMultiplier;
   const creatureIdCount = state.creatureIdCount + creatureMultiplier;
 
   const ariaAnnouncement = newCreatures.length > 1 ? 'creatures added' : `${newCreatures[0].name} added`;
@@ -104,7 +96,6 @@ export function addCreature(state, creature) {
   return {
     ...state,
     creatures,
-    creatureCount,
     creatureIdCount,
     activeCreature,
     ariaAnnouncements,

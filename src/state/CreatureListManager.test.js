@@ -46,7 +46,6 @@ const defaultState = {
     },
   ],
   creatureIdCount: 3,
-  creatureCount: 3,
   activeCreature: 1,
   focusedCreature: 1,
   round: 1,
@@ -72,7 +71,6 @@ describe('removeCreature', () => {
         state.creatures[0],
         state.creatures[2],
       ],
-      creatureCount: 2,
       activeCreature: undefined,
       ariaAnnouncements: ['creature removed from battle'],
     };
@@ -93,7 +91,6 @@ describe('removeCreature', () => {
         state.creatures[0],
         state.creatures[2],
       ],
-      creatureCount: 2,
       activeCreature: 0,
       ariaAnnouncements: ['creature removed from battle'],
     };
@@ -108,7 +105,6 @@ describe('removeCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      creatureCount: 2,
       activeCreature: 0,
       ariaAnnouncements: ['creature removed from battle'],
     };
@@ -123,7 +119,6 @@ describe('removeCreature', () => {
         defaultState.creatures[0],
         defaultState.creatures[2],
       ],
-      creatureCount: 2,
       activeCreature: 1,
       ariaAnnouncements: ['creature removed from battle'],
     };
@@ -138,7 +133,6 @@ describe('removeCreature', () => {
         defaultState.creatures[0],
         defaultState.creatures[1],
       ],
-      creatureCount: 2,
       activeCreature: 1,
       ariaAnnouncements: ['creature removed from battle'],
     };
@@ -153,12 +147,10 @@ describe('removeCreature', () => {
         defaultState.creatures[0],
       ],
       activeCreature: 0,
-      creatureCount: 1,
     };
     const expected = {
       ...state,
       creatures: [],
-      creatureCount: 0,
       activeCreature: undefined,
       ariaAnnouncements: ['creature removed from battle'],
     };
@@ -202,7 +194,6 @@ describe('addCreature', () => {
         defaultState.creatures[2],
         createdCreature,
       ],
-      creatureCount: 4,
       creatureIdCount: 4,
       ariaAnnouncements: ['name added'],
     };
@@ -239,7 +230,6 @@ describe('addCreature', () => {
         defaultState.creatures[2],
         createdCreature,
       ],
-      creatureCount: 4,
       creatureIdCount: 4,
       ariaAnnouncements: ['name added'],
     };
@@ -276,7 +266,6 @@ describe('addCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      creatureCount: 4,
       creatureIdCount: 4,
       activeCreature: 2,
       ariaAnnouncements: ['name added'],
@@ -320,7 +309,6 @@ describe('addCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      creatureCount: 4,
       creatureIdCount: 4,
       ariaAnnouncements: ['name added'],
     };
@@ -362,7 +350,6 @@ describe('addCreature', () => {
         createdCreature,
         createdCreature2,
       ],
-      creatureCount: 5,
       creatureIdCount: 5,
       ariaAnnouncements: ['creatures added'],
     };
@@ -428,7 +415,6 @@ describe('addCreature', () => {
         initialCreature2,
         ...defaultState.creatures,
       ],
-      creatureCount: 5,
       creatureIdCount: 5,
     };
 
@@ -439,7 +425,6 @@ describe('addCreature', () => {
         createdCreature,
         createdCreature2,
       ],
-      creatureCount: 7,
       creatureIdCount: 7,
       ariaAnnouncements: ['creatures added'],
     };
