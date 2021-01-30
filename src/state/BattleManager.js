@@ -7,7 +7,6 @@ function findCreatureIndex(creatures, creature) {
 export const newBattleState = {
   creatures: [],
   creatureIdCount: 0,
-  creatureCount: 0,
   activeCreature: undefined,
   sharedActiveCreature: null,
   focusedCreature: undefined,
@@ -21,17 +20,19 @@ export const newBattleState = {
 };
 
 export function nextFocus(state) {
-  if (state.creatures.length === 0) {
+  const { creatures, focusedCreature: currentFocusedCreature } = state;
+  const creatureCount = creatures.length;
+  if (creatureCount === 0) {
     return state;
   }
 
   let focusedCreature = 0;
 
-  if (state.focusedCreature !== undefined) {
-    focusedCreature = state.focusedCreature + 1;
+  if (currentFocusedCreature !== undefined) {
+    focusedCreature = currentFocusedCreature + 1;
   }
 
-  if (focusedCreature === state.creatureCount) {
+  if (focusedCreature === creatureCount) {
     focusedCreature = 0;
   }
 
@@ -39,14 +40,16 @@ export function nextFocus(state) {
 }
 
 export function prevFocus(state) {
-  if (state.creatures.length === 0) {
+  const { creatures, focusedCreature: currentFocusedCreature } = state;
+  const creatureCount = creatures.length;
+  if (creatureCount === 0) {
     return state;
   }
 
-  let focusedCreature = state.focusedCreature - 1;
+  let focusedCreature = currentFocusedCreature - 1;
 
-  if (state.focusedCreature === undefined || state.focusedCreature === 0) {
-    focusedCreature = state.creatureCount - 1;
+  if (currentFocusedCreature === undefined || currentFocusedCreature === 0) {
+    focusedCreature = creatureCount - 1;
   }
 
   return { ...state, focusedCreature };
@@ -69,7 +72,7 @@ export function resetBattle(state) {
     battleCreated,
   } = state;
   const lockedCreatures = creatures.filter((creature) => creature.locked);
-  const creatureCount = lockedCreatures.length;
+  const creatureIdCount = lockedCreatures.length;
   const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
   const ariaAnnouncements = currentAriaAnnouncements.concat(['battle reset']);
   return {
@@ -77,8 +80,7 @@ export function resetBattle(state) {
     battleCreated,
     shareEnabled,
     battleId,
-    creatureCount,
-    creatureIdCount: creatureCount,
+    creatureIdCount,
     creatures: resetLockedCreatures,
     ariaAnnouncements,
   };
