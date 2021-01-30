@@ -2,6 +2,7 @@ import {
   nextInitiative,
   getInitiative,
   sortByInitiative,
+  getRound,
 } from './InitiativeManager';
 import defaultState from '../../test/fixtures/battle';
 
@@ -22,6 +23,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...defaultState,
       round: 1,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 0,
@@ -30,7 +32,7 @@ describe('nextInitiative', () => {
     expect(nextInitiative(defaultState)).toEqual(expected);
   });
 
-  it('does not advance the shared active creature on the first round if the first creature is not shared', () => {
+  it('does not advance the shared active creature or shared round on the first round if the first creature is not shared', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -44,7 +46,6 @@ describe('nextInitiative', () => {
     };
     const expected = {
       ...state,
-
       round: 1,
       activeCreature: 0,
       focusedCreature: 0,
@@ -68,6 +69,7 @@ describe('nextInitiative', () => {
         ...defaultState.creatures,
       ],
       round: 1,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 0,
@@ -91,6 +93,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...state,
       round: 1,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 0,
@@ -111,6 +114,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...defaultState,
       round: 1,
+      sharedRound: 1,
       activeCreature: 1,
       sharedActiveCreature: 1,
       focusedCreature: 1,
@@ -132,6 +136,7 @@ describe('nextInitiative', () => {
         defaultState.creatures[2],
       ],
       round: 1,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 0,
@@ -140,6 +145,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...state,
       round: 1,
+      sharedRound: 1,
       activeCreature: 1,
       sharedActiveCreature: 0,
       focusedCreature: 1,
@@ -157,6 +163,7 @@ describe('nextInitiative', () => {
         droop,
       ],
       round: 1,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 0,
@@ -169,6 +176,7 @@ describe('nextInitiative', () => {
         ...defaultState.creatures,
       ],
       round: 1,
+      sharedRound: 1,
       activeCreature: 2,
       sharedActiveCreature: 2,
       focusedCreature: 2,
@@ -182,6 +190,7 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       round: 1,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 2,
@@ -190,6 +199,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...defaultState,
       round: 1,
+      sharedRound: 1,
       activeCreature: 1,
       sharedActiveCreature: 1,
       focusedCreature: 1,
@@ -203,6 +213,7 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       round: 1,
+      sharedRound: 1,
       activeCreature: 2,
       sharedActiveCreature: 2,
       focusedCreature: 2,
@@ -211,6 +222,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...defaultState,
       round: 2,
+      sharedRound: 2,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 0,
@@ -220,7 +232,7 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
-  it('does not restart the shared active creature if the first creature is not shared', () => {
+  it('does not restart the shared active creature or increment shared round if the first creature is not shared', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -232,6 +244,7 @@ describe('nextInitiative', () => {
         defaultState.creatures[2],
       ],
       round: 1,
+      sharedRound: 1,
       activeCreature: 2,
       sharedActiveCreature: 2,
       focusedCreature: 2,
@@ -240,10 +253,42 @@ describe('nextInitiative', () => {
     const expected = {
       ...state,
       round: 2,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 2,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go'],
+    };
+
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
+  it('restarts the shared active creature and increments shared round on the next shared creature from the top', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          shared: false,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      round: 2,
+      sharedRound: 1,
+      activeCreature: 0,
+      sharedActiveCreature: 2,
+      focusedCreature: 0,
+    };
+
+    const expected = {
+      ...state,
+      round: 2,
+      sharedRound: 2,
+      activeCreature: 1,
+      sharedActiveCreature: 1,
+      focusedCreature: 1,
+      ariaAnnouncements: ['its Goblin #1\'s go'],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -329,6 +374,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...state,
       round: 1,
+      sharedRound: 1,
       activeCreature: 0,
       sharedActiveCreature: 0,
       focusedCreature: 0,
@@ -378,6 +424,30 @@ describe('getInitiative', () => {
 
   it('returns no name and id if the battle has not started', () => {
     expect(getInitiative(defaultState)).toEqual(['', null]);
+  });
+});
+
+describe('getRound', () => {
+  it('gets the round for a DM session', () => {
+    const state = {
+      ...defaultState,
+      activeCreature: 0,
+      sharedActiveCreature: 2,
+      round: 2,
+      sharedRound: 1,
+    };
+    expect(getRound(state)).toEqual(2);
+  });
+
+  it('gets the shared round for a player session', () => {
+    const state = {
+      ...defaultState,
+      activeCreature: 0,
+      sharedActiveCreature: 2,
+      round: 2,
+      sharedRound: 1,
+    };
+    expect(getRound(state, true)).toEqual(1);
   });
 });
 

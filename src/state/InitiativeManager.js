@@ -17,6 +17,36 @@ export function sortByInitiative(creatures, activeCreature, round) {
   return [sortedCreatures, currentlyActiveCreature];
 }
 
+function getNextActiveCreatureAndRound(currentActiveCreature, creatureCount, currentRound) {
+  if (currentActiveCreature === undefined) {
+    return [0, 1];
+  }
+
+  const nextActiveCreature = currentActiveCreature + 1;
+
+  if (nextActiveCreature === creatureCount) {
+    return [0, currentRound + 1];
+  }
+
+  return [nextActiveCreature, currentRound];
+}
+
+function getNextSharedActiveCreatureAndRound(
+  currentSharedActiveCreature,
+  nextActiveCreature,
+  creatures,
+  currentSharedRound,
+  nextRound,
+) {
+  const { shared: nextCreatureIsShared } = creatures[nextActiveCreature];
+
+  if (nextCreatureIsShared) {
+    return [nextActiveCreature, nextRound];
+  }
+
+  return [currentSharedActiveCreature, currentSharedRound];
+}
+
 export function nextInitiative(state) {
   if (state.creatures.length === 0) {
     return state;
@@ -37,28 +67,21 @@ export function nextInitiative(state) {
     currentlyActiveCreature,
   ] = sortByInitiative(state.creatures, state.activeCreature, state.round);
 
-  let activeCreature = 0;
-  let sharedActiveCreature = 0;
-  let round = 1;
+  const [
+    activeCreature,
+    round,
+  ] = getNextActiveCreatureAndRound(currentlyActiveCreature, state.creatures.length, state.round);
 
-  if (state.round > 0) {
-    activeCreature = currentlyActiveCreature + 1;
-    sharedActiveCreature = activeCreature;
-    round = state.round;
-
-    if (activeCreature === state.creatures.length) {
-      activeCreature = 0;
-      sharedActiveCreature = 0;
-      round += 1;
-    }
-  }
-
-  const { sharedActiveCreature: previousSharedActiveCreature } = state;
-  const { shared: nextCreatureIsShared } = state.creatures[sharedActiveCreature];
-
-  if (!nextCreatureIsShared) {
-    sharedActiveCreature = previousSharedActiveCreature;
-  }
+  const [
+    sharedActiveCreature,
+    sharedRound,
+  ] = getNextSharedActiveCreatureAndRound(
+    state.sharedActiveCreature,
+    activeCreature,
+    state.creatures,
+    state.sharedRound,
+    round,
+  );
 
   const { name, alive } = state.creatures[activeCreature];
   let ariaAnnouncement = `its ${name}'s go`;
@@ -72,6 +95,7 @@ export function nextInitiative(state) {
     ...state,
     creatures: sortedCreatures,
     round,
+    sharedRound,
     activeCreature,
     sharedActiveCreature,
     focusedCreature: activeCreature,
@@ -96,4 +120,8 @@ export function getInitiative(state, playerSession) {
   const { name, id } = creatures[activeCreatureIndex];
 
   return [name, id];
+}
+
+export function getRound(state, playerSession) {
+  return playerSession ? state.sharedRound : state.round;
 }

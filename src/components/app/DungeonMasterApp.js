@@ -15,6 +15,7 @@ import {
 import {
   nextInitiative,
   getInitiative,
+  getRound,
 } from '../../state/InitiativeManager';
 import {
   removeCreature,
@@ -107,12 +108,13 @@ function DungeonMasterApp({
 
   const [activeCreatureName, activeCreatureId] = getInitiative(state, true);
   const [creatures, creatureCount] = getCreatureList(state, true);
+  const round = getRound(state, true);
 
   return (
     <>
       <BattleToolbar
         initiative={activeCreatureName}
-        round={state.round}
+        round={round}
         secondsElapsed={secondsElapsed}
         creatureCount={creatureCount}
         nextInitiative={updateBattle(nextInitiative)}
@@ -147,7 +149,7 @@ function DungeonMasterApp({
             activeCreatureId={activeCreatureId}
             focusedCreature={state.focusedCreature}
             setFocus={updateBattle(setFocus, false)}
-            round={state.round}
+            round={round}
             secondsElapsed={secondsElapsed}
             creatureManagement={creatureManagement}
           />
