@@ -20,7 +20,7 @@ describe('newBattleState', () => {
     const expected = {
       creatures: [],
       creatureIdCount: 0,
-      activeCreature: undefined,
+      activeCreature: null,
       sharedActiveCreature: null,
       focusedCreature: undefined,
       round: 0,
@@ -41,7 +41,7 @@ describe('resetBattle', () => {
   test('resets to the initial battle state', () => {
     const expected = {
       creatureIdCount: 2,
-      activeCreature: undefined,
+      activeCreature: null,
       sharedActiveCreature: null,
       focusedCreature: undefined,
       round: 0,

@@ -7,7 +7,7 @@ function findCreatureIndex(creatures, creature) {
 export const newBattleState = {
   creatures: [],
   creatureIdCount: 0,
-  activeCreature: undefined,
+  activeCreature: null,
   sharedActiveCreature: null,
   focusedCreature: undefined,
   round: 0,

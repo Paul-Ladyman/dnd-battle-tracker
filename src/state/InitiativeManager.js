@@ -18,7 +18,7 @@ export function sortByInitiative(creatures, activeCreature, round) {
 }
 
 function getNextActiveCreatureAndRound(currentActiveCreature, creatureCount, currentRound) {
-  if (currentActiveCreature === undefined) {
+  if (currentActiveCreature === null) {
     return [0, 1];
   }
 
@@ -113,7 +113,7 @@ export function getInitiative(state, playerSession) {
 
   const activeCreatureIndex = playerSession ? sharedActiveCreature : activeCreature;
 
-  if (activeCreatureIndex === null || activeCreatureIndex === undefined) {
+  if (activeCreatureIndex === null) {
     return ['', null];
   }
 
