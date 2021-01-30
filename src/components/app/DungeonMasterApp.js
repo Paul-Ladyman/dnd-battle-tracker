@@ -88,8 +88,6 @@ function DungeonMasterApp({
     if (onlineError) updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
   }, [onlineError]);
 
-  const secondsElapsed = getSecondsElapsed(state);
-
   const creatureManagement = {
     killCreature: updateBattle(killCreature),
     stabalizeCreature: updateBattle(stabalizeCreature),
@@ -109,6 +107,7 @@ function DungeonMasterApp({
   const [activeCreatureName, activeCreatureId] = getInitiative(state, true);
   const [creatures, creatureCount] = getCreatureList(state, true);
   const round = getRound(state, true);
+  const secondsElapsed = getSecondsElapsed(round);
 
   return (
     <>

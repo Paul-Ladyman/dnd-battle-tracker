@@ -137,7 +137,7 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
   const note = {
     text,
     appliedAtRound: state.round,
-    appliedAtSeconds: getSecondsElapsed(state),
+    appliedAtSeconds: getSecondsElapsed(state.round),
   };
   const notes = [...creature.notes, note];
   const ariaAnnouncement = `note added to ${creature.name}`;
