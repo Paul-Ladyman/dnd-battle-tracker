@@ -36,7 +36,6 @@ export default {
     },
   ],
   creatureIdCount: 3,
-  creatureCount: 3,
   activeCreature: undefined,
   sharedActiveCreature: null,
   focusedCreature: undefined,

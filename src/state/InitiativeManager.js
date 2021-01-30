@@ -46,7 +46,7 @@ export function nextInitiative(state) {
     sharedActiveCreature = activeCreature;
     round = state.round;
 
-    if (activeCreature === state.creatureCount) {
+    if (activeCreature === state.creatures.length) {
       activeCreature = 0;
       sharedActiveCreature = 0;
       round += 1;
