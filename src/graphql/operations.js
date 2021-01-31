@@ -18,6 +18,7 @@ const Battle = `{
   battleId
   creatureCount
   round
+  sharedRound
   creatures {
     id
     name
@@ -27,8 +28,10 @@ const Battle = `{
     alive
     conditions ${Condition}
     notes ${Note}
+    shared
   }
   activeCreature
+  sharedActiveCreature
 }`;
 
 export const GET_BATTLE = gql`

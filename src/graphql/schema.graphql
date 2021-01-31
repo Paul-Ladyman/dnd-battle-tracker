@@ -9,7 +9,7 @@ type Condition @aws_api_key @aws_iam {
   appliedAtRound: Int!
   appliedAtSeconds: Int!
   url: String!
-  id: String
+  id: String!
 }
 
 type Note @aws_api_key @aws_iam {
@@ -29,14 +29,17 @@ type Creature @aws_api_key @aws_iam {
   conditions: [Condition!]
   notes: [Note!]
   locked: Boolean!
+  shared: Boolean
 }
 
 type Battle @aws_api_key @aws_iam {
   battleId: String!
   creatureCount: Int!
   round: Int!
+  sharedRound: Int
   creatures: [Creature!]
   activeCreature: Int
+  sharedActiveCreature: Int
 }
 
 input ConditionInput @aws_api_key @aws_iam {
@@ -44,7 +47,7 @@ input ConditionInput @aws_api_key @aws_iam {
   appliedAtRound: Int!
   appliedAtSeconds: Int!
   url: String!
-  id: String
+  id: String!
 }
 
 input NoteInput @aws_api_key @aws_iam {
@@ -64,14 +67,17 @@ input CreatureInput @aws_api_key @aws_iam {
   conditions: [ConditionInput!]
   notes: [NoteInput!]
   locked: Boolean!
+  shared: Boolean
 }
 
 input BattleInput @aws_api_key @aws_iam {
   battleId: String!
   creatureCount: Int!
   round: Int!
+  sharedRound: Int
   creatures: [CreatureInput!]
   activeCreature: Int
+  sharedActiveCreature: Int
   expdate: Int!
 }
 
