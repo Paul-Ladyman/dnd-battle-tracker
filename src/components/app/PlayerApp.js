@@ -5,7 +5,7 @@ import Footer from '../page/Footer';
 import Errors from '../error/Errors';
 import Title from '../page/Title';
 import { newBattleState } from '../../state/BattleManager';
-import { getInitiative, getInitiative2, getRound } from '../../state/InitiativeManager';
+import { getInitiative2 } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import { getCreatureList } from '../../state/CreatureListManager';
 
@@ -36,11 +36,6 @@ function PlayerApp({
   }, [onlineError, getError, syncError]);
 
   const loading = !getData && !syncData;
-
-  // const [activeCreatureName, activeCreatureId] = getInitiative(battleData, true);
-  // const [creatures, creatureCount] = getCreatureList(battleData, true);
-  // const round = getRound(battleData, true);
-  // const secondsElapsed = getSecondsElapsed(round);
 
   const [round, activeCreatureName, activeCreatureId] = getInitiative2(battleData, true);
   const [creatures, creatureCount] = getCreatureList(battleData, true);

@@ -14,8 +14,7 @@ import {
 } from '../../state/BattleManager';
 import {
   nextInitiative,
-  getInitiative,
-  getRound,
+  getInitiative2,
 } from '../../state/InitiativeManager';
 import {
   removeCreature,
@@ -104,9 +103,8 @@ function DungeonMasterApp({
 
   const errors = state.errors && state.errors.length > 0;
 
-  const [activeCreatureName, activeCreatureId] = getInitiative(state);
+  const [round, activeCreatureName, activeCreatureId] = getInitiative2(state);
   const [creatures, creatureCount] = getCreatureList(state);
-  const round = getRound(state);
   const secondsElapsed = getSecondsElapsed(round);
 
   return (
