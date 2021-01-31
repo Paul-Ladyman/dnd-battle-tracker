@@ -16,10 +16,8 @@ const expectedInput = (battleId) => ({
     battleinput: {
       battleId: battleId || defaultState.battleId,
       round: defaultState.round,
-      sharedRound: defaultState.sharedRound,
       creatures: defaultState.creatures,
       activeCreature: defaultState.activeCreature,
-      sharedActiveCreature: defaultState.sharedActiveCreature,
       expdate: 1605901893,
     },
   },

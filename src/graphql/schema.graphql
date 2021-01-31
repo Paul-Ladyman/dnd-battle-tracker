@@ -36,10 +36,8 @@ type Battle @aws_api_key @aws_iam {
   battleId: String!
   creatureCount: Int
   round: Int!
-  sharedRound: Int
   creatures: [Creature!]
   activeCreature: Int
-  sharedActiveCreature: Int
 }
 
 input ConditionInput @aws_api_key @aws_iam {
@@ -74,10 +72,8 @@ input BattleInput @aws_api_key @aws_iam {
   battleId: String!
   creatureCount: Int
   round: Int!
-  sharedRound: Int
   creatures: [CreatureInput!]
   activeCreature: Int
-  sharedActiveCreature: Int
   expdate: Int!
 }
 

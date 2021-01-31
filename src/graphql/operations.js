@@ -17,7 +17,6 @@ const Note = `{
 const Battle = `{
   battleId
   round
-  sharedRound
   creatures {
     id
     name
@@ -30,7 +29,6 @@ const Battle = `{
     shared
   }
   activeCreature
-  sharedActiveCreature
 }`;
 
 export const GET_BATTLE = gql`

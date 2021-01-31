@@ -22,9 +22,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...defaultState,
       round: 1,
-      sharedRound: 1,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go'],
     };
@@ -68,9 +66,7 @@ describe('nextInitiative', () => {
         ...defaultState.creatures,
       ],
       round: 1,
-      sharedRound: 1,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Droop\'s go'],
     };
@@ -92,9 +88,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...state,
       round: 1,
-      sharedRound: 1,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go. Wellby is dead/unconscious'],
     };
@@ -106,47 +100,13 @@ describe('nextInitiative', () => {
       ...defaultState,
       round: 1,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 0,
     };
 
     const expected = {
       ...defaultState,
       round: 1,
-      sharedRound: 1,
       activeCreature: 1,
-      sharedActiveCreature: 1,
-      focusedCreature: 1,
-      ariaAnnouncements: ['its Goblin #1\'s go'],
-    };
-
-    expect(nextInitiative(state)).toEqual(expected);
-  });
-
-  it('does not advance the shared active creature if the next creature is not shared', () => {
-    const state = {
-      ...defaultState,
-      creatures: [
-        defaultState.creatures[0],
-        {
-          ...defaultState.creatures[1],
-          shared: false,
-        },
-        defaultState.creatures[2],
-      ],
-      round: 1,
-      sharedRound: 1,
-      activeCreature: 0,
-      sharedActiveCreature: 0,
-      focusedCreature: 0,
-    };
-
-    const expected = {
-      ...state,
-      round: 1,
-      sharedRound: 1,
-      activeCreature: 1,
-      sharedActiveCreature: 0,
       focusedCreature: 1,
       ariaAnnouncements: ['its Goblin #1\'s go'],
     };
@@ -162,9 +122,7 @@ describe('nextInitiative', () => {
         droop,
       ],
       round: 1,
-      sharedRound: 1,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 0,
     };
 
@@ -175,9 +133,7 @@ describe('nextInitiative', () => {
         ...defaultState.creatures,
       ],
       round: 1,
-      sharedRound: 1,
       activeCreature: 2,
-      sharedActiveCreature: 2,
       focusedCreature: 2,
       ariaAnnouncements: ['its Goblin #1\'s go'],
     };
@@ -189,18 +145,14 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       round: 1,
-      sharedRound: 1,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 2,
     };
 
     const expected = {
       ...defaultState,
       round: 1,
-      sharedRound: 1,
       activeCreature: 1,
-      sharedActiveCreature: 1,
       focusedCreature: 1,
       ariaAnnouncements: ['its Goblin #1\'s go'],
     };
@@ -212,82 +164,16 @@ describe('nextInitiative', () => {
     const state = {
       ...defaultState,
       round: 1,
-      sharedRound: 1,
       activeCreature: 2,
-      sharedActiveCreature: 2,
       focusedCreature: 2,
     };
 
     const expected = {
       ...defaultState,
       round: 2,
-      sharedRound: 2,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go'],
-    };
-
-    expect(nextInitiative(state)).toEqual(expected);
-  });
-
-  it('does not restart the shared active creature or increment shared round if the first creature is not shared', () => {
-    const state = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          shared: false,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-      round: 1,
-      sharedRound: 1,
-      activeCreature: 2,
-      sharedActiveCreature: 2,
-      focusedCreature: 2,
-    };
-
-    const expected = {
-      ...state,
-      round: 2,
-      sharedRound: 1,
-      activeCreature: 0,
-      sharedActiveCreature: 2,
-      focusedCreature: 0,
-      ariaAnnouncements: ['its Wellby\'s go'],
-    };
-
-    expect(nextInitiative(state)).toEqual(expected);
-  });
-
-  it('restarts the shared active creature and increments shared round on the next shared creature from the top', () => {
-    const state = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          shared: false,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-      round: 2,
-      sharedRound: 1,
-      activeCreature: 0,
-      sharedActiveCreature: 2,
-      focusedCreature: 0,
-    };
-
-    const expected = {
-      ...state,
-      round: 2,
-      sharedRound: 2,
-      activeCreature: 1,
-      sharedActiveCreature: 1,
-      focusedCreature: 1,
-      ariaAnnouncements: ['its Goblin #1\'s go'],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -373,9 +259,7 @@ describe('nextInitiative', () => {
     const expected = {
       ...state,
       round: 1,
-      sharedRound: 1,
       activeCreature: 0,
-      sharedActiveCreature: 0,
       focusedCreature: 0,
       errors: [],
       ariaAnnouncements: ['its Wellby\'s go'],
