@@ -223,17 +223,20 @@ describe('setFocus', () => {
 
 describe('toggleSync', () => {
   it('enables share if it is disabled', () => {
-    expect(toggleSync(defaultState)).toEqual({
+    const state = {
       ...defaultState,
+      shareEnabled: false,
+    };
+    expect(toggleSync(state)).toEqual({
+      ...state,
       shareEnabled: true,
       ariaAnnouncements: ['share enabled'],
     });
   });
 
   it('disables share if it is disabled', () => {
-    const state = { ...defaultState, shareEnabled: true };
-    expect(toggleSync(state)).toEqual({
-      ...state,
+    expect(toggleSync(defaultState)).toEqual({
+      ...defaultState,
       shareEnabled: false,
       ariaAnnouncements: ['share disabled'],
     });

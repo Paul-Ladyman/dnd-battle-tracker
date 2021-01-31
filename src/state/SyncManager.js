@@ -13,8 +13,10 @@ export function share(state, createBattle, updateBattle, date) {
       battleinput: {
         battleId,
         round: state.round,
+        sharedRound: state.sharedRound,
         creatures: state.creatures,
         activeCreature: state.activeCreature,
+        sharedActiveCreature: state.sharedActiveCreature,
         expdate: Math.floor(date.getTime() / 1000.0) + 86400,
       },
     },

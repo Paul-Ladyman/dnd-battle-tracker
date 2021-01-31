@@ -45,6 +45,6 @@ export default {
   errors: [],
   createCreatureErrors: {},
   battleCreated: false,
-  shareEnabled: false,
+  shareEnabled: true,
   battleId: '123',
 };
