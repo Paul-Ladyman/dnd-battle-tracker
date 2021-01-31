@@ -104,24 +104,6 @@ export function nextInitiative(state) {
   };
 }
 
-export function getInitiative(state, playerSession) {
-  const {
-    creatures,
-    activeCreature,
-    sharedActiveCreature,
-  } = state;
-
-  const activeCreatureIndex = playerSession ? sharedActiveCreature : activeCreature;
-
-  if (activeCreatureIndex === null) {
-    return ['', null];
-  }
-
-  const { name, id } = creatures[activeCreatureIndex];
-
-  return [name, id];
-}
-
 function findPreviousSharedCreature(
   startingRound,
   creatures,
@@ -152,7 +134,7 @@ function findPreviousSharedCreature(
   return findPreviousSharedCreature(round, creatures, startingIndex, previousCreatureIndex);
 }
 
-export function getInitiative2(state, playerSession) {
+export function getInitiative(state, playerSession) {
   const { creatures, round, activeCreature } = state;
   if (creatures.length === 0 || round === 0) {
     return [0, '', null];
@@ -165,8 +147,4 @@ export function getInitiative2(state, playerSession) {
   const { name, id } = creatures[activeCreature];
 
   return [round, name, id];
-}
-
-export function getRound(state, playerSession) {
-  return playerSession ? state.sharedRound : state.round;
 }
