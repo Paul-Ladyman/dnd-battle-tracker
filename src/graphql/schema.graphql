@@ -34,7 +34,7 @@ type Creature @aws_api_key @aws_iam {
 
 type Battle @aws_api_key @aws_iam {
   battleId: String!
-  creatureCount: Int!
+  creatureCount: Int
   round: Int!
   sharedRound: Int
   creatures: [Creature!]
@@ -72,7 +72,7 @@ input CreatureInput @aws_api_key @aws_iam {
 
 input BattleInput @aws_api_key @aws_iam {
   battleId: String!
-  creatureCount: Int!
+  creatureCount: Int
   round: Int!
   sharedRound: Int
   creatures: [CreatureInput!]

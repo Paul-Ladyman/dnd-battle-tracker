@@ -16,7 +16,6 @@ const Note = `{
 
 const Battle = `{
   battleId
-  creatureCount
   round
   sharedRound
   creatures {

@@ -122,6 +122,51 @@ export function getInitiative(state, playerSession) {
   return [name, id];
 }
 
+function findPreviousSharedCreature(
+  startingRound,
+  creatures,
+  startingIndex,
+  currentIndex = startingIndex,
+) {
+  const { name, shared, id } = creatures[currentIndex];
+
+  if (shared) {
+    return [startingRound, name, id];
+  }
+
+  const lastIndex = creatures.length - 1;
+  const previousIndex = currentIndex - 1;
+  const wrapIndex = previousIndex < 0;
+  const previousCreatureIndex = wrapIndex ? lastIndex : previousIndex;
+
+  if (previousCreatureIndex === startingIndex) {
+    return [0, '', null];
+  }
+
+  const round = wrapIndex ? startingRound - 1 : startingRound;
+
+  if (round === 0) {
+    return [0, '', null];
+  }
+
+  return findPreviousSharedCreature(round, creatures, startingIndex, previousCreatureIndex);
+}
+
+export function getInitiative2(state, playerSession) {
+  const { creatures, round, activeCreature } = state;
+  if (creatures.length === 0 || round === 0) {
+    return [0, '', null];
+  }
+
+  if (playerSession) {
+    return findPreviousSharedCreature(round, creatures, activeCreature);
+  }
+
+  const { name, id } = creatures[activeCreature];
+
+  return [round, name, id];
+}
+
 export function getRound(state, playerSession) {
   return playerSession ? state.sharedRound : state.round;
 }

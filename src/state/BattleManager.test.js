@@ -217,7 +217,7 @@ describe('setFocus', () => {
       focusedCreature: 0,
     };
 
-    expect(setFocus(defaultState, { id: 3 })).toEqual(expected);
+    expect(setFocus(defaultState, { id: 4 })).toEqual(expected);
   });
 });
 

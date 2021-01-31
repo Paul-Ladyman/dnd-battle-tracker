@@ -104,9 +104,9 @@ function DungeonMasterApp({
 
   const errors = state.errors && state.errors.length > 0;
 
-  const [activeCreatureName, activeCreatureId] = getInitiative(state, true);
-  const [creatures, creatureCount] = getCreatureList(state, true);
-  const round = getRound(state, true);
+  const [activeCreatureName, activeCreatureId] = getInitiative(state);
+  const [creatures, creatureCount] = getCreatureList(state);
+  const round = getRound(state);
   const secondsElapsed = getSecondsElapsed(round);
 
   return (
