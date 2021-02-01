@@ -8,7 +8,6 @@ export default function CreatureStatus({ creature, shared }) {
   const stableMessage = stable ? ['Stable'] : [];
   const sharedMessage = shared ? [] : ['Not shared'];
   const messages = dyingMessage.concat(stableMessage, sharedMessage);
-  console.log(messages);
   const renderStatus = messages.length > 0;
 
   return (renderStatus && (
