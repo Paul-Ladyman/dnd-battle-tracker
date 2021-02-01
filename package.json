@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "npm run build:index && webpack serve --mode development --env development",
-    "build": "npm run build:index && npm run build:react && npm run build:bundle:html",
+    "build": "npm ci && npm run build:index && npm run build:react && npm run build:bundle:html",
     "build:react": "webpack --mode production",
     "build:bundle:html": "node ./scripts/bundle-html.js",
     "build:index": "node ./scripts/create-index.js",
