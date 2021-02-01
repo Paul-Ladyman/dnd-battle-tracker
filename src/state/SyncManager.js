@@ -12,7 +12,6 @@ export function share(state, createBattle, updateBattle, date) {
     variables: {
       battleinput: {
         battleId,
-        creatureCount: state.creatureCount,
         round: state.round,
         creatures: state.creatures,
         activeCreature: state.activeCreature,

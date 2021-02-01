@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
-import { hotkeys } from '../hotkeys/hotkeys';
-import AddCreatureIcon from './icons/AddCreatureIcon';
-import MonsterSearcher from './MonsterSearcher';
+import { hotkeys } from '../../hotkeys/hotkeys';
+import AddCreatureIcon from '../icons/AddCreatureIcon';
+import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from './Input';
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {

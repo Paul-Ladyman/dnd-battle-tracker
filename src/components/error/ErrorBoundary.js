@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from './Footer';
+import Footer from '../page/Footer';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {

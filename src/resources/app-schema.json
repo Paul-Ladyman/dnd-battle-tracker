@@ -7,7 +7,6 @@
   "required": [
     "creatures",
     "creatureIdCount",
-    "creatureCount",
     "round"
   ],
   "properties": {
@@ -179,15 +178,6 @@
       "$id": "#/properties/creatureIdCount",
       "type": "integer",
       "title": "The Creatureidcount Schema",
-      "default": 0,
-      "examples": [
-        2
-      ]
-    },
-    "creatureCount": {
-      "$id": "#/properties/creatureCount",
-      "type": "integer",
-      "title": "The Creaturecount Schema",
       "default": 0,
       "examples": [
         2

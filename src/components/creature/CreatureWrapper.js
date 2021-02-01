@@ -4,9 +4,9 @@ import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
-import CreatureRemover from './CreatureRemover';
-import { getAvailableConditions } from '../state/ConditionsManager';
-import { getHealthBar } from '../display/displayLogic';
+import CreatureRemover from '../buttons/CreatureRemover';
+import { getAvailableConditions } from '../../state/ConditionsManager';
+import { getHealthBar } from '../../display/displayLogic';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
@@ -119,10 +119,12 @@ class CreatureWrapper extends Component {
       name,
       id,
       locked,
+      shared,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
       notes,
       conditions: creatureConditions,
+      alive,
     } = creature;
 
     const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
@@ -130,11 +132,16 @@ class CreatureWrapper extends Component {
 
     const { expanded } = this.state;
 
-    const activeModifier = active ? 'creature-wrapper__active ' : '';
-    const classes = `creature-wrapper ${activeModifier}`;
+    const activeClassModifier = active ? 'creature-wrapper__active' : '';
+    const classes = `creature-wrapper ${activeClassModifier}`;
     const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
-    const { removeCreature, removeNoteFromCreature } = creatureManagement;
+    const {
+      removeCreature,
+      removeNoteFromCreature,
+      toggleCreatureLock,
+      toggleCreatureShare,
+    } = creatureManagement;
 
     const healthPoints = (
       <HealthPoints
@@ -149,9 +156,12 @@ class CreatureWrapper extends Component {
 
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
 
-    const showCreatureRemover = showExpanded && !playerSession && !active;
+    const showCreatureRemover = showExpanded && !playerSession;
 
-    const [leftPercentage, rightPercentage] = getHealthBar(creatureHealthPoints, maxHealthPoints);
+    const [
+      leftPercentage,
+      rightPercentage,
+    ] = getHealthBar(creatureHealthPoints, maxHealthPoints, alive);
 
     return (
       <>
@@ -168,7 +178,9 @@ class CreatureWrapper extends Component {
               creature={creature}
               active={active}
               locked={locked}
-              lockHandler={() => creatureManagement.toggleCreatureLock(id)}
+              lockHandler={() => toggleCreatureLock(id)}
+              shared={shared}
+              shareHandler={() => toggleCreatureShare(id)}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && !alreadyFocused}
@@ -180,7 +192,7 @@ class CreatureWrapper extends Component {
                 <>
                   <ExpandedCreature
                     creature={creature}
-                    active={active}
+                    shared={shared}
                     round={round}
                     secondsElapsed={secondsElapsed}
                     removeCreature={removeCreature}
@@ -203,6 +215,7 @@ class CreatureWrapper extends Component {
             <CreatureRemover
               creature={creature}
               removeCreature={removeCreature}
+              disabled={active}
             />
           )}
         </section>

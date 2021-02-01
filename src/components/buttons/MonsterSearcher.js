@@ -1,7 +1,7 @@
 import React from 'react';
-import ExternalLink from './ExternalLink';
-import MonsterSearchIcon from './icons/MonsterSearchIcon';
-import { getRawName } from '../state/CreatureManager';
+import ExternalLink from '../page/ExternalLink';
+import MonsterSearchIcon from '../icons/MonsterSearchIcon';
+import { getRawName } from '../../state/CreatureManager';
 
 function MonsterSearcher({ search, asButton }) {
   const rawSearch = getRawName(search);

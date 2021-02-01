@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDamageLevel } from '../display/displayLogic';
+import { getDamageLevel } from '../../display/displayLogic';
 
 function HealthPoints({
   short,

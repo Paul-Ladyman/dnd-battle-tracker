@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import BattleToolbar from '../BattleToolbar';
-import Creatures from '../Creatures';
-import Footer from '../Footer';
-import Errors from '../Errors';
-import Title from '../Title';
-import {
-  newBattleState,
-  getInitiative,
-} from '../../state/BattleManager';
+import BattleToolbar from '../page/BattleToolbar';
+import Creatures from '../page/Creatures';
+import Footer from '../page/Footer';
+import Errors from '../error/Errors';
+import Title from '../page/Title';
+import { newBattleState } from '../../state/BattleManager';
+import { getInitiative } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
+import { getCreatureList } from '../../state/CreatureListManager';
 
 // TODO abstract into SyncManager
 function getBattleData(getLoading, getData, syncLoading, syncData) {
@@ -30,11 +29,6 @@ function PlayerApp({
 
   const battleData = getBattleData(getLoading, getData, syncLoading, syncData);
 
-  const secondsElapsed = getSecondsElapsed(battleData);
-  const {
-    creatureCount, round, creatures, activeCreature, focusedCreature,
-  } = battleData;
-
   useEffect(() => {
     if (onlineError || getError || syncError) {
       setErrors(true);
@@ -43,13 +37,17 @@ function PlayerApp({
 
   const loading = !getData && !syncData;
 
+  const [round, activeCreatureName, activeCreatureId] = getInitiative(battleData, true);
+  const [creatures, creatureCount] = getCreatureList(battleData, true);
+  const secondsElapsed = getSecondsElapsed(round);
+
   return (
     <>
       <BattleToolbar
-        initiative={getInitiative(battleData)}
+        initiative={activeCreatureName}
         round={round}
         secondsElapsed={secondsElapsed}
-        creatures={creatureCount}
+        creatureCount={creatureCount}
         playerSession
       />
       { errors && (
@@ -67,8 +65,7 @@ function PlayerApp({
           />
           <Creatures
             creatures={creatures}
-            activeCreature={activeCreature}
-            focusedCreature={focusedCreature}
+            activeCreatureId={activeCreatureId}
             round={round}
             secondsElapsed={secondsElapsed}
             creatureManagement={{}}

@@ -1,13 +1,13 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import StabalizeIcon from './icons/StabalizeIcon';
-import KillIcon from './icons/KillIcon';
-import AddNoteIcon from './icons/AddNoteIcon';
-import HealIcon from './icons/HealIcon';
-import DamageIcon from './icons/DamageIcon';
-import InitiativeIcon from './icons/InitiativeIcon';
-import AddHpIcon from './icons/AddHpIcon';
-import { hotkeys } from '../hotkeys/hotkeys';
+import StabalizeIcon from '../icons/StabalizeIcon';
+import KillIcon from '../icons/KillIcon';
+import AddNoteIcon from '../icons/AddNoteIcon';
+import HealIcon from '../icons/HealIcon';
+import DamageIcon from '../icons/DamageIcon';
+import InitiativeIcon from '../icons/InitiativeIcon';
+import AddHpIcon from '../icons/AddHpIcon';
+import { hotkeys } from '../../hotkeys/hotkeys';
 
 function CreatureToolbar({
   creature,

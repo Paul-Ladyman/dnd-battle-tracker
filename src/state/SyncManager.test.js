@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import { share, handleShareError } from './SyncManager';
 import { updateErrors, dismissErrors } from './AppManager';
+import defaultState from '../../test/fixtures/battle';
 
 jest.mock('nanoid');
 jest.mock('./AppManager');
@@ -8,38 +9,12 @@ jest.mock('./AppManager');
 const createBattleMock = jest.fn();
 const updateBattleMock = jest.fn();
 
-const defaultState = {
-  creatures: [
-    {
-      name: 'Wellby',
-      initiative: 13,
-      id: 0,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: false,
-    },
-  ],
-  creatureIdCount: 3,
-  creatureCount: 3,
-  activeCreature: 1,
-  focusedCreature: 0,
-  round: 1,
-  ariaAnnouncements: [],
-  errors: [],
-  createCreatureErrors: {},
-  battleId: '123',
-  battleCreated: false,
-  shareEnabled: true,
-};
-
 const date = new Date(1605815493000);
 
 const expectedInput = (battleId) => ({
   variables: {
     battleinput: {
       battleId: battleId || defaultState.battleId,
-      creatureCount: defaultState.creatureCount,
       round: defaultState.round,
       creatures: defaultState.creatures,
       activeCreature: defaultState.activeCreature,

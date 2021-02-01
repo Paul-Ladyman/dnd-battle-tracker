@@ -103,6 +103,7 @@ export function createCreature(creatureId, {
     conditions: [],
     notes: [],
     locked: false,
+    shared: true,
   };
 }
 
@@ -136,7 +137,7 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
   const note = {
     text,
     appliedAtRound: state.round,
-    appliedAtSeconds: getSecondsElapsed(state),
+    appliedAtSeconds: getSecondsElapsed(state.round),
   };
   const notes = [...creature.notes, note];
   const ariaAnnouncement = `note added to ${creature.name}`;
@@ -203,6 +204,13 @@ export function toggleCreatureLock(state, creatureId) {
   const newState = creature.locked ? 'unlocked' : 'locked';
   const ariaAnnouncement = `${creature.name} is ${newState}`;
   return updateCreature(state, creatureId, { locked: !creature.locked }, ariaAnnouncement);
+}
+
+export function toggleCreatureShare(state, creatureId) {
+  const creature = findCreature(state.creatures, creatureId);
+  const newState = creature.shared ? 'not shared' : 'shared';
+  const ariaAnnouncement = `${creature.name} is ${newState}`;
+  return updateCreature(state, creatureId, { shared: !creature.shared }, ariaAnnouncement);
 }
 
 export function resetCreature(id, creature) {

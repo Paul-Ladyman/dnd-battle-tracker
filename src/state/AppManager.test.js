@@ -37,7 +37,6 @@ const defaultState = {
     },
   ],
   creatureIdCount: 3,
-  creatureCount: 3,
   activeCreature: 1,
   focusedCreature: 1,
   round: 1,

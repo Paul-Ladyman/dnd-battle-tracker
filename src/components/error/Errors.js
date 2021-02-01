@@ -1,5 +1,5 @@
 import React from 'react';
-import RemoveIcon from './icons/RemoveIcon';
+import RemoveIcon from '../icons/RemoveIcon';
 
 export default function Errors({ errors, dismissErrors }) {
   return (

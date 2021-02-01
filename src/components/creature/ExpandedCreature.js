@@ -1,10 +1,10 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
-import { isCreatureStable } from '../state/CreatureManager';
+import CreatureStatus from './CreatureStatus';
 
 export default function ExpandedCreature({
   creature,
-  active,
+  shared,
   round,
   secondsElapsed,
   removeNoteFromCreature,
@@ -13,23 +13,14 @@ export default function ExpandedCreature({
   playerSession,
 }) {
   const {
-    alive, initiative, id, conditions, notes,
+    initiative, id, conditions, notes,
   } = creature;
   const showInitiative = initiative !== undefined && initiative !== null;
 
   return (
     <>
       <div>
-        {!alive && (
-          <div className="expanded-creature--status">
-            <em>Dying/dead</em>
-          </div>
-        )}
-        {isCreatureStable(creature) && (
-          <div className="expanded-creature--status">
-            <em>Stable</em>
-          </div>
-        )}
+        <CreatureStatus creature={creature} shared={shared} />
         <div className="expanded-creature--separator" />
         {showHealth && healthPoints}
         {showInitiative
@@ -61,7 +52,6 @@ export default function ExpandedCreature({
         secondsElapsed={secondsElapsed}
         playerSession={playerSession}
       />
-      {active && <div style={{ height: '43px' }} />}
     </>
   );
 }

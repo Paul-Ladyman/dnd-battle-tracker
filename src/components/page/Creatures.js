@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
-import CreatureWrapper from './CreatureWrapper';
-import { hotkeys } from '../hotkeys/hotkeys';
+import CreatureWrapper from '../creature/CreatureWrapper';
+import { hotkeys } from '../../hotkeys/hotkeys';
 
 function Creatures({
   creatures,
-  activeCreature,
+  activeCreatureId,
   focusedCreature,
   setFocus,
   round,
@@ -34,10 +34,11 @@ function Creatures({
   return (
     <div className="creature-list">
       {creatures.map((creature, i) => {
-        const active = activeCreature === i;
+        const { id } = creature;
+        const active = activeCreatureId === id;
         const focused = focusedCreature === i;
         return (
-          <React.Fragment key={creature.id}>
+          <React.Fragment key={id}>
             <CreatureWrapper
               creature={creature}
               active={active}

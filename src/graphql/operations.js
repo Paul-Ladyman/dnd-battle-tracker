@@ -16,7 +16,6 @@ const Note = `{
 
 const Battle = `{
   battleId
-  creatureCount
   round
   creatures {
     id
@@ -27,6 +26,7 @@ const Battle = `{
     alive
     conditions ${Condition}
     notes ${Note}
+    shared
   }
   activeCreature
 }`;

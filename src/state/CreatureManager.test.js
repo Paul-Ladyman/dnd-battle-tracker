@@ -10,6 +10,7 @@ import {
   validateCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
+  toggleCreatureShare,
   resetCreature,
   getRawName,
   isCreatureStable,
@@ -28,6 +29,7 @@ const defaultState = {
       conditions: [],
       notes: [],
       locked: false,
+      shared: false,
     },
     {
       name: 'Goblin',
@@ -38,6 +40,7 @@ const defaultState = {
       conditions: [],
       notes: [],
       locked: true,
+      shared: true,
     },
     {
       name: 'Goblin 2',
@@ -49,10 +52,10 @@ const defaultState = {
       conditions: [],
       notes: [],
       locked: false,
+      shared: true,
     },
   ],
   creatureIdCount: 3,
-  creatureCount: 3,
   activeCreature: 1,
   round: 1,
   ariaAnnouncements: [],
@@ -443,6 +446,7 @@ describe('createCreature', () => {
       conditions: [],
       notes: [],
       locked: false,
+      shared: true,
     };
 
     const creature = createCreature(1, { name: 'name', initiative: 13, healthPoints: 10 });
@@ -460,6 +464,7 @@ describe('createCreature', () => {
       conditions: [],
       notes: [],
       locked: false,
+      shared: true,
     };
 
     const creature = createCreature(1, {
@@ -858,6 +863,44 @@ describe('toggleCreatureLock', () => {
     };
 
     const result = toggleCreatureLock(defaultState, 1);
+    expect(result).toEqual(expectedState);
+  });
+});
+
+describe('toggleCreatureShare', () => {
+  it('enables creature share if it is disabled', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          shared: true,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby is shared'],
+    };
+
+    const result = toggleCreatureShare(defaultState, 0);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('disables creature share if it is enabled', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          shared: false,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin is not shared'],
+    };
+
+    const result = toggleCreatureShare(defaultState, 1);
     expect(result).toEqual(expectedState);
   });
 });

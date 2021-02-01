@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
-import CreateCreatureForm from '../CreateCreatureForm';
-import Creatures from '../Creatures';
-import BattleToolbar from '../BattleToolbar';
-import Title from '../Title';
+import CreateCreatureForm from '../page/CreateCreatureForm';
+import Creatures from '../page/Creatures';
+import BattleToolbar from '../page/BattleToolbar';
+import Title from '../page/Title';
 import {
-  nextInitiative,
-  getInitiative,
   nextFocus,
   prevFocus,
   setFocus,
-  removeCreature,
-  addCreature,
   resetBattle,
   toggleSync,
 } from '../../state/BattleManager';
+import {
+  nextInitiative,
+  getInitiative,
+} from '../../state/InitiativeManager';
+import {
+  removeCreature,
+  addCreature,
+  getCreatureList,
+} from '../../state/CreatureListManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import {
   killCreature,
@@ -27,6 +32,7 @@ import {
   addHealthToCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
+  toggleCreatureShare,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -35,8 +41,8 @@ import {
   dismissErrors,
   updateErrors,
 } from '../../state/AppManager';
-import Footer from '../Footer';
-import Errors from '../Errors';
+import Footer from '../page/Footer';
+import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 
 function DungeonMasterApp({
@@ -81,8 +87,6 @@ function DungeonMasterApp({
     if (onlineError) updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
   }, [onlineError]);
 
-  const secondsElapsed = getSecondsElapsed(state);
-
   const creatureManagement = {
     killCreature: updateBattle(killCreature),
     stabalizeCreature: updateBattle(stabalizeCreature),
@@ -94,17 +98,22 @@ function DungeonMasterApp({
     addNoteToCreature: updateBattle(addNoteToCreature),
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
     toggleCreatureLock: updateBattle(toggleCreatureLock, false),
+    toggleCreatureShare: updateBattle(toggleCreatureShare),
   };
 
   const errors = state.errors && state.errors.length > 0;
 
+  const [round, activeCreatureName, activeCreatureId] = getInitiative(state);
+  const [creatures, creatureCount] = getCreatureList(state);
+  const secondsElapsed = getSecondsElapsed(round);
+
   return (
     <>
       <BattleToolbar
-        initiative={getInitiative(state)}
-        round={state.round}
+        initiative={activeCreatureName}
+        round={round}
         secondsElapsed={secondsElapsed}
-        creatures={state.creatureCount}
+        creatureCount={creatureCount}
         nextInitiative={updateBattle(nextInitiative)}
         resetBattle={updateBattle(resetBattle)}
         saveBattle={updateBattle(save, false)}
@@ -133,11 +142,11 @@ function DungeonMasterApp({
             createCreatureErrors={state.createCreatureErrors}
           />
           <Creatures
-            creatures={state.creatures}
-            activeCreature={state.activeCreature}
+            creatures={creatures}
+            activeCreatureId={activeCreatureId}
             focusedCreature={state.focusedCreature}
             setFocus={updateBattle(setFocus, false)}
-            round={state.round}
+            round={round}
             secondsElapsed={secondsElapsed}
             creatureManagement={creatureManagement}
           />
