@@ -10,6 +10,7 @@ import { resetCreature } from './CreatureManager';
 import defaultState from '../../test/fixtures/battle';
 
 jest.mock('./CreatureManager');
+jest.mock('../../package.json', () => ({ version: '1.0.0' }));
 
 beforeEach(() => {
   resetCreature.mockClear();
@@ -29,6 +30,7 @@ describe('newBattleState', () => {
       battleCreated: false,
       shareEnabled: false,
       battleId: undefined,
+      battleTrackerVersion: '1.0.0',
     };
 
     expect(newBattleState).toEqual(expected);
@@ -45,6 +47,7 @@ describe('resetBattle', () => {
       ariaAnnouncements: ['battle reset'],
       errors: [],
       createCreatureErrors: {},
+      battleTrackerVersion: '1.0.0',
     };
 
     expect(resetBattle(defaultState)).toMatchObject(expected);

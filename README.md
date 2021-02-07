@@ -6,9 +6,10 @@ D&D Battle Tracker is a combat tracker tool for Dungeons & Dragons 5th Edition (
 
 The D&D Battle Tracker is designed to run as a single HTML page in the browser (but does not require an internet connection).
 
-You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download the latest release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
+You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download a specific release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v3.0.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v3.0.1/dnd-battle-tracker.html)
+**Latest release (v4.0.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v4.0.0/dnd-battle-tracker.html)
+[List of previous releases](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases)
 
 ## Motivation
 

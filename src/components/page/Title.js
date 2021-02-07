@@ -39,7 +39,7 @@ export default function Title({
     );
   };
 
-  const showSubtitle = shareEnabled || playerSession;
+  const showSubtitle = error || shareEnabled || playerSession;
 
   const titleClasses = `main-title ${showSubtitle ? 'main-title__short' : ''}`;
 

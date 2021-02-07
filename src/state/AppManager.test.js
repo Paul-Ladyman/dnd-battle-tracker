@@ -2,48 +2,9 @@ import {
   save, load, isSaveLoadSupported, dismissErrors, addError, updateErrors,
 } from './AppManager';
 import FileSystem from '../util/fileSystem';
+import defaultState from '../../test/fixtures/battle';
 
 jest.mock('../util/fileSystem');
-
-const defaultState = {
-  creatures: [
-    {
-      name: 'Wellby',
-      initiative: 13,
-      id: 0,
-      alive: true,
-      conditions: [],
-      notes: [],
-    },
-    {
-      name: 'Goblin',
-      initiative: 12,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 1,
-      alive: true,
-      conditions: [],
-      notes: [],
-    },
-    {
-      name: 'Goblin 2',
-      initiative: 10,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 2,
-      alive: true,
-      conditions: [],
-      notes: [],
-    },
-  ],
-  creatureIdCount: 3,
-  activeCreature: 1,
-  focusedCreature: 1,
-  round: 1,
-  ariaAnnouncements: [],
-  errors: [],
-  createCreatureErrors: {},
-};
 
 beforeEach(() => {
   FileSystem.save.mockReset();
@@ -154,10 +115,11 @@ describe('load', () => {
     expect(loadedFileContents).toEqual(expectedFileContents);
   });
 
-  it('sets an error in app state if the loaded file contents do not meet the schema', async () => {
+  it('sets an error in app state if the loaded battle is from a previous major version', async () => {
     expect.assertions(1);
 
-    const fileContents = { fake: 'contents' };
+    const { ariaAnnouncements, ...state } = defaultState;
+    const fileContents = { ...state, battleTrackerVersion: '0.1.0' };
     FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
     const results = await load(defaultState, file);
@@ -165,7 +127,43 @@ describe('load', () => {
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file "fileName" was invalid.'],
+      errors: ['Failed to load battle. The file "fileName" was saved from version 0.1.0 of the battle tracker and is not compatible with the current version, 1.0.0.'],
+    };
+
+    expect(results).toEqual(expectedState);
+  });
+
+  it('sets an error in app state if the loaded battle is from a subsequent major version', async () => {
+    expect.assertions(1);
+
+    const { ariaAnnouncements, ...state } = defaultState;
+    const fileContents = { ...state, battleTrackerVersion: '2.0.0' };
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
+
+    const results = await load(defaultState, file);
+
+    const expectedState = {
+      ...defaultState,
+      ariaAnnouncements: ['failed to load battle'],
+      errors: ['Failed to load battle. The file "fileName" was saved from version 2.0.0 of the battle tracker and is not compatible with the current version, 1.0.0.'],
+    };
+
+    expect(results).toEqual(expectedState);
+  });
+
+  it('sets an error in app state if the loaded battle is from an unknown version', async () => {
+    expect.assertions(1);
+
+    const { ariaAnnouncements, ...state } = defaultState;
+    const fileContents = { ...state, battleTrackerVersion: undefined };
+    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
+
+    const results = await load(defaultState, file);
+
+    const expectedState = {
+      ...defaultState,
+      ariaAnnouncements: ['failed to load battle'],
+      errors: ['Failed to load battle. The file "fileName" was saved from a different version of the battle tracker and is not compatible with the current version, 1.0.0.'],
     };
 
     expect(results).toEqual(expectedState);
