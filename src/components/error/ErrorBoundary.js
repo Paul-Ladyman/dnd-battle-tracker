@@ -1,27 +1,28 @@
 import React from 'react';
 import Footer from '../page/Footer';
+import Title from '../page/Title';
+import BattleTrackerError from './BattleTrackerError';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error) {
+    const errorMessage = error instanceof BattleTrackerError ? error.message : null;
+    return { hasError: true, error: errorMessage };
   }
 
   render() {
-    const { hasError } = this.state;
+    const { hasError, error } = this.state;
     const { children } = this.props;
     if (hasError) {
       return (
         <div className="main-footer-wrapper">
           <main className="main main__error">
-            <h1 className="main-title main-title__short">
-              D&D Battle Tracker
-            </h1>
-            <h2>Something went wrong!</h2>
+            <Title error />
+            { error && <div className="error-panel">{error}</div> }
           </main>
           <Footer error />
         </div>

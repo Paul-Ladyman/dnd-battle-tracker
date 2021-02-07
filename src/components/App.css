@@ -737,6 +737,17 @@ input[type="number"] {
 
 /* Errors */
 
+.error-panel {
+  width: 80%;
+  margin-top: 20px;
+  background-color: red;
+  border: 2px solid #822000;
+  box-shadow: 0 0 5px #979aa4;
+  border-radius: 15px;
+  font-weight: 700;
+  padding: 10px;
+}
+
 .error-bar {
   width: 100%;
   display: flex;
