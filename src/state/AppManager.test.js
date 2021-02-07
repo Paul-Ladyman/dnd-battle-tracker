@@ -154,23 +154,6 @@ describe('load', () => {
     expect(loadedFileContents).toEqual(expectedFileContents);
   });
 
-  it('sets an error in app state if the loaded file contents do not meet the schema', async () => {
-    expect.assertions(1);
-
-    const fileContents = { fake: 'contents' };
-    FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
-
-    const results = await load(defaultState, file);
-
-    const expectedState = {
-      ...defaultState,
-      ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file "fileName" was invalid.'],
-    };
-
-    expect(results).toEqual(expectedState);
-  });
-
   it('sets an error in app state if the loaded file contents are not JSON', async () => {
     expect.assertions(1);
 

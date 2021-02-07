@@ -1,7 +1,4 @@
-import { validate } from 'jsonschema';
 import FileSystem from '../util/fileSystem';
-
-const appSchema = require('../resources/app-schema.json');
 
 export function save(state) {
   const {
@@ -44,17 +41,13 @@ export async function load(state, file) {
   const fileContents = await FileSystem.load(file);
   const loadedState = jsonParse(fileContents);
 
-  const { valid: validSchema } = validate(loadedState, appSchema);
-
-  const validLoadedState = loadedState && validSchema;
-
   const { battleId, battleCreated, shareEnabled } = state;
 
-  const newState = validLoadedState ? loadedState : state;
-  const ariaAnnouncement = validLoadedState ? 'battle loaded' : 'failed to load battle';
-  const error = validLoadedState ? [] : [`Failed to load battle. The file "${file.name}" was invalid.`];
+  const newState = loadedState || state;
+  const ariaAnnouncement = loadedState ? 'battle loaded' : 'failed to load battle';
+  const error = loadedState ? [] : [`Failed to load battle. The file "${file.name}" was invalid.`];
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
-  const errors = validLoadedState ? error : addError(state, error);
+  const errors = loadedState ? error : addError(state, error);
 
   return {
     ...newState,
