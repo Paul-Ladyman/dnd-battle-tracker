@@ -126,6 +126,7 @@ input[type="number"] {
   position: fixed;
   top: 0;
   z-index: 1;
+  box-shadow: 0 0 5px #979aa4;
 }
 
 /*
@@ -759,6 +760,7 @@ input[type="number"] {
   border-bottom: 2px solid #822000;
   justify-content: space-between;
   align-items: flex-start;
+  box-shadow: 0 0 5px #979aa4;
 }
 
 /*
