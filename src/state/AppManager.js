@@ -27,6 +27,12 @@ function jsonParse(value) {
   }
 }
 
+function versionCompatibility(version, loadedVersion) {
+  const majorVersion = version.split('.')[0];
+  const loadedMajorVersion = loadedVersion && loadedVersion.split('.')[0];
+  return majorVersion === loadedMajorVersion;
+}
+
 export function addError(state, errorToAdd) {
   const errorExists = state.errors.find((error) => error === errorToAdd);
 
@@ -37,17 +43,15 @@ export function addError(state, errorToAdd) {
   return state.errors.concat(errorToAdd);
 }
 
-export async function load(state, file) {
-  const fileContents = await FileSystem.load(file);
-  const loadedState = jsonParse(fileContents);
+function getLoadState(oldState, newState, ariaAnnouncement, error) {
+  const {
+    battleId,
+    battleCreated,
+    shareEnabled,
+  } = oldState;
 
-  const { battleId, battleCreated, shareEnabled } = state;
-
-  const newState = loadedState || state;
-  const ariaAnnouncement = loadedState ? 'battle loaded' : 'failed to load battle';
-  const error = loadedState ? [] : [`Failed to load battle. The file "${file.name}" was invalid.`];
-  const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
-  const errors = loadedState ? error : addError(state, error);
+  const ariaAnnouncements = oldState.ariaAnnouncements.concat([ariaAnnouncement]);
+  const errors = error ? addError(oldState, error) : [];
 
   return {
     ...newState,
@@ -58,6 +62,47 @@ export async function load(state, file) {
     errors,
     createCreatureErrors: {},
   };
+}
+
+export async function load(state, file) {
+  const fileContents = await FileSystem.load(file);
+  const loadedState = jsonParse(fileContents);
+
+  if (!loadedState) {
+    return getLoadState(
+      state,
+      state,
+      'failed to load battle',
+      `Failed to load battle. The file "${file.name}" was invalid.`,
+    );
+  }
+
+  const { battleTrackerVersion } = state;
+  const { battleTrackerVersion: loadedBattleTrackerVersion } = loadedState;
+
+  const versionsAreCompatible = versionCompatibility(
+    battleTrackerVersion,
+    loadedBattleTrackerVersion,
+  );
+
+  if (!versionsAreCompatible) {
+    const loadedVersion = loadedBattleTrackerVersion
+      ? `version ${loadedBattleTrackerVersion}`
+      : 'a different version';
+    const error = `The file "${file.name}" was saved from ${loadedVersion} of the battle tracker and is not compatible with the current version, ${battleTrackerVersion}.`;
+    return getLoadState(
+      state,
+      state,
+      'failed to load battle',
+      `Failed to load battle. ${error}`,
+    );
+  }
+
+  return getLoadState(
+    state,
+    loadedState,
+    'battle loaded',
+  );
 }
 
 export function isSaveLoadSupported() {
