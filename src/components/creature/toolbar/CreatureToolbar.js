@@ -1,16 +1,19 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import StatusTool from './StatusTool';
 import HealthPointsTool from './HealthPointsTool';
 import MaxHealthPointsTool from './MaxHealthPointsTool';
+import TemporaryHealthPointsTool from './TemporaryHealthPointsTool';
 import InitiativeTool from './InitiativeTool';
 import ConditionsTool from './ConditionsTool';
 import NotesTool from './NotesTool';
+import NavigationTool from './NavigationTool';
 
 function toolsPageOne({
   creatureManagement,
   creature,
   conditions,
   statusToolRef,
+  navFunc,
 }) {
   const {
     killCreature,
@@ -18,7 +21,6 @@ function toolsPageOne({
     damageCreature,
     healCreature,
     addNoteToCreature,
-    addHealthToCreature,
     addInitiativeToCreature,
   } = creatureManagement;
   const {
@@ -44,13 +46,6 @@ function toolsPageOne({
       damageCreature={damageCreature}
       healCreature={healCreature}
     />,
-    <MaxHealthPointsTool
-      key={`${id}-maxhitpoints-tool`}
-      name={name}
-      id={id}
-      healthPoints={healthPoints}
-      addHealthToCreature={addHealthToCreature}
-    />,
     <InitiativeTool
       key={`${id}-initiative-tool`}
       name={name}
@@ -71,6 +66,45 @@ function toolsPageOne({
       id={id}
       addNoteToCreature={addNoteToCreature}
     />,
+    <NavigationTool
+      key={`${id}-navigation-1-tool`}
+      name={name}
+      navFunc={navFunc}
+    />,
+  ];
+}
+
+function toolsPageTwo({
+  creatureManagement,
+  creature,
+  navFunc,
+}) {
+  const {
+    addHealthToCreature,
+  } = creatureManagement;
+  const {
+    id, name, healthPoints,
+  } = creature;
+
+  return [
+    <NavigationTool
+      key={`${id}-navigation-2-tool`}
+      name={name}
+      navFunc={navFunc}
+      previous
+    />,
+    <MaxHealthPointsTool
+      key={`${id}-maxhitpoints-tool`}
+      name={name}
+      id={id}
+      healthPoints={healthPoints}
+      addHealthToCreature={addHealthToCreature}
+    />,
+    <TemporaryHealthPointsTool
+      key={`${id}-temphitpoints-tool`}
+      name={name}
+      id={id}
+    />,
   ];
 }
 
@@ -80,7 +114,10 @@ function CreatureToolbar({
   creatureManagement,
   focused,
 }) {
+  const [page, setPage] = useState(1);
   const statusToolRef = useRef(null);
+  const isPageOne = page === 1;
+  const isPageTwo = page === 2;
 
   useLayoutEffect(() => {
     if (focused) {
@@ -90,11 +127,18 @@ function CreatureToolbar({
 
   return (
     <div className="creature-toolbar">
-      {toolsPageOne({
+      {isPageOne && toolsPageOne({
         creature,
         conditions,
         creatureManagement,
         statusToolRef,
+        navFunc: () => setPage(2),
+      })}
+      {isPageTwo && toolsPageTwo({
+        creature,
+        conditions,
+        creatureManagement,
+        navFunc: () => setPage(1),
       })}
     </div>
   );
