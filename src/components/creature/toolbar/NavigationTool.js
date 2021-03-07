@@ -3,6 +3,7 @@ import React from 'react';
 export default function NavigationTool({
   name,
   previous,
+  navRef,
   navFunc,
 }) {
   const title = previous ? 'Previous creature tools' : 'Next creature tools';
@@ -16,6 +17,7 @@ export default function NavigationTool({
       title={title}
       onClick={navFunc}
       type="button"
+      ref={navRef}
     >
       {icon}
     </button>

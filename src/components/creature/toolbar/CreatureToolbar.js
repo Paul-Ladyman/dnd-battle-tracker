@@ -77,6 +77,7 @@ function toolsPageOne({
 function toolsPageTwo({
   creatureManagement,
   creature,
+  navRef,
   navFunc,
 }) {
   const {
@@ -90,6 +91,7 @@ function toolsPageTwo({
     <NavigationTool
       key={`${id}-navigation-2-tool`}
       name={name}
+      navRef={navRef}
       navFunc={navFunc}
       previous
     />,
@@ -116,14 +118,16 @@ function CreatureToolbar({
 }) {
   const [page, setPage] = useState(1);
   const statusToolRef = useRef(null);
+  const navRef = useRef(null);
   const isPageOne = page === 1;
   const isPageTwo = page === 2;
 
   useLayoutEffect(() => {
     if (focused) {
-      statusToolRef.current.focus();
+      if (isPageOne) statusToolRef.current.focus();
+      if (isPageTwo) navRef.current.focus();
     }
-  }, [focused]);
+  }, [focused, isPageOne, isPageTwo]);
 
   return (
     <div className="creature-toolbar">
@@ -138,6 +142,7 @@ function CreatureToolbar({
         creature,
         conditions,
         creatureManagement,
+        navRef,
         navFunc: () => setPage(1),
       })}
     </div>
