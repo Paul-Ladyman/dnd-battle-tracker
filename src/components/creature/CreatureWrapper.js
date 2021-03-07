@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
-import CreatureToolbar from './CreatureToolbar';
+import CreatureToolbar from './toolbar/CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from '../buttons/CreatureRemover';
