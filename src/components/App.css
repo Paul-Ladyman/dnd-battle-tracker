@@ -338,7 +338,7 @@ input[type="number"] {
 
 @media only screen and (max-width: 768px) {
   .creature-toolbar {
-    justify-content: center;
+    margin-left: 5px;
   }
 }
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import NextIcon from '../../icons/NextIcon';
+import PreviousIcon from '../../icons/PreviousIcon';
 
 export default function NavigationTool({
   name,
@@ -6,8 +8,8 @@ export default function NavigationTool({
   navRef,
   navFunc,
 }) {
-  const title = previous ? 'Previous creature tools' : 'Next creature tools';
-  const icon = previous ? '<' : '>';
+  const title = previous ? 'Previous creature tools' : 'More creature tools';
+  const icon = previous ? <PreviousIcon /> : <NextIcon />;
   const toolClass = 'creature-toolbar--button';
 
   return (
