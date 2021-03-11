@@ -132,9 +132,10 @@ class CreatureWrapper extends Component {
 
     const { expanded } = this.state;
 
-    const activeClassModifier = active ? 'creature-wrapper__active' : '';
-    const classes = `creature-wrapper ${activeClassModifier}`;
     const showExpanded = active || expanded;
+    const activeClassModifier = active ? 'creature-wrapper__active' : '';
+    const expandedModifier = showExpanded ? 'creature-wrapper__expanded' : '';
+    const classes = `creature-wrapper ${activeClassModifier} ${expandedModifier}`;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
       removeCreature,
@@ -189,19 +190,17 @@ class CreatureWrapper extends Component {
             />
             {showExpanded
               ? (
-                <>
-                  <ExpandedCreature
-                    creature={creature}
-                    shared={shared}
-                    round={round}
-                    secondsElapsed={secondsElapsed}
-                    removeCreature={removeCreature}
-                    removeNoteFromCreature={removeNoteFromCreature}
-                    healthPoints={healthPoints}
-                    showHealth={showHealth}
-                    playerSession={playerSession}
-                  />
-                </>
+                <ExpandedCreature
+                  creature={creature}
+                  shared={shared}
+                  round={round}
+                  secondsElapsed={secondsElapsed}
+                  removeCreature={removeCreature}
+                  removeNoteFromCreature={removeNoteFromCreature}
+                  healthPoints={healthPoints}
+                  showHealth={showHealth}
+                  playerSession={playerSession}
+                />
               )
               : (
                 <CollapsedCreature

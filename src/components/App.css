@@ -204,6 +204,11 @@ input[type="number"] {
   width: 40px;
 }
 
+@keyframes battle-toolbar-options-fadein {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
 .battle-toolbar--options-dropdown {
   border-bottom: 2px solid #822000;
   border-left: 2px solid #822000;
@@ -214,6 +219,9 @@ input[type="number"] {
   padding: 10px 10px;
   background: #ebe2d3;
   margin-top: 10px;
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+  animation-name: battle-toolbar-options-fadein;
 }
 
 /* Input */
@@ -302,6 +310,16 @@ input[type="number"] {
 
 /* Creature toolbar */
 
+@keyframes creature-toolbar-page1-fadein {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
+@keyframes creature-toolbar-page2-fadein {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
 .creature-toolbar {
   grid-gap: 22px;
   grid-row-gap: 10px;
@@ -309,6 +327,16 @@ input[type="number"] {
   grid-template-columns: repeat(auto-fit, 15px);
   grid-auto-rows: 1fr;
   width: 100%;
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+}
+
+.creature-toolbar__page-1 {
+  animation-name: creature-toolbar-page1-fadein;
+}
+
+.creature-toolbar__page-2 {
+  animation-name: creature-toolbar-page2-fadein;
 }
 
 .creature-toolbar--select {
@@ -452,6 +480,17 @@ input[type="number"] {
 .creature-list {
   width: 80%;
   margin-bottom: 40px;
+}
+
+@keyframes creature-list-fadein {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
+.creature-list > * {
+  animation-name: creature-list-fadein;
+  animation-timing-function: ease-in-out;
+  animation-duration: 300ms;
 }
 
 .creature-wrapper {
@@ -602,6 +641,17 @@ input[type="number"] {
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
+}
+
+@keyframes expanded-creature-fadein {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
+.creature--columns> *:not(.creature-title) {
+  animation-name: expanded-creature-fadein;
+  animation-timing-function: ease-in-out;
+  animation-duration: 300ms;
 }
 
 /* Allow more room for buttons in creature box on smaller screen sizes. */

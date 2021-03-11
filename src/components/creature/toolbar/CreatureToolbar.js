@@ -116,10 +116,12 @@ function CreatureToolbar({
   creatureManagement,
   focused,
 }) {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(null);
   const statusToolRef = useRef(null);
   const navRef = useRef(null);
-  const isPageOne = page === 1;
+  const toolbarClass = 'creature-toolbar';
+  const classes = page ? `${toolbarClass} creature-toolbar__page-${page}` : toolbarClass;
+  const isPageOne = page === null || page === 1;
   const isPageTwo = page === 2;
 
   useLayoutEffect(() => {
@@ -130,7 +132,7 @@ function CreatureToolbar({
   }, [focused, isPageOne, isPageTwo]);
 
   return (
-    <div className="creature-toolbar">
+    <div className={classes}>
       {isPageOne && toolsPageOne({
         creature,
         conditions,
