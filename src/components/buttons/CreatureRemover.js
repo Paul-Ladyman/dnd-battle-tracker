@@ -18,7 +18,7 @@ export default function CreatureRemover({
       <button
         aria-label={`remove ${name}`}
         title="Remove creature"
-        className={`expanded-creature--remove-button ${disabledClassModifier}`}
+        className={disabledClassModifier}
         onClick={() => setRemoving(true)}
         type="button"
         disabled={disabled}

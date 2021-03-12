@@ -10,7 +10,8 @@ export default function NavigationTool({
 }) {
   const title = previous ? 'Previous creature tools' : 'More creature tools';
   const icon = previous ? <PreviousIcon /> : <NextIcon />;
-  const toolClass = 'creature-toolbar--button';
+  const buttonClass = 'creature-toolbar--button';
+  const toolClass = `${buttonClass} ${buttonClass}__navigation`;
 
   return (
     <button
