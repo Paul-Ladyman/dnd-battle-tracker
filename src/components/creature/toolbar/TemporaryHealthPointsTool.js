@@ -1,6 +1,6 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import AddHpIcon from '../../icons/AddHpIcon';
+import TempHpIcon from '../../icons/TempHpIcon';
 
 export default function TemporaryHealthPointsTool({
   name,
@@ -11,12 +11,12 @@ export default function TemporaryHealthPointsTool({
       integer
       name="creature-toolbar-temphp"
       min={1}
-      ariaLabel={`add temp hp ${name}`}
-      label="Add Temp HP"
+      ariaLabel={`add/edit temp hp ${name}`}
+      label="Temp HP"
       rightSubmit={(health) => console.log(health)}
       rightControls={{
-        rightTitle: 'Add Temp HP',
-        RightSubmitIcon: <AddHpIcon />,
+        rightTitle: 'Add/Edit Temp HP',
+        RightSubmitIcon: <TempHpIcon />,
       }}
       inputId={`temp-health-${id}`}
     />
