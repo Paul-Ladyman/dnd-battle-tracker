@@ -129,7 +129,12 @@ function CreatureToolbar({
       if (isPageOne) statusToolRef.current.focus();
       if (isPageTwo) navRef.current.focus();
     }
-  }, [focused, isPageOne, isPageTwo]);
+  }, [focused]);
+
+  useLayoutEffect(() => {
+    if (page === 1) statusToolRef.current.focus();
+    if (isPageTwo) navRef.current.focus();
+  }, [page]);
 
   return (
     <div className={classes}>
