@@ -4,8 +4,7 @@ import Timer from './Timer';
 import StartBattleIcon from '../icons/StartBattleIcon';
 import NextInitiativeIcon from '../icons/NextInitiativeIcon';
 import OptionsMenuIcon from '../icons/OptionsMenuIcon';
-import SaveIcon from '../icons/SaveIcon';
-import LoadIcon from '../icons/LoadIcon';
+import SaveLoadIcon from '../icons/SaveLoadIcon';
 import ResetIcon from '../icons/ResetIcon';
 import ShareEnabledIcon from '../icons/ShareEnabledIcon';
 import ShareDisabledIcon from '../icons/ShareDisabledIcon';
@@ -138,7 +137,7 @@ function BattleToolbar({
               onClick={() => { toggleOptions(); saveBattle(); }}
               type="button"
             >
-              <SaveIcon />
+              <SaveLoadIcon />
             </button>
             <input
               type="file"
@@ -154,7 +153,7 @@ function BattleToolbar({
               onClick={() => { toggleOptions(); fileSelector.current.click(); }}
               type="button"
             >
-              <LoadIcon />
+              <SaveLoadIcon load />
             </button>
             <ShareButton />
             <ResetButton />
