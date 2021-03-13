@@ -538,6 +538,8 @@ input[type="number"] {
   border: none;
   box-shadow: none;
   width: auto;
+  height: auto;
+  align-items: baseline;
 }
 
 .creature-expander-button__disabled {
