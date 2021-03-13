@@ -6,8 +6,7 @@ import NextInitiativeIcon from '../icons/NextInitiativeIcon';
 import OptionsMenuIcon from '../icons/OptionsMenuIcon';
 import SaveLoadIcon from '../icons/SaveLoadIcon';
 import ResetIcon from '../icons/ResetIcon';
-import ShareEnabledIcon from '../icons/ShareEnabledIcon';
-import ShareDisabledIcon from '../icons/ShareDisabledIcon';
+import ShareIcon from '../icons/ShareIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../../state/AppManager';
 
@@ -74,7 +73,6 @@ function BattleToolbar({
   );
 
   const ShareButton = () => {
-    const Icon = shareEnabled ? ShareEnabledIcon : ShareDisabledIcon;
     const title = shareEnabled ? 'Disable share' : 'Enable share';
     return (
       <button
@@ -83,7 +81,7 @@ function BattleToolbar({
         onClick={() => { toggleOptions(); toggleShare(); }}
         type="button"
       >
-        <Icon />
+        <ShareIcon enabled={shareEnabled} />
       </button>
     );
   };
