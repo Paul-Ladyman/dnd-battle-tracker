@@ -1,6 +1,6 @@
 import React from 'react';
 import Timer from '../page/Timer';
-import RemoveIcon from '../icons/RemoveIcon';
+import CrossIcon from '../icons/CrossIcon';
 
 export default function Note({
   note,
@@ -38,7 +38,7 @@ export default function Note({
         onClick={() => dismissHandler(creatureId, note)}
         type="button"
       >
-        <RemoveIcon />
+        <CrossIcon rotate />
       </button>
       )}
     </div>

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import { hotkeys } from '../../hotkeys/hotkeys';
-import AddCreatureIcon from '../icons/AddCreatureIcon';
+import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from './Input';
 
@@ -155,7 +155,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           aria-label="Add creature"
           onClick={createCreature}
         >
-          <AddCreatureIcon />
+          <CrossIcon />
         </button>
       </div>
     </form>

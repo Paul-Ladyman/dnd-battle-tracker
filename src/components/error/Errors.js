@@ -1,5 +1,5 @@
 import React from 'react';
-import RemoveIcon from '../icons/RemoveIcon';
+import CrossIcon from '../icons/CrossIcon';
 
 export default function Errors({ errors, dismissErrors }) {
   return (
@@ -22,7 +22,7 @@ export default function Errors({ errors, dismissErrors }) {
         onClick={dismissErrors}
         type="button"
       >
-        <RemoveIcon fill="black" />
+        <CrossIcon fill="black" rotate />
       </button>
     </div>
   );

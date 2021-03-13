@@ -751,7 +751,7 @@ input[type="number"] {
   width: 100%;
   display: flex;
   position: fixed;
-  top: 61px;
+  top: 66px;
   background: red;
   padding: 10px 0;
   border-top: 2px solid #822000;
@@ -759,6 +759,7 @@ input[type="number"] {
   justify-content: space-between;
   align-items: flex-start;
   box-shadow: 0 0 5px #979aa4;
+  z-index: 1;
 }
 
 /*
@@ -791,9 +792,6 @@ input[type="number"] {
 }
 
 .error-bar--dismiss {
-  padding: 4px;
-  height: 40px;
-  width: 40px;
   border: 2px solid black;
   margin-right: 10px;
 }
