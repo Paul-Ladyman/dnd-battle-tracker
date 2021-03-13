@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import RemoveCreatureIcon from '../icons/RemoveCreatureIcon';
-import ConfirmRemoveCreatureIcon from '../icons/ConfirmRemoveCreatureIcon';
 
 export default function CreatureRemover({
   creature,
@@ -36,7 +35,8 @@ export default function CreatureRemover({
         type="button"
         disabled={disabled}
       >
-        <ConfirmRemoveCreatureIcon />
+        <RemoveCreatureIcon />
+        <div>Confirm</div>
       </button>
       )}
     </>

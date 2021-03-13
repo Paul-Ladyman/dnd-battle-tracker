@@ -124,7 +124,7 @@ input[type="number"] {
   justify-content: space-around;
   border-top: 2px solid #822000;
   border-bottom: 2px solid #822000;
-  height: 50px;
+  height: 54px;
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -193,8 +193,6 @@ input[type="number"] {
 }
 
 .battle-toolbar--button {
-  padding: 4px;
-  height: 40px;
   margin-top: 5px;
   display: grid;
 }
@@ -579,7 +577,9 @@ input[type="number"] {
 }
 
 .expanded-creature--confirm-remove-button {
-  min-width: 10%;
+  width: auto;
+  padding: 6px;
+  padding-right: 10px;
 }
 
 .expanded-creature--separator {
@@ -618,13 +618,6 @@ input[type="number"] {
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
-}
-
-/* Allow more room for buttons in creature box on smaller screen sizes. */
-@media only screen and (max-width: 600px) {
-  .expanded-creature--confirm-remove-button {
-    max-width: 40%;
-  }
 }
 
 .collapsed-creature {
