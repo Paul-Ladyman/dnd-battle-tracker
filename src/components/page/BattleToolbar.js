@@ -3,8 +3,7 @@ import isHotkey from 'is-hotkey';
 import Timer from './Timer';
 import StartBattleIcon from '../icons/StartBattleIcon';
 import NextInitiativeIcon from '../icons/NextInitiativeIcon';
-import OptionsMenuClosedIcon from '../icons/OptionsMenuClosedIcon';
-import OptionsMenuOpenIcon from '../icons/OptionsMenuOpenIcon';
+import OptionsMenuIcon from '../icons/OptionsMenuIcon';
 import SaveIcon from '../icons/SaveIcon';
 import LoadIcon from '../icons/LoadIcon';
 import ResetIcon from '../icons/ResetIcon';
@@ -61,7 +60,6 @@ function BattleToolbar({
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
-  const optionsMenuIcon = optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
 
   const ResetButton = () => (
@@ -131,7 +129,7 @@ function BattleToolbar({
             ref={optionsButton}
             type="button"
           >
-            {optionsMenuIcon}
+            <OptionsMenuIcon open={optionsExpanded} />
           </button>
           <div className={optionsClass}>
             <button
