@@ -1,6 +1,5 @@
 import React from 'react';
-import NextIcon from '../../icons/NextIcon';
-import PreviousIcon from '../../icons/PreviousIcon';
+import PageNavigationIcon from '../../icons/PageNavigationIcon';
 
 export default function NavigationTool({
   name,
@@ -9,7 +8,6 @@ export default function NavigationTool({
   navFunc,
 }) {
   const title = previous ? 'Previous creature tools' : 'More creature tools';
-  const icon = previous ? <PreviousIcon /> : <NextIcon />;
   const buttonClass = 'creature-toolbar--button';
   const toolClass = `${buttonClass} ${buttonClass}__navigation`;
 
@@ -22,7 +20,7 @@ export default function NavigationTool({
       type="button"
       ref={navRef}
     >
-      {icon}
+      <PageNavigationIcon previous={previous} />
     </button>
   );
 }
