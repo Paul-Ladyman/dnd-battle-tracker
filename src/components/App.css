@@ -501,7 +501,7 @@ input[type="number"] {
 
 .creature-title {
   display: flex;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
