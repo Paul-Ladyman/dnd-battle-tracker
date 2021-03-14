@@ -24,7 +24,7 @@ function toolsPageOne({
     addInitiativeToCreature,
   } = creatureManagement;
   const {
-    alive, healthPoints, maxHealthPoints, id, name, initiative,
+    alive, healthPoints, maxHealthPoints, temporaryHealthPoints, id, name, initiative,
   } = creature;
 
   return [
@@ -43,6 +43,7 @@ function toolsPageOne({
       id={id}
       healthPoints={healthPoints}
       maxHealthPoints={maxHealthPoints}
+      temporaryHealthPoints={temporaryHealthPoints}
       damageCreature={damageCreature}
       healCreature={healCreature}
     />,

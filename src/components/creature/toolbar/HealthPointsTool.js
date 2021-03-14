@@ -9,11 +9,12 @@ export default function HealthPointsTool({
   id,
   healthPoints,
   maxHealthPoints,
+  temporaryHealthPoints,
   damageCreature,
   healCreature,
 }) {
   const enableHealthTool = healthPoints !== undefined;
-  const enableDamage = healthPoints > 0;
+  const enableDamage = healthPoints > 0 || temporaryHealthPoints > 0;
   const enableHeal = healthPoints < maxHealthPoints;
 
   return enableHealthTool && (

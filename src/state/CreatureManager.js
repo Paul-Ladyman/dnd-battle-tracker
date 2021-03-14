@@ -42,12 +42,12 @@ export function damageCreature(state, creatureId, damage) {
   }
 
   const creature = findCreature(state.creatures, creatureId);
+  let { healthPoints, temporaryHealthPoints } = creature;
 
-  if (!creature.healthPoints) {
+  if (!healthPoints && !temporaryHealthPoints) {
     return state;
   }
 
-  let { temporaryHealthPoints } = creature;
   let remainingDamage = damage;
   if (temporaryHealthPoints !== null) {
     temporaryHealthPoints -= damage;
@@ -58,7 +58,7 @@ export function damageCreature(state, creatureId, damage) {
     }
   }
 
-  let healthPoints = creature.healthPoints - remainingDamage;
+  healthPoints -= remainingDamage;
   let { alive, conditions } = creature;
   if (healthPoints <= 0) {
     healthPoints = 0;
