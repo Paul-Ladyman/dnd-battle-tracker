@@ -98,7 +98,7 @@ export function createCreature(creatureId, {
     initiative,
     healthPoints,
     maxHealthPoints: healthPoints,
-    temporaryHealthPoints: 0,
+    temporaryHealthPoints: null,
     id: creatureId,
     alive: true,
     conditions: [],
@@ -190,7 +190,18 @@ export function addHealthToCreature(state, creatureId, health) {
 }
 
 export function addTemporaryHealthToCreature(state, creatureId, health) {
+  if (health < 0) {
+    return state;
+  }
 
+  const creature = findCreature(state.creatures, creatureId);
+  const ariaAnnouncement = `${creature.name} has ${health} temporary health points`;
+  return updateCreature(
+    state,
+    creatureId,
+    { temporaryHealthPoints: health },
+    ariaAnnouncement,
+  );
 }
 
 export function addInitiativeToCreature(state, creatureId, initiative) {

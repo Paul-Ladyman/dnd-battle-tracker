@@ -122,6 +122,7 @@ class CreatureWrapper extends Component {
       shared,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
+      temporaryHealthPoints,
       notes,
       conditions: creatureConditions,
       alive,
@@ -149,6 +150,7 @@ class CreatureWrapper extends Component {
         short={!showExpanded}
         hp={creatureHealthPoints}
         maxHp={maxHealthPoints}
+        tempHp={temporaryHealthPoints}
         className={showExpanded ? 'expanded-creature--stat' : ''}
         playerSession={playerSession}
       />

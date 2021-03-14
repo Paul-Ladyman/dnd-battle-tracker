@@ -82,6 +82,7 @@ function toolsPageTwo({
 }) {
   const {
     addHealthToCreature,
+    addTemporaryHealthToCreature,
   } = creatureManagement;
   const {
     id, name, healthPoints,
@@ -106,6 +107,8 @@ function toolsPageTwo({
       key={`${id}-temphitpoints-tool`}
       name={name}
       id={id}
+      healthPoints={healthPoints}
+      addTemporaryHealthToCreature={addTemporaryHealthToCreature}
     />,
   ];
 }

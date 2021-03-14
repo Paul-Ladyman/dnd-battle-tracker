@@ -7,6 +7,7 @@ import {
   addNoteToCreature,
   removeNoteFromCreature,
   addHealthToCreature,
+  addTemporaryHealthToCreature,
   validateCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
@@ -398,7 +399,7 @@ describe('createCreature', () => {
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
-      temporaryHealthPoints: 0,
+      temporaryHealthPoints: null,
       id: 1,
       alive: true,
       conditions: [],
@@ -417,7 +418,7 @@ describe('createCreature', () => {
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
-      temporaryHealthPoints: 0,
+      temporaryHealthPoints: null,
       id: 1,
       alive: true,
       conditions: [],
@@ -759,6 +760,67 @@ describe('addHealthToCreature', () => {
 
   it('does nothing to a creature if less than 0 health is added', () => {
     const result = addHealthToCreature(defaultState, 1, -1);
+    expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addTemporaryHealthToCreature', () => {
+  it('adds temporary health to a creature that does not already have it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          temporaryHealthPoints: 10,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby has 10 temporary health points'],
+    };
+
+    const result = addTemporaryHealthToCreature(defaultState, 1, 10);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('overrides temporary health for a creature that already has it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 20,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 20 temporary health points'],
+    };
+
+    const result = addTemporaryHealthToCreature(defaultState, 2, 20);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('allows 0 temporary health to be added to a creature', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          temporaryHealthPoints: 0,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby has 0 temporary health points'],
+    };
+
+    const result = addTemporaryHealthToCreature(defaultState, 1, 0);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature if less than 0 health is added', () => {
+    const result = addTemporaryHealthToCreature(defaultState, 1, -1);
     expect(result).toEqual(defaultState);
   });
 });
