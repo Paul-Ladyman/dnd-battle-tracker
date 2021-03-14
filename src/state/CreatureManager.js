@@ -98,6 +98,7 @@ export function createCreature(creatureId, {
     initiative,
     healthPoints,
     maxHealthPoints: healthPoints,
+    temporaryHealthPoints: 0,
     id: creatureId,
     alive: true,
     conditions: [],
@@ -186,6 +187,10 @@ export function addHealthToCreature(state, creatureId, health) {
     { healthPoints, maxHealthPoints: health },
     ariaAnnouncement,
   );
+}
+
+export function addTemporaryHealthToCreature(state, creatureId, health) {
+
 }
 
 export function addInitiativeToCreature(state, creatureId, initiative) {
