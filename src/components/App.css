@@ -12,6 +12,7 @@ button, .button {
   box-shadow: 0 0 5px #979AA4;
   padding: 0px;
   height: 44px;
+  min-height: 44px;
   width: 44px;
   display: flex;
   align-items: center;
@@ -194,7 +195,6 @@ input[type="number"] {
 
 .battle-toolbar--button {
   margin-top: 5px;
-  display: grid;
 }
 
 .battle-toolbar--button__option {
@@ -284,6 +284,7 @@ input[type="number"] {
   box-shadow: none;
   margin: 0;
   height: 40px;
+  min-height: 40px;
 }
 
 .input--submit__left {
@@ -500,7 +501,6 @@ input[type="number"] {
 
 .creature-title {
   display: flex;
-  align-items: baseline;
   margin-bottom: 5px;
 }
 
@@ -531,7 +531,6 @@ input[type="number"] {
 .creature-header {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 8px;
 }
 
 .creature-expander-button {
@@ -559,6 +558,7 @@ input[type="number"] {
   text-align: left;
   text-transform: capitalize;
   background: transparent;
+  align-items: center;
 }
 
 @media only screen and (max-width: 768px) {
