@@ -47,7 +47,18 @@ export function damageCreature(state, creatureId, damage) {
     return state;
   }
 
-  let healthPoints = creature.healthPoints - damage;
+  let { temporaryHealthPoints } = creature;
+  let remainingDamage = damage;
+  if (temporaryHealthPoints !== null) {
+    temporaryHealthPoints -= damage;
+    remainingDamage = 0;
+    if (temporaryHealthPoints < 0) {
+      remainingDamage = Math.abs(temporaryHealthPoints);
+      temporaryHealthPoints = 0;
+    }
+  }
+
+  let healthPoints = creature.healthPoints - remainingDamage;
   let { alive, conditions } = creature;
   if (healthPoints <= 0) {
     healthPoints = 0;
@@ -55,8 +66,19 @@ export function damageCreature(state, creatureId, damage) {
     conditions = addCondition(allConditions.Unconscious, creature, state.round);
   }
 
-  const ariaAnnouncement = `damaged ${creature.name} by ${damage}. ${creature.name}'s health is ${healthPoints}`;
-  return updateCreature(state, creatureId, { alive, healthPoints, conditions }, ariaAnnouncement);
+  const temporaryHealthPointsAnnouncement = temporaryHealthPoints !== null ? `${creature.name}'s temporary health is ${temporaryHealthPoints}. ` : '';
+  const ariaAnnouncement = `damaged ${creature.name} by ${damage}. ${temporaryHealthPointsAnnouncement}${creature.name}'s health is ${healthPoints}`;
+  return updateCreature(
+    state,
+    creatureId,
+    {
+      alive,
+      healthPoints,
+      temporaryHealthPoints,
+      conditions,
+    },
+    ariaAnnouncement,
+  );
 }
 
 export function healCreature(state, creatureId, health) {
