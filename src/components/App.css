@@ -501,7 +501,6 @@ input[type="number"] {
 
 .creature-title {
   display: flex;
-  margin-bottom: 10px;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -628,7 +627,7 @@ input[type="number"] {
 
 .collapsed-creature--status {
   display: flex;
-  margin: 4px 0 4px 0;
+  margin-top: 5px;
   color: black;
   font-style: italic;
 }
