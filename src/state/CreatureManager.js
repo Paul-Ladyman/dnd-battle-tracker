@@ -42,12 +42,23 @@ export function damageCreature(state, creatureId, damage) {
   }
 
   const creature = findCreature(state.creatures, creatureId);
+  let { healthPoints, temporaryHealthPoints } = creature;
 
-  if (!creature.healthPoints) {
+  if (!healthPoints && !temporaryHealthPoints) {
     return state;
   }
 
-  let healthPoints = creature.healthPoints - damage;
+  let remainingDamage = damage;
+  if (temporaryHealthPoints !== null) {
+    temporaryHealthPoints -= damage;
+    remainingDamage = 0;
+    if (temporaryHealthPoints < 0) {
+      remainingDamage = Math.abs(temporaryHealthPoints);
+      temporaryHealthPoints = 0;
+    }
+  }
+
+  healthPoints -= remainingDamage;
   let { alive, conditions } = creature;
   if (healthPoints <= 0) {
     healthPoints = 0;
@@ -55,8 +66,19 @@ export function damageCreature(state, creatureId, damage) {
     conditions = addCondition(allConditions.Unconscious, creature, state.round);
   }
 
-  const ariaAnnouncement = `damaged ${creature.name} by ${damage}. ${creature.name}'s health is ${healthPoints}`;
-  return updateCreature(state, creatureId, { alive, healthPoints, conditions }, ariaAnnouncement);
+  const temporaryHealthPointsAnnouncement = temporaryHealthPoints !== null ? `${creature.name}'s temporary health is ${temporaryHealthPoints}. ` : '';
+  const ariaAnnouncement = `damaged ${creature.name} by ${damage}. ${temporaryHealthPointsAnnouncement}${creature.name}'s health is ${healthPoints}`;
+  return updateCreature(
+    state,
+    creatureId,
+    {
+      alive,
+      healthPoints,
+      temporaryHealthPoints,
+      conditions,
+    },
+    ariaAnnouncement,
+  );
 }
 
 export function healCreature(state, creatureId, health) {
@@ -98,6 +120,7 @@ export function createCreature(creatureId, {
     initiative,
     healthPoints,
     maxHealthPoints: healthPoints,
+    temporaryHealthPoints: null,
     id: creatureId,
     alive: true,
     conditions: [],
@@ -184,6 +207,21 @@ export function addHealthToCreature(state, creatureId, health) {
     state,
     creatureId,
     { healthPoints, maxHealthPoints: health },
+    ariaAnnouncement,
+  );
+}
+
+export function addTemporaryHealthToCreature(state, creatureId, health) {
+  if (health < 0) {
+    return state;
+  }
+
+  const creature = findCreature(state.creatures, creatureId);
+  const ariaAnnouncement = `${creature.name} has ${health} temporary health points`;
+  return updateCreature(
+    state,
+    creatureId,
+    { temporaryHealthPoints: health },
     ariaAnnouncement,
   );
 }

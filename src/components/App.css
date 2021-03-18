@@ -6,11 +6,18 @@ body {
 button, .button {
   cursor: pointer;
   border: 2px solid #822000;
-  padding: 10px;
   font-weight: bold; 
   background-color: #EBE1AD;
   border-radius: 15px;
   box-shadow: 0 0 5px #979AA4;
+  padding: 0px;
+  height: 44px;
+  min-height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .button__disabled {
@@ -57,7 +64,7 @@ a:hover {
   display: flex;
   align-items: center;
   flex-flow: column;
-  padding-top: 44px;
+  padding-top: 48px;
   width: 100%;
 }
 
@@ -118,7 +125,7 @@ input[type="number"] {
   justify-content: space-around;
   border-top: 2px solid #822000;
   border-bottom: 2px solid #822000;
-  height: 50px;
+  height: 54px;
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -187,10 +194,7 @@ input[type="number"] {
 }
 
 .battle-toolbar--button {
-  padding: 4px;
-  height: 40px;
   margin-top: 5px;
-  display: grid;
 }
 
 .battle-toolbar--button__option {
@@ -279,6 +283,8 @@ input[type="number"] {
   border: none;
   box-shadow: none;
   margin: 0;
+  height: 40px;
+  min-height: 40px;
 }
 
 .input--submit__left {
@@ -302,6 +308,16 @@ input[type="number"] {
 
 /* Creature toolbar */
 
+@keyframes creature-toolbar-page1-fadein {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
+@keyframes creature-toolbar-page2-fadein {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
 .creature-toolbar {
   grid-gap: 22px;
   grid-row-gap: 10px;
@@ -309,6 +325,16 @@ input[type="number"] {
   grid-template-columns: repeat(auto-fit, 15px);
   grid-auto-rows: 1fr;
   width: 100%;
+  animation-duration: 400ms;
+  animation-timing-function: ease-in-out;
+}
+
+.creature-toolbar__page-1 {
+  animation-name: creature-toolbar-page1-fadein;
+}
+
+.creature-toolbar__page-2 {
+  animation-name: creature-toolbar-page2-fadein;
 }
 
 .creature-toolbar--select {
@@ -318,9 +344,14 @@ input[type="number"] {
 }
 
 .creature-toolbar--button {
-  padding: 5px;
-  margin-top: 23px;
+  margin-top: 27px;
   grid-column: span 2;
+}
+
+.creature-toolbar--button__navigation {
+  border: none;
+  background: none;
+  box-shadow: none;
 }
 
 .creature-toolbar--button__dead {
@@ -338,7 +369,7 @@ input[type="number"] {
 
 @media only screen and (max-width: 768px) {
   .creature-toolbar {
-    justify-content: center;
+    margin-left: 5px;
   }
 }
 
@@ -383,8 +414,6 @@ input[type="number"] {
 }
 
 .create-creature-form--submit {
-  height: 44px;
-  padding: 4px;
   grid-column: span 2;
 }
 
@@ -443,7 +472,6 @@ input[type="number"] {
 
   .create-creature-form--submit {
     grid-column: 4 / span 2;
-    width: 60px;
   }
 }
 
@@ -473,8 +501,6 @@ input[type="number"] {
 
 .creature-title {
   display: flex;
-  align-items: baseline;
-  margin-bottom: 5px;
 }
 
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
@@ -504,14 +530,14 @@ input[type="number"] {
 .creature-header {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 8px;
 }
 
 .creature-expander-button {
   border: none;
   box-shadow: none;
-  padding: 0px;
-  display: flex;
+  width: auto;
+  height: auto;
+  align-items: baseline;
 }
 
 .creature-expander-button__disabled {
@@ -531,6 +557,7 @@ input[type="number"] {
   text-align: left;
   text-transform: capitalize;
   background: transparent;
+  align-items: center;
 }
 
 @media only screen and (max-width: 768px) {
@@ -550,20 +577,10 @@ input[type="number"] {
   color: #822000;
 }
 
-.expanded-creature--remove-button {
-  max-width: 20%;
-  padding: 4px;
-  height: 43px;
-}
-
 .expanded-creature--confirm-remove-button {
-  max-width: 20%;
-  padding: 4px;
-  height: 43px;
-  min-width: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: auto;
+  padding: 6px;
+  padding-right: 10px;
 }
 
 .expanded-creature--separator {
@@ -604,20 +621,13 @@ input[type="number"] {
   break-inside: avoid;
 }
 
-/* Allow more room for buttons in creature box on smaller screen sizes. */
-@media only screen and (max-width: 600px) {
-  .expanded-creature--confirm-remove-button {
-    max-width: 40%;
-  }
-}
-
 .collapsed-creature {
   width: 100%;
 }
 
 .collapsed-creature--status {
   display: flex;
-  margin: 4px 0 4px 0;
+  margin-top: 5px;
   color: black;
   font-style: italic;
 }
@@ -680,7 +690,6 @@ input[type="number"] {
   margin-right: 15%;
   margin-left: 5px;
   padding: 4px;
-  display: flex;
 }
 
 @media only screen and (max-width: 768px) {
@@ -696,7 +705,6 @@ input[type="number"] {
 
 .creature-title-button {
   padding: 4px;
-  display: flex;
   margin-left: 10px;
 }
 
@@ -742,7 +750,7 @@ input[type="number"] {
   width: 100%;
   display: flex;
   position: fixed;
-  top: 61px;
+  top: 66px;
   background: red;
   padding: 10px 0;
   border-top: 2px solid #822000;
@@ -750,6 +758,7 @@ input[type="number"] {
   justify-content: space-between;
   align-items: flex-start;
   box-shadow: 0 0 5px #979aa4;
+  z-index: 1;
 }
 
 /*
@@ -782,9 +791,6 @@ input[type="number"] {
 }
 
 .error-bar--dismiss {
-  padding: 4px;
-  height: 40px;
-  width: 40px;
   border: 2px solid black;
   margin-right: 10px;
 }

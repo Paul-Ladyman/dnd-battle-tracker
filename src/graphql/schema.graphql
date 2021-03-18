@@ -24,12 +24,13 @@ type Creature @aws_api_key @aws_iam {
   initiative: Int
   healthPoints: Int
   maxHealthPoints: Int
+  temporaryHealthPoints: Int
   id: Int!
   alive: Boolean!
   conditions: [Condition!]
   notes: [Note!]
   locked: Boolean!
-  shared: Boolean
+  shared: Boolean!
 }
 
 type Battle @aws_api_key @aws_iam {
@@ -60,12 +61,13 @@ input CreatureInput @aws_api_key @aws_iam {
   initiative: Int
   healthPoints: Int
   maxHealthPoints: Int
+  temporaryHealthPoints: Int
   id: Int!
   alive: Boolean!
   conditions: [ConditionInput!]
   notes: [NoteInput!]
   locked: Boolean!
-  shared: Boolean
+  shared: Boolean!
 }
 
 input BattleInput @aws_api_key @aws_iam {

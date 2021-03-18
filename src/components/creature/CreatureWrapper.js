@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
-import CreatureToolbar from './CreatureToolbar';
+import CreatureToolbar from './toolbar/CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from '../buttons/CreatureRemover';
@@ -122,6 +122,7 @@ class CreatureWrapper extends Component {
       shared,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
+      temporaryHealthPoints,
       notes,
       conditions: creatureConditions,
       alive,
@@ -132,9 +133,9 @@ class CreatureWrapper extends Component {
 
     const { expanded } = this.state;
 
+    const showExpanded = active || expanded;
     const activeClassModifier = active ? 'creature-wrapper__active' : '';
     const classes = `creature-wrapper ${activeClassModifier}`;
-    const showExpanded = active || expanded;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
       removeCreature,
@@ -148,6 +149,7 @@ class CreatureWrapper extends Component {
         short={!showExpanded}
         hp={creatureHealthPoints}
         maxHp={maxHealthPoints}
+        tempHp={temporaryHealthPoints}
         className={showExpanded ? 'expanded-creature--stat' : ''}
         playerSession={playerSession}
       />
@@ -189,19 +191,17 @@ class CreatureWrapper extends Component {
             />
             {showExpanded
               ? (
-                <>
-                  <ExpandedCreature
-                    creature={creature}
-                    shared={shared}
-                    round={round}
-                    secondsElapsed={secondsElapsed}
-                    removeCreature={removeCreature}
-                    removeNoteFromCreature={removeNoteFromCreature}
-                    healthPoints={healthPoints}
-                    showHealth={showHealth}
-                    playerSession={playerSession}
-                  />
-                </>
+                <ExpandedCreature
+                  creature={creature}
+                  shared={shared}
+                  round={round}
+                  secondsElapsed={secondsElapsed}
+                  removeCreature={removeCreature}
+                  removeNoteFromCreature={removeNoteFromCreature}
+                  healthPoints={healthPoints}
+                  showHealth={showHealth}
+                  playerSession={playerSession}
+                />
               )
               : (
                 <CollapsedCreature

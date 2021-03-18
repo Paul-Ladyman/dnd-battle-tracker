@@ -1,7 +1,7 @@
 import React from 'react';
 import Timer from '../page/Timer';
 import ExternalLink from '../page/ExternalLink';
-import RemoveIcon from '../icons/RemoveIcon';
+import CrossIcon from '../icons/CrossIcon';
 
 export default function Condition({
   condition,
@@ -31,7 +31,7 @@ export default function Condition({
         onClick={() => dismissHandler(creatureId, condition)}
         type="button"
       >
-        <RemoveIcon />
+        <CrossIcon rotate />
       </button>
       )}
     </div>

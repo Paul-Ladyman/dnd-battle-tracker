@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download a specific release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v4.0.3):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v4.0.3/dnd-battle-tracker.html)
+**Latest release (v5.0.0):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v5.0.0/dnd-battle-tracker.html)
 [List of previous releases](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases)
 
 ## Motivation
@@ -75,11 +75,14 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Trash can](https://game-icons.net/1x1/delapouite/trash-can.html)
   * [Pencil](https://game-icons.net/1x1/delapouite/pencil.html)
   * [Player time](https://game-icons.net/1x1/delapouite/player-time.html)
+  * [Next button](https://game-icons.net/1x1/delapouite/next-button.html)
+  * [Previous button](https://game-icons.net/1x1/delapouite/previous-button.html)
 * Icons by [Lorc](http://lorcblog.blogspot.com/):
   * [Magnifying glass](https://game-icons.net/1x1/lorc/magnifying-glass.html)
   * [Crossed swords](https://game-icons.net/1x1/lorc/crossed-swords.html)
   * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
   * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
+  * [Charm](https://game-icons.net/1x1/lorc/charm.html)
 
 ### Fonts
 

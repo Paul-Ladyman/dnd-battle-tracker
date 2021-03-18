@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import RemoveCreatureIcon from '../icons/RemoveCreatureIcon';
-import ConfirmRemoveCreatureIcon from '../icons/ConfirmRemoveCreatureIcon';
 
 export default function CreatureRemover({
   creature,
@@ -18,7 +17,7 @@ export default function CreatureRemover({
       <button
         aria-label={`remove ${name}`}
         title="Remove creature"
-        className={`expanded-creature--remove-button ${disabledClassModifier}`}
+        className={disabledClassModifier}
         onClick={() => setRemoving(true)}
         type="button"
         disabled={disabled}
@@ -36,7 +35,8 @@ export default function CreatureRemover({
         type="button"
         disabled={disabled}
       >
-        <ConfirmRemoveCreatureIcon />
+        <RemoveCreatureIcon />
+        <div>Confirm</div>
       </button>
       )}
     </>

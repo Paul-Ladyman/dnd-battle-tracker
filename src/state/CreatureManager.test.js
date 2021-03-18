@@ -7,6 +7,7 @@ import {
   addNoteToCreature,
   removeNoteFromCreature,
   addHealthToCreature,
+  addTemporaryHealthToCreature,
   validateCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
@@ -16,52 +17,9 @@ import {
   isCreatureStable,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
+import defaultState from '../../test/fixtures/battle';
 
 jest.mock('./ConditionsManager');
-
-const defaultState = {
-  creatures: [
-    {
-      name: 'Wellby',
-      initiative: 13,
-      id: 0,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: false,
-      shared: false,
-    },
-    {
-      name: 'Goblin',
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 1,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: true,
-      shared: true,
-    },
-    {
-      name: 'Goblin 2',
-      initiative: 12,
-      healthPoints: 10,
-      maxHealthPoints: 10,
-      id: 2,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: false,
-      shared: true,
-    },
-  ],
-  creatureIdCount: 3,
-  activeCreature: 1,
-  round: 1,
-  ariaAnnouncements: [],
-  errors: [],
-  createCreatureErrors: {},
-};
 
 const unconsciousCondition = [{ text: 'Unconscious' }];
 
@@ -87,10 +45,10 @@ describe('killCreature', () => {
       ariaAnnouncements: ['Wellby killed/made unconscious'],
     };
 
-    const result = killCreature(defaultState, 0);
+    const result = killCreature(defaultState, 1);
     expect(result).toEqual(expected);
     expect(addCondition).toHaveBeenCalledTimes(1);
-    expect(addCondition).toHaveBeenCalledWith('Unconscious', defaultState.creatures[0], 1);
+    expect(addCondition).toHaveBeenCalledWith('Unconscious', defaultState.creatures[0], 0);
   });
 
   test('it kills a creature and sets its health points to 0 if it has them', () => {
@@ -106,10 +64,10 @@ describe('killCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin killed/made unconscious'],
+      ariaAnnouncements: ['Goblin #1 killed/made unconscious'],
     };
 
-    const result = killCreature(defaultState, 1);
+    const result = killCreature(defaultState, 2);
     expect(result).toEqual(expected);
   });
 });
@@ -140,10 +98,10 @@ describe('stabalizeCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin stabalized'],
+      ariaAnnouncements: ['Goblin #1 stabalized'],
     };
 
-    expect(stabalizeCreature(state, 1)).toEqual(expected);
+    expect(stabalizeCreature(state, 2)).toEqual(expected);
   });
 
   test('it stabalizes a creature who is dead with no hit points', () => {
@@ -172,7 +130,7 @@ describe('stabalizeCreature', () => {
       ariaAnnouncements: ['Wellby stabalized'],
     };
 
-    expect(stabalizeCreature(state, 0)).toEqual(expected);
+    expect(stabalizeCreature(state, 1)).toEqual(expected);
   });
 
   test('it stabalizes a creature who is already alive', () => {
@@ -180,16 +138,174 @@ describe('stabalizeCreature', () => {
       ...defaultState,
       ariaAnnouncements: ['Wellby stabalized'],
     };
-    expect(stabalizeCreature(defaultState, 0)).toEqual(expected);
+    expect(stabalizeCreature(defaultState, 1)).toEqual(expected);
   });
 });
 
 describe('damageCreature', () => {
   test('it does nothing if a creature has no health points', () => {
-    expect(damageCreature(defaultState, 0, 5)).toEqual(defaultState);
+    expect(damageCreature(defaultState, 1, 5)).toEqual(defaultState);
   });
 
-  test('it does nothing to an already dead creature', () => {
+  test('it does nothing to an already dead creature without temporary health points', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        {
+          ...defaultState.creatures[2],
+          healthPoints: 0,
+          alive: false,
+        },
+      ],
+    };
+
+    expect(damageCreature(state, 3, 5)).toEqual(state);
+  });
+
+  test('it does nothing to an already dead creature with 0 temporary health points', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        {
+          ...defaultState.creatures[2],
+          healthPoints: 0,
+          temporaryHealthPoints: 0,
+          alive: false,
+        },
+      ],
+    };
+
+    expect(damageCreature(state, 3, 5)).toEqual(state);
+  });
+
+  test('it does nothing if the damage is negative', () => {
+    expect(damageCreature(defaultState, 2, -1)).toEqual(defaultState);
+  });
+
+  test('it removes health points from a creature', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        defaultState.creatures[1],
+        {
+          ...defaultState.creatures[2],
+          healthPoints: 5,
+        },
+      ],
+      ariaAnnouncements: ['damaged Goblin #2 by 5. Goblin #2\'s health is 5'],
+    };
+
+    expect(damageCreature(defaultState, 3, 5)).toEqual(expected);
+  });
+
+  test('it removes temporary health points first', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['damaged Goblin #1 by 5. Goblin #1\'s temporary health is 5. Goblin #1\'s health is 10'],
+    };
+
+    expect(damageCreature(defaultState, 2, 5)).toEqual(expected);
+  });
+
+  test('it removes all temporary health points before health points', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 0,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['damaged Goblin #1 by 10. Goblin #1\'s temporary health is 0. Goblin #1\'s health is 10'],
+    };
+
+    expect(damageCreature(defaultState, 2, 10)).toEqual(expected);
+  });
+
+  test('it removes health points once temporary health points are down to 0', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 0,
+          healthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['damaged Goblin #1 by 15. Goblin #1\'s temporary health is 0. Goblin #1\'s health is 5'],
+    };
+
+    expect(damageCreature(defaultState, 2, 15)).toEqual(expected);
+  });
+
+  test('it removes health points if temporary health points are already 0', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 0,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 0,
+          healthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['damaged Goblin #1 by 5. Goblin #1\'s temporary health is 0. Goblin #1\'s health is 5'],
+    };
+
+    expect(damageCreature(state, 2, 5)).toEqual(expected);
+  });
+
+  test('kills a creature with temporary health if enough damage is done', () => {
+    const expected = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 0,
+          healthPoints: 0,
+          alive: false,
+          conditions: unconsciousCondition,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['damaged Goblin #1 by 20. Goblin #1\'s temporary health is 0. Goblin #1\'s health is 0'],
+    };
+
+    expect(damageCreature(defaultState, 2, 20)).toEqual(expected);
+  });
+
+  test('it removes temporary health points from an already dead creature', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -198,33 +314,26 @@ describe('damageCreature', () => {
           ...defaultState.creatures[1],
           healthPoints: 0,
           alive: false,
+          conditions: unconsciousCondition,
         },
         defaultState.creatures[2],
       ],
     };
 
-    expect(damageCreature(state, 1, 5)).toEqual(state);
-  });
-
-  test('it does nothing if the damage is negative', () => {
-    expect(damageCreature(defaultState, 1, -1)).toEqual(defaultState);
-  });
-
-  test('it removes health points from a creature', () => {
     const expected = {
-      ...defaultState,
+      ...state,
       creatures: [
-        defaultState.creatures[0],
+        state.creatures[0],
         {
-          ...defaultState.creatures[1],
-          healthPoints: 5,
+          ...state.creatures[1],
+          temporaryHealthPoints: 5,
         },
-        defaultState.creatures[2],
+        state.creatures[2],
       ],
-      ariaAnnouncements: ['damaged Goblin by 5. Goblin\'s health is 5'],
+      ariaAnnouncements: ['damaged Goblin #1 by 5. Goblin #1\'s temporary health is 5. Goblin #1\'s health is 0'],
     };
 
-    expect(damageCreature(defaultState, 1, 5)).toEqual(expected);
+    expect(damageCreature(state, 2, 5)).toEqual(expected);
   });
 
   test('it kills a creature if it drops to 0 health points', () => {
@@ -232,18 +341,18 @@ describe('damageCreature', () => {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
+        defaultState.creatures[1],
         {
-          ...defaultState.creatures[1],
+          ...defaultState.creatures[2],
           healthPoints: 0,
           alive: false,
           conditions: unconsciousCondition,
         },
-        defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['damaged Goblin by 10. Goblin\'s health is 0'],
+      ariaAnnouncements: ['damaged Goblin #2 by 10. Goblin #2\'s health is 0'],
     };
 
-    expect(damageCreature(defaultState, 1, 10)).toEqual(expected);
+    expect(damageCreature(defaultState, 3, 10)).toEqual(expected);
   });
 
   test('it kills a creature and sets its HP to 0 if it drops below 0 health points', () => {
@@ -251,36 +360,36 @@ describe('damageCreature', () => {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
+        defaultState.creatures[1],
         {
-          ...defaultState.creatures[1],
+          ...defaultState.creatures[2],
           healthPoints: 0,
           alive: false,
           conditions: unconsciousCondition,
         },
-        defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['damaged Goblin by 100. Goblin\'s health is 0'],
+      ariaAnnouncements: ['damaged Goblin #2 by 100. Goblin #2\'s health is 0'],
     };
 
-    expect(damageCreature(defaultState, 1, 100)).toEqual(expected);
+    expect(damageCreature(defaultState, 3, 100)).toEqual(expected);
   });
 });
 
 describe('healCreature', () => {
   test('it does nothing if a creature has no health points', () => {
-    expect(healCreature(defaultState, 0, 5)).toEqual(defaultState);
+    expect(healCreature(defaultState, 1, 5)).toEqual(defaultState);
   });
 
   test('it does nothing to a fully healed creature', () => {
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['healed Goblin by 5. Goblin\'s health is 10'],
+      ariaAnnouncements: ['healed Goblin #1 by 5. Goblin #1\'s health is 10'],
     };
-    expect(healCreature(defaultState, 1, 5)).toEqual(expectedState);
+    expect(healCreature(defaultState, 2, 5)).toEqual(expectedState);
   });
 
   test('it does nothing if the damage is negative', () => {
-    expect(healCreature(defaultState, 1, -1)).toEqual(defaultState);
+    expect(healCreature(defaultState, 2, -1)).toEqual(defaultState);
   });
 
   test('it adds health points to a creature', () => {
@@ -298,10 +407,10 @@ describe('healCreature', () => {
 
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['healed Goblin by 5. Goblin\'s health is 10'],
+      ariaAnnouncements: ['healed Goblin #1 by 5. Goblin #1\'s health is 10'],
     };
 
-    expect(healCreature(state, 1, 5)).toEqual(expectedState);
+    expect(healCreature(state, 2, 5)).toEqual(expectedState);
   });
 
   test('it does not exceed a creature\'s maximum health points', () => {
@@ -319,10 +428,10 @@ describe('healCreature', () => {
 
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['healed Goblin by 10. Goblin\'s health is 10'],
+      ariaAnnouncements: ['healed Goblin #1 by 10. Goblin #1\'s health is 10'],
     };
 
-    expect(healCreature(state, 1, 10)).toEqual(expectedState);
+    expect(healCreature(state, 2, 10)).toEqual(expectedState);
   });
 
   test('it stabalizes a creature if it was dead and removes the unconscious condition', () => {
@@ -351,10 +460,10 @@ describe('healCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['healed Goblin by 1. Goblin\'s health is 1'],
+      ariaAnnouncements: ['healed Goblin #1 by 1. Goblin #1\'s health is 1'],
     };
 
-    expect(healCreature(state, 1, 1)).toEqual(expected);
+    expect(healCreature(state, 2, 1)).toEqual(expected);
     expect(removeCondition).toHaveBeenCalledTimes(1);
     expect(removeCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1]);
   });
@@ -383,10 +492,10 @@ describe('healCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['healed Goblin by 1. Goblin\'s health is 1'],
+      ariaAnnouncements: ['healed Goblin #1 by 1. Goblin #1\'s health is 1'],
     };
 
-    expect(healCreature(state, 1, 1)).toEqual(expected);
+    expect(healCreature(state, 2, 1)).toEqual(expected);
     expect(removeCondition).toHaveBeenCalledTimes(1);
     expect(removeCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1]);
   });
@@ -415,10 +524,10 @@ describe('healCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['healed Goblin by 5. Goblin\'s health is 10'],
+      ariaAnnouncements: ['healed Goblin #1 by 5. Goblin #1\'s health is 10'],
     };
 
-    expect(healCreature(state, 1, 5)).toEqual(expectedState);
+    expect(healCreature(state, 2, 5)).toEqual(expectedState);
   });
 });
 
@@ -441,6 +550,7 @@ describe('createCreature', () => {
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
+      temporaryHealthPoints: null,
       id: 1,
       alive: true,
       conditions: [],
@@ -459,6 +569,7 @@ describe('createCreature', () => {
       initiative: 13,
       healthPoints: 10,
       maxHealthPoints: 10,
+      temporaryHealthPoints: null,
       id: 1,
       alive: true,
       conditions: [],
@@ -545,7 +656,7 @@ describe('addNoteToCreature', () => {
       round: 2,
     };
 
-    const result = addNoteToCreature(state, 1, 'some note', false);
+    const result = addNoteToCreature(state, 2, 'some note', false);
 
     const expectedNote = {
       text: 'some note',
@@ -565,7 +676,7 @@ describe('addNoteToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['note added to Goblin'],
+      ariaAnnouncements: ['note added to Goblin #1'],
     };
     expect(result).toEqual(expectedState);
   });
@@ -576,7 +687,7 @@ describe('addNoteToCreature', () => {
       round: 2,
     };
 
-    const result = addNoteToCreature(state, 1, 'Unconscious', true);
+    const result = addNoteToCreature(state, 2, 'Unconscious', true);
 
     const expectedState = {
       ...state,
@@ -588,7 +699,7 @@ describe('addNoteToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Unconscious condition added to Goblin'],
+      ariaAnnouncements: ['Unconscious condition added to Goblin #1'],
     };
     expect(result).toEqual(expectedState);
     expect(addCondition).toHaveBeenCalledTimes(1);
@@ -617,10 +728,10 @@ describe('removeNoteFromCreature', () => {
 
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['note removed from Goblin'],
+      ariaAnnouncements: ['note removed from Goblin #1'],
     };
 
-    const result = removeNoteFromCreature(state, 1, note, false);
+    const result = removeNoteFromCreature(state, 2, note, false);
 
     expect(result).toEqual(expectedState);
   });
@@ -666,10 +777,10 @@ describe('removeNoteFromCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['note removed from Goblin'],
+      ariaAnnouncements: ['note removed from Goblin #1'],
     };
 
-    const result = removeNoteFromCreature(state, 1, note, false);
+    const result = removeNoteFromCreature(state, 2, note, false);
 
     expect(result).toEqual(expectedState);
   });
@@ -697,10 +808,10 @@ describe('removeNoteFromCreature', () => {
 
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['note removed from Goblin'],
+      ariaAnnouncements: ['note removed from Goblin #1'],
     };
 
-    const result = removeNoteFromCreature(state, 1, note, false);
+    const result = removeNoteFromCreature(state, 2, note, false);
 
     expect(result).toEqual(expectedState);
   });
@@ -726,10 +837,10 @@ describe('removeNoteFromCreature', () => {
 
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['blinded condition removed from Goblin'],
+      ariaAnnouncements: ['blinded condition removed from Goblin #1'],
     };
 
-    const result = removeNoteFromCreature(state, 1, condition, true);
+    const result = removeNoteFromCreature(state, 2, condition, true);
 
     expect(result).toEqual(expectedState);
     expect(removeCondition).toHaveBeenCalledTimes(1);
@@ -753,7 +864,7 @@ describe('addHealthToCreature', () => {
       ariaAnnouncements: ['Wellby\'s health is 10, max health is 10'],
     };
 
-    const result = addHealthToCreature(defaultState, 0, 10);
+    const result = addHealthToCreature(defaultState, 1, 10);
     expect(result).toEqual(expectedState);
   });
 
@@ -784,28 +895,101 @@ describe('addHealthToCreature', () => {
       ariaAnnouncements: ['Wellby\'s health is 0, max health is 10'],
     };
 
-    const result = addHealthToCreature(state, 0, 10);
+    const result = addHealthToCreature(state, 1, 10);
     expect(result).toEqual(expectedState);
   });
 
   it('does nothing to a creature that already has health', () => {
-    const result = addHealthToCreature(defaultState, 1, 30);
+    const result = addHealthToCreature(defaultState, 2, 30);
     expect(result).toEqual(defaultState);
   });
 
   it('does nothing to a creature if 0 health is added', () => {
-    const result = addHealthToCreature(defaultState, 0, 0);
+    const result = addHealthToCreature(defaultState, 1, 0);
     expect(result).toEqual(defaultState);
   });
 
   it('does nothing to a creature if less than 0 health is added', () => {
-    const result = addHealthToCreature(defaultState, 0, -1);
+    const result = addHealthToCreature(defaultState, 1, -1);
+    expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addTemporaryHealthToCreature', () => {
+  it('adds temporary health to a creature that does not already have it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          temporaryHealthPoints: 10,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby has 10 temporary health points'],
+    };
+
+    const result = addTemporaryHealthToCreature(defaultState, 1, 10);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('overrides temporary health for a creature that already has it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          temporaryHealthPoints: 20,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 20 temporary health points'],
+    };
+
+    const result = addTemporaryHealthToCreature(defaultState, 2, 20);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('allows 0 temporary health to be added to a creature', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          temporaryHealthPoints: 0,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby has 0 temporary health points'],
+    };
+
+    const result = addTemporaryHealthToCreature(defaultState, 1, 0);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature if less than 0 health is added', () => {
+    const result = addTemporaryHealthToCreature(defaultState, 1, -1);
     expect(result).toEqual(defaultState);
   });
 });
 
 describe('addInitiativeToCreature', () => {
   it('adds initiative to a creature that does not already have it', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: undefined,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
     const expectedState = {
       ...defaultState,
       creatures: [
@@ -816,15 +1000,15 @@ describe('addInitiativeToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin\'s initiative is 10'],
+      ariaAnnouncements: ['Goblin #1\'s initiative is 10'],
     };
 
-    const result = addInitiativeToCreature(defaultState, 1, 10);
+    const result = addInitiativeToCreature(state, 2, 10);
     expect(result).toEqual(expectedState);
   });
 
   it('does nothing to a creature that already has initiative', () => {
-    const result = addInitiativeToCreature(defaultState, 0, 30);
+    const result = addInitiativeToCreature(defaultState, 1, 30);
     expect(result).toEqual(defaultState);
   });
 });
@@ -844,7 +1028,7 @@ describe('toggleCreatureLock', () => {
       ariaAnnouncements: ['Wellby is locked'],
     };
 
-    const result = toggleCreatureLock(defaultState, 0);
+    const result = toggleCreatureLock(defaultState, 1);
     expect(result).toEqual(expectedState);
   });
 
@@ -859,16 +1043,28 @@ describe('toggleCreatureLock', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin is unlocked'],
+      ariaAnnouncements: ['Goblin #1 is unlocked'],
     };
 
-    const result = toggleCreatureLock(defaultState, 1);
+    const result = toggleCreatureLock(defaultState, 2);
     expect(result).toEqual(expectedState);
   });
 });
 
 describe('toggleCreatureShare', () => {
   it('enables creature share if it is disabled', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          shared: false,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+    };
+
     const expectedState = {
       ...defaultState,
       creatures: [
@@ -882,7 +1078,7 @@ describe('toggleCreatureShare', () => {
       ariaAnnouncements: ['Wellby is shared'],
     };
 
-    const result = toggleCreatureShare(defaultState, 0);
+    const result = toggleCreatureShare(state, 1);
     expect(result).toEqual(expectedState);
   });
 
@@ -897,10 +1093,10 @@ describe('toggleCreatureShare', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin is not shared'],
+      ariaAnnouncements: ['Goblin #1 is not shared'],
     };
 
-    const result = toggleCreatureShare(defaultState, 1);
+    const result = toggleCreatureShare(defaultState, 2);
     expect(result).toEqual(expectedState);
   });
 });

@@ -3,6 +3,7 @@ export default {
     {
       name: 'Wellby',
       initiative: 13,
+      temporaryHealthPoints: null,
       id: 1,
       alive: true,
       conditions: [],
@@ -15,6 +16,7 @@ export default {
       initiative: 12,
       healthPoints: 10,
       maxHealthPoints: 10,
+      temporaryHealthPoints: 10,
       id: 2,
       alive: true,
       conditions: [],
@@ -27,6 +29,7 @@ export default {
       initiative: 12,
       healthPoints: 10,
       maxHealthPoints: 10,
+      temporaryHealthPoints: null,
       id: 3,
       alive: true,
       conditions: [],

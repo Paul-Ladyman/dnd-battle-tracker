@@ -3,13 +3,10 @@ import isHotkey from 'is-hotkey';
 import Timer from './Timer';
 import StartBattleIcon from '../icons/StartBattleIcon';
 import NextInitiativeIcon from '../icons/NextInitiativeIcon';
-import OptionsMenuClosedIcon from '../icons/OptionsMenuClosedIcon';
-import OptionsMenuOpenIcon from '../icons/OptionsMenuOpenIcon';
-import SaveIcon from '../icons/SaveIcon';
-import LoadIcon from '../icons/LoadIcon';
+import OptionsMenuIcon from '../icons/OptionsMenuIcon';
+import SaveLoadIcon from '../icons/SaveLoadIcon';
 import ResetIcon from '../icons/ResetIcon';
-import ShareEnabledIcon from '../icons/ShareEnabledIcon';
-import ShareDisabledIcon from '../icons/ShareDisabledIcon';
+import ShareIcon from '../icons/ShareIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../../state/AppManager';
 
@@ -61,7 +58,6 @@ function BattleToolbar({
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
-  const optionsMenuIcon = optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
 
   const ResetButton = () => (
@@ -77,7 +73,6 @@ function BattleToolbar({
   );
 
   const ShareButton = () => {
-    const Icon = shareEnabled ? ShareEnabledIcon : ShareDisabledIcon;
     const title = shareEnabled ? 'Disable share' : 'Enable share';
     return (
       <button
@@ -86,7 +81,7 @@ function BattleToolbar({
         onClick={() => { toggleOptions(); toggleShare(); }}
         type="button"
       >
-        <Icon />
+        <ShareIcon enabled={shareEnabled} />
       </button>
     );
   };
@@ -131,7 +126,7 @@ function BattleToolbar({
             ref={optionsButton}
             type="button"
           >
-            {optionsMenuIcon}
+            <OptionsMenuIcon open={optionsExpanded} />
           </button>
           <div className={optionsClass}>
             <button
@@ -140,7 +135,7 @@ function BattleToolbar({
               onClick={() => { toggleOptions(); saveBattle(); }}
               type="button"
             >
-              <SaveIcon />
+              <SaveLoadIcon />
             </button>
             <input
               type="file"
@@ -156,7 +151,7 @@ function BattleToolbar({
               onClick={() => { toggleOptions(); fileSelector.current.click(); }}
               type="button"
             >
-              <LoadIcon />
+              <SaveLoadIcon load />
             </button>
             <ShareButton />
             <ResetButton />
