@@ -94,7 +94,7 @@ function DungeonMasterApp({
     damageCreature: updateBattle(damageCreature),
     healCreature: updateBattle(healCreature),
     addHealthToCreature: updateBattle(addHealthToCreature),
-    addTemporaryHealthToCreature: updateBattle(addTemporaryHealthToCreature),
+    addTemporaryHealthToCreature: updateBattle(addTemporaryHealthToCreature, false),
     addInitiativeToCreature: updateBattle(addInitiativeToCreature),
     removeCreature: updateBattle(removeCreature),
     addNoteToCreature: updateBattle(addNoteToCreature),

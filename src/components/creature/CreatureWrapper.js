@@ -135,8 +135,7 @@ class CreatureWrapper extends Component {
 
     const showExpanded = active || expanded;
     const activeClassModifier = active ? 'creature-wrapper__active' : '';
-    const expandedModifier = showExpanded ? 'creature-wrapper__expanded' : '';
-    const classes = `creature-wrapper ${activeClassModifier} ${expandedModifier}`;
+    const classes = `creature-wrapper ${activeClassModifier}`;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
       removeCreature,
