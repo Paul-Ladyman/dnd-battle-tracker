@@ -324,7 +324,6 @@ input[type="number"] {
   display: grid;
   grid-template-columns: repeat(auto-fit, 15px);
   grid-auto-rows: 1fr;
-  width: 100%;
   animation-duration: 400ms;
   animation-timing-function: ease-in-out;
 }
