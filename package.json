@@ -3,7 +3,7 @@
   "version": "5.0.5",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.3.13",
+    "@apollo/client": "^3.3.14",
     "@aws-sdk/client-cognito-identity": "^3.10.0",
     "aws-appsync-auth-link": "^3.0.4",
     "aws-appsync-subscription-link": "3.0.4",
