@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Input from './Input';
 import ExternalLink from './ExternalLink';
-import MonsterSearchIcon from '../icons/MonsterSearchIcon';
+import RulesSearchIcon from '../icons/RulesSearchIcon';
 
 export default function RulesSearchBar() {
   const [value, setValue] = useState('');
@@ -31,7 +31,7 @@ export default function RulesSearchBar() {
       title="D&D Beyond Rules Search"
       anchorRef={anchorRef}
     >
-      <MonsterSearchIcon />
+      <RulesSearchIcon />
     </ExternalLink>
   );
 

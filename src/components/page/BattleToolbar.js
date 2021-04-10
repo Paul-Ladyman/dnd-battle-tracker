@@ -7,6 +7,7 @@ import OptionsMenuIcon from '../icons/OptionsMenuIcon';
 import SaveLoadIcon from '../icons/SaveLoadIcon';
 import ResetIcon from '../icons/ResetIcon';
 import ShareIcon from '../icons/ShareIcon';
+import RulesSearchMenuIcon from '../icons/RulesSearchMenuIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../../state/AppManager';
 
@@ -22,6 +23,8 @@ function BattleToolbar({
   playerSession,
   shareEnabled,
   toggleShare,
+  rulesSearchbarOpen,
+  toggleRulesSearchBar,
 }) {
   const [optionsExpanded, setOptionsExpanded] = useState(false);
   const nextButton = useRef(null);
@@ -82,6 +85,20 @@ function BattleToolbar({
         type="button"
       >
         <ShareIcon enabled={shareEnabled} />
+      </button>
+    );
+  };
+
+  const RulesSearchButton = () => {
+    const title = rulesSearchbarOpen ? 'Close rules search bar' : 'Open rules search bar';
+    return (
+      <button
+        title={title}
+        className={`${buttonClass} ${buttonClass}__option`}
+        onClick={() => { toggleOptions(); toggleRulesSearchBar(); }}
+        type="button"
+      >
+        <RulesSearchMenuIcon opened={rulesSearchbarOpen} />
       </button>
     );
   };
@@ -153,6 +170,7 @@ function BattleToolbar({
             >
               <SaveLoadIcon load />
             </button>
+            <RulesSearchButton />
             <ShareButton />
             <ResetButton />
           </div>

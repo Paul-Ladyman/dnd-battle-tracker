@@ -134,6 +134,8 @@ function DungeonMasterApp({
         toggleShare={updateBattle(toggleSync)}
         shareEnabled={state.shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
+        rulesSearchbarOpen={showRulesSearchBar}
+        toggleRulesSearchBar={toggleRulesSearchBar}
       />
       { errors && (
       <Errors
