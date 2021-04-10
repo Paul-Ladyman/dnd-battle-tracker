@@ -18,14 +18,9 @@ export default function RulesSearchBar() {
     setValue(event.target.value);
   };
 
-  const resetForm = () => {
-    setValue('');
-  };
-
   const formHandler = (event) => {
     if (event.keyCode === 13) {
       anchorRef.current.click();
-      resetForm();
     }
   };
 
@@ -42,18 +37,17 @@ export default function RulesSearchBar() {
 
   return (
     <div className="rules-search-bar">
-      <div className="dnd-beyond-search">
-        <Input
-          ariaLabel="search rules using D&D Beyond"
-          label="Search rules using D&D Beyond"
-          rightControls={{ RightControl }}
-          inputId="dnd-beyond-search"
-          value={value}
-          handleChange={handleChange}
-          formHandler={formHandler}
-          inputRef={inputRef}
-        />
-      </div>
+      <Input
+        ariaLabel="search rules using D&D Beyond"
+        label="Search rules using D&D Beyond"
+        rightControls={{ RightControl }}
+        inputId="dnd-beyond-search"
+        value={value}
+        handleChange={handleChange}
+        formHandler={formHandler}
+        inputRef={inputRef}
+        customClasses="dnd-beyond-search"
+      />
     </div>
   );
 }
