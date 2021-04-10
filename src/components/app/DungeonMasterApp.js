@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
 import CreateCreatureForm from '../page/CreateCreatureForm';
@@ -45,10 +45,12 @@ import {
 import Footer from '../page/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
+import NotesTool from '../creature/toolbar/NotesTool';
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
+  const [showSidePanel, setShowSidePanel] = useState(false);
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
       const newState = update(prevState, ...args);
@@ -109,6 +111,8 @@ function DungeonMasterApp({
   const [creatures, creatureCount] = getCreatureList(state);
   const secondsElapsed = getSecondsElapsed(round);
 
+  const mainWrapperClass = showSidePanel ? 'main-footer-wrapper main-footer-wrapper__right' : 'main-footer-wrapper';
+
   return (
     <>
       <BattleToolbar
@@ -116,7 +120,7 @@ function DungeonMasterApp({
         round={round}
         secondsElapsed={secondsElapsed}
         creatureCount={creatureCount}
-        nextInitiative={updateBattle(nextInitiative)}
+        nextInitiative={() => { setShowSidePanel((prev) => !prev); updateBattle(nextInitiative); }}
         resetBattle={updateBattle(resetBattle)}
         saveBattle={updateBattle(save, false)}
         loadBattle={loadBattle}
@@ -133,27 +137,34 @@ function DungeonMasterApp({
       <div className="aria-announcements" role="region" aria-live="assertive">
         {state.ariaAnnouncements}
       </div>
-      <div className="main-footer-wrapper">
-        <main className="main">
-          <Title
-            shareEnabled={state.shareEnabled}
-            battleId={state.battleId}
-          />
-          <CreateCreatureForm
-            createCreature={updateBattle(addCreature)}
-            createCreatureErrors={state.createCreatureErrors}
-          />
-          <Creatures
-            creatures={creatures}
-            activeCreatureId={activeCreatureId}
-            focusedCreature={state.focusedCreature}
-            setFocus={updateBattle(setFocus, false)}
-            round={round}
-            secondsElapsed={secondsElapsed}
-            creatureManagement={creatureManagement}
-          />
-        </main>
-        <Footer />
+      <div className="main-side-wrapper">
+        {showSidePanel && (
+          <div className="side-panel">
+            <NotesTool />
+          </div>
+        )}
+        <div className={mainWrapperClass}>
+          <main className="main">
+            <Title
+              shareEnabled={state.shareEnabled}
+              battleId={state.battleId}
+            />
+            <CreateCreatureForm
+              createCreature={updateBattle(addCreature)}
+              createCreatureErrors={state.createCreatureErrors}
+            />
+            <Creatures
+              creatures={creatures}
+              activeCreatureId={activeCreatureId}
+              focusedCreature={state.focusedCreature}
+              setFocus={updateBattle(setFocus, false)}
+              round={round}
+              secondsElapsed={secondsElapsed}
+              creatureManagement={creatureManagement}
+            />
+          </main>
+          <Footer />
+        </div>
       </div>
     </>
   );

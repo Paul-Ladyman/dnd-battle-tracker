@@ -64,7 +64,6 @@ a:hover {
   display: flex;
   align-items: center;
   flex-flow: column;
-  padding-top: 48px;
   width: 100%;
 }
 
@@ -73,7 +72,7 @@ a:hover {
 }
 
 .main-title {
-  margin-top: 40px;
+  margin-top: 20px;
   color: #822000;
   text-align: center;
 }
@@ -791,4 +790,53 @@ input[type="number"] {
 .error-bar--dismiss {
   border: 2px solid black;
   margin-right: 10px;
+}
+
+.main-side-wrapper {
+  padding-top: 68px;
+  display: flex;
+}
+
+.side-panel {
+  padding: 20px 10px 0 10px;
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-name: side-panel-entrance;
+}
+
+@media only screen and (min-width: 1024px) {
+  @keyframes side-panel-entrance {
+    0% { width: 0; opacity: 0; }
+    75% { width: 33%; opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .main-footer-wrapper__right {
+    border-left: 2px solid #822000;
+  }
+
+  .side-panel {
+    width: 33%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  @keyframes side-panel-entrance {
+    0% { height: 0; opacity: 0; }
+    75% { height: 33%; opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  .main-footer-wrapper__right {
+    border-top: 2px solid #822000;
+  }
+  
+  .side-panel {
+    height: 33%;
+    padding-bottom: 20px;
+  }
+  
+  .main-side-wrapper {
+    flex-direction: column;
+  }
 }
