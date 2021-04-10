@@ -5,6 +5,7 @@ import CreateCreatureForm from '../page/CreateCreatureForm';
 import Creatures from '../page/Creatures';
 import BattleToolbar from '../page/BattleToolbar';
 import Title from '../page/Title';
+import RulesSearchBar from '../page/RulesSearchBar';
 import {
   nextFocus,
   prevFocus,
@@ -45,12 +46,16 @@ import {
 import Footer from '../page/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
-import NotesTool from '../creature/toolbar/NotesTool';
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
-  const [showSidePanel, setShowSidePanel] = useState(false);
+  const [showRulesSearchBar, setShowRulesSearchBar] = useState(false);
+
+  const toggleRulesSearchBar = () => setShowRulesSearchBar(
+    (prevShowRulesSearchBar) => !prevShowRulesSearchBar,
+  );
+
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
       const newState = update(prevState, ...args);
@@ -72,8 +77,8 @@ function DungeonMasterApp({
       updateBattle(prevFocus, false)();
     }
 
-    if (isHotkey(hotkeys.dndBeyondSearch, e)) {
-      setShowSidePanel((prev) => !prev);
+    if (isHotkey(hotkeys.rulesSearchBar, e)) {
+      toggleRulesSearchBar();
     }
   };
 
@@ -115,8 +120,6 @@ function DungeonMasterApp({
   const [creatures, creatureCount] = getCreatureList(state);
   const secondsElapsed = getSecondsElapsed(round);
 
-  const mainWrapperClass = showSidePanel ? 'main-footer-wrapper main-footer-wrapper__right' : 'main-footer-wrapper';
-
   return (
     <>
       <BattleToolbar
@@ -124,7 +127,7 @@ function DungeonMasterApp({
         round={round}
         secondsElapsed={secondsElapsed}
         creatureCount={creatureCount}
-        nextInitiative={() => { setShowSidePanel((prev) => !prev); updateBattle(nextInitiative); }}
+        nextInitiative={updateBattle(nextInitiative)}
         resetBattle={updateBattle(resetBattle)}
         saveBattle={updateBattle(save, false)}
         loadBattle={loadBattle}
@@ -141,36 +144,28 @@ function DungeonMasterApp({
       <div className="aria-announcements" role="region" aria-live="assertive">
         {state.ariaAnnouncements}
       </div>
-      <div className="main-side-wrapper">
-        {showSidePanel && (
-          <div className="side-panel">
-            <div className="dnd-beyond-search">
-              <NotesTool />
-            </div>
-          </div>
-        )}
-        <div className={mainWrapperClass}>
-          <main className="main">
-            <Title
-              shareEnabled={state.shareEnabled}
-              battleId={state.battleId}
-            />
-            <CreateCreatureForm
-              createCreature={updateBattle(addCreature)}
-              createCreatureErrors={state.createCreatureErrors}
-            />
-            <Creatures
-              creatures={creatures}
-              activeCreatureId={activeCreatureId}
-              focusedCreature={state.focusedCreature}
-              setFocus={updateBattle(setFocus, false)}
-              round={round}
-              secondsElapsed={secondsElapsed}
-              creatureManagement={creatureManagement}
-            />
-          </main>
-          <Footer />
-        </div>
+      <div className="main-footer-wrapper">
+        {showRulesSearchBar && <RulesSearchBar />}
+        <main className={`main${showRulesSearchBar ? ' main__search-open' : ''}`}>
+          <Title
+            shareEnabled={state.shareEnabled}
+            battleId={state.battleId}
+          />
+          <CreateCreatureForm
+            createCreature={updateBattle(addCreature)}
+            createCreatureErrors={state.createCreatureErrors}
+          />
+          <Creatures
+            creatures={creatures}
+            activeCreatureId={activeCreatureId}
+            focusedCreature={state.focusedCreature}
+            setFocus={updateBattle(setFocus, false)}
+            round={round}
+            secondsElapsed={secondsElapsed}
+            creatureManagement={creatureManagement}
+          />
+        </main>
+        <Footer />
       </div>
     </>
   );
