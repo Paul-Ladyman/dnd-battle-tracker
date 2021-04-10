@@ -140,7 +140,9 @@ function DungeonMasterApp({
       <div className="main-side-wrapper">
         {showSidePanel && (
           <div className="side-panel">
-            <NotesTool />
+            <div className="dnd-beyond-search">
+              <NotesTool />
+            </div>
           </div>
         )}
         <div className={mainWrapperClass}>
