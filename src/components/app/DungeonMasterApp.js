@@ -71,6 +71,10 @@ function DungeonMasterApp({
     if (isHotkey(hotkeys.prevFocus, e)) {
       updateBattle(prevFocus, false)();
     }
+
+    if (isHotkey(hotkeys.dndBeyondSearch, e)) {
+      setShowSidePanel((prev) => !prev);
+    }
   };
 
   useEffect(() => {
