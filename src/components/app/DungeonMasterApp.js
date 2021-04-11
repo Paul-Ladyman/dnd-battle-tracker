@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
 import CreateCreatureForm from '../page/CreateCreatureForm';
@@ -12,6 +12,7 @@ import {
   setFocus,
   resetBattle,
   toggleSync,
+  toggleRulesSearch,
 } from '../../state/BattleManager';
 import {
   nextInitiative,
@@ -50,12 +51,6 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
-  const [showRulesSearchBar, setShowRulesSearchBar] = useState(false);
-
-  const toggleRulesSearchBar = () => setShowRulesSearchBar(
-    (prevShowRulesSearchBar) => !prevShowRulesSearchBar,
-  );
-
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
       const newState = update(prevState, ...args);
@@ -78,7 +73,7 @@ function DungeonMasterApp({
     }
 
     if (isHotkey(hotkeys.rulesSearchBar, e)) {
-      toggleRulesSearchBar();
+      updateBattle(toggleRulesSearch, false)();
     }
   };
 
@@ -119,6 +114,7 @@ function DungeonMasterApp({
   const [round, activeCreatureName, activeCreatureId] = getInitiative(state);
   const [creatures, creatureCount] = getCreatureList(state);
   const secondsElapsed = getSecondsElapsed(round);
+  const { shareEnabled, rulesSearchOpened } = state;
 
   return (
     <>
@@ -132,10 +128,10 @@ function DungeonMasterApp({
         saveBattle={updateBattle(save, false)}
         loadBattle={loadBattle}
         toggleShare={updateBattle(toggleSync)}
-        shareEnabled={state.shareEnabled}
+        shareEnabled={shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
-        rulesSearchbarOpen={showRulesSearchBar}
-        toggleRulesSearchBar={toggleRulesSearchBar}
+        rulesSearchbarOpen={rulesSearchOpened}
+        toggleRulesSearchBar={updateBattle(toggleRulesSearch, false)}
       />
       { errors && (
       <Errors
@@ -147,8 +143,8 @@ function DungeonMasterApp({
         {state.ariaAnnouncements}
       </div>
       <div className="main-footer-wrapper">
-        {showRulesSearchBar && <RulesSearchBar />}
-        <main className={`main${showRulesSearchBar ? ' main__search-open' : ''}`}>
+        <RulesSearchBar rulesSearchOpened={rulesSearchOpened} />
+        <main className={`main${rulesSearchOpened ? ' main__search-open' : ''}`}>
           <Title
             shareEnabled={state.shareEnabled}
             battleId={state.battleId}

@@ -3,14 +3,15 @@ import Input from './Input';
 import ExternalLink from './ExternalLink';
 import RulesSearchIcon from '../icons/RulesSearchIcon';
 
-export default function RulesSearchBar() {
+export default function RulesSearchBar({ rulesSearchOpened }) {
   const [value, setValue] = useState('');
+  const [animateNextEntrance, setAnimateNextEntrance] = useState(false);
   const anchorRef = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    if (!rulesSearchOpened) setAnimateNextEntrance(true);
+  }, [rulesSearchOpened]);
 
   const encodedSearch = encodeURIComponent(value);
 
@@ -35,8 +36,11 @@ export default function RulesSearchBar() {
     </ExternalLink>
   );
 
-  return (
-    <div className="rules-search-bar">
+  const className = 'rules-search-bar';
+  const classModifier = animateNextEntrance ? `${className}__entrance-animation` : `${className}__no-entrance-animation`;
+
+  return rulesSearchOpened && (
+    <div className={`rules-search-bar ${classModifier}`}>
       <Input
         ariaLabel="search rules using D&D Beyond"
         label="Search rules using D&D Beyond"

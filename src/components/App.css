@@ -806,12 +806,16 @@ input[type="number"] {
 .rules-search-bar {
   height: 108px;
   padding-top: 20px;
-  animation-duration: 200ms;
-  animation-timing-function: ease-in-out;
-  animation-name: rules-search-bar-entrance;
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.rules-search-bar__entrance-animation {
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-name: rules-search-bar-entrance;
+  animation-fill-mode: both;
 }
 
 .dnd-beyond-search {
