@@ -89,15 +89,15 @@ function BattleToolbar({
     );
   };
 
-  const RulesSearchButton = ({ asOption }) => {
+  const RulesSearchButton = ({ inMenu, asOption }) => {
     const title = rulesSearchbarOpen ? 'Close rules search bar' : 'Open rules search bar';
     const className = asOption ? `${buttonClass} ${buttonClass}__option` : buttonClass;
     const onClick = () => {
-      if (asOption) {
+      if (inMenu) {
         toggleOptions();
       }
       toggleRulesSearchBar();
-    }
+    };
     return (
       <button
         title={title}
@@ -109,6 +109,8 @@ function BattleToolbar({
       </button>
     );
   };
+
+  const showSaveLoadButtons = isSaveLoadSupported();
 
   return (
     <header className="battle-toolbar">
@@ -140,8 +142,7 @@ function BattleToolbar({
         Time Elapsed:
         <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
       </div>
-      { !playerSession && isSaveLoadSupported()
-        && (
+      { !playerSession && (
         <div className="battle-toolbar--options-container">
           <button
             title="Options Menu"
@@ -153,37 +154,40 @@ function BattleToolbar({
             <OptionsMenuIcon open={optionsExpanded} />
           </button>
           <div className={optionsClass}>
-            <button
-              title="Save Battle"
-              className={buttonClass}
-              onClick={() => { toggleOptions(); saveBattle(); }}
-              type="button"
-            >
-              <SaveLoadIcon />
-            </button>
-            <input
-              type="file"
-              className="hidden"
-              accept="application/json"
-              ref={fileSelector}
-              onChange={() => handleUpload(loadBattle)}
-              value=""
-            />
-            <button
-              title="Load Battle"
-              className={`${buttonClass} ${buttonClass}__option`}
-              onClick={() => { toggleOptions(); fileSelector.current.click(); }}
-              type="button"
-            >
-              <SaveLoadIcon load />
-            </button>
-            <RulesSearchButton asOption />
+            {showSaveLoadButtons && (
+              <>
+                <button
+                  title="Save Battle"
+                  className={buttonClass}
+                  onClick={() => { toggleOptions(); saveBattle(); }}
+                  type="button"
+                >
+                  <SaveLoadIcon />
+                </button>
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="application/json"
+                  ref={fileSelector}
+                  onChange={() => handleUpload(loadBattle)}
+                  value=""
+                />
+                <button
+                  title="Load Battle"
+                  className={`${buttonClass} ${buttonClass}__option`}
+                  onClick={() => { toggleOptions(); fileSelector.current.click(); }}
+                  type="button"
+                >
+                  <SaveLoadIcon load />
+                </button>
+              </>
+            )}
+            <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
             <ShareButton />
             <ResetButton />
           </div>
         </div>
-        )}
-      { !playerSession && !isSaveLoadSupported() && <ResetButton asOption /> }
+      )}
       { playerSession && <RulesSearchButton /> }
     </header>
   );
