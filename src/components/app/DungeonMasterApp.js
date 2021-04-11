@@ -144,7 +144,7 @@ function DungeonMasterApp({
       </div>
       <div className="main-footer-wrapper">
         <RulesSearchBar rulesSearchOpened={rulesSearchOpened} />
-        <main className={`main${rulesSearchOpened ? ' main__search-open' : ''}`}>
+        <main className="main">
           <Title
             shareEnabled={state.shareEnabled}
             battleId={state.battleId}

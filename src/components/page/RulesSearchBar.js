@@ -40,18 +40,20 @@ export default function RulesSearchBar({ rulesSearchOpened }) {
   const classModifier = animateNextEntrance ? `${className}__entrance-animation` : `${className}__no-entrance-animation`;
 
   return rulesSearchOpened && (
-    <div className={`rules-search-bar ${classModifier}`}>
-      <Input
-        ariaLabel="search rules using D&D Beyond"
-        label="Search rules using D&D Beyond"
-        rightControls={{ RightControl }}
-        inputId="dnd-beyond-search"
-        value={value}
-        handleChange={handleChange}
-        formHandler={formHandler}
-        inputRef={inputRef}
-        customClasses="dnd-beyond-search"
-      />
-    </div>
+    <section className="rules-search-bar-wrapper">
+      <div className={`rules-search-bar ${classModifier}`}>
+        <Input
+          ariaLabel="search rules using D&D Beyond"
+          label="Search rules using D&D Beyond"
+          rightControls={{ RightControl }}
+          inputId="dnd-beyond-search"
+          value={value}
+          handleChange={handleChange}
+          formHandler={formHandler}
+          inputRef={inputRef}
+          customClasses="dnd-beyond-search"
+        />
+      </div>
+    </section>
   );
 }
