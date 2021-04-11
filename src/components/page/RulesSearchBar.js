@@ -11,6 +11,7 @@ export default function RulesSearchBar({ rulesSearchOpened }) {
 
   useEffect(() => {
     if (!rulesSearchOpened) setAnimateNextEntrance(true);
+    if (rulesSearchOpened) inputRef.current.focus();
   }, [rulesSearchOpened]);
 
   const encodedSearch = encodeURIComponent(value);
@@ -37,10 +38,10 @@ export default function RulesSearchBar({ rulesSearchOpened }) {
   );
 
   const className = 'rules-search-bar';
-  const classModifier = animateNextEntrance ? `${className}__entrance-animation` : `${className}__no-entrance-animation`;
+  const classModifier = animateNextEntrance ? `${className}__entrance-animation` : '';
 
   return rulesSearchOpened && (
-    <section className="rules-search-bar-wrapper">
+    <aside className="rules-search-bar-wrapper" role="search">
       <div className={`rules-search-bar ${classModifier}`}>
         <Input
           ariaLabel="search rules using D&D Beyond"
@@ -54,6 +55,6 @@ export default function RulesSearchBar({ rulesSearchOpened }) {
           customClasses="dnd-beyond-search"
         />
       </div>
-    </section>
+    </aside>
   );
 }
