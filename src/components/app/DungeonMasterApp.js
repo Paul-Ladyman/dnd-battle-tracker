@@ -5,12 +5,15 @@ import CreateCreatureForm from '../page/CreateCreatureForm';
 import Creatures from '../page/Creatures';
 import BattleToolbar from '../page/BattleToolbar';
 import Title from '../page/Title';
+import AriaAnnouncements from '../page/AriaAnnouncements';
+import RulesSearchBar from '../page/RulesSearchBar';
 import {
   nextFocus,
   prevFocus,
   setFocus,
   resetBattle,
   toggleSync,
+  toggleRulesSearch,
 } from '../../state/BattleManager';
 import {
   nextInitiative,
@@ -69,6 +72,11 @@ function DungeonMasterApp({
     if (isHotkey(hotkeys.prevFocus, e)) {
       updateBattle(prevFocus, false)();
     }
+
+    if (isHotkey(hotkeys.rulesSearchBar, e)) {
+      e.preventDefault();
+      updateBattle(toggleRulesSearch, false)();
+    }
   };
 
   useEffect(() => {
@@ -108,6 +116,7 @@ function DungeonMasterApp({
   const [round, activeCreatureName, activeCreatureId] = getInitiative(state);
   const [creatures, creatureCount] = getCreatureList(state);
   const secondsElapsed = getSecondsElapsed(round);
+  const { shareEnabled, rulesSearchOpened, ariaAnnouncements } = state;
 
   return (
     <>
@@ -121,8 +130,10 @@ function DungeonMasterApp({
         saveBattle={updateBattle(save, false)}
         loadBattle={loadBattle}
         toggleShare={updateBattle(toggleSync)}
-        shareEnabled={state.shareEnabled}
+        shareEnabled={shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
+        rulesSearchOpen={rulesSearchOpened}
+        toggleRulesSearch={updateBattle(toggleRulesSearch, false)}
       />
       { errors && (
       <Errors
@@ -130,10 +141,9 @@ function DungeonMasterApp({
         dismissErrors={updateBattle(dismissErrors, false)}
       />
       )}
-      <div className="aria-announcements" role="region" aria-live="assertive">
-        {state.ariaAnnouncements}
-      </div>
+      <AriaAnnouncements announcements={ariaAnnouncements} />
       <div className="main-footer-wrapper">
+        <RulesSearchBar rulesSearchOpened={rulesSearchOpened} />
         <main className="main">
           <Title
             shareEnabled={state.shareEnabled}

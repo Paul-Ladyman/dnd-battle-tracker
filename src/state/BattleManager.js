@@ -18,6 +18,7 @@ export const newBattleState = {
   battleCreated: false,
   shareEnabled: false,
   battleTrackerVersion: version,
+  rulesSearchOpened: false,
 };
 
 export function nextFocus(state) {
@@ -92,4 +93,11 @@ export function toggleSync(state) {
   const announcement = shareEnabled ? 'share disabled' : 'share enabled';
   const ariaAnnouncements = currentAriaAnnouncements.concat([announcement]);
   return { ...state, shareEnabled: !shareEnabled, ariaAnnouncements };
+}
+
+export function toggleRulesSearch(state) {
+  const { rulesSearchOpened, ariaAnnouncements: currentAriaAnnouncements } = state;
+  const announcement = rulesSearchOpened ? 'rules search closed' : 'rules search opened';
+  const ariaAnnouncements = currentAriaAnnouncements.concat([announcement]);
+  return { ...state, rulesSearchOpened: !rulesSearchOpened, ariaAnnouncements };
 }

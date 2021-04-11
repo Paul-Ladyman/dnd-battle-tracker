@@ -7,6 +7,7 @@ import OptionsMenuIcon from '../icons/OptionsMenuIcon';
 import SaveLoadIcon from '../icons/SaveLoadIcon';
 import ResetIcon from '../icons/ResetIcon';
 import ShareIcon from '../icons/ShareIcon';
+import RulesSearchMenuIcon from '../icons/RulesSearchMenuIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../../state/AppManager';
 
@@ -22,6 +23,8 @@ function BattleToolbar({
   playerSession,
   shareEnabled,
   toggleShare,
+  rulesSearchOpen,
+  toggleRulesSearch,
 }) {
   const [optionsExpanded, setOptionsExpanded] = useState(false);
   const nextButton = useRef(null);
@@ -86,6 +89,29 @@ function BattleToolbar({
     );
   };
 
+  const RulesSearchButton = ({ inMenu, asOption }) => {
+    const title = rulesSearchOpen ? 'Close rules search bar' : 'Open rules search bar';
+    const className = asOption ? `${buttonClass} ${buttonClass}__option` : buttonClass;
+    const onClick = () => {
+      if (inMenu) {
+        toggleOptions();
+      }
+      toggleRulesSearch();
+    };
+    return (
+      <button
+        title={title}
+        className={className}
+        onClick={onClick}
+        type="button"
+      >
+        <RulesSearchMenuIcon opened={rulesSearchOpen} />
+      </button>
+    );
+  };
+
+  const showSaveLoadButtons = isSaveLoadSupported();
+
   return (
     <header className="battle-toolbar">
       {!playerSession && (
@@ -116,8 +142,7 @@ function BattleToolbar({
         Time Elapsed:
         <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
       </div>
-      { !playerSession && isSaveLoadSupported()
-        && (
+      { !playerSession && (
         <div className="battle-toolbar--options-container">
           <button
             title="Options Menu"
@@ -129,36 +154,41 @@ function BattleToolbar({
             <OptionsMenuIcon open={optionsExpanded} />
           </button>
           <div className={optionsClass}>
-            <button
-              title="Save Battle"
-              className={buttonClass}
-              onClick={() => { toggleOptions(); saveBattle(); }}
-              type="button"
-            >
-              <SaveLoadIcon />
-            </button>
-            <input
-              type="file"
-              className="hidden"
-              accept="application/json"
-              ref={fileSelector}
-              onChange={() => handleUpload(loadBattle)}
-              value=""
-            />
-            <button
-              title="Load Battle"
-              className={`${buttonClass} ${buttonClass}__option`}
-              onClick={() => { toggleOptions(); fileSelector.current.click(); }}
-              type="button"
-            >
-              <SaveLoadIcon load />
-            </button>
+            {showSaveLoadButtons && (
+              <>
+                <button
+                  title="Save Battle"
+                  className={buttonClass}
+                  onClick={() => { toggleOptions(); saveBattle(); }}
+                  type="button"
+                >
+                  <SaveLoadIcon />
+                </button>
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="application/json"
+                  ref={fileSelector}
+                  onChange={() => handleUpload(loadBattle)}
+                  value=""
+                />
+                <button
+                  title="Load Battle"
+                  className={`${buttonClass} ${buttonClass}__option`}
+                  onClick={() => { toggleOptions(); fileSelector.current.click(); }}
+                  type="button"
+                >
+                  <SaveLoadIcon load />
+                </button>
+              </>
+            )}
             <ShareButton />
+            <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
             <ResetButton />
           </div>
         </div>
-        )}
-      { !playerSession && !isSaveLoadSupported() && <ResetButton /> }
+      )}
+      { playerSession && <RulesSearchButton /> }
     </header>
   );
 }

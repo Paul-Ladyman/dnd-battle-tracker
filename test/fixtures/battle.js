@@ -49,4 +49,5 @@ export default {
   shareEnabled: true,
   battleId: '123',
   battleTrackerVersion: '1.0.0',
+  rulesSearchOpened: false,
 };
