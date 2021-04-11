@@ -141,7 +141,7 @@ input[type="number"] {
  * On screen keyboards and the sticky bar leave a very small viewport.
  */
 @media only screen and (max-width: 600px) and (orientation: landscape) {
-  .main {
+  .main-footer-wrapper {
     padding-top: 0px;
   }
 
@@ -823,4 +823,21 @@ input[type="number"] {
 
 .dnd-beyond-search {
   width: 50%;
+}
+
+@media only screen and (max-width: 825px) {
+  .dnd-beyond-search {
+    width: auto;
+    min-width: 280px;
+  }
+
+  .dnd-beyond-search .form--label {
+    text-align: center;
+  }
+}
+
+@media only screen and (min-width: 1565px) {
+  .dnd-beyond-search {
+    max-width: 785px;
+  }
 }
