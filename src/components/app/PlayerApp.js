@@ -6,6 +6,7 @@ import Footer from '../page/Footer';
 import Errors from '../error/Errors';
 import Title from '../page/Title';
 import RulesSearchBar from '../page/RulesSearchBar';
+import AriaAnnouncements from '../page/AriaAnnouncements';
 import { newBattleState, toggleRulesSearch } from '../../state/BattleManager';
 import { getInitiative } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
@@ -67,7 +68,7 @@ function PlayerApp({
   const [round, activeCreatureName, activeCreatureId] = getInitiative(battleData, true);
   const [creatures, creatureCount] = getCreatureList(battleData, true);
   const secondsElapsed = getSecondsElapsed(round);
-  const { rulesSearchOpened } = state;
+  const { rulesSearchOpened, ariaAnnouncements } = state;
 
   return (
     <>
@@ -76,8 +77,8 @@ function PlayerApp({
         round={round}
         secondsElapsed={secondsElapsed}
         creatureCount={creatureCount}
-        rulesSearchbarOpen={rulesSearchOpened}
-        toggleRulesSearchBar={updateRulesSearch}
+        rulesSearchOpen={rulesSearchOpened}
+        toggleRulesSearch={updateRulesSearch}
         playerSession
       />
       { errors && (
@@ -86,6 +87,7 @@ function PlayerApp({
         dismissErrors={() => setErrors(false)}
       />
       )}
+      <AriaAnnouncements announcements={ariaAnnouncements} />
       <div className="main-footer-wrapper">
         <RulesSearchBar rulesSearchOpened={rulesSearchOpened} />
         <main className="main">

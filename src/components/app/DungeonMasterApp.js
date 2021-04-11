@@ -5,6 +5,7 @@ import CreateCreatureForm from '../page/CreateCreatureForm';
 import Creatures from '../page/Creatures';
 import BattleToolbar from '../page/BattleToolbar';
 import Title from '../page/Title';
+import AriaAnnouncements from '../page/AriaAnnouncements';
 import RulesSearchBar from '../page/RulesSearchBar';
 import {
   nextFocus,
@@ -115,7 +116,7 @@ function DungeonMasterApp({
   const [round, activeCreatureName, activeCreatureId] = getInitiative(state);
   const [creatures, creatureCount] = getCreatureList(state);
   const secondsElapsed = getSecondsElapsed(round);
-  const { shareEnabled, rulesSearchOpened } = state;
+  const { shareEnabled, rulesSearchOpened, ariaAnnouncements } = state;
 
   return (
     <>
@@ -131,8 +132,8 @@ function DungeonMasterApp({
         toggleShare={updateBattle(toggleSync)}
         shareEnabled={shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
-        rulesSearchbarOpen={rulesSearchOpened}
-        toggleRulesSearchBar={updateBattle(toggleRulesSearch, false)}
+        rulesSearchOpen={rulesSearchOpened}
+        toggleRulesSearch={updateBattle(toggleRulesSearch, false)}
       />
       { errors && (
       <Errors
@@ -140,9 +141,7 @@ function DungeonMasterApp({
         dismissErrors={updateBattle(dismissErrors, false)}
       />
       )}
-      <div className="aria-announcements" role="region" aria-live="assertive">
-        {state.ariaAnnouncements}
-      </div>
+      <AriaAnnouncements announcements={ariaAnnouncements} />
       <div className="main-footer-wrapper">
         <RulesSearchBar rulesSearchOpened={rulesSearchOpened} />
         <main className="main">

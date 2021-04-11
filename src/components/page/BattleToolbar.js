@@ -23,8 +23,8 @@ function BattleToolbar({
   playerSession,
   shareEnabled,
   toggleShare,
-  rulesSearchbarOpen,
-  toggleRulesSearchBar,
+  rulesSearchOpen,
+  toggleRulesSearch,
 }) {
   const [optionsExpanded, setOptionsExpanded] = useState(false);
   const nextButton = useRef(null);
@@ -90,13 +90,13 @@ function BattleToolbar({
   };
 
   const RulesSearchButton = ({ inMenu, asOption }) => {
-    const title = rulesSearchbarOpen ? 'Close rules search bar' : 'Open rules search bar';
+    const title = rulesSearchOpen ? 'Close rules search bar' : 'Open rules search bar';
     const className = asOption ? `${buttonClass} ${buttonClass}__option` : buttonClass;
     const onClick = () => {
       if (inMenu) {
         toggleOptions();
       }
-      toggleRulesSearchBar();
+      toggleRulesSearch();
     };
     return (
       <button
@@ -105,7 +105,7 @@ function BattleToolbar({
         onClick={onClick}
         type="button"
       >
-        <RulesSearchMenuIcon opened={rulesSearchbarOpen} />
+        <RulesSearchMenuIcon opened={rulesSearchOpen} />
       </button>
     );
   };
