@@ -182,8 +182,8 @@ function BattleToolbar({
                 </button>
               </>
             )}
-            <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
             <ShareButton />
+            <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
             <ResetButton />
           </div>
         </div>
