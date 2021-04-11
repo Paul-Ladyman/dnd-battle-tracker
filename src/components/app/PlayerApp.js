@@ -51,6 +51,7 @@ function PlayerApp({
 
   const hotKeyHandler = (e) => {
     if (isHotkey(hotkeys.rulesSearchBar, e)) {
+      e.preventDefault();
       updateRulesSearch();
     }
   };

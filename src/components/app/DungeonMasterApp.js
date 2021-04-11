@@ -73,6 +73,7 @@ function DungeonMasterApp({
     }
 
     if (isHotkey(hotkeys.rulesSearchBar, e)) {
+      e.preventDefault();
       updateBattle(toggleRulesSearch, false)();
     }
   };
