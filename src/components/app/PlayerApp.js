@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import isHotkey from 'is-hotkey';
 import BattleToolbar from '../page/BattleToolbar';
 import Creatures from '../page/Creatures';
 import Footer from '../page/Footer';
 import Errors from '../error/Errors';
 import Title from '../page/Title';
-import { newBattleState } from '../../state/BattleManager';
+import RulesSearchBar from '../page/RulesSearchBar';
+import { newBattleState, toggleRulesSearch } from '../../state/BattleManager';
 import { getInitiative } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import { getCreatureList } from '../../state/CreatureListManager';
+import { hotkeys } from '../../hotkeys/hotkeys';
 
 // TODO abstract into SyncManager
 function getBattleData(getLoading, getData, syncLoading, syncData) {
@@ -23,7 +26,16 @@ function getBattleData(getLoading, getData, syncLoading, syncData) {
 }
 
 function PlayerApp({
-  battleId, getLoading, syncLoading, getError, syncError, getData, syncData, onlineError,
+  state,
+  setState,
+  battleId,
+  getLoading,
+  syncLoading,
+  getError,
+  syncError,
+  getData,
+  syncData,
+  onlineError,
 }) {
   const [errors, setErrors] = useState(false);
 
@@ -35,11 +47,26 @@ function PlayerApp({
     }
   }, [onlineError, getError, syncError]);
 
+  const updateRulesSearch = () => setState((prevState) => toggleRulesSearch(prevState));
+
+  const hotKeyHandler = (e) => {
+    if (isHotkey(hotkeys.rulesSearchBar, e)) {
+      updateRulesSearch();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', hotKeyHandler);
+
+    return () => window.removeEventListener('keydown', hotKeyHandler);
+  }, []);
+
   const loading = !getData && !syncData;
 
   const [round, activeCreatureName, activeCreatureId] = getInitiative(battleData, true);
   const [creatures, creatureCount] = getCreatureList(battleData, true);
   const secondsElapsed = getSecondsElapsed(round);
+  const { rulesSearchOpened } = state;
 
   return (
     <>
@@ -48,6 +75,8 @@ function PlayerApp({
         round={round}
         secondsElapsed={secondsElapsed}
         creatureCount={creatureCount}
+        rulesSearchbarOpen={rulesSearchOpened}
+        toggleRulesSearchBar={updateRulesSearch}
         playerSession
       />
       { errors && (
@@ -57,6 +86,7 @@ function PlayerApp({
       />
       )}
       <div className="main-footer-wrapper">
+        <RulesSearchBar rulesSearchOpened={rulesSearchOpened} />
         <main className="main">
           <Title
             battleId={battleId}

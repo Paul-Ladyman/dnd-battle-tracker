@@ -89,13 +89,20 @@ function BattleToolbar({
     );
   };
 
-  const RulesSearchButton = () => {
+  const RulesSearchButton = ({ asOption }) => {
     const title = rulesSearchbarOpen ? 'Close rules search bar' : 'Open rules search bar';
+    const className = asOption ? `${buttonClass} ${buttonClass}__option` : buttonClass;
+    const onClick = () => {
+      if (asOption) {
+        toggleOptions();
+      }
+      toggleRulesSearchBar();
+    }
     return (
       <button
         title={title}
-        className={`${buttonClass} ${buttonClass}__option`}
-        onClick={() => { toggleOptions(); toggleRulesSearchBar(); }}
+        className={className}
+        onClick={onClick}
         type="button"
       >
         <RulesSearchMenuIcon opened={rulesSearchbarOpen} />
@@ -170,13 +177,14 @@ function BattleToolbar({
             >
               <SaveLoadIcon load />
             </button>
-            <RulesSearchButton />
+            <RulesSearchButton asOption />
             <ShareButton />
             <ResetButton />
           </div>
         </div>
         )}
-      { !playerSession && !isSaveLoadSupported() && <ResetButton /> }
+      { !playerSession && !isSaveLoadSupported() && <ResetButton asOption /> }
+      { playerSession && <RulesSearchButton /> }
     </header>
   );
 }
