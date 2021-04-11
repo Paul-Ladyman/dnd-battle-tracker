@@ -10,7 +10,10 @@ export default function RulesSearchBar({ rulesSearchOpened }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (!rulesSearchOpened) setAnimateNextEntrance(true);
+    if (!rulesSearchOpened) {
+      setValue('');
+      setAnimateNextEntrance(true);
+    }
     if (rulesSearchOpened) inputRef.current.focus();
   }, [rulesSearchOpened]);
 
