@@ -3,7 +3,7 @@ import Input from './Input';
 import ExternalLink from './ExternalLink';
 import RulesSearchIcon from '../icons/RulesSearchIcon';
 
-export default function RulesSearchBar({ rulesSearchOpened }) {
+export default function RulesSearchBar({ rulesSearchOpened, onSearch }) {
   const [value, setValue] = useState('');
   const [animateNextEntrance, setAnimateNextEntrance] = useState(false);
   const anchorRef = useRef(null);
@@ -26,6 +26,7 @@ export default function RulesSearchBar({ rulesSearchOpened }) {
   const formHandler = (event) => {
     if (event.keyCode === 13) {
       anchorRef.current.click();
+      onSearch();
     }
   };
 
