@@ -89,7 +89,7 @@ function PlayerApp({
       )}
       <AriaAnnouncements announcements={ariaAnnouncements} />
       <div className="main-footer-wrapper">
-        <RulesSearchBar rulesSearchOpened={rulesSearchOpened} />
+        <RulesSearchBar rulesSearchOpened={rulesSearchOpened} onSearch={updateRulesSearch} />
         <main className="main">
           <Title
             battleId={battleId}
