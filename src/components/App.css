@@ -160,8 +160,8 @@ input[type="number"] {
   max-width: 25%;
 }
 
-/* Remove most unimportant battle bar info for screens smaller than 768px */
-@media only screen and (max-width: 768px) {
+/* Remove most unimportant battle bar info for screens smaller than 825px */
+@media only screen and (max-width: 825px) {
   .battle-toolbar--stat__extra2 {
     display: none;
   }
@@ -171,8 +171,8 @@ input[type="number"] {
   }
 }
 
-/* Remove second-most unimportant battle bar info for screens smaller than 600px */
-@media only screen and (max-width: 600px) and (orientation: portrait) {
+/* Remove second-most unimportant battle bar info for screens smaller than 300px */
+@media only screen and (max-width: 300px) and (orientation: portrait) {
   .battle-toolbar--stat__extra1 {
     display: none;
   }
