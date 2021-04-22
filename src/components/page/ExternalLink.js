@@ -1,7 +1,7 @@
 import React from 'react';
 
 function ExternalLink({
-  url, children, className, title, ariaLabel, anchorRef,
+  url, children, className, title, ariaLabel, anchorRef, onClick,
 }) {
   return (
     <a
@@ -12,6 +12,7 @@ function ExternalLink({
       target="_blank"
       rel="noopener noreferrer"
       ref={anchorRef}
+      onClick={onClick}
     >
       {children}
     </a>

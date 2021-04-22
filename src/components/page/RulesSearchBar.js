@@ -26,7 +26,6 @@ export default function RulesSearchBar({ rulesSearchOpened, onSearch }) {
   const formHandler = (event) => {
     if (event.keyCode === 13) {
       anchorRef.current.click();
-      onSearch();
     }
   };
 
@@ -36,6 +35,7 @@ export default function RulesSearchBar({ rulesSearchOpened, onSearch }) {
       ariaLabel={`Search ${value} on D&D Beyond`}
       title="D&D Beyond Rules Search"
       anchorRef={anchorRef}
+      onClick={onSearch}
     >
       <RulesSearchIcon />
     </ExternalLink>
