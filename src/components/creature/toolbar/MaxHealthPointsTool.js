@@ -8,7 +8,7 @@ export default function MaxHealthPointsTool({
   healthPoints,
   addHealthToCreature,
 }) {
-  return healthPoints === undefined && (
+  return (
     <CreatureToolbarInput
       integer
       name="creature-toolbar-maxhp"
@@ -17,6 +17,7 @@ export default function MaxHealthPointsTool({
       label="Add Max HP"
       rightSubmit={(health) => addHealthToCreature(id, health)}
       rightControls={{
+        rightEnabled: healthPoints === undefined,
         rightTitle: 'Add Max HP',
         RightSubmitIcon: <AddHpIcon />,
       }}

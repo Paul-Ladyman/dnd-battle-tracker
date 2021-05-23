@@ -8,7 +8,7 @@ export default function TemporaryHealthPointsTool({
   healthPoints,
   addTemporaryHealthToCreature,
 }) {
-  return healthPoints !== undefined && (
+  return (
     <CreatureToolbarInput
       integer
       name="creature-toolbar-temphp"
@@ -17,6 +17,7 @@ export default function TemporaryHealthPointsTool({
       label="Temp HP"
       rightSubmit={(health) => addTemporaryHealthToCreature(id, health)}
       rightControls={{
+        rightEnabled: healthPoints !== undefined,
         rightTitle: 'Add/Edit Temp HP',
         RightSubmitIcon: <TempHpIcon />,
       }}
