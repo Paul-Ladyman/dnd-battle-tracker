@@ -72,9 +72,12 @@ export default function CreatureHeader({
   return (
     <div className="creature-title">
       <h2 className="creature-header">{creatureExpander}</h2>
-      {monsterSearcher}
-      {creatureLocker}
-      {creatureSharer}
+      <div className="creature-header--controls">
+        {monsterSearcher}
+        {creatureLocker}
+        {creatureSharer}
+        {creatureSharer}
+      </div>
     </div>
   );
 }
