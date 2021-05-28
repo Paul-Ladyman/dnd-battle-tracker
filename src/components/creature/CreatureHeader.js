@@ -3,6 +3,7 @@ import CreatureExpander from '../buttons/CreatureExpander';
 import CreatureLocker from '../buttons/CreatureLocker';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import CreatureSharer from '../buttons/CreatureSharer';
+import CreatureHealthSharer from '../buttons/CreatureHealthSharer';
 
 function getName(expanded, active, name, multiColumn) {
   const maxLength = 22;
@@ -63,6 +64,15 @@ export default function CreatureHeader({
     />
   );
 
+  const creatureHealthSharer = !playerSession && (
+    <CreatureHealthSharer
+      shared={shared}
+      name={name}
+      shareHandler={shareHandler}
+      disabled={active && shared}
+    />
+  );
+
   const monsterSearcher = !playerSession && (
     <MonsterSearcher
       search={name}
@@ -76,7 +86,7 @@ export default function CreatureHeader({
         {monsterSearcher}
         {creatureLocker}
         {creatureSharer}
-        {creatureSharer}
+        {creatureHealthSharer}
       </div>
     </div>
   );
