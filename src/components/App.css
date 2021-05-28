@@ -526,13 +526,6 @@ input[type="number"] {
   display: flex;
 }
 
-/* Drop creature title tools onto a newline on smaller screens. */
-@media only screen and (max-width: 600px) {
-  .creature-title {
-    flex-direction: column;
-  }
-}
-
 .creature-header {
   margin-top: 0;
   margin-bottom: 0;
@@ -545,6 +538,25 @@ input[type="number"] {
 .creature-title-button {
   padding: 4px;
   margin-left: 10px;
+}
+
+/* Drop creature title tools onto a newline on smaller screens. */
+@media only screen and (max-width: 600px) {
+  .creature-title {
+    flex-direction: column;
+  }
+
+  .creature-title-button:first-child {
+    margin-left: 0;
+  }
+
+  .creature-header--controls {
+    margin-top: 5px;
+  }
+
+  .collapsed-creature--status {
+    margin-top: 10px;
+  }
 }
 
 .creature-expander-button {
@@ -644,6 +656,13 @@ input[type="number"] {
   margin-top: 5px;
   color: black;
   font-style: italic;
+}
+
+/* A bit more margin when creature title tools are on a newline */
+@media only screen and (max-width: 600px) {
+  .collapsed-creature--status {
+    margin-top: 10px;
+  }
 }
 
 .collapsed-creature--status__margin {
