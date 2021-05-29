@@ -34,6 +34,8 @@ export default function CreatureHeader({
   const collapsedNameClasses = `${nameClass} ${nameModifier}`;
 
   const classes = (expanded || active) ? nameClass : collapsedNameClasses;
+  const titleClasses = (expanded || active) && multiColumn ? ' creature-title creature-title__expanded' : 'creature-title';
+  const controlsClasses = (expanded || active) && multiColumn ? ' creature-header--controls creature-header--controls__expanded' : 'creature-header--controls';
 
   const creatureExpander = (
     <CreatureExpander
@@ -79,9 +81,9 @@ export default function CreatureHeader({
   );
 
   return (
-    <div className="creature-title">
+    <div className={titleClasses}>
       <h2 className="creature-header">{creatureExpander}</h2>
-      <div className="creature-header--controls">
+      <div className={controlsClasses}>
         {monsterSearcher}
         {creatureLocker}
         {creatureSharer}
