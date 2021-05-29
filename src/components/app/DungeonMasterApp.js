@@ -37,6 +37,7 @@ import {
   addInitiativeToCreature,
   toggleCreatureLock,
   toggleCreatureShare,
+  toggleCreatureHpShare,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -109,6 +110,7 @@ function DungeonMasterApp({
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
     toggleCreatureLock: updateBattle(toggleCreatureLock, false),
     toggleCreatureShare: updateBattle(toggleCreatureShare),
+    toggleCreatureHpShare: updateBattle(toggleCreatureHpShare),
   };
 
   const errors = state.errors && state.errors.length > 0;

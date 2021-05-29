@@ -22,13 +22,14 @@ export default function CreatureHeader({
   lockHandler,
   shared,
   shareHandler,
+  shareHpHandler,
   expanded,
   expandHandler,
   focused,
   multiColumn,
 }) {
   const {
-    alive, name,
+    alive, name, hitPointsShared,
   } = creature;
   const nameClass = 'creature-name';
   const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
@@ -66,9 +67,9 @@ export default function CreatureHeader({
 
   const creatureHealthSharer = !playerSession && (
     <CreatureHealthSharer
-      shared={shared}
+      shared={hitPointsShared}
       name={name}
-      shareHandler={shareHandler}
+      shareHandler={shareHpHandler}
       disabled={active && shared}
     />
   );
