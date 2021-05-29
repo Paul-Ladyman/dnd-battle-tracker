@@ -21,26 +21,26 @@ export function getDamageLevel(hp, maxHp) {
   return { level: 'fine', display: 'Fine' };
 }
 
-export function getHealthBar(hp, maxHp, alive, showHitPoints) {
+export function getHitPointsBar(hitPoints, maxHitPoints, alive, showHitPoints) {
   if (!alive) {
     return [0, 0];
   }
 
-  if (hp === undefined || hp === null) {
+  if (hitPoints === undefined || hitPoints === null) {
     return [100, 100];
   }
 
-  if (hp <= 0 || maxHp <= 0) {
+  if (hitPoints <= 0 || maxHitPoints <= 0) {
     return [0, 0];
   }
 
-  if (!showHitPoints || hp >= maxHp) {
+  if (!showHitPoints || hitPoints >= maxHitPoints) {
     return [100, 100];
   }
 
-  const healthPercentage = Math.ceil((hp / maxHp) * 100);
-  const rightPercentage = healthPercentage < 85 ? healthPercentage + 15 : 100;
-  return [healthPercentage, rightPercentage];
+  const hitPointsPercentage = Math.ceil((hitPoints / maxHitPoints) * 100);
+  const rightPercentage = hitPointsPercentage < 85 ? hitPointsPercentage + 15 : 100;
+  return [hitPointsPercentage, rightPercentage];
 }
 
 export function shouldShowHitPoints(hitPoints, hitPointsShared, playerSession) {
