@@ -181,7 +181,7 @@ class CreatureWrapper extends Component {
               active={active}
               lockHandler={() => toggleCreatureLock(id)}
               shareHandler={() => toggleCreatureShare(id)}
-              shareHpHandler={() => toggleCreatureHitPointsShare(id)}
+              shareHitPointsHandler={() => toggleCreatureHitPointsShare(id)}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && !alreadyFocused}

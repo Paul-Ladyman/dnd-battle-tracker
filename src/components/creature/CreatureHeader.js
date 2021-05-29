@@ -20,7 +20,7 @@ export default function CreatureHeader({
   playerSession,
   lockHandler,
   shareHandler,
-  shareHpHandler,
+  shareHitPointsHandler,
   expanded,
   expandHandler,
   focused,
@@ -63,11 +63,11 @@ export default function CreatureHeader({
     />
   );
 
-  const creatureHealthSharer = !playerSession && (
+  const creatureHitPointsSharer = !playerSession && (
     <CreatureHitPointsSharer
       shared={hitPointsShared}
       name={name}
-      shareHandler={shareHpHandler}
+      shareHandler={shareHitPointsHandler}
       disabled={active && shared}
     />
   );
@@ -85,7 +85,7 @@ export default function CreatureHeader({
         {monsterSearcher}
         {creatureLocker}
         {creatureSharer}
-        {creatureHealthSharer}
+        {creatureHitPointsSharer}
       </div>
     </div>
   );
