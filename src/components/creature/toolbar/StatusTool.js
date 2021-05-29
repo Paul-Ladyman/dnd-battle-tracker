@@ -1,6 +1,5 @@
 import React from 'react';
-import StabalizeIcon from '../../icons/StabalizeIcon';
-import KillIcon from '../../icons/KillIcon';
+import KillStabalizeIcon from '../../icons/KillStabalizeIcon';
 
 export default function StatusTool({
   name,
@@ -12,7 +11,6 @@ export default function StatusTool({
 }) {
   const statusToolFunc = alive ? killCreature : stabalizeCreature;
   const statusToolTitle = alive ? 'Kill/Make unconscious' : 'Stabalize';
-  const statusToolIcon = alive ? <KillIcon /> : <StabalizeIcon />;
   const statusToolClass = 'creature-toolbar--button';
 
   const statusToolClasses = alive ? statusToolClass : `${statusToolClass} ${statusToolClass}__dead`;
@@ -26,7 +24,7 @@ export default function StatusTool({
       type="button"
       ref={statusToolRef}
     >
-      {statusToolIcon}
+      <KillStabalizeIcon alive={alive} />
     </button>
   );
 }
