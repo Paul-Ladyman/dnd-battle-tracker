@@ -1,4 +1,4 @@
-import { getDamageLevel, getHealthBar } from './displayLogic';
+import { getDamageLevel, getHealthBar, showHitPoints } from './displayLogic';
 
 describe('getDamageLevel', () => {
   it('returns fine if the creature is at full health', () => {
@@ -76,72 +76,103 @@ describe('getDamageLevel', () => {
 
 describe('getHealthBar', () => {
   it('sets both health bar indicators fully right if a creature has full hit points', () => {
-    const style = getHealthBar(100, 100, true);
+    const style = getHealthBar(100, 100, true, true);
     expect(style).toEqual([100, 100]);
   });
 
   it('sets both indicators fully right if a creature has greater than maximum hit points', () => {
-    const style = getHealthBar(10, 9, true);
+    const style = getHealthBar(10, 9, true, true);
+    expect(style).toEqual([100, 100]);
+  });
+
+  it('sets both indicators fully right if the creature\'s hit points are not to be shared', () => {
+    const style = getHealthBar(50, 100, true, false);
     expect(style).toEqual([100, 100]);
   });
 
   it('sets both indicators fully right if a creature has undefined hit points', () => {
-    const style = getHealthBar(undefined, 100, true);
+    const style = getHealthBar(undefined, 100, true, true);
     expect(style).toEqual([100, 100]);
   });
 
   it('sets both indicators fully right if a creature has null hit points', () => {
-    const style = getHealthBar(null, 100, true);
+    const style = getHealthBar(null, 100, true, true);
     expect(style).toEqual([100, 100]);
   });
 
   it('moves the left indicator to the left if a creature has less than full hit points', () => {
-    const style = getHealthBar(99, 100, true);
+    const style = getHealthBar(99, 100, true, true);
     expect(style).toEqual([99, 100]);
   });
 
   it('moves the left indicator without moving the right up to 85% full hit points', () => {
-    const style = getHealthBar(85, 100, true);
+    const style = getHealthBar(85, 100, true, true);
     expect(style).toEqual([85, 100]);
   });
 
   it('begins to move the right indicator below 85% full hit points', () => {
-    const style = getHealthBar(84, 100, true);
+    const style = getHealthBar(84, 100, true, true);
     expect(style).toEqual([84, 99]);
   });
 
   it('keeps the indicators 15% apart below 85% full hit points', () => {
-    const style = getHealthBar(10, 100, true);
+    const style = getHealthBar(10, 100, true, true);
     expect(style).toEqual([10, 25]);
   });
 
   it('calculates indicator percentages as integers given hp and maxHp', () => {
-    const style = getHealthBar(10, 30, true);
+    const style = getHealthBar(10, 30, true, true);
     expect(style).toEqual([34, 49]);
   });
 
   it('sets both indicators fully left if a creature is not alive', () => {
-    const style = getHealthBar(null, null, false);
+    const style = getHealthBar(null, null, false, true);
     expect(style).toEqual([0, 0]);
   });
 
   it('sets both indicators fully left if a creature has 0 hit points', () => {
-    const style = getHealthBar(0, 100, true);
+    const style = getHealthBar(0, 100, true, true);
     expect(style).toEqual([0, 0]);
   });
 
   it('sets both indicators fully left if a creature has negative hit points', () => {
-    const style = getHealthBar(-1, 100, true);
+    const style = getHealthBar(-1, 100, true, true);
     expect(style).toEqual([0, 0]);
   });
 
   it('sets both indicators fully left if a creature has 0 maximum hit points', () => {
-    const style = getHealthBar(1, 0, true);
+    const style = getHealthBar(1, 0, true, true);
     expect(style).toEqual([0, 0]);
   });
 
   it('sets both indicators fully left if a creature has negative maximum hit points', () => {
-    const style = getHealthBar(1, -1, true);
+    const style = getHealthBar(1, -1, true, true);
     expect(style).toEqual([0, 0]);
+  });
+});
+
+describe('showHitPoints', () => {
+  it('returns true if hit points are defined and shared in a player session', () => {
+    expect(showHitPoints(10, true, true)).toBe(true);
+  });
+
+  it('returns true if hit points are defined and not shared in a DM session', () => {
+    expect(showHitPoints(10, false, false)).toBe(true);
+  });
+
+  it('returns true if hit points are defined and shared in a DM session', () => {
+    expect(showHitPoints(10, true, false)).toBe(true);
+  });
+
+  it('returns false if hit points are defined but not shared in a player session', () => {
+    expect(showHitPoints(10, false, true)).toBe(false);
+  });
+
+  it('returns false if hit points are null', () => {
+    expect(showHitPoints(null, true, true)).toBe(false);
+  });
+
+  it('returns false if hit points are undefined', () => {
+    expect(showHitPoints(undefined, true, true)).toBe(false);
   });
 });

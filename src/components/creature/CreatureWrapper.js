@@ -6,7 +6,7 @@ import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from '../buttons/CreatureRemover';
 import { getAvailableConditions } from '../../state/ConditionsManager';
-import { getHealthBar } from '../../display/displayLogic';
+import { getHealthBar, showHitPoints } from '../../display/displayLogic';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
@@ -120,6 +120,7 @@ class CreatureWrapper extends Component {
       id,
       locked,
       shared,
+      hitPointsShared,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
       temporaryHealthPoints,
@@ -155,7 +156,7 @@ class CreatureWrapper extends Component {
         playerSession={playerSession}
       />
     );
-    const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
+    const showHealth = showHitPoints(creatureHealthPoints, hitPointsShared, true);
 
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
 
@@ -164,7 +165,7 @@ class CreatureWrapper extends Component {
     const [
       leftPercentage,
       rightPercentage,
-    ] = getHealthBar(creatureHealthPoints, maxHealthPoints, alive);
+    ] = getHealthBar(creatureHealthPoints, maxHealthPoints, alive, showHealth);
 
     return (
       <>

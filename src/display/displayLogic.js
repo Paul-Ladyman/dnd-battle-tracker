@@ -1,3 +1,5 @@
+import { playerSessionHotkeyDescriptions } from "../hotkeys/hotkeys";
+
 export function getDamageLevel(hp, maxHp) {
   const injuredLevel = maxHp / 2;
   const badlyInjuredLevel = maxHp / 4;
@@ -21,12 +23,12 @@ export function getDamageLevel(hp, maxHp) {
   return { level: 'fine', display: 'Fine' };
 }
 
-export function getHealthBar(hp, maxHp, alive) {
+export function getHealthBar(hp, maxHp, alive, showHitPoints) {
   if (!alive) {
     return [0, 0];
   }
 
-  if (hp === undefined || hp === null) {
+  if (!showHitPoints || hp === undefined || hp === null) {
     return [100, 100];
   }
 
@@ -41,4 +43,10 @@ export function getHealthBar(hp, maxHp, alive) {
   const healthPercentage = Math.ceil((hp / maxHp) * 100);
   const rightPercentage = healthPercentage < 85 ? healthPercentage + 15 : 100;
   return [healthPercentage, rightPercentage];
+}
+
+export function showHitPoints(hitPoints, hitPointsShared, playerSession) {
+  if (hitPoints === undefined || hitPoints === null) return false;
+  if (!playerSession) return true;
+  return hitPointsShared;
 }
