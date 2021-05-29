@@ -118,8 +118,6 @@ class CreatureWrapper extends Component {
     const {
       name,
       id,
-      locked,
-      shared,
       hitPointsShared,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
@@ -181,9 +179,7 @@ class CreatureWrapper extends Component {
             <CreatureHeader
               creature={creature}
               active={active}
-              locked={locked}
               lockHandler={() => toggleCreatureLock(id)}
-              shared={shared}
               shareHandler={() => toggleCreatureShare(id)}
               shareHpHandler={() => toggleCreatureHpShare(id)}
               expanded={expanded}
@@ -196,7 +192,6 @@ class CreatureWrapper extends Component {
               ? (
                 <ExpandedCreature
                   creature={creature}
-                  shared={shared}
                   round={round}
                   secondsElapsed={secondsElapsed}
                   removeCreature={removeCreature}

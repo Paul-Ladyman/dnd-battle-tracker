@@ -18,9 +18,7 @@ export default function CreatureHeader({
   creature,
   active,
   playerSession,
-  locked,
   lockHandler,
-  shared,
   shareHandler,
   shareHpHandler,
   expanded,
@@ -29,7 +27,7 @@ export default function CreatureHeader({
   multiColumn,
 }) {
   const {
-    alive, name, hitPointsShared,
+    alive, name, hitPointsShared, locked, shared,
   } = creature;
   const nameClass = 'creature-name';
   const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
