@@ -1,14 +1,14 @@
 import React from 'react';
-import ShareHealthIcon from '../icons/ShareHealthIcon';
+import ShareHitPointsIcon from '../icons/ShareHitPointsIcon';
 
-function CreatureHitPointSharer({
+function CreatureHitPointsSharer({
   shared,
   name,
   shareHandler,
   disabled,
 }) {
-  const buttonTitle = shared ? 'Creature health share enabled' : 'Creature health share disabled';
-  const buttonAriaLabel = shared ? `${name} health share enabled` : `${name} health share disabled`;
+  const buttonTitle = shared ? 'Creature hit points share enabled' : 'Creature hit points share disabled';
+  const buttonAriaLabel = shared ? `${name} hit points share enabled` : `${name} hit points share disabled`;
   const buttonClass = 'creature-title-button';
   const buttonClasses = disabled ? `${buttonClass} button__disabled` : buttonClass;
 
@@ -21,9 +21,9 @@ function CreatureHitPointSharer({
       type="button"
       disabled={disabled}
     >
-      <ShareHealthIcon enabled={shared} />
+      <ShareHitPointsIcon enabled={shared} />
     </button>
   );
 }
 
-export default CreatureHitPointSharer;
+export default CreatureHitPointsSharer;

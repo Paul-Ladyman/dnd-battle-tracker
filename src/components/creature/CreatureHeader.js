@@ -3,7 +3,7 @@ import CreatureExpander from '../buttons/CreatureExpander';
 import CreatureLocker from '../buttons/CreatureLocker';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import CreatureSharer from '../buttons/CreatureSharer';
-import CreatureHitPointSharer from '../buttons/CreatureHitPointSharer';
+import CreatureHitPointsSharer from '../buttons/CreatureHitPointsSharer';
 
 function getName(expanded, active, name, multiColumn) {
   const maxLength = 22;
@@ -64,7 +64,7 @@ export default function CreatureHeader({
   );
 
   const creatureHealthSharer = !playerSession && (
-    <CreatureHitPointSharer
+    <CreatureHitPointsSharer
       shared={hitPointsShared}
       name={name}
       shareHandler={shareHpHandler}

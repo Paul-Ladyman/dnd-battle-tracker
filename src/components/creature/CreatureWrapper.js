@@ -141,7 +141,7 @@ class CreatureWrapper extends Component {
       removeNoteFromCreature,
       toggleCreatureLock,
       toggleCreatureShare,
-      toggleCreatureHitPointShare,
+      toggleCreatureHitPointsShare,
     } = creatureManagement;
 
     const healthPoints = (
@@ -181,7 +181,7 @@ class CreatureWrapper extends Component {
               active={active}
               lockHandler={() => toggleCreatureLock(id)}
               shareHandler={() => toggleCreatureShare(id)}
-              shareHpHandler={() => toggleCreatureHitPointShare(id)}
+              shareHpHandler={() => toggleCreatureHitPointsShare(id)}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && !alreadyFocused}

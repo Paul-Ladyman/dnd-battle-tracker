@@ -12,7 +12,7 @@ import {
   addInitiativeToCreature,
   toggleCreatureLock,
   toggleCreatureShare,
-  toggleCreatureHitPointShare,
+  toggleCreatureHitPointsShare,
   resetCreature,
   getRawName,
   isCreatureStable,
@@ -1104,7 +1104,7 @@ describe('toggleCreatureShare', () => {
   });
 });
 
-describe('toggleCreatureHitPointShare', () => {
+describe('toggleCreatureHitPointsShare', () => {
   it('enables creature hit points share if it is disabled', () => {
     const state = {
       ...defaultState,
@@ -1131,7 +1131,7 @@ describe('toggleCreatureHitPointShare', () => {
       ariaAnnouncements: ['Wellby\'s hit points are shared'],
     };
 
-    const result = toggleCreatureHitPointShare(state, 1);
+    const result = toggleCreatureHitPointsShare(state, 1);
     expect(result).toEqual(expectedState);
   });
 
@@ -1149,7 +1149,7 @@ describe('toggleCreatureHitPointShare', () => {
       ariaAnnouncements: ['Goblin #1\'s hit points are not shared'],
     };
 
-    const result = toggleCreatureHitPointShare(defaultState, 2);
+    const result = toggleCreatureHitPointsShare(defaultState, 2);
     expect(result).toEqual(expectedState);
   });
 });

@@ -252,7 +252,7 @@ export function toggleCreatureShare(state, creatureId) {
   return updateCreature(state, creatureId, { shared: !creature.shared }, ariaAnnouncement);
 }
 
-export function toggleCreatureHitPointShare(state, creatureId) {
+export function toggleCreatureHitPointsShare(state, creatureId) {
   const creature = findCreature(state.creatures, creatureId);
   const newState = creature.hitPointsShared ? 'not shared' : 'shared';
   const ariaAnnouncement = `${creature.name}'s hit points are ${newState}`;

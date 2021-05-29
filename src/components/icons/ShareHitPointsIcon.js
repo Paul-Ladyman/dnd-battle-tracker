@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ShareHealthIcon({ enabled }) {
+function ShareHitPointsIcon({ enabled }) {
   const fillOpacity = enabled ? '1' : '0';
   const shareStroke = enabled ? '#EBE1AD' : '#822000';
   const shareStrokeWidth = enabled ? '10' : '20';
@@ -14,4 +14,4 @@ function ShareHealthIcon({ enabled }) {
     </svg>
   );
 }
-export default ShareHealthIcon;
+export default ShareHitPointsIcon;
