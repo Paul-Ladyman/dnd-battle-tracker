@@ -1,4 +1,4 @@
-import { getDamageLevel, getHealthBar, showHitPoints } from './displayLogic';
+import { getDamageLevel, getHealthBar, shouldShowHitPoints } from './displayLogic';
 
 describe('getDamageLevel', () => {
   it('returns fine if the creature is at full health', () => {
@@ -151,28 +151,28 @@ describe('getHealthBar', () => {
   });
 });
 
-describe('showHitPoints', () => {
+describe('shouldShowHitPoints', () => {
   it('returns true if hit points are defined and shared in a player session', () => {
-    expect(showHitPoints(10, true, true)).toBe(true);
+    expect(shouldShowHitPoints(10, true, true)).toBe(true);
   });
 
   it('returns true if hit points are defined and not shared in a DM session', () => {
-    expect(showHitPoints(10, false, false)).toBe(true);
+    expect(shouldShowHitPoints(10, false, false)).toBe(true);
   });
 
   it('returns true if hit points are defined and shared in a DM session', () => {
-    expect(showHitPoints(10, true, false)).toBe(true);
+    expect(shouldShowHitPoints(10, true, false)).toBe(true);
   });
 
   it('returns false if hit points are defined but not shared in a player session', () => {
-    expect(showHitPoints(10, false, true)).toBe(false);
+    expect(shouldShowHitPoints(10, false, true)).toBe(false);
   });
 
   it('returns false if hit points are null', () => {
-    expect(showHitPoints(null, true, true)).toBe(false);
+    expect(shouldShowHitPoints(null, true, true)).toBe(false);
   });
 
   it('returns false if hit points are undefined', () => {
-    expect(showHitPoints(undefined, true, true)).toBe(false);
+    expect(shouldShowHitPoints(undefined, true, true)).toBe(false);
   });
 });

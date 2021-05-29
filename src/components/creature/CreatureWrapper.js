@@ -6,7 +6,7 @@ import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from '../buttons/CreatureRemover';
 import { getAvailableConditions } from '../../state/ConditionsManager';
-import { getHealthBar, showHitPoints } from '../../display/displayLogic';
+import { getHealthBar, shouldShowHitPoints } from '../../display/displayLogic';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
@@ -156,7 +156,7 @@ class CreatureWrapper extends Component {
         playerSession={playerSession}
       />
     );
-    const showHealth = showHitPoints(creatureHealthPoints, hitPointsShared, true);
+    const showHealth = shouldShowHitPoints(creatureHealthPoints, hitPointsShared, playerSession);
 
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
 

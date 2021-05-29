@@ -1,5 +1,3 @@
-import { playerSessionHotkeyDescriptions } from "../hotkeys/hotkeys";
-
 export function getDamageLevel(hp, maxHp) {
   const injuredLevel = maxHp / 2;
   const badlyInjuredLevel = maxHp / 4;
@@ -45,7 +43,7 @@ export function getHealthBar(hp, maxHp, alive, showHitPoints) {
   return [healthPercentage, rightPercentage];
 }
 
-export function showHitPoints(hitPoints, hitPointsShared, playerSession) {
+export function shouldShowHitPoints(hitPoints, hitPointsShared, playerSession) {
   if (hitPoints === undefined || hitPoints === null) return false;
   if (!playerSession) return true;
   return hitPointsShared;
