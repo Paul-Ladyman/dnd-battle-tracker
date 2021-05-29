@@ -1,7 +1,7 @@
 import React from 'react';
 import ShareHealthIcon from '../icons/ShareHealthIcon';
 
-function CreatureHealthSharer({
+function CreatureHitPointSharer({
   shared,
   name,
   shareHandler,
@@ -26,4 +26,4 @@ function CreatureHealthSharer({
   );
 }
 
-export default CreatureHealthSharer;
+export default CreatureHitPointSharer;
