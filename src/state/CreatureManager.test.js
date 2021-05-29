@@ -12,6 +12,7 @@ import {
   addInitiativeToCreature,
   toggleCreatureLock,
   toggleCreatureShare,
+  toggleCreatureHpShare,
   resetCreature,
   getRawName,
   isCreatureStable,
@@ -557,6 +558,7 @@ describe('createCreature', () => {
       notes: [],
       locked: false,
       shared: true,
+      hitPointsShared: true,
     };
 
     const creature = createCreature(1, { name: 'name', initiative: 13, healthPoints: 10 });
@@ -576,6 +578,7 @@ describe('createCreature', () => {
       notes: [],
       locked: false,
       shared: true,
+      hitPointsShared: true,
     };
 
     const creature = createCreature(1, {
@@ -1097,6 +1100,56 @@ describe('toggleCreatureShare', () => {
     };
 
     const result = toggleCreatureShare(defaultState, 2);
+    expect(result).toEqual(expectedState);
+  });
+});
+
+describe('toggleCreatureHpShare', () => {
+  it('enables creature hit points share if it is disabled', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          hitPointsShared: false,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          hitPointsShared: true,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby\'s hit points are shared'],
+    };
+
+    const result = toggleCreatureHpShare(state, 1);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('disables creature hit points share if it is enabled', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          hitPointsShared: false,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s hit points are not shared'],
+    };
+
+    const result = toggleCreatureHpShare(defaultState, 2);
     expect(result).toEqual(expectedState);
   });
 });
