@@ -31,6 +31,7 @@ type Creature @aws_api_key @aws_iam {
   notes: [Note!]
   locked: Boolean!
   shared: Boolean!
+  hitPointsShared: Boolean
 }
 
 type Battle @aws_api_key @aws_iam {
@@ -68,6 +69,7 @@ input CreatureInput @aws_api_key @aws_iam {
   notes: [NoteInput!]
   locked: Boolean!
   shared: Boolean!
+  hitPointsShared: Boolean
 }
 
 input BattleInput @aws_api_key @aws_iam {

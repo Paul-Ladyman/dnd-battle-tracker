@@ -3,6 +3,7 @@ import CreatureExpander from '../buttons/CreatureExpander';
 import CreatureLocker from '../buttons/CreatureLocker';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import CreatureSharer from '../buttons/CreatureSharer';
+import CreatureHitPointsSharer from '../buttons/CreatureHitPointsSharer';
 
 function getName(expanded, active, name, multiColumn) {
   const maxLength = 22;
@@ -17,17 +18,16 @@ export default function CreatureHeader({
   creature,
   active,
   playerSession,
-  locked,
   lockHandler,
-  shared,
   shareHandler,
+  shareHitPointsHandler,
   expanded,
   expandHandler,
   focused,
   multiColumn,
 }) {
   const {
-    alive, name,
+    alive, name, hitPointsShared, locked, shared,
   } = creature;
   const nameClass = 'creature-name';
   const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
@@ -63,6 +63,15 @@ export default function CreatureHeader({
     />
   );
 
+  const creatureHitPointsSharer = !playerSession && (
+    <CreatureHitPointsSharer
+      shared={hitPointsShared}
+      name={name}
+      shareHandler={shareHitPointsHandler}
+      disabled={active && shared}
+    />
+  );
+
   const monsterSearcher = !playerSession && (
     <MonsterSearcher
       search={name}
@@ -72,9 +81,12 @@ export default function CreatureHeader({
   return (
     <div className="creature-title">
       <h2 className="creature-header">{creatureExpander}</h2>
-      {monsterSearcher}
-      {creatureLocker}
-      {creatureSharer}
+      <div className="creature-header--controls">
+        {monsterSearcher}
+        {creatureLocker}
+        {creatureSharer}
+        {creatureHitPointsSharer}
+      </div>
     </div>
   );
 }

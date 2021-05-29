@@ -498,10 +498,6 @@ input[type="number"] {
   border-bottom: 10px solid #822000;
 }
 
-.creature-title {
-  display: flex;
-}
-
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
 @media only screen and (max-width: 825px) {
   .creature-list {
@@ -526,9 +522,41 @@ input[type="number"] {
   }
 }
 
+.creature-title {
+  display: flex;
+}
+
 .creature-header {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.creature-header--controls {
+  display: flex;
+}
+
+.creature-title-button {
+  padding: 4px;
+  margin-left: 10px;
+}
+
+/* Drop creature title tools onto a newline on smaller screens. */
+@media only screen and (max-width: 600px) {
+  .creature-title {
+    flex-direction: column;
+  }
+
+  .creature-title-button:first-child {
+    margin-left: 0;
+  }
+
+  .creature-header--controls {
+    margin-top: 5px;
+  }
+
+  .collapsed-creature--status {
+    margin-top: 10px;
+  }
 }
 
 .creature-expander-button {
@@ -630,6 +658,13 @@ input[type="number"] {
   font-style: italic;
 }
 
+/* A bit more margin when creature title tools are on a newline */
+@media only screen and (max-width: 600px) {
+  .collapsed-creature--status {
+    margin-top: 10px;
+  }
+}
+
 .collapsed-creature--status__margin {
   margin-left: 5px;
 }
@@ -699,11 +734,6 @@ input[type="number"] {
 .creature-note-list--timer {
   margin-left: 10px;
   white-space: nowrap;
-}
-
-.creature-title-button {
-  padding: 4px;
-  margin-left: 10px;
 }
 
 /* Health points */
