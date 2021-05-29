@@ -135,6 +135,11 @@ describe('getHealthBar', () => {
     expect(style).toEqual([0, 0]);
   });
 
+  it('sets both indicators fully left if a creature has 0 hit points even if hit points aren\'t shared', () => {
+    const style = getHealthBar(0, 100, true, false);
+    expect(style).toEqual([0, 0]);
+  });
+
   it('sets both indicators fully left if a creature has negative hit points', () => {
     const style = getHealthBar(-1, 100, true, true);
     expect(style).toEqual([0, 0]);

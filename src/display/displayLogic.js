@@ -26,7 +26,7 @@ export function getHealthBar(hp, maxHp, alive, showHitPoints) {
     return [0, 0];
   }
 
-  if (!showHitPoints || hp === undefined || hp === null) {
+  if (hp === undefined || hp === null) {
     return [100, 100];
   }
 
@@ -34,7 +34,7 @@ export function getHealthBar(hp, maxHp, alive, showHitPoints) {
     return [0, 0];
   }
 
-  if (hp >= maxHp) {
+  if (!showHitPoints || hp >= maxHp) {
     return [100, 100];
   }
 
