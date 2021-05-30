@@ -37,9 +37,9 @@ export default function CreatureHeader({
   const classes = expandedOrActive ? nameClass : collapsedNameClasses;
 
   const titleClass = 'creature-title';
-  const titleClasses = expandedOrActive && multiColumn ? `${titleClass} ${titleClass}__expanded` : titleClass;
+  const titleClasses = expandedOrActive && multiColumn ? `${titleClass} ${titleClass}__multicolumn` : titleClass;
   const controlsClass = 'creature-header--controls';
-  const controlsClasses = expandedOrActive && multiColumn ? `${controlsClass} ${controlsClass}__expanded` : controlsClass;
+  const controlsClasses = expandedOrActive && multiColumn ? `${controlsClass} ${controlsClass}__multicolumn` : controlsClass;
 
   const creatureExpander = (
     <CreatureExpander
