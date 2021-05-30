@@ -74,7 +74,6 @@ export default function CreatureHeader({
       shared={hitPointsShared}
       name={name}
       shareHandler={shareHitPointsHandler}
-      disabled={active && shared}
     />
   );
 
