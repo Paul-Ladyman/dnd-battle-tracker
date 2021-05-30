@@ -540,16 +540,19 @@ input[type="number"] {
   margin-left: 10px;
 }
 
-.creature-title__expanded {
-  flex-direction: column;
-}
+/* Drop creature title tools onto newline on larger screens when multi-column creature is expanded */
+@media only screen and (min-width: 825px) {
+  .creature-title__expanded {
+    flex-direction: column;
+  }
 
-.creature-title__expanded .creature-title-button:first-child {
-  margin-left: 0;
-}
+  .creature-title__expanded .creature-title-button:first-child {
+    margin-left: 0;
+  }
 
-.creature-header--controls__expanded {
-  margin-top: 5px;
+  .creature-header--controls__expanded {
+    margin-top: 5px;
+  }
 }
 
 /* Drop creature title tools onto a newline on smaller screens. */

@@ -29,13 +29,17 @@ export default function CreatureHeader({
   const {
     alive, name, hitPointsShared, locked, shared,
   } = creature;
+  const expandedOrActive = expanded || active;
+
   const nameClass = 'creature-name';
   const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
   const collapsedNameClasses = `${nameClass} ${nameModifier}`;
+  const classes = expandedOrActive ? nameClass : collapsedNameClasses;
 
-  const classes = (expanded || active) ? nameClass : collapsedNameClasses;
-  const titleClasses = (expanded || active) && multiColumn ? ' creature-title creature-title__expanded' : 'creature-title';
-  const controlsClasses = (expanded || active) && multiColumn ? ' creature-header--controls creature-header--controls__expanded' : 'creature-header--controls';
+  const titleClass = 'creature-title';
+  const titleClasses = expandedOrActive && multiColumn ? `${titleClass} ${titleClass}__expanded` : titleClass;
+  const controlsClass = 'creature-header--controls';
+  const controlsClasses = expandedOrActive && multiColumn ? `${controlsClass} ${controlsClass}__expanded` : controlsClass;
 
   const creatureExpander = (
     <CreatureExpander
