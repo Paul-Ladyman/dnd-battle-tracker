@@ -540,6 +540,21 @@ input[type="number"] {
   margin-left: 10px;
 }
 
+/* Drop creature title tools onto newline on larger screens when multi-column creature is expanded */
+@media only screen and (min-width: 825px) {
+  .creature-title__multicolumn {
+    flex-direction: column;
+  }
+
+  .creature-title__multicolumn .creature-title-button:first-child {
+    margin-left: 0;
+  }
+
+  .creature-header--controls__multicolumn {
+    margin-top: 5px;
+  }
+}
+
 /* Drop creature title tools onto a newline on smaller screens. */
 @media only screen and (max-width: 600px) {
   .creature-title {
@@ -552,10 +567,6 @@ input[type="number"] {
 
   .creature-header--controls {
     margin-top: 5px;
-  }
-
-  .collapsed-creature--status {
-    margin-top: 10px;
   }
 }
 

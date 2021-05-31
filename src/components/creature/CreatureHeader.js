@@ -29,11 +29,17 @@ export default function CreatureHeader({
   const {
     alive, name, hitPointsShared, locked, shared,
   } = creature;
+  const expandedOrActive = expanded || active;
+
   const nameClass = 'creature-name';
   const nameModifier = alive ? '' : 'collapsed-creature--name__dead';
   const collapsedNameClasses = `${nameClass} ${nameModifier}`;
+  const classes = expandedOrActive ? nameClass : collapsedNameClasses;
 
-  const classes = (expanded || active) ? nameClass : collapsedNameClasses;
+  const titleClass = 'creature-title';
+  const titleClasses = expandedOrActive && multiColumn ? `${titleClass} ${titleClass}__multicolumn` : titleClass;
+  const controlsClass = 'creature-header--controls';
+  const controlsClasses = expandedOrActive && multiColumn ? `${controlsClass} ${controlsClass}__multicolumn` : controlsClass;
 
   const creatureExpander = (
     <CreatureExpander
@@ -68,7 +74,6 @@ export default function CreatureHeader({
       shared={hitPointsShared}
       name={name}
       shareHandler={shareHitPointsHandler}
-      disabled={active && shared}
     />
   );
 
@@ -79,9 +84,9 @@ export default function CreatureHeader({
   );
 
   return (
-    <div className="creature-title">
+    <div className={titleClasses}>
       <h2 className="creature-header">{creatureExpander}</h2>
-      <div className="creature-header--controls">
+      <div className={controlsClasses}>
         {monsterSearcher}
         {creatureLocker}
         {creatureSharer}
