@@ -852,7 +852,7 @@ describe('removeNoteFromCreature', () => {
 });
 
 describe('addHitPointsToCreature', () => {
-  it('adds health to a creature that does not already have it', () => {
+  it('adds hp to a creature that does not already have it', () => {
     const expectedState = {
       ...defaultState,
       creatures: [
@@ -864,14 +864,14 @@ describe('addHitPointsToCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Wellby\'s health is 10, max health is 10'],
+      ariaAnnouncements: ['Wellby\'s hp is 10, max hp is 10'],
     };
 
     const result = addHitPointsToCreature(defaultState, 1, 10);
     expect(result).toEqual(expectedState);
   });
 
-  it('sets healthPoints to 0 if creature is dead', () => {
+  it('sets hp to 0 if creature is dead', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -895,14 +895,14 @@ describe('addHitPointsToCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Wellby\'s health is 0, max health is 10'],
+      ariaAnnouncements: ['Wellby\'s hp is 0, max hp is 10'],
     };
 
     const result = addHitPointsToCreature(state, 1, 10);
     expect(result).toEqual(expectedState);
   });
 
-  it('updates a creature\'s health if it is on full health and the max health increases', () => {
+  it('updates a creature\'s hp if it is on full hp and the max hp increases', () => {
     const result = addHitPointsToCreature(defaultState, 2, 30);
 
     const expectedState = {
@@ -916,12 +916,12 @@ describe('addHitPointsToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1\'s health is 30, max health is 30'],
+      ariaAnnouncements: ['Goblin #1\'s hp is 30, max hp is 30'],
     };
     expect(result).toEqual(expectedState);
   });
 
-  it('updates a creature\'s health if it is on less than full health and the max health increases', () => {
+  it('updates a creature\'s hp if it is on less than full hp and the max hp increases', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -947,12 +947,12 @@ describe('addHitPointsToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1\'s health is 15, max health is 20'],
+      ariaAnnouncements: ['Goblin #1\'s hp is 15, max hp is 20'],
     };
     expect(result).toEqual(expectedState);
   });
 
-  it('updates a creature\'s health if it is on full health and the max health decreases', () => {
+  it('updates a creature\'s hp if it is on full hp and the max hp decreases', () => {
     const result = addHitPointsToCreature(defaultState, 2, 5);
 
     const expectedState = {
@@ -966,12 +966,12 @@ describe('addHitPointsToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1\'s health is 5, max health is 5'],
+      ariaAnnouncements: ['Goblin #1\'s hp is 5, max hp is 5'],
     };
     expect(result).toEqual(expectedState);
   });
 
-  it('updates a creature\'s health if it is on less than full health and the max health decreases below it', () => {
+  it('updates a creature\'s hp if it is on less than full hp and the max hp decreases below it', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -997,12 +997,12 @@ describe('addHitPointsToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1\'s health is 2, max health is 2'],
+      ariaAnnouncements: ['Goblin #1\'s hp is 2, max hp is 2'],
     };
     expect(result).toEqual(expectedState);
   });
 
-  it('updates a creature\'s health if it is on less than full health and the max health decreases whilst staying above it', () => {
+  it('updates a creature\'s hp if it is on less than full hp and the max hp decreases whilst staying above it', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -1028,22 +1028,22 @@ describe('addHitPointsToCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1\'s health is 5, max health is 7'],
+      ariaAnnouncements: ['Goblin #1\'s hp is 5, max hp is 7'],
     };
     expect(result).toEqual(expectedState);
   });
 
-  it('does nothing to a creature if it is on full health and the max health stays the same', () => {
+  it('does nothing to a creature if it is on full hp and the max hp stays the same', () => {
     const result = addHitPointsToCreature(defaultState, 2, 10);
 
     const expectedState = {
       ...defaultState,
-      ariaAnnouncements: ['Goblin #1\'s health is 10, max health is 10'],
+      ariaAnnouncements: ['Goblin #1\'s hp is 10, max hp is 10'],
     };
     expect(result).toEqual(expectedState);
   });
 
-  it('does nothing to a creature if it is on less than full health and the max health stays the same', () => {
+  it('does nothing to a creature if it is on less than full hp and the max hp stays the same', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -1060,17 +1060,17 @@ describe('addHitPointsToCreature', () => {
 
     const expectedState = {
       ...state,
-      ariaAnnouncements: ['Goblin #1\'s health is 5, max health is 10'],
+      ariaAnnouncements: ['Goblin #1\'s hp is 5, max hp is 10'],
     };
     expect(result).toEqual(expectedState);
   });
 
-  it('does nothing to a creature if 0 health is added', () => {
+  it('does nothing to a creature if 0 hp is added', () => {
     const result = addHitPointsToCreature(defaultState, 1, 0);
     expect(result).toEqual(defaultState);
   });
 
-  it('does nothing to a creature if less than 0 health is added', () => {
+  it('does nothing to a creature if less than 0 hp is added', () => {
     const result = addHitPointsToCreature(defaultState, 1, -1);
     expect(result).toEqual(defaultState);
   });
