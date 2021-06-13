@@ -12,11 +12,11 @@ export default function MaxHealthPointsTool({
       integer
       name="creature-toolbar-maxhp"
       min={1}
-      ariaLabel={`add max hp ${name}`}
-      label="Add Max HP"
+      ariaLabel={`add/edit max hp ${name}`}
+      label="Max HP"
       rightSubmit={(health) => addHealthToCreature(id, health)}
       rightControls={{
-        rightTitle: 'Add Max HP',
+        rightTitle: 'Add/Edit Max HP',
         RightSubmitIcon: <AddHpIcon />,
       }}
       inputId={`max-health-${id}`}
