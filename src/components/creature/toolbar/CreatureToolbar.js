@@ -2,7 +2,7 @@ import React, { useRef, useLayoutEffect, useState } from 'react';
 import StatusTool from './StatusTool';
 import HealthPointsTool from './HealthPointsTool';
 import MaxHealthPointsTool from './MaxHitPointsTool';
-import TemporaryHealthPointsTool from './TemporaryHealthPointsTool';
+import TemporaryHealthPointsTool from './TemporaryHitPointsTool';
 import InitiativeTool from './InitiativeTool';
 import ConditionsTool from './ConditionsTool';
 import NotesTool from './NotesTool';
