@@ -101,7 +101,6 @@ function toolsPageTwo({
       key={`${id}-maxhitpoints-tool`}
       name={name}
       id={id}
-      healthPoints={healthPoints}
       addHealthToCreature={addHealthToCreature}
     />,
     <TemporaryHealthPointsTool

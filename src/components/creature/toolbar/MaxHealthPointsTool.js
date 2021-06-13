@@ -5,7 +5,6 @@ import AddHpIcon from '../../icons/AddHpIcon';
 export default function MaxHealthPointsTool({
   name,
   id,
-  healthPoints,
   addHealthToCreature,
 }) {
   return (
@@ -17,7 +16,6 @@ export default function MaxHealthPointsTool({
       label="Add Max HP"
       rightSubmit={(health) => addHealthToCreature(id, health)}
       rightControls={{
-        rightEnabled: healthPoints === undefined,
         rightTitle: 'Add Max HP',
         RightSubmitIcon: <AddHpIcon />,
       }}
