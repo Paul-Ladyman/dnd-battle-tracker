@@ -188,7 +188,7 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
   return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
 
-export function addHealthToCreature(state, creatureId, health) {
+export function addHitPointsToCreature(state, creatureId, health) {
   if (health <= 0) {
     return state;
   }

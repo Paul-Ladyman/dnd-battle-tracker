@@ -5,7 +5,7 @@ import AddHpIcon from '../../icons/AddHpIcon';
 export default function MaxHitPointsTool({
   name,
   id,
-  addHealthToCreature,
+  addHitPointsToCreature,
 }) {
   return (
     <CreatureToolbarInput
@@ -14,7 +14,7 @@ export default function MaxHitPointsTool({
       min={1}
       ariaLabel={`add/edit max hp ${name}`}
       label="Max HP"
-      rightSubmit={(hitPoints) => addHealthToCreature(id, hitPoints)}
+      rightSubmit={(hitPoints) => addHitPointsToCreature(id, hitPoints)}
       rightControls={{
         rightTitle: 'Add/Edit Max HP',
         RightSubmitIcon: <AddHpIcon />,

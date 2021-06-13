@@ -82,7 +82,7 @@ function toolsPageTwo({
   navFunc,
 }) {
   const {
-    addHealthToCreature,
+    addHitPointsToCreature,
     addTemporaryHealthToCreature,
   } = creatureManagement;
   const {
@@ -101,7 +101,7 @@ function toolsPageTwo({
       key={`${id}-maxhitpoints-tool`}
       name={name}
       id={id}
-      addHealthToCreature={addHealthToCreature}
+      addHitPointsToCreature={addHitPointsToCreature}
     />,
     <TemporaryHealthPointsTool
       key={`${id}-temphitpoints-tool`}

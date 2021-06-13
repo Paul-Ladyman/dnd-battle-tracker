@@ -6,7 +6,7 @@ import {
   createCreature,
   addNoteToCreature,
   removeNoteFromCreature,
-  addHealthToCreature,
+  addHitPointsToCreature,
   addTemporaryHealthToCreature,
   validateCreature,
   addInitiativeToCreature,
@@ -851,7 +851,7 @@ describe('removeNoteFromCreature', () => {
   });
 });
 
-describe('addHealthToCreature', () => {
+describe('addHitPointsToCreature', () => {
   it('adds health to a creature that does not already have it', () => {
     const expectedState = {
       ...defaultState,
@@ -867,7 +867,7 @@ describe('addHealthToCreature', () => {
       ariaAnnouncements: ['Wellby\'s health is 10, max health is 10'],
     };
 
-    const result = addHealthToCreature(defaultState, 1, 10);
+    const result = addHitPointsToCreature(defaultState, 1, 10);
     expect(result).toEqual(expectedState);
   });
 
@@ -898,12 +898,12 @@ describe('addHealthToCreature', () => {
       ariaAnnouncements: ['Wellby\'s health is 0, max health is 10'],
     };
 
-    const result = addHealthToCreature(state, 1, 10);
+    const result = addHitPointsToCreature(state, 1, 10);
     expect(result).toEqual(expectedState);
   });
 
   it('updates a creature\'s health if it is on full health and the max health increases', () => {
-    const result = addHealthToCreature(defaultState, 2, 30);
+    const result = addHitPointsToCreature(defaultState, 2, 30);
 
     const expectedState = {
       ...defaultState,
@@ -934,7 +934,7 @@ describe('addHealthToCreature', () => {
       ],
     };
 
-    const result = addHealthToCreature(state, 2, 20);
+    const result = addHitPointsToCreature(state, 2, 20);
 
     const expectedState = {
       ...defaultState,
@@ -953,7 +953,7 @@ describe('addHealthToCreature', () => {
   });
 
   it('updates a creature\'s health if it is on full health and the max health decreases', () => {
-    const result = addHealthToCreature(defaultState, 2, 5);
+    const result = addHitPointsToCreature(defaultState, 2, 5);
 
     const expectedState = {
       ...defaultState,
@@ -984,7 +984,7 @@ describe('addHealthToCreature', () => {
       ],
     };
 
-    const result = addHealthToCreature(state, 2, 2);
+    const result = addHitPointsToCreature(state, 2, 2);
 
     const expectedState = {
       ...defaultState,
@@ -1015,7 +1015,7 @@ describe('addHealthToCreature', () => {
       ],
     };
 
-    const result = addHealthToCreature(state, 2, 7);
+    const result = addHitPointsToCreature(state, 2, 7);
 
     const expectedState = {
       ...defaultState,
@@ -1034,7 +1034,7 @@ describe('addHealthToCreature', () => {
   });
 
   it('does nothing to a creature if it is on full health and the max health stays the same', () => {
-    const result = addHealthToCreature(defaultState, 2, 10);
+    const result = addHitPointsToCreature(defaultState, 2, 10);
 
     const expectedState = {
       ...defaultState,
@@ -1056,7 +1056,7 @@ describe('addHealthToCreature', () => {
       ],
     };
 
-    const result = addHealthToCreature(state, 2, 10);
+    const result = addHitPointsToCreature(state, 2, 10);
 
     const expectedState = {
       ...state,
@@ -1066,12 +1066,12 @@ describe('addHealthToCreature', () => {
   });
 
   it('does nothing to a creature if 0 health is added', () => {
-    const result = addHealthToCreature(defaultState, 1, 0);
+    const result = addHitPointsToCreature(defaultState, 1, 0);
     expect(result).toEqual(defaultState);
   });
 
   it('does nothing to a creature if less than 0 health is added', () => {
-    const result = addHealthToCreature(defaultState, 1, -1);
+    const result = addHitPointsToCreature(defaultState, 1, -1);
     expect(result).toEqual(defaultState);
   });
 });
