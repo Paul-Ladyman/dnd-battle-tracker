@@ -1,7 +1,7 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import StatusTool from './StatusTool';
 import HealthPointsTool from './HealthPointsTool';
-import MaxHealthPointsTool from './MaxHealthPointsTool';
+import MaxHealthPointsTool from './MaxHitPointsTool';
 import TemporaryHealthPointsTool from './TemporaryHealthPointsTool';
 import InitiativeTool from './InitiativeTool';
 import ConditionsTool from './ConditionsTool';
