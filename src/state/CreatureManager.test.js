@@ -902,9 +902,167 @@ describe('addHealthToCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('does nothing to a creature that already has health', () => {
+  it('updates a creature\'s health if it is on full health and the max health increases', () => {
     const result = addHealthToCreature(defaultState, 2, 30);
-    expect(result).toEqual(defaultState);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 30,
+          maxHealthPoints: 30,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s health is 30, max health is 30'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('updates a creature\'s health if it is on less than full health and the max health increases', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addHealthToCreature(state, 2, 20);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 15,
+          maxHealthPoints: 20,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s health is 15, max health is 20'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('updates a creature\'s health if it is on full health and the max health decreases', () => {
+    const result = addHealthToCreature(defaultState, 2, 5);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5,
+          maxHealthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s health is 5, max health is 5'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('updates a creature\'s health if it is on less than full health and the max health decreases below it', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addHealthToCreature(state, 2, 2);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 2,
+          maxHealthPoints: 2,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s health is 2, max health is 2'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('updates a creature\'s health if it is on less than full health and the max health decreases whilst staying above it', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addHealthToCreature(state, 2, 7);
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5,
+          maxHealthPoints: 7,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s health is 5, max health is 7'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature if it is on full health and the max health stays the same', () => {
+    const result = addHealthToCreature(defaultState, 2, 10);
+
+    const expectedState = {
+      ...defaultState,
+      ariaAnnouncements: ['Goblin #1\'s health is 10, max health is 10'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature if it is on less than full health and the max health stays the same', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          healthPoints: 5,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addHealthToCreature(state, 2, 10);
+
+    const expectedState = {
+      ...state,
+      ariaAnnouncements: ['Goblin #1\'s health is 5, max health is 10'],
+    };
+    expect(result).toEqual(expectedState);
   });
 
   it('does nothing to a creature if 0 health is added', () => {

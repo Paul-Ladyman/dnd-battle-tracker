@@ -193,21 +193,31 @@ export function addHealthToCreature(state, creatureId, health) {
     return state;
   }
 
-  const creature = findCreature(state.creatures, creatureId);
-  if (creature.healthPoints !== undefined) {
-    return state;
+  const {
+    alive,
+    healthPoints,
+    maxHealthPoints,
+    name,
+  } = findCreature(state.creatures, creatureId);
+
+  let newHealthPoints;
+
+  if (!alive) {
+    newHealthPoints = 0;
+  } else if (health > maxHealthPoints) {
+    const healthDifference = health - maxHealthPoints;
+    newHealthPoints = healthPoints + healthDifference;
+  } else if (health > healthPoints) {
+    newHealthPoints = healthPoints;
+  } else {
+    newHealthPoints = health;
   }
 
-  let healthPoints = health;
-  if (!creature.alive) {
-    healthPoints = 0;
-  }
-
-  const ariaAnnouncement = `${creature.name}'s health is ${healthPoints}, max health is ${health}`;
+  const ariaAnnouncement = `${name}'s health is ${newHealthPoints}, max health is ${health}`;
   return updateCreature(
     state,
     creatureId,
-    { healthPoints, maxHealthPoints: health },
+    { healthPoints: newHealthPoints, maxHealthPoints: health },
     ariaAnnouncement,
   );
 }
