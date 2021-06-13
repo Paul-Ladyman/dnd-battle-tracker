@@ -127,6 +127,7 @@ export function createCreature(creatureId, {
     notes: [],
     locked: false,
     shared: true,
+    hitPointsShared: true,
   };
 }
 
@@ -249,6 +250,18 @@ export function toggleCreatureShare(state, creatureId) {
   const newState = creature.shared ? 'not shared' : 'shared';
   const ariaAnnouncement = `${creature.name} is ${newState}`;
   return updateCreature(state, creatureId, { shared: !creature.shared }, ariaAnnouncement);
+}
+
+export function toggleCreatureHitPointsShare(state, creatureId) {
+  const creature = findCreature(state.creatures, creatureId);
+  const newState = creature.hitPointsShared ? 'not shared' : 'shared';
+  const ariaAnnouncement = `${creature.name}'s hit points are ${newState}`;
+  return updateCreature(
+    state,
+    creatureId,
+    { hitPointsShared: !creature.hitPointsShared },
+    ariaAnnouncement,
+  );
 }
 
 export function resetCreature(id, creature) {

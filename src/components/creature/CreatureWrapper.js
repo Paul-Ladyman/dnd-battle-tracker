@@ -6,7 +6,7 @@ import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from '../buttons/CreatureRemover';
 import { getAvailableConditions } from '../../state/ConditionsManager';
-import { getHealthBar } from '../../display/displayLogic';
+import { getHitPointsBar, shouldShowHitPoints } from '../../display/displayLogic';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
@@ -118,8 +118,7 @@ class CreatureWrapper extends Component {
     const {
       name,
       id,
-      locked,
-      shared,
+      hitPointsShared,
       healthPoints: creatureHealthPoints,
       maxHealthPoints,
       temporaryHealthPoints,
@@ -142,6 +141,7 @@ class CreatureWrapper extends Component {
       removeNoteFromCreature,
       toggleCreatureLock,
       toggleCreatureShare,
+      toggleCreatureHitPointsShare,
     } = creatureManagement;
 
     const healthPoints = (
@@ -154,7 +154,7 @@ class CreatureWrapper extends Component {
         playerSession={playerSession}
       />
     );
-    const showHealth = creatureHealthPoints !== undefined && creatureHealthPoints !== null;
+    const showHitPoints = shouldShowHitPoints(creatureHealthPoints, hitPointsShared, playerSession);
 
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
 
@@ -163,7 +163,7 @@ class CreatureWrapper extends Component {
     const [
       leftPercentage,
       rightPercentage,
-    ] = getHealthBar(creatureHealthPoints, maxHealthPoints, alive);
+    ] = getHitPointsBar(creatureHealthPoints, maxHealthPoints, alive, showHitPoints);
 
     return (
       <>
@@ -179,10 +179,9 @@ class CreatureWrapper extends Component {
             <CreatureHeader
               creature={creature}
               active={active}
-              locked={locked}
               lockHandler={() => toggleCreatureLock(id)}
-              shared={shared}
               shareHandler={() => toggleCreatureShare(id)}
+              shareHitPointsHandler={() => toggleCreatureHitPointsShare(id)}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && !alreadyFocused}
@@ -193,13 +192,12 @@ class CreatureWrapper extends Component {
               ? (
                 <ExpandedCreature
                   creature={creature}
-                  shared={shared}
                   round={round}
                   secondsElapsed={secondsElapsed}
                   removeCreature={removeCreature}
                   removeNoteFromCreature={removeNoteFromCreature}
                   healthPoints={healthPoints}
-                  showHealth={showHealth}
+                  showHealth={showHitPoints}
                   playerSession={playerSession}
                 />
               )
@@ -207,7 +205,7 @@ class CreatureWrapper extends Component {
                 <CollapsedCreature
                   creature={creature}
                   healthPoints={healthPoints}
-                  showHealth={showHealth}
+                  showHealth={showHitPoints}
                 />
               )}
           </div>

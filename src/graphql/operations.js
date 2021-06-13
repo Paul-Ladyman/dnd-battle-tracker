@@ -27,6 +27,7 @@ const Battle = `{
     conditions ${Condition}
     notes ${Note}
     shared
+    hitPointsShared
   }
   activeCreature
 }`;

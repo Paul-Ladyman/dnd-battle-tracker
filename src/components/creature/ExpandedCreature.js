@@ -4,7 +4,6 @@ import CreatureStatus from './CreatureStatus';
 
 export default function ExpandedCreature({
   creature,
-  shared,
   round,
   secondsElapsed,
   removeNoteFromCreature,
@@ -13,7 +12,7 @@ export default function ExpandedCreature({
   playerSession,
 }) {
   const {
-    initiative, id, conditions, notes,
+    initiative, id, conditions, notes, shared,
   } = creature;
   const showInitiative = initiative !== undefined && initiative !== null;
 

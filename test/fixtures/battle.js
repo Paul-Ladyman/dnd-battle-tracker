@@ -10,6 +10,7 @@ export default {
       notes: [],
       locked: false,
       shared: true,
+      hitPointsShared: true,
     },
     {
       name: 'Goblin #1',
@@ -23,6 +24,7 @@ export default {
       notes: [],
       locked: true,
       shared: true,
+      hitPointsShared: true,
     },
     {
       name: 'Goblin #2',
@@ -36,6 +38,7 @@ export default {
       notes: [],
       locked: true,
       shared: true,
+      hitPointsShared: true,
     },
   ],
   creatureIdCount: 2,
