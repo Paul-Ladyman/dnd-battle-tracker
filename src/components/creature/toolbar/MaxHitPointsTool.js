@@ -2,25 +2,24 @@ import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
 import AddHpIcon from '../../icons/AddHpIcon';
 
-export default function MaxHealthPointsTool({
+export default function MaxHitPointsTool({
   name,
   id,
-  healthPoints,
-  addHealthToCreature,
+  addHitPointsToCreature,
 }) {
-  return healthPoints === undefined && (
+  return (
     <CreatureToolbarInput
       integer
       name="creature-toolbar-maxhp"
       min={1}
-      ariaLabel={`add max hp ${name}`}
-      label="Add Max HP"
-      rightSubmit={(health) => addHealthToCreature(id, health)}
+      ariaLabel={`add/edit max hp ${name}`}
+      label="Max HP"
+      rightSubmit={(hitPoints) => addHitPointsToCreature(id, hitPoints)}
       rightControls={{
-        rightTitle: 'Add Max HP',
+        rightTitle: 'Add/Edit Max HP',
         RightSubmitIcon: <AddHpIcon />,
       }}
-      inputId={`max-health-${id}`}
+      inputId={`max-hp-${id}`}
     />
   );
 }

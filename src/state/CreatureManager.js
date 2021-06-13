@@ -188,26 +188,36 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
   return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
 
-export function addHealthToCreature(state, creatureId, health) {
-  if (health <= 0) {
+export function addHitPointsToCreature(state, creatureId, hitPoints) {
+  if (hitPoints <= 0) {
     return state;
   }
 
-  const creature = findCreature(state.creatures, creatureId);
-  if (creature.healthPoints !== undefined) {
-    return state;
+  const {
+    alive,
+    healthPoints,
+    maxHealthPoints,
+    name,
+  } = findCreature(state.creatures, creatureId);
+
+  let newHitPoints;
+
+  if (!alive) {
+    newHitPoints = 0;
+  } else if (hitPoints > maxHealthPoints) {
+    const difference = hitPoints - maxHealthPoints;
+    newHitPoints = healthPoints + difference;
+  } else if (hitPoints > healthPoints) {
+    newHitPoints = healthPoints;
+  } else {
+    newHitPoints = hitPoints;
   }
 
-  let healthPoints = health;
-  if (!creature.alive) {
-    healthPoints = 0;
-  }
-
-  const ariaAnnouncement = `${creature.name}'s health is ${healthPoints}, max health is ${health}`;
+  const ariaAnnouncement = `${name}'s hp is ${newHitPoints}, max hp is ${hitPoints}`;
   return updateCreature(
     state,
     creatureId,
-    { healthPoints, maxHealthPoints: health },
+    { healthPoints: newHitPoints, maxHealthPoints: hitPoints },
     ariaAnnouncement,
   );
 }

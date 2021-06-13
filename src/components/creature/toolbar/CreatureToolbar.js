@@ -1,8 +1,8 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import StatusTool from './StatusTool';
 import HealthPointsTool from './HealthPointsTool';
-import MaxHealthPointsTool from './MaxHealthPointsTool';
-import TemporaryHealthPointsTool from './TemporaryHealthPointsTool';
+import MaxHealthPointsTool from './MaxHitPointsTool';
+import TemporaryHealthPointsTool from './TemporaryHitPointsTool';
 import InitiativeTool from './InitiativeTool';
 import ConditionsTool from './ConditionsTool';
 import NotesTool from './NotesTool';
@@ -82,7 +82,7 @@ function toolsPageTwo({
   navFunc,
 }) {
   const {
-    addHealthToCreature,
+    addHitPointsToCreature,
     addTemporaryHealthToCreature,
   } = creatureManagement;
   const {
@@ -101,8 +101,7 @@ function toolsPageTwo({
       key={`${id}-maxhitpoints-tool`}
       name={name}
       id={id}
-      healthPoints={healthPoints}
-      addHealthToCreature={addHealthToCreature}
+      addHitPointsToCreature={addHitPointsToCreature}
     />,
     <TemporaryHealthPointsTool
       key={`${id}-temphitpoints-tool`}

@@ -1,5 +1,13 @@
 import React from 'react';
 
+function isInputDisabled(leftEnabled, rightEnabled) {
+  if (leftEnabled !== undefined && rightEnabled !== undefined) {
+    return leftEnabled === false && rightEnabled === false;
+  }
+
+  return leftEnabled === false || rightEnabled === false;
+}
+
 function Input({
   integer,
   error,
@@ -38,16 +46,18 @@ function Input({
 
   const leftDisabled = leftEnabled === false;
   const rightDisabled = rightEnabled === false;
+  const inputDisabled = isInputDisabled(leftEnabled, rightEnabled);
 
   const buttonClass = 'input--submit';
   const leftButtonClasses = leftDisabled ? `${buttonClass} ${buttonClass}__left ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__left`;
   const rightButtonClasses = rightDisabled ? `${buttonClass} ${buttonClass}__right ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__right`;
 
+  const inputClassDisabled = inputDisabled ? 'input__disabled' : '';
   const inputClassRightModifier = RightSubmitIcon || RightControl ? 'input__button-right' : '';
   const inputClassLeftModifier = LeftSubmitIcon ? 'input__button-left' : '';
-  const inputClassLeftEnabled = leftDisabled ? 'input__button-left-disabled' : '';
-  const inputClassRightEnabled = rightDisabled ? 'input__button-right-disabled' : '';
-  const inputClasses = `input ${inputClassLeftModifier} ${inputClassLeftEnabled} ${inputClassRightModifier} ${inputClassRightEnabled}`;
+  const inputClassLeftDisabled = leftDisabled ? 'input__button-left-disabled' : '';
+  const inputClassRightDisabled = rightDisabled ? 'input__button-right-disabled' : '';
+  const inputClasses = `input ${inputClassDisabled} ${inputClassLeftModifier} ${inputClassLeftDisabled} ${inputClassRightModifier} ${inputClassRightDisabled}`;
 
   const leftSubmit = () => submitHandler(true);
   const rightSubmit = () => submitHandler(false);
@@ -73,6 +83,7 @@ function Input({
             value={value}
             onChange={handleChange}
             onKeyDown={formHandler}
+            disabled={inputDisabled}
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon
