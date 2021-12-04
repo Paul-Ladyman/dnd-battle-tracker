@@ -9,55 +9,6 @@ beforeEach(() => {
   validateCreature.mockClear();
 });
 
-// const defaultState = {
-//   creatures: [
-//     {
-//       name: 'Wellby',
-//       initiative: 13,
-//       id: 0,
-//       alive: true,
-//       conditions: [],
-//       notes: [],
-//       locked: true,
-//       shared: true,
-//     },
-//     {
-//       name: 'Goblin #1',
-//       initiative: 12,
-//       healthPoints: 10,
-//       maxHealthPoints: 10,
-//       id: 1,
-//       alive: true,
-//       conditions: [],
-//       notes: [],
-//       locked: true,
-//       shared: false,
-//     },
-//     {
-//       name: 'Goblin #2',
-//       initiative: 12,
-//       healthPoints: 10,
-//       maxHealthPoints: 10,
-//       id: 2,
-//       alive: true,
-//       conditions: [],
-//       notes: [],
-//       locked: true,
-//       shared: true,
-//     },
-//   ],
-//   creatureIdCount: 3,
-//   activeCreature: 1,
-//   focusedCreature: 1,
-//   round: 1,
-//   ariaAnnouncements: [],
-//   errors: [],
-//   createCreatureErrors: {},
-//   battleCreated: false,
-//   shareEnabled: false,
-//   battleId: '123',
-// };
-
 describe('removeCreature', () => {
   it('returns the new state when the battle has not yet started', () => {
     const expected = {
