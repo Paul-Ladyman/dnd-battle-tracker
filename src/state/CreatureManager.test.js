@@ -1214,32 +1214,20 @@ describe('toggleCreatureLock', () => {
 
 describe('toggleCreatureShare', () => {
   it('enables creature share if it is disabled', () => {
-    const state = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          shared: false,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-    };
-
     const expectedState = {
       ...defaultState,
       creatures: [
+        defaultState.creatures[0],
         {
-          ...defaultState.creatures[0],
+          ...defaultState.creatures[1],
           shared: true,
         },
-        defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Wellby is shared'],
+      ariaAnnouncements: ['Goblin #1 is shared'],
     };
 
-    const result = toggleCreatureShare(state, 1);
+    const result = toggleCreatureShare(defaultState, 2);
     expect(result).toEqual(expectedState);
   });
 
@@ -1247,17 +1235,17 @@ describe('toggleCreatureShare', () => {
     const expectedState = {
       ...defaultState,
       creatures: [
-        defaultState.creatures[0],
         {
-          ...defaultState.creatures[1],
+          ...defaultState.creatures[0],
           shared: false,
         },
+        defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1 is not shared'],
+      ariaAnnouncements: ['Wellby is not shared'],
     };
 
-    const result = toggleCreatureShare(defaultState, 2);
+    const result = toggleCreatureShare(defaultState, 1);
     expect(result).toEqual(expectedState);
   });
 });

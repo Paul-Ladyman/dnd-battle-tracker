@@ -200,12 +200,12 @@ describe('addCreature', () => {
         defaultState.creatures[2],
         createdCreature,
       ],
-      creatureIdCount: 4,
+      creatureIdCount: 3,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    expect(createCreature).toHaveBeenCalledWith(2, creature);
   });
 
   it('sorts creatures by their initiative', () => {
@@ -236,12 +236,12 @@ describe('addCreature', () => {
         defaultState.creatures[2],
         createdCreature,
       ],
-      creatureIdCount: 4,
+      creatureIdCount: 3,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    expect(createCreature).toHaveBeenCalledWith(2, creature);
   });
 
   it('keeps the currently active creature', () => {
@@ -256,7 +256,7 @@ describe('addCreature', () => {
       initiative: 15,
       healthPoints: 10,
       maxHealthPoints: 10,
-      id: 3,
+      id: 4,
       alive: true,
       conditions: [],
       notes: [],
@@ -264,21 +264,27 @@ describe('addCreature', () => {
 
     createCreature.mockReturnValue(createdCreature);
 
-    const expectedState = {
+    const state = {
       ...defaultState,
+      round: 1,
+      activeCreature: 1,
+    };
+
+    const expectedState = {
+      ...state,
       creatures: [
         createdCreature,
-        defaultState.creatures[0],
-        defaultState.creatures[1],
-        defaultState.creatures[2],
+        state.creatures[0],
+        state.creatures[1],
+        state.creatures[2],
       ],
-      creatureIdCount: 4,
+      creatureIdCount: 3,
       activeCreature: 2,
       ariaAnnouncements: ['name added'],
     };
 
-    expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    expect(addCreature(state, creature)).toEqual(expectedState);
+    expect(createCreature).toHaveBeenCalledWith(2, creature);
   });
 
   it('does not change the active creature if the battle has not begun', () => {
@@ -315,12 +321,12 @@ describe('addCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      creatureIdCount: 4,
+      creatureIdCount: 3,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    expect(createCreature).toHaveBeenCalledWith(2, creature);
   });
 
   it('creates multiple creatures at once based on a multiplier', () => {
@@ -356,7 +362,7 @@ describe('addCreature', () => {
         createdCreature,
         createdCreature2,
       ],
-      creatureIdCount: 5,
+      creatureIdCount: 4,
       ariaAnnouncements: ['creatures added'],
     };
 
@@ -374,8 +380,8 @@ describe('addCreature', () => {
       initiative: 9,
       healthPoints: 10,
     };
-    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
-    expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
+    expect(createCreature).toHaveBeenCalledWith(2, expectedCreature1);
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature2);
   });
 
   it('adds multiple creatures to an existing group based on a multiplier', () => {

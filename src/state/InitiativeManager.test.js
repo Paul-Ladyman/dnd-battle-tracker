@@ -272,32 +272,24 @@ describe('getInitiative', () => {
   it('gets the round and the name and id of the currently active creature for a DM session', () => {
     const state = {
       ...defaultState,
-      activeCreature: 1,
+      activeCreature: 2,
       round: 1,
     };
-    expect(getInitiative(state)).toEqual([1, 'Goblin #1', 2]);
+    expect(getInitiative(state)).toEqual([1, 'Goblin #2', 3]);
   });
 
   it('gets the round and the name and id of the currently active creature for a player session', () => {
     const state = {
       ...defaultState,
-      activeCreature: 1,
+      activeCreature: 2,
       round: 1,
     };
-    expect(getInitiative(state, true)).toEqual([1, 'Goblin #1', 2]);
+    expect(getInitiative(state, true)).toEqual([1, 'Goblin #2', 3]);
   });
 
   it('gets the round and the name and id of the currently active creature if it is not shared for a DM session', () => {
     const state = {
       ...defaultState,
-      creatures: [
-        defaultState.creatures[0],
-        {
-          ...defaultState.creatures[1],
-          shared: false,
-        },
-        defaultState.creatures[2],
-      ],
       activeCreature: 1,
       round: 1,
     };
@@ -307,14 +299,6 @@ describe('getInitiative', () => {
   it('gets the round and the name and id of the previously active creature if the current one is not shared for a player session', () => {
     const state = {
       ...defaultState,
-      creatures: [
-        defaultState.creatures[0],
-        {
-          ...defaultState.creatures[1],
-          shared: false,
-        },
-        defaultState.creatures[2],
-      ],
       activeCreature: 1,
       round: 1,
     };

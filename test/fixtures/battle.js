@@ -23,7 +23,7 @@ export default {
       conditions: [],
       notes: [],
       locked: true,
-      shared: true,
+      shared: false,
       hitPointsShared: true,
     },
     {
