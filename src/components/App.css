@@ -414,13 +414,31 @@ input[type="number"] {
   margin-top: 0;
   list-style-type: none;
   background: white;
-  display: flex;
   padding: 0;
+}
+
+.creature-toolbar--notes-dropdown-group {
+  width: 100%;
+  display: flex;
+  border-bottom: 2px solid #822000;
+}
+
+.creature-toolbar--notes-dropdown-group:last-child {
+  border-bottom: 0;
+}
+
+.creature-toolbar--notes-dropdown-group:last-child .creature-toolbar--notes-dropdown-button {
+  border-bottom-right-radius: 15px;
 }
 
 .creature-toolbar--notes-dropdown-item {
   width: 100%;
   padding: 5px;
+  border-right: 2px solid #822000;
+}
+
+.creature-toolbar--notes-dropdown-button {
+  border-radius: 0;
 }
 
 /* Create creature form */

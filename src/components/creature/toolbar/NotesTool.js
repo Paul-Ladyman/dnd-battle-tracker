@@ -29,10 +29,10 @@ export default function NotesTool({
         <ul className="creature-toolbar--notes-dropdown">
           {
             notes.map(({ text }) => (
-              <>
+              <div className="creature-toolbar--notes-dropdown-group">
                 <li className="creature-toolbar--notes-dropdown-item">{text}</li>
-                <button type="button" title="Remove note"><CrossIcon /></button>
-              </>
+                <button type="button" title="Remove note" className="input--submit creature-toolbar--notes-dropdown-button"><CrossIcon rotate /></button>
+              </div>
             ))
           }
         </ul>
