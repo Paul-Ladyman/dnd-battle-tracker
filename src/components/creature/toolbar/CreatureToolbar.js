@@ -24,7 +24,7 @@ function toolsPageOne({
     addInitiativeToCreature,
   } = creatureManagement;
   const {
-    alive, healthPoints, maxHealthPoints, temporaryHealthPoints, id, name, initiative,
+    alive, healthPoints, maxHealthPoints, temporaryHealthPoints, id, name, initiative, notes,
   } = creature;
 
   return [
@@ -66,6 +66,7 @@ function toolsPageOne({
       name={name}
       id={id}
       addNoteToCreature={addNoteToCreature}
+      notes={notes}
     />,
     <NavigationTool
       key={`${id}-navigation-1-tool`}

@@ -1,5 +1,21 @@
 body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: #f5f1ea;
+  font-size: 18px;
+}
+
+input {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-size: 18px;
 }
 
@@ -374,6 +390,37 @@ input[type="number"] {
   .creature-toolbar {
     margin-left: 5px;
   }
+}
+
+.creature-toolbar--notes .input-wrapper {
+  border-radius: 15px 15px 0 0;
+}
+
+.creature-toolbar--notes .input {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.creature-toolbar--notes .input--submit {
+  border-bottom-right-radius: 0;
+}
+
+.creature-toolbar--notes-dropdown {
+  border-width: 0 2px 2px 2px;
+  border-color: #822000;
+  border-style: solid;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 0px 5px #979aa4;
+  margin-top: 0;
+  list-style-type: none;
+  background: white;
+  display: flex;
+  padding: 0;
+}
+
+.creature-toolbar--notes-dropdown-item {
+  width: 100%;
+  padding: 5px;
 }
 
 /* Create creature form */
