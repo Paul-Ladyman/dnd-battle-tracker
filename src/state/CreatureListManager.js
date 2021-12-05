@@ -98,6 +98,7 @@ export function addCreature(state, creature) {
     creatures,
     creatureIdCount,
     activeCreature,
+    focusedCreature: undefined,
     ariaAnnouncements,
     createCreatureErrors: {},
     errors: [],
