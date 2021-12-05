@@ -159,6 +159,48 @@ describe('addCreature', () => {
     expect(createCreature).toHaveBeenCalledWith(2, creature);
   });
 
+  it('removes focus on a creature if it is set', () => {
+    const creature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10,
+    };
+
+    const createdCreature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      id: 3,
+      alive: true,
+      conditions: [],
+      notes: [],
+    };
+
+    createCreature.mockReturnValue(createdCreature);
+
+    const state = {
+      ...defaultState,
+      focusedCreature: 0,
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        state.creatures[0],
+        state.creatures[1],
+        state.creatures[2],
+        createdCreature,
+      ],
+      creatureIdCount: 3,
+      focusedCreature: undefined,
+      ariaAnnouncements: ['name added'],
+    };
+
+    expect(addCreature(state, creature)).toEqual(expectedState);
+    expect(createCreature).toHaveBeenCalledWith(2, creature);
+  });
+
   it('sorts creatures by their initiative', () => {
     const creature = {
       name: 'name',
