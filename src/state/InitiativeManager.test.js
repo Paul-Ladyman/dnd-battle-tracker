@@ -275,7 +275,7 @@ describe('getInitiative', () => {
       activeCreature: 2,
       round: 1,
     };
-    expect(getInitiative(state)).toEqual([1, 'Goblin #2', 3]);
+    expect(getInitiative(state)).toEqual([1, 'Goblin #2', 2]);
   });
 
   it('gets the round and the name and id of the currently active creature for a player session', () => {
@@ -284,7 +284,7 @@ describe('getInitiative', () => {
       activeCreature: 2,
       round: 1,
     };
-    expect(getInitiative(state, true)).toEqual([1, 'Goblin #2', 3]);
+    expect(getInitiative(state, true)).toEqual([1, 'Goblin #2', 2]);
   });
 
   it('gets the round and the name and id of the currently active creature if it is not shared for a DM session', () => {
@@ -293,7 +293,7 @@ describe('getInitiative', () => {
       activeCreature: 1,
       round: 1,
     };
-    expect(getInitiative(state, false)).toEqual([1, 'Goblin #1', 2]);
+    expect(getInitiative(state, false)).toEqual([1, 'Goblin #1', 1]);
   });
 
   it('gets the round and the name and id of the previously active creature if the current one is not shared for a player session', () => {
@@ -302,7 +302,7 @@ describe('getInitiative', () => {
       activeCreature: 1,
       round: 1,
     };
-    expect(getInitiative(state, true)).toEqual([1, 'Wellby', 1]);
+    expect(getInitiative(state, true)).toEqual([1, 'Wellby', 0]);
   });
 
   it('reverses through the creatures and rounds if the active creature is not shared until it finds one that is for a player session', () => {
@@ -322,7 +322,7 @@ describe('getInitiative', () => {
       activeCreature: 1,
       round: 2,
     };
-    expect(getInitiative(state, true)).toEqual([1, 'Goblin #2', 3]);
+    expect(getInitiative(state, true)).toEqual([1, 'Goblin #2', 2]);
   });
 
   it('returns round 0 and no name and id if a shared creature is not yet active on round 1 for a player session', () => {

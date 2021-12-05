@@ -20,7 +20,7 @@ describe('removeCreature', () => {
       ariaAnnouncements: ['creature removed from battle'],
     };
 
-    const result = removeCreature(defaultState, 2);
+    const result = removeCreature(defaultState, 1);
     expect(result).toEqual(expected);
   });
 
@@ -38,7 +38,7 @@ describe('removeCreature', () => {
       ],
       ariaAnnouncements: ['creature removed from battle'],
     };
-    const result = removeCreature(state, 2);
+    const result = removeCreature(state, 1);
     expect(result).toEqual(expected);
   });
 
@@ -57,7 +57,7 @@ describe('removeCreature', () => {
       activeCreature: 0,
       ariaAnnouncements: ['creature removed from battle'],
     };
-    const result = removeCreature(state, 1);
+    const result = removeCreature(state, 0);
     expect(result).toEqual(expected);
   });
 
@@ -75,7 +75,7 @@ describe('removeCreature', () => {
       ],
       ariaAnnouncements: ['creature removed from battle'],
     };
-    const result = removeCreature(state, 2);
+    const result = removeCreature(state, 1);
     expect(result).toEqual(expected);
   });
 
@@ -93,7 +93,7 @@ describe('removeCreature', () => {
       ],
       ariaAnnouncements: ['creature removed from battle'],
     };
-    const result = removeCreature(state, 3);
+    const result = removeCreature(state, 2);
     expect(result).toEqual(expected);
   });
 
@@ -111,7 +111,7 @@ describe('removeCreature', () => {
       activeCreature: undefined,
       ariaAnnouncements: ['creature removed from battle'],
     };
-    const result = removeCreature(state, 1);
+    const result = removeCreature(state, 0);
     expect(result).toEqual(expected);
   });
 
@@ -151,12 +151,12 @@ describe('addCreature', () => {
         defaultState.creatures[2],
         createdCreature,
       ],
-      creatureIdCount: 3,
+      creatureIdCount: 4,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(2, creature);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
 
   it('removes focus on a creature if it is set', () => {
@@ -192,13 +192,13 @@ describe('addCreature', () => {
         state.creatures[2],
         createdCreature,
       ],
-      creatureIdCount: 3,
+      creatureIdCount: 4,
       focusedCreature: undefined,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(2, creature);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
 
   it('sorts creatures by their initiative', () => {
@@ -229,12 +229,12 @@ describe('addCreature', () => {
         defaultState.creatures[2],
         createdCreature,
       ],
-      creatureIdCount: 3,
+      creatureIdCount: 4,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(2, creature);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
 
   it('keeps the currently active creature', () => {
@@ -271,13 +271,13 @@ describe('addCreature', () => {
         state.creatures[1],
         state.creatures[2],
       ],
-      creatureIdCount: 3,
+      creatureIdCount: 4,
       activeCreature: 2,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(2, creature);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
 
   it('does not change the active creature if the battle has not begun', () => {
@@ -314,12 +314,12 @@ describe('addCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      creatureIdCount: 3,
+      creatureIdCount: 4,
       ariaAnnouncements: ['name added'],
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(2, creature);
+    expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
 
   it('creates multiple creatures at once based on a multiplier', () => {
@@ -355,7 +355,7 @@ describe('addCreature', () => {
         createdCreature,
         createdCreature2,
       ],
-      creatureIdCount: 4,
+      creatureIdCount: 5,
       ariaAnnouncements: ['creatures added'],
     };
 
@@ -373,8 +373,8 @@ describe('addCreature', () => {
       initiative: 9,
       healthPoints: 10,
     };
-    expect(createCreature).toHaveBeenCalledWith(2, expectedCreature1);
-    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature2);
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
+    expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
   });
 
   it('adds multiple creatures to an existing group based on a multiplier', () => {
