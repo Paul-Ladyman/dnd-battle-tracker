@@ -26,6 +26,8 @@ function Input({
   handleChange,
   formHandler,
   inputId,
+  onClick,
+  onBlur,
 }) {
   const {
     leftEnabled,
@@ -84,6 +86,8 @@ function Input({
             onChange={handleChange}
             onKeyDown={formHandler}
             disabled={inputDisabled}
+            onClick={onClick}
+            onBlur={onBlur}
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon

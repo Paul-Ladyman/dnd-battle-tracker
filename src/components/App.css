@@ -392,16 +392,24 @@ input[type="number"] {
   }
 }
 
-.creature-toolbar--notes .input-wrapper {
-  border-radius: 15px 15px 0 0;
+.creature-toolbar--notes-wrapper {
+  position: relative;
 }
 
 .creature-toolbar--notes .input {
+  cursor: pointer;
+}
+
+.creature-toolbar--notes__open .input-wrapper {
+  border-radius: 15px 15px 0 0;
+}
+
+.creature-toolbar--notes__open .input {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.creature-toolbar--notes .input--submit {
+.creature-toolbar--notes__open .input--submit {
   border-bottom-right-radius: 0;
 }
 
@@ -415,12 +423,17 @@ input[type="number"] {
   list-style-type: none;
   background: white;
   padding: 0;
+  position: absolute;
+  top: 71px;
+  width: inherit;
+  box-sizing: border-box;
 }
 
 .creature-toolbar--notes-dropdown-group {
   width: 100%;
   display: flex;
   border-bottom: 2px solid #822000;
+  cursor: pointer;
 }
 
 .creature-toolbar--notes-dropdown-group:last-child {
