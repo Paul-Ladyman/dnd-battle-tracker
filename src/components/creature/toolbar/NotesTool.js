@@ -3,6 +3,24 @@ import CreatureToolbarInput from './CreatureToolbarInput';
 import AddNoteIcon from '../../icons/AddNoteIcon';
 import CrossIcon from '../../icons/CrossIcon';
 
+function NotesToolLabel(expanded) {
+  const style = {
+    transform: expanded ? 'rotate(180deg) translate(0, -3px)' : undefined,
+    color: '#822000',
+    forcedColorAdjust: 'auto',
+    marginLeft: '5px',
+  };
+
+  return (
+    <>
+      Notes
+      <svg width="18" height="16" aria-hidden="true" focusable="false" style={style}>
+        <polygon className="arrow" strokeWidth="0" fillOpacity="0.75" fill="currentColor" points="3,6 15,6 9,14" />
+      </svg>
+    </>
+  );
+}
+
 export default function NotesTool({
   name,
   id,
@@ -24,7 +42,7 @@ export default function NotesTool({
     <div className="input--form creature-toolbar--notes-wrapper">
       <CreatureToolbarInput
         ariaLabel={`add or edit note for ${name}`}
-        label="Notes"
+        label={NotesToolLabel(showNotes)}
         rightSubmit={(note) => addNoteToCreature(id, note, false)}
         rightControls={{
           rightTitle: 'Add/Edit Note',
