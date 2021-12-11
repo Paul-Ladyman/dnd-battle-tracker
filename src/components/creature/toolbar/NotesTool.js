@@ -25,6 +25,7 @@ export default function NotesTool({
   name,
   id,
   addNoteToCreature,
+  removeNoteFromCreature,
   notes,
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -51,15 +52,19 @@ export default function NotesTool({
         inputId={`notes-${id}`}
         customClasses={customClasses}
         onClick={toggleExpanded}
-        onBlur={() => setExpanded(false)}
       />
       {showNotes && (
         <ul className="creature-toolbar--notes-dropdown">
           {
-            notes.map(({ text }) => (
+            notes.map((note) => (
               <div className="creature-toolbar--notes-dropdown-group">
-                <li className="creature-toolbar--notes-dropdown-item">{text}</li>
-                <button type="button" title="Remove note" className="input--submit creature-toolbar--notes-dropdown-button">
+                <li className="creature-toolbar--notes-dropdown-item">{note.text}</li>
+                <button
+                  type="button"
+                  title="Remove note"
+                  className="input--submit creature-toolbar--notes-dropdown-button"
+                  onClick={() => removeNoteFromCreature(id, note, false)}
+                >
                   <CrossIcon rotate />
                 </button>
               </div>

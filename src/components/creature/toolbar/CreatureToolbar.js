@@ -21,6 +21,7 @@ function toolsPageOne({
     damageCreature,
     healCreature,
     addNoteToCreature,
+    removeNoteFromCreature,
     addInitiativeToCreature,
   } = creatureManagement;
   const {
@@ -66,6 +67,7 @@ function toolsPageOne({
       name={name}
       id={id}
       addNoteToCreature={addNoteToCreature}
+      removeNoteFromCreature={removeNoteFromCreature}
       notes={notes}
     />,
     <NavigationTool
