@@ -1,3 +1,23 @@
+*:focus {
+  outline: 2px orange solid;
+  outline-offset: 2px;
+}
+
+button:hover {
+  outline: 2px orange solid;
+  outline-offset: 2px;
+}
+
+input:hover {
+  outline: 2px orange solid;
+  outline-offset: 2px;
+}
+
+a:hover {
+  outline: 2px orange solid;
+  outline-offset: 2px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -418,7 +438,7 @@ input[type="number"] {
   border-color: #822000;
   border-style: solid;
   border-radius: 0 0 15px 15px;
-  box-shadow: 0 0px 5px #979aa4;
+  box-shadow: 0 5px 10px #1a1a1b;
   margin-top: 0;
   list-style-type: none;
   background: white;
@@ -427,13 +447,14 @@ input[type="number"] {
   top: 71px;
   width: inherit;
   box-sizing: border-box;
+  z-index: 1;
 }
 
 .creature-toolbar--notes-dropdown-group {
   width: 100%;
   display: flex;
-  border-bottom: 2px solid #822000;
   cursor: pointer;
+  border-bottom: 2px solid #822000;
 }
 
 .creature-toolbar--notes-dropdown-group:last-child {
@@ -442,12 +463,22 @@ input[type="number"] {
 
 .creature-toolbar--notes-dropdown-group:last-child .creature-toolbar--notes-dropdown-button {
   border-bottom-right-radius: 15px;
+  border-bottom: 0px;
 }
 
 .creature-toolbar--notes-dropdown-item {
   width: 100%;
   padding: 5px;
   border-right: 2px solid #822000;
+}
+
+.creature-toolbar--notes-dropdown-item:hover {
+  outline: 2px orange solid;
+  outline-offset: 2px;
+}
+
+.creature-toolbar--notes-dropdown-group:last-child .creature-toolbar--notes-dropdown-item {
+  border-bottom-left-radius: 15px;
 }
 
 .creature-toolbar--notes-dropdown-button {
