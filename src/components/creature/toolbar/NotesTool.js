@@ -79,6 +79,10 @@ export default function NotesTool({
       setExpanded(true);
     }
 
+    if (isHotkey(hotkeys.dropdownEscape, e)) {
+      setExpanded(false);
+    }
+
     return null;
   };
 

@@ -12,6 +12,7 @@ export const hotkeys = {
   dropdownNavDown: 'down',
   dropdownNavUp: 'up',
   dropdownNavOpen: 'alt+down',
+  dropdownEscape: 'esc',
 };
 
 const rulesSearchBar = 'Search rules using D&D Beyond';
@@ -30,6 +31,7 @@ export const hotkeyDescriptions = {
   dropdownNavDown: 'Navigate down through a dropdown menu',
   dropdownNavUp: 'Navigate up through a dropdown menu',
   dropdownNavOpen: 'Open a dropdown menu',
+  dropdownEscape: 'Close a dropdown menu',
 };
 
 export const playerSessionHotkeyDescriptions = {
