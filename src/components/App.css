@@ -461,6 +461,10 @@ input[type="number"] {
   background: #EBE1AD;
 }
 
+.creature-toolbar--notes-dropdown-item__focused {
+  background: #EBE1AD;
+}
+
 .creature-toolbar--notes-dropdown-group:last-child .creature-toolbar--notes-dropdown-item {
   border-bottom-left-radius: 15px;
 }

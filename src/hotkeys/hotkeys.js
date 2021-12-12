@@ -9,6 +9,8 @@ export const hotkeys = {
   battlebar: 'alt+shift+l',
   healCreature: 'shift+enter',
   damageCreature: 'enter',
+  dropdownNavDown: 'down',
+  dropdownNavUp: 'up',
 };
 
 const rulesSearchBar = 'Search rules using D&D Beyond';
@@ -24,6 +26,8 @@ export const hotkeyDescriptions = {
   battlebar: 'Move focus to battle toolbar.',
   healCreature: 'Heal a creature whilst using the Damage/Heal tool.',
   damageCreature: 'Damage a creature whilst using the Damage/Heal tool.',
+  dropdownNavDown: 'Navigate down through a dropdown menu',
+  dropdownNavUp: 'Navigate up through a dropdown menu',
 };
 
 export const playerSessionHotkeyDescriptions = {
