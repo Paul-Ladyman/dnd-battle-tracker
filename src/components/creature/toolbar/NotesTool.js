@@ -32,6 +32,7 @@ export default function NotesTool({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState({});
   const inputRef = useRef();
 
   const hasNotes = notes.length > 0;
@@ -64,6 +65,11 @@ export default function NotesTool({
     return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem + focusIncrement);
   };
 
+  const handleItemSubmit = (item) => {
+    setSelectedItem(item);
+    setExpanded(false);
+  };
+
   const hotKeyHandler = (e) => {
     if (notes.length === 0) return null;
 
@@ -83,6 +89,11 @@ export default function NotesTool({
       setExpanded(false);
     }
 
+    if (isHotkey('enter', e) && focusedItem) {
+      e.preventDefault();
+      handleItemSubmit(notes[focusedItem]);
+    }
+
     return null;
   };
 
@@ -91,6 +102,8 @@ export default function NotesTool({
 
     return () => inputRef.current.removeEventListener('keydown', hotKeyHandler);
   }, [focusedItem, notes, expanded]);
+
+  console.log('>>> selectedItem', selectedItem.text);
 
   return (
     <div className="input--form creature-toolbar--notes-wrapper">
@@ -106,6 +119,7 @@ export default function NotesTool({
         customClasses={customClasses}
         onClick={toggleExpanded}
         inputRef={inputRef}
+        initialValue={selectedItem.text}
       />
       {showNotes && (
         <ul className="creature-toolbar--notes-dropdown">
@@ -116,7 +130,14 @@ export default function NotesTool({
               const itemClassName = `${itemClass}${itemModifier}`;
               return (
                 <div className="creature-toolbar--notes-dropdown-group">
-                  <li className={itemClassName}>{note.text}</li>
+                  <li
+                    className={itemClassName}
+                    role="option"
+                    onClick={() => handleItemSubmit(note)}
+                    onKeyDown={() => console.log('>>> li key down')}
+                  >
+                    {note.text}
+                  </li>
                   <button
                     type="button"
                     title="Remove note"
