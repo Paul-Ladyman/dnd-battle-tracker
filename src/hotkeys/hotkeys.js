@@ -11,6 +11,7 @@ export const hotkeys = {
   damageCreature: 'enter',
   dropdownNavDown: 'down',
   dropdownNavUp: 'up',
+  dropdownNavOpen: 'alt+down',
 };
 
 const rulesSearchBar = 'Search rules using D&D Beyond';
@@ -28,6 +29,7 @@ export const hotkeyDescriptions = {
   damageCreature: 'Damage a creature whilst using the Damage/Heal tool.',
   dropdownNavDown: 'Navigate down through a dropdown menu',
   dropdownNavUp: 'Navigate up through a dropdown menu',
+  dropdownNavOpen: 'Open a dropdown menu',
 };
 
 export const playerSessionHotkeyDescriptions = {

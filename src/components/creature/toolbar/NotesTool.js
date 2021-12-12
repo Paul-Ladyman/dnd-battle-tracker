@@ -44,45 +44,39 @@ export default function NotesTool({
     setExpanded(!expanded);
   };
 
-  const moveFocusDown = () => {
+  const moveFocus = (down = true) => {
     const noItemFocused = focusedItem === null;
-    const lastItemFocused = focusedItem === notes.length - 1;
+    const start = 0;
+    const end = notes.length - 1;
+    const endBound = down ? end : start;
+    const startBound = down ? start : end;
+    const endItemFocused = focusedItem === endBound;
 
     if (!expanded) {
       setExpanded(true);
     }
 
-    if (noItemFocused || lastItemFocused) {
-      return setFocusedItem(0);
+    if (noItemFocused || endItemFocused) {
+      return setFocusedItem(startBound);
     }
 
-    return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem + 1);
-  };
-
-  const moveFocusUp = () => {
-    const noItemFocused = focusedItem === null;
-    const firstItemFocused = focusedItem === 0;
-
-    if (!expanded) {
-      setExpanded(true);
-    }
-
-    if (noItemFocused || firstItemFocused) {
-      return setFocusedItem(notes.length - 1);
-    }
-
-    return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem - 1);
+    const focusIncrement = down ? 1 : -1;
+    return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem + focusIncrement);
   };
 
   const hotKeyHandler = (e) => {
     if (notes.length === 0) return null;
 
     if (isHotkey(hotkeys.dropdownNavDown, e)) {
-      return moveFocusDown();
+      return moveFocus();
     }
 
     if (isHotkey(hotkeys.dropdownNavUp, e)) {
-      return moveFocusUp();
+      return moveFocus(false);
+    }
+
+    if (isHotkey(hotkeys.dropdownNavOpen, e)) {
+      setExpanded(true);
     }
 
     return null;
