@@ -71,6 +71,7 @@ export default function NotesTool({
     setFocusedItem(null);
     setExpanded(false);
     setValue(item.text);
+    inputRef.current.focus();
   };
 
   const resetDropdown = () => {
@@ -112,25 +113,12 @@ export default function NotesTool({
   };
 
   const hotKeyHandler = (e) => {
-    if (notes.length === 0) return null;
-
-    if (isHotkey(hotkeys.dropdownNavDown, e)) {
-      return moveFocus();
+    if (notes.length > 0) {
+      if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus();
+      if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(false);
+      if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
+      if (isHotkey(hotkeys.dropdownEscape, e)) resetDropdown();
     }
-
-    if (isHotkey(hotkeys.dropdownNavUp, e)) {
-      return moveFocus(false);
-    }
-
-    if (isHotkey(hotkeys.dropdownNavOpen, e)) {
-      setExpanded(true);
-    }
-
-    if (isHotkey(hotkeys.dropdownEscape, e)) {
-      resetDropdown();
-    }
-
-    return null;
   };
 
   useEffect(() => {
