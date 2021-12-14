@@ -146,14 +146,15 @@ export default function NotesTool({
               const itemClassName = `${itemClass}${itemModifier}`;
               return (
                 <div className="creature-toolbar--notes-dropdown-group">
+                  {/* eslint-disable jsx-a11y/click-events-have-key-events */}
                   <li
                     className={itemClassName}
                     role="option"
                     onClick={() => handleItemSubmit(note)}
-                    onKeyDown={() => console.log('>>> li key down')}
                   >
                     {note.text}
                   </li>
+                  {/* eslint-enable jsx-a11y/click-events-have-key-events */}
                   <button
                     type="button"
                     title="Remove note"
