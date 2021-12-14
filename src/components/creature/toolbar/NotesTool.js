@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import isHotkey from 'is-hotkey';
 import AddNoteIcon from '../../icons/AddNoteIcon';
 import CrossIcon from '../../icons/CrossIcon';
@@ -100,9 +100,16 @@ export default function NotesTool({
     }
   };
 
-  const formHandler = (event) => {
-    if (isHotkey('enter', event)) {
-      event.preventDefault();
+  const formHandler = (e) => {
+    if (notes.length > 0) {
+      if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus();
+      if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(false);
+      if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
+      if (isHotkey(hotkeys.dropdownEscape, e)) resetDropdown();
+    }
+
+    if (isHotkey('enter', e)) {
+      e.preventDefault();
 
       if (focusedItem !== null) {
         handleItemSubmit(notes[focusedItem]);
@@ -111,21 +118,6 @@ export default function NotesTool({
       }
     }
   };
-
-  const hotKeyHandler = (e) => {
-    if (notes.length > 0) {
-      if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus();
-      if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(false);
-      if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
-      if (isHotkey(hotkeys.dropdownEscape, e)) resetDropdown();
-    }
-  };
-
-  useEffect(() => {
-    inputRef.current.addEventListener('keydown', hotKeyHandler);
-
-    return () => inputRef.current.removeEventListener('keydown', hotKeyHandler);
-  }, [focusedItem, notes, expanded]);
 
   return (
     <div className="input--form creature-toolbar--notes-wrapper">
