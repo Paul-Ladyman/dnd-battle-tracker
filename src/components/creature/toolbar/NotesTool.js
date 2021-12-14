@@ -66,14 +66,6 @@ export default function NotesTool({
     return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem + focusIncrement);
   };
 
-  const handleItemSubmit = (item) => {
-    setSelectedItem(item);
-    setFocusedItem(null);
-    setExpanded(false);
-    setValue(item.text);
-    inputRef.current.focus();
-  };
-
   const resetDropdown = () => {
     setExpanded(false);
     setFocusedItem(null);
@@ -89,7 +81,15 @@ export default function NotesTool({
     resetDropdown();
   };
 
-  const submitHandler = () => {
+  const handleItemSubmit = (item) => {
+    setSelectedItem(item);
+    setFocusedItem(null);
+    setExpanded(false);
+    setValue(item.text);
+    inputRef.current.focus();
+  };
+
+  const handleNoteSubmit = () => {
     if (value) {
       resetForm();
       if (selectedItem) {
@@ -97,6 +97,14 @@ export default function NotesTool({
       } else {
         addNoteToCreature(id, value, false);
       }
+    }
+  };
+
+  const handleSubmit = () => {
+    if (focusedItem !== null) {
+      handleItemSubmit(notes[focusedItem]);
+    } else {
+      handleNoteSubmit();
     }
   };
 
@@ -110,12 +118,7 @@ export default function NotesTool({
 
     if (isHotkey('enter', e)) {
       e.preventDefault();
-
-      if (focusedItem !== null) {
-        handleItemSubmit(notes[focusedItem]);
-      } else {
-        submitHandler(false);
-      }
+      handleSubmit();
     }
   };
 
@@ -134,7 +137,7 @@ export default function NotesTool({
         inputRef={inputRef}
         value={value}
         handleChange={handleChange}
-        submitHandler={submitHandler}
+        submitHandler={handleNoteSubmit}
         formHandler={formHandler}
       />
       {showNotes && (
