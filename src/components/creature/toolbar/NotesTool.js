@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
-import CreatureToolbarInput from './CreatureToolbarInput';
 import AddNoteIcon from '../../icons/AddNoteIcon';
 import CrossIcon from '../../icons/CrossIcon';
 import { hotkeys } from '../../../hotkeys/hotkeys';
+import Input from '../../page/Input';
 
 function NotesToolLabel(expanded) {
   const style = {
@@ -32,7 +32,8 @@ export default function NotesTool({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
-  const [selectedItem, setSelectedItem] = useState({});
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [value, setValue] = useState('');
   const inputRef = useRef();
 
   const hasNotes = notes.length > 0;
@@ -67,7 +68,47 @@ export default function NotesTool({
 
   const handleItemSubmit = (item) => {
     setSelectedItem(item);
+    setFocusedItem(null);
     setExpanded(false);
+    setValue(item.text);
+  };
+
+  const resetDropdown = () => {
+    setExpanded(false);
+    setFocusedItem(null);
+    setSelectedItem(null);
+  };
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const resetForm = () => {
+    setValue('');
+    resetDropdown();
+  };
+
+  const submitHandler = () => {
+    if (value) {
+      resetForm();
+      if (selectedItem) {
+        console.log('>>> UPDATING NOTE', selectedItem);
+      } else {
+        addNoteToCreature(id, value, false);
+      }
+    }
+  };
+
+  const formHandler = (event) => {
+    if (isHotkey('enter', event)) {
+      event.preventDefault();
+
+      if (focusedItem !== null) {
+        handleItemSubmit(notes[focusedItem]);
+      } else {
+        submitHandler(false);
+      }
+    }
   };
 
   const hotKeyHandler = (e) => {
@@ -86,12 +127,7 @@ export default function NotesTool({
     }
 
     if (isHotkey(hotkeys.dropdownEscape, e)) {
-      setExpanded(false);
-    }
-
-    if (isHotkey('enter', e) && focusedItem) {
-      e.preventDefault();
-      handleItemSubmit(notes[focusedItem]);
+      resetDropdown();
     }
 
     return null;
@@ -103,14 +139,11 @@ export default function NotesTool({
     return () => inputRef.current.removeEventListener('keydown', hotKeyHandler);
   }, [focusedItem, notes, expanded]);
 
-  console.log('>>> selectedItem', selectedItem.text);
-
   return (
     <div className="input--form creature-toolbar--notes-wrapper">
-      <CreatureToolbarInput
+      <Input
         ariaLabel={`add or edit note for ${name}`}
         label={NotesToolLabel(showNotes)}
-        rightSubmit={(note) => addNoteToCreature(id, note, false)}
         rightControls={{
           rightTitle: 'Add/Edit Note',
           RightSubmitIcon: <AddNoteIcon />,
@@ -119,7 +152,10 @@ export default function NotesTool({
         customClasses={customClasses}
         onClick={toggleExpanded}
         inputRef={inputRef}
-        initialValue={selectedItem.text}
+        value={value}
+        handleChange={handleChange}
+        submitHandler={submitHandler}
+        formHandler={formHandler}
       />
       {showNotes && (
         <ul className="creature-toolbar--notes-dropdown">

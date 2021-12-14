@@ -3,8 +3,7 @@ import isHotkey from 'is-hotkey';
 import Input from '../../page/Input';
 
 export default function CreatureToolbarInput(props) {
-  const { initialValue } = props;
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState('');
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -56,5 +55,4 @@ CreatureToolbarInput.defaultProps = {
   enabled: true,
   min: undefined,
   customClasses: '',
-  initialValue: '',
 };
