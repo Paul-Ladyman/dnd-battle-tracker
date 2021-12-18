@@ -46,7 +46,11 @@ export default function NotesTool({
     setExpanded(!expanded);
   };
 
-  const moveFocus = (down = true) => {
+  const moveFocus = (e, down = true) => {
+    if (value !== '' && !expanded) return null;
+
+    e.preventDefault();
+
     const noItemFocused = focusedItem === null;
     const start = 0;
     const end = notes.length - 1;
@@ -110,8 +114,8 @@ export default function NotesTool({
 
   const formHandler = (e) => {
     if (notes.length > 0) {
-      if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus();
-      if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(false);
+      if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus(e);
+      if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(e, false);
       if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
       if (isHotkey(hotkeys.dropdownEscape, e)) resetDropdown();
     }
