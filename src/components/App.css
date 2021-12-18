@@ -431,6 +431,15 @@ input[type="number"] {
   z-index: 1;
 }
 
+.creature-toolbar--notes-dropdown-expander {
+  border: none;
+  background: none;
+  box-shadow: none;
+  display: inline;
+  height: auto;
+  min-height: auto;
+}
+
 .creature-toolbar--notes-dropdown-group {
   width: 100%;
   display: flex;

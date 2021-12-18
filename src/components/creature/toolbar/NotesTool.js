@@ -5,7 +5,7 @@ import CrossIcon from '../../icons/CrossIcon';
 import { hotkeys } from '../../../hotkeys/hotkeys';
 import Input from '../../page/Input';
 
-function NotesToolLabel(expanded) {
+function NotesToolLabel(expanded, label, dropdownId, onClick) {
   const style = {
     transform: expanded ? 'rotate(180deg) translate(0, -3px)' : undefined,
     color: '#822000',
@@ -16,9 +16,19 @@ function NotesToolLabel(expanded) {
   return (
     <>
       Notes
-      <svg width="18" height="16" aria-hidden="true" focusable="false" style={style}>
-        <polygon className="arrow" strokeWidth="0" fillOpacity="0.75" fill="currentColor" points="3,6 15,6 9,14" />
-      </svg>
+      <button
+        className="creature-toolbar--notes-dropdown-expander"
+        type="button"
+        tabIndex="-1"
+        aria-label={label}
+        aria-expanded={expanded}
+        aria-controls={dropdownId}
+        onClick={onClick}
+      >
+        <svg width="18" height="16" aria-hidden="true" focusable="false" style={style}>
+          <polygon className="arrow" strokeWidth="0" fillOpacity="0.75" fill="currentColor" points="3,6 15,6 9,14" />
+        </svg>
+      </button>
     </>
   );
 }
@@ -42,6 +52,7 @@ export default function NotesTool({
   const classModifier = 'creature-toolbar--notes__open';
   const customClasses = showNotes ? `${className} ${classModifier}` : className;
   const notesDropdownId = `notes-dropdown-${id}`;
+  const notesAriaLabel = 'notes';
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -131,7 +142,7 @@ export default function NotesTool({
         ariaExpanded={expanded}
         ariaControls={notesDropdownId}
         role="combobox"
-        label={NotesToolLabel(showNotes)}
+        label={NotesToolLabel(showNotes, notesAriaLabel, notesDropdownId, toggleExpanded)}
         rightControls={{
           rightTitle: 'Add/Edit Note',
           RightSubmitIcon: <AddNoteIcon />,
@@ -146,7 +157,7 @@ export default function NotesTool({
         formHandler={formHandler}
       />
       {showNotes && (
-        <ul className="creature-toolbar--notes-dropdown" id={notesDropdownId} role="listbox" aria-label="notes">
+        <ul className="creature-toolbar--notes-dropdown" id={notesDropdownId} role="listbox" aria-label={notesAriaLabel}>
           {
             notes.map((note, i) => {
               const itemClass = 'creature-toolbar--notes-dropdown-item';
