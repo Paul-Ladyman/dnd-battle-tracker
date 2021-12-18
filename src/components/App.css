@@ -429,6 +429,11 @@ input[type="number"] {
   width: inherit;
   box-sizing: border-box;
   z-index: 1;
+  display: none;
+}
+
+.creature-toolbar--notes-dropdown__open {
+  display: block;
 }
 
 .creature-toolbar--notes-dropdown-expander {

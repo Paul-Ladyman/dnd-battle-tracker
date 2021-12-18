@@ -53,6 +53,9 @@ export default function NotesTool({
   const customClasses = showNotes ? `${className} ${classModifier}` : className;
   const notesDropdownId = `notes-dropdown-${id}`;
   const notesAriaLabel = 'notes';
+  const dropdownClassName = 'creature-toolbar--notes-dropdown';
+  const dropdownClassModifier = `${dropdownClassName}__open`;
+  const dropdownClasses = showNotes ? `${dropdownClassName} ${dropdownClassModifier}` : dropdownClassName;
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -156,38 +159,36 @@ export default function NotesTool({
         submitHandler={handleNoteSubmit}
         formHandler={formHandler}
       />
-      {showNotes && (
-        <ul className="creature-toolbar--notes-dropdown" id={notesDropdownId} role="listbox" aria-label={notesAriaLabel}>
-          {
-            notes.map((note, i) => {
-              const itemClass = 'creature-toolbar--notes-dropdown-item';
-              const itemModifier = focusedItem === i ? ` ${itemClass}__focused` : '';
-              const itemClassName = `${itemClass}${itemModifier}`;
-              return (
-                <div className="creature-toolbar--notes-dropdown-group">
-                  {/* eslint-disable jsx-a11y/click-events-have-key-events */}
-                  <li
-                    className={itemClassName}
-                    role="option"
-                    onClick={() => handleItemSubmit(note)}
-                  >
-                    {note.text}
-                  </li>
-                  {/* eslint-enable jsx-a11y/click-events-have-key-events */}
-                  <button
-                    type="button"
-                    title="Remove note"
-                    className="input--submit creature-toolbar--notes-dropdown-button"
-                    onClick={() => removeNoteFromCreature(id, note, false)}
-                  >
-                    <CrossIcon rotate />
-                  </button>
-                </div>
-              );
-            })
-          }
-        </ul>
-      )}
+      <ul className={dropdownClasses} id={notesDropdownId} role="listbox" aria-label={notesAriaLabel}>
+        {
+          notes.map((note, i) => {
+            const itemClass = 'creature-toolbar--notes-dropdown-item';
+            const itemModifier = focusedItem === i ? ` ${itemClass}__focused` : '';
+            const itemClassName = `${itemClass}${itemModifier}`;
+            return (
+              <div className="creature-toolbar--notes-dropdown-group">
+                {/* eslint-disable jsx-a11y/click-events-have-key-events */}
+                <li
+                  className={itemClassName}
+                  role="option"
+                  onClick={() => handleItemSubmit(note)}
+                >
+                  {note.text}
+                </li>
+                {/* eslint-enable jsx-a11y/click-events-have-key-events */}
+                <button
+                  type="button"
+                  title="Remove note"
+                  className="input--submit creature-toolbar--notes-dropdown-button"
+                  onClick={() => removeNoteFromCreature(id, note, false)}
+                >
+                  <CrossIcon rotate />
+                </button>
+              </div>
+            );
+          })
+        }
+      </ul>
     </div>
   );
 }
