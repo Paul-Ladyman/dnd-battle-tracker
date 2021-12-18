@@ -41,6 +41,7 @@ export default function NotesTool({
   const className = 'creature-toolbar--notes';
   const classModifier = 'creature-toolbar--notes__open';
   const customClasses = showNotes ? `${className} ${classModifier}` : className;
+  const notesDropdownId = `notes-dropdown-${id}`;
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -128,7 +129,7 @@ export default function NotesTool({
         ariaLabel={`add or edit note for ${name}`}
         ariaAutoComplete="list"
         ariaExpanded={expanded}
-        ariaControls={`notes-dropdown-${id}`}
+        ariaControls={notesDropdownId}
         role="combobox"
         label={NotesToolLabel(showNotes)}
         rightControls={{
@@ -145,7 +146,7 @@ export default function NotesTool({
         formHandler={formHandler}
       />
       {showNotes && (
-        <ul className="creature-toolbar--notes-dropdown">
+        <ul className="creature-toolbar--notes-dropdown" id={notesDropdownId} role="listbox" aria-label="notes">
           {
             notes.map((note, i) => {
               const itemClass = 'creature-toolbar--notes-dropdown-item';
