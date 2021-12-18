@@ -70,19 +70,15 @@ export default function NotesTool({
     return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem + focusIncrement);
   };
 
-  const resetDropdown = () => {
-    setExpanded(false);
-    setFocusedItem(null);
-    setSelectedItem(null);
-  };
-
   const handleChange = (event) => {
     setValue(event.target.value);
   };
 
   const resetForm = () => {
     setValue('');
-    resetDropdown();
+    setExpanded(false);
+    setFocusedItem(null);
+    setSelectedItem(null);
   };
 
   const handleItemSubmit = (item) => {
@@ -117,7 +113,7 @@ export default function NotesTool({
       if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus(e);
       if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(e, false);
       if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
-      if (isHotkey(hotkeys.dropdownEscape, e)) resetDropdown();
+      if (isHotkey(hotkeys.dropdownEscape, e)) resetForm();
     }
 
     if (isHotkey('enter', e)) {
