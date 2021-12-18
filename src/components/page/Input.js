@@ -17,6 +17,10 @@ function Input({
   rightControls,
   customClasses,
   ariaLabel,
+  ariaAutoComplete,
+  ariaExpanded,
+  ariaControls,
+  role,
   label,
   name,
   min,
@@ -88,6 +92,10 @@ function Input({
             disabled={inputDisabled}
             onClick={onClick}
             onBlur={onBlur}
+            aria-autocomplete={ariaAutoComplete}
+            aria-expanded={ariaExpanded}
+            aria-controls={ariaControls}
+            role={role}
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon
