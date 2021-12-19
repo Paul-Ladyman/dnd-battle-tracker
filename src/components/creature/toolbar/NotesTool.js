@@ -124,12 +124,20 @@ export default function NotesTool({
     }
   };
 
+  const handleEscape = () => {
+    if (expanded) {
+      setExpanded(false);
+    } else {
+      resetForm();
+    }
+  };
+
   const formHandler = (e) => {
     if (notes.length > 0) {
       if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus(e);
       if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(e, false);
       if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
-      if (isHotkey(hotkeys.dropdownEscape, e)) resetForm();
+      if (isHotkey(hotkeys.dropdownEscape, e)) handleEscape();
     }
 
     if (isHotkey('enter', e)) {
