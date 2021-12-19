@@ -146,10 +146,14 @@ export default function NotesTool({
     }
   };
 
+  const RightSubmitIcon = selectedItem ? <AddNoteIcon /> : <CrossIcon />;
+  const rightTitle = selectedItem ? 'Edit Note' : 'Add Note';
+  const ariaLabelVerb = selectedItem ? 'edit' : 'add';
+
   return (
     <div className="input--form creature-toolbar--notes-wrapper">
       <Input
-        ariaLabel={`add or edit note for ${name}`}
+        ariaLabel={`${ariaLabelVerb} note for ${name}`}
         ariaAutoComplete="none"
         ariaExpanded={expanded}
         ariaControls={notesDropdownId}
@@ -157,8 +161,8 @@ export default function NotesTool({
         role="combobox"
         label={NotesToolLabel(showNotes, notesAriaLabel, notesDropdownId, toggleExpanded)}
         rightControls={{
-          rightTitle: 'Add/Edit Note',
-          RightSubmitIcon: <AddNoteIcon />,
+          rightTitle,
+          RightSubmitIcon,
         }}
         inputId={`notes-${id}`}
         customClasses={customClasses}
@@ -185,6 +189,8 @@ export default function NotesTool({
                   onClick={() => handleItemSubmit(note)}
                   aria-selected={selected}
                   id={`notes-dropdown-${id}-${i}`}
+                  title="Edit note"
+                  aria-label={`Edit note ${note.text}`}
                 >
                   {note.text}
                 </li>
@@ -194,6 +200,7 @@ export default function NotesTool({
                   title="Remove note"
                   className="input--submit creature-toolbar--notes-dropdown-button"
                   onClick={() => removeNoteFromCreature(id, note, false)}
+                  aria-label={`Remove note ${i + 1} of ${notes.length}`}
                 >
                   <CrossIcon rotate />
                 </button>
