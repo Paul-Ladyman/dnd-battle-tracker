@@ -127,6 +127,7 @@ export default function NotesTool({
   const handleEscape = () => {
     if (expanded) {
       setExpanded(false);
+      setFocusedItem(null);
     } else {
       resetForm();
     }
