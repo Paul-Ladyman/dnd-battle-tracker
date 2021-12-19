@@ -142,7 +142,7 @@ export default function NotesTool({
     <div className="input--form creature-toolbar--notes-wrapper">
       <Input
         ariaLabel={`add or edit note for ${name}`}
-        ariaAutoComplete="list"
+        ariaAutoComplete="none"
         ariaExpanded={expanded}
         ariaControls={notesDropdownId}
         ariaActiveDescendant={activeNoteId}
