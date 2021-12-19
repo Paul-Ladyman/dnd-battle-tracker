@@ -56,6 +56,7 @@ export default function NotesTool({
   const dropdownClassName = 'creature-toolbar--notes-dropdown';
   const dropdownClassModifier = `${dropdownClassName}__open`;
   const dropdownClasses = showNotes ? `${dropdownClassName} ${dropdownClassModifier}` : dropdownClassName;
+  const activeNoteId = focusedItem !== null ? `notes-dropdown-${id}-${focusedItem}` : '';
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -144,6 +145,7 @@ export default function NotesTool({
         ariaAutoComplete="list"
         ariaExpanded={expanded}
         ariaControls={notesDropdownId}
+        ariaActiveDescendant={activeNoteId}
         role="combobox"
         label={NotesToolLabel(showNotes, notesAriaLabel, notesDropdownId, toggleExpanded)}
         rightControls={{
@@ -162,8 +164,9 @@ export default function NotesTool({
       <ul className={dropdownClasses} id={notesDropdownId} role="listbox" aria-label={notesAriaLabel}>
         {
           notes.map((note, i) => {
+            const selected = focusedItem === i;
             const itemClass = 'creature-toolbar--notes-dropdown-item';
-            const itemModifier = focusedItem === i ? ` ${itemClass}__focused` : '';
+            const itemModifier = selected ? ` ${itemClass}__focused` : '';
             const itemClassName = `${itemClass}${itemModifier}`;
             return (
               <div className="creature-toolbar--notes-dropdown-group">
@@ -172,6 +175,8 @@ export default function NotesTool({
                   className={itemClassName}
                   role="option"
                   onClick={() => handleItemSubmit(note)}
+                  aria-selected={selected}
+                  id={`notes-dropdown-${id}-${i}`}
                 >
                   {note.text}
                 </li>

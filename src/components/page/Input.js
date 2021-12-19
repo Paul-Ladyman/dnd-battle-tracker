@@ -20,6 +20,7 @@ function Input({
   ariaAutoComplete,
   ariaExpanded,
   ariaControls,
+  ariaActiveDescendant,
   role,
   label,
   name,
@@ -95,6 +96,7 @@ function Input({
             aria-autocomplete={ariaAutoComplete}
             aria-expanded={ariaExpanded}
             aria-controls={ariaControls}
+            aria-activedescendant={ariaActiveDescendant}
             role={role}
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
