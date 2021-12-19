@@ -38,13 +38,18 @@ export default function NotesTool({
   id,
   addNoteToCreature,
   removeNoteFromCreature,
-  notes,
+  notes: allNotes,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [value, setValue] = useState('');
   const inputRef = useRef();
+
+  const notes = allNotes.filter((note) => {
+    const noteRegex = new RegExp(value);
+    return noteRegex.test(note.text);
+  });
 
   const hasNotes = notes.length > 0;
   const showNotes = hasNotes && expanded;
@@ -74,19 +79,16 @@ export default function NotesTool({
     const startBound = down ? start : end;
     const endItemFocused = focusedItem === endBound;
 
-    if (!expanded) {
-      setExpanded(true);
-    }
+    if (!expanded) setExpanded(true);
 
-    if (noItemFocused || endItemFocused) {
-      return setFocusedItem(startBound);
-    }
+    if (noItemFocused || endItemFocused) return setFocusedItem(startBound);
 
     const focusIncrement = down ? 1 : -1;
     return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem + focusIncrement);
   };
 
   const handleChange = (event) => {
+    if (!expanded) setExpanded(true);
     setValue(event.target.value);
   };
 
@@ -125,7 +127,7 @@ export default function NotesTool({
   };
 
   const handleEscape = () => {
-    if (expanded) {
+    if (showNotes) {
       setExpanded(false);
       setFocusedItem(null);
     } else {
@@ -138,8 +140,9 @@ export default function NotesTool({
       if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus(e);
       if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(e, false);
       if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
-      if (isHotkey(hotkeys.dropdownEscape, e)) handleEscape();
     }
+
+    if (isHotkey(hotkeys.dropdownEscape, e)) handleEscape();
 
     if (isHotkey('enter', e)) {
       e.preventDefault();
@@ -155,7 +158,7 @@ export default function NotesTool({
     <div className="input--form creature-toolbar--notes-wrapper">
       <Input
         ariaLabel={`${ariaLabelVerb} note for ${name}`}
-        ariaAutoComplete="none"
+        ariaAutoComplete="list"
         ariaExpanded={expanded}
         ariaControls={notesDropdownId}
         ariaActiveDescendant={activeNoteId}
