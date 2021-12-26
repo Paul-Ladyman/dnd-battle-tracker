@@ -4,6 +4,7 @@ import AddNoteIcon from '../../icons/AddNoteIcon';
 import CrossIcon from '../../icons/CrossIcon';
 import { hotkeys } from '../../../hotkeys/hotkeys';
 import Input from '../../page/Input';
+import DropdownOption from './DropdownOption';
 
 function NotesToolLabel(expanded, label, dropdownId, onClick) {
   const style = {
@@ -186,19 +187,15 @@ export default function NotesTool({
             const itemClassName = `${itemClass}${itemModifier}`;
             return (
               <div className="creature-toolbar--notes-dropdown-group">
-                {/* eslint-disable jsx-a11y/click-events-have-key-events */}
-                <li
+                <DropdownOption
                   className={itemClassName}
-                  role="option"
                   onClick={() => handleItemSubmit(note)}
-                  aria-selected={selected}
+                  selected={selected}
                   id={`notes-dropdown-${id}-${i}`}
+                  ariaLabel={`Edit note ${note.text}`}
                   title="Edit note"
-                  aria-label={`Edit note ${note.text}`}
-                >
-                  {note.text}
-                </li>
-                {/* eslint-enable jsx-a11y/click-events-have-key-events */}
+                  text={note.text}
+                />
                 <button
                   type="button"
                   title="Remove note"
