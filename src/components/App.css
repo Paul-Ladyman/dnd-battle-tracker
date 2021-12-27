@@ -430,6 +430,24 @@ input[type="number"] {
   box-sizing: border-box;
   z-index: 1;
   display: none;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: #822000 #EBE1AD;
+}
+
+.creature-toolbar--notes-dropdown::-webkit-scrollbar {
+  width: 12px;
+}
+
+.creature-toolbar--notes-dropdown::-webkit-scrollbar-track {
+  background: #EBE1AD;
+  border-radius: 0 0 15px 0;
+}
+.creature-toolbar--notes-dropdown::-webkit-scrollbar-thumb {
+  background-color: #822000;
+  border-radius: 0 15px 15px 0;
+  border: 3px solid #EBE1AD;
 }
 
 .creature-toolbar--notes-dropdown__open {
@@ -465,7 +483,6 @@ input[type="number"] {
 .creature-toolbar--notes-dropdown-item {
   width: 100%;
   padding: 5px;
-  border-right: 2px solid #822000;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

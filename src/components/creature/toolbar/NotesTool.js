@@ -108,14 +108,17 @@ export default function NotesTool({
     inputRef.current.focus();
   };
 
-  const handleNoteSubmit = () => {
-    if (value) {
+  const handleNoteSubmit = (removeItem) => {
+    if (removeItem) {
+      removeNoteFromCreature(id, selectedItem, false);
       resetForm();
+    } else if (value) {
       if (selectedItem) {
         console.log('>>> UPDATING NOTE', selectedItem);
       } else {
         addNoteToCreature(id, value, false);
       }
+      resetForm();
     }
   };
 
@@ -152,6 +155,12 @@ export default function NotesTool({
   };
 
   const RightSubmitIcon = selectedItem ? <AddNoteIcon /> : <CrossIcon />;
+  const leftControls = selectedItem
+    ? {
+      leftTitle: 'Remove note',
+      LeftSubmitIcon: <CrossIcon rotate />,
+    }
+    : {};
   const rightTitle = selectedItem ? 'Edit Note' : 'Add Note';
   const ariaLabelVerb = selectedItem ? 'edit' : 'add';
 
@@ -169,6 +178,7 @@ export default function NotesTool({
           rightTitle,
           RightSubmitIcon,
         }}
+        leftControls={leftControls}
         inputId={`notes-${id}`}
         customClasses={customClasses}
         onClick={toggleExpanded}
@@ -196,15 +206,6 @@ export default function NotesTool({
                   title="Edit note"
                   text={note.text}
                 />
-                <button
-                  type="button"
-                  title="Remove note"
-                  className="input--submit creature-toolbar--notes-dropdown-button"
-                  onClick={() => removeNoteFromCreature(id, note, false)}
-                  aria-label={`Remove note ${i + 1} of ${notes.length}`}
-                >
-                  <CrossIcon rotate />
-                </button>
               </div>
             );
           })
