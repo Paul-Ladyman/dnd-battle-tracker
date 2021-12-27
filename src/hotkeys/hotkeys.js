@@ -13,6 +13,8 @@ export const hotkeys = {
   dropdownNavUp: 'up',
   dropdownNavOpen: 'alt+down',
   dropdownEscape: 'esc',
+  removeNote: 'delete',
+  removeNoteAlt: 'backspace',
 };
 
 const rulesSearchBar = 'Search rules using D&D Beyond';
@@ -32,6 +34,8 @@ export const hotkeyDescriptions = {
   dropdownNavUp: 'Navigate up through a dropdown menu',
   dropdownNavOpen: 'Open a dropdown menu',
   dropdownEscape: 'Close a dropdown menu',
+  removeNote: 'Remove note from creature from the note tool dropdown',
+  removeNoteAlt: 'Remove note from creature from the note tool dropdown',
 };
 
 export const playerSessionHotkeyDescriptions = {

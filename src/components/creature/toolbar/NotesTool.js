@@ -139,6 +139,16 @@ export default function NotesTool({
     }
   };
 
+  const handleRemoveNoteHotkey = (e) => {
+    if (focusedItem !== null) {
+      e.preventDefault();
+      removeNoteFromCreature(id, notes[focusedItem], false);
+      const newLength = notes.length - 1;
+      if (focusedItem === newLength) setFocusedItem(newLength - 1);
+      if (newLength === 0) resetForm();
+    }
+  };
+
   const formHandler = (e) => {
     if (notes.length > 0) {
       if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus(e);
@@ -151,6 +161,10 @@ export default function NotesTool({
     if (isHotkey('enter', e)) {
       e.preventDefault();
       handleSubmit();
+    }
+
+    if (isHotkey(hotkeys.removeNote, e) || isHotkey(hotkeys.removeNoteAlt, e)) {
+      handleRemoveNoteHotkey(e);
     }
   };
 
