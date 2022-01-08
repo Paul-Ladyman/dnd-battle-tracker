@@ -44,7 +44,6 @@ export default function NotesTool({
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [blurRequested, setBlurRequested] = useState(false);
   const [value, setValue] = useState('');
   const inputRef = useRef();
 
@@ -180,24 +179,31 @@ export default function NotesTool({
   const ariaLabelVerb = selectedItem ? 'edit' : 'add';
 
   useEffect(() => {
-    if (blurRequested) {
-      const timeoutRef = setTimeout(() => {
-        const noteTool = document.getElementById(`notes-wrapper-${id}`);
-        const inputIsActive = document.activeElement.getAttribute('id') === `notes-${id}`;
-        const noteToolIsActive = inputIsActive || noteTool.contains(document.activeElement);
-        if (!noteToolIsActive) setExpanded(false);
-        setBlurRequested(false);
-      }, 300);
-      return () => clearTimeout(timeoutRef);
-    }
-    return undefined;
-  }, [blurRequested]);
+    const clickHandler = (e) => {
+      const noteTool = document.getElementById(`notes-wrapper-${id}`);
+      const clickInNoteTool = noteTool.contains(e.target);
+      if (!clickInNoteTool) setExpanded(false);
+    };
+    document.addEventListener('click', clickHandler);
+
+    return () => document.removeEventListener('click', clickHandler);
+  }, []);
+
+  useEffect(() => {
+    const noteTool = document.getElementById(`notes-wrapper-${id}`);
+    const focusHandler = (e) => {
+      const focusOutsideNoteTool = e.relatedTarget !== null && !noteTool.contains(e.relatedTarget);
+      if (focusOutsideNoteTool) setExpanded(false);
+    };
+    noteTool.addEventListener('focusout', focusHandler);
+
+    return () => noteTool.removeEventListener('focusout', focusHandler);
+  }, []);
 
   return (
     <div
       className="input--form creature-toolbar--notes-wrapper"
       id={`notes-wrapper-${id}`}
-      onBlur={() => setBlurRequested(true)}
     >
       <Input
         ariaLabel={`${ariaLabelVerb} note for ${name}`}
@@ -215,10 +221,6 @@ export default function NotesTool({
         inputId={`notes-${id}`}
         customClasses={customClasses}
         onClick={toggleExpanded}
-        onBlur={(e) => {
-          e.stopPropagation();
-          setBlurRequested(true);
-        }}
         inputRef={inputRef}
         value={value}
         handleChange={handleChange}
