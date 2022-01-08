@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import AddNoteIcon from '../../icons/AddNoteIcon';
 import CrossIcon from '../../icons/CrossIcon';
@@ -44,6 +44,7 @@ export default function NotesTool({
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [blurRequested, setBlurRequested] = useState(false);
   const [value, setValue] = useState('');
   const inputRef = useRef();
 
@@ -178,8 +179,26 @@ export default function NotesTool({
   const rightTitle = selectedItem ? 'Edit Note' : 'Add Note';
   const ariaLabelVerb = selectedItem ? 'edit' : 'add';
 
+  useEffect(() => {
+    if (blurRequested) {
+      const timeoutRef = setTimeout(() => {
+        const noteTool = document.getElementById(`notes-wrapper-${id}`);
+        const inputIsActive = document.activeElement.getAttribute('id') === `notes-${id}`;
+        const noteToolIsActive = inputIsActive || noteTool.contains(document.activeElement);
+        if (!noteToolIsActive) setExpanded(false);
+        setBlurRequested(false);
+      }, 300);
+      return () => clearTimeout(timeoutRef);
+    }
+    return undefined;
+  }, [blurRequested]);
+
   return (
-    <div className="input--form creature-toolbar--notes-wrapper">
+    <div
+      className="input--form creature-toolbar--notes-wrapper"
+      id={`notes-wrapper-${id}`}
+      onBlur={() => setBlurRequested(true)}
+    >
       <Input
         ariaLabel={`${ariaLabelVerb} note for ${name}`}
         ariaAutoComplete="list"
@@ -196,6 +215,10 @@ export default function NotesTool({
         inputId={`notes-${id}`}
         customClasses={customClasses}
         onClick={toggleExpanded}
+        onBlur={(e) => {
+          e.stopPropagation();
+          setBlurRequested(true);
+        }}
         inputRef={inputRef}
         value={value}
         handleChange={handleChange}
