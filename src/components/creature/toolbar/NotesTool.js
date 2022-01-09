@@ -179,26 +179,38 @@ export default function NotesTool({
   const ariaLabelVerb = selectedItem ? 'edit' : 'add';
 
   useEffect(() => {
-    const clickHandler = (e) => {
-      const noteTool = document.getElementById(`notes-wrapper-${id}`);
-      const clickInNoteTool = noteTool.contains(e.target);
-      if (!clickInNoteTool) setExpanded(false);
-    };
-    document.addEventListener('click', clickHandler);
+    if (expanded) {
+      const clickHandler = (e) => {
+        const noteTool = document.getElementById(`notes-wrapper-${id}`);
+        const clickInNoteTool = noteTool && noteTool.contains(e.target);
+        if (expanded && !clickInNoteTool) {
+          setExpanded(false);
+        }
+      };
+      document.addEventListener('click', clickHandler);
 
-    return () => document.removeEventListener('click', clickHandler);
-  }, []);
+      return () => document.removeEventListener('click', clickHandler);
+    }
+    return undefined;
+  }, [expanded]);
 
   useEffect(() => {
-    const noteTool = document.getElementById(`notes-wrapper-${id}`);
-    const focusHandler = (e) => {
-      const focusOutsideNoteTool = e.relatedTarget !== null && !noteTool.contains(e.relatedTarget);
-      if (focusOutsideNoteTool) setExpanded(false);
-    };
-    noteTool.addEventListener('focusout', focusHandler);
+    if (expanded) {
+      const noteTool = document.getElementById(`notes-wrapper-${id}`);
+      const focusHandler = (e) => {
+        const focusOutsideNoteTool = e.relatedTarget !== null
+          && noteTool
+          && !noteTool.contains(e.relatedTarget);
+        if (expanded && focusOutsideNoteTool) {
+          setExpanded(false);
+        }
+      };
+      noteTool.addEventListener('focusout', focusHandler);
 
-    return () => noteTool.removeEventListener('focusout', focusHandler);
-  }, []);
+      return () => noteTool.removeEventListener('focusout', focusHandler);
+    }
+    return undefined;
+  }, [expanded]);
 
   return (
     <div
