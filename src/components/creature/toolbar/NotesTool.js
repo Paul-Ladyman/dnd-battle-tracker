@@ -90,6 +90,7 @@ export default function NotesTool({
 
   const handleChange = (event) => {
     if (!expanded) setExpanded(true);
+    if (focusedItem !== null) setFocusedItem(null);
     setValue(event.target.value);
   };
 
