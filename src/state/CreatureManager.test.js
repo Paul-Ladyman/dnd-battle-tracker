@@ -654,7 +654,7 @@ describe('validateCreature', () => {
 });
 
 describe('addNoteToCreature', () => {
-  it('adds a note to a creature including application round and time', () => {
+  it('adds a note to a creature including an ID and application round and time', () => {
     const state = {
       ...defaultState,
       round: 2,
@@ -666,6 +666,7 @@ describe('addNoteToCreature', () => {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
 
     const expectedState = {
@@ -677,6 +678,92 @@ describe('addNoteToCreature', () => {
           notes: [
             expectedNote,
           ],
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['note added to Goblin #1'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('sets a new id when a second note is added', () => {
+    const note = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 0,
+    };
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note],
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addNoteToCreature(state, 1, 'some note', false);
+
+    const expectedNote = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 1,
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note, expectedNote],
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['note added to Goblin #1'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('continues to set ids when notes have been deleted', () => {
+    const note = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 3,
+    };
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note],
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addNoteToCreature(state, 1, 'some note', false);
+
+    const expectedNote = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 1,
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note, expectedNote],
         },
         defaultState.creatures[2],
       ],
