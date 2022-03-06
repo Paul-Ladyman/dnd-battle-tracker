@@ -248,13 +248,14 @@ export default function NotesTool({
             const itemClass = 'creature-toolbar--notes-dropdown-item';
             const itemModifier = selected ? ` ${itemClass}__focused` : '';
             const itemClassName = `${itemClass}${itemModifier}`;
+            const htmlId = `notes-dropdown-${id}-${note.id}`;
             return (
-              <div className="creature-toolbar--notes-dropdown-group">
+              <div className="creature-toolbar--notes-dropdown-group" key={htmlId}>
                 <DropdownOption
                   className={itemClassName}
                   onClick={() => handleItemSubmit(note)}
                   selected={selected}
-                  id={`notes-dropdown-${id}-${i}`}
+                  id={htmlId}
                   ariaLabel={`Edit note ${note.text}`}
                   title="Edit note"
                   text={note.text}
