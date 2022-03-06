@@ -862,6 +862,7 @@ describe('removeNoteFromCreature', () => {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
     const state = {
       ...defaultState,
@@ -890,6 +891,7 @@ describe('removeNoteFromCreature', () => {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
     const state = {
       ...defaultState,
@@ -900,8 +902,9 @@ describe('removeNoteFromCreature', () => {
           notes: [
             {
               text: 'some note',
-              appliedAtRound: 1,
-              appliedAtSeconds: 0,
+              appliedAtRound: 2,
+              appliedAtSeconds: 6,
+              id: 1,
             },
             note,
           ],
@@ -919,8 +922,9 @@ describe('removeNoteFromCreature', () => {
           notes: [
             {
               text: 'some note',
-              appliedAtRound: 1,
-              appliedAtSeconds: 0,
+              appliedAtRound: 2,
+              appliedAtSeconds: 6,
+              id: 1,
             },
           ],
         },
@@ -934,11 +938,12 @@ describe('removeNoteFromCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('removes all duplicate notes from a creature', () => {
+  it('removes all notes with the same id from a creature', () => {
     const note = {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
     const state = {
       ...defaultState,

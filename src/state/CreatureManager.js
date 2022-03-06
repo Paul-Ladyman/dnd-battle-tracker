@@ -195,13 +195,7 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
     return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
   }
 
-  const notes = creature.notes.filter(({ text, appliedAtRound, appliedAtSeconds }) => {
-    const notesAreEqual = text === note.text
-      && appliedAtRound === note.appliedAtRound
-      && appliedAtSeconds === note.appliedAtSeconds;
-
-    return !notesAreEqual;
-  });
+  const notes = creature.notes.filter(({ id }) => id !== note.id);
   const ariaAnnouncement = `note removed from ${creature.name}`;
   return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
