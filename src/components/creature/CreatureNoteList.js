@@ -34,7 +34,7 @@ function CreatureNoteList({
       number={number}
       round={round}
       secondsElapsed={secondsElapsed}
-      key={`${creatureId}-note-${number}`}
+      key={`${note.id}-${creatureId}`}
     />
   );
 
