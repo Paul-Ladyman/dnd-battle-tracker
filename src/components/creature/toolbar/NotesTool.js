@@ -38,6 +38,7 @@ export default function NotesTool({
   name,
   id,
   addNoteToCreature,
+  updateNoteForCreature,
   removeNoteFromCreature,
   notes: allNotes,
 }) {
@@ -115,7 +116,7 @@ export default function NotesTool({
       resetForm();
     } else if (value) {
       if (selectedItem) {
-        console.log('>>> UPDATING NOTE', selectedItem);
+        updateNoteForCreature(id, selectedItem.id, value);
       } else {
         addNoteToCreature(id, value, false);
       }
