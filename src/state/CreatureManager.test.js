@@ -5,6 +5,7 @@ import {
   healCreature,
   createCreature,
   addNoteToCreature,
+  updateNoteForCreature,
   removeNoteFromCreature,
   addHitPointsToCreature,
   addTemporaryHealthToCreature,
@@ -707,6 +708,64 @@ describe('addNoteToCreature', () => {
     expect(result).toEqual(expectedState);
     expect(addCondition).toHaveBeenCalledTimes(1);
     expect(addCondition).toHaveBeenCalledWith('Unconscious', state.creatures[1], 2);
+  });
+});
+
+describe('updateNoteForCreature', () => {
+  it('updates a note without changing other notes', () => {
+    const note1 = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6,
+      id: 0,
+    };
+    const note2 = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6,
+      id: 1,
+    };
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note1, note2],
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = updateNoteForCreature(state, 1, 1, 'new value');
+
+    const expectedNote = {
+      ...note2,
+      text: 'new value',
+    };
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note1, expectedNote],
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['note updated for Goblin #1'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing if the note to be updated does not exist', () => {
+    const result = updateNoteForCreature(defaultState, 1, 1, 'new value');
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing if the creature to be updated does not exist', () => {
+    const result = updateNoteForCreature(defaultState, 5, 1, 'new value');
+    expect(result).toEqual(defaultState);
   });
 });
 

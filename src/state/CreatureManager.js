@@ -168,6 +168,23 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
   return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
 
+export function updateNoteForCreature(state, creatureId, noteId, text) {
+  const creature = findCreature(state.creatures, creatureId);
+  if (!creature) return state;
+  const existingNote = creature.notes.find(({ id }) => id === noteId);
+  if (!existingNote) return state;
+  const newNote = {
+    ...existingNote,
+    text,
+  };
+  const notes = creature.notes.map((note) => {
+    if (note.id === noteId) return newNote;
+    return note;
+  });
+  const ariaAnnouncement = `note updated for ${creature.name}`;
+  return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
+}
+
 export function removeNoteFromCreature(state, creatureId, note, isCondition) {
   const creature = findCreature(state.creatures, creatureId);
 
