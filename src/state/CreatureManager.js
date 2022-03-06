@@ -158,11 +158,15 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
     return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
   }
 
+  const noteIds = creature.notes.map(({ id }) => id);
+  const largestId = noteIds.sort((id1, id2) => id2 - id1)[0];
+  const nextId = largestId === undefined ? 0 : largestId + 1;
+
   const note = {
     text,
     appliedAtRound: state.round,
     appliedAtSeconds: getSecondsElapsed(state.round),
-    id: creature.notes.length,
+    id: nextId,
   };
   const notes = [...creature.notes, note];
   const ariaAnnouncement = `note added to ${creature.name}`;

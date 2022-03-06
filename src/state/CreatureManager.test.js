@@ -686,12 +686,18 @@ describe('addNoteToCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('sets a new id when a second note is added', () => {
-    const note = {
+  it('increments the id based on the highest existing id when a note is added', () => {
+    const note1 = {
       text: 'some note',
       appliedAtRound: 0,
       appliedAtSeconds: 0,
-      id: 0,
+      id: 3,
+    };
+    const note2 = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 4,
     };
     const state = {
       ...defaultState,
@@ -699,7 +705,7 @@ describe('addNoteToCreature', () => {
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          notes: [note],
+          notes: [note1, note2],
         },
         defaultState.creatures[2],
       ],
@@ -711,7 +717,7 @@ describe('addNoteToCreature', () => {
       text: 'some note',
       appliedAtRound: 0,
       appliedAtSeconds: 0,
-      id: 1,
+      id: 5,
     };
 
     const expectedState = {
@@ -720,7 +726,7 @@ describe('addNoteToCreature', () => {
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          notes: [note, expectedNote],
+          notes: [note1, note2, expectedNote],
         },
         defaultState.creatures[2],
       ],
@@ -729,12 +735,18 @@ describe('addNoteToCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('continues to set ids when notes have been deleted', () => {
-    const note = {
+  it('increments the id regardless of the order of other notes', () => {
+    const note1 = {
       text: 'some note',
       appliedAtRound: 0,
       appliedAtSeconds: 0,
       id: 3,
+    };
+    const note2 = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 4,
     };
     const state = {
       ...defaultState,
@@ -742,7 +754,7 @@ describe('addNoteToCreature', () => {
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          notes: [note],
+          notes: [note2, note1],
         },
         defaultState.creatures[2],
       ],
@@ -754,7 +766,7 @@ describe('addNoteToCreature', () => {
       text: 'some note',
       appliedAtRound: 0,
       appliedAtSeconds: 0,
-      id: 1,
+      id: 5,
     };
 
     const expectedState = {
@@ -763,7 +775,7 @@ describe('addNoteToCreature', () => {
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          notes: [note, expectedNote],
+          notes: [note2, note1, expectedNote],
         },
         defaultState.creatures[2],
       ],
