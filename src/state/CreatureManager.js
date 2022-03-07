@@ -158,13 +158,35 @@ export function addNoteToCreature(state, creatureId, text, isCondition) {
     return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
   }
 
+  const noteIds = creature.notes.map(({ id }) => id);
+  const largestId = noteIds.sort((id1, id2) => id2 - id1)[0];
+  const nextId = largestId === undefined ? 0 : largestId + 1;
+
   const note = {
     text,
     appliedAtRound: state.round,
     appliedAtSeconds: getSecondsElapsed(state.round),
+    id: nextId,
   };
   const notes = [...creature.notes, note];
   const ariaAnnouncement = `note added to ${creature.name}`;
+  return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
+}
+
+export function updateNoteForCreature(state, creatureId, noteId, text) {
+  const creature = findCreature(state.creatures, creatureId);
+  if (!creature) return state;
+  const existingNote = creature.notes.find(({ id }) => id === noteId);
+  if (!existingNote) return state;
+  const newNote = {
+    ...existingNote,
+    text,
+  };
+  const notes = creature.notes.map((note) => {
+    if (note.id === noteId) return newNote;
+    return note;
+  });
+  const ariaAnnouncement = `note updated for ${creature.name}`;
   return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }
 
@@ -177,13 +199,7 @@ export function removeNoteFromCreature(state, creatureId, note, isCondition) {
     return updateCreature(state, creatureId, { conditions }, ariaAnnouncement);
   }
 
-  const notes = creature.notes.filter(({ text, appliedAtRound, appliedAtSeconds }) => {
-    const notesAreEqual = text === note.text
-      && appliedAtRound === note.appliedAtRound
-      && appliedAtSeconds === note.appliedAtSeconds;
-
-    return !notesAreEqual;
-  });
+  const notes = creature.notes.filter(({ id }) => id !== note.id);
   const ariaAnnouncement = `note removed from ${creature.name}`;
   return updateCreature(state, creatureId, { notes }, ariaAnnouncement);
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
 import PlayerAppWrapper from './components/app/PlayerAppWrapper';
 import ErrorBoundary from './components/error/ErrorBoundary';

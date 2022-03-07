@@ -34,10 +34,7 @@ function CreatureNoteList({
       number={number}
       round={round}
       secondsElapsed={secondsElapsed}
-      playerSession={playerSession}
-      dismissHandler={dismissHandler}
-      creatureId={creatureId}
-      key={`${creatureId}-note-${number}`}
+      key={`${note.id}-${creatureId}`}
     />
   );
 

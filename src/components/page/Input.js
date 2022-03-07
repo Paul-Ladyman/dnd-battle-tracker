@@ -17,6 +17,11 @@ function Input({
   rightControls,
   customClasses,
   ariaLabel,
+  ariaAutoComplete,
+  ariaExpanded,
+  ariaControls,
+  ariaActiveDescendant,
+  role,
   label,
   name,
   min,
@@ -26,6 +31,8 @@ function Input({
   handleChange,
   formHandler,
   inputId,
+  onClick,
+  onBlur,
 }) {
   const {
     leftEnabled,
@@ -84,6 +91,13 @@ function Input({
             onChange={handleChange}
             onKeyDown={formHandler}
             disabled={inputDisabled}
+            onClick={onClick}
+            onBlur={onBlur}
+            aria-autocomplete={ariaAutoComplete}
+            aria-expanded={ariaExpanded}
+            aria-controls={ariaControls}
+            aria-activedescendant={ariaActiveDescendant}
+            role={role}
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon

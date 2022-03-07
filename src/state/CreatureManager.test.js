@@ -5,6 +5,7 @@ import {
   healCreature,
   createCreature,
   addNoteToCreature,
+  updateNoteForCreature,
   removeNoteFromCreature,
   addHitPointsToCreature,
   addTemporaryHealthToCreature,
@@ -653,7 +654,7 @@ describe('validateCreature', () => {
 });
 
 describe('addNoteToCreature', () => {
-  it('adds a note to a creature including application round and time', () => {
+  it('adds a note to a creature including an ID and application round and time', () => {
     const state = {
       ...defaultState,
       round: 2,
@@ -665,6 +666,7 @@ describe('addNoteToCreature', () => {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
 
     const expectedState = {
@@ -676,6 +678,104 @@ describe('addNoteToCreature', () => {
           notes: [
             expectedNote,
           ],
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['note added to Goblin #1'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('increments the id based on the highest existing id when a note is added', () => {
+    const note1 = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 3,
+    };
+    const note2 = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 4,
+    };
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note1, note2],
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addNoteToCreature(state, 1, 'some note', false);
+
+    const expectedNote = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 5,
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note1, note2, expectedNote],
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['note added to Goblin #1'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('increments the id regardless of the order of other notes', () => {
+    const note1 = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 3,
+    };
+    const note2 = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 4,
+    };
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note2, note1],
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addNoteToCreature(state, 1, 'some note', false);
+
+    const expectedNote = {
+      text: 'some note',
+      appliedAtRound: 0,
+      appliedAtSeconds: 0,
+      id: 5,
+    };
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note2, note1, expectedNote],
         },
         defaultState.creatures[2],
       ],
@@ -710,12 +810,71 @@ describe('addNoteToCreature', () => {
   });
 });
 
+describe('updateNoteForCreature', () => {
+  it('updates a note without changing other notes', () => {
+    const note1 = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6,
+      id: 0,
+    };
+    const note2 = {
+      text: 'some note',
+      appliedAtRound: 2,
+      appliedAtSeconds: 6,
+      id: 1,
+    };
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note1, note2],
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = updateNoteForCreature(state, 1, 1, 'new value');
+
+    const expectedNote = {
+      ...note2,
+      text: 'new value',
+    };
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          notes: [note1, expectedNote],
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['note updated for Goblin #1'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing if the note to be updated does not exist', () => {
+    const result = updateNoteForCreature(defaultState, 1, 1, 'new value');
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing if the creature to be updated does not exist', () => {
+    const result = updateNoteForCreature(defaultState, 5, 1, 'new value');
+    expect(result).toEqual(defaultState);
+  });
+});
+
 describe('removeNoteFromCreature', () => {
   it('removes a note from a creature', () => {
     const note = {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
     const state = {
       ...defaultState,
@@ -744,6 +903,7 @@ describe('removeNoteFromCreature', () => {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
     const state = {
       ...defaultState,
@@ -754,8 +914,9 @@ describe('removeNoteFromCreature', () => {
           notes: [
             {
               text: 'some note',
-              appliedAtRound: 1,
-              appliedAtSeconds: 0,
+              appliedAtRound: 2,
+              appliedAtSeconds: 6,
+              id: 1,
             },
             note,
           ],
@@ -773,8 +934,9 @@ describe('removeNoteFromCreature', () => {
           notes: [
             {
               text: 'some note',
-              appliedAtRound: 1,
-              appliedAtSeconds: 0,
+              appliedAtRound: 2,
+              appliedAtSeconds: 6,
+              id: 1,
             },
           ],
         },
@@ -788,11 +950,12 @@ describe('removeNoteFromCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('removes all duplicate notes from a creature', () => {
+  it('removes all notes with the same id from a creature', () => {
     const note = {
       text: 'some note',
       appliedAtRound: 2,
       appliedAtSeconds: 6,
+      id: 0,
     };
     const state = {
       ...defaultState,
