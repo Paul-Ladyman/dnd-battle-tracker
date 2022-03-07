@@ -411,6 +411,7 @@ input[type="number"] {
 }
 
 .creature-toolbar--notes__open .input--submit {
+  border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
