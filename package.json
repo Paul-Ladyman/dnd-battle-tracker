@@ -22,8 +22,8 @@
     "build:bundle:html": "node ./scripts/bundle-html.js",
     "build:index": "node ./scripts/create-index.js",
     "start:ci": "node ./test/appServer.js",
-    "test": "npx jest --watch",
-    "test:ci": "npx jest",
+    "test": "npx jest --watch --testPathIgnorePatterns=/test/e2e.spec.js",
+    "test:ci": "npx jest --testPathIgnorePatterns=/test/e2e.spec.js",
     "test:e2e": "npx playwright test",
     "lint": "npx eslint --ext js,jsx src",
     "size": "npm run build && size-limit"
