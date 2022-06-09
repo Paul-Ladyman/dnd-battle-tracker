@@ -12,20 +12,23 @@ on:
 jobs:
   test:
     name: Test
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run test:ci
-    - run: npm run lint
-    - run: npm run size
+        node-version: '14.x'
+    - name: Install Dependencies
+      run: npm ci
+    - name: Run Unit Tests
+      run: npm run test:ci
+    - name: Run Linter
+      run: npm run lint
+    - name: Run Size Tests
+      run: npm run size
+    - name: Run Build
+      run: npm run build
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run E2E Tests
+      run: npx playwright test
