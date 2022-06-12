@@ -6,7 +6,7 @@
     "@apollo/client": "^3.4.10",
     "@aws-sdk/client-cognito-identity": "^3.30.0",
     "aws-appsync-auth-link": "^3.0.6",
-    "aws-appsync-subscription-link": "3.0.4",
+    "aws-appsync-subscription-link": "3.0.11",
     "file-saver": "^2.0.5",
     "graphql": "^15.5.3",
     "is-hotkey": "^0.2.0",
