@@ -55,7 +55,7 @@
     "@babel/preset-react": "^7.17.12",
     "@playwright/test": "^1.22.2",
     "@size-limit/preset-app": "^4.9.1",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "eslint": "^7.32.0",
