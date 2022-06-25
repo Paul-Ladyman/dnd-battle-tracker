@@ -8,7 +8,7 @@
     "aws-appsync-auth-link": "^3.0.6",
     "aws-appsync-subscription-link": "3.1.0",
     "file-saver": "^2.0.5",
-    "graphql": "^15.8.0",
+    "graphql": "^16.5.0",
     "is-hotkey": "^0.2.0",
     "nanoid": "^3.1.25",
     "react": "^17.0.2",
