@@ -1,5 +1,5 @@
 import { resetCreature } from './CreatureManager';
-import { version } from '../../package.json';
+import packageJson from '../../package.json';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({ id }) => creature.id === id);
@@ -17,7 +17,7 @@ export const newBattleState = {
   battleId: undefined,
   battleCreated: false,
   shareEnabled: false,
-  battleTrackerVersion: version,
+  battleTrackerVersion: packageJson.version,
   rulesSearchOpened: false,
 };
 
