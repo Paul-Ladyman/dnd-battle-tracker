@@ -32,11 +32,11 @@ describe('Player App', () => {
     expect(buildTime).not.toBeInTheDocument();
   });
 
-  test('displays full build details if build time is set', async () => {
+  test('displays full build details in UTC if build time is set', async () => {
     window.BUILD_TIME = '1657373230123';
     render(<PlayerAppWrapper />);
     const { version } = packageInfo;
-    const expectedDetails = new RegExp(`Version ${version} built at 09/07/2022, 15:27:10.123`);
+    const expectedDetails = new RegExp(`Version ${version} built at 2022-07-09, 13:27:10.123`);
     const details = await screen.findByText(expectedDetails);
     expect(details).toBeVisible();
   });

@@ -15,10 +15,9 @@ function getVersionInfo() {
 
   if (!isValidDate(buildTime)) return version;
 
-  const localBuildTime = buildTime.toLocaleString();
-  const buildTimeMillis = buildTime.getMilliseconds();
-  const buildTimeInMillis = `${localBuildTime}.${buildTimeMillis}`;
-  return `${version} built at ${buildTimeInMillis}`;
+  const isoBuildTime = buildTime.toISOString();
+  const formattedBuildTime = isoBuildTime.replace('T', ', ').replace('Z', '');
+  return `${version} built at ${formattedBuildTime}`;
 }
 
 function Footer({ playerSession, error }) {
