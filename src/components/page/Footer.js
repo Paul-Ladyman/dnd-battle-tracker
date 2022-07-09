@@ -3,8 +3,25 @@ import ExternalLink from './ExternalLink';
 import packageInfo from '../../../package.json';
 import { hotkeys, hotkeyDescriptions, playerSessionHotkeyDescriptions } from '../../hotkeys/hotkeys';
 
+function isValidDate(date) {
+  return !Number.isNaN(Date.parse(date));
+}
+
+function getVersionInfo() {
+  const version = `Version ${packageInfo.version}`;
+  const { BUILD_TIME } = window;
+
+  const buildTime = new Date(parseInt(BUILD_TIME, 10));
+
+  if (!isValidDate(buildTime)) return version;
+
+  const localBuildTime = buildTime.toLocaleString();
+  const buildTimeMillis = buildTime.getMilliseconds();
+  const buildTimeInMillis = `${localBuildTime}.${buildTimeMillis}`;
+  return `${version} built at ${buildTimeInMillis}`;
+}
+
 function Footer({ playerSession, error }) {
-  const { version } = packageInfo;
   const hotkeysToDisplay = playerSession ? playerSessionHotkeyDescriptions : hotkeyDescriptions;
 
   const Shortcuts = () => (
@@ -41,9 +58,7 @@ function Footer({ playerSession, error }) {
         D&D Battle Tracker is a combat tracker tool for Dungeons & Dragons 5th Edition (D&D 5e).
       </p>
       <p>
-        Version
-        {' '}
-        {version}
+        {getVersionInfo()}
         . See&nbsp;
         <ExternalLink
           url="https://paul-ladyman.github.io/dnd-battle-tracker"
