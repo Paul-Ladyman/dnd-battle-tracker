@@ -75,6 +75,7 @@ jobs:
     needs: deploystage
     if: github.event_name == 'push'
     steps:
+      - uses: actions/checkout@v2
       - name: Check if version has been updated
         id: versioncheck
         uses: EndBug/version-check@v1
