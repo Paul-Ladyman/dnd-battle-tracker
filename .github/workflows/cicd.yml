@@ -47,7 +47,9 @@ jobs:
   deploystage:
     name: Deploy to Staging
     runs-on: ubuntu-latest
-    environment: staging
+    environment:
+      name: staging
+      url: https://dndbattletracker.com/stage/
     concurrency:
       group: staging
       cancel-in-progress: true
