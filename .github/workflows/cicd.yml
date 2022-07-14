@@ -47,6 +47,10 @@ jobs:
   deploystage:
     name: Deploy to Staging
     runs-on: ubuntu-latest
+    environment: staging
+    concurrency:
+      group: staging
+      cancel-in-progress: true
     needs: testbuild
     if: github.event_name == 'push'
     steps:
