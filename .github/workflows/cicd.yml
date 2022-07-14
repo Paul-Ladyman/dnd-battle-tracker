@@ -48,18 +48,6 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     needs: testbuild
-    steps:
-      - name: Download Build Artefact
-        uses: actions/download-artifact@v3
-        with:
-          name: dnd-battle-tracker.html
-      - name: Display structure of downloaded files
-        run: ls -R
-
-  deployprod:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: deploystage
     if: github.event_name == 'push'
     steps:
       - name: Download Build Artefact
@@ -68,4 +56,3 @@ jobs:
           name: dnd-battle-tracker.html
       - name: Display structure of downloaded files
         run: ls -R
-
