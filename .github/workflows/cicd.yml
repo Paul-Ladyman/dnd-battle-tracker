@@ -62,3 +62,35 @@ jobs:
           name: dnd-battle-tracker.html
       - name: Display structure of downloaded files
         run: ls -R
+
+  deployprod:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://dndbattletracker.com/
+    concurrency:
+      group: production
+      cancel-in-progress: true
+    needs: staging
+    if: github.event_name == 'push'
+    steps:
+      - name: Check if version has been updated
+        id: versioncheck
+        uses: EndBug/version-check@v1
+        with:
+          diff-search: true
+      - name: Log when version unchanged
+        if: steps.check.outputs.changed == 'false'
+        run: 'echo "No version change, skipping Deploy to Production"'
+      - name: Log when version changed
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+      - name: Download Build Artefact
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/download-artifact@v3
+        with:
+          name: dnd-battle-tracker.html
+      - name: Display structure of downloaded files
+        if: steps.check.outputs.changed == 'true'
+        run: ls -R
