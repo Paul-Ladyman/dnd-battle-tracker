@@ -77,12 +77,6 @@ jobs:
         uses: EndBug/version-check@v1
         with:
           diff-search: true
-      - name: Log when version unchanged
-        if: steps.versioncheck.outputs.changed == 'false'
-        run: 'echo "No version change, skipping Deploy to Production"'
-      - name: Log when version changed
-        if: steps.versioncheck.outputs.changed == 'true'
-        run: 'echo "Version change found in commit ${{ steps.versioncheck.outputs.commit }}! New version: ${{ steps.versioncheck.outputs.version }} (${{ steps.versioncheck.outputs.type }})"'
 
   deployprod:
     name: Deploy to Production
