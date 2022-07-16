@@ -63,6 +63,27 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 
+  deployprodpreflight:
+    name: Deploy to Production Preflight Checks
+    runs-on: ubuntu-latest
+    needs: deploystage
+    if: github.event_name == 'push'
+    outputs:
+      versionchanged: ${{ steps.versioncheck.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check if version has been updated
+        id: versioncheck
+        uses: EndBug/version-check@v1
+        with:
+          diff-search: true
+      - name: Log when version unchanged
+        if: steps.versioncheck.outputs.changed == 'false'
+        run: 'echo "No version change, skipping Deploy to Production"'
+      - name: Log when version changed
+        if: steps.versioncheck.outputs.changed == 'true'
+        run: 'echo "Version change found in commit ${{ steps.versioncheck.outputs.commit }}! New version: ${{ steps.versioncheck.outputs.version }} (${{ steps.versioncheck.outputs.type }})"'
+
   deployprod:
     name: Deploy to Production
     runs-on: ubuntu-latest
@@ -72,26 +93,12 @@ jobs:
     concurrency:
       group: production
       cancel-in-progress: true
-    needs: deploystage
-    if: github.event_name == 'push'
+    needs: deployprodpreflight
+    if: github.event_name == 'push' && needs.deployprodpreflight.outputs.versionchanged == 'true'
     steps:
-      - uses: actions/checkout@v2
-      - name: Check if version has been updated
-        id: versioncheck
-        uses: EndBug/version-check@v1
-        with:
-          diff-search: true
-      - name: Log when version unchanged
-        if: steps.check.outputs.changed == 'false'
-        run: 'echo "No version change, skipping Deploy to Production"'
-      - name: Log when version changed
-        if: steps.check.outputs.changed == 'true'
-        run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
       - name: Download Build Artefact
-        if: steps.check.outputs.changed == 'true'
         uses: actions/download-artifact@v3
         with:
           name: dnd-battle-tracker.html
       - name: Display structure of downloaded files
-        if: steps.check.outputs.changed == 'true'
         run: ls -R
