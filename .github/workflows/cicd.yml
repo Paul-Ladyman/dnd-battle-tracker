@@ -64,6 +64,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access
+          aws-region: eu-west-2
       - name: Display structure of downloaded files
         run: ls -R
       - name: Deploy to Staging
