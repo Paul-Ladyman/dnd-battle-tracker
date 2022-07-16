@@ -60,8 +60,14 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dnd-battle-tracker.html
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::341118543232:role/github-s3-access
       - name: Display structure of downloaded files
         run: ls -R
+      - name: Deploy to Staging
+        run: aws s3 sync dnd-battle-tracker.html s3://dndbattletracker.com/stage/
 
   deployprodpreflight:
     name: Deploy to Production Preflight Checks
