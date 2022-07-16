@@ -71,7 +71,7 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
       - name: Deploy to Staging
-        run: aws s3 sync dnd-battle-tracker.html s3://dndbattletracker.com/stage/
+        run: aws s3 sync . s3://dndbattletracker.com/stage/
 
   deployprodpreflight:
     name: Deploy to Production Preflight Checks
