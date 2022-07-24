@@ -68,8 +68,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access
           aws-region: eu-west-2
-      - name: Display structure of downloaded files
-        run: ls -R
       - name: Deploy to Staging
         run: aws s3 sync . s3://dndbattletracker.com/stage/
 
@@ -104,5 +102,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dnd-battle-tracker.html
-      - name: Display structure of downloaded files
-        run: ls -R
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::341118543232:role/github-s3-access-production
+          aws-region: eu-west-2
+      - name: Deploy to Production
+        run: aws s3 sync . s3://dndbattletracker.com/
