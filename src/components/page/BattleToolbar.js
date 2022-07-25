@@ -11,6 +11,25 @@ import RulesSearchMenuIcon from '../icons/RulesSearchMenuIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../../state/AppManager';
 
+function ResetButton({
+  className,
+  toggleOptions,
+  resetBattle,
+  creaturesAdded,
+}) {
+  return (
+    <button
+      title="Reset Battle"
+      className={className}
+      onClick={() => { toggleOptions(); resetBattle(); }}
+      disabled={!creaturesAdded}
+      type="button"
+    >
+      <ResetIcon />
+    </button>
+  );
+}
+
 function BattleToolbar({
   initiative,
   round,
@@ -59,21 +78,12 @@ function BattleToolbar({
   const buttonClass = 'battle-toolbar--button';
   const creaturesAdded = creatureCount > 0;
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
+  const resetButtonClasses = `${buttonClasses} ${buttonClass}__option`;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
 
-  const ResetButton = () => (
-    <button
-      title="Reset Battle"
-      className={`${buttonClasses} ${buttonClass}__option`}
-      onClick={() => { toggleOptions(); resetBattle(); }}
-      disabled={!creaturesAdded}
-      type="button"
-    >
-      <ResetIcon />
-    </button>
-  );
+
 
   const ShareButton = () => {
     const title = shareEnabled ? 'Disable share' : 'Enable share';
@@ -184,7 +194,12 @@ function BattleToolbar({
             )}
             <ShareButton />
             <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
-            <ResetButton />
+            <ResetButton
+              className={resetButtonClasses}
+              toggleOptions={toggleOptions}
+              resetBattle={resetBattle}
+              creaturesAdded={creaturesAdded}
+            />
           </div>
         </div>
       )}
