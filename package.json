@@ -26,7 +26,7 @@
     "test:ci": "npx jest --testPathIgnorePatterns=/test/e2e.spec.js",
     "test:e2e": "npx playwright test",
     "lint": "npx eslint --ext js,jsx src",
-    "size": "npm run build && size-limit"
+    "size": "size-limit"
   },
   "size-limit": [
     {
