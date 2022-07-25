@@ -173,7 +173,9 @@ describe('load', () => {
     expect.assertions(1);
 
     const fileContents = 'not JSON';
-    FileSystem.load.mockReturnValue(new Promise((resolve) => resolve(fileContents)));
+    FileSystem.load.mockReturnValue(new Promise((resolve) => {
+      resolve(fileContents);
+    }));
 
     const results = await load(defaultState, file);
 

@@ -20,10 +20,8 @@ function getVersionInfo() {
   return `${version} built at ${formattedBuildTime}`;
 }
 
-function Footer({ playerSession, error }) {
-  const hotkeysToDisplay = playerSession ? playerSessionHotkeyDescriptions : hotkeyDescriptions;
-
-  const Shortcuts = () => (
+function Shortcuts({ hotkeysToDisplay }) {
+  return (
     <div className="footer-text--shortcuts">
       <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
       <ul>
@@ -41,6 +39,10 @@ function Footer({ playerSession, error }) {
       </ul>
     </div>
   );
+}
+
+function Footer({ playerSession, error }) {
+  const hotkeysToDisplay = playerSession ? playerSessionHotkeyDescriptions : hotkeyDescriptions;
 
   return (
     <footer className="footer-text" role="contentinfo">
@@ -81,7 +83,7 @@ function Footer({ playerSession, error }) {
             <ExternalLink url="https://github.com/Paul-Ladyman/dnd-battle-tracker/issues/new">Github issues</ExternalLink>
             .
           </p>
-          <Shortcuts />
+          <Shortcuts hotkeysToDisplay={hotkeysToDisplay} />
         </>
         )}
     </footer>

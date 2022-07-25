@@ -11,6 +11,70 @@ import RulesSearchMenuIcon from '../icons/RulesSearchMenuIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../../state/AppManager';
 
+function ResetButton({
+  className,
+  toggleOptions,
+  resetBattle,
+  creaturesAdded,
+}) {
+  return (
+    <button
+      title="Reset Battle"
+      className={className}
+      onClick={() => { toggleOptions(); resetBattle(); }}
+      disabled={!creaturesAdded}
+      type="button"
+    >
+      <ResetIcon />
+    </button>
+  );
+}
+
+function ShareButton({
+  shareEnabled,
+  className,
+  toggleOptions,
+  toggleShare,
+}) {
+  const title = shareEnabled ? 'Disable share' : 'Enable share';
+  return (
+    <button
+      title={title}
+      className={className}
+      onClick={() => { toggleOptions(); toggleShare(); }}
+      type="button"
+    >
+      <ShareIcon enabled={shareEnabled} />
+    </button>
+  );
+}
+
+function RulesSearchButton({
+  rulesSearchOpen,
+  inMenu,
+  className,
+  toggleOptions,
+  toggleRulesSearch,
+}) {
+  const title = rulesSearchOpen ? 'Close rules search bar' : 'Open rules search bar';
+  const onClick = () => {
+    if (inMenu) {
+      toggleOptions();
+    }
+    toggleRulesSearch();
+  };
+  return (
+    <button
+      title={title}
+      className={className}
+      onClick={onClick}
+      type="button"
+    >
+      <RulesSearchMenuIcon opened={rulesSearchOpen} />
+    </button>
+  );
+}
+
 function BattleToolbar({
   initiative,
   round,
@@ -56,61 +120,17 @@ function BattleToolbar({
     setOptionsExpanded((prevOptionsExpanded) => !prevOptionsExpanded);
   };
 
+  const showSaveLoadButtons = isSaveLoadSupported();
+
   const buttonClass = 'battle-toolbar--button';
   const creaturesAdded = creatureCount > 0;
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
+  const resetButtonClasses = `${buttonClasses} ${buttonClass}__option`;
+  const shareButtonClasses = `${buttonClass} ${buttonClass}__option`;
+  const rulesSearchButtonClasses = showSaveLoadButtons ? `${buttonClass} ${buttonClass}__option` : buttonClass;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
-
-  const ResetButton = () => (
-    <button
-      title="Reset Battle"
-      className={`${buttonClasses} ${buttonClass}__option`}
-      onClick={() => { toggleOptions(); resetBattle(); }}
-      disabled={!creaturesAdded}
-      type="button"
-    >
-      <ResetIcon />
-    </button>
-  );
-
-  const ShareButton = () => {
-    const title = shareEnabled ? 'Disable share' : 'Enable share';
-    return (
-      <button
-        title={title}
-        className={`${buttonClass} ${buttonClass}__option`}
-        onClick={() => { toggleOptions(); toggleShare(); }}
-        type="button"
-      >
-        <ShareIcon enabled={shareEnabled} />
-      </button>
-    );
-  };
-
-  const RulesSearchButton = ({ inMenu, asOption }) => {
-    const title = rulesSearchOpen ? 'Close rules search bar' : 'Open rules search bar';
-    const className = asOption ? `${buttonClass} ${buttonClass}__option` : buttonClass;
-    const onClick = () => {
-      if (inMenu) {
-        toggleOptions();
-      }
-      toggleRulesSearch();
-    };
-    return (
-      <button
-        title={title}
-        className={className}
-        onClick={onClick}
-        type="button"
-      >
-        <RulesSearchMenuIcon opened={rulesSearchOpen} />
-      </button>
-    );
-  };
-
-  const showSaveLoadButtons = isSaveLoadSupported();
 
   return (
     <header className="battle-toolbar">
@@ -182,9 +202,25 @@ function BattleToolbar({
                 </button>
               </>
             )}
-            <ShareButton />
-            <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
-            <ResetButton />
+            <ShareButton
+              shareEnabled={shareEnabled}
+              className={shareButtonClasses}
+              toggleOptions={toggleOptions}
+              toggleShare={toggleShare}
+            />
+            <RulesSearchButton
+              rulesSearchOpen={rulesSearchOpen}
+              inMenu
+              className={rulesSearchButtonClasses}
+              toggleOptions={toggleOptions}
+              toggleRulesSearch={toggleRulesSearch}
+            />
+            <ResetButton
+              className={resetButtonClasses}
+              toggleOptions={toggleOptions}
+              resetBattle={resetBattle}
+              creaturesAdded={creaturesAdded}
+            />
           </div>
         </div>
       )}
