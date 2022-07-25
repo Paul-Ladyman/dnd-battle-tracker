@@ -5,7 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@aws-sdk/client-cognito-identity": "^3.121.0",
-    "aws-appsync-auth-link": "^3.0.6",
+    "aws-appsync-auth-link": "^3.0.7",
     "aws-appsync-subscription-link": "3.1.0",
     "file-saver": "^2.0.5",
     "graphql": "^16.5.0",
