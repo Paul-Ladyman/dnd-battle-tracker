@@ -30,6 +30,25 @@ function ResetButton({
   );
 }
 
+function ShareButton({
+  shareEnabled,
+  className,
+  toggleOptions,
+  toggleShare,
+}) {
+  const title = shareEnabled ? 'Disable share' : 'Enable share';
+  return (
+    <button
+      title={title}
+      className={className}
+      onClick={() => { toggleOptions(); toggleShare(); }}
+      type="button"
+    >
+      <ShareIcon enabled={shareEnabled} />
+    </button>
+  );
+}
+
 function BattleToolbar({
   initiative,
   round,
@@ -79,25 +98,11 @@ function BattleToolbar({
   const creaturesAdded = creatureCount > 0;
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
   const resetButtonClasses = `${buttonClasses} ${buttonClass}__option`;
+  const shareButtonClasses = `${buttonClass} ${buttonClass}__option`;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
 
-
-
-  const ShareButton = () => {
-    const title = shareEnabled ? 'Disable share' : 'Enable share';
-    return (
-      <button
-        title={title}
-        className={`${buttonClass} ${buttonClass}__option`}
-        onClick={() => { toggleOptions(); toggleShare(); }}
-        type="button"
-      >
-        <ShareIcon enabled={shareEnabled} />
-      </button>
-    );
-  };
 
   const RulesSearchButton = ({ inMenu, asOption }) => {
     const title = rulesSearchOpen ? 'Close rules search bar' : 'Open rules search bar';
@@ -192,7 +197,12 @@ function BattleToolbar({
                 </button>
               </>
             )}
-            <ShareButton />
+            <ShareButton
+              shareEnabled={shareEnabled}
+              className={shareButtonClasses}
+              toggleOptions={toggleOptions}
+              toggleShare={toggleShare}
+            />
             <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
             <ResetButton
               className={resetButtonClasses}
