@@ -49,6 +49,32 @@ function ShareButton({
   );
 }
 
+function RulesSearchButton({
+  rulesSearchOpen,
+  inMenu,
+  className,
+  toggleOptions,
+  toggleRulesSearch,
+}) {
+  const title = rulesSearchOpen ? 'Close rules search bar' : 'Open rules search bar';
+  const onClick = () => {
+    if (inMenu) {
+      toggleOptions();
+    }
+    toggleRulesSearch();
+  };
+  return (
+    <button
+      title={title}
+      className={className}
+      onClick={onClick}
+      type="button"
+    >
+      <RulesSearchMenuIcon opened={rulesSearchOpen} />
+    </button>
+  );
+}
+
 function BattleToolbar({
   initiative,
   round,
@@ -94,38 +120,17 @@ function BattleToolbar({
     setOptionsExpanded((prevOptionsExpanded) => !prevOptionsExpanded);
   };
 
+  const showSaveLoadButtons = isSaveLoadSupported();
+
   const buttonClass = 'battle-toolbar--button';
   const creaturesAdded = creatureCount > 0;
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
   const resetButtonClasses = `${buttonClasses} ${buttonClass}__option`;
   const shareButtonClasses = `${buttonClass} ${buttonClass}__option`;
+  const rulesSearchButtonClasses = showSaveLoadButtons ? `${buttonClass} ${buttonClass}__option` : buttonClass;
   const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
   const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
-
-
-  const RulesSearchButton = ({ inMenu, asOption }) => {
-    const title = rulesSearchOpen ? 'Close rules search bar' : 'Open rules search bar';
-    const className = asOption ? `${buttonClass} ${buttonClass}__option` : buttonClass;
-    const onClick = () => {
-      if (inMenu) {
-        toggleOptions();
-      }
-      toggleRulesSearch();
-    };
-    return (
-      <button
-        title={title}
-        className={className}
-        onClick={onClick}
-        type="button"
-      >
-        <RulesSearchMenuIcon opened={rulesSearchOpen} />
-      </button>
-    );
-  };
-
-  const showSaveLoadButtons = isSaveLoadSupported();
 
   return (
     <header className="battle-toolbar">
@@ -203,7 +208,13 @@ function BattleToolbar({
               toggleOptions={toggleOptions}
               toggleShare={toggleShare}
             />
-            <RulesSearchButton inMenu asOption={showSaveLoadButtons} />
+            <RulesSearchButton
+              rulesSearchOpen={rulesSearchOpen}
+              inMenu
+              className={rulesSearchButtonClasses}
+              toggleOptions={toggleOptions}
+              toggleRulesSearch={toggleRulesSearch}
+            />
             <ResetButton
               className={resetButtonClasses}
               toggleOptions={toggleOptions}
