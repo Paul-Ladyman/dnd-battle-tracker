@@ -1,44 +1,49 @@
 import React from 'react';
 import ExternalLink from './ExternalLink';
 
+function SubTitle({
+  error,
+  playerSession,
+  loading,
+  battleId,
+}) {
+  if (error) {
+    return (<>Something went wrong!</>);
+  }
+
+  if (playerSession && loading) {
+    return (
+      <>
+        Loading player Session
+        {` ${battleId} ...`}
+      </>
+    );
+  }
+
+  if (playerSession && !loading) {
+    return (
+      <>
+        Player Session
+        {` ${battleId}`}
+      </>
+    );
+  }
+
+  if (!battleId) {
+    return (<>. . .</>);
+  }
+
+  return (
+    <ExternalLink url={`/?battle=${battleId}`}>
+      Player session link
+      {` ${battleId}`}
+    </ExternalLink>
+  );
+}
+
 export default function Title({
   shareEnabled, battleId, playerSession, error, loading,
 }) {
-  const SubTitle = () => {
-    if (error) {
-      return (<>Something went wrong!</>);
-    }
-
-    if (playerSession && loading) {
-      return (
-        <>
-          Loading player Session
-          {` ${battleId} ...`}
-        </>
-      );
-    }
-
-    if (playerSession && !loading) {
-      return (
-        <>
-          Player Session
-          {` ${battleId}`}
-        </>
-      );
-    }
-
-    if (!battleId) {
-      return (<>. . .</>);
-    }
-
-    return (
-      <ExternalLink url={`/?battle=${battleId}`}>
-        Player session link
-        {` ${battleId}`}
-      </ExternalLink>
-    );
-  };
-
   const showSubtitle = error || shareEnabled || playerSession;
 
   const titleClasses = `main-title ${showSubtitle ? 'main-title__short' : ''}`;
@@ -48,7 +53,16 @@ export default function Title({
       <h1 className={titleClasses}>
         <ExternalLink url="/">D&D Battle Tracker</ExternalLink>
       </h1>
-      { showSubtitle && <h2 className="sub-title"><SubTitle /></h2> }
+      { showSubtitle && (
+        <h2 className="sub-title">
+          <SubTitle
+            error={error}
+            playerSession={playerSession}
+            loading={loading}
+            battleId={battleId}
+          />
+        </h2>
+      )}
     </>
   );
 }

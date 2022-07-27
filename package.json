@@ -26,7 +26,7 @@
     "test:ci": "npx jest --testPathIgnorePatterns=/test/e2e.spec.js",
     "test:e2e": "npx playwright test",
     "lint": "npx eslint --ext js,jsx src",
-    "size": "npm run build && size-limit"
+    "size": "size-limit"
   },
   "size-limit": [
     {
@@ -63,7 +63,7 @@
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.5.3",
     "eslint-plugin-jsx-a11y": "^6.6.0",

@@ -11,24 +11,30 @@ function getUrlParameter(name) {
   return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
+function RenderPlayerApp({ battleId }) {
+  return (
+    <ErrorBoundary>
+      <PlayerAppWrapper battleId={battleId} />
+    </ErrorBoundary>
+  );
+}
+
+function RenderDmApp() {
+  return (
+    <ErrorBoundary>
+      <DungeonMasterAppWrapper />
+    </ErrorBoundary>
+  );
+}
+
 const battleId = getUrlParameter('battle');
 
 async function render() {
   const rootElement = document.getElementById('root');
 
   if (battleId) {
-    const RenderPlayerApp = () => (
-      <ErrorBoundary>
-        <PlayerAppWrapper battleId={battleId} />
-      </ErrorBoundary>
-    );
-    ReactDOM.render(RenderPlayerApp(), rootElement);
+    ReactDOM.render(RenderPlayerApp({ battleId }), rootElement);
   } else {
-    const RenderDmApp = () => (
-      <ErrorBoundary>
-        <DungeonMasterAppWrapper />
-      </ErrorBoundary>
-    );
     ReactDOM.render(RenderDmApp(), rootElement);
   }
 }

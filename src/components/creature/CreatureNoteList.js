@@ -13,7 +13,7 @@ function CreatureNoteList({
   isConditionList,
 }) {
   if (noteList.length === 0) {
-    return (<></>);
+    return undefined;
   }
 
   const renderCondition = (condition) => (
