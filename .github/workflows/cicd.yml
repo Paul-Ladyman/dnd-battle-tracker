@@ -97,6 +97,9 @@ jobs:
       cancel-in-progress: true
     needs: deployprodpreflight
     if: github.event_name == 'push' && needs.deployprodpreflight.outputs.versionchanged == 'true'
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Download Build Artefact
         uses: actions/download-artifact@v3
