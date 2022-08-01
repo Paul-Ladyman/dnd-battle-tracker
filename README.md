@@ -103,7 +103,14 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 
 ### To test
 
+Unit and integration tests:
+
      $ npm test
+
+End to end tests:
+
+     $ npx playwright install --with-deps
+     $ npm run test:e2e
 
 ## Architecture
 
@@ -114,10 +121,10 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 - Following a Continuous Integration workflow, all commits to `master` will trigger the execution of automated tests and a build of the project
 - Commits to `master` that successfully pass the CI step will result in the build artefact being deployed to the [staging environment](https://github.com/Paul-Ladyman/dnd-battle-tracker/deployments/activity_log?environment=staging)
 - Commits to `master` that include a change in the package version and have successfully passed the CI and stage deploy steps will be deployed to the [production environment](https://github.com/Paul-Ladyman/dnd-battle-tracker/deployments/activity_log?environment=production)
-- In this way a Continuous Delivery workflow can be followed by committing a change that includes a version change. If a manual testing step is called for, the version can be left as it is and the change tested on the stage environment. The version can then be bumped to promote the change to production
-- Each version change should also be refelcted in the ***Latest release*** section of this README and in a Github release where the build artefact `dnd-battle-tracker.html` is uploaded. This ensures the current version of the project can be easily downloaded for use offline and all previous versions are
+- In this way, a Continuous Delivery workflow can be followed by increasing the version in the same commit as the code is modified. If a manual testing step is called for, the version can be left as it is and the change tested on the stage environment. A version change can then be committed seperately to promote the change to production
+- Each version change should also be reflected in the ***Latest release*** section of this README and in a Github release where the build artefact `dnd-battle-tracker.html` is uploaded. This ensures the current version of the project can be easily downloaded for use offline and all previous versions are available
 
 ### Dependabot
 
-- The projects dependencies are automatically kept up to date using Dependabot, which creates pull requests for each update
+- The project's dependencies are automatically kept up to date using Dependabot, which creates pull requests for each update
 - Commits to pull requests also trigger the CI step of the pipeline and this step must execute successfully before the PR can be merged
