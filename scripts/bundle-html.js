@@ -6,8 +6,6 @@ const htmlTemplate = fs.readFileSync(__dirname + '/../public/index.mustache.html
 
 const buildTime = new Date().getTime();
 
-console.log(`>> build time: ${buildTime}`);
-
 const bundle = {
   bundle: `<script>window.BUILD_TIME=${buildTime}</script><script>${js}</script>`,
   styleBundle: `<style type="text/css">${css}</style>`
