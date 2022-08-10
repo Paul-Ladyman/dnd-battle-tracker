@@ -1,3 +1,9 @@
+function oneHourFromNow() {
+  const date = new Date();
+  date.setTime(date.getTime() + 60 * 60 * 1000);
+  return date;
+}
+
 export const mockGetId = jest.fn().mockResolvedValue({
   IdentityId: 'identity-id',
 });
@@ -5,7 +11,7 @@ export const mockGetId = jest.fn().mockResolvedValue({
 export const mockGetCredentialsForIdentity = jest.fn().mockResolvedValue({
   Credentials: {
     AccessKeyId: 'access-key-id',
-    Expiration: new Date(),
+    Expiration: oneHourFromNow(),
     SecretKey: 'secret-key',
     SessionToken: 'session-token',
   },

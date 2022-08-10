@@ -3,16 +3,23 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PlayerAppWrapper from '../src/components/app/PlayerAppWrapper';
 import packageInfo from '../package.json';
+import 'cross-fetch/polyfill';
 
-describe('Player App', () => {
+function waitForOnline() {
+  return screen.findByText('Player Session random-battle-id');
+}
+
+describe('Online Player App', () => {
   test('displays application title', async () => {
-    render(<PlayerAppWrapper />);
+    render(<PlayerAppWrapper battleId="random-battle-id" />);
+    await waitForOnline();
     const title = await screen.findByText('D&D Battle Tracker');
     expect(title).toBeVisible();
   });
 
   test('displays only version details if build time is not set', async () => {
-    render(<PlayerAppWrapper />);
+    render(<PlayerAppWrapper battleId="random-battle-id" />);
+    await waitForOnline();
     const { version } = packageInfo;
     const versionDetails = await screen.findByText(new RegExp(`Version ${version}`));
     expect(versionDetails).toBeVisible();
@@ -23,7 +30,8 @@ describe('Player App', () => {
 
   test('displays only version details if build time is invalid', async () => {
     window.BUILD_TIME = 'invalid';
-    render(<PlayerAppWrapper />);
+    render(<PlayerAppWrapper battleId="random-battle-id" />);
+    await waitForOnline();
     const { version } = packageInfo;
     const versionDetails = await screen.findByText(new RegExp(`Version ${version}`));
     expect(versionDetails).toBeVisible();
@@ -34,7 +42,8 @@ describe('Player App', () => {
 
   test('displays full build details in UTC if build time is set', async () => {
     window.BUILD_TIME = '1657373230123';
-    render(<PlayerAppWrapper />);
+    render(<PlayerAppWrapper battleId="random-battle-id" />);
+    await waitForOnline();
     const { version } = packageInfo;
     const expectedDetails = new RegExp(`Version ${version} built at 2022-07-09, 13:27:10.123`);
     const details = await screen.findByText(expectedDetails);
