@@ -10,7 +10,7 @@ test('A DM can share an existing battle with their players who receive subsequen
 
   const [playerPage] = await Promise.all([
     context.waitForEvent('page'),
-    page.locator('text=Player session link').click(),
+    page.locator('text=Player session').click(),
   ]);
   await playerPage.waitForLoadState();
 
