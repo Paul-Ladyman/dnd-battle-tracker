@@ -40,6 +40,16 @@ describe('Battle Share', () => {
     expect(writeTextMock).toHaveBeenCalledWith('http://localhost/?battle=random-battle-id');
   });
 
+  test('still displays the player session link if the clipboard is not available', async () => {
+    const user = userEvent.setup();
+    delete window.navigator.clipboard;
+    render(<DungeonMasterAppWrapper />);
+    await shareBattle(user);
+    const playerSessionLink = await screen.findByRole('link', { name: 'Player session random-battle-id' });
+    expect(playerSessionLink).toBeVisible();
+    expect(playerSessionLink).toHaveAttribute('href', '/?battle=random-battle-id');
+  });
+
   test('still displays the player session link if copying it fails', async () => {
     const user = userEvent.setup();
     writeTextMock.mockRejectedValue('clipboard error');

@@ -116,9 +116,15 @@ function DungeonMasterApp({
     if (shareEnabled && battleId) {
       const { href } = window.location;
       const url = `${href}?battle=${battleId}`;
-      window.navigator.clipboard.writeText(url)
-        .then(() => setPlayerLinkCopied(true))
-        .catch(() => {});
+      const copyPlayerLink = async () => {
+        try {
+          await window.navigator.clipboard.writeText(url);
+          setPlayerLinkCopied(true);
+        } catch {
+          //
+        }
+      };
+      copyPlayerLink();
     }
   }, [shareEnabled, battleId]);
 
