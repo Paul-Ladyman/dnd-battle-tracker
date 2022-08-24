@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
 import CreateCreatureForm from '../page/CreateCreatureForm';
@@ -81,6 +81,25 @@ function DungeonMasterApp({
     }
   };
 
+  const loadBattle = async (file) => {
+    const newState = shareBattle(await load(state, file));
+    setState(newState);
+  };
+
+  const errors = state.errors && state.errors.length > 0;
+
+  const [round, activeCreatureName, activeCreatureId] = getInitiative(state);
+  const [creatures, creatureCount] = getCreatureList(state);
+  const secondsElapsed = getSecondsElapsed(round);
+  const {
+    shareEnabled,
+    rulesSearchOpened,
+    ariaAnnouncements,
+    battleId,
+  } = state;
+
+  const [playerLinkCopied, setPlayerLinkCopied] = useState(false);
+
   useEffect(() => {
     window.onbeforeunload = () => true;
 
@@ -89,14 +108,19 @@ function DungeonMasterApp({
     return () => window.removeEventListener('keydown', hotKeyHandler);
   }, []);
 
-  const loadBattle = async (file) => {
-    const newState = shareBattle(await load(state, file));
-    setState(newState);
-  };
-
   useEffect(() => {
     if (onlineError) updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
   }, [onlineError]);
+
+  useEffect(() => {
+    if (shareEnabled && battleId) {
+      const { href } = window.location;
+      const url = `${href}?battle=${battleId}`;
+      window.navigator.clipboard.writeText(url)
+        .then(() => setPlayerLinkCopied(true))
+        .catch(() => {});
+    }
+  }, [shareEnabled, battleId]);
 
   const creatureManagement = {
     killCreature: updateBattle(killCreature),
@@ -114,13 +138,6 @@ function DungeonMasterApp({
     toggleCreatureShare: updateBattle(toggleCreatureShare),
     toggleCreatureHitPointsShare: updateBattle(toggleCreatureHitPointsShare),
   };
-
-  const errors = state.errors && state.errors.length > 0;
-
-  const [round, activeCreatureName, activeCreatureId] = getInitiative(state);
-  const [creatures, creatureCount] = getCreatureList(state);
-  const secondsElapsed = getSecondsElapsed(round);
-  const { shareEnabled, rulesSearchOpened, ariaAnnouncements } = state;
 
   return (
     <>
@@ -153,8 +170,9 @@ function DungeonMasterApp({
         />
         <main className="main">
           <Title
-            shareEnabled={state.shareEnabled}
-            battleId={state.battleId}
+            shareEnabled={shareEnabled}
+            battleId={battleId}
+            playerLinkCopied={playerLinkCopied}
           />
           <CreateCreatureForm
             createCreature={updateBattle(addCreature)}

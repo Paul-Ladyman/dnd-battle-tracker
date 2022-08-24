@@ -6,6 +6,7 @@ function SubTitle({
   playerSession,
   loading,
   battleId,
+  playerLinkCopied,
 }) {
   if (error) {
     return (<>Something went wrong!</>);
@@ -35,14 +36,15 @@ function SubTitle({
 
   return (
     <ExternalLink url={`/?battle=${battleId}`}>
-      Player session link
+      Player session
       {` ${battleId}`}
+      { playerLinkCopied && ' (link copied)'}
     </ExternalLink>
   );
 }
 
 export default function Title({
-  shareEnabled, battleId, playerSession, error, loading,
+  shareEnabled, battleId, playerLinkCopied, playerSession, error, loading,
 }) {
   const showSubtitle = error || shareEnabled || playerSession;
 
@@ -60,6 +62,7 @@ export default function Title({
             playerSession={playerSession}
             loading={loading}
             battleId={battleId}
+            playerLinkCopied={playerLinkCopied}
           />
         </h2>
       )}
