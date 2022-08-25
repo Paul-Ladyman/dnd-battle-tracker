@@ -1,50 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ExternalLink from './ExternalLink';
+
+function ErrorSubTitle() {
+  return 'Something went wrong!';
+}
+
+function PlayerSessionSubTitle({ loading, battleId }) {
+  return loading
+    ? `Loading player Session ${battleId} ...`
+    : `Player Session ${battleId}`;
+}
+
+function DungeonMasterSubTitle({ battleId }) {
+  const [playerLink, setPlayerLink] = useState({ url: null, copied: false });
+
+  useEffect(() => {
+    if (battleId) {
+      const { href } = window.location;
+      const url = `${href}?battle=${battleId}`;
+      const copyPlayerLink = async () => {
+        try {
+          await window.navigator.clipboard.writeText(url);
+          setPlayerLink({ url, copied: true });
+        } catch {
+          setPlayerLink({ url, copied: false });
+        }
+      };
+      copyPlayerLink();
+    }
+  }, [battleId]);
+
+  const { url, copied } = playerLink;
+
+  if (!battleId || !url) {
+    return (<>. . .</>);
+  }
+
+  return (
+    <ExternalLink url={url}>
+      Player session
+      {` ${battleId}`}
+      { copied && ' (link copied)'}
+    </ExternalLink>
+  );
+}
 
 function SubTitle({
   error,
   playerSession,
   loading,
   battleId,
-  playerLinkCopied,
 }) {
   if (error) {
-    return (<>Something went wrong!</>);
+    return (<ErrorSubTitle />);
   }
 
-  if (playerSession && loading) {
-    return (
-      <>
-        Loading player Session
-        {` ${battleId} ...`}
-      </>
-    );
+  if (playerSession) {
+    return (<PlayerSessionSubTitle loading={loading} battleId={battleId} />);
   }
 
-  if (playerSession && !loading) {
-    return (
-      <>
-        Player Session
-        {` ${battleId}`}
-      </>
-    );
-  }
-
-  if (!battleId) {
-    return (<>. . .</>);
-  }
-
-  return (
-    <ExternalLink url={`/?battle=${battleId}`}>
-      Player session
-      {` ${battleId}`}
-      { playerLinkCopied && ' (link copied)'}
-    </ExternalLink>
-  );
+  return (<DungeonMasterSubTitle battleId={battleId} />);
 }
 
 export default function Title({
-  shareEnabled, battleId, playerLinkCopied, playerSession, error, loading,
+  shareEnabled, battleId, playerSession, error, loading,
 }) {
   const showSubtitle = error || shareEnabled || playerSession;
 
@@ -62,7 +81,6 @@ export default function Title({
             playerSession={playerSession}
             loading={loading}
             battleId={battleId}
-            playerLinkCopied={playerLinkCopied}
           />
         </h2>
       )}

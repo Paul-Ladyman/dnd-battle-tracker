@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
 import CreateCreatureForm from '../page/CreateCreatureForm';
@@ -98,8 +98,6 @@ function DungeonMasterApp({
     battleId,
   } = state;
 
-  const [playerLinkCopied, setPlayerLinkCopied] = useState(false);
-
   useEffect(() => {
     window.onbeforeunload = () => true;
 
@@ -111,22 +109,6 @@ function DungeonMasterApp({
   useEffect(() => {
     if (onlineError) updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
   }, [onlineError]);
-
-  useEffect(() => {
-    if (shareEnabled && battleId) {
-      const { href } = window.location;
-      const url = `${href}?battle=${battleId}`;
-      const copyPlayerLink = async () => {
-        try {
-          await window.navigator.clipboard.writeText(url);
-          setPlayerLinkCopied(true);
-        } catch {
-          //
-        }
-      };
-      copyPlayerLink();
-    }
-  }, [shareEnabled, battleId]);
 
   const creatureManagement = {
     killCreature: updateBattle(killCreature),
@@ -178,7 +160,6 @@ function DungeonMasterApp({
           <Title
             shareEnabled={shareEnabled}
             battleId={battleId}
-            playerLinkCopied={playerLinkCopied}
           />
           <CreateCreatureForm
             createCreature={updateBattle(addCreature)}
