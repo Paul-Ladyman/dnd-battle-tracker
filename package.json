@@ -79,7 +79,7 @@
     "html-loader": "^4.1.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^28.1.3",
-    "jest-environment-jsdom": "^28.1.3",
+    "jest-environment-jsdom": "^29.0.1",
     "mini-css-extract-plugin": "^2.6.1",
     "msw": "^0.44.2",
     "mustache": "^4.2.0",
