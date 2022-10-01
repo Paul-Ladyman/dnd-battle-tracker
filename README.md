@@ -8,7 +8,7 @@ The D&D Battle Tracker is designed to run as a single HTML page in the browser (
 
 You can either [access the D&D Battle Tracker live](http://dndbattletracker.com/) or download a specific release of the `dnd-battle-tracker.html` file below and open it in your favourite browser.
 
-**Latest release (v5.10.1):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v5.10.1/dnd-battle-tracker.html)
+**Latest release (v5.10.2):** [dnd-battle-tracker.html](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/download/v5.10.2/dnd-battle-tracker.html)
 [List of previous releases](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases)
 
 ## Motivation
