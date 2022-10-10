@@ -2,6 +2,10 @@
 
 D&D Battle Tracker is a combat tracker tool for Dungeons & Dragons 5th Edition (D&D 5e). Track the initiative and status of all creatures involved in combat with this D&D combat tracker!
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R5R12KANF)
+
+Feature ideas and general feedback welcome on [Ko-fi](https://ko-fi.com/paulbod). Bugs can be reported through [Github issues](https://github.com/Paul-Ladyman/dnd-battle-tracker/issues/new).
+
 ## Use
 
 The D&D Battle Tracker is designed to run as a single HTML page in the browser (but does not require an internet connection).
