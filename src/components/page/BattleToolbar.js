@@ -224,7 +224,12 @@ function BattleToolbar({
           </div>
         </div>
       )}
-      { playerSession && <RulesSearchButton /> }
+      { playerSession && (
+        <RulesSearchButton
+          rulesSearchOpen={rulesSearchOpen}
+          toggleRulesSearch={toggleRulesSearch}
+        />
+      )}
     </header>
   );
 }
