@@ -1,7 +1,8 @@
 import React from 'react';
-import ExternalLink from './ExternalLink';
-import packageInfo from '../../../package.json';
-import { hotkeys, hotkeyDescriptions, playerSessionHotkeyDescriptions } from '../../hotkeys/hotkeys';
+import ExternalLink from '../ExternalLink';
+import packageInfo from '../../../../package.json';
+import { hotkeyDescriptions, playerSessionHotkeyDescriptions } from '../../../hotkeys/hotkeys';
+import Help from './Help';
 
 function isValidDate(date) {
   return !Number.isNaN(Date.parse(date));
@@ -18,27 +19,6 @@ function getVersionInfo() {
   const isoBuildTime = buildTime.toISOString();
   const formattedBuildTime = isoBuildTime.replace('T', ', ').replace('Z', '');
   return `${version} built at ${formattedBuildTime}`;
-}
-
-function Shortcuts({ hotkeysToDisplay }) {
-  return (
-    <div className="footer-text--shortcuts">
-      <p>Keyboard shortcuts (mod is Ctrl or Cmd on Mac):</p>
-      <ul>
-        {Object.keys(hotkeysToDisplay).map((key) => {
-          const hotkey = hotkeys[key];
-          const hotkeyDescription = hotkeysToDisplay[key];
-          return (
-            <li key={hotkey}>
-              <b>{hotkey}</b>
-              {' '}
-              {hotkeyDescription}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
 }
 
 function Footer({ playerSession, error }) {
@@ -83,7 +63,7 @@ function Footer({ playerSession, error }) {
             <ExternalLink url="https://github.com/Paul-Ladyman/dnd-battle-tracker/issues/new">Github issues</ExternalLink>
             .
           </p>
-          <Shortcuts hotkeysToDisplay={hotkeysToDisplay} />
+          <Help hotkeysToDisplay={hotkeysToDisplay} />
         </>
         )}
     </footer>

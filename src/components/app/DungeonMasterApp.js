@@ -47,7 +47,7 @@ import {
   dismissErrors,
   updateErrors,
 } from '../../state/AppManager';
-import Footer from '../page/Footer';
+import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 

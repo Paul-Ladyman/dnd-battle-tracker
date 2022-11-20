@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import BattleToolbar from '../page/BattleToolbar';
 import Creatures from '../page/Creatures';
-import Footer from '../page/Footer';
+import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import Title from '../page/Title';
 import RulesSearchBar from '../page/RulesSearchBar';
