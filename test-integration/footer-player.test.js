@@ -172,3 +172,13 @@ describe('Info', () => {
     expect(details).toBeVisible();
   });
 });
+
+describe('DM tips', () => {
+  test('the dm tips are not displayed', async () => {
+    render(<PlayerAppWrapper />);
+    const button = await screen.queryByRole('button', { name: 'Dungeon Master tips' });
+    expect(button).not.toBeInTheDocument();
+    const tips = await screen.queryByTestId('dm-tips');
+    expect(tips).not.toBeInTheDocument();
+  });
+});
