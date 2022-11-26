@@ -1,13 +1,10 @@
 import React from 'react';
-import { hotkeys } from '../../../hotkeys/hotkeys';
+import { hotkeys, hotkeyDescriptions, playerSessionHotkeyDescriptions } from '../../../hotkeys/hotkeys';
 
-export default function Shortcuts({ display, hotkeysToDisplay }) {
+export default function Shortcuts({ playerSession }) {
+  const hotkeysToDisplay = playerSession ? playerSessionHotkeyDescriptions : hotkeyDescriptions;
   return (
-    <div
-      data-testid="keyboard-shortcuts"
-      id="keyboard-shortcuts"
-      style={{ display }}
-    >
+    <>
       <p>Mod is Ctrl or Cmd on Mac.</p>
       <ul>
         {Object.keys(hotkeysToDisplay).map((key) => {
@@ -22,6 +19,6 @@ export default function Shortcuts({ display, hotkeysToDisplay }) {
           );
         })}
       </ul>
-    </div>
+    </>
   );
 }
