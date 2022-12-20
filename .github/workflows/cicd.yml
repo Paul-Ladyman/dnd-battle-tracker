@@ -122,8 +122,9 @@ jobs:
       deployprod
     if: github.event_name == 'push'
     permissions:
-      contents: write
-      contents: read
+      contents:
+        read
+        write
       id-token: write
     steps:
       - name: Checkout
