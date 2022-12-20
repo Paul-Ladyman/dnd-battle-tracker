@@ -11,8 +11,8 @@ jobs:
     name: Test and Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: '14.x'
     - name: Install Dependencies
@@ -30,14 +30,14 @@ jobs:
     - name: Run E2E Tests
       run: npm run test:e2e
     - name: Upload E2E Test Results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       if: always()
       with:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
     - name: Upload Build Artefact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       if: always()
       with:
         name: dnd-battle-tracker.html
@@ -64,7 +64,7 @@ jobs:
         with:
           name: dnd-battle-tracker.html
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access
           aws-region: eu-west-2
@@ -79,10 +79,10 @@ jobs:
     outputs:
       versionchanged: ${{ steps.versioncheck.outputs.changed }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Check if version has been updated
         id: versioncheck
-        uses: EndBug/version-check@v1
+        uses: EndBug/version-check@v2
         with:
           diff-search: true
 
@@ -106,7 +106,7 @@ jobs:
         with:
           name: dnd-battle-tracker.html
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access-production
           aws-region: eu-west-2
