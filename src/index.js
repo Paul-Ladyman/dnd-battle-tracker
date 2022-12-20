@@ -27,9 +27,16 @@ function RenderDmApp() {
   );
 }
 
+function registerServiceworker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+}
+
 const battleId = getUrlParameter('battle');
 
 async function render() {
+  registerServiceworker();
   const rootElement = document.getElementById('root');
 
   if (battleId) {

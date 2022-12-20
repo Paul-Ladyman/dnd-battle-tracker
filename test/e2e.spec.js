@@ -23,3 +23,14 @@ test('A DM can share an existing battle with their players who receive subsequen
   const owlbear = playerPage.locator('role=button', { hasText: /^owlbear$/ });
   await expect(owlbear).toBeVisible();
 });
+
+test('The application is available offline after the first page load', async ({ page, context }) => {
+  await page.goto('');
+  const title = page.locator('role=heading[name="D&D Battle Tracker"]');
+  await expect(title).toBeVisible();
+
+  await context.setOffline(true);
+  await page.reload();
+  const offlineTitle = page.locator('role=heading[name="D&D Battle Tracker"]');
+  await expect(offlineTitle).toBeVisible();
+});
