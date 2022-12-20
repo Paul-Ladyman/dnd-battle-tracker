@@ -126,7 +126,7 @@ End to end tests:
 - Commits to `master` that successfully pass the CI step will result in the build artefact being deployed to the [staging environment](https://github.com/Paul-Ladyman/dnd-battle-tracker/deployments/activity_log?environment=staging)
 - Commits to `master` that include a change in the package version and have successfully passed the CI and stage deploy steps will be deployed to the [production environment](https://github.com/Paul-Ladyman/dnd-battle-tracker/deployments/activity_log?environment=production)
 - In this way, a Continuous Delivery workflow can be followed by increasing the version in the same commit as the code is modified. If a manual testing step is called for, the version can be left as it is and the change tested on the stage environment. A version change can then be committed seperately to promote the change to production
-- Each version change should also be reflected in a Github release where the build artefact `dnd-battle-tracker.html` is uploaded. This ensures the current version of the project can be easily downloaded for use offline and all previous versions are available
+- Each version successfully deployed to production results in a Github release being created with the build artefact `dnd-battle-tracker.html` attached. This ensures the current version of the project can be easily downloaded for use offline and all previous versions are available
 
 ### Dependabot
 
