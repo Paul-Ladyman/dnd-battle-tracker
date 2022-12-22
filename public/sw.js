@@ -25,15 +25,27 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', function (event) {
-  event.respondWith(
-    caches.open(cacheName).then(function (cache) {
-      return cache.match(event.request).then(function (response) {
-        var fetchPromise = fetch(event.request).then(function (networkResponse) {
-          cache.put(event.request, networkResponse.clone());
-          return networkResponse;
+  const requestURL = new URL(event.request.url);
+
+  if (requestURL.origin == location.origin) {
+    // Stale-while-revalidate
+    event.respondWith(
+      caches.open(cacheName).then(function (cache) {
+        return cache.match(event.request).then(function (response) {
+          const fetchPromise = fetch(event.request).then(function (networkResponse) {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+          return response || fetchPromise;
         });
-        return response || fetchPromise;
-      });
+      }),
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      return response || fetch(event.request);
     }),
   );
 });
