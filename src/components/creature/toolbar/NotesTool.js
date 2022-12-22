@@ -61,8 +61,7 @@ export default function NotesTool({
   const notesDropdownId = `notes-dropdown-${id}`;
   const notesAriaLabel = 'notes';
   const dropdownClassName = 'creature-toolbar--notes-dropdown';
-  const dropdownClassModifier = `${dropdownClassName}__open`;
-  const dropdownClasses = showNotes ? `${dropdownClassName} ${dropdownClassModifier}` : dropdownClassName;
+  const display = showNotes ? 'block' : 'none';
   const activeNoteId = focusedItem !== null ? `notes-dropdown-${id}-${focusedItem}` : '';
 
   const toggleExpanded = () => {
@@ -241,7 +240,7 @@ export default function NotesTool({
         submitHandler={handleNoteSubmit}
         formHandler={formHandler}
       />
-      <ul className={dropdownClasses} id={notesDropdownId} role="listbox" aria-label={notesAriaLabel}>
+      <ul className={dropdownClassName} style={{ display }} id={notesDropdownId} role="listbox" aria-label={notesAriaLabel}>
         {
           notes.map((note, i) => {
             const selected = focusedItem === i;

@@ -450,7 +450,6 @@ input[type="number"] {
   width: inherit;
   box-sizing: border-box;
   z-index: 1;
-  display: none;
   max-height: 225px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -469,10 +468,6 @@ input[type="number"] {
   background-color: #822000;
   border-radius: 0 15px 15px 0;
   border: 3px solid white;
-}
-
-.creature-toolbar--notes-dropdown__open {
-  display: block;
 }
 
 .creature-toolbar--notes-dropdown-expander {
