@@ -1,9 +1,11 @@
 /* eslint-disable */
 const cacheName = 'dndbattletracker-v1';
 
-// TODO add favicon, kofi image, fonts
 const contentToCache = [
   '/',
+  '/favicon.png',
+  'https://cdn.ko-fi.com/cdn/kofi4.png?v=3',
+  'https://fonts.googleapis.com/css2?family=IM+Fell+Great+Primer+SC&family=Open+Sans&display=swap'
 ];
 
 self.addEventListener('install', (e) => {
