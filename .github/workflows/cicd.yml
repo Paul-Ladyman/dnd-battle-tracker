@@ -40,8 +40,8 @@ jobs:
       uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: dnd-battle-tracker.html
-        path: dist/dnd-battle-tracker.html
+        name: dist-final
+        path: dist-final
         retention-days: 30
 
   deploystage:
@@ -62,14 +62,14 @@ jobs:
       - name: Download Build Artefact
         uses: actions/download-artifact@v3
         with:
-          name: dnd-battle-tracker.html
+          name: dist-final
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access
           aws-region: eu-west-2
       - name: Deploy to Staging
-        run: aws s3 sync . s3://dndbattletracker.com/stage/
+        run: aws s3 sync ./dist-final s3://dndbattletracker.com/stage/
 
   deployprodpreflight:
     name: Deploy to Production Preflight Checks
@@ -105,14 +105,14 @@ jobs:
       - name: Download Build Artefact
         uses: actions/download-artifact@v3
         with:
-          name: dnd-battle-tracker.html
+          name: dist-final
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access-production
           aws-region: eu-west-2
       - name: Deploy to Production
-        run: aws s3 sync . s3://dndbattletracker.com/
+        run: aws s3 sync ./dist-final s3://dndbattletracker.com/
 
   githubrelease:
     name: Github Release
@@ -128,7 +128,7 @@ jobs:
       - name: Download Build Artefact
         uses: actions/download-artifact@v3
         with:
-          name: dnd-battle-tracker.html
+          name: dist-final
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
@@ -136,4 +136,4 @@ jobs:
           makeLatest: true
           body: ${{ github.event.head_commit.message }}
           tag: "v${{ needs.deployprodpreflight.outputs.version }}"
-          artifacts: "dnd-battle-tracker.html"
+          artifacts: "dist-final/dnd-battle-tracker.html"
