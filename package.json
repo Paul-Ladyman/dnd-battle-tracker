@@ -24,7 +24,7 @@
     "start:ci": "node ./test/appServer.js",
     "test": "jest --watch --testPathIgnorePatterns=/test/e2e.spec.js",
     "test:ci": "npx jest --testPathIgnorePatterns=/test/e2e.spec.js",
-    "test:e2e": "npx playwright test",
+    "test:e2e": "PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS=1 npx playwright test",
     "lint": "npx eslint --ext js,jsx src",
     "size": "size-limit"
   },
