@@ -1,6 +1,7 @@
-/* eslint-disable no-restricted-globals */
-const cacheName = 'dndbattletracker';
+/* eslint-disable */
+const cacheName = 'dndbattletracker-v1';
 
+// TODO add favicon, kofi image, fonts
 const contentToCache = [
   '/',
 ];
@@ -10,6 +11,15 @@ self.addEventListener('install', (e) => {
     const cache = await caches.open(cacheName);
     await cache.addAll(contentToCache);
   })());
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(caches.keys().then((keyList) => {
+    return Promise.all(keyList.map((key) => {
+      if (key === cacheName) { return; }
+      return caches.delete(key);
+    }));
+  }));
 });
 
 self.addEventListener('fetch', (e) => {
