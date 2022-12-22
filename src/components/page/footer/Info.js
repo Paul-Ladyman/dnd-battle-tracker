@@ -33,7 +33,7 @@ export default function Info() {
         >
           D&D Battle Tracker Info
         </ExternalLink>
-        &nbsp;for all versions, more info and to download the application for offline battles.
+        &nbsp;for more information and a list of previous versions.
         Feature ideas and general feedback welcome on
         {' '}
         <ExternalLink url="https://ko-fi.com/paulbod">Ko-fi</ExternalLink>
