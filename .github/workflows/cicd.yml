@@ -68,10 +68,8 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access
           aws-region: eu-west-2
-      - name: Display structure of downloaded files
-        run: ls -R
       - name: Deploy to Staging
-        run: aws s3 sync ./dist-final s3://dndbattletracker.com/stage/
+        run: aws s3 sync . s3://dndbattletracker.com/stage/
 
   deployprodpreflight:
     name: Deploy to Production Preflight Checks
@@ -114,7 +112,7 @@ jobs:
           role-to-assume: arn:aws:iam::341118543232:role/github-s3-access-production
           aws-region: eu-west-2
       - name: Deploy to Production
-        run: aws s3 sync ./dist-final s3://dndbattletracker.com/
+        run: aws s3 sync . s3://dndbattletracker.com/
 
   githubrelease:
     name: Github Release
@@ -138,4 +136,4 @@ jobs:
           makeLatest: true
           body: ${{ github.event.head_commit.message }}
           tag: "v${{ needs.deployprodpreflight.outputs.version }}"
-          artifacts: "dist-final/dnd-battle-tracker.html"
+          artifacts: "dnd-battle-tracker.html"
