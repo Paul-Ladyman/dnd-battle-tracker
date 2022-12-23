@@ -40,12 +40,12 @@ const config: PlaywrightTestConfig = {
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    baseURL: 'http://localhost:3000/dnd-battle-tracker.html',
+    baseURL: 'http://localhost:3000/'
   },
 
   webServer: {
     command: 'npm run start:ci',
-    url: 'http://localhost:3000/dnd-battle-tracker.html',
+    url: 'http://localhost:3000/',
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
   },
@@ -59,19 +59,19 @@ const config: PlaywrightTestConfig = {
       },
     },
 
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //   },
+    // },
 
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
-      },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //   },
+    // },
 
     /* Test against mobile viewports. */
     // {
