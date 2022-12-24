@@ -1,0 +1,16 @@
+{
+  "name": "D&D Battle Tracker",
+  "short_name": "D&D Battle Tracker",
+  "description": "D&D Battle Tracker is a combat tracker tool for Dungeons & Dragons 5th Edition.",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "black",
+  "background_color": "#822000"
+}

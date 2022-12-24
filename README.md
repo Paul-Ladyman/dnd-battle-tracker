@@ -10,7 +10,7 @@ Feature ideas and general feedback welcome on [Ko-fi](https://ko-fi.com/paulbod)
 
 The D&D Battle Tracker is a web application designed to run in a browser but does not require an internet connection.
 
-First, [access the live D&D Battle Tracker](http://dndbattletracker.com/). The application will then be saved in your browser for offline use.
+First, [access the live D&D Battle Tracker](http://dndbattletracker.com/). The application will then be saved in your browser for offline use. If your mobile or desktop browser supports it you can install the Battle Tracker as a [Progressive Web App](https://support.google.com/chrome/answer/9658361?hl=en-GB&co=GENIE.Platform%3DDesktop) on your device so you can easily access it whenever you need to.
 
 You can also download a specific release of the `dnd-battle-tracker.html` file below and open it in your favourite browser. This will be necessary if you have downloaded an in-progress battle that is no longer compatible with the live application:
 

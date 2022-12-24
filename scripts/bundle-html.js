@@ -18,3 +18,4 @@ fs.mkdirSync(`${__dirname}/../dist-final`, { recursive: true });
 fs.writeFileSync(`${__dirname}/../dist-final/dnd-battle-tracker.html`, html);
 fs.copyFileSync(`${__dirname}/../public/favicon.png`, `${__dirname}/../dist-final/favicon.png`);
 fs.copyFileSync(`${__dirname}/../public/sw.js`, `${__dirname}/../dist-final/sw.js`);
+fs.copyFileSync(`${__dirname}/../public/dndbattletracker.webmanifest`, `${__dirname}/../dist-final/dndbattletracker.webmanifest`);
