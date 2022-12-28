@@ -8,16 +8,18 @@ export default function StatusTool({
   alive,
   killCreature,
   stabalizeCreature,
+  classes,
 }) {
   const statusToolFunc = alive ? killCreature : stabalizeCreature;
   const statusToolTitle = alive ? 'Kill/Make unconscious' : 'Stabalize';
   const statusToolClass = 'creature-toolbar--button';
 
   const statusToolClasses = alive ? statusToolClass : `${statusToolClass} ${statusToolClass}__dead`;
+  const finalClasses = `${statusToolClasses} ${classes}`;
 
   return (
     <button
-      className={statusToolClasses}
+      className={finalClasses}
       aria-label={`${statusToolTitle} ${name}`}
       title={statusToolTitle}
       onClick={() => statusToolFunc(id)}

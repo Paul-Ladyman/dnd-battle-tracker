@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './toolbar/CreatureToolbar';
+import NewCreatureToolbar from './toolbar/NewCreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import CreatureRemover from '../buttons/CreatureRemover';
@@ -42,6 +43,7 @@ class CreatureWrapper extends Component {
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
     this.hasBrowserFocus = this.hasBrowserFocus.bind(this);
+    this.newCreatureToolbar = window.CREATURE_TOOLBAR;
   }
 
   /*
@@ -217,7 +219,7 @@ class CreatureWrapper extends Component {
             />
           )}
         </section>
-        { !playerSession && (
+        { !playerSession && !this.newCreatureToolbar && (
           <section
             aria-label={`${name} toolbar`}
             id="creature-toolbar"
@@ -231,6 +233,9 @@ class CreatureWrapper extends Component {
               focused={focused && toolbarFocused && !toolbarAlreadyFocused}
             />
           </section>
+        )}
+        { !playerSession && this.newCreatureToolbar && (
+          <NewCreatureToolbar creature={creature} />
         )}
       </>
     );

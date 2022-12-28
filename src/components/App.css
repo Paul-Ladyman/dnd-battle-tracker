@@ -520,6 +520,21 @@ input[type="number"] {
   border-radius: 0;
 }
 
+.new-creature-toolbar {
+  display: flex;
+}
+
+.new-creature-toolbar-button {
+  padding: 4px;
+  margin-left: 10px;
+}
+
+.new-creature-toolbar-button__text {
+  width: auto;
+  padding: 6px;
+  padding-right: 10px;
+}
+
 /* Create creature form */
 
 .create-creature-form {
