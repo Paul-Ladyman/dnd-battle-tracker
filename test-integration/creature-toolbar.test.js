@@ -77,12 +77,12 @@ describe('Creature toolbar', () => {
     expect(button).toBeVisible();
   });
 
-  it('contains the damage/heal button', async () => {
+  it('contains the HP button', async () => {
     render(<DungeonMasterAppWrapper />);
     const user = userEvent.setup();
     await addCreature(user);
     const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Damage/Heal');
+    const button = await findToolbarButton(toolbar, 'HP');
     expect(button).toBeVisible();
   });
 

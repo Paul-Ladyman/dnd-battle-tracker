@@ -59,7 +59,8 @@ button, .button {
   padding: 2px 6px 2px 0;
   background-color: #EBE1AD;
   border: 2px solid #822000;
-  outline-color: #822000;
+  box-shadow: 0 0 5px #979aa4;
+  outline: none;
 }
 
 a {
@@ -521,18 +522,56 @@ input[type="number"] {
 }
 
 .new-creature-toolbar {
-  display: flex;
+  grid-gap: 15px;
+  grid-row-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 10px);
+  grid-auto-rows: 1fr;
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 825px) {
+  .new-creature-toolbar {
+    grid-gap: 18px;
+  }
+
+  .new-creature-toolbar-button__text svg {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 825px) {
+  .new-creature-toolbar-button {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
 }
 
 .new-creature-toolbar-button {
-  padding: 4px;
-  margin-left: 10px;
+  grid-column: span 2;
+}
+
+.new-creature-toolbar-button:hover,
+.new-creature-toolbar-button:focus {
+  background-color: #EBE1AD;
+  border: 2px solid #822000;
+  outline: none;
+  box-shadow: 0 0 5px #979aa4;
+}
+
+.new-creature-toolbar-button__text:hover,
+.new-creature-toolbar-button__text:focus {
+  padding: 3px 10px;
 }
 
 .new-creature-toolbar-button__text {
   width: auto;
-  padding: 6px;
-  padding-right: 10px;
+  grid-column: span 4;
+  display: flex;
+  padding: 5px 0;
+  flex-direction: column;
+  height: auto;
 }
 
 /* Create creature form */

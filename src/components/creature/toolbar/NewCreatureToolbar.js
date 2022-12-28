@@ -56,7 +56,7 @@ export default function NewCreatureToolbar({ creature }) {
         type="button"
       >
         <AddHpIcon />
-        Damage/Heal
+        HP
       </button>
       <button
         className={textButtonClass}
