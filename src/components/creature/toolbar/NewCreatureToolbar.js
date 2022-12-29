@@ -5,6 +5,8 @@ import InitiativeIcon from '../../icons/InitiativeIcon';
 import TempHpIcon from '../../icons/TempHpIcon';
 import AddHpIcon from '../../icons/AddHpIcon';
 import AddNoteIcon from '../../icons/AddNoteIcon';
+import MaxHpIcon from '../../icons/MaxHpIcon';
+import ConditionsIcon from '../../icons/ConditionsIcon';
 
 export default function NewCreatureToolbar({ creature }) {
   const {
@@ -41,7 +43,7 @@ export default function NewCreatureToolbar({ creature }) {
         className={textButtonClass}
         type="button"
       >
-        <InitiativeIcon />
+        <ConditionsIcon />
         Conditions
       </button>
       <button
@@ -62,7 +64,7 @@ export default function NewCreatureToolbar({ creature }) {
         className={`${textButtonClass} ${buttonClass}__medium`}
         type="button"
       >
-        <AddHpIcon />
+        <MaxHpIcon />
         Max HP
       </button>
       <button
