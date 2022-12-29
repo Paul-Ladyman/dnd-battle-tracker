@@ -43,7 +43,7 @@ class CreatureWrapper extends Component {
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
     this.hasBrowserFocus = this.hasBrowserFocus.bind(this);
-    this.newCreatureToolbar = window.CREATURE_TOOLBAR;
+    this.newCreatureToolbar = window.FLAG_creatureToolbar;
   }
 
   /*

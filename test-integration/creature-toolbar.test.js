@@ -21,7 +21,7 @@ function findToolbarButton(toolbar, name) {
 
 describe('Creature toolbar', () => {
   beforeAll(() => {
-    window.CREATURE_TOOLBAR = true;
+    window.FLAG_creatureToolbar = true;
   });
 
   test('a creature has a toolbar', async () => {
