@@ -45,14 +45,14 @@ export default function NewCreatureToolbar({ creature }) {
         Conditions
       </button>
       <button
-        className={textButtonClass}
+        className={`${textButtonClass} ${buttonClass}__medium`}
         type="button"
       >
         <AddNoteIcon />
         Notes
       </button>
       <button
-        className={textButtonClass}
+        className={`${textButtonClass} ${buttonClass}__small`}
         type="button"
       >
         <AddHpIcon />
