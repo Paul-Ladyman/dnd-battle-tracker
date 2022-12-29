@@ -59,7 +59,7 @@ export default function NewCreatureToolbar({ creature }) {
         HP
       </button>
       <button
-        className={textButtonClass}
+        className={`${textButtonClass} ${buttonClass}__medium`}
         type="button"
       >
         <AddHpIcon />
