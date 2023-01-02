@@ -6,6 +6,9 @@ import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from './Input';
 import InitiativeGenerator from '../buttons/InitiativeGenerator';
 import rollDice from '../../util/rollDice';
+import DropdownOption from '../creature/toolbar/DropdownOption';
+
+const BASE_API_URL = 'https://www.dnd5eapi.co';
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
   const initialState = {
@@ -17,6 +20,10 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
   const [state, setState] = useState(initialState);
 
+  const [monsterData, setMonsterData] = useState([]);
+
+  const [dropdownVisible, setDropdownVisible] = useState(true);
+
   const nameInput = useRef(null);
 
   const hotKeyHandler = (e) => {
@@ -26,6 +33,19 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   useEffect(() => {
+    fetch(`${BASE_API_URL}/api/monsters`, { 'Content-Type': 'application/json' })
+      .then((response) => response.json())
+      .then((data) => {
+        setDropdownVisible(true);
+        setMonsterData(data.results);
+      })
+      .catch(() => {
+        setDropdownVisible(false);
+        setMonsterData([]);
+      });
+  }, []);
+
+  useEffect(() => {
     nameInput.current.focus();
     window.addEventListener('keydown', hotKeyHandler);
     return () => window.removeEventListener('keydown', hotKeyHandler);
@@ -33,6 +53,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
   const resetForm = () => {
     setState(initialState);
+    setDropdownVisible(true);
     nameInput.current.focus();
   };
 
@@ -86,6 +107,23 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     }
   };
 
+  const onSelectMonster = (monster) => {
+    if (!monster) return;
+    fetch(`${BASE_API_URL}${monster.url}`, { 'Content-Type': 'application/json' })
+      .then((response) => response.json())
+      .then((data) => {
+        setState((prevState) => ({
+          ...prevState,
+          name: monster.name,
+          healthPoints: data.hit_points,
+          // TODO: add AC
+        }));
+      })
+      .finally(() => {
+        setDropdownVisible(false);
+      });
+  };
+
   const {
     name, initiative, healthPoints, multiplier,
   } = state;
@@ -93,6 +131,8 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   const {
     nameError, initiativeError, healthError, multiplierError,
   } = createCreatureErrors;
+
+  const filteredMonsters = monsterData.filter((monster) =>  monster.name.toLowerCase().includes(name.toLowerCase()));
 
   return (
     <form className="create-creature-form">
@@ -113,6 +153,29 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         formHandler={formHandler}
         inputId="create-creature-form-name"
       />
+
+      {name.length > 1 && filteredMonsters.length > 0 && dropdownVisible && (
+      <ul
+        style={{
+          height: '80px',
+          overflowY: 'scroll',
+        }}
+        className="creature-toolbar--notes-dropdown"
+        role="listbox"
+      >
+        {filteredMonsters.map((item) => (
+          <div className="creature-toolbar--notes-dropdown-group" key={item.index}>
+            <DropdownOption
+              className="creature-toolbar--notes-dropdown-item"
+              onClick={() => onSelectMonster(item)}
+              selected={false}
+              text={item.name}
+            />
+          </div>
+        ))}
+      </ul>
+      )}
+
       <Input
         customClasses="create-creature-form--item__number create-creature-form--item__tall"
         error={initiativeError}
