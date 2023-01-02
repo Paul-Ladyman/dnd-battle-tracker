@@ -112,10 +112,11 @@ export function getRawName(name) {
 }
 
 export function createCreature(creatureId, {
-  name, number, initiative, healthPoints,
+  armorClass, name, number, initiative, healthPoints,
 }) {
   const groupedName = number ? `${name} #${number}` : name;
   return {
+    armorClass,
     name: groupedName,
     initiative,
     healthPoints,
