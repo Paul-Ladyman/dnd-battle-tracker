@@ -1,9 +1,18 @@
 import { createCreature, validateCreature } from './CreatureManager';
 import { sortByInitiative } from './InitiativeManager';
 import { addError } from './AppManager';
+import rollDice from '../util/rollDice';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({ id }) => creature.id === id);
+}
+
+function randomizeInitiative(initiative, index) {
+  // keep only first input initiative, randomize for others
+  if (index === 0) {
+    return initiative;
+  }
+  return rollDice(20);
 }
 
 export function removeCreature(state, creatureId) {
@@ -50,16 +59,19 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
   const groupOffset = groupSize > 0 ? groupIndexes[groupSize - 1] : 0;
 
   return Array(multiplier).fill().map((_, i) => {
-    const { name } = creature;
+    const { name, initiative } = creature;
     const number = i + 1 + groupOffset;
-    return createCreature(creatureIdCount + i, { ...creature, name, number });
+    // don't change empty inputs
+    const newInitiative = initiative ? randomizeInitiative(initiative, i) : undefined;
+    return createCreature(creatureIdCount + i, {
+      ...creature, name, number, initiative: newInitiative,
+    });
   });
 }
 
 export function addCreature(state, creature) {
   const { multiplier, ...creatureStats } = creature;
   const creatureMultiplier = multiplier || 1;
-
   const { name, initiative, healthPoints } = creatureStats;
   const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier);
 

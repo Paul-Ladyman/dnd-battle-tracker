@@ -5,8 +5,7 @@ import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from './Input';
 import InitiativeGenerator from '../buttons/InitiativeGenerator';
-
-const DICE_TYPE = 20;
+import rollDice from '../../util/rollDice';
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
   const initialState = {
@@ -77,7 +76,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   const onPressDice = () => {
     setState((prevState) => ({
       ...prevState,
-      initiative: `${Math.floor(Math.random() * DICE_TYPE) + 1}`,
+      initiative: `${rollDice(20)}`,
     }));
   };
 
