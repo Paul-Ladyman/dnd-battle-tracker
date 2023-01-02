@@ -4,6 +4,9 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from './Input';
+import InitiativeGenerator from '../buttons/InitiativeGenerator';
+
+const DICE_TYPE = 20;
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
   const initialState = {
@@ -71,6 +74,13 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     setState((prevState) => ({ ...prevState, submitted: true }));
   };
 
+  const onPressDice = () => {
+    setState((prevState) => ({
+      ...prevState,
+      initiative: `${Math.floor(Math.random() * DICE_TYPE) + 1}`,
+    }));
+  };
+
   const formHandler = (event) => {
     if (event.keyCode === 13) {
       createCreature();
@@ -113,6 +123,12 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         label="Initiative (optional)"
         name="initiative"
         handleChange={handleChange}
+        rightControls={{
+          rightEnabled: true,
+          RightControl: (
+            <InitiativeGenerator asButton={false} onPressDice={onPressDice} diceRoll={initiative} />
+          ),
+        }}
         formHandler={formHandler}
         inputId="create-creature-form-initiative"
       />
