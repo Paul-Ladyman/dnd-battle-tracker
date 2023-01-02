@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OptionsMenuIcon from '../../icons/OptionsMenuIcon';
 import KillStabalizeIcon from '../../icons/KillStabalizeIcon';
 import InitiativeIcon from '../../icons/InitiativeIcon';
@@ -9,15 +9,26 @@ import MaxHpIcon from '../../icons/MaxHpIcon';
 import ConditionsIcon from '../../icons/ConditionsIcon';
 
 export default function NewCreatureToolbar({ creature }) {
+  const [focused, setFocused] = useState(false);
   const {
     alive, name,
   } = creature;
 
-  const buttonClass = 'new-creature-toolbar-button';
+  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClasses = focused ? `${toolbarClass} ${toolbarClass}__focused` : toolbarClass;
+  const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
 
+  console.log('>>> FOCUSED', focused);
+
   return (
-    <div role="toolbar" aria-label={`${name} toolbar`} className="new-creature-toolbar">
+    <div
+      role="toolbar"
+      aria-label={`${name} toolbar`}
+      className={toolbarClasses}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+    >
       <button
         title="Creature Menu"
         type="button"
