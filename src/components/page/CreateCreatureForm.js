@@ -121,7 +121,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           ...prevState,
           name: monster.name,
           healthPoints: data.hit_points,
-          // TODO: add AC
+          armorClass: data.armor_class,
         }));
       })
       .finally(() => {
