@@ -43,7 +43,9 @@
     "transformIgnorePatterns": [
       "/node_modules/(?!(uuid|nanoid)/)"
     ],
-    "setupFilesAfterEnv": ["./jest.setup.js"]
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
