@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getModifierSign, getProficiencyBonus } from '../../util/characterSheet';
+import { getAbilityWithSign, getModifierSign, getProficiencyBonus } from '../../util/characterSheet';
 import ExternalLink from '../page/ExternalLink';
 
 const SAVING_THROW_CUT = 'Saving Throw:';
@@ -84,27 +84,27 @@ export default function CreatureStats({
           <div className="abilities">
             <div className="ability-strength">
               <h4>STR</h4>
-              <p>{creature.strength}</p>
+              <p>{`${creature.strength}  ${getAbilityWithSign(creature.strength)}`}</p>
             </div>
             <div className="ability-dexterity">
               <h4>DEX</h4>
-              <p>{creature.dexterity}</p>
+              <p>{`${creature.dexterity}  ${getAbilityWithSign(creature.dexterity)}`}</p>
             </div>
             <div className="ability-constitution">
               <h4>CON</h4>
-              <p>{creature.constitution}</p>
+              <p>{`${creature.constitution}  ${getAbilityWithSign(creature.constitution)}`}</p>
             </div>
             <div className="ability-intelligence">
               <h4>INT</h4>
-              <p>{creature.intelligence}</p>
+              <p>{`${creature.intelligence}  ${getAbilityWithSign(creature.intelligence)}`}</p>
             </div>
             <div className="ability-wisdom">
               <h4>WIS</h4>
-              <p>{creature.wisdom}</p>
+              <p>{`${creature.wisdom}  ${getAbilityWithSign(creature.wisdom)}`}</p>
             </div>
             <div className="ability-charisma">
               <h4>CHA</h4>
-              <p>{creature.charisma}</p>
+              <p>{`${creature.charisma}  ${getAbilityWithSign(creature.charisma)}`}</p>
             </div>
           </div>
           <svg height="5" width="100%" className="tapered-rule">
@@ -202,7 +202,7 @@ export default function CreatureStats({
                 {' '}
                 {key}
                 {' - '}
-                <b>{creature.senses[key]}</b>
+                {creature.senses[key]}
                 {', '}
               </p>
             ))}
