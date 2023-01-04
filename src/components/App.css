@@ -1241,5 +1241,15 @@ input[type="number"] {
     justify-content: center;
     color: grey
 }
+.flexRow{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+}
+
+.proficiency-bonus{
+  margin-left: 50px;
+}
 
 /* creature stats */

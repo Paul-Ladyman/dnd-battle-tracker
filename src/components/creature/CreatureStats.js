@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getModifierSign } from '../../util/characterSheet';
+import { getModifierSign, getProficiencyBonus } from '../../util/characterSheet';
 import ExternalLink from '../page/ExternalLink';
 
 const SAVING_THROW_CUT = 'Saving Throw:';
@@ -215,9 +215,23 @@ export default function CreatureStats({
           </div>
           )}
           {creature.challenge_rating && (
-          <div className="property-line last">
-            <h4>Challenge - </h4>
-            <p>{creature.challenge_rating}</p>
+          <div className="property-line last flexRow">
+            <div>
+              <h4>Challenge </h4>
+              <p>
+                {creature.challenge_rating}
+                {' '}
+                {creature.xp && <span>{` (${creature.xp} XP) `}</span>}
+              </p>
+            </div>
+            <div className="proficiency-bonus">
+              <h4>Proficiency Bonus </h4>
+              {' '}
+              <p>
+                {getModifierSign(creature.challenge_rating)}
+                {getProficiencyBonus(creature.challenge_rating)}
+              </p>
+            </div>
           </div>
           )}
 
