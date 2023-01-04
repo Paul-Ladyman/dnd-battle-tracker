@@ -35,7 +35,7 @@ export default function CreatureStats({
       <div className="section-left">
         <div className="creature-heading">
           <div className="creature-title-header">
-            <h1>{creature.name}</h1>
+            <h1 id="creature-header-text">{creature.name}</h1>
             <button id="close-creature-stats" type="button" onClick={toggleCreatureStats}>▲ Hide  stats</button>
           </div>
 

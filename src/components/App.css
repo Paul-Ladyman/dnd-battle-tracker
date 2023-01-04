@@ -1226,8 +1226,12 @@ input[type="number"] {
   display: flex;
   flex-direction: row;
 }
+#creature-header-text{
+  margin-right: 15px;
+}
 #close-creature-stats{
-  margin-left: 20px;
+  font-size: 1rem;
+  /* margin-left: 20px; */
   cursor: pointer;
     border: 0px solid #822000;
     border: 0px;
