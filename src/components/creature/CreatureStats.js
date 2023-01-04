@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { getAbilityWithSign, getModifierSign, getProficiencyBonus } from '../../util/characterSheet';
+import {
+  beautifySnakeWord, capitalizeWord, getAbilityWithSign, getModifierSign, getProficiencyBonus,
+} from '../../util/characterSheet';
 import ExternalLink from '../page/ExternalLink';
 
 const SAVING_THROW_CUT = 'Saving Throw:';
@@ -70,10 +72,15 @@ export default function CreatureStats({
             {Object.keys(creature.speed).map((key) => (
               <p key={key}>
                 {' '}
-                {key}
-                {' - '}
-                {creature.speed[key]}
-                {', '}
+                {capitalizeWord(key)}
+                {creature.speed[key] && typeof creature.speed[key] === 'string' && (
+                  <>
+                    {': '}
+                    {creature.speed[key]}
+                    {', '}
+                  </>
+                )}
+
               </p>
             ))}
           </div>
@@ -115,7 +122,7 @@ export default function CreatureStats({
               <h4>Damage Immunities: </h4>
               {creature.damage_immunities.map((name) => (
                 <p key={name}>
-                  {name}
+                  {capitalizeWord(name)}
                   ,
                   {' '}
                 </p>
@@ -127,7 +134,7 @@ export default function CreatureStats({
             <h4>Damage Resistances: </h4>
             {creature.damage_resistances.map((name) => (
               <p key={name}>
-                {name}
+                {capitalizeWord(name)}
                 ,
                 {' '}
               </p>
@@ -200,8 +207,8 @@ export default function CreatureStats({
             {Object.keys(creature.senses).map((key) => (
               <p key={key}>
                 {' '}
-                {key}
-                {' - '}
+                {beautifySnakeWord(key)}
+                {' '}
                 {creature.senses[key]}
                 {', '}
               </p>

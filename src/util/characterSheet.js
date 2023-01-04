@@ -9,3 +9,11 @@ export const getAbilityWithSign = (base) => {
 
   return `(${getModifierSign(abilityModifier)}${abilityModifier})`;
 };
+
+export const capitalizeWord = (word) => word[0].toUpperCase() + word.slice(1);
+
+export const beautifySnakeWord = (word) => {
+  if (!word) return '';
+
+  return word.split('_').map((line) => capitalizeWord(line)).join(' ');
+};
