@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { getModifierSign } from '../../util/characterSheet';
 import ExternalLink from '../page/ExternalLink';
+
+const SAVING_THROW_CUT = 'Saving Throw:';
+const SKILL_CUT = 'Skill:';
 
 export default function CreatureStats({
   creature,
 }) {
   const [showCreatureStats, setCreatureStats] = useState(true);
+
+  const savingThrows = creature.proficiencies ? creature.proficiencies.filter((ability) => ability.proficiency?.index.includes('saving-throw')) : [];
+  const skills = creature.proficiencies ? creature.proficiencies.filter((ability) => ability.proficiency?.index.includes('skill')) : [];
 
   console.log(`creature ${creature.name}`, creature);
 
@@ -153,6 +160,38 @@ export default function CreatureStats({
                 <p key={name}>{name}</p>
               ))}
             </div>
+          )}
+
+          {savingThrows.length > 0 && (
+          <div className="property-line">
+            <h4>Saving Throws: </h4>
+            {savingThrows.map((savingThrow) => (
+              <p key={savingThrow.proficiency.index}>
+                {' '}
+                {savingThrow.proficiency.name.replace(SAVING_THROW_CUT, '')}
+                {': '}
+                {getModifierSign(savingThrow.value)}
+                {savingThrow.value}
+                {', '}
+              </p>
+            ))}
+          </div>
+          )}
+
+          {skills.length > 0 && (
+          <div className="property-line">
+            <h4>Skills: </h4>
+            {skills.map((skill) => (
+              <p key={skill.proficiency.index}>
+                {' '}
+                {skill.proficiency.name.replace(SKILL_CUT, '')}
+                {': '}
+                {getModifierSign(skill.value)}
+                {skill.value}
+                {', '}
+              </p>
+            ))}
+          </div>
           )}
 
           {creature.senses && (
