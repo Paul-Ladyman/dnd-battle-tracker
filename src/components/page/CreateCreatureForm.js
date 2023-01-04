@@ -18,6 +18,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     armorClass: '',
     multiplier: 1,
     submitted: false,
+    apiData: undefined,
   };
   const [state, setState] = useState(initialState);
 
@@ -122,6 +123,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           name: monster.name,
           healthPoints: data.hit_points,
           armorClass: data.armor_class,
+          apiData: data,
         }));
       })
       .finally(() => {

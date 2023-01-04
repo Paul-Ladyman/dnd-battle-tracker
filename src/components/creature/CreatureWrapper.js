@@ -8,6 +8,7 @@ import CreatureHeader from './CreatureHeader';
 import CreatureRemover from '../buttons/CreatureRemover';
 import { getAvailableConditions } from '../../state/ConditionsManager';
 import { getHitPointsBar, shouldShowHitPoints } from '../../display/displayLogic';
+import CreatureStats from './CreatureStats';
 
 function getCreatureAriaLabel(creature, active, expanded) {
   const { name } = creature;
@@ -194,16 +195,26 @@ class CreatureWrapper extends Component {
             />
             {showExpanded
               ? (
-                <ExpandedCreature
-                  creature={creature}
-                  round={round}
-                  secondsElapsed={secondsElapsed}
-                  removeCreature={removeCreature}
-                  removeNoteFromCreature={removeNoteFromCreature}
-                  healthPoints={healthPoints}
-                  showHealth={showHitPoints}
-                  playerSession={playerSession}
-                />
+                <>
+                  <ExpandedCreature
+                    creature={creature}
+                    round={round}
+                    secondsElapsed={secondsElapsed}
+                    removeCreature={removeCreature}
+                    removeNoteFromCreature={removeNoteFromCreature}
+                    healthPoints={healthPoints}
+                    showHealth={showHitPoints}
+                    playerSession={playerSession}
+                  />
+                  {creature.apiData && (
+                  <div>
+                    <CreatureStats
+                      creature={creature.apiData}
+                    />
+                  </div>
+                  )}
+                </>
+
               )
               : (
                 <CollapsedCreature
