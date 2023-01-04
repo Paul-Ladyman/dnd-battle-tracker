@@ -282,6 +282,7 @@ input[type="number"] {
   border-radius: 15px;
   box-shadow: 0 0 5px #979aa4;
   height: 40px;
+  background-color: #fff;
 }
 
 .input {
@@ -1255,5 +1256,19 @@ input[type="number"] {
 .proficiency-bonus{
   margin-left: 50px;
 }
+
+.right-toggle{
+  display: flex;
+  flex-direction: column;
+  grid-column: span 3;
+  justify-content: center;
+  align-items: center;
+}
+
+.sync-label-text{
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
 
 /* creature stats */

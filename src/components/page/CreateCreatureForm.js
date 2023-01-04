@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
 import React, { useState, useRef, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
+import Switch from 'react-switch';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
@@ -7,6 +9,7 @@ import Input from './Input';
 import InitiativeGenerator from '../buttons/InitiativeGenerator';
 import rollDice from '../../util/rollDice';
 import DropdownOption from '../creature/toolbar/DropdownOption';
+import { calculateAbilityModifier } from '../../util/characterSheet';
 
 const BASE_API_URL = 'https://www.dnd5eapi.co';
 
@@ -26,12 +29,25 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
   const [dropdownVisible, setDropdownVisible] = useState(true);
 
+  const [hasSameInitiative, setSameInitiative] = useState(true);
+
   const nameInput = useRef(null);
 
   const hotKeyHandler = (e) => {
     if (isHotkey(hotkeys.createCreature, e)) {
       nameInput.current.focus();
     }
+  };
+
+  const toggleInitiative = () => {
+    setSameInitiative((prevValue) => !prevValue);
+  };
+
+  const resetForm = () => {
+    setState(initialState);
+    setDropdownVisible(true);
+    setSameInitiative(true);
+    nameInput.current.focus();
   };
 
   useEffect(() => {
@@ -52,12 +68,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     window.addEventListener('keydown', hotKeyHandler);
     return () => window.removeEventListener('keydown', hotKeyHandler);
   }, []);
-
-  const resetForm = () => {
-    setState(initialState);
-    setDropdownVisible(true);
-    nameInput.current.focus();
-  };
 
   useEffect(() => {
     const errors = Object.keys(createCreatureErrors).length > 0;
@@ -93,7 +103,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
       : parseInt(state.initiative, 10);
 
     const creature = {
-      ...state, healthPoints, initiative, multiplier, armorClass,
+      ...state, healthPoints, initiative, multiplier, armorClass, syncMultipleInitiatives: hasSameInitiative,
     };
 
     propsCreateCreature(creature);
@@ -118,8 +128,12 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     fetch(`${BASE_API_URL}${monster.url}`, { 'Content-Type': 'application/json' })
       .then((response) => response.json())
       .then((data) => {
+        const dexterityModifier = data.dexterity ? calculateAbilityModifier(data.dexterity) : 0;
+        const rolledNumber = rollDice(20);
+        const calculatedInitiative = `${rolledNumber + dexterityModifier}`;
         setState((prevState) => ({
           ...prevState,
+          initiative: state.initiative.length > 0 ? state.initiative : calculatedInitiative,
           name: monster.name,
           healthPoints: data.hit_points,
           armorClass: data.armor_class,
@@ -139,7 +153,11 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     nameError, initiativeError, healthError, multiplierError,
   } = createCreatureErrors;
 
-  const filteredMonsters = monsterData.filter((monster) =>  monster.name.toLowerCase().includes(name.toLowerCase()));
+  const renderToggle = state.multiplier > 1;
+
+  const toggleTitle = hasSameInitiative ? 'Same' : 'Random';
+
+  const filteredMonsters = monsterData.filter((monster) => monster.name.toLowerCase().includes(name.toLowerCase()));
 
   return (
     <form className="create-creature-form">
@@ -243,7 +261,34 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           formHandler={formHandler}
           inputId="create-creature-form-multiplier"
         />
+
       </div>
+      {renderToggle && (
+      <div className="right-toggle">
+        <span className="sync-label-text">
+          {toggleTitle}
+          {' '}
+          init.
+        </span>
+
+        <Switch
+          onChange={toggleInitiative}
+          checked={hasSameInitiative}
+          className="react-switch"
+          onColor="#822000"
+          onHandleColor="#EBE1AD"
+          handleDiameter={22}
+          uncheckedIcon={false}
+          checkedIcon={false}
+          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+          activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+          height={14}
+          width={44}
+          id="material-switch"
+        />
+      </div>
+      )}
+
       <div className="create-creature-form--item__submit">
         <button
           type="button"
