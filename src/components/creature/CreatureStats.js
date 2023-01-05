@@ -19,7 +19,8 @@ const renderHighlighter = (text) => {
     if (splitText.length === 0) {
       return <p>text</p>;
     }
-    const attackRegexp = /\d+d\d+([+,-,*,/]\d+)?/g;
+    // const attackRegexp = /\d+d\d+([+,-,*,/]\d+)?/g;
+    const attackRegexp = /\d+d\d+( \+ \d+)?/g;
     const attackWords = text.match(attackRegexp) ?? [];
 
     const damageRegexp = /\+\d+ to hit/g;
