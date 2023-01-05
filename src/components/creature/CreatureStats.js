@@ -30,6 +30,8 @@ const renderHighlighter = (text) => {
       const finalWords = allWords.filter((word) => item.includes(word));
       const textLine = index === 0 ? item : `${HIT_CUT}${item}`;
 
+      const isAttackType = splitText.length === 2 && index === 0;
+
       const damageTypeRegexp = /\b\w+\b damage/g;
       const foundDamages = textLine.match(damageTypeRegexp) ?? [];
 
@@ -52,8 +54,8 @@ const renderHighlighter = (text) => {
           searchWords={finalWords}
           autoEscape
           textToHighlight={newSentence}
-          activeClassName={index === 0 ? 'attack-highlight' : 'damage-highlight'}
-          highlightClassName={index === 0 ? 'attack-highlight' : 'damage-highlight'}
+          activeClassName={isAttackType ? 'attack-highlight' : 'damage-highlight'}
+          highlightClassName={isAttackType ? 'attack-highlight' : 'damage-highlight'}
         />
 
       );
