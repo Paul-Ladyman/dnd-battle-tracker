@@ -1270,5 +1270,24 @@ input[type="number"] {
   font-size: 14px;
 }
 
+.creature-action-description{
+  font-weight: bold;
+}
+
+.attack-highlight {
+  background-color: #ffd54f;
+  font-weight: bold;
+}
+
+.damage-highlight {
+  background-color: #f8cfcd;
+  font-weight: bold;
+}
+
+
+.Active {
+  background-color: #f48f42;
+}
+
 
 /* creature stats */

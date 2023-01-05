@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Highlighter from 'react-highlight-words';
+
 import {
   beautifySnakeWord, capitalizeWord, getAbilityWithSign, getModifierSign, getProficiencyBonus,
 } from '../../util/characterSheet';
@@ -6,6 +8,47 @@ import ExternalLink from '../page/ExternalLink';
 
 const SAVING_THROW_CUT = 'Saving Throw:';
 const SKILL_CUT = 'Skill:';
+const HIT_CUT = 'Hit:';
+
+// word before damage highlight
+// "/\b\w+\b damage /gm"
+
+const renderHighlighter = (text) => {
+  try {
+    const splitText = text.split(HIT_CUT);
+    if (splitText.length === 0) {
+      return <p>text</p>;
+    }
+    const attackRegexp = /\d+d\d+([+,-,*,/]\d+)?/g;
+    const attackWords = text.match(attackRegexp) ?? [];
+
+    const damageRegexp = /\+\d+ to hit/g;
+    const damageWords = text.match(damageRegexp) ?? [];
+
+    const allWords = [...attackWords, ...damageWords];
+
+    return splitText.map((item, index) => {
+      const finalWords = allWords.filter((word) => item.includes(word));
+      const textLine = index === 0 ? item : `${HIT_CUT}${item}`;
+
+      return (
+
+        <Highlighter
+          key={textLine}
+          searchWords={finalWords}
+          autoEscape
+          textToHighlight={textLine}
+          activeClassName={index === 0 ? 'attack-highlight' : 'damage-highlight'}
+          highlightClassName={index === 0 ? 'attack-highlight' : 'damage-highlight'}
+        />
+
+      );
+    });
+  } catch (error) {
+    console.log('regex error', error);
+    return <p>text</p>;
+  }
+};
 
 export default function CreatureStats({
   creature,
@@ -254,7 +297,10 @@ export default function CreatureStats({
               .
               {' '}
             </h4>
-            <p>{ability.desc}</p>
+            <p>
+              {renderHighlighter(ability.desc)}
+              {' '}
+            </p>
           </div>
         ))}
 
@@ -270,7 +316,10 @@ export default function CreatureStats({
                   .
                   {' '}
                 </h4>
-                <p>{action.desc}</p>
+                <p>
+                  {renderHighlighter(action.desc)}
+                  {' '}
+                </p>
               </div>
             ))}
           </div>
@@ -286,7 +335,10 @@ export default function CreatureStats({
                 .
                 {' '}
               </h4>
-              <p>{action.desc}</p>
+              <p>
+                {renderHighlighter(action.desc)}
+                {' '}
+              </p>
             </div>
           ))}
         </div>
