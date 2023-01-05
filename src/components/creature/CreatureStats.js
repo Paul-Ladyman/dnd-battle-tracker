@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
 import {
-  beautifySnakeWord, capitalizeWord, getAbilityWithSign, getModifierSign, getProficiencyBonus,
+  beautifySnakeWord, capitalizeWord, DamageTypesObject, getAbilityWithSign, getModifierSign, getProficiencyBonus,
 } from '../../util/characterSheet';
 import ExternalLink from '../page/ExternalLink';
 
@@ -10,16 +11,13 @@ const SAVING_THROW_CUT = 'Saving Throw:';
 const SKILL_CUT = 'Skill:';
 const HIT_CUT = 'Hit:';
 
-// word before damage highlight
-// "/\b\w+\b damage /gm"
-
 const renderHighlighter = (text) => {
   try {
     const splitText = text.split(HIT_CUT);
     if (splitText.length === 0) {
       return <p>text</p>;
     }
-    // const attackRegexp = /\d+d\d+([+,-,*,/]\d+)?/g;
+
     const attackRegexp = /\d+d\d+( \+ \d+)?/g;
     const attackWords = text.match(attackRegexp) ?? [];
 
@@ -32,13 +30,28 @@ const renderHighlighter = (text) => {
       const finalWords = allWords.filter((word) => item.includes(word));
       const textLine = index === 0 ? item : `${HIT_CUT}${item}`;
 
+      const damageTypeRegexp = /\b\w+\b damage/g;
+      const foundDamages = textLine.match(damageTypeRegexp) ?? [];
+
+      const filterDamageTypes = foundDamages.map((currentDamage) => currentDamage.replace(' damage', '')).filter((thisDamage) => thisDamage.toLowerCase() in DamageTypesObject);
+      const finalDamageTypesArr = Array.from(new Set(filterDamageTypes));
+
+      const sentence = textLine.split(' ');
+
+      const newSentence = sentence.map((word) => {
+        if (finalDamageTypesArr.includes(word)) {
+          return `${word} ${DamageTypesObject[word]}`;
+        }
+        return word;
+      }).join(' ');
+
       return (
 
         <Highlighter
           key={textLine}
           searchWords={finalWords}
           autoEscape
-          textToHighlight={textLine}
+          textToHighlight={newSentence}
           activeClassName={index === 0 ? 'attack-highlight' : 'damage-highlight'}
           highlightClassName={index === 0 ? 'attack-highlight' : 'damage-highlight'}
         />

@@ -17,3 +17,19 @@ export const beautifySnakeWord = (word) => {
 
   return word.split('_').map((line) => capitalizeWord(line)).join(' ');
 };
+
+export const DamageTypesObject = {
+  acid: '🧪',
+  bludgeoning: '🔨',
+  cold: '❄️',
+  force: '👊🏽',
+  fire: '🔥',
+  lightning: '⚡️',
+  necrotic: '💀',
+  piercing: '📌',
+  poison: '🦠',
+  psychic: '🔮',
+  radiant: '🔆',
+  slashing: '⚔️',
+  thunder: '⛈️',
+};
