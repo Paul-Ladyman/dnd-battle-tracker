@@ -3,12 +3,15 @@ import { createCreature, validateCreature } from './CreatureManager';
 import { sortByInitiative } from './InitiativeManager';
 import { addError } from './AppManager';
 import rollDice from '../util/rollDice';
+import { calculateAbilityModifier } from '../util/characterSheet';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({ id }) => creature.id === id);
 }
 // calculate with DEX as well
-function randomizeInitiative(initiative, index, syncMultipleInitiatives) {
+function randomizeInitiative({
+  initiative, index, syncMultipleInitiatives, apiData,
+}) {
   // keep only first input initiative, randomize for others
   if (index === 0) {
     return initiative;
@@ -16,7 +19,9 @@ function randomizeInitiative(initiative, index, syncMultipleInitiatives) {
   if (syncMultipleInitiatives) {
     return initiative;
   }
-  return rollDice(20);
+  // for multiple random initiatives, use DEX modifier to apply to result
+  const dexterityModifier = apiData?.dexterity ? calculateAbilityModifier(apiData.dexterity) : 0;
+  return rollDice(20) + dexterityModifier;
 }
 
 export function removeCreature(state, creatureId) {
@@ -47,7 +52,7 @@ export function removeCreature(state, creatureId) {
 }
 
 // eslint-disable-next-line max-len
-function createCreatures(creatureIdCount, creatures, creature, multiplier, syncMultipleInitiatives) {
+function createCreatures(creatureIdCount, creatures, creature, multiplier, syncMultipleInitiatives, apiData) {
   if (multiplier <= 1) {
     return [createCreature(creatureIdCount, creature)];
   }
@@ -67,7 +72,9 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier, syncM
     const { name, initiative } = creature;
     const number = i + 1 + groupOffset;
     // don't change empty inputs
-    const newInitiative = initiative ? randomizeInitiative(initiative, i, syncMultipleInitiatives) : undefined;
+    const newInitiative = initiative ? randomizeInitiative({
+      initiative, index: i, syncMultipleInitiatives, apiData,
+    }) : undefined;
     return createCreature(creatureIdCount + i, {
       ...creature, name, number, initiative: newInitiative,
     });
@@ -75,7 +82,9 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier, syncM
 }
 
 export function addCreature(state, creature) {
-  const { multiplier, syncMultipleInitiatives, ...creatureStats } = creature;
+  const {
+    multiplier, syncMultipleInitiatives, ...creatureStats
+  } = creature;
   const creatureMultiplier = multiplier || 1;
   const { name, initiative, healthPoints } = creatureStats;
   const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier);
@@ -99,6 +108,7 @@ export function addCreature(state, creature) {
     creatureStats,
     creatureMultiplier,
     syncMultipleInitiatives,
+    creatureStats.apiData,
   );
 
   const [
