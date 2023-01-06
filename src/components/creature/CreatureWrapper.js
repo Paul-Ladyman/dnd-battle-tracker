@@ -38,7 +38,7 @@ class CreatureWrapper extends Component {
     super(props);
 
     this.state = {
-      expanded: true,
+      expanded: false,
     };
 
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
