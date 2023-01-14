@@ -340,6 +340,7 @@ describe('addCreature', () => {
       conditions: [],
       notes: [],
     };
+
     const createdCreature2 = { ...createdCreature, name: 'name #2', id: 4 };
 
     createCreature
@@ -359,7 +360,9 @@ describe('addCreature', () => {
       ariaAnnouncements: ['creatures added'],
     };
 
-    expect(addCreature(defaultState, creature)).toEqual(expectedState);
+    const newState = addCreature(defaultState, creature);
+
+    expect(newState).toEqual(expectedState);
     expect(createCreature.mock.calls.length).toBe(2);
     const expectedCreature1 = {
       name: 'name',
@@ -434,7 +437,9 @@ describe('addCreature', () => {
       ariaAnnouncements: ['creatures added'],
     };
 
-    expect(addCreature(initialState, creature)).toEqual(expectedState);
+    const newState = addCreature(initialState, creature);
+
+    expect(newState).toEqual(expectedState);
     expect(createCreature.mock.calls.length).toBe(2);
     const expectedCreature1 = {
       name: 'Goblin',

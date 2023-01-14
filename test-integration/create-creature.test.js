@@ -1,4 +1,11 @@
 import DmApp from './page-object-models/dmApp';
+import rollDice from '../src/util/rollDice';
+
+jest.mock('../src/util/rollDice');
+
+beforeAll(() => {
+  rollDice.mockReturnValue(20);
+});
 
 describe('Create creature', () => {
   it('allows a creature to be searched', async () => {
@@ -45,6 +52,13 @@ describe('Create creature', () => {
     await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
   });
 
+  it("allows a creature's initiative to be rolled", async () => {
+    const dmApp = new DmApp();
+    await dmApp.addCreature('goblin 1', '1');
+    await dmApp.addCreatureWithRolledInitiative('goblin 2');
+    await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
+  });
+
   it('creatures without initiative are added at the bottom of the initiative order', async () => {
     const dmApp = new DmApp();
     await dmApp.addCreature('goblin 1', '1');
@@ -70,6 +84,13 @@ describe('Create creature', () => {
     const dmApp = new DmApp();
     await dmApp.addCreature('owlbear', '1', null);
     await dmApp.addCreature('goblin', '2', null, '2');
+    await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'owlbear']);
+  });
+
+  it('adds the same rolled initiative to each multiplied creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.addCreature('owlbear', '1', null);
+    await dmApp.addCreatureWithRolledInitiative('goblin', null, '2');
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'owlbear']);
   });
 

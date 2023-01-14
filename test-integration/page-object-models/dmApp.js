@@ -51,6 +51,12 @@ export default class DmApp extends DndBattleTracker {
     return this.submitCreature();
   }
 
+  async addCreatureWithRolledInitiative(name, hp, multiply) {
+    const rollInitiative = await screen.findByRole('button', { name: 'Roll Initiative' });
+    await this.user.click(rollInitiative);
+    return this.addCreature(name, null, hp, multiply);
+  }
+
   async addNote(name, note) {
     const noteTool = await findNoteTool(name);
     await this.user.type(noteTool, note);
