@@ -5,8 +5,9 @@ import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from './Input';
 import DropdownOption from '../creature/toolbar/DropdownOption';
-
 const BASE_API_URL = 'https://www.dnd5eapi.co';
+import rollDice from '../../util/rollDice';
+import D20Icon from '../icons/D20Icon';
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
   const initialState = {
@@ -90,6 +91,13 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
     propsCreateCreature(creature);
     setState((prevState) => ({ ...prevState, submitted: true }));
+  };
+
+  const onPressDice = () => {
+    setState((prevState) => ({
+      ...prevState,
+      initiative: `${rollDice(20)}`,
+    }));
   };
 
   const formHandler = (event) => {
@@ -176,6 +184,11 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         label="Initiative (optional)"
         name="initiative"
         handleChange={handleChange}
+        submitHandler={onPressDice}
+        rightControls={{
+          rightTitle: 'Roll Initiative',
+          RightSubmitIcon: <D20Icon />,
+        }}
         formHandler={formHandler}
         inputId="create-creature-form-initiative"
       />

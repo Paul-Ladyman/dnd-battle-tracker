@@ -59,7 +59,6 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
 export function addCreature(state, creature) {
   const { multiplier, ...creatureStats } = creature;
   const creatureMultiplier = multiplier || 1;
-
   const { name, initiative, healthPoints } = creatureStats;
   const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier);
 
