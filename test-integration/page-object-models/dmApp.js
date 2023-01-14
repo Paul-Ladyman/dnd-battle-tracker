@@ -19,11 +19,36 @@ export default class DmApp extends DndBattleTracker {
     super(<DungeonMasterAppWrapper />);
   }
 
-  async addCreature(name) {
-    const nameField = await screen.findByText('Creature Name');
-    await this.user.type(nameField, name);
+  async submitCreature() {
     const add = await screen.findByRole('button', { name: 'Add creature' });
     return this.user.click(add);
+  }
+
+  async enterCreatureName(name) {
+    const nameField = await screen.findByText('Creature Name');
+    return this.user.type(nameField, name);
+  }
+
+  async addCreature(name, initiative, hp, multiply) {
+    await this.enterCreatureName(name);
+
+    if (initiative) {
+      const initiativeField = await screen.findByText('Initiative (optional)');
+      await this.user.type(initiativeField, initiative);
+    }
+
+    if (hp) {
+      const hpField = await screen.findByText('HP (optional)');
+      await this.user.type(hpField, hp);
+    }
+
+    if (multiply) {
+      const multiplyField = await screen.findByText('Multiply');
+      await this.user.type(multiplyField, '{delete}');
+      await this.user.type(multiplyField, multiply);
+    }
+
+    return this.submitCreature();
   }
 
   async addNote(name, note) {
@@ -55,5 +80,12 @@ export default class DmApp extends DndBattleTracker {
     const notes = await screen.queryByRole('listbox', { name: `${name} notes` });
     const note = await findByText(notes, noteText);
     return expect(note).toBeVisible();
+  }
+
+  static async assertCreateCreatureSearch(name) {
+    const search = await screen.findByRole('link', { name: `Search ${name} on D&D Beyond` });
+    expect(search).toBeVisible();
+    const expectedHref = `https://www.dndbeyond.com/monsters?filter-search=${name}&sort=cr`;
+    return expect(search).toHaveAttribute('href', expectedHref);
   }
 }
