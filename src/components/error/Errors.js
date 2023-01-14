@@ -3,7 +3,7 @@ import CrossIcon from '../icons/CrossIcon';
 
 export default function Errors({ errors, dismissErrors }) {
   return (
-    <div className="error-bar">
+    <div className="error-bar" role="alert">
       <div className="error-bar--errors">
         {errors.map((error, i) => {
           const isLast = i === errors.length - 1;

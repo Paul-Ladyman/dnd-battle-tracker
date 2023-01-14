@@ -59,7 +59,7 @@ export default function NotesTool({
   const classModifier = 'creature-toolbar--notes__open';
   const customClasses = showNotes ? `${className} ${classModifier}` : className;
   const notesDropdownId = `notes-dropdown-${id}`;
-  const notesAriaLabel = 'notes';
+  const notesAriaLabel = `${name} notes`;
   const dropdownClassName = 'creature-toolbar--notes-dropdown';
   const display = showNotes ? 'block' : 'none';
   const activeNoteId = focusedItem !== null ? `notes-dropdown-${id}-${focusedItem}` : '';
