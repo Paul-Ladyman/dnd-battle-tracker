@@ -1,12 +1,8 @@
 import { createCreature, validateCreature } from './CreatureManager';
 import { removeCreature, addCreature, getCreatureList } from './CreatureListManager';
 import defaultState from '../../test/fixtures/battle';
-import rollDice from '../util/rollDice';
 
 jest.mock('./CreatureManager');
-jest.mock('../util/rollDice');
-
-const randomInitiative = 8;
 
 beforeEach(() => {
   createCreature.mockClear();
@@ -326,7 +322,7 @@ describe('addCreature', () => {
     expect(createCreature).toHaveBeenCalledWith(3, creature);
   });
 
-  it('creates multiple creatures at once based on a multiplier, assigning a random initiative to all but the first', () => {
+  it('creates multiple creatures at once based on a multiplier', () => {
     const creature = {
       name: 'name',
       initiative: 9,
@@ -345,14 +341,8 @@ describe('addCreature', () => {
       notes: [],
     };
 
-    const createdCreature2 = {
-      ...createdCreature,
-      name: 'name #2',
-      id: 4,
-      initiative: randomInitiative,
-    };
+    const createdCreature2 = { ...createdCreature, name: 'name #2', id: 4 };
 
-    rollDice.mockReturnValue(randomInitiative);
     createCreature
       .mockReturnValueOnce(createdCreature)
       .mockReturnValueOnce(createdCreature2);
@@ -383,14 +373,14 @@ describe('addCreature', () => {
     const expectedCreature2 = {
       name: 'name',
       number: 2,
-      initiative: randomInitiative,
+      initiative: 9,
       healthPoints: 10,
     };
     expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
     expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
   });
 
-  it('adds multiple creatures to an existing group based on a multiplier, assigning a random initiative to all but the first', () => {
+  it('adds multiple creatures to an existing group based on a multiplier', () => {
     const creature = {
       name: 'Goblin',
       initiative: 9,
@@ -408,14 +398,8 @@ describe('addCreature', () => {
       conditions: [],
       notes: [],
     };
-    const createdCreature2 = {
-      ...createdCreature,
-      name: 'goblin #6',
-      id: 6,
-      initiative: randomInitiative,
-    };
+    const createdCreature2 = { ...createdCreature, name: 'goblin #6', id: 6 };
 
-    rollDice.mockReturnValue(randomInitiative);
     createCreature
       .mockReturnValueOnce(createdCreature)
       .mockReturnValueOnce(createdCreature2);
@@ -466,7 +450,7 @@ describe('addCreature', () => {
     const expectedCreature2 = {
       name: 'Goblin',
       number: 6,
-      initiative: randomInitiative,
+      initiative: 9,
       healthPoints: 10,
     };
     expect(createCreature).toHaveBeenCalledWith(5, expectedCreature1);
