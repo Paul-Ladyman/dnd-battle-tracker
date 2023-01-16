@@ -1,5 +1,6 @@
 import DmApp from './page-object-models/dmApp';
 import rollDice from '../src/util/rollDice';
+import 'cross-fetch/polyfill';
 
 jest.mock('../src/util/rollDice');
 

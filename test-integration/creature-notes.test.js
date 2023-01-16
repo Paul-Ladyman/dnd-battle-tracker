@@ -1,4 +1,5 @@
 import DmApp from './page-object-models/dmApp';
+import 'cross-fetch/polyfill';
 
 describe('Creature note tool', () => {
   it('has no notes by default', async () => {

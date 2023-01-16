@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DungeonMasterAppWrapper from '../src/components/app/DungeonMasterAppWrapper';
+import 'cross-fetch/polyfill';
 
 describe('Dungeon Master App', () => {
   test('displays application title', async () => {

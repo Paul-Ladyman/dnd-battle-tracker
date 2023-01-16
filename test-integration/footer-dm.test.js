@@ -10,6 +10,7 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import DungeonMasterAppWrapper from '../src/components/app/DungeonMasterAppWrapper';
 import packageInfo from '../package.json';
+import 'cross-fetch/polyfill';
 
 describe('Keyboard shortcuts', () => {
   test('the keyboard shortcuts button is not expanded by default', async () => {
