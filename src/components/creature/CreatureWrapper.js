@@ -128,7 +128,6 @@ class CreatureWrapper extends Component {
       notes,
       conditions: creatureConditions,
       alive,
-      armorClass,
     } = creature;
 
     const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
@@ -150,7 +149,6 @@ class CreatureWrapper extends Component {
 
     const healthPoints = (
       <HealthPoints
-        armorClass={armorClass}
         short={!showExpanded}
         hp={creatureHealthPoints}
         maxHp={maxHealthPoints}

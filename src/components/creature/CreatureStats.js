@@ -111,10 +111,6 @@ export default function CreatureStats({
           <polyline points="0,0 400,2.5 0,5" />
         </svg>
         <div className="top-stats">
-          <div className="property-line first">
-            <h4>Armor Class - </h4>
-            <p>{creature.armor_class}</p>
-          </div>
           <div className="property-line">
             <h4>Hit Points - </h4>
             <p>

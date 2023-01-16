@@ -1085,40 +1085,49 @@ input[type="number"] {
 }
 
 /* creature stats */
-.stat-block { text-align: left; margin: 20px; display: inline-block; vertical-align: top;  background: #FDF1DC; padding: 5px 10px 20px; box-shadow: 0 0 1.5em #867453;border-radius: 20px; }
-.stat-block.wide {  text-align: center; }
+.stat-block { 
+  text-align: left; 
+  margin: 20px; 
+  display: inline-block; 
+  vertical-align: top;  
+  background: #FDF1DC; 
+  padding: 5px 10px 20px; 
+  box-shadow: 0 0 1.5em #867453;
+  border-radius: 20px; 
+}
+.stat-block.wide {  
+  text-align: center; 
+}
 .stat-block.wide .section-left,
-.stat-block.wide .section-right { display: inline-block; vertical-align: top; width: 48%; text-align: left; }
-.stat-block.wide .section-left { margin-right: 1.5%; }
-.stat-block.wide .section-right { margin-left: 1.5%; }
+.stat-block.wide .section-right { 
+  display: inline-block; 
+  vertical-align: top; 
+  width: 48%; 
+  text-align: left; 
+}
+.stat-block.wide .section-left { 
+  margin-right: 1.5%; 
+}
+.stat-block.wide .section-right { 
+  margin-left: 1.5%; 
+}
+
 @media screen and (max-width: 675px){
 	.stat-block.wide{
 		min-width: 280px;
 	}
 	.stat-block.wide .section-left,
 	.stat-block.wide .section-right{
-	  display: block;
-	  width: 100%;
+	display: block;
+	width: 100%;
 	}
 	.stat-block.wide .section-left{
-	  margin: 0;
+	margin: 0;
 	}
 	.stat-block.wide .section-right{
 		margin: 0;
 	}
 }
-/* .orange-border{
-  display: block;
-  background: #E69A28;
-  border: 1px solid #000;
-  height: 5px;
-  padding: 0 10px 0;
-  margin: -10px -10px 0;
-  box-sizing: initial;
-}
-.orange-border.bottom{
-  margin: 15px -10px -20px;
-} */
 .tapered-rule{
   display: block;
   width: 100%;
@@ -1232,25 +1241,23 @@ input[type="number"] {
 }
 #close-creature-stats{
   font-size: 1rem;
-  /* margin-left: 20px; */
   cursor: pointer;
-    border: 0px solid #822000;
-    border: 0px;
-    box-shadow: none;
-    width: auto;
-    border-radius: 0%;
-    height: auto;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: grey
+  border: 0px solid #822000;
+  border: 0px;
+  box-shadow: none;
+  width: auto;
+  border-radius: 0%;
+  height: auto;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: grey
 }
 .flexRow{
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  /* justify-content: space-between; */
 }
 
 .proficiency-bonus{
@@ -1284,10 +1291,8 @@ input[type="number"] {
   font-weight: bold;
 }
 
-
 .Active {
   background-color: #f48f42;
 }
-
 
 /* creature stats */

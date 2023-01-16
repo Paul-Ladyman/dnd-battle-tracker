@@ -18,7 +18,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     name: '',
     initiative: '',
     healthPoints: '',
-    armorClass: '',
     multiplier: 1,
     submitted: false,
     apiData: undefined,
@@ -92,10 +91,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
       ? undefined
       : parseInt(state.healthPoints, 10);
 
-    const armorClass = state.armorClass === ''
-      ? undefined
-      : parseInt(state.armorClass, 10);
-
     const multiplier = parseInt(state.multiplier, 10);
 
     const initiative = state.initiative === ''
@@ -103,7 +98,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
       : parseInt(state.initiative, 10);
 
     const creature = {
-      ...state, healthPoints, initiative, multiplier, armorClass, syncMultipleInitiatives: hasSameInitiative,
+      ...state, healthPoints, initiative, multiplier, syncMultipleInitiatives: hasSameInitiative,
     };
 
     propsCreateCreature(creature);
@@ -136,7 +131,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           initiative: state.initiative.length > 0 ? state.initiative : calculatedInitiative,
           name: monster.name,
           healthPoints: data.hit_points,
-          armorClass: data.armor_class,
           apiData: data,
         }));
       })
@@ -146,7 +140,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   const {
-    name, initiative, healthPoints, multiplier, armorClass,
+    name, initiative, healthPoints, multiplier,
   } = state;
 
   const {
@@ -231,18 +225,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         handleChange={handleChange}
         formHandler={formHandler}
         inputId="create-creature-form-health"
-      />
-      <Input
-        customClasses="create-creature-form--item__number"
-        integer
-        value={armorClass}
-        ariaLabel="create creature form. Armor Class (optional)"
-        label="Armor Class (AC)"
-        min="1"
-        name="armorClass"
-        handleChange={handleChange}
-        formHandler={formHandler}
-        inputId="create-creature-form-ac"
       />
       <div className="create-creature-form--multiplier-wrapper">
         <span className="create-creature-form--multiplier-symbol">x</span>
