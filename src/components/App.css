@@ -528,18 +528,31 @@ input[type="number"] {
   display: grid;
   grid-template-columns: repeat(auto-fit, 18px);
   grid-auto-rows: 1fr;
-  margin-left: 10px;
+  padding: 10px;
+}
+
+.new-creature-toolbar__focused {
+  padding: 8px;
+  border: 2px solid #822000;
+  border-radius: 15px;
+  box-shadow: 0 0 5px #979aa4;
 }
 
 .new-creature-toolbar-button {
   grid-column: span 2;
 }
 
-.new-creature-toolbar-button:hover,
 .new-creature-toolbar-button:focus {
   background-color: #EBE1AD;
-  border: 2px solid #822000;
-  outline: none;
+  border: 1px solid #822000;
+  outline: 2px solid #822000;
+  outline-offset: 2px;
+  box-shadow: 0 0 5px #979aa4;
+}
+
+.new-creature-toolbar-button:hover {
+  background-color: #EBE1AD;
+  border: 1px solid #822000;
   box-shadow: 0 0 5px #979aa4;
 }
 

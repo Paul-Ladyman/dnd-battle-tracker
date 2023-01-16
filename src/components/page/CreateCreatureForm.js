@@ -6,10 +6,10 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from './Input';
-import InitiativeGenerator from '../buttons/InitiativeGenerator';
 import rollDice from '../../util/rollDice';
 import DropdownOption from '../creature/toolbar/DropdownOption';
 import { calculateAbilityModifier } from '../../util/characterSheet';
+import D20Icon from '../icons/D20Icon';
 
 const BASE_API_URL = 'https://www.dnd5eapi.co';
 
@@ -204,11 +204,10 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         label="Initiative (optional)"
         name="initiative"
         handleChange={handleChange}
+        submitHandler={onPressDice}
         rightControls={{
-          rightEnabled: true,
-          RightControl: (
-            <InitiativeGenerator asButton={false} onPressDice={onPressDice} diceRoll={initiative} />
-          ),
+          rightTitle: 'Roll Initiative',
+          RightSubmitIcon: <D20Icon />,
         }}
         formHandler={formHandler}
         inputId="create-creature-form-initiative"

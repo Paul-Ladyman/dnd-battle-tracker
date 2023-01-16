@@ -40,7 +40,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 
 Many of these systems are very feature rich and aim to provide tools beyond the combat tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
-This D&D Battle Tracker simply aims to automate the process of tracking combat using a pen and paper. It attempts to do this in a way that is as straight-forward and easy to use as possible. As such it does not do things like automate dice roles, provide custom character creation tools, battle map creation tools or provide content from the Player's Hand Book. Instead it focuses on automating the smaller things that are prone to error and often distract a DM from the combat itself.
+This D&D Battle Tracker simply aims to automate the process of tracking combat using a pen and paper. It attempts to do this in a way that is as straight-forward and easy to use as possible. As such it does not do things like provide custom character creation tools, battle map creation tools or provide content from the Player's Hand Book. Instead it focuses on automating the smaller things that are prone to error and often distract a DM from the combat itself.
 
 ## Features
 
@@ -83,6 +83,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Player time](https://game-icons.net/1x1/delapouite/player-time.html)
   * [Next button](https://game-icons.net/1x1/delapouite/next-button.html)
   * [Previous button](https://game-icons.net/1x1/delapouite/previous-button.html)
+  * [Dice 20 faces 20](https://game-icons.net/1x1/delapouite/dice-twenty-faces-twenty.html)
 * Icons by [Lorc](http://lorcblog.blogspot.com/):
   * [Magnifying glass](https://game-icons.net/1x1/lorc/magnifying-glass.html)
   * [Crossed swords](https://game-icons.net/1x1/lorc/crossed-swords.html)
