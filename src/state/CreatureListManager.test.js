@@ -328,6 +328,7 @@ describe('addCreature', () => {
       initiative: 9,
       healthPoints: 10,
       multiplier: 2,
+      syncMultipleInitiatives: true,
     };
 
     const createdCreature = {
@@ -386,6 +387,7 @@ describe('addCreature', () => {
       initiative: 9,
       healthPoints: 10,
       multiplier: 2,
+      syncMultipleInitiatives: true,
     };
 
     const createdCreature = {
