@@ -1095,3 +1095,13 @@ input[type="number"] {
     max-width: 785px;
   }
 }
+
+/* scroll to active initiative */
+.creature-scroll-effect {
+  scroll-margin-top: 120px;
+}
+
+.clickable-initiative {
+  cursor: pointer;
+}
+/* scroll to active initiative */

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
 import CreateCreatureForm from '../page/CreateCreatureForm';
@@ -54,6 +54,7 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
+  const creaturesRef = useRef();
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
       const newState = update(prevState, ...args);
@@ -127,6 +128,10 @@ function DungeonMasterApp({
     toggleCreatureHitPointsShare: updateBattle(toggleCreatureHitPointsShare),
   };
 
+  const onScrollActiveInitiative = () => {
+    creaturesRef?.current?.scrollToCreature(activeCreatureId);
+  };
+
   return (
     <>
       <BattleToolbar
@@ -143,6 +148,7 @@ function DungeonMasterApp({
         isSaveLoadSupported={isSaveLoadSupported}
         rulesSearchOpen={rulesSearchOpened}
         toggleRulesSearch={updateBattle(toggleRulesSearch, false)}
+        onScrollActiveInitiative={onScrollActiveInitiative}
       />
       { errors && (
       <Errors
@@ -166,6 +172,7 @@ function DungeonMasterApp({
             createCreatureErrors={state.createCreatureErrors}
           />
           <Creatures
+            ref={creaturesRef}
             creatures={creatures}
             activeCreatureId={activeCreatureId}
             focusedCreature={state.focusedCreature}

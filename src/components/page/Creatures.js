@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useImperativeHandle } from 'react';
 import isHotkey from 'is-hotkey';
 import CreatureWrapper from '../creature/CreatureWrapper';
 import { hotkeys } from '../../hotkeys/hotkeys';
@@ -12,8 +12,25 @@ function Creatures({
   secondsElapsed,
   creatureManagement,
   playerSession,
-}) {
+}, forwardedRef) {
   const [toolbarFocused, setToolbarFocused] = useState(false);
+
+  const refs = creatures.reduce((acc, value) => {
+    acc[value.id] = React.createRef();
+    return acc;
+  }, {});
+
+  useImperativeHandle(
+    forwardedRef,
+    () => ({
+      scrollToCreature: (value) => {
+        refs[value]?.current?.scrollIntoView({
+          behavior: 'smooth',
+        });
+      },
+    }),
+    [refs],
+  );
 
   const hotKeyHandler = (event) => {
     const focusToolbar = isHotkey(hotkeys.focusCreatureToolbar, event);
@@ -38,7 +55,12 @@ function Creatures({
         const active = activeCreatureId === id;
         const focused = focusedCreature === i;
         return (
-          <React.Fragment key={id}>
+          <div
+            className="creature-scroll-effect"
+            key={id}
+            ref={refs[id]}
+          >
+
             <CreatureWrapper
               creature={creature}
               active={active}
@@ -51,11 +73,12 @@ function Creatures({
               creatureManagement={creatureManagement}
               playerSession={playerSession}
             />
-          </React.Fragment>
+          </div>
         );
       })}
+
     </div>
   );
 }
 
-export default Creatures;
+export default React.forwardRef(Creatures);
