@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import isHotkey from 'is-hotkey';
 import BattleToolbar from '../page/BattleToolbar';
 import Creatures from '../page/Creatures';
@@ -42,6 +42,10 @@ function PlayerApp({
 
   const battleData = getBattleData(getLoading, getData, syncLoading, syncData);
 
+  const creaturesRef = useRef();
+
+  const prevActiveCreature = useRef();
+
   useEffect(() => {
     if (onlineError || getError || syncError) {
       setErrors(true);
@@ -70,6 +74,17 @@ function PlayerApp({
   const secondsElapsed = getSecondsElapsed(round);
   const { rulesSearchOpened, ariaAnnouncements } = state;
 
+  const onScrollActiveInitiative = () => {
+    creaturesRef?.current?.scrollToCreature(activeCreatureId);
+  };
+
+  useEffect(() => {
+    if (prevActiveCreature.current !== activeCreatureId) {
+      onScrollActiveInitiative(activeCreatureId);
+    }
+    prevActiveCreature.current = activeCreatureId;
+  }, [activeCreatureId, onScrollActiveInitiative]);
+
   return (
     <>
       <BattleToolbar
@@ -80,6 +95,7 @@ function PlayerApp({
         rulesSearchOpen={rulesSearchOpened}
         toggleRulesSearch={updateRulesSearch}
         playerSession
+        onScrollActiveInitiative={onScrollActiveInitiative}
       />
       { errors && (
       <Errors
@@ -97,6 +113,7 @@ function PlayerApp({
             loading={loading}
           />
           <Creatures
+            ref={creaturesRef}
             creatures={creatures}
             activeCreatureId={activeCreatureId}
             round={round}
