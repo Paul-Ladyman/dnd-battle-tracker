@@ -149,9 +149,13 @@ function BattleToolbar({
       )}
       <div className="battle-toolbar--stat">
         Initiative:
-        <div onClick={onScrollActiveInitiative} className="battle-toolbar--stat-value clickable-initiative">
+        <button
+          type="button"
+          onClick={onScrollActiveInitiative}
+          className="battle-toolbar--stat-value battle-toolbar--stat-value__button"
+        >
           {initiative}
-        </div>
+        </button>
       </div>
       <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
         Creatures:
