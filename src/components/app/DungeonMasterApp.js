@@ -55,6 +55,9 @@ function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
   const creaturesRef = useRef();
+
+  const prevActiveCreature = useRef();
+
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
       const newState = update(prevState, ...args);
@@ -131,6 +134,13 @@ function DungeonMasterApp({
   const onScrollActiveInitiative = () => {
     creaturesRef?.current?.scrollToCreature(activeCreatureId);
   };
+
+  useEffect(() => {
+    if (prevActiveCreature.current !== activeCreatureId) {
+      onScrollActiveInitiative(activeCreatureId);
+    }
+    prevActiveCreature.current = activeCreatureId;
+  }, [activeCreatureId, onScrollActiveInitiative]);
 
   return (
     <>
