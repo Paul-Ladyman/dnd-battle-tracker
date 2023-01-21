@@ -3,6 +3,7 @@ import React from 'react';
 import {
   screen,
   findByRole,
+  getByRole,
   findByText,
   fireEvent,
 } from '@testing-library/react';
@@ -68,6 +69,12 @@ export default class DmApp extends DndBattleTracker {
     const noteTool = await findNoteTool(name);
     await this.user.type(noteTool, note);
     return fireEvent.keyDown(noteTool, { key: 'enter', keyCode: 13 });
+  }
+
+  async startBattle() {
+    const banner = await screen.findByRole('banner');
+    const startBattleButton = getByRole(banner, 'button', { name: 'Start battle' });
+    return this.user.click(startBattleButton);
   }
 
   static async assertCreatureNoteToolClosed(name) {

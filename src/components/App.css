@@ -1115,10 +1115,16 @@ input[type="number"] {
   border-radius: 5px;
 }
 
-.battle-toolbar--stat-value__button:focus,
-.battle-toolbar--stat-value__button:hover {
+.battle-toolbar--stat-value__button-disabled {
+  cursor: auto;
+}
+
+.battle-toolbar--stat-value__button-enabled:focus,
+.battle-toolbar--stat-value__button-enabled:hover {
   background-color: #EBE1AD;
-  box-shadow: 0 0 7px #979aa4;
-  outline: 2px solid #822000;
+  box-shadow: 0 0 5px #979aa4;
+  border: 2px solid #822000;
+  padding: 0px;
+  outline: none;
 }
 /* scroll to active initiative */
