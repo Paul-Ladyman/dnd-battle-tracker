@@ -135,12 +135,12 @@ function DungeonMasterApp({
     creaturesRef?.current?.scrollToCreature(activeCreatureId);
   };
 
-  useEffect(() => {
-    if (prevActiveCreature.current !== activeCreatureId) {
-      onScrollActiveInitiative(activeCreatureId);
-    }
-    prevActiveCreature.current = activeCreatureId;
-  }, [activeCreatureId, onScrollActiveInitiative]);
+  // useEffect(() => {
+  //   if (prevActiveCreature.current !== activeCreatureId) {
+  //     onScrollActiveInitiative(activeCreatureId);
+  //   }
+  //   prevActiveCreature.current = activeCreatureId;
+  // }, [activeCreatureId, onScrollActiveInitiative]);
 
   return (
     <>
