@@ -1123,8 +1123,6 @@ input[type="number"] {
 .battle-toolbar--stat-value__button-enabled:hover {
   background-color: #EBE1AD;
   box-shadow: 0 0 5px #979aa4;
-  border: 2px solid #822000;
-  padding: 0px;
-  outline: none;
+  outline: 2px solid #822000;
 }
 /* scroll to active initiative */
