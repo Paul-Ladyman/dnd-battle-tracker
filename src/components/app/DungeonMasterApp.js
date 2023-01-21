@@ -56,7 +56,7 @@ function DungeonMasterApp({
 }) {
   const creaturesRef = useRef();
 
-  const prevActiveCreature = useRef();
+  // const prevActiveCreature = useRef();
 
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
