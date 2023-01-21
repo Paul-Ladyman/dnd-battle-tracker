@@ -124,6 +124,7 @@ function BattleToolbar({
   const showSaveLoadButtons = isSaveLoadSupported();
 
   const round0 = round === 0;
+  const currentTurnLabel = round0 ? '...' : initiative;
   const buttonClass = 'battle-toolbar--button';
   const creaturesAdded = creatureCount > 0;
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
@@ -157,10 +158,10 @@ function BattleToolbar({
           onClick={onScrollActiveInitiative}
           className={currentTurnClasses}
           title="Current Turn"
-          aria-label="Current Turn"
+          aria-label={currentTurnLabel}
           disabled={round0}
         >
-          {round0 ? '...' : initiative}
+          {currentTurnLabel}
         </button>
       </div>
       <div className="battle-toolbar--stat battle-toolbar--stat__extra2">

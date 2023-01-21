@@ -4,6 +4,7 @@ import {
   screen,
   getByText,
   getByRole,
+  findByRole,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -35,15 +36,14 @@ export default class DndBattleTracker {
     return expect(errorBar).toHaveTextContent(message);
   }
 
-  static async assertCurrentTurn(enabled, label) {
+  static async assertCurrentTurn(enabled, name) {
     const banner = await screen.findByRole('banner');
-    const currentTurnButton = getByRole(banner, 'button', { name: 'Current Turn' });
+    const currentTurnButton = await findByRole(banner, 'button', { name });
     expect(currentTurnButton).toBeVisible();
-    expect(currentTurnButton).toHaveTextContent(label);
+    expect(currentTurnButton).toHaveTextContent(name);
     if (enabled) {
-      expect(currentTurnButton).toBeEnabled();
-    } else {
-      expect(currentTurnButton).toBeDisabled();
+      return expect(currentTurnButton).toBeEnabled();
     }
+    return expect(currentTurnButton).toBeDisabled();
   }
 }

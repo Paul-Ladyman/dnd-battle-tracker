@@ -44,7 +44,7 @@ function PlayerApp({
 
   const creaturesRef = useRef();
 
-  const prevActiveCreature = useRef();
+  // const prevActiveCreature = useRef();
 
   useEffect(() => {
     if (onlineError || getError || syncError) {
@@ -78,12 +78,13 @@ function PlayerApp({
     creaturesRef?.current?.scrollToCreature(activeCreatureId);
   };
 
-  useEffect(() => {
-    if (prevActiveCreature.current !== activeCreatureId) {
-      onScrollActiveInitiative(activeCreatureId);
-    }
-    prevActiveCreature.current = activeCreatureId;
-  }, [activeCreatureId, onScrollActiveInitiative]);
+  // useEffect(() => {
+  //   console.log('>>> activeCreatureId', activeCreatureId, prevActiveCreature.current);
+  //   if (activeCreatureId !== null && prevActiveCreature.current !== activeCreatureId) {
+  //     onScrollActiveInitiative(activeCreatureId);
+  //   }
+  //   prevActiveCreature.current = activeCreatureId;
+  // }, [activeCreatureId, onScrollActiveInitiative]);
 
   return (
     <>
