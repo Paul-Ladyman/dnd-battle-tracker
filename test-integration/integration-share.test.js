@@ -3,7 +3,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import DungeonMasterAppWrapper from '../src/components/app/DungeonMasterAppWrapper';
-import 'cross-fetch/polyfill';
 
 const writeTextMock = jest.fn();
 
