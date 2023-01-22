@@ -54,9 +54,7 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
-  const creaturesRef = useRef();
-
-  // const prevActiveCreature = useRef();
+  const creaturesRef = useRef(null);
 
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
@@ -100,6 +98,7 @@ function DungeonMasterApp({
     rulesSearchOpened,
     ariaAnnouncements,
     battleId,
+    focusedCreature,
   } = state;
 
   useEffect(() => {
@@ -132,15 +131,8 @@ function DungeonMasterApp({
   };
 
   const onScrollActiveInitiative = () => {
-    creaturesRef?.current?.scrollToCreature(activeCreatureId);
+    creaturesRef.current.scrollIntoView(activeCreatureId);
   };
-
-  // useEffect(() => {
-  //   if (prevActiveCreature.current !== activeCreatureId) {
-  //     onScrollActiveInitiative(activeCreatureId);
-  //   }
-  //   prevActiveCreature.current = activeCreatureId;
-  // }, [activeCreatureId, onScrollActiveInitiative]);
 
   return (
     <>
@@ -185,7 +177,7 @@ function DungeonMasterApp({
             ref={creaturesRef}
             creatures={creatures}
             activeCreatureId={activeCreatureId}
-            focusedCreature={state.focusedCreature}
+            focusedCreature={focusedCreature}
             setFocus={updateBattle(setFocus, false)}
             round={round}
             secondsElapsed={secondsElapsed}

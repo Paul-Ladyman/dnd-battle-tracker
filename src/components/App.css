@@ -1099,7 +1099,7 @@ input[type="number"] {
 
 /* scroll to active initiative */
 .creature-scroll-effect {
-  scroll-margin-top: 120px;
+  scroll-margin-top: 54px;
 }
 
 .battle-toolbar--stat-value__button {

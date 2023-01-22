@@ -23,9 +23,10 @@ function Creatures({
   useImperativeHandle(
     forwardedRef,
     () => ({
-      scrollToCreature: (value) => {
-        refs[value]?.current?.scrollIntoView({
+      scrollIntoView: (value) => {
+        refs[value].current.scrollIntoView({
           behavior: 'smooth',
+          block: 'center',
         });
       },
     }),
