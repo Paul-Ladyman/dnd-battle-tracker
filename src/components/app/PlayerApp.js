@@ -44,8 +44,6 @@ function PlayerApp({
 
   const creaturesRef = useRef();
 
-  // const prevActiveCreature = useRef();
-
   useEffect(() => {
     if (onlineError || getError || syncError) {
       setErrors(true);

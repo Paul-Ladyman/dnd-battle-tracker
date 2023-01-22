@@ -131,7 +131,7 @@ function DungeonMasterApp({
   };
 
   const onScrollActiveInitiative = () => {
-    creaturesRef.current.scrollIntoView(activeCreatureId);
+    creaturesRef.current.scrollToCreature(activeCreatureId);
   };
 
   return (
