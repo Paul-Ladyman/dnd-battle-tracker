@@ -89,6 +89,7 @@ function BattleToolbar({
   toggleShare,
   rulesSearchOpen,
   toggleRulesSearch,
+  onScrollActiveInitiative,
 }) {
   const [optionsExpanded, setOptionsExpanded] = useState(false);
   const nextButton = useRef(null);
@@ -122,15 +123,19 @@ function BattleToolbar({
 
   const showSaveLoadButtons = isSaveLoadSupported();
 
+  const round0 = round === 0;
+  const currentTurnLabel = round0 ? '...' : initiative;
   const buttonClass = 'battle-toolbar--button';
   const creaturesAdded = creatureCount > 0;
   const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} button__disabled`;
   const resetButtonClasses = `${buttonClasses} ${buttonClass}__option`;
   const shareButtonClasses = `${buttonClass} ${buttonClass}__option`;
   const rulesSearchButtonClasses = showSaveLoadButtons ? `${buttonClass} ${buttonClass}__option` : buttonClass;
-  const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
-  const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
+  const nextButtonLabel = round0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
+  const nextButtonTitle = round0 ? 'Start battle' : 'Next initiative';
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
+  const currentTurnDefaultClasses = 'battle-toolbar--stat-value battle-toolbar--stat-value__button';
+  const currentTurnClasses = round0 ? `${currentTurnDefaultClasses} battle-toolbar--stat-value__button-disabled` : `${currentTurnDefaultClasses} battle-toolbar--stat-value__button-enabled`;
 
   return (
     <header className="battle-toolbar">
@@ -148,7 +153,16 @@ function BattleToolbar({
       )}
       <div className="battle-toolbar--stat">
         Initiative:
-        <div className="battle-toolbar--stat-value">{initiative}</div>
+        <button
+          type="button"
+          onClick={onScrollActiveInitiative}
+          className={currentTurnClasses}
+          title="Current Turn"
+          aria-label={currentTurnLabel}
+          disabled={round0}
+        >
+          {currentTurnLabel}
+        </button>
       </div>
       <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
         Creatures:

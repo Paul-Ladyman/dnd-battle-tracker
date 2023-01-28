@@ -1,32 +1,33 @@
-import React from 'react';
 import {
   findByRole,
   findByText,
   queryByText,
-  render,
   screen,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import PlayerAppWrapper from '../src/components/app/PlayerAppWrapper';
 import packageInfo from '../package.json';
+import PlayerApp from './page-object-models/playerApp';
 
 describe('Keyboard shortcuts', () => {
   test('the keyboard shortcuts button is not expanded by default', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const button = await screen.findByRole('button', { name: 'Keyboard shortcuts' });
     expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 
   test('the keyboard shortcuts are hidden by default', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const shortcuts = await screen.findByTestId('keyboard-shortcuts');
     expect(shortcuts).toBeInTheDocument();
     expect(shortcuts).toHaveStyle({ display: 'none' });
   });
 
   test('the keyboard shortcuts button is expanded when clicked', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Keyboard shortcuts' });
     await user.click(button);
@@ -34,7 +35,8 @@ describe('Keyboard shortcuts', () => {
   });
 
   test('the keyboard shortcuts are displayed as a list', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Keyboard shortcuts' });
     await user.click(button);
@@ -45,7 +47,8 @@ describe('Keyboard shortcuts', () => {
   });
 
   test('the keyboard shortcuts are displayed when the button is clicked', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Keyboard shortcuts' });
     await user.click(button);
@@ -55,7 +58,8 @@ describe('Keyboard shortcuts', () => {
   });
 
   test('the keyboard shortcuts button is not expanded when clicked again', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Keyboard shortcuts' });
     await user.click(button);
@@ -64,7 +68,8 @@ describe('Keyboard shortcuts', () => {
   });
 
   test('the keyboard shortcuts are hidden when the button is clicked', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Keyboard shortcuts' });
     await user.click(button);
@@ -77,20 +82,23 @@ describe('Keyboard shortcuts', () => {
 
 describe('Info', () => {
   test('the info button is not expanded by default', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const button = await screen.findByRole('button', { name: 'Info' });
     expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 
   test('the info section is hidden by default', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const info = await screen.findByTestId('info');
     expect(info).toBeInTheDocument();
     expect(info).toHaveStyle({ display: 'none' });
   });
 
   test('the info button is expanded when clicked', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Info' });
     await user.click(button);
@@ -98,7 +106,8 @@ describe('Info', () => {
   });
 
   test('the info section is displayed when the button is clicked', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Info' });
     await user.click(button);
@@ -108,7 +117,8 @@ describe('Info', () => {
   });
 
   test('the info button is not expanded when clicked again', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Info' });
     await user.click(button);
@@ -117,7 +127,8 @@ describe('Info', () => {
   });
 
   test('the info section is hidden when the button is clicked', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Info' });
     await user.click(button);
@@ -128,7 +139,8 @@ describe('Info', () => {
   });
 
   test('displays only version details if build time is not set', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Info' });
     await user.click(button);
@@ -144,7 +156,8 @@ describe('Info', () => {
 
   test('displays only version details if build time is invalid', async () => {
     window.BUILD_TIME = 'invalid';
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Info' });
     await user.click(button);
@@ -160,7 +173,8 @@ describe('Info', () => {
 
   test('displays full build details in UTC if build time is set', async () => {
     window.BUILD_TIME = '1657373230123';
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const user = userEvent.setup();
     const button = await screen.findByRole('button', { name: 'Info' });
     await user.click(button);
@@ -175,7 +189,8 @@ describe('Info', () => {
 
 describe('DM tips', () => {
   test('the dm tips are not displayed', async () => {
-    render(<PlayerAppWrapper />);
+    const _ = new PlayerApp();
+    await PlayerApp.waitForOnline();
     const button = await screen.queryByRole('button', { name: 'Dungeon Master tips' });
     expect(button).not.toBeInTheDocument();
     const tips = await screen.queryByTestId('dm-tips');

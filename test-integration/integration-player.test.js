@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PlayerAppWrapper from '../src/components/app/PlayerAppWrapper';
-import 'cross-fetch/polyfill';
 
 function waitForOnline() {
   return screen.findByText('Player Session random-battle-id');
