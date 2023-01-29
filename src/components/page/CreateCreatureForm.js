@@ -3,7 +3,7 @@ import isHotkey from 'is-hotkey';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
-import DropdownOption from '../creature/toolbar/DropdownOption';
+import DropdownOption from '../form/DropdownOption';
 import Input from '../form/Input';
 import rollDice from '../../util/rollDice';
 import D20Icon from '../icons/D20Icon';
