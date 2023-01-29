@@ -25,7 +25,7 @@ export default function ComboboxList({
   handleRemoveItem,
   inputRef,
   error,
-  inputClass,
+  customClassName,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
@@ -101,8 +101,10 @@ export default function ComboboxList({
     setFocusedItem(null);
     setExpanded(false);
     setValue(item.text);
-    onItemSubmit(item);
-    inputRef.current.focus();
+    if (onItemSubmit) {
+      onItemSubmit(item);
+    }
+    internalInputRef.current.focus();
   };
 
   const handleKeyboardSubmit = () => {
@@ -178,7 +180,7 @@ export default function ComboboxList({
 
   return (
     <div
-      className="input--form combobox-wrapper"
+      className={`input--form combobox-wrapper ${customClassName}`}
       id={id}
     >
       <Input
@@ -192,7 +194,7 @@ export default function ComboboxList({
         rightControls={rControls}
         leftControls={lControls}
         inputId={`combobox-${id}`}
-        customClasses={`${customClasses} ${inputClass}`}
+        customClasses={customClasses}
         onClick={toggleExpanded}
         inputRef={internalInputRef}
         value={value}

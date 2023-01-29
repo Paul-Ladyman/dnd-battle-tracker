@@ -22,8 +22,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
   const [monsterData, setMonsterData] = useState([]);
 
-  const [dropdownVisible, setDropdownVisible] = useState(true);
-
   const nameInput = useRef(null);
 
   const hotKeyHandler = (e) => {
@@ -36,11 +34,9 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     fetch(`${BASE_API_URL}/api/monsters`, { 'Content-Type': 'application/json' })
       .then((response) => response.json())
       .then((data) => {
-        setDropdownVisible(true);
         setMonsterData(data.results);
       })
       .catch(() => {
-        setDropdownVisible(false);
         setMonsterData([]);
       });
   }, []);
@@ -53,7 +49,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
   const resetForm = () => {
     setState(initialState);
-    setDropdownVisible(true);
     nameInput.current.focus();
   };
 
@@ -122,9 +117,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           healthPoints: data.hit_points,
           // TODO: add AC
         }));
-      })
-      .finally(() => {
-        setDropdownVisible(false);
       });
   };
 
@@ -152,8 +144,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     RightControl: <MonsterSearcher asButton={false} search={name} />,
   };
 
-  console.log('>>> FILTEREDMONSTERS', filteredMonsters);
-
   return (
     <form className="create-creature-form">
       <ComboboxList
@@ -173,48 +163,8 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         onItemSubmit={onSelectMonster}
         inputRef={nameInput}
         error={nameError && <span className="form--label__error"> *</span>}
-        inputClass="create-creature-form--item__text"
+        customClassName="create-creature-form--item__text"
       />
-      {/* <Input
-        customClasses="create-creature-form--item__text"
-        required
-        error={nameError && <span className="form--label__error"> *</span>}
-        inputRef={nameInput}
-        value={name}
-        ariaLabel="create creature form. Name (required)"
-        label="Creature Name"
-        name="name"
-        handleChange={handleChange}
-        rightControls={{
-          rightEnabled: true,
-          RightControl: <MonsterSearcher asButton={false} search={name} />,
-        }}
-        formHandler={formHandler}
-        inputId="create-creature-form-name"
-      />
-
-      {name.length > 1 && filteredMonsters.length > 0 && dropdownVisible && (
-      <ul
-        style={{
-          height: '80px',
-          overflowY: 'scroll',
-        }}
-        className="creature-toolbar--notes-dropdown"
-        role="listbox"
-      >
-        {filteredMonsters.map((item) => (
-          <div className="creature-toolbar--notes-dropdown-group" key={item.index}>
-            <DropdownOption
-              className="creature-toolbar--notes-dropdown-item"
-              onClick={() => onSelectMonster(item)}
-              selected={false}
-              text={item.name}
-            />
-          </div>
-        ))}
-      </ul>
-      )} */}
-
       <Input
         customClasses="create-creature-form--item__number create-creature-form--item__tall"
         error={initiativeError}
