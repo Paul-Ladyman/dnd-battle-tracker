@@ -10,7 +10,7 @@ const graphqlHost = 'wyqoq6xpifbjlm6xq6jnqugjvm.appsync-api.eu-west-2.amazonaws.
 const uri = `https://${graphqlHost}/graphql`;
 const region = 'eu-west-2';
 
-const cache = new InMemoryCache();
+export const cache = new InMemoryCache();
 const cognitoIdentity = new CognitoIdentity({
   region,
 });

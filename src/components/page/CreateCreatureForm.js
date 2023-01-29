@@ -3,11 +3,12 @@ import isHotkey from 'is-hotkey';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
-import Input from './Input';
 import DropdownOption from '../creature/toolbar/DropdownOption';
-const BASE_API_URL = 'https://www.dnd5eapi.co';
+import Input from '../form/Input';
 import rollDice from '../../util/rollDice';
 import D20Icon from '../icons/D20Icon';
+
+const BASE_API_URL = 'https://www.dnd5eapi.co';
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
   const initialState = {
