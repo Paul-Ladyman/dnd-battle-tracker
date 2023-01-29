@@ -99,12 +99,15 @@ export default class DmApp extends DndBattleTracker {
 
   static async navigateToNoteByKeyboard(name, noteText) {
     const noteTool = await findNoteTool(name);
-    const notes = await screen.queryByRole('listbox', { name: `${name} notes` });
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
     const noteNodes = notes.childNodes;
     const noteIndex = Array.from(noteNodes).findIndex((node) => node.textContent === noteText);
-    for (let i = 0; i <= noteIndex - 1; i += 1) {
-      fireEvent.keyDown(noteTool, { key: 'arrowdown', keyCode: 40 });
-    }
+    const navigationSteps = Array.from({ length: noteIndex });
+    const promises = navigationSteps.map(() => new Promise((resolve) => {
+      const keyDown = fireEvent.keyDown(noteTool, { key: 'arrowdown', keyCode: 40 });
+      resolve(keyDown);
+    }));
+    return Promise.all(promises);
   }
 
   async editNoteByKeyboard(name, noteText, newText) {
@@ -197,7 +200,7 @@ export default class DmApp extends DndBattleTracker {
     return expect(note).toBeVisible();
   }
 
-  static async assertCreatureNotesLength(name, length) {
+  static assertCreatureNotesLength(name, length) {
     const notes = screen.queryByRole('listbox', { name: `${name} notes` });
     expect(notes.childElementCount).toBe(length);
   }

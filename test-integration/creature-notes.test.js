@@ -95,9 +95,9 @@ describe('Creature note tool', () => {
     await dmApp.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
-    await DmApp.removeNoteByKeyboard('goblin', 'note 1');
+    await DmApp.removeNoteByKeyboard('goblin', 'note 2');
     await dmApp.openNotes('goblin');
-    await DmApp.assertCreatureNoteExists('goblin', 'note 2');
+    await DmApp.assertCreatureNoteExists('goblin', 'note 1');
     DmApp.assertCreatureNotesLength('goblin', 1);
   });
 

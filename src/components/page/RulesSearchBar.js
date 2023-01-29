@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Input from './Input';
+import Input from '../form/Input';
 import ExternalLink from './ExternalLink';
 import RulesSearchIcon from '../icons/RulesSearchIcon';
 
