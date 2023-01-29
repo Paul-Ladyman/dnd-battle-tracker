@@ -3,10 +3,10 @@ import isHotkey from 'is-hotkey';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
-import DropdownOption from '../form/DropdownOption';
 import Input from '../form/Input';
 import rollDice from '../../util/rollDice';
 import D20Icon from '../icons/D20Icon';
+import ComboboxList from '../form/ComboboxList';
 
 const BASE_API_URL = 'https://www.dnd5eapi.co';
 
@@ -75,6 +75,10 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     });
   };
 
+  const setName = (newName) => {
+    setState((prevState) => ({ ...prevState, name: newName }));
+  };
+
   const createCreature = () => {
     const healthPoints = state.healthPoints === ''
       ? undefined
@@ -132,11 +136,46 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     nameError, initiativeError, healthError, multiplierError,
   } = createCreatureErrors;
 
-  const filteredMonsters = monsterData.filter((monster) =>  monster.name.toLowerCase().includes(name.toLowerCase()));
+  const filteredMonsters = () => {
+    if (name.length < 2) return [];
+    return monsterData
+      .filter((monster) => monster.name.toLowerCase().includes(name.toLowerCase()))
+      .map((monster) => ({
+        ...monster,
+        text: monster.name,
+        id: monster.index,
+      }));
+  };
+
+  const nameRightControls = {
+    rightEnabled: true,
+    RightControl: <MonsterSearcher asButton={false} search={name} />,
+  };
+
+  console.log('>>> FILTEREDMONSTERS', filteredMonsters);
 
   return (
     <form className="create-creature-form">
-      <Input
+      <ComboboxList
+        value={name}
+        setValue={setName}
+        list={filteredMonsters()}
+        id="create-creature-form-name"
+        dropdownId="create-creature-form-name-dropdown"
+        dropdownLabel="Select creature"
+        label="Creature Name"
+        listAriaLabel="Creature Name"
+        inputAriaLabel="create creature form. Name (required)"
+        inputAriaLabelItemSelected="create creature form. Name (required)"
+        rightControls={nameRightControls}
+        rightControlsItemSelected={nameRightControls}
+        handleSubmit={createCreature}
+        onItemSubmit={onSelectMonster}
+        inputRef={nameInput}
+        error={nameError && <span className="form--label__error"> *</span>}
+        inputClass="create-creature-form--item__text"
+      />
+      {/* <Input
         customClasses="create-creature-form--item__text"
         required
         error={nameError && <span className="form--label__error"> *</span>}
@@ -174,7 +213,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           </div>
         ))}
       </ul>
-      )}
+      )} */}
 
       <Input
         customClasses="create-creature-form--item__number create-creature-form--item__tall"
