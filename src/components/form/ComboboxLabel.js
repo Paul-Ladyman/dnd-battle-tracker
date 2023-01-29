@@ -12,7 +12,7 @@ export default function ComboboxLabel(expanded, label, dropdownId, onClick) {
     <>
       Notes
       <button
-        className="creature-toolbar--notes-dropdown-expander"
+        className="combobox-dropdown-expander"
         type="button"
         tabIndex="-1"
         aria-label={label}

@@ -30,10 +30,10 @@ export default function ComboboxList({
   const hasList = list.length > 0;
   const activeNoteId = focusedItem !== null ? `${dropdownId}-${focusedItem}` : '';
   const showList = hasList && expanded;
-  const className = 'creature-toolbar--notes';
-  const classModifier = 'creature-toolbar--notes__open';
+  const className = 'combobox';
+  const classModifier = 'combobox__open';
   const customClasses = showList ? `${className} ${classModifier}` : className;
-  const dropdownClassName = 'creature-toolbar--notes-dropdown';
+  const dropdownClassName = 'combobox-dropdown';
   const display = showList ? 'block' : 'none';
 
   const rControls = selectedItem ? rightControlsItemSelected : rightControls;
@@ -172,7 +172,7 @@ export default function ComboboxList({
 
   return (
     <div
-      className="input--form creature-toolbar--notes-wrapper"
+      className="input--form combobox-wrapper"
       id={id}
     >
       <Input
@@ -198,12 +198,12 @@ export default function ComboboxList({
         {
           list.map((item, i) => {
             const selected = focusedItem === i;
-            const itemClass = 'creature-toolbar--notes-dropdown-item';
+            const itemClass = 'combobox-dropdown-item';
             const itemModifier = selected ? ` ${itemClass}__focused` : '';
             const itemClassName = `${itemClass}${itemModifier}`;
             const htmlId = `combobox-dropdown-${id}-${item.id}`;
             return (
-              <div className="creature-toolbar--notes-dropdown-group" key={htmlId}>
+              <div className="combobox-dropdown-group" key={htmlId}>
                 <DropdownOption
                   className={itemClassName}
                   onClick={() => handleItemSubmit(item)}
