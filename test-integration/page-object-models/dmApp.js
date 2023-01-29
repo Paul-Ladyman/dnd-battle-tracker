@@ -58,6 +58,11 @@ export default class DmApp extends DndBattleTracker {
     return this.addCreature(name, null, hp, multiply);
   }
 
+  async typeNote(name, note) {
+    const noteTool = await findNoteTool(name);
+    return this.user.type(noteTool, note);
+  }
+
   async addNote(name, note) {
     const noteTool = await findNoteTool(name);
     await this.user.type(noteTool, note);
@@ -71,6 +76,88 @@ export default class DmApp extends DndBattleTracker {
     return fireEvent.keyDown(noteTool, { key: 'enter', keyCode: 13 });
   }
 
+  async editNote(name, noteText, newText) {
+    const noteTool = await findNoteTool(name);
+    await this.user.click(noteTool);
+    const notes = await screen.queryByRole('listbox', { name: `${name} notes` });
+    const note = await findByText(notes, noteText);
+    await this.user.click(note);
+    await this.user.type(noteTool, newText);
+    const edit = await findByRole(noteTool.parentElement, 'button', { name: 'Edit Note' });
+    return this.user.click(edit);
+  }
+
+  static async navigateNotesUp(name) {
+    const noteTool = await findNoteTool(name);
+    fireEvent.keyDown(noteTool, { key: 'arrowup', keyCode: 38 });
+  }
+
+  static async navigateNotesDown(name) {
+    const noteTool = await findNoteTool(name);
+    fireEvent.keyDown(noteTool, { key: 'arrowdown', keyCode: 40 });
+  }
+
+  static async navigateToNoteByKeyboard(name, noteText) {
+    const noteTool = await findNoteTool(name);
+    const notes = await screen.queryByRole('listbox', { name: `${name} notes` });
+    const noteNodes = notes.childNodes;
+    const noteIndex = Array.from(noteNodes).findIndex((node) => node.textContent === noteText);
+    for (let i = 0; i <= noteIndex - 1; i += 1) {
+      fireEvent.keyDown(noteTool, { key: 'arrowdown', keyCode: 40 });
+    }
+  }
+
+  async editNoteByKeyboard(name, noteText, newText) {
+    const noteTool = await findNoteTool(name);
+    fireEvent.keyDown(noteTool, { key: 'arrowdown', keyCode: 40 });
+    await DmApp.navigateToNoteByKeyboard(name, noteText);
+    fireEvent.keyDown(noteTool, { key: 'enter', keyCode: 13 });
+    await this.user.type(noteTool, newText);
+    return fireEvent.keyDown(noteTool, { key: 'enter', keyCode: 13 });
+  }
+
+  async removeNote(name, noteText) {
+    const noteTool = await findNoteTool(name);
+    await this.user.click(noteTool);
+    const notes = await screen.queryByRole('listbox', { name: `${name} notes` });
+    const note = await findByText(notes, noteText);
+    await this.user.click(note);
+    const remove = await findByRole(noteTool.parentElement, 'button', { name: 'Remove note' });
+    return this.user.click(remove);
+  }
+
+  static async removeNoteByKeyboard(name, noteText) {
+    const noteTool = await findNoteTool(name);
+    fireEvent.keyDown(noteTool, { key: 'arrowdown', keyCode: 40 });
+    await DmApp.navigateToNoteByKeyboard(name, noteText);
+    return fireEvent.keyDown(noteTool, { key: 'delete', keyCode: 46 });
+  }
+
+  async openNotes(name) {
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
+    if (notes) return Promise.resolve();
+    const noteTool = await findNoteTool(name);
+    return this.user.click(noteTool);
+  }
+
+  async closeNotes(name) {
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
+    if (notes) {
+      const noteTool = await findNoteTool(name);
+      return this.user.click(noteTool);
+    }
+    return Promise.resolve();
+  }
+
+  static async closeNotesByKeyboard(name) {
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
+    if (notes) {
+      const noteTool = await findNoteTool(name);
+      return fireEvent.keyDown(noteTool, { key: 'esc', keyCode: 27 });
+    }
+    return Promise.resolve();
+  }
+
   async startBattle() {
     const banner = await screen.findByRole('banner');
     const startBattleButton = getByRole(banner, 'button', { name: 'Start battle' });
@@ -82,17 +169,37 @@ export default class DmApp extends DndBattleTracker {
     return expect(noteTool).toHaveAttribute('aria-expanded', 'false');
   }
 
+  static async assertCreatureNoteToolOpen(name) {
+    const noteTool = await findNoteTool(name);
+    return expect(noteTool).toHaveAttribute('aria-expanded', 'true');
+  }
+
   static assertCreatureNotesEmpty(name) {
     const notes = screen.queryByRole('listbox', { name: `${name} notes` });
     expect(notes).toBe(null);
   }
 
-  async assertCreatureNoteExists(name, noteText) {
-    const noteTool = await findNoteTool(name);
-    await this.user.click(noteTool);
-    const notes = await screen.queryByRole('listbox', { name: `${name} notes` });
+  static async assertCreatureNoteSelected(name, noteText) {
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
+    const note = await findByText(notes, noteText);
+    return expect(note).toHaveAttribute('aria-selected', 'true');
+  }
+
+  static async assertCreatureNoteNotSelected(name, noteText) {
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
+    const note = await findByText(notes, noteText);
+    return expect(note).toHaveAttribute('aria-selected', 'false');
+  }
+
+  static async assertCreatureNoteExists(name, noteText) {
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
     const note = await findByText(notes, noteText);
     return expect(note).toBeVisible();
+  }
+
+  static async assertCreatureNotesLength(name, length) {
+    const notes = screen.queryByRole('listbox', { name: `${name} notes` });
+    expect(notes.childElementCount).toBe(length);
   }
 
   static async assertCreateCreatureSearch(name) {
