@@ -6,7 +6,8 @@ import msw from './mocks/server';
 
 jest.mock('../src/util/rollDice');
 
-beforeAll(() => {
+beforeEach(() => {
+  jest.resetAllMocks();
   rollDice.mockReturnValue(20);
 });
 
@@ -128,11 +129,12 @@ describe('Creature SRD search', () => {
 });
 
 describe('Create creature using SRD', () => {
-  it("uses the creature's stats when it is selected", async () => {
+  it("uses the creature's stats and rolls initiative when it is selected", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('7');
+    await dmApp.createCreatureForm.assertInitiative('22');
   });
 
   it('allows a creature to be selected by keyboard', async () => {
@@ -140,12 +142,21 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreatureByKeyboard('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('7');
+    await dmApp.createCreatureForm.assertInitiative('22');
   });
 
   it('adds a creature from the search results', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addSrdCreature('Goblin');
     await DmApp.assertCreatureVisible('Goblin', '7');
+  });
+
+  it("uses the currently selected creature's dexterity modifier to reroll initiative", async () => {
+    rollDice.mockReturnValue(10);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.rollInitiative();
+    await dmApp.createCreatureForm.assertInitiative('12');
   });
 
   it("selects only a creature's name if it does not specify a URL", async () => {
@@ -162,6 +173,7 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('');
+    await dmApp.createCreatureForm.assertInitiative('');
   });
 
   it("selects only a creature's name if its data is malformed", async () => {
@@ -174,6 +186,7 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('');
+    await dmApp.createCreatureForm.assertInitiative('');
   });
 
   it("selects only a creature's name if fetching its data returns an error", async () => {
@@ -186,6 +199,7 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('');
+    await dmApp.createCreatureForm.assertInitiative('');
   });
 
   it("does not select a creature's HP if it is not specified", async () => {
@@ -201,6 +215,21 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('');
+  });
+
+  it("does not use a creature's dexterity modifier to roll initiative if it is not specified", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertInitiative('20');
   });
 });
 

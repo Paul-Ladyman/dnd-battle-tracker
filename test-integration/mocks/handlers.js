@@ -18,6 +18,7 @@ export default [
       index: 'goblin',
       name: 'Goblin',
       hit_points: 7,
+      dexterity: 14,
     }),
   )),
 

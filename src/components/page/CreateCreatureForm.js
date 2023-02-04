@@ -7,6 +7,7 @@ import Input from '../form/Input';
 import rollDice from '../../util/rollDice';
 import D20Icon from '../icons/D20Icon';
 import ComboboxList from '../form/ComboboxList';
+import { calculateAbilityModifier } from '../../domain/characterSheet';
 
 const BASE_API_URL = 'https://www.dnd5eapi.co';
 
@@ -17,6 +18,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     healthPoints: '',
     multiplier: 1,
     submitted: false,
+    dexterityModifier: 0,
   };
   const [state, setState] = useState(initialState);
 
@@ -96,9 +98,11 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   const onPressDice = () => {
+    const rolledNumber = rollDice(20);
+    const initiative = `${rolledNumber + state.dexterityModifier}`;
     setState((prevState) => ({
       ...prevState,
-      initiative: `${rollDice(20)}`,
+      initiative,
     }));
   };
 
@@ -109,15 +113,21 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   const onSelectMonster = (monster) => {
-    const { url } = monster;
+    const { url, name } = monster;
     if (!url) return;
     fetch(`${BASE_API_URL}${monster.url}`, { 'Content-Type': 'application/json' })
       .then((response) => response.json())
       .then((data) => {
+        const { hit_points: healthPoints, dexterity } = data;
+        const dexterityModifier = calculateAbilityModifier(dexterity);
+        const rolledNumber = rollDice(20);
+        const initiative = `${rolledNumber + dexterityModifier}`;
         setState((prevState) => ({
           ...prevState,
-          name: monster.name,
-          healthPoints: data.hit_points,
+          name,
+          healthPoints: healthPoints || '',
+          initiative,
+          dexterityModifier,
         }));
       })
       .catch(() => {

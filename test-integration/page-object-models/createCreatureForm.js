@@ -85,9 +85,13 @@ export default class CreateCreatureForm {
     return this.submitCreature();
   }
 
+  async rollInitiative() {
+    const initiativeButton = await screen.findByRole('button', { name: 'Roll Initiative' });
+    return this.user.click(initiativeButton);
+  }
+
   async addCreatureWithRolledInitiative(name, hp, multiply) {
-    const rollInitiative = await screen.findByRole('button', { name: 'Roll Initiative' });
-    await this.user.click(rollInitiative);
+    await this.rollInitiative();
     return this.addCreature(name, null, hp, multiply);
   }
 
@@ -184,5 +188,10 @@ export default class CreateCreatureForm {
   async assertHp(hp) {
     const hpField = await screen.findByLabelText('HP (optional)');
     await waitFor(() => expect(hpField).toHaveDisplayValue(hp));
+  }
+
+  async assertInitiative(initiative) {
+    const initiativeField = await screen.findByLabelText('Initiative (optional)');
+    await waitFor(() => expect(initiativeField).toHaveDisplayValue(initiative));
   }
 }
