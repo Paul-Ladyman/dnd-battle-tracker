@@ -33,12 +33,14 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   useEffect(() => {
     fetch(`${BASE_API_URL}/api/monsters`, { 'Content-Type': 'application/json' })
       .then((response) => response.json())
-      .then((data) => {
-        setMonsterData(data.results);
+      .then(({ results }) => {
+        if (!results) {
+          setMonsterData([]);
+        } else {
+          setMonsterData(results);
+        }
       })
-      .catch(() => {
-        setMonsterData([]);
-      });
+      .catch(() => setMonsterData([]));
   }, []);
 
   useEffect(() => {
@@ -107,7 +109,8 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   const onSelectMonster = (monster) => {
-    if (!monster) return;
+    const { url } = monster;
+    if (!url) return;
     fetch(`${BASE_API_URL}${monster.url}`, { 'Content-Type': 'application/json' })
       .then((response) => response.json())
       .then((data) => {
@@ -115,7 +118,12 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
           ...prevState,
           name: monster.name,
           healthPoints: data.hit_points,
-          // TODO: add AC
+        }));
+      })
+      .catch(() => {
+        setState((prevState) => ({
+          ...prevState,
+          name: monster.name,
         }));
       });
   };
@@ -154,7 +162,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         dropdownId="create-creature-form-name-dropdown"
         dropdownLabel="Select creature"
         label="Creature Name"
-        listAriaLabel="Creature Name"
+        listAriaLabel="Creature search results"
         inputAriaLabel="create creature form. Name (required)"
         inputAriaLabelItemSelected="create creature form. Name (required)"
         rightControls={nameRightControls}
