@@ -3,14 +3,14 @@ import DmApp from './page-object-models/dmApp';
 describe('Creature note tool', () => {
   it('is closed by default', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await DmApp.assertCreatureNoteToolClosed('goblin');
     DmApp.assertCreatureNotesEmpty('goblin');
   });
 
   it('has no notes by default', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.openNotes('goblin');
     await DmApp.assertCreatureNoteToolOpen('goblin');
     DmApp.assertCreatureNotesEmpty('goblin');
@@ -18,7 +18,7 @@ describe('Creature note tool', () => {
 
   it('allows notes to be added', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await dmApp.openNotes('goblin');
@@ -29,7 +29,7 @@ describe('Creature note tool', () => {
 
   it('allows a note to be added using the keyboard', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNoteByKeyboard('goblin', 'note 1');
     await dmApp.openNotes('goblin');
     await DmApp.assertCreatureNoteExists('goblin', 'note 1');
@@ -37,7 +37,7 @@ describe('Creature note tool', () => {
 
   it('allows notes to be closed', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.openNotes('goblin');
     await dmApp.closeNotes('goblin');
@@ -47,7 +47,7 @@ describe('Creature note tool', () => {
 
   it('allows notes to be closed using the keyboad', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.openNotes('goblin');
     await DmApp.closeNotesByKeyboard('goblin');
@@ -57,7 +57,7 @@ describe('Creature note tool', () => {
 
   it('allows a note to be editted', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await dmApp.editNote('goblin', 'note 1', ' b');
@@ -69,7 +69,7 @@ describe('Creature note tool', () => {
 
   it('allows a note to be editted using the keyboard', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await dmApp.editNoteByKeyboard('goblin', 'note 2', ' b');
@@ -81,7 +81,7 @@ describe('Creature note tool', () => {
 
   it('allows a note to be removed', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await dmApp.removeNote('goblin', 'note 1');
@@ -92,7 +92,7 @@ describe('Creature note tool', () => {
 
   it('allows a note to be removed using the keyboard', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await DmApp.removeNoteByKeyboard('goblin', 'note 2');
@@ -103,7 +103,7 @@ describe('Creature note tool', () => {
 
   it('allows a note to be searched', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'one');
     await dmApp.addNote('goblin', 'two');
     await dmApp.typeNote('goblin', 'n');
@@ -113,7 +113,7 @@ describe('Creature note tool', () => {
 
   it('selects the last note when navigating up from a closed note tool', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await DmApp.navigateNotesUp('goblin');
@@ -122,7 +122,7 @@ describe('Creature note tool', () => {
 
   it('wraps note list when navigating up', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await DmApp.navigateNotesDown('goblin');
@@ -133,7 +133,7 @@ describe('Creature note tool', () => {
 
   it('wraps note list when navigating down', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.addNote('goblin', 'note 1');
     await dmApp.addNote('goblin', 'note 2');
     await DmApp.navigateNotesDown('goblin');

@@ -12,13 +12,13 @@ describe('Battle Toolbar initiative controls - DM', () => {
 
   test('the current turn button is disabled if the battle has not started', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
     await DmApp.assertCurrentTurn(false, '...');
   });
 
   test('the current turn button is enabled when the battle starts', async () => {
     const dmApp = new DmApp();
-    await dmApp.addCreature('goblin', '1');
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
     await dmApp.startBattle();
     await DmApp.assertCurrentTurn(true, 'goblin');
   });
