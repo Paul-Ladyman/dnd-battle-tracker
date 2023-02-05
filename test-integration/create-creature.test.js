@@ -1,14 +1,239 @@
+import { rest } from 'msw';
 import DmApp from './page-object-models/dmApp';
 import CreateCreatureForm from './page-object-models/createCreatureForm';
 import rollDice from '../src/util/rollDice';
+import msw from './mocks/server';
 
 jest.mock('../src/util/rollDice');
 
-beforeAll(() => {
+beforeEach(() => {
+  jest.resetAllMocks();
   rollDice.mockReturnValue(20);
 });
 
-describe('Create creature', () => {
+describe('Creature SRD search', () => {
+  it('is closed by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.assertSrdSearchClosed();
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('has no creatures by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.openCreatures();
+    await dmApp.createCreatureForm.assertSrdSearchOpen();
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('searches for creatures by name', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    await dmApp.createCreatureForm.assertCreatureExists('Goblin');
+    await dmApp.createCreatureForm.assertCreatureExists('Hobgoblin');
+    dmApp.createCreatureForm.assertCreaturesLength(2);
+  });
+
+  it('has no creatures if the search did not match a creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('Wellby');
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('has no creatures if the search returned an empty list', async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
+        ctx.json({
+          results: [],
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('has no creatures if the search returned malformed JSON', async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
+        ctx.json({}),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('has no creatures if the search returned a malformed response', async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
+        ctx.body('malformed'),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('has no creatures if the search returned an error', async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
+        ctx.status(500),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('allows creature list to be closed', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    await dmApp.createCreatureForm.closeCreatures();
+    await dmApp.createCreatureForm.assertSrdSearchClosed();
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('allows creature list to be closed using the keyboad', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    await dmApp.createCreatureForm.closeCreaturesByKeyboard();
+    await dmApp.createCreatureForm.assertSrdSearchClosed();
+    dmApp.createCreatureForm.assertCreaturesEmpty();
+  });
+
+  it('selects the last creature when navigating up from closed', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    await dmApp.createCreatureForm.navigateCreaturesUp();
+    await dmApp.createCreatureForm.assertCreatureSelected('Hobgoblin');
+  });
+
+  it('wraps creature list when navigating up', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    await dmApp.createCreatureForm.navigateCreaturesDown();
+    await dmApp.createCreatureForm.navigateCreaturesUp();
+    await dmApp.createCreatureForm.assertCreatureNotSelected('Goblin');
+    await dmApp.createCreatureForm.assertCreatureSelected('Hobgoblin');
+  });
+
+  it('wraps creature list when navigating down', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.typeName('goblin');
+    await dmApp.createCreatureForm.navigateCreaturesDown();
+    await dmApp.createCreatureForm.navigateCreaturesDown();
+    await dmApp.createCreatureForm.navigateCreaturesDown();
+    await dmApp.createCreatureForm.assertCreatureSelected('Goblin');
+    await dmApp.createCreatureForm.assertCreatureNotSelected('Hobgoblin');
+  });
+});
+
+describe('Create creature using SRD', () => {
+  it("uses the creature's stats and rolls initiative when it is selected", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('7');
+    await dmApp.createCreatureForm.assertInitiative('22');
+  });
+
+  it('allows a creature to be selected by keyboard', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreatureByKeyboard('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('7');
+    await dmApp.createCreatureForm.assertInitiative('22');
+  });
+
+  it('adds a creature from the search results', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addSrdCreature('Goblin');
+    await DmApp.assertCreatureVisible('Goblin', '7');
+  });
+
+  it("uses the currently selected creature's dexterity modifier to reroll initiative", async () => {
+    rollDice.mockReturnValue(10);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.rollInitiative();
+    await dmApp.createCreatureForm.assertInitiative('12');
+  });
+
+  it("selects only a creature's name if it does not specify a URL", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
+        ctx.json({
+          results: [
+            { index: 'goblin', name: 'Goblin' },
+          ],
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('');
+    await dmApp.createCreatureForm.assertInitiative('');
+  });
+
+  it("selects only a creature's name if its data is malformed", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.body('malformed'),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('');
+    await dmApp.createCreatureForm.assertInitiative('');
+  });
+
+  it("selects only a creature's name if fetching its data returns an error", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.status(500),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('');
+    await dmApp.createCreatureForm.assertInitiative('');
+  });
+
+  it("does not select a creature's HP if it is not specified", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('');
+  });
+
+  it("does not roll initiative if a creature's dexterity it is not specified", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertInitiative('');
+  });
+});
+
+describe('Create creature manually', () => {
   it('allows a creature to be searched', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.enterCreatureName('goblin');

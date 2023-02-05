@@ -61,6 +61,7 @@ export default function NotesTool({
       id={`notes-wrapper-${id}`}
       dropdownId={notesDropdownId}
       dropdownLabel="Edit note"
+      label="Notes"
       inputAriaLabel={inputAriaLabel}
       inputAriaLabelItemSelected={inputAriaLabelItemSelected}
       listAriaLabel={notesAriaLabel}

@@ -12,6 +12,7 @@ export default function ComboboxList({
   id,
   dropdownId,
   dropdownLabel,
+  label,
   inputAriaLabel,
   inputAriaLabelItemSelected,
   listAriaLabel,
@@ -20,12 +21,16 @@ export default function ComboboxList({
   leftControls,
   leftControlsItemSelected,
   handleSubmit,
+  onItemSubmit,
   handleRemoveItem,
+  inputRef,
+  error,
+  customClassName,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
-  const inputRef = useRef();
+  const internalInputRef = inputRef || useRef();
 
   const hasList = list.length > 0;
   const activeNoteId = focusedItem !== null ? `${dropdownId}-${focusedItem}` : '';
@@ -96,7 +101,10 @@ export default function ComboboxList({
     setFocusedItem(null);
     setExpanded(false);
     setValue(item.text);
-    inputRef.current.focus();
+    if (onItemSubmit) {
+      onItemSubmit(item);
+    }
+    internalInputRef.current.focus();
   };
 
   const handleKeyboardSubmit = () => {
@@ -172,7 +180,7 @@ export default function ComboboxList({
 
   return (
     <div
-      className="input--form combobox-wrapper"
+      className={`input--form combobox-wrapper ${customClassName}`}
       id={id}
     >
       <Input
@@ -182,17 +190,18 @@ export default function ComboboxList({
         ariaControls={dropdownId}
         ariaActiveDescendant={activeNoteId}
         role="combobox"
-        label={ComboboxLabel(showList, listAriaLabel, dropdownId, toggleExpanded)}
+        label={ComboboxLabel(showList, label, listAriaLabel, dropdownId, toggleExpanded)}
         rightControls={rControls}
         leftControls={lControls}
         inputId={`combobox-${id}`}
         customClasses={customClasses}
         onClick={toggleExpanded}
-        inputRef={inputRef}
+        inputRef={internalInputRef}
         value={value}
         handleChange={handleChange}
         submitHandler={submitHandler}
         formHandler={formHandler}
+        error={error}
       />
       <ul className={dropdownClassName} style={{ display }} id={dropdownId} role="listbox" aria-label={listAriaLabel}>
         {

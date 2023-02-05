@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ComboboxLabel(expanded, label, dropdownId, onClick) {
+export default function ComboboxLabel(expanded, label, ariaLabel, dropdownId, onClick) {
   const style = {
     transform: expanded ? 'rotate(180deg) translate(0, -3px)' : undefined,
     color: '#822000',
@@ -10,12 +10,12 @@ export default function ComboboxLabel(expanded, label, dropdownId, onClick) {
 
   return (
     <>
-      Notes
+      {label}
       <button
         className="combobox-dropdown-expander"
         type="button"
         tabIndex="-1"
-        aria-label={label}
+        aria-label={ariaLabel}
         aria-expanded={expanded}
         aria-controls={dropdownId}
         onClick={onClick}

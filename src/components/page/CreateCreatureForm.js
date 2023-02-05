@@ -6,6 +6,9 @@ import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from '../form/Input';
 import rollDice from '../../util/rollDice';
 import D20Icon from '../icons/D20Icon';
+import ComboboxList from '../form/ComboboxList';
+import { calculateAbilityModifier } from '../../domain/characterSheet';
+import { getMonsters, getMonster } from '../../client/dnd5eapi';
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
   const initialState = {
@@ -14,8 +17,11 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     healthPoints: '',
     multiplier: 1,
     submitted: false,
+    dexterityModifier: 0,
   };
   const [state, setState] = useState(initialState);
+
+  const [monsterData, setMonsterData] = useState([]);
 
   const nameInput = useRef(null);
 
@@ -24,6 +30,10 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
       nameInput.current.focus();
     }
   };
+
+  useEffect(() => {
+    getMonsters().then(setMonsterData);
+  }, []);
 
   useEffect(() => {
     nameInput.current.focus();
@@ -54,6 +64,10 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     });
   };
 
+  const setName = (newName) => {
+    setState((prevState) => ({ ...prevState, name: newName }));
+  };
+
   const createCreature = () => {
     const healthPoints = state.healthPoints === ''
       ? undefined
@@ -74,9 +88,11 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   const onPressDice = () => {
+    const rolledNumber = rollDice(20);
+    const initiative = `${rolledNumber + state.dexterityModifier}`;
     setState((prevState) => ({
       ...prevState,
-      initiative: `${rollDice(20)}`,
+      initiative,
     }));
   };
 
@@ -84,6 +100,25 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     if (event.keyCode === 13) {
       createCreature();
     }
+  };
+
+  const getInitiative = (dexterity, dexterityModifier) => {
+    if (dexterity === undefined) return '';
+    const rolledNumber = rollDice(20);
+    return `${rolledNumber + dexterityModifier}`;
+  };
+
+  const onSelectMonster = async (monster) => {
+    const data = await getMonster(monster);
+    const { hit_points: healthPoints, dexterity } = data;
+    const dexterityModifier = calculateAbilityModifier(dexterity);
+    setState((prevState) => ({
+      ...prevState,
+      name: monster.name,
+      healthPoints: healthPoints || '',
+      initiative: getInitiative(dexterity, dexterityModifier),
+      dexterityModifier,
+    }));
   };
 
   const {
@@ -94,24 +129,42 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     nameError, initiativeError, healthError, multiplierError,
   } = createCreatureErrors;
 
+  const filteredMonsters = () => {
+    if (name.length < 2) return [];
+    return monsterData
+      .filter((monster) => monster.name.toLowerCase().includes(name.toLowerCase()))
+      .map((monster) => ({
+        ...monster,
+        text: monster.name,
+        id: monster.index,
+      }));
+  };
+
+  const nameRightControls = {
+    rightEnabled: true,
+    RightControl: <MonsterSearcher asButton={false} search={name} />,
+  };
+
   return (
     <form className="create-creature-form">
-      <Input
-        customClasses="create-creature-form--item__text"
-        required
-        error={nameError && <span className="form--label__error"> *</span>}
-        inputRef={nameInput}
+      <ComboboxList
         value={name}
-        ariaLabel="create creature form. Name (required)"
+        setValue={setName}
+        list={filteredMonsters()}
+        id="create-creature-form-name"
+        dropdownId="create-creature-form-name-dropdown"
+        dropdownLabel="Select creature"
         label="Creature Name"
-        name="name"
-        handleChange={handleChange}
-        rightControls={{
-          rightEnabled: true,
-          RightControl: <MonsterSearcher asButton={false} search={name} />,
-        }}
-        formHandler={formHandler}
-        inputId="create-creature-form-name"
+        listAriaLabel="Creature search results"
+        inputAriaLabel="create creature form. Name (required)"
+        inputAriaLabelItemSelected="create creature form. Name (required)"
+        rightControls={nameRightControls}
+        rightControlsItemSelected={nameRightControls}
+        handleSubmit={createCreature}
+        onItemSubmit={onSelectMonster}
+        inputRef={nameInput}
+        error={nameError && <span className="form--label__error"> *</span>}
+        customClassName="create-creature-form--item__text"
       />
       <Input
         customClasses="create-creature-form--item__number create-creature-form--item__tall"

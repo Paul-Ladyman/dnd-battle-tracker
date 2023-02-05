@@ -3,7 +3,6 @@
 import {
   screen,
   findByRole,
-  getByRole,
   findByText,
   fireEvent,
 } from '@testing-library/react';
