@@ -2,7 +2,7 @@ const BASE_API_URL = 'https://www.dnd5eapi.co';
 
 export async function getMonsters() {
   try {
-    const response = await fetch(`${BASE_API_URL}/api/monsters`, { 'Content-Type': 'application/json' })
+    const response = await fetch(`${BASE_API_URL}/api/monsters`, { 'Content-Type': 'application/json' });
     const json = await response.json();
     const { results } = json;
     return results || [];
