@@ -60,8 +60,10 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * Save and load battles in case they continue into another session.
 * Share your battle with your players so they can see the initiative order and follow along. Requires internet access.
 
-## Credits
+## License and Credits
 
+* This application (D&D Battle Tracker) is offered for use under the terms of the [MIT license](https://github.com/Paul-Ladyman/dnd-battle-tracker/blob/master/LICENSE)
+* Dungeons & Dragons 5th Edition content (e.g. monster stats) provided by [dnd5eapi](https://www.dnd5eapi.co/) under the terms of the [Systems Reference Document and Open-Gaming License](https://dnd.wizards.com/resources/systems-reference-document). The dnd5eapi itself is used under the terms of the [MIT license](https://github.com/5e-bits/5e-srd-api/blob/main/LICENSE.md)
 * All icons taken from [game-icons.net](https://game-icons.net/) under the terms of the [Creative Commons 3.0 BY license](https://creativecommons.org/licenses/by/3.0/). See below for individual credits.
 * Fonts provided by [Google Fonts](https://fonts.google.com/) under the terms of the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See below for individual credits.
 * [Critical Role](https://www.youtube.com/channel/UCpXBGqwsBkpvcYjsJBQ7LEQ) for the inspiration.
