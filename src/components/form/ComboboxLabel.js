@@ -15,7 +15,7 @@ export default function ComboboxLabel(expanded, label, ariaLabel, dropdownId, on
         className="combobox-dropdown-expander"
         type="button"
         tabIndex="-1"
-        aria-label={label}
+        aria-label={ariaLabel}
         aria-expanded={expanded}
         aria-controls={dropdownId}
         onClick={onClick}
