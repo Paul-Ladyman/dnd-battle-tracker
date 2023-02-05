@@ -21,28 +21,4 @@ export async function getMonster(monster) {
   } catch {
     return {};
   }
-
-  // const { url, name } = monster;
-  // if (!url) return;
-  // fetch(`${BASE_API_URL}${monster.url}`, { 'Content-Type': 'application/json' })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     const { hit_points: healthPoints, dexterity } = data;
-  //     const dexterityModifier = calculateAbilityModifier(dexterity);
-  //     const rolledNumber = rollDice(20);
-  //     const initiative = `${rolledNumber + dexterityModifier}`;
-  //     setState((prevState) => ({
-  //       ...prevState,
-  //       name,
-  //       healthPoints: healthPoints || '',
-  //       initiative,
-  //       dexterityModifier,
-  //     }));
-  //   })
-  //   .catch(() => {
-  //     setState((prevState) => ({
-  //       ...prevState,
-  //       name: monster.name,
-  //     }));
-  //   });
 }
