@@ -8,8 +8,7 @@ import rollDice from '../../util/rollDice';
 import D20Icon from '../icons/D20Icon';
 import ComboboxList from '../form/ComboboxList';
 import { calculateAbilityModifier } from '../../domain/characterSheet';
-
-const BASE_API_URL = 'https://www.dnd5eapi.co';
+import { getMonsters, getMonster } from '../../client/dnd5eapi';
 
 function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
   const initialState = {
@@ -33,16 +32,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   useEffect(() => {
-    fetch(`${BASE_API_URL}/api/monsters`, { 'Content-Type': 'application/json' })
-      .then((response) => response.json())
-      .then(({ results }) => {
-        if (!results) {
-          setMonsterData([]);
-        } else {
-          setMonsterData(results);
-        }
-      })
-      .catch(() => setMonsterData([]));
+    getMonsters().then(setMonsterData);
   }, []);
 
   useEffect(() => {
@@ -112,30 +102,23 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     }
   };
 
-  const onSelectMonster = (monster) => {
-    const { url, name } = monster;
-    if (!url) return;
-    fetch(`${BASE_API_URL}${monster.url}`, { 'Content-Type': 'application/json' })
-      .then((response) => response.json())
-      .then((data) => {
-        const { hit_points: healthPoints, dexterity } = data;
-        const dexterityModifier = calculateAbilityModifier(dexterity);
-        const rolledNumber = rollDice(20);
-        const initiative = `${rolledNumber + dexterityModifier}`;
-        setState((prevState) => ({
-          ...prevState,
-          name,
-          healthPoints: healthPoints || '',
-          initiative,
-          dexterityModifier,
-        }));
-      })
-      .catch(() => {
-        setState((prevState) => ({
-          ...prevState,
-          name: monster.name,
-        }));
-      });
+  const getInitiative = (dexterity, dexterityModifier) => {
+    if (dexterity === undefined) return '';
+    const rolledNumber = rollDice(20);
+    return `${rolledNumber + dexterityModifier}`;
+  };
+
+  const onSelectMonster = async (monster) => {
+    const data = await getMonster(monster);
+    const { hit_points: healthPoints, dexterity } = data;
+    const dexterityModifier = calculateAbilityModifier(dexterity);
+    setState((prevState) => ({
+      ...prevState,
+      name: monster.name,
+      healthPoints: healthPoints || '',
+      initiative: getInitiative(dexterity, dexterityModifier),
+      dexterityModifier,
+    }));
   };
 
   const {
