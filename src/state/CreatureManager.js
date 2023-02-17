@@ -133,7 +133,8 @@ export function createCreature(creatureId, {
 
 export function validateCreature(name, initiative, healthPoints, multiplier) {
   const nameError = name === '';
-  const initiativeError = initiative !== undefined && Number.isNaN(initiative);
+  const initiativeIsDefined = initiative !== undefined && initiative !== null;
+  const initiativeError = initiativeIsDefined && Number.isNaN(parseInt(initiative, 10));
   const healthError = healthPoints <= 0;
   const multiplierError = multiplier <= 0 || multiplier > 50;
 

@@ -4,6 +4,7 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from '../form/Input';
+import RollableInput from '../form/RollableInput';
 import rollDice from '../../util/rollDice';
 import D20Icon from '../icons/D20Icon';
 import ComboboxList from '../form/ComboboxList';
@@ -20,6 +21,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     dexterityModifier: 0,
   };
   const [state, setState] = useState(initialState);
+  const [rolledInitiative, setRolledInitiative] = useState();
 
   const [monsterData, setMonsterData] = useState([]);
 
@@ -75,9 +77,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
     const multiplier = parseInt(state.multiplier, 10);
 
-    const initiative = state.initiative === ''
-      ? undefined
-      : parseInt(state.initiative, 10);
+    const initiative = rolledInitiative?.result;
 
     const creature = {
       ...state, healthPoints, initiative, multiplier,
@@ -104,8 +104,11 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
   const getInitiative = (dexterity, dexterityModifier) => {
     if (dexterity === undefined) return '';
-    const rolledNumber = rollDice(20);
-    return `${rolledNumber + dexterityModifier}`;
+
+    const d20 = 'd20';
+    if (dexterityModifier === 0) return d20;
+    const sign = dexterityModifier > 0 ? '+' : '';
+    return `${d20}${sign}${dexterityModifier}`;
   };
 
   const onSelectMonster = async (monster) => {
@@ -166,13 +169,13 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         error={nameError && <span className="form--label__error"> *</span>}
         customClassName="create-creature-form--item__text"
       />
-      <Input
-        customClasses="create-creature-form--item__number create-creature-form--item__tall"
-        error={initiativeError}
-        integer
+      <RollableInput
         value={initiative}
+        setRoll={setRolledInitiative}
+        customClasses="create-creature-form--item__number create-creature-form--item__tall"
+        error={initiativeError && <span className="form--label__error"> number</span>}
         ariaLabel="create creature form. Initiative (optional)"
-        label="Initiative (optional)"
+        label={initiativeError ? 'Initiative' : 'Initiative (optional)'}
         name="initiative"
         handleChange={handleChange}
         submitHandler={onPressDice}
