@@ -594,8 +594,11 @@ describe('validateCreature', () => {
     expect(validateCreature('a', '1', 1, 1)).toEqual(undefined);
   });
 
-  test('initiative is optional', () => {
-    expect(validateCreature('a', undefined, 1, 1)).toEqual(undefined);
+  test.each([
+    [undefined],
+    [null],
+  ])('initiative is optional: %p', (initiative) => {
+    expect(validateCreature('a', initiative, 1, 1)).toEqual(undefined);
   });
 
   test('health is optional', () => {
@@ -612,14 +615,18 @@ describe('validateCreature', () => {
     expect(validateCreature('', '1', 1, 1)).toEqual(expectedErrors);
   });
 
-  test('initiative must be a number if non-empty', () => {
+  test.each([
+    [NaN],
+    ['a'],
+    [new Error('initiative error')],
+  ])('initiative must be a number if non-empty: %p', (initiative) => {
     const expectedErrors = {
       nameError: false,
       initiativeError: 'Initiative must be a number.',
       healthError: false,
       multiplierError: false,
     };
-    expect(validateCreature('a', NaN, 1, 1)).toEqual(expectedErrors);
+    expect(validateCreature('a', initiative, 1, 1)).toEqual(expectedErrors);
   });
 
   test('health must be greater than 0', () => {

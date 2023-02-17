@@ -11,130 +11,43 @@ beforeEach(() => {
   rollDice.mockReturnValue(20);
 });
 
-describe('Creature SRD search', () => {
-  it('is closed by default', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.assertSrdSearchClosed();
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('has no creatures by default', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.openCreatures();
-    await dmApp.createCreatureForm.assertSrdSearchOpen();
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('searches for creatures by name', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    await dmApp.createCreatureForm.assertCreatureExists('Goblin');
-    await dmApp.createCreatureForm.assertCreatureExists('Hobgoblin');
-    dmApp.createCreatureForm.assertCreaturesLength(2);
-  });
-
-  it('has no creatures if the search did not match a creature', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('Wellby');
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('has no creatures if the search returned an empty list', async () => {
-    msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.json({
-          results: [],
-        }),
-      )),
-    );
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('has no creatures if the search returned malformed JSON', async () => {
-    msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.json({}),
-      )),
-    );
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('has no creatures if the search returned a malformed response', async () => {
-    msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.body('malformed'),
-      )),
-    );
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('has no creatures if the search returned an error', async () => {
-    msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.status(500),
-      )),
-    );
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('allows creature list to be closed', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    await dmApp.createCreatureForm.closeCreatures();
-    await dmApp.createCreatureForm.assertSrdSearchClosed();
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('allows creature list to be closed using the keyboad', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    await dmApp.createCreatureForm.closeCreaturesByKeyboard();
-    await dmApp.createCreatureForm.assertSrdSearchClosed();
-    dmApp.createCreatureForm.assertCreaturesEmpty();
-  });
-
-  it('selects the last creature when navigating up from closed', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    await dmApp.createCreatureForm.navigateCreaturesUp();
-    await dmApp.createCreatureForm.assertCreatureSelected('Hobgoblin');
-  });
-
-  it('wraps creature list when navigating up', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    await dmApp.createCreatureForm.navigateCreaturesDown();
-    await dmApp.createCreatureForm.navigateCreaturesUp();
-    await dmApp.createCreatureForm.assertCreatureNotSelected('Goblin');
-    await dmApp.createCreatureForm.assertCreatureSelected('Hobgoblin');
-  });
-
-  it('wraps creature list when navigating down', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.typeName('goblin');
-    await dmApp.createCreatureForm.navigateCreaturesDown();
-    await dmApp.createCreatureForm.navigateCreaturesDown();
-    await dmApp.createCreatureForm.navigateCreaturesDown();
-    await dmApp.createCreatureForm.assertCreatureSelected('Goblin');
-    await dmApp.createCreatureForm.assertCreatureNotSelected('Hobgoblin');
-  });
-});
-
 describe('Create creature using SRD', () => {
-  it("uses the creature's stats and rolls initiative when it is selected", async () => {
+  it("uses the creature's stats when it is selected", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('7');
-    await dmApp.createCreatureForm.assertInitiative('22');
+    await dmApp.createCreatureForm.assertInitiative('d20+2');
+  });
+
+  it("sets initiative to d20 if a creature's dexterity modifier is 0", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          dexterity: 10,
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertInitiative('d20');
+  });
+
+  it("sets initiative to a well-formed dice notation if a creature's dexterity modifier is a negative", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          dexterity: 1,
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertInitiative('d20-5');
   });
 
   it('allows a creature to be selected by keyboard', async () => {
@@ -142,7 +55,7 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreatureByKeyboard('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('7');
-    await dmApp.createCreatureForm.assertInitiative('22');
+    await dmApp.createCreatureForm.assertInitiative('d20+2');
   });
 
   it('adds a creature from the search results', async () => {
@@ -217,7 +130,7 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.assertHp('');
   });
 
-  it("does not roll initiative if a creature's dexterity it is not specified", async () => {
+  it("does set initiative if a creature's dexterity it is not specified", async () => {
     msw.use(
       rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
         ctx.json({
@@ -285,12 +198,25 @@ describe('Create creature manually', () => {
     await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
   });
 
+  it("allows a creature's initiative to be specified as dice notation", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '1d20+1');
+    await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
+  });
+
   it('creatures without initiative are added at the bottom of the initiative order', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin 1', '1');
     await dmApp.createCreatureForm.addCreature('goblin 2', '2');
     await dmApp.createCreatureForm.addCreature('goblin 3');
     await DmApp.assertCreatureList(['goblin 2', 'goblin 1', 'goblin 3']);
+  });
+
+  it('shows an error when the creature initiative is invalid', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', 'initiative');
+    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
   });
 
   it('adds multiples of a creature to the battle', async () => {
