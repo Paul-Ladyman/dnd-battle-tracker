@@ -1,11 +1,10 @@
 {
   "name": "dnd-battle-tracker",
-  "version": "5.23.0",
+  "version": "5.23.1",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.1",
     "@aws-sdk/client-cognito-identity": "^3.262.0",
-    "@dice-roller/rpg-dice-roller": "^5.2.1",
     "aws-appsync-auth-link": "^3.0.7",
     "aws-appsync-subscription-link": "3.1.2",
     "file-saver": "^2.0.5",

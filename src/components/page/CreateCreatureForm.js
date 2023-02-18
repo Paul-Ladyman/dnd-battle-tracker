@@ -173,7 +173,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         value={initiative}
         setRoll={setRolledInitiative}
         customClasses="create-creature-form--item__number create-creature-form--item__tall"
-        error={initiativeError && <span className="form--label__error"> number</span>}
+        error={initiativeError && <span className="form--label__error"> number, dice</span>}
         ariaLabel="create creature form. Initiative (optional)"
         label={initiativeError ? 'Initiative' : 'Initiative (optional)'}
         name="initiative"

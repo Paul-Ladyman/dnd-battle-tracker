@@ -30,5 +30,6 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
+    'no-eval': ['error', { allowIndirect: true }],
   },
 };
