@@ -213,6 +213,31 @@ describe('nextInitiative', () => {
     expect(nextInitiative(state)).toEqual(expected);
   });
 
+  test('sets an error and does not continue if a creature has an initiative of null', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        ...defaultState.creatures,
+        {
+          name: 'Droop',
+          healthPoints: 10,
+          maxHealthPoints: 10,
+          initiative: null,
+          id: 3,
+          alive: true,
+          conditions: [],
+          notes: [],
+        },
+      ],
+    };
+    const expected = {
+      ...state,
+      ariaAnnouncements: ['Cannot continue battle. Droop has no initiative.'],
+      errors: ['Cannot continue battle; Droop has no initiative.'],
+    };
+    expect(nextInitiative(state)).toEqual(expected);
+  });
+
   test('clears existing errors before adding new ones', () => {
     const state = {
       ...defaultState,

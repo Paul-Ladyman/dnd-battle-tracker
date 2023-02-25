@@ -22,6 +22,13 @@ describe('Battle Toolbar initiative controls - DM', () => {
     await dmApp.startBattle();
     await DmApp.assertCurrentTurn(true, 'goblin');
   });
+
+  test("it's not possible to start a battle if a creature has no initiative", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.startBattle();
+    await DmApp.assertError('Cannot continue battle; goblin has no initiative.');
+  });
 });
 
 describe('Battle Toolbar initiative controls - Player', () => {

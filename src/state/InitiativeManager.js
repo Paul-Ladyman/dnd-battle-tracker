@@ -37,7 +37,7 @@ export function nextInitiative(state) {
   }
 
   const creaturesWithoutInitiative = state.creatures.filter(
-    (creature) => creature.initiative === undefined,
+    (creature) => creature.initiative === undefined || creature.initiative === null,
   );
   if (creaturesWithoutInitiative.length > 0) {
     const { name } = creaturesWithoutInitiative[0];

@@ -238,7 +238,7 @@ export function addTemporaryHealthToCreature(state, creatureId, health) {
 export function addInitiativeToCreature(state, creatureId, initiative) {
   const creature = findCreature(state.creatures, creatureId);
 
-  if (creature.initiative !== undefined) {
+  if (creature.initiative !== undefined && creature.initiative !== null) {
     return state;
   }
 

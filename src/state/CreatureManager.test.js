@@ -1266,6 +1266,36 @@ describe('addInitiativeToCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
+  it("adds initiative to a creature who's initiative is currently null", () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: null,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: 10,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s initiative is 10'],
+    };
+
+    const result = addInitiativeToCreature(state, 1, 10);
+    expect(result).toEqual(expectedState);
+  });
+
   it('does nothing to a creature that already has initiative', () => {
     const result = addInitiativeToCreature(defaultState, 1, 30);
     expect(result).toEqual(defaultState);
