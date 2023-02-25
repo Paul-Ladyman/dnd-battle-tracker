@@ -130,7 +130,7 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.assertHp('');
   });
 
-  it("does set initiative if a creature's dexterity it is not specified", async () => {
+  it("does not set initiative if a creature's dexterity it is not specified", async () => {
     msw.use(
       rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
         ctx.json({

@@ -21,11 +21,11 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     dexterityModifier: 0,
   };
   const [state, setState] = useState(initialState);
-  const [rolledInitiative, setRolledInitiative] = useState();
 
   const [monsterData, setMonsterData] = useState([]);
 
   const nameInput = useRef(null);
+  const initiativeInput = useRef(null);
 
   const hotKeyHandler = (e) => {
     if (isHotkey(hotkeys.createCreature, e)) {
@@ -77,7 +77,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
     const multiplier = parseInt(state.multiplier, 10);
 
-    const initiative = rolledInitiative?.result;
+    const initiative = initiativeInput.current.roll().result;
 
     const creature = {
       ...state, healthPoints, initiative, multiplier,
@@ -171,7 +171,6 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
       />
       <RollableInput
         value={initiative}
-        setRoll={setRolledInitiative}
         customClasses="create-creature-form--item__number create-creature-form--item__tall"
         error={initiativeError && <span className="form--label__error"> number, dice</span>}
         ariaLabel="create creature form. Initiative (optional)"
@@ -185,6 +184,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         }}
         formHandler={formHandler}
         inputId="create-creature-form-initiative"
+        ref={initiativeInput}
       />
       <Input
         customClasses="create-creature-form--item__number"

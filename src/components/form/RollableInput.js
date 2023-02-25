@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useImperativeHandle } from 'react';
 import Input from './Input';
 import roll from '../../domain/dice';
 
-export default function RollableInput({
+function RollableInput({
   customClasses,
   error,
   value,
-  setRoll,
   ariaLabel,
   label,
   name,
@@ -15,12 +14,14 @@ export default function RollableInput({
   rightControls,
   formHandler,
   inputId,
-}) {
-  useEffect(() => {
-    if (setRoll) {
-      setRoll(roll(value));
-    }
-  }, [value]);
+}, forwardedRef) {
+  useImperativeHandle(
+    forwardedRef,
+    () => ({
+      roll: () => roll(value),
+    }),
+    [value],
+  );
 
   return (
     <Input
@@ -39,3 +40,5 @@ export default function RollableInput({
     />
   );
 }
+
+export default React.forwardRef(RollableInput);
