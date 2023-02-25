@@ -1,14 +1,14 @@
 import { rest } from 'msw';
 import DmApp from './page-object-models/dmApp';
 import CreateCreatureForm from './page-object-models/createCreatureForm';
-import rollDice from '../src/util/rollDice';
 import msw from './mocks/server';
+import random from '../src/util/random';
 
-jest.mock('../src/util/rollDice');
+jest.mock('../src/util/random');
 
 beforeEach(() => {
   jest.resetAllMocks();
-  rollDice.mockReturnValue(20);
+  random.mockReturnValue(0.999999);
 });
 
 describe('Create creature using SRD', () => {
@@ -62,14 +62,6 @@ describe('Create creature using SRD', () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addSrdCreature('Goblin');
     await DmApp.assertCreatureVisible('Goblin', '7');
-  });
-
-  it("uses the currently selected creature's dexterity modifier to reroll initiative", async () => {
-    rollDice.mockReturnValue(10);
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
-    await dmApp.createCreatureForm.rollInitiative();
-    await dmApp.createCreatureForm.assertInitiative('12');
   });
 
   it("selects only a creature's name if it does not specify a URL", async () => {
@@ -191,13 +183,6 @@ describe('Create creature manually', () => {
     await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
   });
 
-  it("allows a creature's initiative to be rolled", async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
-    await dmApp.createCreatureForm.addCreatureWithRolledInitiative('goblin 2');
-    await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
-  });
-
   it("allows a creature's initiative to be specified as dice notation", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin 1', '1');
@@ -239,11 +224,54 @@ describe('Create creature manually', () => {
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'owlbear']);
   });
 
-  it('adds the same rolled initiative to each multiplied creature', async () => {
+  it('adds the same dice notation initiative to each multiplied creature', async () => {
+    random
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0);
     const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('owlbear', '1', null);
-    await dmApp.createCreatureForm.addCreatureWithRolledInitiative('goblin', null, '2');
-    await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'owlbear']);
+    await dmApp.createCreatureForm.addCreature('goblin', '5');
+    await dmApp.createCreatureForm.addCreature('owlbear', '1d20', null, '2');
+    await DmApp.assertCreatureList(['owlbear #1', 'owlbear #2', 'goblin']);
+  });
+
+  it("allows each creature's initiative to be rolled separately in a group", async () => {
+    random
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '5');
+    await dmApp.createCreatureForm.addCreature('owlbear', '1d20', null, '2', true);
+    await DmApp.assertCreatureList(['owlbear #1', 'goblin', 'owlbear #2']);
+  });
+
+  it('returns to rolling initiative for the group when a creature is added', async () => {
+    random
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1d20', null, '2', true);
+    await dmApp.createCreatureForm.addCreature('owlbear', '1d20', null, '2');
+    await DmApp.assertCreatureList(['goblin #1', 'owlbear #1', 'owlbear #2', 'goblin #2']);
+  });
+
+  it('allows the initiative rolling strategy to be toggled', async () => {
+    random
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0.999999);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.setRollInitiativePerCreature();
+    await dmApp.createCreatureForm.setRollInitiativeAsGroup();
+    await dmApp.createCreatureForm.addCreature('goblin', '1d20', null, '2');
+    await DmApp.assertCreatureList(['goblin #1', 'goblin #2']);
+  });
+
+  it('selecting roll initiative per creature with a numerical initiative does not change initiative order', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.setRollInitiativePerCreature();
+    await dmApp.createCreatureForm.addCreature('goblin', '1', null, '5');
+    await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'goblin #3', 'goblin #4', 'goblin #5']);
   });
 
   it('shows an error when the multiplier is less than 1', async () => {

@@ -1,6 +1,5 @@
-import { createCreature, validateCreature } from './CreatureManager';
+import { createCreature } from './CreatureManager';
 import { sortByInitiative } from './InitiativeManager';
-import { addError } from './AppManager';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({ id }) => creature.id === id);
@@ -33,12 +32,14 @@ export function removeCreature(state, creatureId) {
   };
 }
 
-function createCreatures(creatureIdCount, creatures, creature, multiplier) {
+function createCreatures(creatureIdCount, creatures, creatureStats, multiplier) {
   if (multiplier <= 1) {
+    const initiative = creatureStats.initiative();
+    const creature = { ...creatureStats, initiative };
     return [createCreature(creatureIdCount, creature)];
   }
 
-  const groupRegex = new RegExp(`^${creature.name.toLowerCase()}\\s*#(\\d*)$`);
+  const groupRegex = new RegExp(`^${creatureStats.name.toLowerCase()}\\s*#(\\d*)$`);
   const groupMatch = (_) => _.name.toLowerCase().match(groupRegex);
 
   const groupIndexes = creatures
@@ -50,30 +51,21 @@ function createCreatures(creatureIdCount, creatures, creature, multiplier) {
   const groupOffset = groupSize > 0 ? groupIndexes[groupSize - 1] : 0;
 
   return Array(multiplier).fill().map((_, i) => {
-    const { name } = creature;
+    const { name } = creatureStats;
     const number = i + 1 + groupOffset;
-    return createCreature(creatureIdCount + i, { ...creature, name, number });
+    const initiative = creatureStats.initiative();
+    return createCreature(creatureIdCount + i, {
+      ...creatureStats,
+      initiative,
+      name,
+      number,
+    });
   });
 }
 
 export function addCreature(state, creature) {
   const { multiplier, ...creatureStats } = creature;
   const creatureMultiplier = multiplier || 1;
-  const { name, initiative, healthPoints } = creatureStats;
-  const createCreatureErrors = validateCreature(name, initiative, healthPoints, multiplier);
-
-  if (createCreatureErrors) {
-    const createCreatureErrorMessages = Object.keys(createCreatureErrors)
-      .filter((error) => createCreatureErrors[error])
-      .map((error) => createCreatureErrors[error])
-      .join('. ');
-
-    const ariaAnnouncements = state.ariaAnnouncements.concat(`Failed to create creature. ${createCreatureErrorMessages}`);
-    const errors = addError(state, 'Failed to create creature. Create creature form is invalid.');
-    return {
-      ...state, ariaAnnouncements, errors, createCreatureErrors,
-    };
-  }
 
   const newCreatures = createCreatures(
     state.creatureIdCount,

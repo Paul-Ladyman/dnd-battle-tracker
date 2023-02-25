@@ -47,6 +47,7 @@ import {
   dismissErrors,
   updateErrors,
 } from '../../state/AppManager';
+import { handleCreateCreatureErrors } from '../../state/CreatureFormManager';
 import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
@@ -171,6 +172,7 @@ function DungeonMasterApp({
           />
           <CreateCreatureForm
             createCreature={updateBattle(addCreature)}
+            handleCreateCreatureErrors={updateBattle(handleCreateCreatureErrors)}
             createCreatureErrors={state.createCreatureErrors}
           />
           <Creatures

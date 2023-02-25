@@ -5,19 +5,25 @@ import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from '../form/Input';
 import RollableInput from '../form/RollableInput';
-import rollDice from '../../util/rollDice';
-import D20Icon from '../icons/D20Icon';
+import RollGroupIcon from '../icons/RollGroupIcon';
+import RollEachIcon from '../icons/RollEachIcon';
 import ComboboxList from '../form/ComboboxList';
 import { calculateAbilityModifier } from '../../domain/characterSheet';
 import { getMonsters, getMonster } from '../../client/dnd5eapi';
+import { validateCreature } from '../../state/CreatureFormManager';
 
-function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateCreature }) {
+function CreateCreatureForm({
+  createCreatureErrors,
+  createCreature: propsCreateCreature,
+  handleCreateCreatureErrors,
+}) {
   const initialState = {
     name: '',
     initiative: '',
     healthPoints: '',
     multiplier: 1,
     submitted: false,
+    rollEachInitiative: false,
     dexterityModifier: 0,
   };
   const [state, setState] = useState(initialState);
@@ -70,6 +76,13 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
     setState((prevState) => ({ ...prevState, name: newName }));
   };
 
+  const rollInitiative = () => {
+    const { roll } = initiativeInput.current;
+    if (state.rollEachInitiative) return () => roll().result;
+    const initiative = roll().result;
+    return () => initiative;
+  };
+
   const createCreature = () => {
     const healthPoints = state.healthPoints === ''
       ? undefined
@@ -77,23 +90,27 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
 
     const multiplier = parseInt(state.multiplier, 10);
 
-    const initiative = initiativeInput.current.roll().result;
+    const errors = validateCreature(state.name, state.initiative, healthPoints, multiplier);
 
-    const creature = {
-      ...state, healthPoints, initiative, multiplier,
-    };
+    if (!errors) {
+      const creature = {
+        name: state.name, healthPoints, initiative: rollInitiative(), multiplier,
+      };
 
-    propsCreateCreature(creature);
+      propsCreateCreature(creature);
+    } else {
+      handleCreateCreatureErrors(errors);
+    }
+
     setState((prevState) => ({ ...prevState, submitted: true }));
   };
 
-  const onPressDice = () => {
-    const rolledNumber = rollDice(20);
-    const initiative = `${rolledNumber + state.dexterityModifier}`;
-    setState((prevState) => ({
-      ...prevState,
-      initiative,
-    }));
+  const toggleRollEachInitiative = () => {
+    setState((prevState) => {
+      const { rollEachInitiative } = state;
+      const newState = { ...prevState, rollEachInitiative: !rollEachInitiative };
+      return newState;
+    });
   };
 
   const formHandler = (event) => {
@@ -125,7 +142,7 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
   };
 
   const {
-    name, initiative, healthPoints, multiplier,
+    name, initiative, healthPoints, multiplier, rollEachInitiative,
   } = state;
 
   const {
@@ -177,10 +194,10 @@ function CreateCreatureForm({ createCreatureErrors, createCreature: propsCreateC
         label={initiativeError ? 'Initiative' : 'Initiative (optional)'}
         name="initiative"
         handleChange={handleChange}
-        submitHandler={onPressDice}
+        submitHandler={toggleRollEachInitiative}
         rightControls={{
-          rightTitle: 'Roll Initiative',
-          RightSubmitIcon: <D20Icon />,
+          rightTitle: rollEachInitiative ? 'Roll as group' : 'Roll per creature',
+          RightSubmitIcon: rollEachInitiative ? <RollEachIcon /> : <RollGroupIcon />,
         }}
         formHandler={formHandler}
         inputId="create-creature-form-initiative"

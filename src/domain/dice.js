@@ -1,3 +1,5 @@
+import random from '../util/random';
+
 const whiteSpace = /\s/g;
 const multipliedDice = /(\d+)d(\d*)/g;
 const dice = /d(\d*)/g;
@@ -7,7 +9,7 @@ function validateLength(notation) {
   return notation.length <= 500;
 }
 
-function validateSyntax(notation) {
+export function validateSyntax(notation) {
   return /^(\d|-[d\d]|\+[d\d]|d\d+)+$/g.test(notation);
 }
 
@@ -30,7 +32,7 @@ function validateNotation(notation) {
 }
 
 function rollDice(_, diceType) {
-  return Math.floor(Math.random() * diceType + 1);
+  return Math.floor(random() * diceType + 1);
 }
 
 function expandMultipliedDice(_, multiplier, diceType) {

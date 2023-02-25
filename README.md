@@ -94,6 +94,8 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
   * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
   * [Charm](https://game-icons.net/1x1/lorc/charm.html)
+  * [Two shadows](https://game-icons.net/1x1/lorc/two-shadows.html)
+  * [Backup](https://game-icons.net/1x1/lorc/backup.html)
 
 ### Fonts
 

@@ -63,12 +63,26 @@ export default class CreateCreatureForm {
     return fireEvent.keyDown(srdSearch, { key: 'enter', keyCode: 13 });
   }
 
-  async addCreature(name, initiative, hp, multiply) {
+  async setRollInitiativePerCreature() {
+    const initiativeRollButton = await screen.findByRole('button', { name: 'Roll per creature' });
+    return this.user.click(initiativeRollButton);
+  }
+
+  async setRollInitiativeAsGroup() {
+    const initiativeRollButton = await screen.findByRole('button', { name: 'Roll as group' });
+    return this.user.click(initiativeRollButton);
+  }
+
+  async addCreature(name, initiative, hp, multiply, rollEachInitiative) {
     await this.enterCreatureName(name);
 
     if (initiative) {
       const initiativeField = await screen.findByText('Initiative (optional)');
       await this.user.type(initiativeField, initiative);
+    }
+
+    if (rollEachInitiative) {
+      await this.setRollInitiativePerCreature();
     }
 
     if (hp) {
@@ -78,21 +92,12 @@ export default class CreateCreatureForm {
 
     if (multiply) {
       const multiplyField = await screen.findByText('Multiply');
+      await this.user.type(multiplyField, '{backspace}');
       await this.user.type(multiplyField, '{delete}');
       await this.user.type(multiplyField, multiply);
     }
 
     return this.submitCreature();
-  }
-
-  async rollInitiative() {
-    const initiativeButton = await screen.findByRole('button', { name: 'Roll Initiative' });
-    return this.user.click(initiativeButton);
-  }
-
-  async addCreatureWithRolledInitiative(name, hp, multiply) {
-    await this.rollInitiative();
-    return this.addCreature(name, null, hp, multiply);
   }
 
   static async assertCreateCreatureSearch(name) {

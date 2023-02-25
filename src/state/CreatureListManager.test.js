@@ -1,4 +1,4 @@
-import { createCreature, validateCreature } from './CreatureManager';
+import { createCreature } from './CreatureManager';
 import { removeCreature, addCreature, getCreatureList } from './CreatureListManager';
 import defaultState from '../../test/fixtures/battle';
 
@@ -6,7 +6,6 @@ jest.mock('./CreatureManager');
 
 beforeEach(() => {
   createCreature.mockClear();
-  validateCreature.mockClear();
 });
 
 describe('removeCreature', () => {
@@ -126,7 +125,7 @@ describe('addCreature', () => {
   it('creates a creature, adds it to the list and increments relevant counts', () => {
     const creature = {
       name: 'name',
-      initiative: 9,
+      initiative: () => 9,
       healthPoints: 10,
     };
 
@@ -156,13 +155,18 @@ describe('addCreature', () => {
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    const expectedCreature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10,
+    };
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature);
   });
 
   it('removes focus on a creature if it is set', () => {
     const creature = {
       name: 'name',
-      initiative: 9,
+      initiative: () => 9,
       healthPoints: 10,
     };
 
@@ -198,13 +202,18 @@ describe('addCreature', () => {
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    const expectedCreature = {
+      name: 'name',
+      initiative: 9,
+      healthPoints: 10,
+    };
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature);
   });
 
   it('sorts creatures by their initiative', () => {
     const creature = {
       name: 'name',
-      initiative: 5,
+      initiative: () => 5,
       healthPoints: 10,
     };
 
@@ -234,13 +243,19 @@ describe('addCreature', () => {
     };
 
     expect(addCreature(defaultState, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    const expectedCreature = {
+      name: 'name',
+      initiative: 5,
+      healthPoints: 10,
+    };
+
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature);
   });
 
   it('keeps the currently active creature', () => {
     const creature = {
       name: 'name',
-      initiative: 15,
+      initiative: () => 15,
       healthPoints: 10,
     };
 
@@ -277,13 +292,18 @@ describe('addCreature', () => {
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    const expectedCreature = {
+      name: 'name',
+      initiative: 15,
+      healthPoints: 10,
+    };
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature);
   });
 
   it('does not change the active creature if the battle has not begun', () => {
     const creature = {
       name: 'name',
-      initiative: 15,
+      initiative: () => 15,
       healthPoints: 10,
     };
 
@@ -319,13 +339,22 @@ describe('addCreature', () => {
     };
 
     expect(addCreature(state, creature)).toEqual(expectedState);
-    expect(createCreature).toHaveBeenCalledWith(3, creature);
+    const expectedCreature = {
+      name: 'name',
+      initiative: 15,
+      healthPoints: 10,
+    };
+    expect(createCreature).toHaveBeenCalledWith(3, expectedCreature);
   });
 
   it('creates multiple creatures at once based on a multiplier', () => {
+    const initiative = jest.fn()
+      .mockReturnValueOnce(9)
+      .mockReturnValueOnce(10);
+
     const creature = {
       name: 'name',
-      initiative: 9,
+      initiative,
       healthPoints: 10,
       multiplier: 2,
     };
@@ -341,7 +370,12 @@ describe('addCreature', () => {
       notes: [],
     };
 
-    const createdCreature2 = { ...createdCreature, name: 'name #2', id: 4 };
+    const createdCreature2 = {
+      ...createdCreature,
+      initiative: 10,
+      name: 'name #2',
+      id: 4,
+    };
 
     createCreature
       .mockReturnValueOnce(createdCreature)
@@ -353,8 +387,8 @@ describe('addCreature', () => {
         defaultState.creatures[0],
         defaultState.creatures[1],
         defaultState.creatures[2],
-        createdCreature,
         createdCreature2,
+        createdCreature,
       ],
       creatureIdCount: 5,
       ariaAnnouncements: ['creatures added'],
@@ -373,7 +407,7 @@ describe('addCreature', () => {
     const expectedCreature2 = {
       name: 'name',
       number: 2,
-      initiative: 9,
+      initiative: 10,
       healthPoints: 10,
     };
     expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
@@ -383,7 +417,7 @@ describe('addCreature', () => {
   it('adds multiple creatures to an existing group based on a multiplier', () => {
     const creature = {
       name: 'Goblin',
-      initiative: 9,
+      initiative: () => 9,
       healthPoints: 10,
       multiplier: 2,
     };
@@ -457,35 +491,13 @@ describe('addCreature', () => {
     expect(createCreature).toHaveBeenCalledWith(6, expectedCreature2);
   });
 
-  it('does not add a creature if it is not valid', () => {
-    const creature = {
-      name: '',
-      initiative: 9,
-      healthPoints: 10,
-      multiplier: 2,
-    };
-
-    validateCreature.mockReturnValue({ nameError: 'some error' });
-
-    const expectedState = {
-      ...defaultState,
-      ariaAnnouncements: ['Failed to create creature. some error'],
-      errors: ['Failed to create creature. Create creature form is invalid.'],
-      createCreatureErrors: { nameError: 'some error' },
-    };
-
-    expect(addCreature(defaultState, creature)).toEqual(expectedState);
-  });
-
-  it('resets all errors if a creature is valid', () => {
+  it('resets all errors', () => {
     const creature = {
       name: 'name',
-      initiative: 9,
+      initiative: () => 9,
       healthPoints: 10,
       multiplier: 2,
     };
-
-    validateCreature.mockReturnValue(undefined);
 
     const state = {
       ...defaultState,
