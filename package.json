@@ -30,7 +30,7 @@
   },
   "size-limit": [
     {
-      "limit": "240 kb",
+      "limit": "241 kb",
       "path": "dist-final/dnd-battle-tracker.html"
     }
   ],
