@@ -94,7 +94,6 @@ export default function CreatureStats({
       <div className="section-left">
         <div className="creature-heading">
           <div className="creature-title-header">
-            <h1 id="creature-header-text">{creature.name}</h1>
             <button id="close-creature-stats" type="button" onClick={toggleCreatureStats}>▲ Hide  stats</button>
           </div>
 
@@ -111,16 +110,6 @@ export default function CreatureStats({
           <polyline points="0,0 400,2.5 0,5" />
         </svg>
         <div className="top-stats">
-          <div className="property-line">
-            <h4>Hit Points - </h4>
-            <p>
-              {creature.hit_points}
-              {' '}
-              (
-              {creature.hit_dice}
-              )
-            </p>
-          </div>
           {creature.speed && (
           <div className="property-line last">
             <h4>Speed: </h4>
