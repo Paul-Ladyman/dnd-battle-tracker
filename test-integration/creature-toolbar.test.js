@@ -3,7 +3,6 @@ import { render, screen, findByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import DungeonMasterAppWrapper from '../src/components/app/DungeonMasterAppWrapper';
-import 'cross-fetch/polyfill';
 
 async function addCreature(user) {
   const name = await screen.findByText('Creature Name');
