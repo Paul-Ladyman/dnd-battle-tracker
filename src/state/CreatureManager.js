@@ -132,24 +132,6 @@ export function createCreature(creatureId, {
   };
 }
 
-export function validateCreature(name, initiative, healthPoints, multiplier) {
-  const nameError = name === '';
-  const initiativeError = initiative !== undefined && Number.isNaN(initiative);
-  const healthError = healthPoints <= 0;
-  const multiplierError = multiplier <= 0 || multiplier > 50;
-
-  if (nameError || initiativeError || healthError || multiplierError) {
-    return {
-      nameError: nameError ? 'Name must be provided.' : false,
-      initiativeError: initiativeError ? 'Initiative must be a number.' : false,
-      healthError: healthError ? 'Health must be greater than 0.' : false,
-      multiplierError: multiplierError ? 'Multiplier must be greater than 0 and less than 50.' : false,
-    };
-  }
-
-  return undefined;
-}
-
 export function addNoteToCreature(state, creatureId, text, isCondition) {
   const creature = findCreature(state.creatures, creatureId);
 
@@ -257,7 +239,7 @@ export function addTemporaryHealthToCreature(state, creatureId, health) {
 export function addInitiativeToCreature(state, creatureId, initiative) {
   const creature = findCreature(state.creatures, creatureId);
 
-  if (creature.initiative !== undefined) {
+  if (creature.initiative !== undefined && creature.initiative !== null) {
     return state;
   }
 

@@ -25,18 +25,20 @@ As a new DM I found that I was frequently making mistakes during combat, such as
 * Forgetting what conditions creatures were under.
 * Doing maths wrong when applying damage to creatures (!)
 
-It was clear that some automation would be helpful. There's a number of browser-based combat trackers out there at the time of writing:
+It was clear that some automation would be helpful. There's a number of browser-based combat trackers out there at the time of writing, in no particular order:
 
 * [D&D Beyond](https://www.dndbeyond.com/combat-tracker)
-* [Aide D&D](https://www.aidedd.org/dnd-tracker/index.php?l=1)
+* [Aide D&D](https://www.aidedd.org/en/online-assistant/)
 * [DHMStark](http://dhmstark.co.uk/rpgs/encounter-tracker/)
 * [Donjon](https://donjon.bin.sh/5e/initiative/)
 * [Harmless Key](https://harmlesskey.com/)
 * [Improved Initiative](https://www.improved-initiative.com/)
 * [Kassoon](https://www.kassoon.com/dnd/combat-tracker/)
-* [Orc Pub](https://www.orcpub2.com/)
+* [Orc Pub](https://www.orcpub2.com/) ([replaced by Dungeon Master's Vault](https://www.dungeonmastersvault.com/help/faq-about-orcpub-and-dungeonmastersvault/) though seemingly without a combat tracker)
 * [Roll20](https://app.roll20.net/sessions/new)
 * [HeroMuster](https://encounters.heromuster.com/)
+* [5e Tools](https://5e.tools/dmscreen.html) (click the add button then go to Special and add the Initiative Tracker. Player view also available)
+* [DM Tools](https://dm.tools/tracker)
 
 Many of these systems are very feature rich and aim to provide tools beyond the combat tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
@@ -58,8 +60,10 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 * Save and load battles in case they continue into another session.
 * Share your battle with your players so they can see the initiative order and follow along. Requires internet access.
 
-## Credits
+## License and Credits
 
+* This application (D&D Battle Tracker) is offered for use under the terms of the [MIT license](https://github.com/Paul-Ladyman/dnd-battle-tracker/blob/master/LICENSE)
+* Dungeons & Dragons 5th Edition content (e.g. monster stats) provided by [dnd5eapi](https://www.dnd5eapi.co/) under the terms of the [Systems Reference Document and Open-Gaming License](https://dnd.wizards.com/resources/systems-reference-document). The dnd5eapi itself is used under the terms of the [MIT license](https://github.com/5e-bits/5e-srd-api/blob/main/LICENSE.md)
 * All icons taken from [game-icons.net](https://game-icons.net/) under the terms of the [Creative Commons 3.0 BY license](https://creativecommons.org/licenses/by/3.0/). See below for individual credits.
 * Fonts provided by [Google Fonts](https://fonts.google.com/) under the terms of the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See below for individual credits.
 * [Critical Role](https://www.youtube.com/channel/UCpXBGqwsBkpvcYjsJBQ7LEQ) for the inspiration.
@@ -90,6 +94,8 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
   * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
   * [Charm](https://game-icons.net/1x1/lorc/charm.html)
+  * [Two shadows](https://game-icons.net/1x1/lorc/two-shadows.html)
+  * [Backup](https://game-icons.net/1x1/lorc/backup.html)
 
 ### Fonts
 

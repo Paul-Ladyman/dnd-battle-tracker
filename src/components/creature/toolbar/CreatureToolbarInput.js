@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import isHotkey from 'is-hotkey';
-import Input from '../../page/Input';
+import Input from '../../form/Input';
 
 export default function CreatureToolbarInput(props) {
   const [value, setValue] = useState('');

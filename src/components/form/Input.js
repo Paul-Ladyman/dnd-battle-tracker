@@ -33,6 +33,7 @@ function Input({
   inputId,
   onClick,
   onBlur,
+  spellCheck = true,
 }) {
   const {
     leftEnabled,
@@ -98,6 +99,8 @@ function Input({
             aria-controls={ariaControls}
             aria-activedescendant={ariaActiveDescendant}
             role={role}
+            autoComplete="off"
+            spellCheck={spellCheck}
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon

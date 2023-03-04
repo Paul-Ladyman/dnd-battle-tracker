@@ -9,7 +9,6 @@ import {
   removeNoteFromCreature,
   addHitPointsToCreature,
   addTemporaryHealthToCreature,
-  validateCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
   toggleCreatureShare,
@@ -586,70 +585,6 @@ describe('createCreature', () => {
       name: 'name', number: 3, initiative: 13, healthPoints: 10,
     });
     expect(creature).toEqual(expectedCreature);
-  });
-});
-
-describe('validateCreature', () => {
-  test('returns undefined if creature is valid', () => {
-    expect(validateCreature('a', '1', 1, 1)).toEqual(undefined);
-  });
-
-  test('initiative is optional', () => {
-    expect(validateCreature('a', undefined, 1, 1)).toEqual(undefined);
-  });
-
-  test('health is optional', () => {
-    expect(validateCreature('a', '1', undefined, 1)).toEqual(undefined);
-  });
-
-  test('name must be non-empty', () => {
-    const expectedErrors = {
-      nameError: 'Name must be provided.',
-      initiativeError: false,
-      healthError: false,
-      multiplierError: false,
-    };
-    expect(validateCreature('', '1', 1, 1)).toEqual(expectedErrors);
-  });
-
-  test('initiative must be a number if non-empty', () => {
-    const expectedErrors = {
-      nameError: false,
-      initiativeError: 'Initiative must be a number.',
-      healthError: false,
-      multiplierError: false,
-    };
-    expect(validateCreature('a', NaN, 1, 1)).toEqual(expectedErrors);
-  });
-
-  test('health must be greater than 0', () => {
-    const expectedErrors = {
-      nameError: false,
-      initiativeError: false,
-      healthError: 'Health must be greater than 0.',
-      multiplierError: false,
-    };
-    expect(validateCreature('a', 1, 0, 1)).toEqual(expectedErrors);
-  });
-
-  test('multiplier must be greater than 0', () => {
-    const expectedErrors = {
-      nameError: false,
-      initiativeError: false,
-      healthError: false,
-      multiplierError: 'Multiplier must be greater than 0 and less than 50.',
-    };
-    expect(validateCreature('a', 1, 1, 0)).toEqual(expectedErrors);
-  });
-
-  test('multiplier must be less than 51', () => {
-    const expectedErrors = {
-      nameError: false,
-      initiativeError: false,
-      healthError: false,
-      multiplierError: 'Multiplier must be greater than 0 and less than 50.',
-    };
-    expect(validateCreature('a', 1, 1, 51)).toEqual(expectedErrors);
   });
 });
 
@@ -1309,6 +1244,36 @@ describe('addInitiativeToCreature', () => {
         {
           ...defaultState.creatures[1],
           initiative: undefined,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: 10,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s initiative is 10'],
+    };
+
+    const result = addInitiativeToCreature(state, 1, 10);
+    expect(result).toEqual(expectedState);
+  });
+
+  it("adds initiative to a creature who's initiative is currently null", () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: null,
         },
         defaultState.creatures[2],
       ],

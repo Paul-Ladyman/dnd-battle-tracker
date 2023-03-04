@@ -4,9 +4,21 @@ import { graphql, rest } from 'msw';
 export default [
   rest.get('https://wyqoq6xpifbjlm6xq6jnqugjvm.appsync-realtime-api.eu-west-2.amazonaws.com/graphql', null),
 
-  rest.get('https://www.dnd5eapi.co/api/monsters', async (req, res, ctx) => res(
+  rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
     ctx.json({
-      results: [],
+      results: [
+        { index: 'goblin', name: 'Goblin', url: '/api/monsters/goblin' },
+        { index: 'hobgoblin', name: 'Hobgoblin', url: '/api/monsters/hobgoblin' },
+      ],
+    }),
+  )),
+
+  rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+    ctx.json({
+      index: 'goblin',
+      name: 'Goblin',
+      hit_points: 7,
+      dexterity: 14,
     }),
   )),
 

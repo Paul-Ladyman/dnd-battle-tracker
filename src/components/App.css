@@ -228,6 +228,7 @@ input[type="number"] {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
+  margin-top: 2px;
 }
 
 .battle-toolbar--button {
@@ -414,30 +415,30 @@ input[type="number"] {
   }
 }
 
-.creature-toolbar--notes-wrapper {
+.combobox-wrapper {
   position: relative;
 }
 
-.creature-toolbar--notes .input {
+.combobox .input {
   cursor: pointer;
 }
 
-.creature-toolbar--notes__open .input-wrapper {
+.combobox__open .input-wrapper {
   border-radius: 15px 15px 0 0;
   box-shadow: 0 5px 10px #1a1a1b;
 }
 
-.creature-toolbar--notes__open .input {
+.combobox__open .input {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.creature-toolbar--notes__open .input--submit {
+.combobox__open .input--submit {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.creature-toolbar--notes-dropdown {
+.combobox-dropdown {
   border-width: 0 2px 2px 2px;
   border-color: #822000;
   border-style: solid;
@@ -458,21 +459,21 @@ input[type="number"] {
   scrollbar-color: #822000 white;
 }
 
-.creature-toolbar--notes-dropdown::-webkit-scrollbar {
+.combobox-dropdown::-webkit-scrollbar {
   width: 12px;
 }
 
-.creature-toolbar--notes-dropdown::-webkit-scrollbar-track {
+.combobox-dropdown::-webkit-scrollbar-track {
   background: white;
   border-radius: 0 0 15px 0;
 }
-.creature-toolbar--notes-dropdown::-webkit-scrollbar-thumb {
+.combobox-dropdown::-webkit-scrollbar-thumb {
   background-color: #822000;
   border-radius: 0 15px 15px 0;
   border: 3px solid white;
 }
 
-.creature-toolbar--notes-dropdown-expander {
+.combobox-dropdown-expander {
   border: none;
   background: none;
   box-shadow: none;
@@ -481,7 +482,7 @@ input[type="number"] {
   min-height: auto;
 }
 
-.creature-toolbar--notes-dropdown-group {
+.combobox-dropdown-group {
   width: 100%;
   display: flex;
   cursor: pointer;
@@ -489,16 +490,16 @@ input[type="number"] {
   height: 40px;
 }
 
-.creature-toolbar--notes-dropdown-group:last-child {
+.combobox-dropdown-group:last-child {
   border-bottom: 0;
 }
 
-.creature-toolbar--notes-dropdown-group:last-child .creature-toolbar--notes-dropdown-button {
+.combobox-dropdown-group:last-child .combobox-dropdown-button {
   border-bottom-right-radius: 15px;
   border-bottom: 0px;
 }
 
-.creature-toolbar--notes-dropdown-item {
+.combobox-dropdown-item {
   width: 100%;
   padding: 5px;
   text-overflow: ellipsis;
@@ -506,19 +507,19 @@ input[type="number"] {
   overflow: hidden;
 }
 
-.creature-toolbar--notes-dropdown-item:hover {
+.combobox-dropdown-item:hover {
   background: #EBE1AD;
 }
 
-.creature-toolbar--notes-dropdown-item__focused {
+.combobox-dropdown-item__focused {
   background: #EBE1AD;
 }
 
-.creature-toolbar--notes-dropdown-group:last-child .creature-toolbar--notes-dropdown-item {
+.combobox-dropdown-group:last-child .combobox-dropdown-item {
   border-bottom-left-radius: 15px;
 }
 
-.creature-toolbar--notes-dropdown-button {
+.combobox-dropdown-button {
   border-radius: 0;
 }
 
@@ -1309,3 +1310,33 @@ input[type="number"] {
 }
 
 /* creature stats */
+
+/* scroll to active initiative */
+.creature-scroll-effect {
+  scroll-margin-top: 54px;
+}
+
+.battle-toolbar--stat-value__button {
+  border: none;
+  box-shadow: none;
+  background: none;
+  min-height: auto;
+  font-size: 18px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  padding: 2px;
+  margin: 0;
+  display: block;
+  border-radius: 5px;
+}
+
+.battle-toolbar--stat-value__button-disabled {
+  cursor: auto;
+}
+
+.battle-toolbar--stat-value__button-enabled:focus,
+.battle-toolbar--stat-value__button-enabled:hover {
+  background-color: #EBE1AD;
+  box-shadow: 0 0 5px #979aa4;
+  outline: 2px solid #822000;
+}
+/* scroll to active initiative */

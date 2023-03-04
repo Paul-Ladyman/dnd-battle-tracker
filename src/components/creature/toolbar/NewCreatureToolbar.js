@@ -19,8 +19,6 @@ export default function NewCreatureToolbar({ creature }) {
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
 
-  console.log('>>> FOCUSED', focused);
-
   return (
     <div
       role="toolbar"

@@ -1,5 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { render, screen, getByText, getByRole } from '@testing-library/react';
+import {
+  render,
+  screen,
+  getByText,
+  getByRole,
+  findByRole,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 export default class DndBattleTracker {
@@ -28,5 +34,16 @@ export default class DndBattleTracker {
   static async assertError(message) {
     const errorBar = await screen.findByRole('alert');
     return expect(errorBar).toHaveTextContent(message);
+  }
+
+  static async assertCurrentTurn(enabled, name) {
+    const banner = await screen.findByRole('banner');
+    const currentTurnButton = await findByRole(banner, 'button', { name });
+    expect(currentTurnButton).toBeVisible();
+    expect(currentTurnButton).toHaveTextContent(name);
+    if (enabled) {
+      return expect(currentTurnButton).toBeEnabled();
+    }
+    return expect(currentTurnButton).toBeDisabled();
   }
 }
