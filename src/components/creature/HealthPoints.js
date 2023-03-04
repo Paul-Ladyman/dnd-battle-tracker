@@ -14,7 +14,6 @@ function HealthPoints({
   const { level, display } = getDamageLevel(hp, maxHp);
   const classes = `health-points--${level} ${className}`;
   const hpLabel = playerSession ? 'Hit Points' : 'Current Hit Points';
-
   const shortTempHpDisplay = displayTempHp ? ` (+${tempHp})` : '';
   const shortHpDisplay = playerSession ? display : `${hp}${shortTempHpDisplay}`;
   const longHpDisplay = playerSession ? display : hp;
@@ -36,7 +35,7 @@ function HealthPoints({
         </div>
       )}
       <div className={classes}>
-        {short && `HP ${shortHpDisplay} `}
+        {short && `HP ${shortHpDisplay}`}
         {!short && (
           <>
             <b>{hpLabel}</b>
@@ -45,7 +44,6 @@ function HealthPoints({
           </>
         )}
       </div>
-
     </>
   );
 }
