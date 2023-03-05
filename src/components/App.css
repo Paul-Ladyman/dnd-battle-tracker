@@ -864,10 +864,6 @@ input[type="number"] {
   column-count: 1;
 }
 
-.creature--columns {
-  margin-bottom: 15px;
-}
-
 @media only screen and (max-width: 825px) {
   .creature--columns__wide {
     column-count: 1;
@@ -1099,19 +1095,19 @@ input[type="number"] {
 }
 
 /* creature stats */
-.stat-block { 
-  text-align: left; 
-  margin: 20px; 
-  display: inline-block; 
-  vertical-align: top;  
-  background: #FDF1DC; 
-  padding: 5px 10px 20px; 
-  box-shadow: 0 0 1.5em #867453;
-  border-radius: 20px; 
+.stat-block-wrapper {
+  margin-bottom: 10px;
 }
-.stat-block.wide {  
-  text-align: center; 
+.stat-block {
+  background: #FDF1DC;
+  margin-left: -10px;
+  padding: 10px;
+  width: 100%;
+  border-top: 1px solid #822000;
+  border-bottom: 1px solid #822000;
+  margin-top: 10px;
 }
+
 .stat-block.wide .section-left,
 .stat-block.wide .section-right { 
   display: inline-block; 
@@ -1151,16 +1147,7 @@ input[type="number"] {
   fill: #922610;
   stroke: #922610;
 }
-.creature-heading h1{
-  font-family: 'Libre Baskerville', 'Lora', 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
-  color: #922610;
-  font-size: 23px;
-  line-height: 1.2em;
-  margin: 10px 0 0;
-  letter-spacing: 1px;
-  font-variant: small-caps;
-  font-weight: bold;
-}
+
 .creature-heading h2{
   font-weight: normal;
   font-style: italic;

@@ -74,7 +74,7 @@ export default function CreatureStats({
   const skills = creature.proficiencies ? creature.proficiencies.filter((ability) => ability.proficiency?.index.includes('skill')) : [];
 
   return (
-    <Disclosure id={`${creature.name}-stat-block`} name="Stat Block" indent={false}>
+    <Disclosure id={`${creature.name}-stat-block`} name="Stat Block" indent={false} className="stat-block-wrapper">
       <div className="stat-block wide">
         <div className="section-left">
           <div className="creature-heading">

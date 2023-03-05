@@ -5,6 +5,7 @@ export default function Disclosure({
   name,
   indent = true,
   children,
+  className,
 }) {
   const [expanded, setExpanded] = useState(false);
   const display = expanded ? 'block' : 'none';
@@ -20,7 +21,7 @@ export default function Disclosure({
   };
 
   return (
-    <>
+    <div className={className}>
       <dt>
         <button
           type="button"
@@ -44,6 +45,6 @@ export default function Disclosure({
           { children }
         </div>
       </dd>
-    </>
+    </div>
   );
 }
