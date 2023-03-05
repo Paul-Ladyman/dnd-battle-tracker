@@ -162,6 +162,7 @@ class CreatureWrapper extends Component {
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
 
     const showCreatureRemover = showExpanded && !playerSession;
+    const showStatBlock = showExpanded && creature.apiData;
 
     const [
       leftPercentage,
@@ -193,26 +194,16 @@ class CreatureWrapper extends Component {
             />
             {showExpanded
               ? (
-                <>
-                  <ExpandedCreature
-                    creature={creature}
-                    round={round}
-                    secondsElapsed={secondsElapsed}
-                    removeCreature={removeCreature}
-                    removeNoteFromCreature={removeNoteFromCreature}
-                    healthPoints={healthPoints}
-                    showHealth={showHitPoints}
-                    playerSession={playerSession}
-                  />
-                  {creature.apiData && (
-                  <div>
-                    <CreatureStats
-                      creature={creature.apiData}
-                    />
-                  </div>
-                  )}
-                </>
-
+                <ExpandedCreature
+                  creature={creature}
+                  round={round}
+                  secondsElapsed={secondsElapsed}
+                  removeCreature={removeCreature}
+                  removeNoteFromCreature={removeNoteFromCreature}
+                  healthPoints={healthPoints}
+                  showHealth={showHitPoints}
+                  playerSession={playerSession}
+                />
               )
               : (
                 <CollapsedCreature
@@ -222,6 +213,7 @@ class CreatureWrapper extends Component {
                 />
               )}
           </div>
+          {showStatBlock && <CreatureStats creature={creature.apiData} />}
           {showCreatureRemover && (
             <CreatureRemover
               creature={creature}
