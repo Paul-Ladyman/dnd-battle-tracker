@@ -1,6 +1,7 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
 import CreatureStatus from './CreatureStatus';
+import Separator from './Separator';
 
 export default function ExpandedCreature({
   creature,
@@ -20,7 +21,7 @@ export default function ExpandedCreature({
     <>
       <div>
         <CreatureStatus creature={creature} shared={shared} />
-        <div className="expanded-creature--separator" />
+        <Separator />
         {showHealth && healthPoints}
         {showInitiative
           && (
@@ -30,7 +31,7 @@ export default function ExpandedCreature({
             {initiative}
           </div>
           )}
-        { (showHealth || showInitiative) && <div className="expanded-creature--separator" /> }
+        { (showHealth || showInitiative) && <Separator /> }
       </div>
       <CreatureNoteList
         creatureId={id}

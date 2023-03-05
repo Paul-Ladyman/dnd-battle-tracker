@@ -2,6 +2,7 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import Disclosure from '../widgets/Disclosure';
+import Separator from './Separator';
 
 import {
   beautifySnakeWord, capitalizeWord, DamageTypesObject, getAbilityWithSign, getModifierSign, getProficiencyBonus,
@@ -87,9 +88,7 @@ export default function CreatureStats({
               {creature.alignment}
             </h2>
           </div>
-          <svg height="5" width="100%" className="tapered-rule">
-            <polyline points="0,0 400,2.5 0,5" />
-          </svg>
+          <Separator />
           <div className="top-stats">
             {creature.speed && (
             <div className="property-line last">
@@ -110,9 +109,7 @@ export default function CreatureStats({
               ))}
             </div>
             )}
-            <svg height="5" width="100%" className="tapered-rule">
-              <polyline points="0,0 400,2.5 0,5" />
-            </svg>
+            <Separator />
             <div className="abilities">
               <div className="ability-strength">
                 <h4>STR</h4>
@@ -139,9 +136,7 @@ export default function CreatureStats({
                 <p>{`${creature.charisma}  ${getAbilityWithSign(creature.charisma)}`}</p>
               </div>
             </div>
-            <svg height="5" width="100%" className="tapered-rule">
-              <polyline points="0,0 400,2.5 0,5" />
-            </svg>
+            <Separator />
             {creature.damage_immunities?.length > 0 && (
               <div className="property-line first">
                 <h4>Damage Immunities: </h4>
@@ -268,9 +263,7 @@ export default function CreatureStats({
             )}
 
           </div>
-          <svg height="5" width="100%" className="tapered-rule">
-            <polyline points="0,0 400,2.5 0,5" />
-          </svg>
+          <Separator />
 
           {creature.special_abilities?.length > 0 && creature.special_abilities.map((ability) => (
             <div key={ability.name} className="property-block">
