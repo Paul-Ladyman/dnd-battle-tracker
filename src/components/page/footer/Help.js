@@ -1,5 +1,5 @@
 import React from 'react';
-import Disclosure from './Disclosure';
+import Disclosure from '../../widgets/Disclosure';
 import Shortcuts from './Shortcuts';
 import Info from './Info';
 import DmTips from './DmTips';

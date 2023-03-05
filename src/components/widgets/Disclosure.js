@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 export default function Disclosure({
   id,
   name,
+  indent = true,
   children,
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -26,7 +27,7 @@ export default function Disclosure({
           aria-expanded={expanded}
           aria-controls={id}
           onClick={toggleExpanded}
-          className="button__help"
+          className="button__disclosure"
         >
           <svg width="18" height="16" aria-hidden="true" focusable="false" style={iconStyle}>
             <polygon className="arrow" strokeWidth="0" fillOpacity="0.75" fill="currentColor" points="3,6 15,6 9,14" />
@@ -34,7 +35,7 @@ export default function Disclosure({
           {name}
         </button>
       </dt>
-      <dd>
+      <dd style={{ 'margin-inline-start': indent ? 'revert' : '0px' }}>
         <div
           data-testid={id}
           id={id}

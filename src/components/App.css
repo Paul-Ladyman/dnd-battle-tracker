@@ -42,7 +42,7 @@ button, .button {
   border: 2px dashed #822000;
 }
 
-.button__help {
+.button__disclosure {
   height: auto;
   width: auto;
   margin: 0;
@@ -54,8 +54,8 @@ button, .button {
   font-size: 16px;
 }
 
-.button__help:hover,
-.button__help:focus {
+.button__disclosure:hover,
+.button__disclosure:focus {
   padding: 2px 6px 2px 0;
   background-color: #EBE1AD;
   border: 2px solid #822000;
@@ -1245,10 +1245,6 @@ input[type="number"] {
 }
 .actions:last-child{
   margin: 0;
-}
-.creature-title-header{
-  display: flex;
-  flex-direction: row;
 }
 
 #close-creature-stats{
