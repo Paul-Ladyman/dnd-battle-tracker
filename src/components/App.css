@@ -1146,7 +1146,7 @@ input[type="number"] {
   line-height: 1.2em;
   margin: 0 0 10px;
 }
-.property-line h4,
+.property-line h3,
 .property-line p{
   display: inline;
   margin: 0;
@@ -1154,7 +1154,7 @@ input[type="number"] {
   font-size: 13.5px;
   line-height: 1.2em;
 }
-.property-line h4{
+.property-line h3{
   color: #7A200D;
   font-weight: 700;
 }
@@ -1193,6 +1193,7 @@ input[type="number"] {
   line-height: 1.2em;
   font-size: 1rem;
 }
+.property-block h3,
 .property-block h4,
 .property-block p{
   font-size: 13.5px;
@@ -1200,6 +1201,7 @@ input[type="number"] {
   display: inline;
   margin: 0;
 }
+.property-block h3,
 .property-block h4{
   font-style: italic;
   font-weight: 700;

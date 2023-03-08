@@ -92,7 +92,7 @@ export default function CreatureStats({
           <div className="top-stats">
             {creature.speed && (
             <div className="property-line last">
-              <h4>Speed: </h4>
+              <h3>Speed: </h3>
               {Object.keys(creature.speed).map((key) => (
                 <p key={key}>
                   {' '}
@@ -112,34 +112,34 @@ export default function CreatureStats({
             <Separator />
             <div className="abilities">
               <div className="ability-strength">
-                <h4>STR</h4>
+                <h3>STR</h3>
                 <p>{`${creature.strength}  ${getAbilityWithSign(creature.strength)}`}</p>
               </div>
               <div className="ability-dexterity">
-                <h4>DEX</h4>
+                <h3>DEX</h3>
                 <p>{`${creature.dexterity}  ${getAbilityWithSign(creature.dexterity)}`}</p>
               </div>
               <div className="ability-constitution">
-                <h4>CON</h4>
+                <h3>CON</h3>
                 <p>{`${creature.constitution}  ${getAbilityWithSign(creature.constitution)}`}</p>
               </div>
               <div className="ability-intelligence">
-                <h4>INT</h4>
+                <h3>INT</h3>
                 <p>{`${creature.intelligence}  ${getAbilityWithSign(creature.intelligence)}`}</p>
               </div>
               <div className="ability-wisdom">
-                <h4>WIS</h4>
+                <h3>WIS</h3>
                 <p>{`${creature.wisdom}  ${getAbilityWithSign(creature.wisdom)}`}</p>
               </div>
               <div className="ability-charisma">
-                <h4>CHA</h4>
+                <h3>CHA</h3>
                 <p>{`${creature.charisma}  ${getAbilityWithSign(creature.charisma)}`}</p>
               </div>
             </div>
             <Separator />
             {creature.damage_immunities?.length > 0 && (
               <div className="property-line first">
-                <h4>Damage Immunities: </h4>
+                <h3>Damage Immunities: </h3>
                 {creature.damage_immunities.map((name) => (
                   <p key={name}>
                     {capitalizeWord(name)}
@@ -151,7 +151,7 @@ export default function CreatureStats({
             )}
             {creature.damage_resistances?.length > 0 && (
             <div className="property-line first">
-              <h4>Damage Resistances: </h4>
+              <h3>Damage Resistances: </h3>
               {creature.damage_resistances.map((name) => (
                 <p key={name}>
                   {capitalizeWord(name)}
@@ -164,7 +164,7 @@ export default function CreatureStats({
 
             {creature.condition_immunities?.length > 0 && (
             <div className="property-line first">
-              <h4>Condition Immunities: </h4>
+              <h3>Condition Immunities: </h3>
               {creature.condition_immunities.map((data) => (
                 <ExternalLink
                   key={data.key}
@@ -182,7 +182,7 @@ export default function CreatureStats({
             )}
             {creature.damage_vulnerabilities?.length > 0 && (
               <div className="property-line first">
-                <h4>Damage Vulnerabilities: </h4>
+                <h3>Damage Vulnerabilities: </h3>
                 {creature.damage_vulnerabilities.map((name) => (
                   <p key={name}>{name}</p>
                 ))}
@@ -191,7 +191,7 @@ export default function CreatureStats({
 
             {savingThrows.length > 0 && (
             <div className="property-line">
-              <h4>Saving Throws: </h4>
+              <h3>Saving Throws: </h3>
               {savingThrows.map((savingThrow) => (
                 <p key={savingThrow.proficiency.index}>
                   {' '}
@@ -207,7 +207,7 @@ export default function CreatureStats({
 
             {skills.length > 0 && (
             <div className="property-line">
-              <h4>Skills: </h4>
+              <h3>Skills: </h3>
               {skills.map((skill) => (
                 <p key={skill.proficiency.index}>
                   {' '}
@@ -223,7 +223,7 @@ export default function CreatureStats({
 
             {creature.senses && (
             <div className="property-line">
-              <h4>Senses: </h4>
+              <h3>Senses: </h3>
               {Object.keys(creature.senses).map((key) => (
                 <p key={key}>
                   {' '}
@@ -237,14 +237,14 @@ export default function CreatureStats({
             )}
             {creature.languages && (
             <div className="property-line">
-              <h4>Languages: </h4>
+              <h3>Languages: </h3>
               <p>{creature.languages}</p>
             </div>
             )}
             {creature.challenge_rating && (
             <div className="property-line last flexRow">
               <div>
-                <h4>Challenge </h4>
+                <h3>Challenge </h3>
                 <p>
                   {creature.challenge_rating}
                   {' '}
@@ -252,7 +252,7 @@ export default function CreatureStats({
                 </p>
               </div>
               <div className="proficiency-bonus">
-                <h4>Proficiency Bonus </h4>
+                <h3>Proficiency Bonus </h3>
                 {' '}
                 <p>
                   {getModifierSign(creature.challenge_rating)}
@@ -267,11 +267,11 @@ export default function CreatureStats({
 
           {creature.special_abilities?.length > 0 && creature.special_abilities.map((ability) => (
             <div key={ability.name} className="property-block">
-              <h4>
+              <h3>
                 {ability.name}
                 .
                 {' '}
-              </h4>
+              </h3>
               <p>
                 {renderHighlighter(ability.desc)}
                 {' '}
