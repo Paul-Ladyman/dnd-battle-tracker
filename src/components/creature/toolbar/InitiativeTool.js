@@ -8,7 +8,8 @@ export default function InitiativeTool({
   initiative,
   addInitiativeToCreature,
 }) {
-  return initiative === null && (
+  const showTool = initiative === undefined || initiative === null;
+  return showTool && (
     <CreatureToolbarInput
       customClasses="creature-toolbar--last"
       integer
