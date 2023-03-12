@@ -1,6 +1,13 @@
 import { nanoid } from 'nanoid';
 import { updateErrors, dismissErrors } from './AppManager';
 
+function getSharedCreatures(creatures) {
+  return creatures.map((creature) => ({
+    ...creature,
+    statBlock: undefined,
+  }));
+}
+
 export function share(state, createBattle, updateBattle, date) {
   if (!state.shareEnabled) {
     return state;
@@ -13,7 +20,7 @@ export function share(state, createBattle, updateBattle, date) {
       battleinput: {
         battleId,
         round: state.round,
-        creatures: state.creatures,
+        creatures: getSharedCreatures(state.creatures),
         activeCreature: state.activeCreature,
         expdate: Math.floor(date.getTime() / 1000.0) + 86400,
       },

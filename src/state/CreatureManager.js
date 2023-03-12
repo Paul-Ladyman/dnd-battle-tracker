@@ -1,5 +1,6 @@
 import getSecondsElapsed from './TimeManager';
 import { allConditions, addCondition, removeCondition } from './ConditionsManager';
+import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({ id }) => creatureId === id);
@@ -112,9 +113,11 @@ export function getRawName(name) {
 }
 
 export function createCreature(creatureId, {
-  name, number, initiative, healthPoints,
+  name, number, initiative, healthPoints, stats,
 }) {
   const groupedName = number ? `${name} #${number}` : name;
+  const index = stats?.index;
+  const statBlock = index ? monsterUrlFrom5eApiIndex(index) : null;
   return {
     name: groupedName,
     initiative,
@@ -128,6 +131,7 @@ export function createCreature(creatureId, {
     locked: false,
     shared: true,
     hitPointsShared: true,
+    statBlock,
   };
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import CreatureExpander from '../buttons/CreatureExpander';
 import CreatureLocker from '../buttons/CreatureLocker';
+import StatBlockLink from '../buttons/StatBlockLink';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import CreatureSharer from '../buttons/CreatureSharer';
 import CreatureHitPointsSharer from '../buttons/CreatureHitPointsSharer';
@@ -27,7 +28,7 @@ export default function CreatureHeader({
   multiColumn,
 }) {
   const {
-    alive, name, hitPointsShared, locked, shared,
+    alive, name, hitPointsShared, locked, shared, statBlock,
   } = creature;
   const expandedOrActive = expanded || active;
 
@@ -77,9 +78,15 @@ export default function CreatureHeader({
     />
   );
 
-  const monsterSearcher = !playerSession && (
+  const monsterSearcher = !playerSession && !statBlock && (
     <MonsterSearcher
       search={name}
+    />
+  );
+
+  const statBlockLink = !playerSession && statBlock && (
+    <StatBlockLink
+      url={statBlock}
     />
   );
 
@@ -88,6 +95,7 @@ export default function CreatureHeader({
       <h2 className="creature-header">{creatureExpander}</h2>
       <div className={controlsClasses}>
         {monsterSearcher}
+        {statBlockLink}
         {creatureLocker}
         {creatureSharer}
         {creatureHitPointsSharer}

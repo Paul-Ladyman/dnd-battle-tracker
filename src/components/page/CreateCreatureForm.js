@@ -25,6 +25,7 @@ function CreateCreatureForm({
     submitted: false,
     rollEachInitiative: false,
     dexterityModifier: 0,
+    stats: null,
   };
   const [state, setState] = useState(initialState);
 
@@ -94,7 +95,11 @@ function CreateCreatureForm({
 
     if (!errors) {
       const creature = {
-        name: state.name, healthPoints, initiative: rollInitiative(), multiplier,
+        name: state.name,
+        healthPoints,
+        initiative: rollInitiative(),
+        multiplier,
+        stats: state.stats,
       };
 
       propsCreateCreature(creature);
@@ -138,6 +143,7 @@ function CreateCreatureForm({
       healthPoints: healthPoints || '',
       initiative: getInitiative(dexterity, dexterityModifier),
       dexterityModifier,
+      stats: data,
     }));
   };
 

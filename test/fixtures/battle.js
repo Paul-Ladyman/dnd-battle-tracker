@@ -11,6 +11,7 @@ export default {
       locked: false,
       shared: true,
       hitPointsShared: true,
+      statBlock: null,
     },
     {
       name: 'Goblin #1',
@@ -25,6 +26,7 @@ export default {
       locked: true,
       shared: false,
       hitPointsShared: true,
+      statBlock: 'https://www.dndbeyond.com/monsters/goblin',
     },
     {
       name: 'Goblin #2',
@@ -39,6 +41,7 @@ export default {
       locked: true,
       shared: true,
       hitPointsShared: true,
+      statBlock: 'https://www.dndbeyond.com/monsters/goblin',
     },
   ],
   creatureIdCount: 3,

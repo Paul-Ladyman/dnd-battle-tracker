@@ -19,8 +19,10 @@ import {
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
+import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
 
 jest.mock('./ConditionsManager');
+jest.mock('../client/dndBeyond');
 
 const unconsciousCondition = [{ text: 'Unconscious' }];
 
@@ -28,6 +30,7 @@ beforeEach(() => {
   jest.resetAllMocks();
   addCondition.mockReturnValue(unconsciousCondition);
   removeCondition.mockReturnValue([]);
+  monsterUrlFrom5eApiIndex.mockReturnValue('https://www.dndbeyond.com/monsters/goblin');
 });
 
 describe('killCreature', () => {
@@ -559,6 +562,7 @@ describe('createCreature', () => {
       locked: false,
       shared: true,
       hitPointsShared: true,
+      statBlock: null,
     };
 
     const creature = createCreature(1, { name: 'name', initiative: 13, healthPoints: 10 });
@@ -579,12 +583,37 @@ describe('createCreature', () => {
       locked: false,
       shared: true,
       hitPointsShared: true,
+      statBlock: null,
     };
 
     const creature = createCreature(1, {
       name: 'name', number: 3, initiative: 13, healthPoints: 10,
     });
     expect(creature).toEqual(expectedCreature);
+  });
+
+  test("it adds a statBlock URL if the creature's stats include its index", () => {
+    const stats = { index: 'goblin' };
+    const creature = {
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.statBlock).toEqual('https://www.dndbeyond.com/monsters/goblin');
+  });
+
+  test('it maps the dnd5eapi index to a valid D&D Beyond URL', () => {
+    const stats = { index: 'goblin' };
+    const creature = {
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      stats,
+    };
+    createCreature(1, creature);
+    expect(monsterUrlFrom5eApiIndex).toHaveBeenCalledWith('goblin');
   });
 });
 

@@ -16,7 +16,20 @@ const expectedInput = (battleId) => ({
     battleinput: {
       battleId: battleId || defaultState.battleId,
       round: defaultState.round,
-      creatures: defaultState.creatures,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          statBlock: undefined,
+        },
+        {
+          ...defaultState.creatures[1],
+          statBlock: undefined,
+        },
+        {
+          ...defaultState.creatures[2],
+          statBlock: undefined,
+        },
+      ],
       activeCreature: defaultState.activeCreature,
       expdate: 1605901893,
     },
