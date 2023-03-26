@@ -267,14 +267,18 @@ input[type="number"] {
   flex-direction: column;
 }
 
+.input--number {
+  grid-column: span 5;
+}
+
+.creature-toolbar .input--number {
+  grid-column: span 4;
+}
+
 @media only screen and (max-width: 825px) {
   .input--form {
     grid-column: span 6;
   }
-}
-
-.input--number {
-  grid-column: span 4;
 }
 
 .input-wrapper {
@@ -607,7 +611,7 @@ input[type="number"] {
 .create-creature-form--multiplier-wrapper {
   display: flex;
   width: 100%;
-  grid-column: span 4;
+  grid-column: span 3;
   align-items: center;
 }
 
@@ -626,7 +630,7 @@ input[type="number"] {
   flex-direction: column;
   grid-column: span 2;
   justify-content: flex-end;
-} 
+}
 
 .create-creature-form--item__tall {
   margin-top: -18px;

@@ -77,6 +77,10 @@ function CreateCreatureForm({
     setState((prevState) => ({ ...prevState, name: newName }));
   };
 
+  const setHp = (newHp) => {
+    setState((prevState) => ({ ...prevState, healthPoints: newHp }));
+  };
+
   const rollInitiative = () => {
     const { roll } = initiativeInput.current;
     if (state.rollEachInitiative) return () => roll().result;
@@ -127,7 +131,7 @@ function CreateCreatureForm({
   const getInitiative = (dexterity, dexterityModifier) => {
     if (dexterity === undefined) return '';
 
-    const d20 = 'd20';
+    const d20 = '1d20';
     if (dexterityModifier === 0) return d20;
     const sign = dexterityModifier > 0 ? '+' : '';
     return `${d20}${sign}${dexterityModifier}`;
@@ -135,12 +139,12 @@ function CreateCreatureForm({
 
   const onSelectMonster = async (monster) => {
     const data = await getMonster(monster);
-    const { hit_points: healthPoints, dexterity } = data;
+    const { hit_points: hp, hit_points_roll: hpRoll, dexterity } = data;
     const dexterityModifier = calculateAbilityModifier(dexterity);
     setState((prevState) => ({
       ...prevState,
       name: monster.name,
-      healthPoints: healthPoints || '',
+      healthPoints: hp || hpRoll || '',
       initiative: getInitiative(dexterity, dexterityModifier),
       dexterityModifier,
       stats: data,
@@ -171,6 +175,14 @@ function CreateCreatureForm({
     RightControl: <MonsterSearcher asButton={false} search={name} />,
   };
 
+  const getHpOptions = () => {
+    if (!state.stats) return [];
+    const { hit_points: hitPoints, hit_points_roll: hitPointsRoll } = state.stats;
+    const hp = hitPoints ? [{ text: hitPoints, id: 'hp' }] : [];
+    const hpRoll = hitPointsRoll ? [{ text: hitPointsRoll, id: 'hp-roll' }] : [];
+    return [...hp, ...hpRoll];
+  };
+
   return (
     <form className="create-creature-form">
       <ComboboxList
@@ -189,15 +201,15 @@ function CreateCreatureForm({
         handleSubmit={createCreature}
         onItemSubmit={onSelectMonster}
         inputRef={nameInput}
-        error={nameError && <span className="form--label__error"> *</span>}
+        error={nameError && <span className="form--label__error">required</span>}
         customClassName="create-creature-form--item__text"
       />
       <RollableInput
         value={initiative}
-        customClasses="create-creature-form--item__number create-creature-form--item__tall"
+        customClasses={`create-creature-form--item__number ${initiativeError && 'create-creature-form--item__tall'}`}
         error={initiativeError && <span className="form--label__error"> number, dice</span>}
         ariaLabel="create creature form. Initiative (optional)"
-        label={initiativeError ? 'Initiative' : 'Initiative (optional)'}
+        label="Initiative (optional)"
         name="initiative"
         handleChange={handleChange}
         submitHandler={toggleRollEachInitiative}
@@ -209,28 +221,31 @@ function CreateCreatureForm({
         inputId="create-creature-form-initiative"
         ref={initiativeInput}
       />
-      <Input
-        customClasses="create-creature-form--item__number"
-        integer
-        error={healthError && <span className="form--label__error"> &gt; 0</span>}
+      <ComboboxList
+        customClassName={`input--number create-creature-form--item__number ${healthError && 'create-creature-form--item__tall'}`}
+        error={healthError && <span className="form--label__error">number, dice, &gt;0</span>}
         value={healthPoints}
-        ariaLabel="create creature form. Health points (optional)"
+        setValue={setHp}
+        list={getHpOptions()}
+        id="create-creature-form-health"
+        dropdownId="create-creature-form-health-dropdown"
+        dropdownLabel="Select HP option"
         label="HP (optional)"
-        min="1"
-        name="healthPoints"
+        listAriaLabel="Creature HP options"
+        inputAriaLabel="create creature form. Health points (optional)"
+        inputAriaLabelItemSelected="create creature form. Health points (optional)"
         handleChange={handleChange}
         formHandler={formHandler}
-        inputId="create-creature-form-health"
       />
       <div className="create-creature-form--multiplier-wrapper">
         <span className="create-creature-form--multiplier-symbol">x</span>
         <Input
-          customClasses="create-creature-form--item__multiplier"
+          customClasses={`create-creature-form--item__multiplier ${multiplierError && 'create-creature-form--item__tall'}`}
           integer
           required
           min="1"
           max="50"
-          error={multiplierError && <span className="form--label__error"> 1 - 50</span>}
+          error={multiplierError && <span className="form--label__error"> &gt;0, &lt;51</span>}
           value={multiplier}
           ariaLabel="create creature form. Multiplier (required)"
           label="Multiply"

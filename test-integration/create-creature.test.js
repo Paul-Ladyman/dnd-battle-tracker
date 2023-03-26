@@ -17,7 +17,15 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('7');
-    await dmApp.createCreatureForm.assertInitiative('d20+2');
+    await dmApp.createCreatureForm.assertInitiative('1d20+2');
+  });
+
+  it('allows a creature to be selected by keyboard', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreatureByKeyboard('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('7');
+    await dmApp.createCreatureForm.assertInitiative('1d20+2');
   });
 
   it("sets initiative to d20 if a creature's dexterity modifier is 0", async () => {
@@ -32,7 +40,7 @@ describe('Create creature using SRD', () => {
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
-    await dmApp.createCreatureForm.assertInitiative('d20');
+    await dmApp.createCreatureForm.assertInitiative('1d20');
   });
 
   it("sets initiative to a well-formed dice notation if a creature's dexterity modifier is a negative", async () => {
@@ -47,15 +55,29 @@ describe('Create creature using SRD', () => {
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
-    await dmApp.createCreatureForm.assertInitiative('d20-5');
+    await dmApp.createCreatureForm.assertInitiative('1d20-5');
   });
 
-  it('allows a creature to be selected by keyboard', async () => {
+  it("allows a creature's HP to be swapped to a dice roll", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.selectHpRoll();
+    await dmApp.createCreatureForm.selectHpAverage();
+    await dmApp.createCreatureForm.assertHp('7');
+  });
+
+  it("allows a creature's HP to be swapped to the average value", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.selectHpRoll();
+    await dmApp.createCreatureForm.assertHp('2d6');
+  });
+
+  it("allows a creature's HP to be swapped using the keyboard", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreatureByKeyboard('Goblin');
-    await dmApp.createCreatureForm.assertName('Goblin');
-    await dmApp.createCreatureForm.assertHp('7');
-    await dmApp.createCreatureForm.assertInitiative('d20+2');
+    await dmApp.createCreatureForm.selectHpRollByKeyboard();
+    await dmApp.createCreatureForm.assertHp('2d6');
   });
 
   it('adds a creature from the search results', async () => {
@@ -107,7 +129,45 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.assertInitiative('');
   });
 
-  it("does not select a creature's HP if it is not specified", async () => {
+  it("selects a creature's average HP if dice roll HP is not specified", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          hit_points: 7,
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('7');
+    await dmApp.createCreatureForm.openHpOptions();
+    await dmApp.createCreatureForm.assertHpOptionsLength(1);
+    await dmApp.createCreatureForm.assertHpOptionExists('7');
+  });
+
+  it("selects a creature's HP dice roll if the average HP is not specified", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          hit_points_roll: '2d6',
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertHp('2d6');
+    await dmApp.createCreatureForm.openHpOptions();
+    await dmApp.createCreatureForm.assertHpOptionsLength(1);
+    await dmApp.createCreatureForm.assertHpOptionExists('2d6');
+  });
+
+  it("does not set a creature's HP if it is not specified", async () => {
     msw.use(
       rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
         ctx.json({
@@ -120,6 +180,8 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('');
+    await dmApp.createCreatureForm.openHpOptions();
+    await dmApp.createCreatureForm.assertHpOptionsEmpty();
   });
 
   it("does not set initiative if a creature's dexterity it is not specified", async () => {
