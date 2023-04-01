@@ -18,8 +18,16 @@ describe('validateCreature', () => {
     expect(validateCreature('a', initiative, 1, 1)).toEqual(undefined);
   });
 
-  test('health is optional', () => {
-    expect(validateCreature('a', '1', undefined, 1)).toEqual(undefined);
+  test('accepts hit points as dice notation', () => {
+    expect(validateCreature('a', '1', '2d6', 1)).toEqual(undefined);
+  });
+
+  test.each([
+    [undefined],
+    [null],
+    [''],
+  ])('hit points are optional: %p', (hp) => {
+    expect(validateCreature('a', '1', hp, 1)).toEqual(undefined);
   });
 
   test('name must be non-empty', () => {
@@ -46,14 +54,20 @@ describe('validateCreature', () => {
     expect(validateCreature('a', initiative, 1, 1)).toEqual(expectedErrors);
   });
 
-  test('health must be greater than 0', () => {
+  test.each([
+    [NaN],
+    ['a'],
+    [new Error('initiative error')],
+    [0],
+    ['1d6-1'],
+  ])('hit points must be a number greater than 0: %p', (hp) => {
     const expectedErrors = {
       nameError: false,
       initiativeError: false,
       healthError: 'Health must be greater than 0.',
       multiplierError: false,
     };
-    expect(validateCreature('a', 1, 0, 1)).toEqual(expectedErrors);
+    expect(validateCreature('a', 1, hp, 1)).toEqual(expectedErrors);
   });
 
   test('multiplier must be greater than 0', () => {

@@ -11,6 +11,7 @@ import ComboboxList from '../form/ComboboxList';
 import { calculateAbilityModifier } from '../../domain/characterSheet';
 import { getMonsters, getMonster } from '../../client/dnd5eapi';
 import { validateCreature } from '../../state/CreatureFormManager';
+import Rollable from '../form/Rollable';
 
 function CreateCreatureForm({
   createCreatureErrors,
@@ -33,6 +34,7 @@ function CreateCreatureForm({
 
   const nameInput = useRef(null);
   const initiativeInput = useRef(null);
+  const hpInput = useRef(null);
 
   const hotKeyHandler = (e) => {
     if (isHotkey(hotkeys.createCreature, e)) {
@@ -89,18 +91,16 @@ function CreateCreatureForm({
   };
 
   const createCreature = () => {
-    const healthPoints = state.healthPoints === ''
-      ? undefined
-      : parseInt(state.healthPoints, 10);
-
     const multiplier = parseInt(state.multiplier, 10);
 
-    const errors = validateCreature(state.name, state.initiative, healthPoints, multiplier);
+    const errors = validateCreature(state.name, state.initiative, state.healthPoints, multiplier);
+
+    const { roll: rollHp } = hpInput.current;
 
     if (!errors) {
       const creature = {
         name: state.name,
-        healthPoints,
+        healthPoints: rollHp().result,
         initiative: rollInitiative(),
         multiplier,
         stats: state.stats,
@@ -178,8 +178,8 @@ function CreateCreatureForm({
   const getHpOptions = () => {
     if (!state.stats) return [];
     const { hit_points: hitPoints, hit_points_roll: hitPointsRoll } = state.stats;
-    const hp = hitPoints ? [{ text: hitPoints, id: 'hp' }] : [];
-    const hpRoll = hitPointsRoll ? [{ text: hitPointsRoll, id: 'hp-roll' }] : [];
+    const hp = hitPoints ? [{ text: hitPoints, id: 'hp', title: 'Select average HP' }] : [];
+    const hpRoll = hitPointsRoll ? [{ text: hitPointsRoll, id: 'hp-roll', title: 'Select HP dice' }] : [];
     return [...hp, ...hpRoll];
   };
 
@@ -203,6 +203,7 @@ function CreateCreatureForm({
         inputRef={nameInput}
         error={nameError && <span className="form--label__error">required</span>}
         customClassName="create-creature-form--item__text"
+        spellCheck={false}
       />
       <RollableInput
         value={initiative}
@@ -221,7 +222,9 @@ function CreateCreatureForm({
         inputId="create-creature-form-initiative"
         ref={initiativeInput}
       />
-      <ComboboxList
+      <Rollable
+        Component={ComboboxList}
+        ref={hpInput}
         customClassName={`input--number create-creature-form--item__number ${healthError && 'create-creature-form--item__tall'}`}
         error={healthError && <span className="form--label__error">number, dice, &gt;0</span>}
         value={healthPoints}
@@ -234,8 +237,8 @@ function CreateCreatureForm({
         listAriaLabel="Creature HP options"
         inputAriaLabel="create creature form. Health points (optional)"
         inputAriaLabelItemSelected="create creature form. Health points (optional)"
-        handleChange={handleChange}
-        formHandler={formHandler}
+        handleSubmit={createCreature}
+        spellCheck={false}
       />
       <div className="create-creature-form--multiplier-wrapper">
         <span className="create-creature-form--multiplier-symbol">x</span>

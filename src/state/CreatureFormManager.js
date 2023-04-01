@@ -1,11 +1,15 @@
 import { addError } from './AppManager';
 import { validateSyntax } from '../domain/dice';
 
-export function validateCreature(name, initiative, healthPoints, multiplier) {
+function isDefined(value) {
+  return value !== undefined && value !== null && value !== '';
+}
+
+export function validateCreature(name, initiative, hitPoints, multiplier) {
   const nameError = name === '';
-  const initiativeIsDefined = initiative !== undefined && initiative !== null && initiative !== '';
-  const initiativeError = initiativeIsDefined && !validateSyntax(initiative);
-  const healthError = healthPoints <= 0;
+  const initiativeError = isDefined(initiative) && !validateSyntax(initiative);
+  const healthError = isDefined(hitPoints)
+    && (!validateSyntax(hitPoints, false) || parseInt(hitPoints, 10) === 0);
   const multiplierError = multiplier <= 0 || multiplier > 50;
 
   if (nameError || initiativeError || healthError || multiplierError) {

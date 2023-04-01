@@ -213,6 +213,34 @@ describe('Create creature manually', () => {
     await DmApp.assertCreatureVisible('goblin');
   });
 
+  it('adds a creature to the battle when the name field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitName();
+    await DmApp.assertCreatureVisible('goblin');
+  });
+
+  it('adds a creature to the battle when the initiative field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitInitiative();
+    await DmApp.assertCreatureVisible('goblin');
+  });
+
+  it('adds a creature to the battle when the HP field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitHp();
+    await DmApp.assertCreatureVisible('goblin');
+  });
+
+  it('adds a creature to the battle when the multiplier field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitMultiplier();
+    await DmApp.assertCreatureVisible('goblin');
+  });
+
   it('shows an error when the creature name is empty', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.submitCreature();
@@ -223,6 +251,12 @@ describe('Create creature manually', () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, '1');
     await DmApp.assertCreatureVisible('goblin', '1');
+  });
+
+  it("allows a creature's HP to be specified as dice notation", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '2d6');
+    await DmApp.assertCreatureVisible('goblin', '12');
   });
 
   it('shows an error when the creature HP is invalid', async () => {

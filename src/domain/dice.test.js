@@ -9,9 +9,14 @@ afterEach(() => {
 });
 
 describe('roll', () => {
-  test('returns the result of a roll described by an integer', () => {
-    const { result } = roll('20');
-    expect(result).toBe(20);
+  test.each([
+    [20, 20],
+    ['20', 20],
+    [0, 0],
+    [-1, -1],
+  ])('returns the result of a roll described by an integer of %p', (integer, total) => {
+    const { result } = roll(integer);
+    expect(result).toBe(total);
   });
 
   test.each([

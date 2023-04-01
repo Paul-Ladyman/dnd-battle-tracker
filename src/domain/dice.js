@@ -9,8 +9,10 @@ function validateLength(notation) {
   return notation.length <= 500;
 }
 
-export function validateSyntax(notation) {
-  return /^(\d|-[d\d]|\+[d\d]|d\d+)+$/g.test(notation);
+export function validateSyntax(notation, allowNegativeModifiers = true) {
+  const negativeModifier = allowNegativeModifiers ? '-[d\\d]|' : '';
+  const diceRegex = new RegExp(`^(\\d|${negativeModifier}\\+[d\\d]|d\\d+)+$`, 'g');
+  return diceRegex.test(notation);
 }
 
 function calculateTotal(total, expression) {
@@ -41,9 +43,9 @@ function expandMultipliedDice(_, multiplier, diceType) {
 }
 
 export default function roll(notation) {
-  if (!notation) return { result: null };
+  if (notation === undefined || notation === '') return { result: null };
 
-  const standardisedNotation = notation.replace(whiteSpace, '').toLowerCase();
+  const standardisedNotation = notation.toString().replace(whiteSpace, '').toLowerCase();
 
   if (!validateNotation(standardisedNotation)) return { result: new Error(`invalid dice notation: ${notation}`) };
 

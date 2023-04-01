@@ -26,6 +26,7 @@ export default function ComboboxList({
   inputRef,
   error,
   customClassName,
+  spellCheck,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
@@ -202,6 +203,7 @@ export default function ComboboxList({
         submitHandler={submitHandler}
         formHandler={formHandler}
         error={error}
+        spellCheck={spellCheck}
       />
       <ul className={dropdownClassName} style={{ display }} id={dropdownId} role="listbox" aria-label={listAriaLabel}>
         {
@@ -210,7 +212,9 @@ export default function ComboboxList({
             const itemClass = 'combobox-dropdown-item';
             const itemModifier = selected ? ` ${itemClass}__focused` : '';
             const itemClassName = `${itemClass}${itemModifier}`;
-            const htmlId = `combobox-dropdown-${id}-${item.id}`;
+            const { id: itemId, text, title } = item;
+            const htmlId = `combobox-dropdown-${id}-${itemId}`;
+            const itemLabel = title || dropdownLabel;
             return (
               <div className="combobox-dropdown-group" key={htmlId}>
                 <DropdownOption
@@ -218,9 +222,9 @@ export default function ComboboxList({
                   onClick={() => handleItemSubmit(item)}
                   selected={selected}
                   id={htmlId}
-                  ariaLabel={`${dropdownLabel} ${item.text}`}
-                  title={dropdownLabel}
-                  text={item.text}
+                  ariaLabel={itemLabel}
+                  title={itemLabel}
+                  text={text}
                 />
               </div>
             );
