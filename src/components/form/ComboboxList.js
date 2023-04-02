@@ -25,7 +25,7 @@ export default function ComboboxList({
   handleRemoveItem,
   inputRef,
   error,
-  customClassName,
+  customClasses,
   spellCheck,
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -38,7 +38,7 @@ export default function ComboboxList({
   const showList = hasList && expanded;
   const className = 'combobox';
   const classModifier = 'combobox__open';
-  const customClasses = showList ? `${className} ${classModifier}` : className;
+  const inputCustomClasses = showList ? `${className} ${classModifier}` : className;
   const dropdownClassName = 'combobox-dropdown';
   const display = showList ? 'block' : 'none';
 
@@ -181,7 +181,7 @@ export default function ComboboxList({
 
   return (
     <div
-      className={`input--form combobox-wrapper ${customClassName}`}
+      className={`input--form combobox-wrapper ${customClasses}`}
       id={id}
     >
       <Input
@@ -195,7 +195,7 @@ export default function ComboboxList({
         rightControls={rControls}
         leftControls={lControls}
         inputId={`combobox-${id}`}
-        customClasses={customClasses}
+        customClasses={inputCustomClasses}
         onClick={toggleExpanded}
         inputRef={internalInputRef}
         value={value}

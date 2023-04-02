@@ -5,6 +5,7 @@ import roll from '../../domain/dice';
 function Rollable({
   value,
   Component,
+  customClasses,
   ...props
 }, forwardedRef) {
   useImperativeHandle(
@@ -18,6 +19,8 @@ function Rollable({
   return (
     <Component
       value={value}
+      customClasses={`input--number ${customClasses}`}
+      spellCheck={false}
       {...props}
     />
   );

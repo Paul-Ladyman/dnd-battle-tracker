@@ -4,7 +4,6 @@ import { hotkeys } from '../../hotkeys/hotkeys';
 import CrossIcon from '../icons/CrossIcon';
 import MonsterSearcher from '../buttons/MonsterSearcher';
 import Input from '../form/Input';
-import RollableInput from '../form/RollableInput';
 import RollGroupIcon from '../icons/RollGroupIcon';
 import RollEachIcon from '../icons/RollEachIcon';
 import ComboboxList from '../form/ComboboxList';
@@ -202,10 +201,11 @@ function CreateCreatureForm({
         onItemSubmit={onSelectMonster}
         inputRef={nameInput}
         error={nameError && <span className="form--label__error">required</span>}
-        customClassName="create-creature-form--item__text"
+        customClasses="create-creature-form--item__text"
         spellCheck={false}
       />
-      <RollableInput
+      <Rollable
+        Component={Input}
         value={initiative}
         customClasses={`create-creature-form--item__number ${initiativeError && 'create-creature-form--item__tall'}`}
         error={initiativeError && <span className="form--label__error"> number, dice</span>}
@@ -225,7 +225,7 @@ function CreateCreatureForm({
       <Rollable
         Component={ComboboxList}
         ref={hpInput}
-        customClassName={`input--number create-creature-form--item__number ${healthError && 'create-creature-form--item__tall'}`}
+        customClasses={`create-creature-form--item__number ${healthError && 'create-creature-form--item__tall'}`}
         error={healthError && <span className="form--label__error">number, dice, &gt;0</span>}
         value={healthPoints}
         setValue={setHp}
@@ -238,7 +238,6 @@ function CreateCreatureForm({
         inputAriaLabel="create creature form. Health points (optional)"
         inputAriaLabelItemSelected="create creature form. Health points (optional)"
         handleSubmit={createCreature}
-        spellCheck={false}
       />
       <div className="create-creature-form--multiplier-wrapper">
         <span className="create-creature-form--multiplier-symbol">x</span>
