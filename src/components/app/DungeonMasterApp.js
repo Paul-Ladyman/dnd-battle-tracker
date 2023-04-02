@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
-import CreateCreatureForm from '../page/CreateCreatureForm';
+import CreateCreatureForm from '../page/create-creature-form/CreateCreatureForm';
 import Creatures from '../page/Creatures';
 import BattleToolbar from '../page/BattleToolbar';
 import Title from '../page/Title';
