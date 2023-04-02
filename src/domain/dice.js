@@ -9,10 +9,8 @@ function validateLength(notation) {
   return notation.length <= 500;
 }
 
-export function validateSyntax(notation, allowNegativeModifiers = true) {
-  const negativeModifier = allowNegativeModifiers ? '-[d\\d]|' : '';
-  const diceRegex = new RegExp(`^(\\d|${negativeModifier}\\+[d\\d]|d\\d+)+$`, 'g');
-  return diceRegex.test(notation);
+export function validateSyntax(notation) {
+  return /^(\d|-[d\d]|\+[d\d]|d\d+)+$/g.test(notation);
 }
 
 function calculateTotal(total, expression) {

@@ -25,7 +25,7 @@ export default function HitPoints({
       Component={ComboboxList}
       ref={inputRef}
       customClasses={`create-creature-form--item__number ${error && 'create-creature-form--item__tall'}`}
-      error={error && <span className="form--label__error">number, dice, &gt;0</span>}
+      error={error && <span className="form--label__error">number &gt;0, dice</span>}
       list={getHpOptions(creatureStats)}
       id="create-creature-form-health"
       dropdownId="create-creature-form-health-dropdown"

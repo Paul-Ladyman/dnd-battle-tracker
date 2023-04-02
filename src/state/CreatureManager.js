@@ -118,11 +118,12 @@ export function createCreature(creatureId, {
   const groupedName = number ? `${name} #${number}` : name;
   const index = stats?.index;
   const statBlock = index ? monsterUrlFrom5eApiIndex(index) : null;
+  const hp = healthPoints === null || healthPoints > 0 ? healthPoints : 1;
   return {
     name: groupedName,
     initiative,
-    healthPoints,
-    maxHealthPoints: healthPoints,
+    healthPoints: hp,
+    maxHealthPoints: hp,
     temporaryHealthPoints: null,
     id: creatureId,
     alive: true,

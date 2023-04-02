@@ -59,7 +59,7 @@ describe('validateCreature', () => {
     ['a'],
     [new Error('initiative error')],
     [0],
-    ['1d6-1'],
+    [-1],
   ])('hit points must be a number greater than 0: %p', (hp) => {
     const expectedErrors = {
       nameError: false,

@@ -548,6 +548,27 @@ describe('getRawName', () => {
 });
 
 describe('createCreature', () => {
+  test('it creates a new creature given a name', () => {
+    const expectedCreature = {
+      name: 'name',
+      initiative: null,
+      healthPoints: null,
+      maxHealthPoints: null,
+      temporaryHealthPoints: null,
+      id: 1,
+      alive: true,
+      conditions: [],
+      notes: [],
+      locked: false,
+      shared: true,
+      hitPointsShared: true,
+      statBlock: null,
+    };
+
+    const creature = createCreature(1, { name: 'name', initiative: null, healthPoints: null });
+    expect(creature).toEqual(expectedCreature);
+  });
+
   test('it creates a new creature given a name, initiative and health points', () => {
     const expectedCreature = {
       name: 'name',
@@ -590,6 +611,19 @@ describe('createCreature', () => {
       name: 'name', number: 3, initiative: 13, healthPoints: 10,
     });
     expect(creature).toEqual(expectedCreature);
+  });
+
+  test.each([
+    [0],
+    [-1],
+  ])("it sets a creature's HP to 1 if it is 0 or less", (hp) => {
+    const creature = {
+      name: 'name',
+      healthPoints: hp,
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.healthPoints).toBe(1);
+    expect(createdCreature.maxHealthPoints).toBe(1);
   });
 
   test("it adds a statBlock URL if the creature's stats include its index", () => {

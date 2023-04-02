@@ -261,7 +261,7 @@ describe('Create creature manually', () => {
 
   it('shows an error when the creature HP is invalid', async () => {
     const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', null, '-1');
+    await dmApp.createCreatureForm.addCreature('goblin', null, 'hp');
     await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
   });
 
