@@ -152,7 +152,7 @@ function BattleToolbar({
       </button>
       )}
       <div className="battle-toolbar--stat">
-        Initiative:
+        Turn:
         <button
           type="button"
           onClick={onScrollActiveInitiative}
