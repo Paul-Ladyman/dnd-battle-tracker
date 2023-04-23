@@ -67,8 +67,15 @@ function Input({
   const inputClassRightDisabled = rightDisabled ? 'input__button-right-disabled' : '';
   const inputClasses = `input ${inputClassDisabled} ${inputClassLeftModifier} ${inputClassLeftDisabled} ${inputClassRightModifier} ${inputClassRightDisabled}`;
 
-  const leftSubmit = () => submitHandler(true);
-  const rightSubmit = () => submitHandler(false);
+  const leftSubmit = (e) => {
+    e.preventDefault();
+    submitHandler(true);
+  };
+
+  const rightSubmit = (e) => {
+    e.preventDefault();
+    submitHandler(false);
+  };
 
   return (
     <div className={`input--form ${numberModifier} ${customClasses}`}>
