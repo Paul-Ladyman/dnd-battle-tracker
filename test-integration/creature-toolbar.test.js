@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom';
 import DmApp from './page-object-models/dmApp';
 
-describe('Creature toolbar', () => {
-  beforeAll(() => {
-    window.FLAG_creatureToolbar = true;
-  });
+beforeAll(() => {
+  window.FLAG_creatureToolbar = true;
+});
 
+describe('Creature toolbar', () => {
   test('a creature has a toolbar', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
@@ -47,16 +47,14 @@ describe('Creature toolbar', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.assertButtonVisible('goblin', 'HP');
   });
+});
 
-  it('contains the max hp button', async () => {
+describe('Creature toolbar navigation', () => {
+  it('allows the buttons to be navigated forwards with the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Max HP');
-  });
-
-  it('contains the temp hp button', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Temp HP');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    await dmApp.creatureToolbar.navigate('goblin', 2);
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Initiative');
   });
 });

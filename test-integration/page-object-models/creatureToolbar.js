@@ -162,6 +162,24 @@ export default class CreatureToolbar {
     expect(notes.childElementCount).toBe(length);
   }
 
+  async selectTool(name, tool) {
+    const toolbar = await this.findToolbar(name);
+    const toolbarButton = await findByRole(toolbar, 'button', { name: tool });
+    return this.user.click(toolbarButton);
+  }
+
+  async navigate(name, steps, forward = true) {
+    const toolbar = await this.findToolbar(name);
+    const navigationSteps = Array.from({ length: steps });
+    const key = forward ? 'ArrowRight' : 'ArrowLeft';
+    const keyCode = forward ? 39 : 37;
+    const promises = navigationSteps.map(() => new Promise((resolve) => {
+      const keyDown = fireEvent.keyDown(toolbar, { key, code: key, keyCode });
+      resolve(keyDown);
+    }));
+    return Promise.all(promises);
+  }
+
   async assertToolbarVisible(name) {
     const toolbar = await this.findToolbar(name);
     return expect(toolbar).toBeVisible();
@@ -171,5 +189,11 @@ export default class CreatureToolbar {
     const toolbar = await this.findToolbar(name);
     const toolbarButton = await findByRole(toolbar, 'button', { name: button });
     return expect(toolbarButton).toBeVisible();
+  }
+
+  async assertButtonFocused(name, button) {
+    const toolbar = await this.findToolbar(name);
+    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    return expect(toolbarButton).toHaveFocus();
   }
 }
