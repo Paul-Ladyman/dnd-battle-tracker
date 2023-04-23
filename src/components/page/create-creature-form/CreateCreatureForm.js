@@ -22,6 +22,7 @@ function CreateCreatureForm({
     multiplier: 1,
     submitted: false,
     rollEachInitiative: false,
+    rollEachHp: false,
     dexterityModifier: 0,
     stats: null,
   };
@@ -74,27 +75,35 @@ function CreateCreatureForm({
     setState((prevState) => ({ ...prevState, healthPoints: newHp }));
   };
 
-  const rollInitiative = () => {
-    const { roll } = initiativeInput.current;
-    if (state.rollEachInitiative) return () => roll().result;
-    const initiative = roll().result;
-    return () => initiative;
+  const rollField = (ref, rollEach) => {
+    const { roll } = ref.current;
+    if (rollEach) return () => roll().result;
+    const hp = roll().result;
+    return () => hp;
   };
 
   const createCreature = () => {
-    const multiplier = parseInt(state.multiplier, 10);
+    const {
+      multiplier,
+      name,
+      initiative,
+      healthPoints,
+      rollEachHp,
+      rollEachInitiative,
+      stats,
+    } = state;
 
-    const errors = validateCreature(state.name, state.initiative, state.healthPoints, multiplier);
+    const intMultiplier = parseInt(multiplier, 10);
 
-    const { roll: rollHp } = hpInput.current;
+    const errors = validateCreature(name, initiative, healthPoints, intMultiplier);
 
     if (!errors) {
       const creature = {
-        name: state.name,
-        healthPoints: rollHp().result,
-        initiative: rollInitiative(),
-        multiplier,
-        stats: state.stats,
+        name,
+        healthPoints: rollField(hpInput, rollEachHp),
+        initiative: rollField(initiativeInput, rollEachInitiative),
+        multiplier: intMultiplier,
+        stats,
       };
 
       propsCreateCreature(creature);
@@ -109,6 +118,14 @@ function CreateCreatureForm({
     setState((prevState) => {
       const { rollEachInitiative } = state;
       const newState = { ...prevState, rollEachInitiative: !rollEachInitiative };
+      return newState;
+    });
+  };
+
+  const toggleRollEachHp = () => {
+    setState((prevState) => {
+      const { rollEachHp } = state;
+      const newState = { ...prevState, rollEachHp: !rollEachHp };
       return newState;
     });
   };
@@ -143,7 +160,7 @@ function CreateCreatureForm({
   };
 
   const {
-    name, initiative, healthPoints, multiplier, rollEachInitiative,
+    name, initiative, healthPoints, multiplier, rollEachInitiative, rollEachHp,
   } = state;
 
   const {
@@ -176,6 +193,8 @@ function CreateCreatureForm({
         createCreature={createCreature}
         inputRef={hpInput}
         error={healthError}
+        rollEachHp={rollEachHp}
+        toggleRollEachHp={toggleRollEachHp}
       />
       <Multiply
         multiplier={multiplier}

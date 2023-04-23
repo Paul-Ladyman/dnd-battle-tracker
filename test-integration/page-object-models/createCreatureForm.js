@@ -116,16 +116,26 @@ export default class CreateCreatureForm {
   }
 
   async setRollInitiativePerCreature() {
-    const initiativeRollButton = await screen.findByRole('button', { name: 'Roll per creature' });
+    const initiativeRollButton = await screen.findByRole('button', { name: 'Roll initiative per creature' });
     return this.user.click(initiativeRollButton);
+  }
+
+  async setRollHpPerCreature() {
+    const hpRollButton = await screen.findByRole('button', { name: 'Roll HP per creature' });
+    return this.user.click(hpRollButton);
   }
 
   async setRollInitiativeAsGroup() {
-    const initiativeRollButton = await screen.findByRole('button', { name: 'Roll as group' });
+    const initiativeRollButton = await screen.findByRole('button', { name: 'Roll initiative as group' });
     return this.user.click(initiativeRollButton);
   }
 
-  async addCreature(name, initiative, hp, multiply, rollEachInitiative) {
+  async setRollHpAsGroup() {
+    const hpRollButton = await screen.findByRole('button', { name: 'Roll HP as group' });
+    return this.user.click(hpRollButton);
+  }
+
+  async addCreature(name, initiative, hp, multiply, rollEachInitiative, rollEachHp) {
     await this.enterCreatureName(name);
 
     if (initiative) {
@@ -135,6 +145,10 @@ export default class CreateCreatureForm {
 
     if (rollEachInitiative) {
       await this.setRollInitiativePerCreature();
+    }
+
+    if (rollEachHp) {
+      await this.setRollHpPerCreature();
     }
 
     if (hp) {

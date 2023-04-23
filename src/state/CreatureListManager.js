@@ -35,7 +35,8 @@ export function removeCreature(state, creatureId) {
 function createCreatures(creatureIdCount, creatures, creatureStats, multiplier) {
   if (multiplier <= 1) {
     const initiative = creatureStats.initiative();
-    const creature = { ...creatureStats, initiative };
+    const healthPoints = creatureStats.healthPoints();
+    const creature = { ...creatureStats, initiative, healthPoints };
     return [createCreature(creatureIdCount, creature)];
   }
 
@@ -54,9 +55,11 @@ function createCreatures(creatureIdCount, creatures, creatureStats, multiplier) 
     const { name } = creatureStats;
     const number = i + 1 + groupOffset;
     const initiative = creatureStats.initiative();
+    const healthPoints = creatureStats.healthPoints();
     return createCreature(creatureIdCount + i, {
       ...creatureStats,
       initiative,
+      healthPoints,
       name,
       number,
     });

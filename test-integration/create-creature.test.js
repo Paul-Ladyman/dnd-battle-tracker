@@ -357,6 +357,64 @@ describe('Hit points', () => {
     await DmApp.assertCreatureVisible('goblin #2', '1');
   });
 
+  it('adds the same dice notation HP to each multiplied creature', async () => {
+    random
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '1d6', '2');
+    await DmApp.assertCreatureVisible('goblin #1', '6');
+    await DmApp.assertCreatureVisible('goblin #2', '6');
+  });
+
+  it("allows each creature's HP to be rolled separately in a group", async () => {
+    random
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '1d6', '2', false, true);
+    await DmApp.assertCreatureVisible('goblin #1', '6');
+    await DmApp.assertCreatureVisible('goblin #2', '1');
+  });
+
+  it('returns to rolling HP for the group when a creature is added', async () => {
+    random
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '1d6', '2', false, true);
+    await dmApp.createCreatureForm.addCreature('owlbear', null, '1d6', '2');
+    await DmApp.assertCreatureVisible('goblin #1', '6');
+    await DmApp.assertCreatureVisible('goblin #2', '1');
+    await DmApp.assertCreatureVisible('owlbear #1', '6');
+    await DmApp.assertCreatureVisible('owlbear #2', '6');
+  });
+
+  it('allows the HP rolling strategy to be toggled', async () => {
+    random
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0.999999);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.setRollHpPerCreature();
+    await dmApp.createCreatureForm.setRollHpAsGroup();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '1d6', '2');
+    await DmApp.assertCreatureVisible('goblin #1', '1');
+    await DmApp.assertCreatureVisible('goblin #2', '1');
+  });
+
+  it('selecting roll HP per creature with a numerical HP does not change HP used for the group', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.setRollInitiativePerCreature();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '1', '5');
+    await DmApp.assertCreatureVisible('goblin #1', '1');
+    await DmApp.assertCreatureVisible('goblin #2', '1');
+    await DmApp.assertCreatureVisible('goblin #3', '1');
+    await DmApp.assertCreatureVisible('goblin #4', '1');
+    await DmApp.assertCreatureVisible('goblin #5', '1');
+  });
+
   it('shows an error when the creature HP is invalid', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, 'hp');

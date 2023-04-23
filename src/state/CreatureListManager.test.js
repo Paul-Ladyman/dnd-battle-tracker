@@ -126,7 +126,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: () => 9,
-      healthPoints: 10,
+      healthPoints: () => 10,
     };
 
     const createdCreature = {
@@ -167,7 +167,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: () => 9,
-      healthPoints: 10,
+      healthPoints: () => 10,
     };
 
     const createdCreature = {
@@ -214,7 +214,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: () => 5,
-      healthPoints: 10,
+      healthPoints: () => 10,
     };
 
     const createdCreature = {
@@ -256,7 +256,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: () => 15,
-      healthPoints: 10,
+      healthPoints: () => 10,
     };
 
     const createdCreature = {
@@ -304,7 +304,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: () => 15,
-      healthPoints: 10,
+      healthPoints: () => 10,
     };
 
     const createdCreature = {
@@ -352,18 +352,22 @@ describe('addCreature', () => {
       .mockReturnValueOnce(9)
       .mockReturnValueOnce(10);
 
+    const healthPoints = jest.fn()
+      .mockReturnValueOnce(4)
+      .mockReturnValueOnce(5);
+
     const creature = {
       name: 'name',
       initiative,
-      healthPoints: 10,
+      healthPoints,
       multiplier: 2,
     };
 
     const createdCreature = {
       name: 'name #1',
       initiative: 9,
-      healthPoints: 10,
-      maxHealthPoints: 10,
+      healthPoints: 4,
+      maxHealthPoints: 4,
       id: 3,
       alive: true,
       conditions: [],
@@ -373,6 +377,8 @@ describe('addCreature', () => {
     const createdCreature2 = {
       ...createdCreature,
       initiative: 10,
+      healthPoints: 5,
+      maxHealthPoints: 5,
       name: 'name #2',
       id: 4,
     };
@@ -402,13 +408,13 @@ describe('addCreature', () => {
       name: 'name',
       number: 1,
       initiative: 9,
-      healthPoints: 10,
+      healthPoints: 4,
     };
     const expectedCreature2 = {
       name: 'name',
       number: 2,
       initiative: 10,
-      healthPoints: 10,
+      healthPoints: 5,
     };
     expect(createCreature).toHaveBeenCalledWith(3, expectedCreature1);
     expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
@@ -418,7 +424,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'Goblin',
       initiative: () => 9,
-      healthPoints: 10,
+      healthPoints: () => 10,
       multiplier: 2,
     };
 
@@ -495,7 +501,7 @@ describe('addCreature', () => {
     const creature = {
       name: 'name',
       initiative: () => 9,
-      healthPoints: 10,
+      healthPoints: () => 10,
       multiplier: 2,
     };
 

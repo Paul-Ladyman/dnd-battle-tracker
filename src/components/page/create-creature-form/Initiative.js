@@ -25,7 +25,7 @@ export default function Initiative({
       handleChange={handleChange}
       submitHandler={toggleRollEachInitiative}
       rightControls={{
-        rightTitle: rollEachInitiative ? 'Roll as group' : 'Roll per creature',
+        rightTitle: rollEachInitiative ? 'Roll initiative as group' : 'Roll initiative per creature',
         RightSubmitIcon: rollEachInitiative ? <RollEachIcon /> : <RollGroupIcon />,
       }}
       formHandler={formHandler}
