@@ -36,13 +36,13 @@ export default function HitPoints({
       customClasses={`create-creature-form--item__number ${error && 'create-creature-form--item__tall'}`}
       error={error && <span className="form--label__error">number &gt;0, dice</span>}
       list={getHpOptions(creatureStats)}
-      id="create-creature-form-health"
-      dropdownId="create-creature-form-health-dropdown"
+      id="create-creature-form-hp"
+      dropdownId="create-creature-form-hp-dropdown"
       dropdownLabel="Select HP option"
       label="HP (optional)"
       listAriaLabel="Creature HP options"
-      inputAriaLabel="create creature form. Health points (optional)"
-      inputAriaLabelItemSelected="create creature form. Health points (optional)"
+      inputAriaLabel="create creature form. Hit points (optional)"
+      inputAriaLabelItemSelected="create creature form. Hit points (optional)"
       handleSubmit={toggleRollEachHp}
       formHandler={createCreature}
       rightControls={rightControls}

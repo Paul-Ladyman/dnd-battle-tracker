@@ -18,6 +18,10 @@ export default class CreateCreatureForm {
     this.user = user;
   }
 
+  findHpField() {
+    return screen.findByRole('combobox', { name: 'create creature form. Hit points (optional)' });
+  }
+
   async submitCreature() {
     const add = await screen.findByRole('button', { name: 'Add creature' });
     return this.user.click(add);
@@ -34,7 +38,7 @@ export default class CreateCreatureForm {
   }
 
   async submitHp() {
-    const hpField = await screen.findByRole('combobox', { name: 'create creature form. Health points (optional)' });
+    const hpField = await this.findHpField();
     return fireEvent.keyDown(hpField, { key: 'enter', keyCode: 13 });
   }
 
@@ -77,7 +81,7 @@ export default class CreateCreatureForm {
   }
 
   async selectHpRoll() {
-    const hpDropdown = await screen.findByRole('combobox', { name: 'create creature form. Health points (optional)' });
+    const hpDropdown = await this.findHpField();
     await this.user.click(hpDropdown);
     const hpOptions = screen.queryByRole('listbox', { name: 'Creature HP options' });
     const hpRoll = getAllByRole(hpOptions, 'option')[1];
@@ -85,7 +89,7 @@ export default class CreateCreatureForm {
   }
 
   async selectHpAverage() {
-    const hpDropdown = await screen.findByRole('combobox', { name: 'create creature form. Health points (optional)' });
+    const hpDropdown = await this.findHpField();
     await this.user.click(hpDropdown);
     const hpOptions = screen.queryByRole('listbox', { name: 'Creature HP options' });
     const hpRoll = getAllByRole(hpOptions, 'option')[0];
@@ -93,7 +97,7 @@ export default class CreateCreatureForm {
   }
 
   async selectHpRollByKeyboard() {
-    const hpDropdown = await screen.findByRole('combobox', { name: 'create creature form. Health points (optional)' });
+    const hpDropdown = await this.findHpField();
     await this.user.type(hpDropdown, '{AltLeft>}{ArrowDown}{/AltLeft}');
     fireEvent.keyDown(hpDropdown, { key: 'arrowdown', keyCode: 40 });
     fireEvent.keyDown(hpDropdown, { key: 'arrowdown', keyCode: 40 });
@@ -103,7 +107,7 @@ export default class CreateCreatureForm {
   async openHpOptions() {
     const hpOptions = screen.queryByRole('listbox', { name: 'Creature HP options' });
     if (hpOptions) return Promise.resolve();
-    const hpDropdown = await screen.findByRole('combobox', { name: 'create creature form. Health points (optional)' });
+    const hpDropdown = await this.findHpField();
     return this.user.click(hpDropdown);
   }
 
@@ -277,7 +281,7 @@ export default class CreateCreatureForm {
   }
 
   async assertHp(hp) {
-    const hpField = await screen.findByRole('combobox', { name: 'create creature form. Health points (optional)' });
+    const hpField = await this.findHpField();
     await waitFor(() => expect(hpField).toHaveDisplayValue(hp));
   }
 
