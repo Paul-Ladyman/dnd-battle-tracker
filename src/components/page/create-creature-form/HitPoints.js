@@ -4,18 +4,6 @@ import RollGroupIcon from '../../icons/RollGroupIcon';
 import RollEachIcon from '../../icons/RollEachIcon';
 import Rollable from '../../form/Rollable';
 
-function RightControl({ rollEachHp, toggleRollEachHp }) {
-  const title = rollEachHp ? 'Roll HP as group' : 'Roll HP per creature';
-  const Icon = rollEachHp ? <RollEachIcon /> : <RollGroupIcon />;
-  const onClick = (e) => {
-    e.preventDefault();
-    toggleRollEachHp();
-  };
-  return (
-    <button type="button" title={title} onClick={onClick}>{Icon}</button>
-  );
-}
-
 function getHpOptions(creatureStats) {
   if (!creatureStats) return [];
   const { hit_points: hitPoints, hit_points_roll: hitPointsRoll } = creatureStats;
@@ -35,7 +23,8 @@ export default function HitPoints({
   toggleRollEachHp,
 }) {
   const rightControls = {
-    RightControl: <RightControl rollEachHp={rollEachHp} toggleRollEachHp={toggleRollEachHp} />,
+    rightTitle: rollEachHp ? 'Roll HP as group' : 'Roll HP per creature',
+    RightSubmitIcon: rollEachHp ? <RollEachIcon /> : <RollGroupIcon />,
   };
 
   return (
@@ -54,8 +43,10 @@ export default function HitPoints({
       listAriaLabel="Creature HP options"
       inputAriaLabel="create creature form. Health points (optional)"
       inputAriaLabelItemSelected="create creature form. Health points (optional)"
-      handleSubmit={createCreature}
+      handleSubmit={toggleRollEachHp}
+      formHandler={createCreature}
       rightControls={rightControls}
+      resetOnSubmit={false}
     />
   );
 }

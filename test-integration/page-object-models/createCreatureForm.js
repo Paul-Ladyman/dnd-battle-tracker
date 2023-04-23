@@ -143,14 +143,6 @@ export default class CreateCreatureForm {
       await this.user.type(initiativeField, initiative);
     }
 
-    if (rollEachInitiative) {
-      await this.setRollInitiativePerCreature();
-    }
-
-    if (rollEachHp) {
-      await this.setRollHpPerCreature();
-    }
-
     if (hp) {
       const hpField = await screen.findByText('HP (optional)');
       await this.user.type(hpField, hp);
@@ -161,6 +153,14 @@ export default class CreateCreatureForm {
       await this.user.type(multiplyField, '{backspace}');
       await this.user.type(multiplyField, '{delete}');
       await this.user.type(multiplyField, multiply);
+    }
+
+    if (rollEachInitiative) {
+      await this.setRollInitiativePerCreature();
+    }
+
+    if (rollEachHp) {
+      await this.setRollHpPerCreature();
     }
 
     return this.submitCreature();

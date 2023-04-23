@@ -22,11 +22,13 @@ export default function ComboboxList({
   leftControlsItemSelected,
   handleSubmit,
   onItemSubmit,
+  formHandler,
   handleRemoveItem,
   inputRef,
   error,
   customClasses,
   spellCheck,
+  resetOnSubmit = true,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
@@ -84,7 +86,7 @@ export default function ComboboxList({
   };
 
   const submitHandler = (leftSubmit) => {
-    resetForm();
+    if (resetOnSubmit) resetForm();
     handleSubmit(leftSubmit, selectedItem);
   };
 
@@ -111,6 +113,9 @@ export default function ComboboxList({
   const handleKeyboardSubmit = () => {
     if (focusedItem !== null) {
       handleItemSubmit(list[focusedItem]);
+    } else if (formHandler) {
+      if (resetOnSubmit) resetForm();
+      formHandler(null, selectedItem);
     } else {
       submitHandler();
     }
@@ -126,7 +131,7 @@ export default function ComboboxList({
     }
   };
 
-  const formHandler = (e) => {
+  const comboBoxFormHandler = (e) => {
     if (list.length > 0) {
       if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus(e);
       if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(e, false);
@@ -201,7 +206,7 @@ export default function ComboboxList({
         value={value}
         handleChange={handleChange}
         submitHandler={submitHandler}
-        formHandler={formHandler}
+        formHandler={comboBoxFormHandler}
         error={error}
         spellCheck={spellCheck}
       />
