@@ -11,7 +11,7 @@ beforeEach(() => {
   random.mockReturnValue(0.999999);
 });
 
-describe('Create creature using SRD', () => {
+describe('SRD search', () => {
   it("uses the creature's stats when it is selected", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -78,12 +78,6 @@ describe('Create creature using SRD', () => {
     await dmApp.createCreatureForm.selectSrdCreatureByKeyboard('Goblin');
     await dmApp.createCreatureForm.selectHpRollByKeyboard();
     await dmApp.createCreatureForm.assertHp('2d6');
-  });
-
-  it('adds a creature from the search results', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addSrdCreature('Goblin');
-    await DmApp.assertCreatureVisible('Goblin', '7');
   });
 
   it("selects only a creature's name if it does not specify a URL", async () => {
@@ -200,17 +194,25 @@ describe('Create creature using SRD', () => {
   });
 });
 
-describe('Create creature manually', () => {
-  it('allows a creature to be searched', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await CreateCreatureForm.assertCreateCreatureSearch('goblin');
-  });
-
+describe('Create creature', () => {
   it('adds a creature to the battle', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await DmApp.assertCreatureVisible('goblin');
+  });
+
+  it('adds a creature from the SRD search results', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addSrdCreature('Goblin');
+    await DmApp.assertCreatureVisible('Goblin', '7');
+  });
+});
+
+describe('Name', () => {
+  it('allows a creature to be searched', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await CreateCreatureForm.assertCreateCreatureSearch('goblin');
   });
 
   it('adds a creature to the battle when the name field is submitted', async () => {
@@ -220,49 +222,19 @@ describe('Create creature manually', () => {
     await DmApp.assertCreatureVisible('goblin');
   });
 
-  it('adds a creature to the battle when the initiative field is submitted', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await dmApp.createCreatureForm.submitInitiative();
-    await DmApp.assertCreatureVisible('goblin');
-  });
-
-  it('adds a creature to the battle when the HP field is submitted', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await dmApp.createCreatureForm.submitHp();
-    await DmApp.assertCreatureVisible('goblin');
-  });
-
-  it('adds a creature to the battle when the multiplier field is submitted', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await dmApp.createCreatureForm.submitMultiplier();
-    await DmApp.assertCreatureVisible('goblin');
-  });
-
   it('shows an error when the creature name is empty', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.submitCreature();
     await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
   });
+});
 
-  it('adds a creature with HP', async () => {
+describe('Initiative', () => {
+  it('adds a creature to the battle when the initiative field is submitted', async () => {
     const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', null, '1');
-    await DmApp.assertCreatureVisible('goblin', '1');
-  });
-
-  it("allows a creature's HP to be specified as dice notation", async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', null, '2d6');
-    await DmApp.assertCreatureVisible('goblin', '12');
-  });
-
-  it('shows an error when the creature HP is invalid', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', null, 'hp');
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitInitiative();
+    await DmApp.assertCreatureVisible('goblin');
   });
 
   it("adds creatures to the battle in the order they are submitted if they don't have initiative", async () => {
@@ -292,25 +264,6 @@ describe('Create creature manually', () => {
     await dmApp.createCreatureForm.addCreature('goblin 2', '2');
     await dmApp.createCreatureForm.addCreature('goblin 3');
     await DmApp.assertCreatureList(['goblin 2', 'goblin 1', 'goblin 3']);
-  });
-
-  it('shows an error when the creature initiative is invalid', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', 'initiative');
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
-  });
-
-  it('adds multiples of a creature to the battle', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', null, null, '2');
-    await DmApp.assertCreatureList(['goblin #1', 'goblin #2']);
-  });
-
-  it('adds the same HP to each multiplied creature', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', null, '1', '2');
-    await DmApp.assertCreatureVisible('goblin #1', '1');
-    await DmApp.assertCreatureVisible('goblin #2', '1');
   });
 
   it('adds the same initiative to each multiplied creature', async () => {
@@ -368,6 +321,61 @@ describe('Create creature manually', () => {
     await dmApp.createCreatureForm.setRollInitiativePerCreature();
     await dmApp.createCreatureForm.addCreature('goblin', '1', null, '5');
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'goblin #3', 'goblin #4', 'goblin #5']);
+  });
+
+  it('shows an error when the creature initiative is invalid', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', 'initiative');
+    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+  });
+});
+
+describe('Hit points', () => {
+  it('adds a creature with HP', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '1');
+    await DmApp.assertCreatureVisible('goblin', '1');
+  });
+
+  it('adds a creature to the battle when the HP field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitHp();
+    await DmApp.assertCreatureVisible('goblin');
+  });
+
+  it("allows a creature's HP to be specified as dice notation", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '2d6');
+    await DmApp.assertCreatureVisible('goblin', '12');
+  });
+
+  it('adds the same HP to each multiplied creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '1', '2');
+    await DmApp.assertCreatureVisible('goblin #1', '1');
+    await DmApp.assertCreatureVisible('goblin #2', '1');
+  });
+
+  it('shows an error when the creature HP is invalid', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, 'hp');
+    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+  });
+});
+
+describe('Multiplier', () => {
+  it('adds a creature to the battle when the multiplier field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitMultiplier();
+    await DmApp.assertCreatureVisible('goblin');
+  });
+
+  it('adds multiples of a creature to the battle', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, null, '2');
+    await DmApp.assertCreatureList(['goblin #1', 'goblin #2']);
   });
 
   it('shows an error when the multiplier is less than 1', async () => {
