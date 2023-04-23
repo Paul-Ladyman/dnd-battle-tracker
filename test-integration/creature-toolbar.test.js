@@ -1,23 +1,5 @@
-import React from 'react';
-import { render, screen, findByRole } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import DungeonMasterAppWrapper from '../src/components/app/DungeonMasterAppWrapper';
-
-async function addCreature(user) {
-  const name = await screen.findByText('Creature Name');
-  await user.type(name, 'goblin');
-  const add = await screen.findByRole('button', { name: 'Add creature' });
-  await user.click(add);
-}
-
-function findToolbar() {
-  return screen.findByRole('toolbar', { name: 'goblin toolbar' });
-}
-
-function findToolbarButton(toolbar, name) {
-  return findByRole(toolbar, 'button', { name });
-}
+import DmApp from './page-object-models/dmApp';
 
 describe('Creature toolbar', () => {
   beforeAll(() => {
@@ -25,82 +7,56 @@ describe('Creature toolbar', () => {
   });
 
   test('a creature has a toolbar', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    expect(toolbar).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertToolbarVisible('goblin');
   });
 
   it('contains the creature menu button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Creature Menu');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Creature Menu');
   });
 
   it('contains the kill creature button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Kill/Make unconscious');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Kill/Make unconscious');
   });
 
   it('contains the initiative button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Initiative');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Initiative');
   });
 
   it('contains the conditions button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Conditions');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Conditions');
   });
 
   it('contains the notes button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Notes');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Notes');
   });
 
   it('contains the HP button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'HP');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'HP');
   });
 
   it('contains the max hp button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Max HP');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Max HP');
   });
 
   it('contains the temp hp button', async () => {
-    render(<DungeonMasterAppWrapper />);
-    const user = userEvent.setup();
-    await addCreature(user);
-    const toolbar = await findToolbar();
-    const button = await findToolbarButton(toolbar, 'Temp HP');
-    expect(button).toBeVisible();
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertButtonVisible('goblin', 'Temp HP');
   });
 });

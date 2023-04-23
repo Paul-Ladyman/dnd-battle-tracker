@@ -17,6 +17,10 @@ export default class CreatureToolbar {
     this.user = user;
   }
 
+  findToolbar(name) {
+    return screen.findByRole('toolbar', { name: `${name} toolbar` });
+  }
+
   async typeNote(name, note) {
     const noteTool = await findNoteTool(name);
     return this.user.type(noteTool, note);
@@ -156,5 +160,16 @@ export default class CreatureToolbar {
   assertCreatureNotesLength(name, length) {
     const notes = screen.queryByRole('listbox', { name: `${name} notes` });
     expect(notes.childElementCount).toBe(length);
+  }
+
+  async assertToolbarVisible(name) {
+    const toolbar = await this.findToolbar(name);
+    return expect(toolbar).toBeVisible();
+  }
+
+  async assertButtonVisible(name, button) {
+    const toolbar = await this.findToolbar(name);
+    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    return expect(toolbarButton).toBeVisible();
   }
 }
