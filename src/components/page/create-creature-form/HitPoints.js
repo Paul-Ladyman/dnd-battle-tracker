@@ -46,6 +46,7 @@ export default function HitPoints({
       handleSubmit={toggleRollEachHp}
       formHandler={createCreature}
       rightControls={rightControls}
+      rightControlsItemSelected={rightControls}
       resetOnSubmit={false}
     />
   );

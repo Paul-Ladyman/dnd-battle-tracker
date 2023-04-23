@@ -48,6 +48,13 @@ export default class CreateCreatureForm {
     return this.user.type(nameField, name);
   }
 
+  async enterMultiplier(multiply) {
+    const multiplyField = await screen.findByText('Multiply');
+    await this.user.type(multiplyField, '{backspace}');
+    await this.user.type(multiplyField, '{delete}');
+    await this.user.type(multiplyField, multiply);
+  }
+
   async navigateToCreatureByKeyboard(nameText) {
     const srdSearch = await findSrdSearch();
     const creatures = screen.queryByRole('listbox', { name: 'Creature search results' });
@@ -149,10 +156,7 @@ export default class CreateCreatureForm {
     }
 
     if (multiply) {
-      const multiplyField = await screen.findByText('Multiply');
-      await this.user.type(multiplyField, '{backspace}');
-      await this.user.type(multiplyField, '{delete}');
-      await this.user.type(multiplyField, multiply);
+      await this.enterMultiplier(multiply);
     }
 
     if (rollEachInitiative) {

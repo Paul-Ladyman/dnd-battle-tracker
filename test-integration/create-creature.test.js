@@ -62,15 +62,15 @@ describe('SRD search', () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.selectHpRoll();
-    await dmApp.createCreatureForm.selectHpAverage();
-    await dmApp.createCreatureForm.assertHp('7');
+    await dmApp.createCreatureForm.assertHp('2d6');
   });
 
   it("allows a creature's HP to be swapped to the average value", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.selectHpRoll();
-    await dmApp.createCreatureForm.assertHp('2d6');
+    await dmApp.createCreatureForm.selectHpAverage();
+    await dmApp.createCreatureForm.assertHp('7');
   });
 
   it("allows a creature's HP to be swapped using the keyboard", async () => {
@@ -375,6 +375,23 @@ describe('Hit points', () => {
     await dmApp.createCreatureForm.addCreature('goblin', null, '1d6', '2', false, true);
     await DmApp.assertCreatureVisible('goblin #1', '6');
     await DmApp.assertCreatureVisible('goblin #2', '1');
+  });
+
+  it("allows each creature's HP to be rolled separately in a group based on the SRD dice value", async () => {
+    random
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0.999999)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0);
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.selectHpRoll();
+    await dmApp.createCreatureForm.setRollHpPerCreature();
+    await dmApp.createCreatureForm.enterMultiplier('2');
+    await dmApp.createCreatureForm.submitCreature();
+    await DmApp.assertCreatureVisible('Goblin #1', '12');
+    await DmApp.assertCreatureVisible('Goblin #2', '2');
   });
 
   it('returns to rolling HP for the group when a creature is added', async () => {
