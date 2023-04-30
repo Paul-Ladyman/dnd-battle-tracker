@@ -180,6 +180,16 @@ export default class CreatureToolbar {
     return Promise.all(promises);
   }
 
+  async navigateHome(name) {
+    const toolbar = await this.findToolbar(name);
+    return fireEvent.keyDown(toolbar, { key: 'home', code: 'home', keyCode: '36' });
+  }
+
+  async navigateEnd(name) {
+    const toolbar = await this.findToolbar(name);
+    return fireEvent.keyDown(toolbar, { key: 'end', code: 'end', keyCode: '35' });
+  }
+
   async assertToolbarVisible(name) {
     const toolbar = await this.findToolbar(name);
     return expect(toolbar).toBeVisible();
@@ -191,9 +201,27 @@ export default class CreatureToolbar {
     return expect(toolbarButton).toBeVisible();
   }
 
+  async assertButtonNotFocused(name, button) {
+    const toolbar = await this.findToolbar(name);
+    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    return expect(toolbarButton).not.toHaveFocus();
+  }
+
   async assertButtonFocused(name, button) {
     const toolbar = await this.findToolbar(name);
     const toolbarButton = await findByRole(toolbar, 'button', { name: button });
     return expect(toolbarButton).toHaveFocus();
+  }
+
+  async assertButtonTabable(name, button) {
+    const toolbar = await this.findToolbar(name);
+    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    return expect(toolbarButton).toHaveAttribute('tabindex', '0');
+  }
+
+  async assertButtonNotTabable(name, button) {
+    const toolbar = await this.findToolbar(name);
+    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    return expect(toolbarButton).toHaveAttribute('tabindex', '-1');
   }
 }
