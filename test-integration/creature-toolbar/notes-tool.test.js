@@ -1,4 +1,4 @@
-import DmApp from './page-object-models/dmApp';
+import DmApp from '../page-object-models/dmApp';
 
 describe('Creature note tool', () => {
   it('is closed by default', async () => {

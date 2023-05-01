@@ -526,21 +526,24 @@ input[type="number"] {
   border-radius: 0;
 }
 
+.new-creature-toolbar-wrapper {
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #ebe2d3;
+}
+
+.new-creature-toolbar-wrapper__focused {
+  padding: 8px;
+  border: 2px solid #822000;
+  box-shadow: 0 0 5px #979aa4;
+}
+
 .new-creature-toolbar {
   grid-gap: 10px;
   grid-row-gap: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 18px);
   grid-auto-rows: 1fr;
-  padding: 10px;
-  border-radius: 15px;
-  background-color: #ebe2d3;
-}
-
-.new-creature-toolbar__focused {
-  padding: 8px;
-  border: 2px solid #822000;
-  box-shadow: 0 0 5px #979aa4;
 }
 
 .new-creature-toolbar-button {

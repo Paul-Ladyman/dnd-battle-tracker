@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import DmApp from './page-object-models/dmApp';
+import DmApp from '../page-object-models/dmApp';
 
 beforeAll(() => {
   window.FLAG_creatureToolbar = true;
@@ -154,5 +154,26 @@ describe('Creature toolbar navigation', () => {
     await dmApp.creatureToolbar.navigate('goblin 1', 1);
     await dmApp.creatureToolbar.assertButtonNotFocused('goblin 2', 'Kill/Make unconscious');
     await dmApp.creatureToolbar.assertButtonFocused('goblin 1', 'Kill/Make unconscious');
+  });
+
+  it('does not open the tool menu when navigating', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.navigate('goblin', 1);
+    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
+  });
+
+  it('does not open the tool menu when no tool is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
+  });
+
+  it('closes the tool menu when the toolbar loses focus', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
   });
 });
