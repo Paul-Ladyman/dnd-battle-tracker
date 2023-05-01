@@ -4,81 +4,7 @@ import React, {
   useRef,
   useMemo,
 } from 'react';
-import OptionsMenuIcon from '../../icons/OptionsMenuIcon';
-import KillStabalizeIcon from '../../icons/KillStabalizeIcon';
-import InitiativeIcon from '../../icons/InitiativeIcon';
-import AddHpIcon from '../../icons/AddHpIcon';
-import AddNoteIcon from '../../icons/AddNoteIcon';
-import ConditionsIcon from '../../icons/ConditionsIcon';
-import StatBlockLink from '../../buttons/StatBlockLink';
-import MonsterSearcher from '../../buttons/MonsterSearcher';
-
-function Separator() {
-  return (
-    <div className="expanded-creature--separator" />
-  );
-}
-
-function getButtons() {
-  return [
-    {
-      title: 'Creature Menu',
-      text: null,
-      Icon: () => <OptionsMenuIcon />,
-      ToolMenu: ({ creature }) => {
-        const { statBlock, name } = creature;
-        return (
-          <>
-            { !statBlock && <MonsterSearcher search={name} /> }
-            { statBlock && <StatBlockLink url={statBlock} /> }
-          </>
-        );
-      },
-      ref: React.createRef(),
-      key: (id) => `${id}-menu`,
-    },
-    {
-      title: 'Kill/Make unconscious',
-      text: null,
-      Icon: ({ creature }) => {
-        const { alive } = creature;
-        return <KillStabalizeIcon alive={alive} />;
-      },
-      ref: React.createRef(),
-      key: (id) => `${id}-kill`,
-    },
-    {
-      title: 'Initiative',
-      text: 'Initiative',
-      Icon: () => <InitiativeIcon />,
-      ref: React.createRef(),
-      key: (id) => `${id}-initiative`,
-    },
-    {
-      title: 'Conditions',
-      text: 'Conditions',
-      Icon: () => <ConditionsIcon />,
-      ref: React.createRef(),
-      key: (id) => `${id}-conditions`,
-    },
-    {
-      title: 'Notes',
-      text: 'Notes',
-      Icon: () => <AddNoteIcon />,
-      ref: React.createRef(),
-      key: (id) => `${id}-notes`,
-      medium: true,
-    },
-    {
-      title: 'HP',
-      text: 'HP',
-      Icon: () => <AddHpIcon />,
-      ref: React.createRef(),
-      key: (id) => `${id}-hp`,
-      small: true,
-    },
-  ];
-}
+import getButtons from './buttons/buttons';
 
 function isHotkeyForward(e) {
   return e.keyCode === 39;
@@ -175,13 +101,8 @@ export default function NewCreatureToolbar({ creature }) {
   const toolbarWrapperClass = 'new-creature-toolbar-wrapper';
   const toolbarWrapperClasses = focused ? `${toolbarWrapperClass} ${toolbarWrapperClass}__focused` : toolbarWrapperClass;
   const toolbarClass = 'new-creature-toolbar';
-  const buttonClass = `${toolbarClass}-button`;
-  const textButtonClass = `${buttonClass} ${buttonClass}__text`;
-  const mediumButtonClass = `${buttonClass}__medium`;
-  const smallButtonClass = `${buttonClass}__small`;
 
   const tabIndex = focusedButton === null ? 0 : focusedButton;
-
   const toolMenuExpanded = selectedButton !== null;
   const toolMenuDisplay = toolMenuExpanded ? 'block' : 'none';
   const ToolMenu = toolMenuExpanded && buttons[selectedButton].ToolMenu;
@@ -200,36 +121,25 @@ export default function NewCreatureToolbar({ creature }) {
       >
         {buttons.map((button, i) => {
           const {
-            title,
-            text,
-            Icon,
-            key,
-            medium,
-            small,
+            Button,
             ref,
+            key,
           } = button;
-          const className = `${text ? textButtonClass : buttonClass} ${medium && mediumButtonClass} ${small && smallButtonClass}`;
           return (
-            <button
-              key={key(id)}
-              title={title}
-              className={className}
-              type="button"
-              ref={ref}
+            <Button
+              key={key}
+              creature={creature}
+              buttonRef={ref}
               onFocus={() => setFocusedButton(i)}
               onClick={() => toggleSelectedButton(i)}
               tabIndex={i === tabIndex ? '0' : '-1'}
-              aria-haspopup="true"
-              aria-controls={`${name}-toolbar-menu`}
-              aria-expanded={toolMenuExpanded}
-            >
-              <Icon creature={creature} />
-              { text }
-            </button>
+              toolMenuId={`${name}-toolbar-menu`}
+              toolMenuExpanded={toolMenuExpanded}
+            />
           );
         })}
       </div>
-      { toolMenuExpanded && <Separator />}
+      { ToolMenu && <div className="expanded-creature--separator" />}
       <div
         role="menu"
         aria-label={`${name} tool menu`}
