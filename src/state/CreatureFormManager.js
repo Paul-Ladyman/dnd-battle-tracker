@@ -5,18 +5,21 @@ function isDefined(value) {
   return value !== undefined && value !== null && value !== '';
 }
 
-export function validateCreature(name, initiative, hitPoints, multiplier) {
+export function validateCreature(name, initiative, hitPoints, armorClass, multiplier) {
   const nameError = name === '';
   const initiativeError = isDefined(initiative) && !validateSyntax(initiative);
   const healthError = isDefined(hitPoints)
     && (!validateSyntax(hitPoints) || parseInt(hitPoints, 10) <= 0);
+  const intAc = parseInt(armorClass, 10);
+  const acError = isDefined(armorClass) && (!Number.isInteger(intAc) || intAc <= 0);
   const multiplierError = multiplier <= 0 || multiplier > 50;
 
-  if (nameError || initiativeError || healthError || multiplierError) {
+  if (nameError || initiativeError || healthError || acError || multiplierError) {
     return {
       nameError: nameError ? 'Name must be provided.' : false,
       initiativeError: initiativeError ? 'Initiative must be a number.' : false,
       healthError: healthError ? 'Health must be greater than 0.' : false,
+      acError: acError ? 'AC must be greater than 0.' : false,
       multiplierError: multiplierError ? 'Multiplier must be greater than 0 and less than 50.' : false,
     };
   }

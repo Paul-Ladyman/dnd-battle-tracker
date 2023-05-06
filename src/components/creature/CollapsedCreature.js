@@ -10,15 +10,32 @@ function CollapsedCreature({
   healthPoints,
   showHealth,
 }) {
-  const showConditions = creature.conditions.length > 0;
-  const showNotes = creature.notes.length > 0;
-  const conditionsMarginClass = showHealth ? 'collapsed-creature--status__margin' : '';
-  const notesMarginClass = showHealth || showConditions ? 'collapsed-creature--status__margin' : '';
+  const { conditions, notes, armorClass } = creature;
+
+  const showConditions = conditions.length > 0;
+  const showNotes = notes.length > 0;
+  const showAc = armorClass !== null && armorClass !== undefined;
+
+  const showHealthComma = showHealth && (showAc || showConditions || showNotes);
+  const showAcComma = showAc && (showConditions || showNotes);
+
+  const acMarginClass = showHealth ? 'collapsed-creature--status__margin' : '';
+  const conditionsMarginClass = showHealth || showAc ? 'collapsed-creature--status__margin' : '';
+  const notesMarginClass = showHealth || showAc || showConditions ? 'collapsed-creature--status__margin' : '';
   return (
     <div className="collapsed-creature">
       <div className="collapsed-creature--status">
         {showHealth && healthPoints}
-        {showHealth && (showConditions || showNotes) && ','}
+        {showHealthComma && ','}
+        {showAc
+          && (
+            <div className={acMarginClass}>
+              AC
+              {' '}
+              {armorClass}
+            </div>
+          )}
+        {showAcComma && ', '}
         {showConditions
           && (
           <div className={`collapsed-creature--notes ${conditionsMarginClass}`}>

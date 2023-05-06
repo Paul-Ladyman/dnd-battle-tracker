@@ -19,6 +19,9 @@ test('A DM can share an existing battle with their players who receive subsequen
   await page.goto('');
 
   await page.fill('text=Creature Name', 'goblin');
+  await page.fill('text=Initiative (optional)', '1');
+  await page.fill('text=HP (optional)', '1');
+  await page.fill('text=AC (optional)', '1');
   await page.locator('role=button[name="Add creature"]').click();
   await page.locator('role=button[name="Options Menu"]').click();
   await page.locator('role=button[name="Enable share"]').click();

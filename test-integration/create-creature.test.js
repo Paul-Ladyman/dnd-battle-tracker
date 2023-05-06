@@ -439,6 +439,34 @@ describe('Hit points', () => {
   });
 });
 
+describe('Armor class', () => {
+  it('adds a creature with AC', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, null, null, null, null, '20');
+    await DmApp.assertCreatureVisible('goblin', null, '20');
+  });
+
+  it('adds a creature to the battle when the AC field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.submitAc();
+    await DmApp.assertCreatureVisible('goblin');
+  });
+
+  it('adds the same AC to each multiplied creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, null, '2', null, null, '20');
+    await DmApp.assertCreatureVisible('goblin #1', null, '20');
+    await DmApp.assertCreatureVisible('goblin #2', null, '20');
+  });
+
+  it('shows an error when the creature AC is invalid', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, null, '2', null, null, '0');
+    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+  });
+});
+
 describe('Multiplier', () => {
   it('adds a creature to the battle when the multiplier field is submitted', async () => {
     const dmApp = new DmApp();

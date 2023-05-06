@@ -12,9 +12,10 @@ export default function ExpandedCreature({
   playerSession,
 }) {
   const {
-    initiative, id, conditions, notes, shared,
+    initiative, id, conditions, notes, shared, armorClass,
   } = creature;
   const showInitiative = initiative !== undefined && initiative !== null;
+  const showAc = armorClass !== null && armorClass !== undefined;
 
   return (
     <>
@@ -22,6 +23,14 @@ export default function ExpandedCreature({
         <CreatureStatus creature={creature} shared={shared} />
         <div className="expanded-creature--separator" />
         {showHealth && healthPoints}
+        {showAc
+          && (
+            <div className="expanded-creature--stat">
+              <b>Armor Class</b>
+              {' '}
+              {armorClass}
+            </div>
+          )}
         {showInitiative
           && (
           <div className="expanded-creature--stat">
@@ -30,7 +39,7 @@ export default function ExpandedCreature({
             {initiative}
           </div>
           )}
-        { (showHealth || showInitiative) && <div className="expanded-creature--separator" /> }
+        { (showHealth || showAc || showInitiative) && <div className="expanded-creature--separator" /> }
       </div>
       <CreatureNoteList
         creatureId={id}

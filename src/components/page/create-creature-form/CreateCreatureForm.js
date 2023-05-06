@@ -9,6 +9,7 @@ import Initiative from './Initiative';
 import HitPoints from './HitPoints';
 import Multiply from './Multiply';
 import Submit from './Submit';
+import ArmorClass from './ArmorClass';
 
 function CreateCreatureForm({
   createCreatureErrors,
@@ -19,6 +20,7 @@ function CreateCreatureForm({
     name: '',
     initiative: '',
     healthPoints: '',
+    armorClass: '',
     multiplier: 1,
     submitted: false,
     rollEachInitiative: false,
@@ -88,6 +90,7 @@ function CreateCreatureForm({
       name,
       initiative,
       healthPoints,
+      armorClass,
       rollEachHp,
       rollEachInitiative,
       stats,
@@ -95,12 +98,13 @@ function CreateCreatureForm({
 
     const intMultiplier = parseInt(multiplier, 10);
 
-    const errors = validateCreature(name, initiative, healthPoints, intMultiplier);
+    const errors = validateCreature(name, initiative, healthPoints, armorClass, intMultiplier);
 
     if (!errors) {
       const creature = {
         name,
         healthPoints: rollField(hpInput, rollEachHp),
+        armorClass,
         initiative: rollField(initiativeInput, rollEachInitiative),
         multiplier: intMultiplier,
         stats,
@@ -160,11 +164,11 @@ function CreateCreatureForm({
   };
 
   const {
-    name, initiative, healthPoints, multiplier, rollEachInitiative, rollEachHp,
+    name, initiative, healthPoints, armorClass, multiplier, rollEachInitiative, rollEachHp,
   } = state;
 
   const {
-    nameError, initiativeError, healthError, multiplierError,
+    nameError, initiativeError, healthError, acError, multiplierError,
   } = createCreatureErrors;
 
   return (
@@ -195,6 +199,12 @@ function CreateCreatureForm({
         error={healthError}
         rollEachHp={rollEachHp}
         toggleRollEachHp={toggleRollEachHp}
+      />
+      <ArmorClass
+        ac={armorClass}
+        handleChange={handleChange}
+        formHandler={formHandler}
+        error={acError}
       />
       <Multiply
         multiplier={multiplier}

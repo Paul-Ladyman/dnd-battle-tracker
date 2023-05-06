@@ -554,6 +554,7 @@ describe('createCreature', () => {
       initiative: null,
       healthPoints: null,
       maxHealthPoints: null,
+      armorClass: null,
       temporaryHealthPoints: null,
       id: 1,
       alive: true,
@@ -569,32 +570,12 @@ describe('createCreature', () => {
     expect(creature).toEqual(expectedCreature);
   });
 
-  test('it creates a new creature given a name, initiative and health points', () => {
+  test('it creates a new creature given a name, initiative, HP and AC', () => {
     const expectedCreature = {
       name: 'name',
       initiative: 13,
       healthPoints: 10,
-      maxHealthPoints: 10,
-      temporaryHealthPoints: null,
-      id: 1,
-      alive: true,
-      conditions: [],
-      notes: [],
-      locked: false,
-      shared: true,
-      hitPointsShared: true,
-      statBlock: null,
-    };
-
-    const creature = createCreature(1, { name: 'name', initiative: 13, healthPoints: 10 });
-    expect(creature).toEqual(expectedCreature);
-  });
-
-  test('it creates a new creature given a name, initiative, health points and a number', () => {
-    const expectedCreature = {
-      name: 'name #3',
-      initiative: 13,
-      healthPoints: 10,
+      armorClass: 20,
       maxHealthPoints: 10,
       temporaryHealthPoints: null,
       id: 1,
@@ -608,7 +589,34 @@ describe('createCreature', () => {
     };
 
     const creature = createCreature(1, {
-      name: 'name', number: 3, initiative: 13, healthPoints: 10,
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      armorClass: 20,
+    });
+    expect(creature).toEqual(expectedCreature);
+  });
+
+  test('it creates a new creature given a name, initiative, HP, AC and a number', () => {
+    const expectedCreature = {
+      name: 'name #3',
+      initiative: 13,
+      healthPoints: 10,
+      maxHealthPoints: 10,
+      armorClass: 20,
+      temporaryHealthPoints: null,
+      id: 1,
+      alive: true,
+      conditions: [],
+      notes: [],
+      locked: false,
+      shared: true,
+      hitPointsShared: true,
+      statBlock: null,
+    };
+
+    const creature = createCreature(1, {
+      name: 'name', number: 3, initiative: 13, healthPoints: 10, armorClass: 20,
     });
     expect(creature).toEqual(expectedCreature);
   });

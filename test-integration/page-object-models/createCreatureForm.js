@@ -42,6 +42,11 @@ export default class CreateCreatureForm {
     return fireEvent.keyDown(hpField, { key: 'enter', keyCode: 13 });
   }
 
+  async submitAc() {
+    const acField = await screen.findByRole('spinbutton', { name: 'create creature form. AC (optional)' });
+    return fireEvent.keyDown(acField, { key: 'enter', keyCode: 13 });
+  }
+
   async submitMultiplier() {
     const multiplierField = await screen.findByRole('spinbutton', { name: 'create creature form. Multiplier (required)' });
     return fireEvent.keyDown(multiplierField, { key: 'enter', keyCode: 13 });
@@ -146,7 +151,7 @@ export default class CreateCreatureForm {
     return this.user.click(hpRollButton);
   }
 
-  async addCreature(name, initiative, hp, multiply, rollEachInitiative, rollEachHp) {
+  async addCreature(name, initiative, hp, multiply, rollEachInitiative, rollEachHp, ac) {
     await this.enterCreatureName(name);
 
     if (initiative) {
@@ -157,6 +162,11 @@ export default class CreateCreatureForm {
     if (hp) {
       const hpField = await screen.findByText('HP (optional)');
       await this.user.type(hpField, hp);
+    }
+
+    if (ac) {
+      const acField = await screen.findByText('AC (optional)');
+      await this.user.type(acField, ac);
     }
 
     if (multiply) {

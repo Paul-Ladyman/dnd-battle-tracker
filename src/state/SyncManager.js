@@ -5,6 +5,7 @@ function getSharedCreatures(creatures) {
   return creatures.map((creature) => ({
     ...creature,
     statBlock: undefined,
+    armorClass: undefined,
   }));
 }
 

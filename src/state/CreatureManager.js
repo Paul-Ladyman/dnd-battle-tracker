@@ -113,7 +113,7 @@ export function getRawName(name) {
 }
 
 export function createCreature(creatureId, {
-  name, number, initiative, healthPoints, stats,
+  name, number, initiative, healthPoints, armorClass, stats,
 }) {
   const groupedName = number ? `${name} #${number}` : name;
   const index = stats?.index;
@@ -124,6 +124,7 @@ export function createCreature(creatureId, {
     initiative,
     healthPoints: hp,
     maxHealthPoints: hp,
+    armorClass: armorClass || null,
     temporaryHealthPoints: null,
     id: creatureId,
     alive: true,

@@ -3,11 +3,11 @@ import defaultState from '../../test/fixtures/battle';
 
 describe('validateCreature', () => {
   test('returns undefined if creature is valid', () => {
-    expect(validateCreature('a', '1', 1, 1)).toEqual(undefined);
+    expect(validateCreature('a', '1', 1, 1, 1)).toEqual(undefined);
   });
 
   test('accepts initiative as dice notation', () => {
-    expect(validateCreature('a', 'd20', 1, 1)).toEqual(undefined);
+    expect(validateCreature('a', 'd20', 1, 1, 1)).toEqual(undefined);
   });
 
   test.each([
@@ -35,6 +35,7 @@ describe('validateCreature', () => {
       nameError: 'Name must be provided.',
       initiativeError: false,
       healthError: false,
+      acError: false,
       multiplierError: false,
     };
     expect(validateCreature('', '1', 1, 1)).toEqual(expectedErrors);
@@ -49,6 +50,7 @@ describe('validateCreature', () => {
       nameError: false,
       initiativeError: 'Initiative must be a number.',
       healthError: false,
+      acError: false,
       multiplierError: false,
     };
     expect(validateCreature('a', initiative, 1, 1)).toEqual(expectedErrors);
@@ -65,9 +67,35 @@ describe('validateCreature', () => {
       nameError: false,
       initiativeError: false,
       healthError: 'Health must be greater than 0.',
+      acError: false,
       multiplierError: false,
     };
     expect(validateCreature('a', 1, hp, 1)).toEqual(expectedErrors);
+  });
+
+  test.each([
+    [undefined],
+    [null],
+    [''],
+  ])('armor class is optional: %p', (ac) => {
+    expect(validateCreature('a', '1', 1, ac, 1)).toEqual(undefined);
+  });
+
+  test.each([
+    [NaN],
+    ['a'],
+    [new Error('ac error')],
+    [0],
+    [-1],
+  ])('armor class must be a number greater than 0 if defined: %p', (ac) => {
+    const expectedErrors = {
+      nameError: false,
+      initiativeError: false,
+      healthError: false,
+      acError: 'AC must be greater than 0.',
+      multiplierError: false,
+    };
+    expect(validateCreature('a', 1, 1, ac, 1)).toEqual(expectedErrors);
   });
 
   test('multiplier must be greater than 0', () => {
@@ -75,9 +103,10 @@ describe('validateCreature', () => {
       nameError: false,
       initiativeError: false,
       healthError: false,
+      acError: false,
       multiplierError: 'Multiplier must be greater than 0 and less than 50.',
     };
-    expect(validateCreature('a', 1, 1, 0)).toEqual(expectedErrors);
+    expect(validateCreature('a', 1, 1, 1, 0)).toEqual(expectedErrors);
   });
 
   test('multiplier must be less than 51', () => {
@@ -85,9 +114,10 @@ describe('validateCreature', () => {
       nameError: false,
       initiativeError: false,
       healthError: false,
+      acError: false,
       multiplierError: 'Multiplier must be greater than 0 and less than 50.',
     };
-    expect(validateCreature('a', 1, 1, 51)).toEqual(expectedErrors);
+    expect(validateCreature('a', 1, 1, 1, 51)).toEqual(expectedErrors);
   });
 });
 

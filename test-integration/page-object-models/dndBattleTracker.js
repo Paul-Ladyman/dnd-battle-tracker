@@ -20,12 +20,17 @@ export default class DndBattleTracker {
     return expect(creatureNames).toEqual(expectedCreatureNames);
   }
 
-  static async assertCreatureVisible(name, hp) {
+  static async assertCreatureVisible(name, hp, ac) {
     const creature = await screen.findByRole('region', { name });
 
     if (hp) {
       const hpValue = getByText(creature, `HP ${hp}`);
       expect(hpValue).toBeVisible();
+    }
+
+    if (ac) {
+      const acValue = getByText(creature, `AC ${ac}`);
+      expect(acValue).toBeVisible();
     }
 
     return expect(creature).toBeVisible();
