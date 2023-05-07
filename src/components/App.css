@@ -604,7 +604,7 @@ input[type="number"] {
 /* Create creature form */
 
 .create-creature-form {
-  width: 80%;
+  width: 100%;
   margin-top: 20px;
   justify-content: center;
   grid-gap: 22px;
@@ -645,9 +645,20 @@ input[type="number"] {
   grid-column: span 2;
 }
 
-@media only screen and (max-width: 1175px) {
+/*
+ * Ensure create creature form is centered on two rows on medium screens
+ */
+@media only screen and (min-width: 825px) and (max-width: 1175px) {
   .create-creature-form {
-    width: 100%;
+    width: unset;
+  }
+
+  .create-creature-form--item__text {
+    grid-column: span 10;
+  }
+
+  .create-creature-form--item__submit {
+    margin-left: 7px;
   }
 }
 
