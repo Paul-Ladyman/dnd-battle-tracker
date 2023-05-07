@@ -18,6 +18,7 @@ describe('SRD search', () => {
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertHp('7');
     await dmApp.createCreatureForm.assertInitiative('1d20+2');
+    await dmApp.createCreatureForm.assertAc('15');
   });
 
   it('allows a creature to be selected by keyboard', async () => {
@@ -191,6 +192,85 @@ describe('SRD search', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.assertName('Goblin');
     await dmApp.createCreatureForm.assertInitiative('');
+  });
+
+  it("does not set AC if a creature's armor_class it is not specified", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertAc('');
+  });
+
+  it("does not set AC if a creature's armor_class is malformed", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          armor_class: 'malformed',
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertAc('');
+  });
+
+  it("does not set AC if a creature's armor_class is empty", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          armor_class: [],
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertAc('');
+  });
+
+  it("does not set AC if a creature's armor_class has no value", async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          armor_class: [{}],
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertAc('');
+  });
+
+  it('sets AC to the first armor_class available', async () => {
+    msw.use(
+      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
+        ctx.json({
+          index: 'goblin',
+          name: 'Goblin',
+          armor_class: [{ value: 15 }, { value: 10 }],
+        }),
+      )),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.assertName('Goblin');
+    await dmApp.createCreatureForm.assertAc('15');
   });
 });
 

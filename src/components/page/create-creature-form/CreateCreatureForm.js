@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import { hotkeys } from '../../../hotkeys/hotkeys';
-import { calculateAbilityModifier } from '../../../domain/characterSheet';
-import { getMonster } from '../../../client/dnd5eapi';
+import getMonster from '../../../domain/monster';
 import { validateCreature } from '../../../state/CreatureFormManager';
 import Name from './Name';
 import Initiative from './Initiative';
@@ -149,17 +148,26 @@ function CreateCreatureForm({
     return `${d20}${sign}${dexterityModifier}`;
   };
 
-  const onSelectMonster = async (monster) => {
-    const data = await getMonster(monster);
-    const { hit_points: hp, hit_points_roll: hpRoll, dexterity } = data;
-    const dexterityModifier = calculateAbilityModifier(dexterity);
+  const onSelectMonster = async (monsterData) => {
+    const monster = await getMonster(monsterData);
+    const {
+      name,
+      hp,
+      hpRoll,
+      dexterity,
+      dexterityModifier,
+      armorClass,
+      stats,
+    } = monster;
+
     setState((prevState) => ({
       ...prevState,
-      name: monster.name,
+      name,
       healthPoints: hp || hpRoll || '',
       initiative: getInitiative(dexterity, dexterityModifier),
       dexterityModifier,
-      stats: data,
+      armorClass: armorClass || '',
+      stats,
     }));
   };
 

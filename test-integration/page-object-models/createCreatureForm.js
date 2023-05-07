@@ -299,4 +299,9 @@ export default class CreateCreatureForm {
     const initiativeField = await screen.findByLabelText('Initiative (optional)');
     await waitFor(() => expect(initiativeField).toHaveDisplayValue(initiative));
   }
+
+  async assertAc(ac) {
+    const acField = await screen.findByLabelText('AC (optional)');
+    await waitFor(() => expect(acField).toHaveDisplayValue(ac));
+  }
 }

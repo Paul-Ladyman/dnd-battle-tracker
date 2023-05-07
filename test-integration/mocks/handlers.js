@@ -20,6 +20,24 @@ export default [
       hit_points: 7,
       hit_points_roll: '2d6',
       dexterity: 14,
+      armor_class: [
+        {
+          type: 'armor',
+          value: 15,
+          armor: [
+            {
+              index: 'leather-armor',
+              name: 'Leather Armor',
+              url: '/api/equipment/leather-armor',
+            },
+            {
+              index: 'shield',
+              name: 'Shield',
+              url: '/api/equipment/shield',
+            },
+          ],
+        },
+      ],
     }),
   )),
 
