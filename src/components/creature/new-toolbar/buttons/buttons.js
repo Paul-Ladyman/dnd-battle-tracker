@@ -20,6 +20,11 @@ export default function getButtons() {
       key: (id) => `${id}-kill`,
     },
     {
+      Button: HpButton,
+      ref: React.createRef(),
+      key: (id) => `${id}-hp`,
+    },
+    {
       Button: InitiativeButton,
       ref: React.createRef(),
       key: (id) => `${id}-initiative`,
@@ -33,11 +38,6 @@ export default function getButtons() {
       Button: NotesButton,
       ref: React.createRef(),
       key: (id) => `${id}-notes`,
-    },
-    {
-      Button: HpButton,
-      ref: React.createRef(),
-      key: (id) => `${id}-hp`,
     },
   ];
 }

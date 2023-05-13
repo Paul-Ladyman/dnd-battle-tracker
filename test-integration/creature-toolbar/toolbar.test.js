@@ -72,7 +72,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'HP');
   });
 
-  it('moves the tab index to the selected bbutton', async () => {
+  it('moves the tab index to the selected button', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
@@ -89,7 +89,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.navigate('goblin', 2);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Initiative');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'HP');
   });
 
   it('moves the tab index to the button being navigated to', async () => {
@@ -99,10 +99,10 @@ describe('Creature toolbar navigation', () => {
     await dmApp.creatureToolbar.navigate('goblin', 2);
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Kill/Make unconscious');
-    await dmApp.creatureToolbar.assertButtonTabable('goblin', 'Initiative');
+    await dmApp.creatureToolbar.assertButtonTabable('goblin', 'HP');
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Conditions');
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Notes');
-    await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'HP');
+    await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Initiative');
   });
 
   it('wraps navigation when navigating forwards with the keyboard', async () => {
@@ -110,7 +110,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'HP');
     await dmApp.creatureToolbar.navigate('goblin', 1);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Creature Menu');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Initiative');
   });
 
   it('allows the buttons to be navigated backwards with the keyboard', async () => {
@@ -118,7 +118,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
     await dmApp.creatureToolbar.navigate('goblin', 2, false);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Creature Menu');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Kill/Make unconscious');
   });
 
   it('wraps navigation when navigating backwards with the keyboard', async () => {
@@ -126,7 +126,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.navigate('goblin', 1, false);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'HP');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Notes');
   });
 
   it('navigates to the first button when the home key is pressed', async () => {
@@ -142,7 +142,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
     await dmApp.creatureToolbar.navigateEnd('goblin');
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'HP');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Notes');
   });
 
   it("navigates two creature's toolbars independently", async () => {
