@@ -166,3 +166,39 @@ describe('Share HP tool', () => {
     return dmApp.menuTool.assertHPShared('Goblin');
   });
 });
+
+describe('Remove tool', () => {
+  it('does nothing when clicked if not confirmed', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
+    await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin #1');
+    return DmApp.assertCreatureList(['Goblin #1', 'Goblin #2']);
+  });
+
+  it('removes a creature when confirmed', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
+    await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin #1');
+    await dmApp.menuTool.confirmRemoveCreature('Goblin #1');
+    return DmApp.assertCreatureList(['Goblin #2']);
+  });
+
+  it("is disabled if it is the creature's turn", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.startBattle();
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    return dmApp.menuTool.assertRemoveCreatureDisabled('Goblin');
+  });
+
+  it("does not allow removing a creature to be confirmed when it is the creature's turn", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.startBattle();
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin');
+    return dmApp.menuTool.assertConfirmRemoveCreatureNotVisible('Goblin');
+  });
+});

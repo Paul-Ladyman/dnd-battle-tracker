@@ -55,6 +55,20 @@ export default class MenuTool {
     return this.user.click(shareTool);
   }
 
+  async removeCreature(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const removeTool = await findByRole(toolMenu, 'button', { name: `remove ${name}` });
+    return this.user.click(removeTool);
+  }
+
+  async confirmRemoveCreature(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const removeTool = await findByRole(toolMenu, 'button', { name: `confirm remove ${name}` });
+    return this.user.click(removeTool);
+  }
+
   async assertCreatureStatBlockLink(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
 
@@ -147,5 +161,19 @@ export default class MenuTool {
 
     const shareTool = await findByRole(toolMenu, 'button', { name: `Share ${name}` });
     expect(shareTool).toHaveAttribute('aria-disabled', 'false');
+  }
+
+  async assertRemoveCreatureDisabled(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const removeTool = await findByRole(toolMenu, 'button', { name: `remove ${name}` });
+    expect(removeTool).toHaveAttribute('aria-disabled', 'true');
+  }
+
+  async assertConfirmRemoveCreatureNotVisible(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const removeTool = queryByRole(toolMenu, 'button', { name: `confirm remove ${name}` });
+    expect(removeTool).toBeNull();
   }
 }

@@ -5,6 +5,7 @@ import MonsterSearcher from '../tools/MonsterSearcher';
 import CreatureLocker from '../tools/CreatureLocker';
 import CreatureSharer from '../tools/CreatureSharer';
 import CreatureHitPointsSharer from '../tools/CreatureHitPointsSharer';
+import CreatureRemover from '../tools/CreatureRemover';
 
 export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
   const {
@@ -15,6 +16,7 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
     toggleCreatureLock,
     toggleCreatureShare,
     toggleCreatureHitPointsShare,
+    removeCreature,
   } = creatureManagement;
 
   return (
@@ -30,6 +32,11 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
       <CreatureHitPointsSharer
         creature={creature}
         toggleCreatureHitPointsShare={toggleCreatureHitPointsShare}
+      />
+      <CreatureRemover
+        creature={creature}
+        removeCreature={removeCreature}
+        disabled={active}
       />
     </div>
   );
