@@ -145,7 +145,7 @@ export default function NewCreatureToolbar({ creature, creatureManagement }) {
         aria-label={`${name} tool menu`}
         style={{ display: toolMenuDisplay }}
       >
-        {ToolMenu && <ToolMenu creature={creature} creatureManagement={creatureManagement}/>}
+        {ToolMenu && <ToolMenu creature={creature} creatureManagement={creatureManagement} />}
       </div>
     </div>
   );
