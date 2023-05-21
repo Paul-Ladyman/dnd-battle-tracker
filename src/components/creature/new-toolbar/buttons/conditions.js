@@ -12,7 +12,6 @@ export default function ConditionsButton({
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   return (
     <button
-      title="Conditions"
       className={textButtonClass}
       type="button"
       ref={buttonRef}

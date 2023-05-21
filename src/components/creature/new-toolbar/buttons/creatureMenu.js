@@ -4,13 +4,18 @@ import StatBlockLink from '../tools/StatBlockLink';
 import MonsterSearcher from '../tools/MonsterSearcher';
 import CreatureLocker from '../tools/CreatureLocker';
 import CreatureSharer from '../tools/CreatureSharer';
+import CreatureHitPointsSharer from '../tools/CreatureHitPointsSharer';
 
 export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
   const {
     statBlock,
     name,
   } = creature;
-  const { toggleCreatureLock, toggleCreatureShare } = creatureManagement;
+  const {
+    toggleCreatureLock,
+    toggleCreatureShare,
+    toggleCreatureHitPointsShare,
+  } = creatureManagement;
 
   return (
     <div className="new-creature-toolbar">
@@ -21,6 +26,10 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
         creature={creature}
         toggleCreatureShare={toggleCreatureShare}
         active={active}
+      />
+      <CreatureHitPointsSharer
+        creature={creature}
+        toggleCreatureHitPointsShare={toggleCreatureHitPointsShare}
       />
     </div>
   );

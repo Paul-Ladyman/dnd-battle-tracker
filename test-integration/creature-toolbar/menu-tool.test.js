@@ -140,3 +140,29 @@ describe('Share tool', () => {
     return dmApp.menuTool.assertCreatureShared('Goblin');
   });
 });
+
+describe('Share HP tool', () => {
+  it('is shared by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    return dmApp.menuTool.assertHPShared('Goblin');
+  });
+
+  it("unshares a creature's HP when clicked", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('Goblin');
+    return dmApp.menuTool.assertHPNotShared('Goblin');
+  });
+
+  it("shares a creature's HP when clicked again", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('Goblin');
+    await dmApp.menuTool.shareHP('Goblin');
+    return dmApp.menuTool.assertHPShared('Goblin');
+  });
+});

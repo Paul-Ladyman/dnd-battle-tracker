@@ -41,6 +41,20 @@ export default class MenuTool {
     return this.user.click(shareTool);
   }
 
+  async shareHP(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Share ${name} HP` });
+    return this.user.click(shareTool);
+  }
+
+  async unshareHP(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Unshare ${name} HP` });
+    return this.user.click(shareTool);
+  }
+
   async assertCreatureStatBlockLink(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
 
@@ -101,6 +115,22 @@ export default class MenuTool {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
 
     const shareTool = await findByRole(toolMenu, 'button', { name: `Unshare ${name}` });
+    expect(shareTool).toBeVisible();
+    expect(shareTool).toHaveAttribute('aria-pressed', 'true');
+  }
+
+  async assertHPNotShared(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Share ${name} HP` });
+    expect(shareTool).toBeVisible();
+    expect(shareTool).toHaveAttribute('aria-pressed', 'false');
+  }
+
+  async assertHPShared(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Unshare ${name} HP` });
     expect(shareTool).toBeVisible();
     expect(shareTool).toHaveAttribute('aria-pressed', 'true');
   }

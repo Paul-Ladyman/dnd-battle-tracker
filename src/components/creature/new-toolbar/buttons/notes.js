@@ -13,7 +13,6 @@ export default function NotesButton({
   const mediumButtonClass = `${buttonClass}__medium`;
   return (
     <button
-      title="Notes"
       className={`${textButtonClass} ${mediumButtonClass}`}
       type="button"
       ref={buttonRef}

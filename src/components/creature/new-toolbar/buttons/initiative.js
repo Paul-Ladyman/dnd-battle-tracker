@@ -12,7 +12,6 @@ export default function InitiativeButton({
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   return (
     <button
-      title="Initiative"
       className={textButtonClass}
       type="button"
       ref={buttonRef}
