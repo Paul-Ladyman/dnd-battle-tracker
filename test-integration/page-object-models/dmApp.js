@@ -10,12 +10,14 @@ import DndBattleTracker from './dndBattleTracker';
 import DungeonMasterAppWrapper from '../../src/components/app/DungeonMasterAppWrapper';
 import CreateCreatureForm from './createCreatureForm';
 import CreatureToolbar from './creatureToolbar';
+import MenuTool from './menuTool';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
     super(<DungeonMasterAppWrapper />);
     this.createCreatureForm = new CreateCreatureForm(this.user);
     this.creatureToolbar = new CreatureToolbar(this.user);
+    this.menuTool = new MenuTool(this.user);
   }
 
   async startBattle() {

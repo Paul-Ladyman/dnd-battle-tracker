@@ -538,6 +538,17 @@ input[type="number"] {
   box-shadow: 0 0 5px #979aa4;
 }
 
+@media only screen and (max-width: 825px) {
+  .new-creature-toolbar-wrapper {
+    border-radius: 0;
+  }
+
+  .new-creature-toolbar-wrapper__focused {
+    border-left: none;
+    border-right: none;
+  }
+}
+
 .new-creature-toolbar {
   grid-gap: 10px;
   grid-row-gap: 10px;
@@ -566,7 +577,7 @@ input[type="number"] {
 
 .new-creature-toolbar-button__text:hover,
 .new-creature-toolbar-button__text:focus {
-  padding: 3px 10px;
+  padding: 4px 10px;
 }
 
 .new-creature-toolbar-button__text {
@@ -576,6 +587,13 @@ input[type="number"] {
   padding: 5px 0;
   flex-direction: column;
   height: auto;
+  text-decoration: none;
+  font-size: 13px;
+  text-align: center;
+}
+
+.new-creature-toolbar-button__large {
+  grid-column: span 5;
 }
 
 .new-creature-toolbar-button__medium,

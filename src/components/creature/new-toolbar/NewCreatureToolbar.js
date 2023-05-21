@@ -22,7 +22,7 @@ function isHotkeyEnd(e) {
   return e.keyCode === 35;
 }
 
-export default function NewCreatureToolbar({ creature }) {
+export default function NewCreatureToolbar({ creature, creatureManagement }) {
   const [focused, setFocused] = useState(false);
   const [focusedButton, setFocusedButton] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
@@ -91,9 +91,9 @@ export default function NewCreatureToolbar({ creature }) {
           setSelectedButton(null);
         }
       };
-      document.addEventListener('click', clickHandler);
+      document.addEventListener('mousedown', clickHandler);
 
-      return () => document.removeEventListener('click', clickHandler);
+      return () => document.removeEventListener('mousedown', clickHandler);
     }
     return undefined;
   }, [focused]);
@@ -145,7 +145,7 @@ export default function NewCreatureToolbar({ creature }) {
         aria-label={`${name} tool menu`}
         style={{ display: toolMenuDisplay }}
       >
-        {ToolMenu && <ToolMenu creature={creature} />}
+        {ToolMenu && <ToolMenu creature={creature} creatureManagement={creatureManagement}/>}
       </div>
     </div>
   );

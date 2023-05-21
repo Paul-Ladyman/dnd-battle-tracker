@@ -236,36 +236,4 @@ export default class CreatureToolbar {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     return expect(toolMenu).toBeNull();
   }
-
-  async assertCreatureStatBlockLink(name) {
-    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
-
-    const link = getByRole(toolMenu, 'link', { name: 'Stat Block' });
-    expect(link).toBeVisible();
-    const expectedHref = `https://www.dndbeyond.com/monsters/${name.toLowerCase()}`;
-    return expect(link).toHaveAttribute('href', expectedHref);
-  }
-
-  async assertCreatureSearchLink(name) {
-    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
-
-    const link = getByRole(toolMenu, 'link', { name: `Search ${name} on D&D Beyond` });
-    expect(link).toBeVisible();
-    const expectedHref = `https://www.dndbeyond.com/monsters?filter-search=${name}&sort=cr`;
-    return expect(link).toHaveAttribute('href', expectedHref);
-  }
-
-  async assertNoCreatureSearchLink(name) {
-    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
-
-    const link = queryByRole(toolMenu, 'link', { name: `Search ${name} on D&D Beyond` });
-    expect(link).toBeNull();
-  }
-
-  async assertNoCreatureStatBlockLink(name) {
-    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
-
-    const link = queryByRole(toolMenu, 'link', { name: 'Stat Block' });
-    expect(link).toBeNull();
-  }
 }

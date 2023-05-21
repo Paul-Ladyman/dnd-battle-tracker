@@ -236,7 +236,7 @@ class CreatureWrapper extends Component {
           </div>
         )}
         { !playerSession && this.newCreatureToolbar && (
-          <NewCreatureToolbar creature={creature} />
+          <NewCreatureToolbar creature={creature} creatureManagement={creatureManagement} />
         )}
       </>
     );

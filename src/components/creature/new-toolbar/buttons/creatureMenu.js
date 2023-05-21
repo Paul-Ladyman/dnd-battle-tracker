@@ -1,15 +1,24 @@
 import React from 'react';
 import OptionsMenuIcon from '../../../icons/OptionsMenuIcon';
-import StatBlockLink from '../../../buttons/StatBlockLink';
-import MonsterSearcher from '../../../buttons/MonsterSearcher';
+import StatBlockLink from '../tools/StatBlockLink';
+import MonsterSearcher from '../tools/MonsterSearcher';
+import CreatureLocker from '../tools/CreatureLocker';
 
-export function CreatureMenuToolMenu({ creature }) {
-  const { statBlock, name } = creature;
+export function CreatureMenuToolMenu({ creature, creatureManagement }) {
+  const {
+    statBlock,
+    name,
+    locked,
+    id,
+  } = creature;
+  const { toggleCreatureLock } = creatureManagement;
+
   return (
-    <>
+    <div className="new-creature-toolbar">
       { !statBlock && <MonsterSearcher search={name} /> }
       { statBlock && <StatBlockLink url={statBlock} /> }
-    </>
+      <CreatureLocker locked={locked} name={name} lockHandler={() => toggleCreatureLock(id)} />
+    </div>
   );
 }
 
