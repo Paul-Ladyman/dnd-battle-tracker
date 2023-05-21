@@ -534,7 +534,7 @@ input[type="number"] {
 
 .new-creature-toolbar-wrapper__focused {
   padding: 8px;
-  border: 2px solid #822000;
+  border: 1px solid #822000;
   box-shadow: 0 0 5px #979aa4;
 }
 
@@ -569,10 +569,20 @@ input[type="number"] {
   box-shadow: 0 0 5px #979aa4;
 }
 
+.new-creature-toolbar-button[aria-disabled="true"]:focus {
+  background-color: transparent;
+  outline-style: dashed;
+}
+
 .new-creature-toolbar-button:hover {
   background-color: #EBE1AD;
   border: 1px solid #822000;
   box-shadow: 0 0 5px #979aa4;
+}
+
+.new-creature-toolbar-button[aria-disabled="true"]:hover {
+  background-color: transparent;
+  cursor: not-allowed;
 }
 
 .new-creature-toolbar-button__text:hover,

@@ -2,7 +2,8 @@ import React from 'react';
 import LockedIcon from '../../../icons/LockedIcon';
 import UnlockedIcon from '../../../icons/UnlockedIcon';
 
-function CreatureLocker({ locked, name, lockHandler }) {
+function CreatureLocker({ creature, toggleCreatureLock }) {
+  const { locked, name, id } = creature;
   const text = locked ? 'Unlock' : 'Lock';
   const buttonIcon = locked ? <LockedIcon /> : <UnlockedIcon />;
   const buttonAriaLabel = locked ? `Unlock ${name}` : `Lock ${name}`;
@@ -16,7 +17,7 @@ function CreatureLocker({ locked, name, lockHandler }) {
     <button
       aria-label={buttonAriaLabel}
       className={`${textButtonClass} ${mediumButtonClass}`}
-      onClick={lockHandler}
+      onClick={() => toggleCreatureLock(id)}
       type="button"
       aria-pressed={ariaPressed}
     >

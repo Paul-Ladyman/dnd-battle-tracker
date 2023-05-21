@@ -76,3 +76,67 @@ describe('Lock tool', () => {
     return dmApp.menuTool.assertCreatureUnlocked('Goblin');
   });
 });
+
+describe('Share tool', () => {
+  it('is shared by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    return dmApp.menuTool.assertCreatureShared('Goblin');
+  });
+
+  it('unshares a creature when clicked', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareCreature('Goblin');
+    return dmApp.menuTool.assertCreatureNotShared('Goblin');
+  });
+
+  it('shares a creature when clicked again', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareCreature('Goblin');
+    await dmApp.menuTool.shareCreature('Goblin');
+    return dmApp.menuTool.assertCreatureShared('Goblin');
+  });
+
+  it("is disabled by default if it is the creature's turn", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.startBattle();
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    return dmApp.menuTool.assertCreatureShareDisabled('Goblin');
+  });
+
+  it('does nothing if clicked whilst disabled', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.startBattle();
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareCreature('Goblin');
+    return dmApp.menuTool.assertCreatureShared('Goblin');
+  });
+
+  it("is enabled if it is the creature's turn but the creature is already unshared", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareCreature('Goblin');
+    await dmApp.startBattle();
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    return dmApp.menuTool.assertCreatureShareEnabled('Goblin');
+  });
+
+  it('shares a creature during its turn', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareCreature('Goblin');
+    await dmApp.startBattle();
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.shareCreature('Goblin');
+    return dmApp.menuTool.assertCreatureShared('Goblin');
+  });
+});

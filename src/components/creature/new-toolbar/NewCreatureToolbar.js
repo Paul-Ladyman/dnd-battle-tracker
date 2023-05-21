@@ -22,7 +22,7 @@ function isHotkeyEnd(e) {
   return e.keyCode === 35;
 }
 
-export default function NewCreatureToolbar({ creature, creatureManagement }) {
+export default function NewCreatureToolbar({ creature, creatureManagement, active }) {
   const [focused, setFocused] = useState(false);
   const [focusedButton, setFocusedButton] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
@@ -145,7 +145,14 @@ export default function NewCreatureToolbar({ creature, creatureManagement }) {
         aria-label={`${name} tool menu`}
         style={{ display: toolMenuDisplay }}
       >
-        {ToolMenu && <ToolMenu creature={creature} creatureManagement={creatureManagement} />}
+        {ToolMenu
+          && (
+          <ToolMenu
+            creature={creature}
+            creatureManagement={creatureManagement}
+            active={active}
+          />
+          )}
       </div>
     </div>
   );

@@ -27,6 +27,20 @@ export default class MenuTool {
     return this.user.click(lockTool);
   }
 
+  async shareCreature(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Share ${name}` });
+    return this.user.click(shareTool);
+  }
+
+  async unshareCreature(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Unshare ${name}` });
+    return this.user.click(shareTool);
+  }
+
   async assertCreatureStatBlockLink(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
 
@@ -73,5 +87,35 @@ export default class MenuTool {
     const lockTool = await findByRole(toolMenu, 'button', { name: `Unlock ${name}` });
     expect(lockTool).toBeVisible();
     expect(lockTool).toHaveAttribute('aria-pressed', 'true');
+  }
+
+  async assertCreatureNotShared(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Share ${name}` });
+    expect(shareTool).toBeVisible();
+    expect(shareTool).toHaveAttribute('aria-pressed', 'false');
+  }
+
+  async assertCreatureShared(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Unshare ${name}` });
+    expect(shareTool).toBeVisible();
+    expect(shareTool).toHaveAttribute('aria-pressed', 'true');
+  }
+
+  async assertCreatureShareDisabled(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Unshare ${name}` });
+    expect(shareTool).toHaveAttribute('aria-disabled', 'true');
+  }
+
+  async assertCreatureShareEnabled(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+
+    const shareTool = await findByRole(toolMenu, 'button', { name: `Share ${name}` });
+    expect(shareTool).toHaveAttribute('aria-disabled', 'false');
   }
 }

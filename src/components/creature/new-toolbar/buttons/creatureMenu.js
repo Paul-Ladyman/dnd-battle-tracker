@@ -3,21 +3,25 @@ import OptionsMenuIcon from '../../../icons/OptionsMenuIcon';
 import StatBlockLink from '../tools/StatBlockLink';
 import MonsterSearcher from '../tools/MonsterSearcher';
 import CreatureLocker from '../tools/CreatureLocker';
+import CreatureSharer from '../tools/CreatureSharer';
 
-export function CreatureMenuToolMenu({ creature, creatureManagement }) {
+export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
   const {
     statBlock,
     name,
-    locked,
-    id,
   } = creature;
-  const { toggleCreatureLock } = creatureManagement;
+  const { toggleCreatureLock, toggleCreatureShare } = creatureManagement;
 
   return (
     <div className="new-creature-toolbar">
       { !statBlock && <MonsterSearcher search={name} /> }
       { statBlock && <StatBlockLink url={statBlock} /> }
-      <CreatureLocker locked={locked} name={name} lockHandler={() => toggleCreatureLock(id)} />
+      <CreatureLocker creature={creature} toggleCreatureLock={toggleCreatureLock} />
+      <CreatureSharer
+        creature={creature}
+        toggleCreatureShare={toggleCreatureShare}
+        active={active}
+      />
     </div>
   );
 }
