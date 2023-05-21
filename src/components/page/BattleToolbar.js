@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import isHotkey from 'is-hotkey';
 import Timer from './Timer';
 import StartBattleIcon from '../icons/StartBattleIcon';
-import NextTurnIcon from '../icons/NextTurnIcon';
+import PageNavigationIcon from '../icons/PageNavigationIcon';
 import OptionsMenuIcon from '../icons/OptionsMenuIcon';
 import SaveLoadIcon from '../icons/SaveLoadIcon';
 import ResetIcon from '../icons/ResetIcon';
@@ -131,7 +131,7 @@ function BattleToolbar({
   const resetButtonClasses = `${buttonClasses} ${buttonClass}__option`;
   const shareButtonClasses = `${buttonClass} ${buttonClass}__option`;
   const rulesSearchButtonClasses = showSaveLoadButtons ? `${buttonClass} ${buttonClass}__option` : buttonClass;
-  const nextButtonLabel = round0 ? <StartBattleIcon /> : <NextTurnIcon />;
+  const nextButtonLabel = round0 ? <StartBattleIcon /> : <PageNavigationIcon />;
   const nextButtonTitle = round0 ? 'Start battle' : 'Next turn';
   const optionsClass = optionsExpanded ? 'battle-toolbar--options-dropdown' : 'hidden';
   const currentTurnDefaultClasses = 'battle-toolbar--stat-value battle-toolbar--stat-value__button';
