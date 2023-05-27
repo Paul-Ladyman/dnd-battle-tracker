@@ -18,7 +18,6 @@ export default function CreatureRemover({
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
-  const mediumButtonClass = `${buttonClass}__medium`;
 
   return (
     <>
@@ -28,11 +27,12 @@ export default function CreatureRemover({
         aria-label={`remove ${name}`}
         aria-disabled={ariaDisabled}
         title="Remove creature"
-        className={buttonClass}
+        className={textButtonClass}
         onClick={onClick}
         type="button"
       >
         <RemoveCreatureIcon />
+        Delete
       </button>
       )}
       {removing
@@ -41,7 +41,7 @@ export default function CreatureRemover({
         aria-label={`confirm remove ${creature.name}`}
         aria-disabled={ariaDisabled}
         title="Confirm remove creature"
-        className={`${textButtonClass} ${mediumButtonClass}`}
+        className={textButtonClass}
         onClick={onClickConfim}
         type="button"
       >

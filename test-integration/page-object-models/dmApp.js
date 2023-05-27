@@ -11,6 +11,7 @@ import DungeonMasterAppWrapper from '../../src/components/app/DungeonMasterAppWr
 import CreateCreatureForm from './createCreatureForm';
 import CreatureToolbar from './creatureToolbar';
 import MenuTool from './menuTool';
+import StatusTool from './statusTool';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
@@ -18,6 +19,7 @@ export default class DmApp extends DndBattleTracker {
     this.createCreatureForm = new CreateCreatureForm(this.user);
     this.creatureToolbar = new CreatureToolbar(this.user);
     this.menuTool = new MenuTool(this.user);
+    this.statusTool = new StatusTool(this.user);
   }
 
   async startBattle() {

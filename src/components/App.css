@@ -533,7 +533,7 @@ input[type="number"] {
 }
 
 .new-creature-toolbar-wrapper__focused {
-  padding: 8px;
+  padding: 9px;
   border: 1px solid #822000;
   box-shadow: 0 0 5px #979aa4;
 }

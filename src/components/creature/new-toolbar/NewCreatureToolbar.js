@@ -98,14 +98,16 @@ export default function NewCreatureToolbar({ creature, creatureManagement, activ
     return undefined;
   }, [focused]);
 
+  const ToolMenu = buttons[selectedButton]?.ToolMenu;
+
   const toolbarWrapperClass = 'new-creature-toolbar-wrapper';
   const toolbarWrapperClasses = focused ? `${toolbarWrapperClass} ${toolbarWrapperClass}__focused` : toolbarWrapperClass;
   const toolbarClass = 'new-creature-toolbar';
 
   const tabIndex = focusedButton === null ? 0 : focusedButton;
-  const toolMenuExpanded = selectedButton !== null;
+  const toolMenuExpanded = !!ToolMenu;
   const toolMenuDisplay = toolMenuExpanded ? 'block' : 'none';
-  const ToolMenu = toolMenuExpanded && buttons[selectedButton].ToolMenu;
+  const toolMenuId = `${name}-tool-menu`;
 
   return (
     <div
@@ -133,17 +135,19 @@ export default function NewCreatureToolbar({ creature, creatureManagement, activ
               onFocus={() => setFocusedButton(i)}
               onClick={() => toggleSelectedButton(i)}
               tabIndex={i === tabIndex ? '0' : '-1'}
-              toolMenuId={`${name}-toolbar-menu`}
+              toolMenuId={toolMenuId}
               toolMenuExpanded={toolMenuExpanded}
+              creatureManagement={creatureManagement}
             />
           );
         })}
       </div>
-      { ToolMenu && <div className="expanded-creature--separator" />}
+      { toolMenuExpanded && <div className="expanded-creature--separator" />}
       <div
         role="menu"
         aria-label={`${name} tool menu`}
         style={{ display: toolMenuDisplay }}
+        id={toolMenuId}
       >
         {ToolMenu
           && (
