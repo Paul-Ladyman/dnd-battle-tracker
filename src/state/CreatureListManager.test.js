@@ -107,7 +107,7 @@ describe('removeCreature', () => {
     const expected = {
       ...state,
       creatures: [],
-      activeCreature: undefined,
+      activeCreature: null,
       ariaAnnouncements: ['creature removed from battle'],
     };
     const result = removeCreature(state, 0);

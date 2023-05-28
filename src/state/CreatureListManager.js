@@ -15,7 +15,7 @@ export function removeCreature(state, creatureId) {
   let activeCreature;
 
   if (creatures.length === 0) {
-    activeCreature = undefined;
+    activeCreature = null;
   } else if (state.activeCreature) {
     const currentlyActiveCreature = state.creatures[state.activeCreature];
     activeCreature = currentlyActiveCreature.id === creatureId

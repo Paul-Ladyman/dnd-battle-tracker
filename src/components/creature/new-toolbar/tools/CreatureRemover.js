@@ -26,13 +26,12 @@ export default function CreatureRemover({
       <button
         aria-label={`remove ${name}`}
         aria-disabled={ariaDisabled}
-        title="Remove creature"
         className={textButtonClass}
         onClick={onClick}
         type="button"
       >
         <RemoveCreatureIcon />
-        Delete
+        Remove
       </button>
       )}
       {removing

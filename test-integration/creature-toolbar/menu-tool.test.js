@@ -201,4 +201,15 @@ describe('Remove tool', () => {
     await dmApp.menuTool.removeCreature('Goblin');
     return dmApp.menuTool.assertConfirmRemoveCreatureNotVisible('Goblin');
   });
+
+  it('allows the battle to be restarted after the last creature is removed', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin');
+    await dmApp.menuTool.confirmRemoveCreature('Goblin');
+    await dmApp.createCreatureForm.addCreature('Goblin 2', '1');
+    await dmApp.startBattle();
+    return DmApp.assertCreatureList(['Goblin 2Active creature']);
+  });
 });
