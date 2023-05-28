@@ -12,8 +12,9 @@ export default function HealthPointsTool({
   temporaryHealthPoints,
   damageCreature,
   healCreature,
+  showIfNoHp = false,
 }) {
-  const enableHealthTool = healthPoints !== undefined && healthPoints !== null;
+  const enableHealthTool = showIfNoHp || (healthPoints !== undefined && healthPoints !== null);
   const enableDamage = healthPoints > 0 || temporaryHealthPoints > 0;
   const enableHeal = healthPoints < maxHealthPoints;
 

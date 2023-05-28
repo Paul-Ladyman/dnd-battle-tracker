@@ -301,6 +301,7 @@ input[type="number"] {
 
 .input__disabled {
   background: transparent;
+  cursor: not-allowed;
 }
 
 .input__button-right {
@@ -344,8 +345,8 @@ input[type="number"] {
 }
 
 .input--submit__disabled {
-  cursor: default;
-  background: #f5f1ea;
+  cursor: not-allowed;
+  background: transparent;
 }
 
 .input__error {

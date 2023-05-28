@@ -1,7 +1,36 @@
 import React from 'react';
 import HpIcon from '../../../icons/AddHpIcon';
+import HealthPointsTool from '../../toolbar/HealthPointsTool';
 
-export default function HpButton({
+export function HpToolMenu({
+  creature,
+  creatureManagement,
+}) {
+  const {
+    healthPoints,
+    maxHealthPoints,
+    temporaryHealthPoints,
+    id,
+    name,
+  } = creature;
+  const { damageCreature, healCreature } = creatureManagement;
+  return (
+    <div className="new-creature-toolbar">
+      <HealthPointsTool
+        name={name}
+        id={id}
+        healthPoints={healthPoints}
+        maxHealthPoints={maxHealthPoints}
+        temporaryHealthPoints={temporaryHealthPoints}
+        damageCreature={damageCreature}
+        healCreature={healCreature}
+        showIfNoHp
+      />
+    </div>
+  );
+}
+
+export function HpButton({
   onFocus,
   onClick,
   tabIndex,

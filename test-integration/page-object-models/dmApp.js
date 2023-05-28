@@ -12,6 +12,7 @@ import CreateCreatureForm from './createCreatureForm';
 import CreatureToolbar from './creatureToolbar';
 import MenuTool from './menuTool';
 import StatusTool from './statusTool';
+import HpTool from './hpTool';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
@@ -20,6 +21,7 @@ export default class DmApp extends DndBattleTracker {
     this.creatureToolbar = new CreatureToolbar(this.user);
     this.menuTool = new MenuTool(this.user);
     this.statusTool = new StatusTool(this.user);
+    this.hpTool = new HpTool(this.user);
   }
 
   async startBattle() {

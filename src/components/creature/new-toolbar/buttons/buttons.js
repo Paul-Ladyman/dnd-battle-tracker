@@ -4,7 +4,7 @@ import StatusButton from './status';
 import InitiativeButton from './initiative';
 import ConditionsButton from './conditions';
 import NotesButton from './notes';
-import HpButton from './hp';
+import { HpButton, HpToolMenu } from './hp';
 
 export default function getButtons() {
   return [
@@ -21,6 +21,7 @@ export default function getButtons() {
     },
     {
       Button: HpButton,
+      ToolMenu: HpToolMenu,
       ref: React.createRef(),
       key: (id) => `${id}-hp`,
     },
