@@ -1,6 +1,7 @@
 import React from 'react';
 import HpIcon from '../../../icons/AddHpIcon';
 import HealthPointsTool from '../../toolbar/HealthPointsTool';
+import MaxHitPointsTool from '../../toolbar/MaxHitPointsTool';
 
 export function HpToolMenu({
   creature,
@@ -13,7 +14,11 @@ export function HpToolMenu({
     id,
     name,
   } = creature;
-  const { damageCreature, healCreature } = creatureManagement;
+  const {
+    damageCreature,
+    healCreature,
+    addHitPointsToCreature,
+  } = creatureManagement;
   return (
     <div className="new-creature-toolbar">
       <HealthPointsTool
@@ -25,6 +30,11 @@ export function HpToolMenu({
         damageCreature={damageCreature}
         healCreature={healCreature}
         showIfNoHp
+      />
+      <MaxHitPointsTool
+        name={name}
+        id={id}
+        addHitPointsToCreature={addHitPointsToCreature}
       />
     </div>
   );

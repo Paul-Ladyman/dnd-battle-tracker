@@ -87,3 +87,39 @@ describe('Heal/damage tool', () => {
     await DmApp.assertCreatureVisible('goblin', '10');
   });
 });
+
+describe('Max HP', () => {
+  it('adds HP to a creature that has none', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.hpTool.setCreatureMaxHp('goblin', '10');
+    await DmApp.assertCreatureVisible('goblin', '10');
+  });
+
+  it("updates a creature's max HP", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '10');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.hpTool.setCreatureMaxHp('goblin', '20');
+    await DmApp.assertCreatureVisible('goblin', '20');
+  });
+
+  it("updates a creature's current HP if the new max HP is less", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '10');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.hpTool.damageCreature('goblin', '5');
+    await dmApp.hpTool.setCreatureMaxHp('goblin', '1');
+    await DmApp.assertCreatureVisible('goblin', '1');
+  });
+
+  it('heals a damaged creature if its max HP is increased by the increased amount', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '10');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.hpTool.damageCreature('goblin', '5');
+    await dmApp.hpTool.setCreatureMaxHp('goblin', '20');
+    await DmApp.assertCreatureVisible('goblin', '15');
+  });
+});

@@ -28,6 +28,14 @@ export default class HpTool {
     return this.user.click(healButton);
   }
 
+  async setCreatureMaxHp(name, hp) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const maxHpTool = await findByText(toolMenu, 'Max HP');
+    await this.user.type(maxHpTool, hp);
+    const submitButton = await findByRole(toolMenu, 'button', { name: 'Add/Edit Max HP' });
+    return this.user.click(submitButton);
+  }
+
   async assertDamageDisabled(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const damageButton = await findByRole(toolMenu, 'button', { name: 'Damage' });
