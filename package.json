@@ -86,7 +86,7 @@
     "msw": "^1.2.1",
     "mustache": "^4.2.0",
     "size-limit": "^4.9.1",
-    "webpack": "^5.77.0",
+    "webpack": "^5.85.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
   }
