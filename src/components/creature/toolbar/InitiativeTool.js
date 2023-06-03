@@ -7,8 +7,10 @@ export default function InitiativeTool({
   id,
   initiative,
   addInitiativeToCreature,
+  showIfNoInitiative = false,
 }) {
-  const showTool = initiative === undefined || initiative === null;
+  const enabled = initiative === undefined || initiative === null;
+  const showTool = showIfNoInitiative || enabled;
   return showTool && (
     <CreatureToolbarInput
       customClasses="creature-toolbar--last"
@@ -17,7 +19,8 @@ export default function InitiativeTool({
       label="Initiative"
       rightSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
       rightControls={{
-        rightTitle: 'Initiative',
+        rightTitle: 'Add Initiative',
+        rightEnabled: enabled,
         RightSubmitIcon: <InitiativeIcon />,
       }}
       inputId={`initiative-${id}`}
