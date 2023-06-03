@@ -14,6 +14,7 @@ import MenuTool from './menuTool';
 import StatusTool from './statusTool';
 import HpTool from './hpTool';
 import InitiativeTool from './initiativeTool';
+import ConditionsTool from './conditionsTool';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
@@ -24,6 +25,7 @@ export default class DmApp extends DndBattleTracker {
     this.statusTool = new StatusTool(this.user);
     this.hpTool = new HpTool(this.user);
     this.initiativeTool = new InitiativeTool(this.user);
+    this.conditionsTool = new ConditionsTool(this.user);
   }
 
   async startBattle() {

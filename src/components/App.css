@@ -630,6 +630,11 @@ input[type="number"] {
   }
 }
 
+.new-creature-toolbar .creature-toolbar--dropdown {
+  height: unset;
+  grid-column: span 5;
+}
+
 /* Create creature form */
 
 .create-creature-form {

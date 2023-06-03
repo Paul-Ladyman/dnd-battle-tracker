@@ -191,6 +191,14 @@ describe('Creature note tool - new creature toolbar', () => {
     await dmApp.creatureToolbar.assertCreatureNoteExists('goblin', 'note 1');
   });
 
+  it('adds a note to the creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
+    await dmApp.creatureToolbar.addNote('goblin', 'note 1');
+    await DmApp.assertCreatureVisible('goblin', null, null, 'Note 1');
+  });
+
   it('allows notes to be closed', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
@@ -224,6 +232,15 @@ describe('Creature note tool - new creature toolbar', () => {
     await dmApp.creatureToolbar.assertCreatureNoteExists('goblin', 'note 1 b');
     await dmApp.creatureToolbar.assertCreatureNoteExists('goblin', 'note 2');
     dmApp.creatureToolbar.assertCreatureNotesLength('goblin', 2);
+  });
+
+  it('updates the editted note on the creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
+    await dmApp.creatureToolbar.addNote('goblin', 'note 1');
+    await dmApp.creatureToolbar.editNote('goblin', 'note 1', ' b');
+    await DmApp.assertCreatureVisible('goblin', null, null, 'Note 1 b');
   });
 
   it('allows a note to be editted using the keyboard', async () => {

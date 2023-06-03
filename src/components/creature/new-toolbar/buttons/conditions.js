@@ -1,7 +1,27 @@
 import React from 'react';
 import ConditionsIcon from '../../../icons/ConditionsIcon';
+import ConditionsTool from '../../toolbar/ConditionsTool';
 
-export default function ConditionsButton({
+export function ConditionsToolMenu({
+  creature,
+  conditions,
+  creatureManagement,
+}) {
+  const { name, id } = creature;
+  const { addNoteToCreature } = creatureManagement;
+  return (
+    <div className="new-creature-toolbar">
+      <ConditionsTool
+        name={name}
+        id={id}
+        conditions={conditions}
+        addNoteToCreature={addNoteToCreature}
+      />
+    </div>
+  );
+}
+
+export function ConditionsButton({
   onFocus,
   onClick,
   tabIndex,

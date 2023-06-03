@@ -2,7 +2,7 @@ import React from 'react';
 import { CreatureMenuButton, CreatureMenuToolMenu } from './creatureMenu';
 import StatusButton from './status';
 import { InitiativeButton, InitiativeToolMenu } from './initiative';
-import ConditionsButton from './conditions';
+import { ConditionsButton, ConditionsToolMenu } from './conditions';
 import { NotesButton, NotesToolMenu } from './notes';
 import { HpButton, HpToolMenu } from './hp';
 
@@ -33,6 +33,7 @@ export default function getButtons() {
     },
     {
       Button: ConditionsButton,
+      ToolMenu: ConditionsToolMenu,
       ref: React.createRef(),
       key: (id) => `${id}-conditions`,
     },

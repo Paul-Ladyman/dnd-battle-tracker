@@ -238,6 +238,7 @@ class CreatureWrapper extends Component {
         { !playerSession && this.newCreatureToolbar && (
           <NewCreatureToolbar
             creature={creature}
+            conditions={getAvailableConditions(creature)}
             creatureManagement={creatureManagement}
             active={active}
           />
