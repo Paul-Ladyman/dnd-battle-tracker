@@ -3,7 +3,7 @@ import { CreatureMenuButton, CreatureMenuToolMenu } from './creatureMenu';
 import StatusButton from './status';
 import InitiativeButton from './initiative';
 import ConditionsButton from './conditions';
-import NotesButton from './notes';
+import { NotesButton, NotesToolMenu } from './notes';
 import { HpButton, HpToolMenu } from './hp';
 
 export default function getButtons() {
@@ -37,6 +37,7 @@ export default function getButtons() {
     },
     {
       Button: NotesButton,
+      ToolMenu: NotesToolMenu,
       ref: React.createRef(),
       key: (id) => `${id}-notes`,
     },

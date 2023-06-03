@@ -1,7 +1,36 @@
 import React from 'react';
 import NotesIcon from '../../../icons/AddNoteIcon';
+import NotesTool from '../../toolbar/NotesTool';
 
-export default function NotesButton({
+export function NotesToolMenu({
+  creature,
+  creatureManagement,
+}) {
+  const {
+    notes,
+    id,
+    name,
+  } = creature;
+  const {
+    addNoteToCreature,
+    updateNoteForCreature,
+    removeNoteFromCreature,
+  } = creatureManagement;
+  return (
+    <div className="new-creature-toolbar">
+      <NotesTool
+        name={name}
+        id={id}
+        addNoteToCreature={addNoteToCreature}
+        updateNoteForCreature={updateNoteForCreature}
+        removeNoteFromCreature={removeNoteFromCreature}
+        notes={notes}
+      />
+    </div>
+  );
+}
+
+export function NotesButton({
   onFocus,
   onClick,
   tabIndex,
