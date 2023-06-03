@@ -123,3 +123,29 @@ describe('Max HP', () => {
     await DmApp.assertCreatureVisible('goblin', '15');
   });
 });
+
+describe('Temp HP', () => {
+  it('is disabled for a creature with no HP', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.hpTool.assertTempHpDisabled('goblin');
+  });
+
+  it('adds temp HP to a creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '10');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.hpTool.setCreatureTempHp('goblin', '10');
+    await DmApp.assertCreatureVisible('goblin', '10 (+10)');
+  });
+
+  it("overrides a creature's existing temp HP", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '10');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.hpTool.setCreatureTempHp('goblin', '10');
+    await dmApp.hpTool.setCreatureTempHp('goblin', '20');
+    await DmApp.assertCreatureVisible('goblin', '10 (+20)');
+  });
+});

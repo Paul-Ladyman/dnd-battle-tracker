@@ -17,7 +17,7 @@ export default function TemporaryHitPointsTool({
       label="Temp HP"
       rightSubmit={(hitPoints) => addTemporaryHealthToCreature(id, hitPoints)}
       rightControls={{
-        rightEnabled: healthPoints !== undefined,
+        rightEnabled: healthPoints !== null,
         rightTitle: 'Add/Edit Temp HP',
         RightSubmitIcon: <TempHpIcon />,
       }}

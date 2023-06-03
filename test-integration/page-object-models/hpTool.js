@@ -36,6 +36,14 @@ export default class HpTool {
     return this.user.click(submitButton);
   }
 
+  async setCreatureTempHp(name, hp) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tempHpTool = await findByText(toolMenu, 'Temp HP');
+    await this.user.type(tempHpTool, hp);
+    const submitButton = await findByRole(toolMenu, 'button', { name: 'Add/Edit Temp HP' });
+    return this.user.click(submitButton);
+  }
+
   async assertDamageDisabled(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const damageButton = await findByRole(toolMenu, 'button', { name: 'Damage' });
@@ -46,5 +54,11 @@ export default class HpTool {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const healButton = await findByRole(toolMenu, 'button', { name: 'Heal' });
     expect(healButton).toBeDisabled();
+  }
+
+  async assertTempHpDisabled(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tempHpButton = await findByRole(toolMenu, 'button', { name: 'Add/Edit Temp HP' });
+    expect(tempHpButton).toBeDisabled();
   }
 }
