@@ -22,7 +22,12 @@ function isHotkeyEnd(e) {
   return e.keyCode === 35;
 }
 
-export default function NewCreatureToolbar({ creature, conditions, creatureManagement, active }) {
+export default function NewCreatureToolbar({
+  creature,
+  conditions,
+  creatureManagement,
+  active,
+}) {
   const [focused, setFocused] = useState(false);
   const [focusedButton, setFocusedButton] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
