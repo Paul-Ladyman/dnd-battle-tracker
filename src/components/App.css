@@ -564,14 +564,21 @@ input[type="number"] {
 }
 
 .new-creature-toolbar--tool-menu {
+  grid-gap: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 15px);
+
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-name: creature-toolmenu-fadein;
+}
+
+.new-creature-toolbar--tool-menu__buttons-only {
   grid-gap: 10px;
   grid-row-gap: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 18px);
   grid-auto-rows: 1fr;
-  animation-duration: 200ms;
-  animation-timing-function: ease-in-out;
-  animation-name: creature-toolmenu-fadein;
 }
 
 .new-creature-toolbar-button {
@@ -588,10 +595,19 @@ input[type="number"] {
     display: none;
   }
 
+  .new-creature-toolbar-button[aria-disabled="true"] {
+    background-color: transparent;
+    border: 2px dashed #822000;
+  }
+
   .new-creature-toolbar-wrapper__focused .new-creature-toolbar-button__focused {
     border: 1px solid #822000;
     outline: 2px solid #822000;
     outline-offset: 2px;
+  }
+
+  .new-creature-toolbar-wrapper__focused .new-creature-toolbar-button__focused[aria-disabled="true"] {
+    outline-style: dashed;
   }
 }
 

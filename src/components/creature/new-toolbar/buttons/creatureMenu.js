@@ -20,7 +20,7 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
   } = creatureManagement;
 
   return (
-    <div className="new-creature-toolbar--tool-menu">
+    <div className="new-creature-toolbar--tool-menu new-creature-toolbar--tool-menu__buttons-only">
       { !statBlock && <MonsterSearcher search={name} /> }
       { statBlock && <StatBlockLink url={statBlock} /> }
       <CreatureLocker creature={creature} toggleCreatureLock={toggleCreatureLock} />
