@@ -22,7 +22,7 @@ export function HpToolMenu({
     addTemporaryHealthToCreature,
   } = creatureManagement;
   return (
-    <div className="new-creature-toolbar">
+    <div className="new-creature-toolbar--tool-menu">
       <HealthPointsTool
         name={name}
         id={id}

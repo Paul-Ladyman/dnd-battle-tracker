@@ -558,6 +558,22 @@ input[type="number"] {
   grid-auto-rows: 1fr;
 }
 
+@keyframes creature-toolmenu-fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.new-creature-toolbar--tool-menu {
+  grid-gap: 10px;
+  grid-row-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 18px);
+  grid-auto-rows: 1fr;
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-name: creature-toolmenu-fadein;
+}
+
 .new-creature-toolbar-button {
   grid-column: span 2;
   font-weight: normal;
@@ -644,7 +660,7 @@ input[type="number"] {
   grid-column: span 3;
 }
 
-.new-creature-toolbar .creature-toolbar--dropdown {
+.new-creature-toolbar--tool-menu .creature-toolbar--dropdown {
   height: unset;
   grid-column: span 5;
 }
