@@ -29,6 +29,8 @@ export function InitiativeButton({
   buttonRef,
   focused,
   closeToolMenu,
+  toolMenuId,
+  toolMenuExpanded,
 }) {
   const { initiative } = creature;
   const enabled = initiative === undefined || initiative === null;
@@ -56,6 +58,9 @@ export function InitiativeButton({
       onFocus={onFocus}
       onClick={initiativeOnClick}
       tabIndex={tabIndex}
+      aria-haspopup="true"
+      aria-controls={toolMenuId}
+      aria-expanded={toolMenuExpanded}
     >
       <InitiativeIcon />
       Initiative

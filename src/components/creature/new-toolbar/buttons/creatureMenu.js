@@ -57,6 +57,7 @@ export function CreatureMenuButton({
   return (
     <button
       title="Creature Menu"
+      aria-label="Creature Menu"
       className={`${buttonClass} ${focusedButtonClass}`}
       type="button"
       ref={buttonRef}

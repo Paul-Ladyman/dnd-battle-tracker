@@ -85,7 +85,18 @@ function Input({
           {error}
         </div>
         <div className={`input-wrapper ${inputErrorClass}`}>
-          {LeftSubmitIcon && <button disabled={leftDisabled} type="button" className={leftButtonClasses} title={leftTitle} onClick={leftSubmit}>{LeftSubmitIcon}</button>}
+          {LeftSubmitIcon && (
+            <button
+              disabled={leftDisabled}
+              type="button"
+              className={leftButtonClasses}
+              title={leftTitle}
+              aria-label={leftTitle}
+              onClick={leftSubmit}
+            >
+                {LeftSubmitIcon}
+            </button>
+          )}
           <input
             id={inputId}
             required={required}
@@ -111,7 +122,18 @@ function Input({
           />
           {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
           {!RightControl && RightSubmitIcon
-            && <button disabled={rightDisabled} type="button" className={rightButtonClasses} title={rightTitle} onClick={rightSubmit}>{RightSubmitIcon}</button>}
+            && (
+              <button
+                disabled={rightDisabled}
+                type="button"
+                className={rightButtonClasses}
+                title={rightTitle}
+                aria-label={rightTitle}
+                onClick={rightSubmit}
+              >
+                {RightSubmitIcon}
+              </button>
+            )}
         </div>
       </label>
     </div>

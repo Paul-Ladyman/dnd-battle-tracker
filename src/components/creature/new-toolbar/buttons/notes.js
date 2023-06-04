@@ -36,6 +36,8 @@ export function NotesButton({
   tabIndex,
   buttonRef,
   focused,
+  toolMenuExpanded,
+  toolMenuId,
 }) {
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
@@ -50,6 +52,9 @@ export function NotesButton({
       onFocus={onFocus}
       onClick={onClick}
       tabIndex={tabIndex}
+      aria-haspopup="true"
+      aria-controls={toolMenuId}
+      aria-expanded={toolMenuExpanded}
     >
       <NotesIcon />
       Notes

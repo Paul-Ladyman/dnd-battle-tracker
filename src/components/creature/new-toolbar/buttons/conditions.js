@@ -27,6 +27,8 @@ export function ConditionsButton({
   tabIndex,
   buttonRef,
   focused,
+  toolMenuId,
+  toolMenuExpanded,
 }) {
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
@@ -41,6 +43,9 @@ export function ConditionsButton({
       onFocus={onFocus}
       onClick={onClick}
       tabIndex={tabIndex}
+      aria-haspopup="true"
+      aria-controls={toolMenuId}
+      aria-expanded={toolMenuExpanded}
     >
       <ConditionsIcon />
       Conditions
