@@ -30,9 +30,10 @@ export function ConditionsButton({
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
+  const mediumButtonClass = `${buttonClass}__medium`;
   return (
     <button
-      className={textButtonClass}
+      className={`${textButtonClass} ${mediumButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}

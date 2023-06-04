@@ -13,7 +13,9 @@ export default function StatusButton({
   const { killCreature, stabalizeCreature } = creatureManagement;
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
-  const statusToolTitle = alive ? 'Kill/Make unconscious' : 'Stabalize';
+  const textButtonClass = `${buttonClass} ${buttonClass}__text`;
+  const mediumButtonClass = `${buttonClass}__medium`;
+  const statusToolTitle = alive ? 'Kill' : 'Stabalize';
   const onClickStatus = () => {
     if (alive) {
       killCreature(id);
@@ -25,8 +27,7 @@ export default function StatusButton({
 
   return (
     <button
-      title={statusToolTitle}
-      className={buttonClass}
+      className={`${textButtonClass} ${mediumButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}
@@ -35,6 +36,7 @@ export default function StatusButton({
       aria-pressed={!alive}
     >
       <KillStabalizeIcon alive={alive} />
+      {statusToolTitle}
     </button>
   );
 }

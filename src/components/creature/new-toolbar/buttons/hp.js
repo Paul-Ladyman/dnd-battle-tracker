@@ -56,10 +56,11 @@ export function HpButton({
 }) {
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
+  const textButtonClass = `${buttonClass} ${buttonClass}__text`;
+  const smallButtonClass = `${buttonClass}__small`;
   return (
     <button
-      title="HP"
-      className={buttonClass}
+      className={`${textButtonClass} ${smallButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}
@@ -67,6 +68,7 @@ export function HpButton({
       tabIndex={tabIndex}
     >
       <HpIcon />
+      HP
     </button>
   );
 }

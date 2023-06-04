@@ -560,6 +560,7 @@ input[type="number"] {
 
 .new-creature-toolbar-button {
   grid-column: span 2;
+  font-weight: normal;
 }
 
 .new-creature-toolbar-button:focus {
