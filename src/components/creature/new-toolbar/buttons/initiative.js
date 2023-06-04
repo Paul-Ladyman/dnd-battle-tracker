@@ -26,14 +26,16 @@ export function InitiativeButton({
   onClick,
   tabIndex,
   buttonRef,
+  focused,
 }) {
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const mediumButtonClass = `${buttonClass}__medium`;
+  const focusedButtonClass = focused ? `${buttonClass}__focused` : '';
   return (
     <button
-      className={`${textButtonClass} ${mediumButtonClass}`}
+      className={`${textButtonClass} ${mediumButtonClass} ${focusedButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}

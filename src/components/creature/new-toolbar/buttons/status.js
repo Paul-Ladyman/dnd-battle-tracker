@@ -8,6 +8,7 @@ export default function StatusButton({
   tabIndex,
   buttonRef,
   creatureManagement,
+  focused,
 }) {
   const { alive, id } = creature;
   const { killCreature, stabalizeCreature } = creatureManagement;
@@ -15,6 +16,7 @@ export default function StatusButton({
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const mediumButtonClass = `${buttonClass}__medium`;
+  const focusedButtonClass = focused ? `${buttonClass}__focused` : '';
   const statusToolTitle = alive ? 'Kill' : 'Stabalize';
   const onClickStatus = () => {
     if (alive) {
@@ -27,7 +29,7 @@ export default function StatusButton({
 
   return (
     <button
-      className={`${textButtonClass} ${mediumButtonClass}`}
+      className={`${textButtonClass} ${mediumButtonClass} ${focusedButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}

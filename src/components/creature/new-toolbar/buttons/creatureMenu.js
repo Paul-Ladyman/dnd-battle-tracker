@@ -49,13 +49,15 @@ export function CreatureMenuButton({
   buttonRef,
   toolMenuId,
   toolMenuExpanded,
+  focused,
 }) {
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
+  const focusedButtonClass = focused ? `${buttonClass}__focused` : '';
   return (
     <button
       title="Creature Menu"
-      className={buttonClass}
+      className={`${buttonClass} ${focusedButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}

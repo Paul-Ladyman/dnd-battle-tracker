@@ -137,6 +137,7 @@ export default function NewCreatureToolbar({
               key={key}
               creature={creature}
               buttonRef={ref}
+              focused={focusedButton === i}
               onFocus={() => setFocusedButton(i)}
               onClick={() => toggleSelectedButton(i)}
               tabIndex={i === tabIndex ? '0' : '-1'}
