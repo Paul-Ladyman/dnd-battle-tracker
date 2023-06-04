@@ -73,6 +73,8 @@ export default function NewCreatureToolbar({
     }
   };
 
+  const closeToolMenu = () => setSelectedButton(null);
+
   useEffect(() => {
     if (toolbarRef.current) {
       const toolbar = toolbarRef.current;
@@ -144,6 +146,7 @@ export default function NewCreatureToolbar({
               toolMenuId={toolMenuId}
               toolMenuExpanded={toolMenuExpanded}
               creatureManagement={creatureManagement}
+              closeToolMenu={closeToolMenu}
             />
           );
         })}

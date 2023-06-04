@@ -24,7 +24,7 @@ export default class StatusTool {
 
   async assertNotPressed(name) {
     const toolbar = await this.findToolbar(name);
-    const statusTool = await findByRole(toolbar, 'button', { name: 'Kill/Make unconscious' });
+    const statusTool = await findByRole(toolbar, 'button', { name: 'Kill' });
     expect(statusTool).toBeVisible();
     expect(statusTool).toHaveAttribute('aria-pressed', 'false');
   }

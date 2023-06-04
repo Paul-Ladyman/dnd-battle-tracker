@@ -3,7 +3,7 @@
 import {
   screen,
   findByText,
-  findByRole
+  findByRole,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -21,8 +21,8 @@ export default class InitiativeTool {
   }
 
   async assertDisabled(name) {
-    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
-    const submitButton = await findByRole(toolMenu, 'button', { name: 'Add Initiative' });
-    expect(submitButton).toBeDisabled();
+    const toolbar = await screen.findByRole('toolbar', { name: `${name} toolbar` });
+    const toolbarButton = await findByRole(toolbar, 'button', { name: 'Initiative' });
+    expect(toolbarButton).toHaveAttribute('aria-disabled', 'true');
   }
 }
