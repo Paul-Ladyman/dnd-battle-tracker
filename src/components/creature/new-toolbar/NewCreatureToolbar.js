@@ -75,6 +75,10 @@ export default function NewCreatureToolbar({
 
   const closeToolMenu = () => setSelectedButton(null);
 
+  const focusButton = (i) => {
+    if (i !== null) buttons[i].ref.current.focus();
+  };
+
   useEffect(() => {
     if (toolbarRef.current) {
       const toolbar = toolbarRef.current;
@@ -85,7 +89,7 @@ export default function NewCreatureToolbar({
   }, []);
 
   useEffect(() => {
-    if (focusedButton !== null) buttons[focusedButton].ref.current.focus();
+    focusButton(focusedButton);
   }, [focusedButton]);
 
   useEffect(() => {
@@ -123,6 +127,23 @@ export default function NewCreatureToolbar({
     }
     return undefined;
   }, [focused]);
+
+  useEffect(() => {
+    if (focused) {
+      const wrapper = document.getElementById(wrapperId);
+      const tabHandler = (e) => {
+        if (e.keyCode === 27) {
+          console.log(e)
+          setSelectedButton(null);
+          focusButton(focusedButton);
+        }
+      };
+      wrapper.addEventListener('keyup', tabHandler);
+
+      return () => wrapper.removeEventListener('keyup', tabHandler);
+    }
+    return undefined;
+  }, [focused, focusedButton]);
 
   const ToolMenu = buttons[selectedButton]?.ToolMenu;
 

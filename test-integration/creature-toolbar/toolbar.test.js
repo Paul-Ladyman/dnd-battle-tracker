@@ -176,4 +176,32 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin 2');
     await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
   });
+
+  it('closes the tool menu via the keyboard shortcut', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    await dmApp.creatureToolbar.closeToolbarByKeyboard('goblin');
+    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
+  });
+
+  it('returns focus to the toolbar if the tool menu is closed via the keyboard shortcut', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    await dmApp.menuTool.lockCreature('goblin');
+    await dmApp.creatureToolbar.closeToolbarByKeyboard('goblin');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Creature Menu');
+  });
+
+  it('maintains the latest button focus if the tool menu is closed via the keyboard shortcut', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    await dmApp.menuTool.lockCreature('goblin');
+    await dmApp.creatureToolbar.closeToolbarByKeyboard('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.creatureToolbar.closeToolbarByKeyboard('goblin');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'HP');
+  });
 });
