@@ -170,7 +170,7 @@ export default class CreatureToolbar {
 
   async closeToolbarByKeyboard(name) {
     const toolbar = await this.findToolbar(name);
-    return fireEvent.keyUp(toolbar, { key: 'esc', keyCode: 27 });
+    return fireEvent.keyDown(toolbar, { key: 'esc', keyCode: 27 });
   }
 
   async navigate(name, steps, forward = true) {

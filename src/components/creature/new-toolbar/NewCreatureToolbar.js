@@ -95,16 +95,16 @@ export default function NewCreatureToolbar({
   useEffect(() => {
     if (focused) {
       const wrapper = document.getElementById(wrapperId);
-      const clickHandler = (e) => {
+      const clickToCloseHandler = (e) => {
         const clickOutsideWrapper = wrapper && !wrapper.contains(e.target);
         if (clickOutsideWrapper) {
           setFocused(false);
           setSelectedButton(null);
         }
       };
-      document.addEventListener('click', clickHandler);
+      document.addEventListener('click', clickToCloseHandler);
 
-      return () => document.removeEventListener('click', clickHandler);
+      return () => document.removeEventListener('click', clickToCloseHandler);
     }
     return undefined;
   }, [focused]);
@@ -112,7 +112,7 @@ export default function NewCreatureToolbar({
   useEffect(() => {
     if (focused) {
       const wrapper = document.getElementById(wrapperId);
-      const tabHandler = (e) => {
+      const tabToCloseHandler = (e) => {
         if (e.keyCode === 9) {
           const focusOutsideComboBox = wrapper && !wrapper.contains(e.target);
           if (focusOutsideComboBox) {
@@ -121,9 +121,9 @@ export default function NewCreatureToolbar({
           }
         }
       };
-      document.addEventListener('keyup', tabHandler);
+      document.addEventListener('keyup', tabToCloseHandler);
 
-      return () => document.removeEventListener('keyup', tabHandler);
+      return () => document.removeEventListener('keyup', tabToCloseHandler);
     }
     return undefined;
   }, [focused]);
@@ -131,16 +131,21 @@ export default function NewCreatureToolbar({
   useEffect(() => {
     if (focused) {
       const wrapper = document.getElementById(wrapperId);
-      const tabHandler = (e) => {
+      const escapeToCloseHandler = (e) => {
         if (e.keyCode === 27) {
-          console.log(e)
-          setSelectedButton(null);
-          focusButton(focusedButton);
+          const targetIsNotesTool = e.target.getAttribute('id') === `combobox-notes-wrapper-${id}`;
+          const notesToolEmpty = e.target.getAttribute('value') === '';
+          const notesToolClosed = e.target.getAttribute('aria-expanded') === 'false';
+          const shouldEscape = targetIsNotesTool ? notesToolEmpty && notesToolClosed : true;
+          if (shouldEscape) {
+            setSelectedButton(null);
+            focusButton(focusedButton);
+          }
         }
       };
-      wrapper.addEventListener('keyup', tabHandler);
+      wrapper.addEventListener('keydown', escapeToCloseHandler);
 
-      return () => wrapper.removeEventListener('keyup', tabHandler);
+      return () => wrapper.removeEventListener('keydown', escapeToCloseHandler);
     }
     return undefined;
   }, [focused, focusedButton]);
