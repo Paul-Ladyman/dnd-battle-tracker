@@ -38,7 +38,7 @@ export default function NewCreatureToolbar({
 
   const buttons = useMemo(getButtons, []);
 
-  const wrapperId = `${id}-toolbar-wrapper`;
+  const wrapperId = `toolbar-wrapper-${id}`;
 
   const getNextButtonForward = (prev) => {
     const next = prev + 1;
@@ -90,17 +90,36 @@ export default function NewCreatureToolbar({
 
   useEffect(() => {
     if (focused) {
+      const wrapper = document.getElementById(wrapperId);
       const clickHandler = (e) => {
-        const wrapper = document.getElementById(wrapperId);
-        const clickInWrapper = wrapper && wrapper.contains(e.target);
-        if (focused && !clickInWrapper) {
+        const clickOutsideWrapper = wrapper && !wrapper.contains(e.target);
+        if (clickOutsideWrapper) {
           setFocused(false);
           setSelectedButton(null);
         }
       };
-      document.addEventListener('mousedown', clickHandler);
+      document.addEventListener('click', clickHandler);
 
-      return () => document.removeEventListener('mousedown', clickHandler);
+      return () => document.removeEventListener('click', clickHandler);
+    }
+    return undefined;
+  }, [focused]);
+
+  useEffect(() => {
+    if (focused) {
+      const wrapper = document.getElementById(wrapperId);
+      const tabHandler = (e) => {
+        if (e.keyCode === 9) {
+          const focusOutsideComboBox = wrapper && !wrapper.contains(e.target);
+          if (focusOutsideComboBox) {
+            setFocused(false);
+            setSelectedButton(null);
+          }
+        }
+      };
+      document.addEventListener('keyup', tabHandler);
+
+      return () => document.removeEventListener('keyup', tabHandler);
     }
     return undefined;
   }, [focused]);

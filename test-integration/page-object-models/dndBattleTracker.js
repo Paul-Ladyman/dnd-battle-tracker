@@ -10,8 +10,8 @@ import userEvent from '@testing-library/user-event';
 
 export default class DndBattleTracker {
   constructor(component) {
-    render(component);
     this.user = userEvent.setup();
+    render(component);
   }
 
   static async assertCreatureList(expectedCreatureNames) {

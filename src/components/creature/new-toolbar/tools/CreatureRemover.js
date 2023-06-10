@@ -18,36 +18,22 @@ export default function CreatureRemover({
   const toolbarClass = 'new-creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
+  const ariaLabel = removing ? `confirm remove ${creature.name}` : `remove ${name}`;
+  const title = removing ? 'Confirm remove creature' : '';
+  const buttonOnClick = removing ? onClickConfim : onClick;
+  const text = removing ? 'Confim...' : 'Remove';
 
   return (
-    <>
-      {!removing
-      && (
-      <button
-        aria-label={`remove ${name}`}
-        aria-disabled={ariaDisabled}
-        className={textButtonClass}
-        onClick={onClick}
-        type="button"
-      >
-        <RemoveCreatureIcon />
-        Remove
-      </button>
-      )}
-      {removing
-      && (
-      <button
-        aria-label={`confirm remove ${creature.name}`}
-        aria-disabled={ariaDisabled}
-        title="Confirm remove creature"
-        className={textButtonClass}
-        onClick={onClickConfim}
-        type="button"
-      >
-        <RemoveCreatureIcon />
-        <div>Confirm...</div>
-      </button>
-      )}
-    </>
+    <button
+      aria-label={ariaLabel}
+      aria-disabled={ariaDisabled}
+      title={title}
+      className={textButtonClass}
+      onClick={buttonOnClick}
+      type="button"
+    >
+      <RemoveCreatureIcon />
+      {text}
+    </button>
   );
 }

@@ -3,7 +3,7 @@
 import {
   screen,
   findByText,
-  findByRole
+  findByRole,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
