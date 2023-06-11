@@ -1,11 +1,9 @@
 import React from 'react';
 import LockedIcon from '../../../icons/LockedIcon';
-import UnlockedIcon from '../../../icons/UnlockedIcon';
 
 function CreatureLocker({ creature, toggleCreatureLock }) {
   const { locked, name, id } = creature;
   const text = locked ? 'Unlock' : 'Lock';
-  const buttonIcon = locked ? <LockedIcon /> : <UnlockedIcon />;
   const buttonAriaLabel = locked ? `Unlock ${name}` : `Lock ${name}`;
   const ariaPressed = locked ? 'true' : 'false';
   const toolbarClass = 'new-creature-toolbar';
@@ -21,7 +19,7 @@ function CreatureLocker({ creature, toggleCreatureLock }) {
       type="button"
       aria-pressed={ariaPressed}
     >
-      {buttonIcon}
+      <LockedIcon locked={locked} />
       {text}
     </button>
   );
