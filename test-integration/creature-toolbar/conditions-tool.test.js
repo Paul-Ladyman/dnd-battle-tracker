@@ -1,9 +1,5 @@
 import DmApp from '../page-object-models/dmApp';
 
-beforeAll(() => {
-  window.FLAG_creatureToolbar = true;
-});
-
 describe('Condition tool', () => {
   it('opens the tool menu when selected', async () => {
     const dmApp = new DmApp();

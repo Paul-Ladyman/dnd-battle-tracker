@@ -11,10 +11,10 @@ function getUrlParameter(name) {
   return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
-function setFeatureFlag(flag) {
-  const value = getUrlParameter(flag);
-  window[`FLAG_${flag}`] = value === 'true';
-}
+// function setFeatureFlag(flag) {
+//   const value = getUrlParameter(flag);
+//   window[`FLAG_${flag}`] = value === 'true';
+// }
 
 function RenderPlayerApp({ battleId }) {
   return (
@@ -42,7 +42,6 @@ const battleId = getUrlParameter('battle');
 
 async function render() {
   registerServiceworker();
-  setFeatureFlag('creatureToolbar');
   const rootElement = document.getElementById('root');
 
   if (battleId) {

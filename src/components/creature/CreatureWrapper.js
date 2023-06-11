@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
-import CreatureToolbar from './toolbar/CreatureToolbar';
 import NewCreatureToolbar from './new-toolbar/NewCreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
-import CreatureRemover from '../buttons/CreatureRemover';
 import { getAvailableConditions } from '../../state/ConditionsManager';
 import { getHitPointsBar, shouldShowHitPoints } from '../../display/displayLogic';
 
@@ -43,7 +41,6 @@ class CreatureWrapper extends Component {
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
     this.hasBrowserFocus = this.hasBrowserFocus.bind(this);
-    this.newCreatureToolbar = window.FLAG_creatureToolbar;
   }
 
   /*
@@ -118,7 +115,6 @@ class CreatureWrapper extends Component {
     } = this.props;
 
     const {
-      name,
       id,
       hitPointsShared,
       healthPoints: creatureHealthPoints,
@@ -130,7 +126,6 @@ class CreatureWrapper extends Component {
     } = creature;
 
     const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
-    const toolbarAlreadyFocused = this.hasBrowserFocus('#creature-toolbar');
 
     const { expanded } = this.state;
 
@@ -141,9 +136,6 @@ class CreatureWrapper extends Component {
     const {
       removeCreature,
       removeNoteFromCreature,
-      toggleCreatureLock,
-      toggleCreatureShare,
-      toggleCreatureHitPointsShare,
     } = creatureManagement;
 
     const healthPoints = (
@@ -159,8 +151,6 @@ class CreatureWrapper extends Component {
     const showHitPoints = shouldShowHitPoints(creatureHealthPoints, hitPointsShared, playerSession);
 
     const multiColumn = creatureConditions.length > 0 || notes.length > 0;
-
-    const showCreatureRemover = showExpanded && !playerSession;
 
     const [
       leftPercentage,
@@ -181,14 +171,10 @@ class CreatureWrapper extends Component {
             <CreatureHeader
               creature={creature}
               active={active}
-              lockHandler={() => toggleCreatureLock(id)}
-              shareHandler={() => toggleCreatureShare(id)}
-              shareHitPointsHandler={() => toggleCreatureHitPointsShare(id)}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
               focused={focused && !toolbarFocused && !alreadyFocused}
               multiColumn={multiColumn}
-              playerSession={playerSession}
             />
             {showExpanded
               ? (
@@ -211,31 +197,8 @@ class CreatureWrapper extends Component {
                 />
               )}
           </div>
-          {showCreatureRemover && (
-            <CreatureRemover
-              creature={creature}
-              removeCreature={removeCreature}
-              disabled={active}
-            />
-          )}
         </section>
-        { !playerSession && !this.newCreatureToolbar && (
-          <div
-            role="toolbar"
-            aria-label={`${name} toolbar`}
-            id="creature-toolbar"
-            data-creature-id={id}
-            onFocus={() => this.focusHandler(true)}
-          >
-            <CreatureToolbar
-              creature={creature}
-              conditions={getAvailableConditions(creature)}
-              creatureManagement={creatureManagement}
-              focused={focused && toolbarFocused && !toolbarAlreadyFocused}
-            />
-          </div>
-        )}
-        { !playerSession && this.newCreatureToolbar && (
+        { !playerSession && (
           <NewCreatureToolbar
             creature={creature}
             conditions={getAvailableConditions(creature)}

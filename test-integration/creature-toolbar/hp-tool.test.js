@@ -1,9 +1,5 @@
 import DmApp from '../page-object-models/dmApp';
 
-beforeAll(() => {
-  window.FLAG_creatureToolbar = true;
-});
-
 describe('HP tool', () => {
   it('opens the tool menu when the Creature Menu toolbar button is selected', async () => {
     const dmApp = new DmApp();

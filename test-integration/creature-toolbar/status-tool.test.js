@@ -1,9 +1,5 @@
 import DmApp from '../page-object-models/dmApp';
 
-beforeAll(() => {
-  window.FLAG_creatureToolbar = true;
-});
-
 describe('Status tool', () => {
   it('does not open the tool menu', async () => {
     const dmApp = new DmApp();

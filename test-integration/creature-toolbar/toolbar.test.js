@@ -1,10 +1,6 @@
 import '@testing-library/jest-dom';
 import DmApp from '../page-object-models/dmApp';
 
-beforeAll(() => {
-  window.FLAG_creatureToolbar = true;
-});
-
 describe('Creature toolbar', () => {
   test('a creature has a toolbar', async () => {
     const dmApp = new DmApp();
