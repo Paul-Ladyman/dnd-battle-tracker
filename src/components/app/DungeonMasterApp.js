@@ -8,9 +8,6 @@ import Title from '../page/Title';
 import AriaAnnouncements from '../page/AriaAnnouncements';
 import RulesSearchBar from '../page/RulesSearchBar';
 import {
-  nextFocus,
-  prevFocus,
-  setFocus,
   resetBattle,
   toggleSync,
   toggleRulesSearch,
@@ -70,14 +67,6 @@ function DungeonMasterApp({
       updateBattle(nextInitiative)();
     }
 
-    if (isHotkey(hotkeys.nextFocus, e)) {
-      updateBattle(nextFocus, false)();
-    }
-
-    if (isHotkey(hotkeys.prevFocus, e)) {
-      updateBattle(prevFocus, false)();
-    }
-
     if (isHotkey(hotkeys.rulesSearchBar, e)) {
       e.preventDefault();
       updateBattle(toggleRulesSearch, false)();
@@ -135,6 +124,10 @@ function DungeonMasterApp({
     creaturesRef.current.scrollToCreature(activeCreatureId);
   };
 
+  useEffect(() => {
+    onScrollActiveInitiative(activeCreatureId);
+  }, [activeCreatureId]);
+
   return (
     <>
       <BattleToolbar
@@ -180,7 +173,6 @@ function DungeonMasterApp({
             creatures={creatures}
             activeCreatureId={activeCreatureId}
             focusedCreature={focusedCreature}
-            setFocus={updateBattle(setFocus, false)}
             round={round}
             secondsElapsed={secondsElapsed}
             creatureManagement={creatureManagement}

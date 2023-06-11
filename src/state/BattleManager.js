@@ -1,10 +1,6 @@
 import { resetCreature } from './CreatureManager';
 import packageJson from '../../package.json';
 
-function findCreatureIndex(creatures, creature) {
-  return creatures.findIndex(({ id }) => creature.id === id);
-}
-
 export const newBattleState = {
   creatures: [],
   creatureIdCount: 0,
@@ -20,50 +16,6 @@ export const newBattleState = {
   battleTrackerVersion: packageJson.version,
   rulesSearchOpened: false,
 };
-
-export function nextFocus(state) {
-  const { creatures, focusedCreature: currentFocusedCreature } = state;
-  const creatureCount = creatures.length;
-  if (creatureCount === 0) {
-    return state;
-  }
-
-  let focusedCreature = 0;
-
-  if (currentFocusedCreature !== undefined) {
-    focusedCreature = currentFocusedCreature + 1;
-  }
-
-  if (focusedCreature === creatureCount) {
-    focusedCreature = 0;
-  }
-
-  return { ...state, focusedCreature };
-}
-
-export function prevFocus(state) {
-  const { creatures, focusedCreature: currentFocusedCreature } = state;
-  const creatureCount = creatures.length;
-  if (creatureCount === 0) {
-    return state;
-  }
-
-  let focusedCreature = currentFocusedCreature - 1;
-
-  if (currentFocusedCreature === undefined || currentFocusedCreature === 0) {
-    focusedCreature = creatureCount - 1;
-  }
-
-  return { ...state, focusedCreature };
-}
-
-export function setFocus(state, creature) {
-  let focusedCreature = findCreatureIndex(state.creatures, creature);
-  if (focusedCreature === -1) {
-    focusedCreature = 0;
-  }
-  return { ...state, focusedCreature };
-}
 
 export function resetBattle(state) {
   const {

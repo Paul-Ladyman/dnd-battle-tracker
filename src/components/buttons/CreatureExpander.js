@@ -17,7 +17,7 @@ function CreatureExpander({
 
   useLayoutEffect(() => {
     if (focused) {
-      buttonRef.current.focus();
+      buttonRef.current.focus({ preventScroll: true });
     }
   }, [focused]);
 

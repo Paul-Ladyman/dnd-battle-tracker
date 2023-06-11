@@ -39,8 +39,6 @@ class CreatureWrapper extends Component {
     };
 
     this.expandCreatureHandler = this.expandCreatureHandler.bind(this);
-    this.focusHandler = this.focusHandler.bind(this);
-    this.hasBrowserFocus = this.hasBrowserFocus.bind(this);
   }
 
   /*
@@ -53,7 +51,6 @@ class CreatureWrapper extends Component {
       creature,
       active,
       focused,
-      toolbarFocused,
       round,
     } = this.props;
 
@@ -64,42 +61,14 @@ class CreatureWrapper extends Component {
     const shouldUpdate = JSON.stringify(nextProps.creature) !== JSON.stringify(creature)
       || nextProps.active !== active
       || nextProps.focused !== focused
-      || nextProps.toolbarFocused !== toolbarFocused
       || nextState.expanded !== expanded
       || nextProps.round !== round;
 
     return shouldUpdate;
   }
 
-  componentDidUpdate(prevProps) {
-    const { active, setToolbarFocus } = this.props;
-    if (active && prevProps.active === false) {
-      setToolbarFocus(false);
-    }
-  }
-
   expandCreatureHandler() {
     this.setState((prevState) => ({ ...prevState, expanded: !prevState.expanded }));
-  }
-
-  focusHandler(toolbar) {
-    const { playerSession } = this.props;
-    if (!playerSession) {
-      const { focused, setToolbarFocus } = this.props;
-      setToolbarFocus(toolbar);
-      if (!focused) {
-        const { setFocus, creature } = this.props;
-        setFocus(creature);
-      }
-    }
-  }
-
-  hasBrowserFocus(selector) {
-    const { creature: { id } } = this.props;
-    const focusedElement = document.activeElement.closest(selector);
-    const focusedDataId = focusedElement && focusedElement.getAttribute('data-creature-id');
-    const focusedId = parseInt(focusedDataId, 10);
-    return focusedId === id;
   }
 
   render() {
@@ -111,7 +80,6 @@ class CreatureWrapper extends Component {
       round,
       secondsElapsed,
       focused,
-      toolbarFocused,
     } = this.props;
 
     const {
@@ -124,8 +92,6 @@ class CreatureWrapper extends Component {
       conditions: creatureConditions,
       alive,
     } = creature;
-
-    const alreadyFocused = this.hasBrowserFocus('#creature-wrapper');
 
     const { expanded } = this.state;
 
@@ -163,7 +129,6 @@ class CreatureWrapper extends Component {
           className={classes}
           id="creature-wrapper"
           aria-label={creatureAriaLabel}
-          onFocus={() => this.focusHandler(false)}
           data-creature-id={id}
           style={{ backgroundImage: `linear-gradient(to right, #EBE1AD ${leftPercentage}%, lightgrey ${rightPercentage}%)` }}
         >
@@ -173,7 +138,7 @@ class CreatureWrapper extends Component {
               active={active}
               expanded={expanded}
               expandHandler={this.expandCreatureHandler}
-              focused={focused && !toolbarFocused && !alreadyFocused}
+              focused={focused}
               multiColumn={multiColumn}
             />
             {showExpanded
