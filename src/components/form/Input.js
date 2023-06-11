@@ -69,11 +69,13 @@ function Input({
 
   const leftSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     submitHandler(true);
   };
 
   const rightSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     submitHandler(false);
   };
 

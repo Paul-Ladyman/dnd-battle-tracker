@@ -204,4 +204,14 @@ describe('Creature toolbar navigation', () => {
     await dmApp.creatureToolbar.closeToolbarByKeyboard('goblin');
     await dmApp.creatureToolbar.assertButtonFocused('goblin', 'HP');
   });
+
+  it('allows the notes dropdown to be closed without closing the tool menu', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
+    await dmApp.creatureToolbar.addNote('goblin', 'note 1');
+    await dmApp.creatureToolbar.openNotes('goblin');
+    await dmApp.creatureToolbar.closeNotesByKeyboard('goblin');
+    await dmApp.creatureToolbar.assertToolMenuVisible('goblin');
+  });
 });
