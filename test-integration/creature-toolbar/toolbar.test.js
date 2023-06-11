@@ -89,7 +89,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.navigate('goblin', 2);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'HP');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Kill');
   });
 
   it('moves the tab index to the button being navigated to', async () => {
@@ -98,25 +98,25 @@ describe('Creature toolbar navigation', () => {
     await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.navigate('goblin', 2);
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Creature Menu');
-    await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Kill');
-    await dmApp.creatureToolbar.assertButtonTabable('goblin', 'HP');
+    await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Initiative');
+    await dmApp.creatureToolbar.assertButtonTabable('goblin', 'Kill');
+    await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'HP');
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Conditions');
     await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Notes');
-    await dmApp.creatureToolbar.assertButtonNotTabable('goblin', 'Initiative');
   });
 
   it('wraps navigation when navigating forwards with the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'HP');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
     await dmApp.creatureToolbar.navigate('goblin', 1);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Initiative');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Creature Menu');
   });
 
   it('allows the buttons to be navigated backwards with the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
     await dmApp.creatureToolbar.navigate('goblin', 2, false);
     await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Kill');
   });
@@ -152,8 +152,8 @@ describe('Creature toolbar navigation', () => {
     await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
     await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
     await dmApp.creatureToolbar.navigate('goblin 1', 1);
-    await dmApp.creatureToolbar.assertButtonNotFocused('goblin 2', 'Kill');
-    await dmApp.creatureToolbar.assertButtonFocused('goblin 1', 'Kill');
+    await dmApp.creatureToolbar.assertButtonNotFocused('goblin 2', 'Initiative');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin 1', 'Initiative');
   });
 
   it('does not open the tool menu when navigating', async () => {

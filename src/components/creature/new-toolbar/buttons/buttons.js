@@ -15,6 +15,12 @@ export default function getButtons() {
       key: (id) => `${id}-menu`,
     },
     {
+      Button: InitiativeButton,
+      ToolMenu: InitiativeToolMenu,
+      ref: React.createRef(),
+      key: (id) => `${id}-initiative`,
+    },
+    {
       Button: StatusButton,
       ref: React.createRef(),
       key: (id) => `${id}-kill`,
@@ -24,12 +30,6 @@ export default function getButtons() {
       ToolMenu: HpToolMenu,
       ref: React.createRef(),
       key: (id) => `${id}-hp`,
-    },
-    {
-      Button: InitiativeButton,
-      ToolMenu: InitiativeToolMenu,
-      ref: React.createRef(),
-      key: (id) => `${id}-initiative`,
     },
     {
       Button: ConditionsButton,
