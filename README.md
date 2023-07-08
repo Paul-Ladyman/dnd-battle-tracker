@@ -72,7 +72,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
 ### Icons
 
 * [Play button](https://game-icons.net/1x1/guard13007/play-button.html) icon by [Guard13007](https://guard13007.com/)
-* [Health normal](https://game-icons.net/1x1/sbed/health-normal.html) icon by [sbed](https://opengameart.org/content/95-game-icons)
+* [Cancel](https://game-icons.net/1x1/sbed/cancel.html) icon by [sbed](https://opengameart.org/content/95-game-icons)
 * [Hearts](https://game-icons.net/1x1/skoll/hearts.html) icon by Skoll
 * Icons by [Delapouite](https://delapouite.com/):
   * [Hamburger menu](https://game-icons.net/1x1/delapouite/hamburger-menu.html)
@@ -86,7 +86,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Pencil](https://game-icons.net/1x1/delapouite/pencil.html)
   * [Player time](https://game-icons.net/1x1/delapouite/player-time.html)
   * [Next button](https://game-icons.net/1x1/delapouite/next-button.html)
-  * [Previous button](https://game-icons.net/1x1/delapouite/previous-button.html)
   * [Dice 20 faces 20](https://game-icons.net/1x1/delapouite/dice-twenty-faces-twenty.html)
   * [ID Card](https://game-icons.net/1x1/delapouite/id-card.html)
 * Icons by [Lorc](http://lorcblog.blogspot.com/):

@@ -17,12 +17,18 @@ function ResetButton({
   resetBattle,
   creaturesAdded,
 }) {
+  const onClick = () => {
+    if (creaturesAdded) {
+      toggleOptions();
+      resetBattle();
+    }
+  };
   return (
     <button
       title="Reset Battle"
       className={className}
-      onClick={() => { toggleOptions(); resetBattle(); }}
-      disabled={!creaturesAdded}
+      onClick={onClick}
+      aria-disabled={!creaturesAdded}
       type="button"
     >
       <ResetIcon />
@@ -137,15 +143,23 @@ function BattleToolbar({
   const currentTurnDefaultClasses = 'battle-toolbar--stat-value battle-toolbar--stat-value__button';
   const currentTurnClasses = round0 ? `${currentTurnDefaultClasses} battle-toolbar--stat-value__button-disabled` : `${currentTurnDefaultClasses} battle-toolbar--stat-value__button-enabled`;
 
+  const nextOnClick = () => {
+    if (creaturesAdded) nextInitiative();
+  };
+
+  const turnOnClick = () => {
+    if (!round0) onScrollActiveInitiative();
+  };
+
   return (
     <header className="battle-toolbar">
       {!playerSession && (
       <button
         title={nextButtonTitle}
         className={buttonClasses}
-        onClick={nextInitiative}
+        onClick={nextOnClick}
         ref={nextButton}
-        disabled={!creaturesAdded}
+        aria-disabled={!creaturesAdded}
         type="button"
       >
         {nextButtonLabel}
@@ -155,11 +169,11 @@ function BattleToolbar({
         Turn:
         <button
           type="button"
-          onClick={onScrollActiveInitiative}
+          onClick={turnOnClick}
           className={currentTurnClasses}
           title="Current Turn"
           aria-label={currentTurnLabel}
-          disabled={round0}
+          aria-disabled={round0}
         >
           {currentTurnLabel}
         </button>

@@ -44,7 +44,7 @@ function CreatureNoteList({
 
   return (
     <>
-      <div key={labelKey}>
+      <div key={labelKey} className="avoid-break">
         <div className="creature-note-list--label">{label}</div>
         {isConditionList ? renderCondition(firstNote) : renderNote(firstNote, 1)}
       </div>

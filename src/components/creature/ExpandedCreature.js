@@ -18,8 +18,8 @@ export default function ExpandedCreature({
   const showAc = armorClass !== null && armorClass !== undefined;
 
   return (
-    <>
-      <div>
+    <div className="expanded-creature">
+      <div className="avoid-break">
         <CreatureStatus creature={creature} shared={shared} />
         <div className="expanded-creature--separator" />
         {showHealth && healthPoints}
@@ -60,6 +60,6 @@ export default function ExpandedCreature({
         secondsElapsed={secondsElapsed}
         playerSession={playerSession}
       />
-    </>
+    </div>
   );
 }

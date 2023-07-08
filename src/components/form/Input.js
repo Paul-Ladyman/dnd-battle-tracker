@@ -89,7 +89,7 @@ function Input({
         <div className={`input-wrapper ${inputErrorClass}`}>
           {LeftSubmitIcon && (
             <button
-              disabled={leftDisabled}
+              aria-disabled={leftDisabled}
               type="button"
               className={leftButtonClasses}
               title={leftTitle}
@@ -126,7 +126,7 @@ function Input({
           {!RightControl && RightSubmitIcon
             && (
               <button
-                disabled={rightDisabled}
+                aria-disabled={rightDisabled}
                 type="button"
                 className={rightButtonClasses}
                 title={rightTitle}
