@@ -47,18 +47,18 @@ export default class HpTool {
   async assertDamageDisabled(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const damageButton = await findByRole(toolMenu, 'button', { name: 'Damage' });
-    expect(damageButton).toBeDisabled();
+    expect(damageButton).toHaveAttribute('aria-disabled', 'true');
   }
 
   async assertHealDisabled(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const healButton = await findByRole(toolMenu, 'button', { name: 'Heal' });
-    expect(healButton).toBeDisabled();
+    expect(healButton).toHaveAttribute('aria-disabled', 'true');
   }
 
   async assertTempHpDisabled(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tempHpButton = await findByRole(toolMenu, 'button', { name: 'Add/Edit Temp HP' });
-    expect(tempHpButton).toBeDisabled();
+    expect(tempHpButton).toHaveAttribute('aria-disabled', 'true');
   }
 }

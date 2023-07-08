@@ -52,8 +52,8 @@ export default class DndBattleTracker {
     expect(currentTurnButton).toBeVisible();
     expect(currentTurnButton).toHaveTextContent(name);
     if (enabled) {
-      return expect(currentTurnButton).toBeEnabled();
+      return expect(currentTurnButton).toHaveAttribute('aria-disabled', 'false');
     }
-    return expect(currentTurnButton).toBeDisabled();
+    return expect(currentTurnButton).toHaveAttribute('aria-disabled', 'true');
   }
 }
