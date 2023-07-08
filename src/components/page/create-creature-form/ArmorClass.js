@@ -19,6 +19,7 @@ export default function ArmorClass({
       value={ac}
       handleChange={handleChange}
       formHandler={formHandler}
+      inputId="create-creature-form-ac"
     />
   );
 }

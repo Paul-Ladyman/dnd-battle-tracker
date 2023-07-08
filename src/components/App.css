@@ -52,7 +52,7 @@ button, .button {
   }
 }
 
-button:focus, .button:focus {
+button:focus-within, .button:focus-within {
   background-color: #EBE1AD;
   border: 1px solid #822000;
   outline: 1px solid #822000;
@@ -105,7 +105,7 @@ a {
 }
 
 a:focus {
-  outline-color: #822000;
+  outline: 1px solid #822000;
 }
 
 h1 {
@@ -173,8 +173,8 @@ a:hover {
 }
 
 .form--input:focus {
-  outline: none;
-  border: 2px solid #822000;
+  outline: 1px solid #822000;
+  outline-offset: 2px;
 }
 
 .form--label {
@@ -199,6 +199,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+label {
+  cursor: pointer;
 }
 
 /* Battle toolbar */
@@ -329,6 +333,11 @@ input[type="number"] {
   height: 44px;
 }
 
+.input-wrapper:focus-within {
+  outline: 1px solid #822000;
+  outline-offset: 2px;
+}
+
 .input {
   width: 100%;
   background: white;
@@ -341,7 +350,14 @@ input[type="number"] {
 
 .input:focus {
   outline: none;
-  border: 2px solid #822000;
+}
+
+@media only screen and (min-width: 1175px) {
+  .input:hover,
+  .input:focus {
+    outline: none;
+    background: #EBE1AD;
+  }
 }
 
 .input__disabled {
@@ -370,10 +386,13 @@ input[type="number"] {
   border: 1px solid #822000;
 }
 
+@media only screen and (min-width: 1175px) {
+  .input--submit {
+    background-color: white;
+  }
+}
+
 .input--submit a {
-  padding: 5px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
   outline: none;
 }
 
@@ -381,16 +400,9 @@ input[type="number"] {
   box-shadow: none;
 }
 
-.input--submit:focus {
+.input--submit:focus-within {
   box-shadow: none;
   outline: none;
-  border: 2px solid #822000;
-  padding: 4px;
-}
-
-.input--submit a:focus {
-  padding: 4px 5px;
-  border: 2px solid #822000;
 }
 
 .input--submit[aria-disabled="true"]:focus {
@@ -436,10 +448,6 @@ input[type="number"] {
 
 .combobox-wrapper {
   position: relative;
-}
-
-.combobox .input {
-  cursor: pointer;
 }
 
 .combobox__open .input-wrapper {

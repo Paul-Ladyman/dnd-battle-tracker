@@ -86,58 +86,58 @@ function Input({
           {label}
           {error}
         </div>
-        <div className={`input-wrapper ${inputErrorClass}`}>
-          {LeftSubmitIcon && (
+      </label>
+      <div className={`input-wrapper ${inputErrorClass}`}>
+        {LeftSubmitIcon && (
+          <button
+            aria-disabled={leftDisabled}
+            type="button"
+            className={leftButtonClasses}
+            title={leftTitle}
+            aria-label={leftTitle}
+            onClick={leftSubmit}
+          >
+              {LeftSubmitIcon}
+          </button>
+        )}
+        <input
+          id={inputId}
+          required={required}
+          className={inputClasses}
+          ref={inputRef}
+          name={name}
+          type={type}
+          min={min}
+          max={max}
+          value={value}
+          onChange={handleChange}
+          onKeyDown={formHandler}
+          disabled={inputDisabled}
+          onClick={onClick}
+          onBlur={onBlur}
+          aria-autocomplete={ariaAutoComplete}
+          aria-expanded={ariaExpanded}
+          aria-controls={ariaControls}
+          aria-activedescendant={ariaActiveDescendant}
+          role={role}
+          autoComplete="off"
+          spellCheck={spellCheck}
+        />
+        {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
+        {!RightControl && RightSubmitIcon
+          && (
             <button
-              aria-disabled={leftDisabled}
+              aria-disabled={rightDisabled}
               type="button"
-              className={leftButtonClasses}
-              title={leftTitle}
-              aria-label={leftTitle}
-              onClick={leftSubmit}
+              className={rightButtonClasses}
+              title={rightTitle}
+              aria-label={rightTitle}
+              onClick={rightSubmit}
             >
-                {LeftSubmitIcon}
+              {RightSubmitIcon}
             </button>
           )}
-          <input
-            id={inputId}
-            required={required}
-            className={inputClasses}
-            ref={inputRef}
-            name={name}
-            type={type}
-            min={min}
-            max={max}
-            value={value}
-            onChange={handleChange}
-            onKeyDown={formHandler}
-            disabled={inputDisabled}
-            onClick={onClick}
-            onBlur={onBlur}
-            aria-autocomplete={ariaAutoComplete}
-            aria-expanded={ariaExpanded}
-            aria-controls={ariaControls}
-            aria-activedescendant={ariaActiveDescendant}
-            role={role}
-            autoComplete="off"
-            spellCheck={spellCheck}
-          />
-          {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
-          {!RightControl && RightSubmitIcon
-            && (
-              <button
-                aria-disabled={rightDisabled}
-                type="button"
-                className={rightButtonClasses}
-                title={rightTitle}
-                aria-label={rightTitle}
-                onClick={rightSubmit}
-              >
-                {RightSubmitIcon}
-              </button>
-            )}
-        </div>
-      </label>
+      </div>
     </div>
   );
 }
