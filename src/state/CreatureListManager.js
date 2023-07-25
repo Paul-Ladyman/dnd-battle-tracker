@@ -32,8 +32,8 @@ export function removeCreature(state, creatureId) {
   };
 }
 
-function createCreatures(creatureIdCount, creatures, creatureStats, multiplier) {
-  if (multiplier <= 1) {
+function createCreatures(creatureIdCount, creatures, creatureStats, quantity) {
+  if (quantity <= 1) {
     const initiative = creatureStats.initiative();
     const healthPoints = creatureStats.healthPoints();
     const creature = { ...creatureStats, initiative, healthPoints };
@@ -51,7 +51,7 @@ function createCreatures(creatureIdCount, creatures, creatureStats, multiplier) 
   const groupSize = groupIndexes.length;
   const groupOffset = groupSize > 0 ? groupIndexes[groupSize - 1] : 0;
 
-  return Array(multiplier).fill().map((_, i) => {
+  return Array(quantity).fill().map((_, i) => {
     const { name } = creatureStats;
     const number = i + 1 + groupOffset;
     const initiative = creatureStats.initiative();
@@ -67,14 +67,14 @@ function createCreatures(creatureIdCount, creatures, creatureStats, multiplier) 
 }
 
 export function addCreature(state, creature) {
-  const { multiplier, ...creatureStats } = creature;
-  const creatureMultiplier = multiplier || 1;
+  const { quantity, ...creatureStats } = creature;
+  const creatureQuantity = quantity || 1;
 
   const newCreatures = createCreatures(
     state.creatureIdCount,
     state.creatures,
     creatureStats,
-    creatureMultiplier,
+    creatureQuantity,
   );
 
   const [
@@ -82,7 +82,7 @@ export function addCreature(state, creature) {
     activeCreature,
   ] = sortByInitiative([...state.creatures, ...newCreatures], state.activeCreature, state.round);
 
-  const creatureIdCount = state.creatureIdCount + creatureMultiplier;
+  const creatureIdCount = state.creatureIdCount + creatureQuantity;
 
   const ariaAnnouncement = newCreatures.length > 1 ? 'creatures added' : `${newCreatures[0].name} added`;
   const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);

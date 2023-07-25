@@ -6,7 +6,7 @@ import { validateCreature } from '../../../state/CreatureFormManager';
 import Name from './Name';
 import Initiative from './Initiative';
 import HitPoints from './HitPoints';
-import Multiply from './Multiply';
+import Quantity from './Quantity';
 import Submit from './Submit';
 import ArmorClass from './ArmorClass';
 
@@ -20,7 +20,7 @@ function CreateCreatureForm({
     initiative: '',
     healthPoints: '',
     armorClass: '',
-    multiplier: 1,
+    quantity: 1,
     submitted: false,
     rollEachInitiative: false,
     rollEachHp: false,
@@ -85,7 +85,7 @@ function CreateCreatureForm({
 
   const createCreature = () => {
     const {
-      multiplier,
+      quantity,
       name,
       initiative,
       healthPoints,
@@ -95,9 +95,9 @@ function CreateCreatureForm({
       stats,
     } = state;
 
-    const intMultiplier = parseInt(multiplier, 10);
+    const intQuantity = parseInt(quantity, 10);
 
-    const errors = validateCreature(name, initiative, healthPoints, armorClass, intMultiplier);
+    const errors = validateCreature(name, initiative, healthPoints, armorClass, intQuantity);
 
     if (!errors) {
       const creature = {
@@ -105,7 +105,7 @@ function CreateCreatureForm({
         healthPoints: rollField(hpInput, rollEachHp),
         armorClass,
         initiative: rollField(initiativeInput, rollEachInitiative),
-        multiplier: intMultiplier,
+        quantity: intQuantity,
         stats,
       };
 
@@ -172,11 +172,11 @@ function CreateCreatureForm({
   };
 
   const {
-    name, initiative, healthPoints, armorClass, multiplier, rollEachInitiative, rollEachHp,
+    name, initiative, healthPoints, armorClass, quantity, rollEachInitiative, rollEachHp,
   } = state;
 
   const {
-    nameError, initiativeError, healthError, acError, multiplierError,
+    nameError, initiativeError, healthError, acError, quantityError,
   } = createCreatureErrors;
 
   return (
@@ -214,11 +214,11 @@ function CreateCreatureForm({
         formHandler={formHandler}
         error={acError}
       />
-      <Multiply
-        multiplier={multiplier}
+      <Quantity
+        quantity={quantity}
         handleChange={handleChange}
         formHandler={formHandler}
-        error={multiplierError}
+        error={quantityError}
       />
       <Submit createCreature={createCreature} />
     </form>

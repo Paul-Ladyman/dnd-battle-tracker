@@ -47,9 +47,9 @@ export default class CreateCreatureForm {
     return fireEvent.keyDown(acField, { key: 'enter', keyCode: 13 });
   }
 
-  async submitMultiplier() {
-    const multiplierField = await screen.findByRole('spinbutton', { name: 'create creature form. Multiplier (required)' });
-    return fireEvent.keyDown(multiplierField, { key: 'enter', keyCode: 13 });
+  async submitQuantity() {
+    const quantityField = await screen.findByRole('spinbutton', { name: 'create creature form. Quantity (required)' });
+    return fireEvent.keyDown(quantityField, { key: 'enter', keyCode: 13 });
   }
 
   async enterCreatureName(name) {
@@ -57,11 +57,11 @@ export default class CreateCreatureForm {
     return this.user.type(nameField, name);
   }
 
-  async enterMultiplier(multiply) {
-    const multiplyField = await screen.findByText('Multiply');
-    await this.user.type(multiplyField, '{backspace}');
-    await this.user.type(multiplyField, '{delete}');
-    await this.user.type(multiplyField, multiply);
+  async enterQuantity(quantity) {
+    const quantityField = await screen.findByText('Quantity');
+    await this.user.type(quantityField, '{backspace}');
+    await this.user.type(quantityField, '{delete}');
+    await this.user.type(quantityField, quantity);
   }
 
   async navigateToCreatureByKeyboard(nameText) {
@@ -151,7 +151,7 @@ export default class CreateCreatureForm {
     return this.user.click(hpRollButton);
   }
 
-  async addCreature(name, initiative, hp, multiply, rollEachInitiative, rollEachHp, ac) {
+  async addCreature(name, initiative, hp, quantity, rollEachInitiative, rollEachHp, ac) {
     await this.enterCreatureName(name);
 
     if (initiative) {
@@ -169,8 +169,8 @@ export default class CreateCreatureForm {
       await this.user.type(acField, ac);
     }
 
-    if (multiply) {
-      await this.enterMultiplier(multiply);
+    if (quantity) {
+      await this.enterQuantity(quantity);
     }
 
     if (rollEachInitiative) {

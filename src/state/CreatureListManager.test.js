@@ -347,7 +347,7 @@ describe('addCreature', () => {
     expect(createCreature).toHaveBeenCalledWith(3, expectedCreature);
   });
 
-  it('creates multiple creatures at once based on a multiplier', () => {
+  it('creates multiple creatures at once based on the quantity', () => {
     const initiative = jest.fn()
       .mockReturnValueOnce(9)
       .mockReturnValueOnce(10);
@@ -360,7 +360,7 @@ describe('addCreature', () => {
       name: 'name',
       initiative,
       healthPoints,
-      multiplier: 2,
+      quantity: 2,
     };
 
     const createdCreature = {
@@ -420,12 +420,12 @@ describe('addCreature', () => {
     expect(createCreature).toHaveBeenCalledWith(4, expectedCreature2);
   });
 
-  it('adds multiple creatures to an existing group based on a multiplier', () => {
+  it('adds multiple creatures to an existing group based on the quantity', () => {
     const creature = {
       name: 'Goblin',
       initiative: () => 9,
       healthPoints: () => 10,
-      multiplier: 2,
+      quantity: 2,
     };
 
     const createdCreature = {
@@ -502,7 +502,7 @@ describe('addCreature', () => {
       name: 'name',
       initiative: () => 9,
       healthPoints: () => 10,
-      multiplier: 2,
+      quantity: 2,
     };
 
     const state = {

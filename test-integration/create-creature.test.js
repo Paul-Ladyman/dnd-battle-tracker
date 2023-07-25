@@ -346,14 +346,14 @@ describe('Initiative', () => {
     await DmApp.assertCreatureList(['goblin 2', 'goblin 1', 'goblin 3']);
   });
 
-  it('adds the same initiative to each multiplied creature', async () => {
+  it('adds the same initiative to each creature in a group', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('owlbear', '1', null);
     await dmApp.createCreatureForm.addCreature('goblin', '2', null, '2');
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'owlbear']);
   });
 
-  it('adds the same dice notation initiative to each multiplied creature', async () => {
+  it('adds the same dice notation initiative to each creature in a group', async () => {
     random
       .mockReturnValueOnce(0.999999)
       .mockReturnValueOnce(0);
@@ -430,14 +430,14 @@ describe('Hit points', () => {
     await DmApp.assertCreatureVisible('goblin', '12');
   });
 
-  it('adds the same HP to each multiplied creature', async () => {
+  it('adds the same HP to each creature in a group', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, '1', '2');
     await DmApp.assertCreatureVisible('goblin #1', '1');
     await DmApp.assertCreatureVisible('goblin #2', '1');
   });
 
-  it('adds the same dice notation HP to each multiplied creature', async () => {
+  it('adds the same dice notation HP to each creature in a group', async () => {
     random
       .mockReturnValueOnce(0.999999)
       .mockReturnValueOnce(0);
@@ -468,7 +468,7 @@ describe('Hit points', () => {
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
     await dmApp.createCreatureForm.selectHpRoll();
     await dmApp.createCreatureForm.setRollHpPerCreature();
-    await dmApp.createCreatureForm.enterMultiplier('2');
+    await dmApp.createCreatureForm.enterQuantity('2');
     await dmApp.createCreatureForm.submitCreature();
     await DmApp.assertCreatureVisible('Goblin #1', '12');
     await DmApp.assertCreatureVisible('Goblin #2', '2');
@@ -533,7 +533,7 @@ describe('Armor class', () => {
     await DmApp.assertCreatureVisible('goblin');
   });
 
-  it('adds the same AC to each multiplied creature', async () => {
+  it('adds the same AC to each creature in a group', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, null, '2', null, null, '20');
     await DmApp.assertCreatureVisible('goblin #1', null, '20');
@@ -547,27 +547,27 @@ describe('Armor class', () => {
   });
 });
 
-describe('Multiplier', () => {
-  it('adds a creature to the battle when the multiplier field is submitted', async () => {
+describe('Quantity', () => {
+  it('adds a creature to the battle when the quantity field is submitted', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await dmApp.createCreatureForm.submitMultiplier();
+    await dmApp.createCreatureForm.submitQuantity();
     await DmApp.assertCreatureVisible('goblin');
   });
 
-  it('adds multiples of a creature to the battle', async () => {
+  it('adds a quantity of a creature to the battle', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, null, '2');
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2']);
   });
 
-  it('shows an error when the multiplier is less than 1', async () => {
+  it('shows an error when the quantity is less than 1', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, null, '0');
     await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
   });
 
-  it('shows an error when the multiplier is greater than 50', async () => {
+  it('shows an error when the quantity is greater than 50', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, null, '51');
     await DmApp.assertError('Failed to create creature. Create creature form is invalid.');

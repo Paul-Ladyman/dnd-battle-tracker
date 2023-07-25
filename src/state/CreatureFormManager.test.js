@@ -36,7 +36,7 @@ describe('validateCreature', () => {
       initiativeError: false,
       healthError: false,
       acError: false,
-      multiplierError: false,
+      quantityError: false,
     };
     expect(validateCreature('', '1', 1, 1)).toEqual(expectedErrors);
   });
@@ -51,7 +51,7 @@ describe('validateCreature', () => {
       initiativeError: 'Initiative must be a number.',
       healthError: false,
       acError: false,
-      multiplierError: false,
+      quantityError: false,
     };
     expect(validateCreature('a', initiative, 1, 1)).toEqual(expectedErrors);
   });
@@ -68,7 +68,7 @@ describe('validateCreature', () => {
       initiativeError: false,
       healthError: 'Health must be greater than 0.',
       acError: false,
-      multiplierError: false,
+      quantityError: false,
     };
     expect(validateCreature('a', 1, hp, 1)).toEqual(expectedErrors);
   });
@@ -93,29 +93,29 @@ describe('validateCreature', () => {
       initiativeError: false,
       healthError: false,
       acError: 'AC must be greater than 0.',
-      multiplierError: false,
+      quantityError: false,
     };
     expect(validateCreature('a', 1, 1, ac, 1)).toEqual(expectedErrors);
   });
 
-  test('multiplier must be greater than 0', () => {
+  test('quantity must be greater than 0', () => {
     const expectedErrors = {
       nameError: false,
       initiativeError: false,
       healthError: false,
       acError: false,
-      multiplierError: 'Multiplier must be greater than 0 and less than 50.',
+      quantityError: 'Quantity must be greater than 0 and less than 50.',
     };
     expect(validateCreature('a', 1, 1, 1, 0)).toEqual(expectedErrors);
   });
 
-  test('multiplier must be less than 51', () => {
+  test('quantity must be less than 51', () => {
     const expectedErrors = {
       nameError: false,
       initiativeError: false,
       healthError: false,
       acError: false,
-      multiplierError: 'Multiplier must be greater than 0 and less than 50.',
+      quantityError: 'Quantity must be greater than 0 and less than 50.',
     };
     expect(validateCreature('a', 1, 1, 1, 51)).toEqual(expectedErrors);
   });

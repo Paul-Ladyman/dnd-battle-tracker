@@ -679,20 +679,20 @@ label {
   grid-template-columns: repeat(auto-fit, 15px);
 }
 
-.create-creature-form--multiplier-wrapper {
+.create-creature-form--quantity-wrapper {
   display: flex;
   width: 100%;
   grid-column: span 3;
   align-items: center;
 }
 
-.create-creature-form--multiplier-symbol {
+.create-creature-form--quantity-symbol {
   margin-right: 5px;
   margin-top: 26px;
   font-weight: 700;
 }
 
-.create-creature-form--multiplier-wrapper input {
+.create-creature-form--quantity-wrapper input {
   font-weight: 700;
 }
 
@@ -747,12 +747,12 @@ label {
     grid-column: 2 / span 4;
   }
 
-  .create-creature-form--multiplier-wrapper {
+  .create-creature-form--quantity-wrapper {
     grid-column: 2 / span 2;
     margin-left: 40px;
   }
 
-  .create-creature-form--item__multiplier {
+  .create-creature-form--item__quantity {
     grid-column: 2 / span 2;
   }
 
@@ -760,7 +760,7 @@ label {
     margin-left: 10px;
   }
 
-  .create-creature-form--item__multiplier .form--label {
+  .create-creature-form--item__quantity .form--label {
     text-align: center;
   }
 
