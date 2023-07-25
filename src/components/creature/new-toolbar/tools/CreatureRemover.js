@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import RemoveCreatureIcon from '../../../icons/RemoveCreatureIcon';
+import RemoveIcon from '../../../icons/RemoveIcon';
 
 export default function CreatureRemover({
   creature,
@@ -32,7 +32,7 @@ export default function CreatureRemover({
       onClick={buttonOnClick}
       type="button"
     >
-      <RemoveCreatureIcon />
+      <RemoveIcon />
       {text}
     </button>
   );

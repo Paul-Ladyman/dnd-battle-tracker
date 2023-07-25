@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '../../icons/AddNoteIcon';
 import CrossIcon from '../../icons/CrossIcon';
+import RemoveIcon from '../../icons/RemoveIcon';
 import ComboboxList from '../../form/ComboboxList';
 
 export default function NotesTool({
@@ -50,7 +51,7 @@ export default function NotesTool({
   const leftControls = {};
   const leftControlsItemSelected = {
     leftTitle: 'Remove note',
-    LeftSubmitIcon: <CrossIcon rotate />,
+    LeftSubmitIcon: <RemoveIcon />,
   };
 
   return (

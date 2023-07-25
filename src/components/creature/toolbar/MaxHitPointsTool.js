@@ -1,6 +1,7 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
 import AddHpIcon from '../../icons/AddHpIcon';
+import CrossIcon from '../../icons/CrossIcon';
 
 export default function MaxHitPointsTool({
   name,
@@ -17,7 +18,7 @@ export default function MaxHitPointsTool({
       rightSubmit={(hitPoints) => addHitPointsToCreature(id, hitPoints)}
       rightControls={{
         rightTitle: 'Add/Edit Max HP',
-        RightSubmitIcon: <AddHpIcon />,
+        RightSubmitIcon: <CrossIcon />,
       }}
       inputId={`max-hp-${id}`}
     />

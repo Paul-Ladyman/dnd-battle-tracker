@@ -1,7 +1,7 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import HealIcon from '../../icons/HealIcon';
-import DamageIcon from '../../icons/DamageIcon';
+import CrossIcon from '../../icons/CrossIcon';
+import MinusIcon from '../../icons/MinusIcon';
 import { hotkeys } from '../../../hotkeys/hotkeys';
 
 export default function HealthPointsTool({
@@ -30,14 +30,14 @@ export default function HealthPointsTool({
       leftControls={{
         leftTitle: 'Damage',
         leftEnabled: enableDamage,
-        LeftSubmitIcon: <DamageIcon />,
+        LeftSubmitIcon: <MinusIcon />,
       }}
       rightSubmit={(health) => healCreature(id, health)}
       rightHotkey={hotkeys.healCreature}
       rightControls={{
         rightTitle: 'Heal',
         rightEnabled: enableHeal,
-        RightSubmitIcon: <HealIcon />,
+        RightSubmitIcon: <CrossIcon />,
       }}
       inputId={`damage-${id}`}
     />

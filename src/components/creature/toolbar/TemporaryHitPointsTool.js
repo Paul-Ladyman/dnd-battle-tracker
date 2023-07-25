@@ -1,6 +1,6 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import TempHpIcon from '../../icons/TempHpIcon';
+import CrossIcon from '../../icons/CrossIcon';
 
 export default function TemporaryHitPointsTool({
   name,
@@ -19,7 +19,7 @@ export default function TemporaryHitPointsTool({
       rightControls={{
         rightEnabled: healthPoints !== null,
         rightTitle: 'Add/Edit Temp HP',
-        RightSubmitIcon: <TempHpIcon />,
+        RightSubmitIcon: <CrossIcon />,
       }}
       inputId={`temp-hp-${id}`}
     />

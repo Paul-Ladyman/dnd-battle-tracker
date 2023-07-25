@@ -5,7 +5,7 @@ import StartBattleIcon from '../icons/StartBattleIcon';
 import PageNavigationIcon from '../icons/PageNavigationIcon';
 import OptionsMenuIcon from '../icons/OptionsMenuIcon';
 import SaveLoadIcon from '../icons/SaveLoadIcon';
-import ResetIcon from '../icons/ResetIcon';
+import RemoveIcon from '../icons/RemoveIcon';
 import ShareIcon from '../icons/ShareIcon';
 import RulesSearchMenuIcon from '../icons/RulesSearchMenuIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
@@ -31,7 +31,7 @@ function ResetButton({
       aria-disabled={!creaturesAdded}
       type="button"
     >
-      <ResetIcon />
+      <RemoveIcon />
     </button>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import InitiativeIcon from '../../icons/InitiativeIcon';
+import CrossIcon from '../../icons/CrossIcon';
 
 export default function InitiativeTool({
   name,
@@ -21,7 +21,7 @@ export default function InitiativeTool({
       rightControls={{
         rightTitle: 'Add Initiative',
         rightEnabled: enabled,
-        RightSubmitIcon: <InitiativeIcon />,
+        RightSubmitIcon: <CrossIcon />,
       }}
       inputId={`initiative-${id}`}
     />
