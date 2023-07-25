@@ -1,6 +1,5 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import AddHpIcon from '../../icons/AddHpIcon';
 import CrossIcon from '../../icons/CrossIcon';
 
 export default function MaxHitPointsTool({
