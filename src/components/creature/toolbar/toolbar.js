@@ -1,12 +1,12 @@
 import React from 'react';
-import { CreatureMenuButton, CreatureMenuToolMenu } from './creatureMenu';
-import StatusButton from './status';
-import { InitiativeButton, InitiativeToolMenu } from './initiative';
-import { ConditionsButton, ConditionsToolMenu } from './conditions';
-import { NotesButton, NotesToolMenu } from './notes';
-import { HpButton, HpToolMenu } from './hp';
+import { CreatureMenuButton, CreatureMenuToolMenu } from './tool-menus/creatureMenu';
+import StatusTool from './tools/StatusTool';
+import { InitiativeButton, InitiativeToolMenu } from './tool-menus/initiative';
+import { ConditionsButton, ConditionsToolMenu } from './tool-menus/conditions';
+import { NotesButton, NotesToolMenu } from './tool-menus/notes';
+import { HpButton, HpToolMenu } from './tool-menus/hp';
 
-export default function getButtons() {
+export default function getToolbar() {
   return [
     {
       Button: CreatureMenuButton,
@@ -21,7 +21,7 @@ export default function getButtons() {
       key: (id) => `${id}-initiative`,
     },
     {
-      Button: StatusButton,
+      Button: StatusTool,
       ref: React.createRef(),
       key: (id) => `${id}-kill`,
     },

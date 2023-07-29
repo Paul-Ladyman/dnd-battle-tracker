@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CollapsedCreature from './CollapsedCreature';
 import ExpandedCreature from './ExpandedCreature';
-import NewCreatureToolbar from './new-toolbar/NewCreatureToolbar';
+import CreatureToolbar from './toolbar/CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
 import { getAvailableConditions } from '../../state/ConditionsManager';
@@ -164,7 +164,7 @@ class CreatureWrapper extends Component {
           </div>
         </section>
         { !playerSession && (
-          <NewCreatureToolbar
+          <CreatureToolbar
             creature={creature}
             conditions={getAvailableConditions(creature)}
             creatureManagement={creatureManagement}

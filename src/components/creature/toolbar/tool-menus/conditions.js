@@ -1,6 +1,6 @@
 import React from 'react';
 import ConditionsIcon from '../../../icons/ConditionsIcon';
-import ConditionsTool from '../../toolbar/ConditionsTool';
+import ConditionsTool from '../tools/ConditionsTool';
 
 export function ConditionsToolMenu({
   creature,

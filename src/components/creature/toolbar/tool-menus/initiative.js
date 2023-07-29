@@ -1,6 +1,6 @@
 import React from 'react';
 import InitiativeIcon from '../../../icons/InitiativeIcon';
-import InitiativeTool from '../../toolbar/InitiativeTool';
+import InitiativeTool from '../tools/InitiativeTool';
 
 export function InitiativeToolMenu({
   creature,

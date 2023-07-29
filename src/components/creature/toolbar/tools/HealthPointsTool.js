@@ -1,8 +1,8 @@
 import React from 'react';
 import CreatureToolbarInput from './CreatureToolbarInput';
-import CrossIcon from '../../icons/CrossIcon';
-import MinusIcon from '../../icons/MinusIcon';
-import { hotkeys } from '../../../hotkeys/hotkeys';
+import CrossIcon from '../../../icons/CrossIcon';
+import MinusIcon from '../../../icons/MinusIcon';
+import { hotkeys } from '../../../../hotkeys/hotkeys';
 
 export default function HealthPointsTool({
   name,

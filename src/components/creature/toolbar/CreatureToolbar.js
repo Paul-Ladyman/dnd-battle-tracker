@@ -4,7 +4,7 @@ import React, {
   useRef,
   useMemo,
 } from 'react';
-import getButtons from './buttons/buttons';
+import getToolbar from './toolbar';
 
 function isHotkeyForward(e) {
   return e.keyCode === 39;
@@ -22,7 +22,7 @@ function isHotkeyEnd(e) {
   return e.keyCode === 35;
 }
 
-export default function NewCreatureToolbar({
+export default function CreatureToolbar({
   creature,
   conditions,
   creatureManagement,
@@ -36,7 +36,7 @@ export default function NewCreatureToolbar({
     id, name,
   } = creature;
 
-  const buttons = useMemo(getButtons, []);
+  const buttons = useMemo(getToolbar, []);
 
   const wrapperId = `toolbar-wrapper-${id}`;
 

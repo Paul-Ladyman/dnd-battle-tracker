@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AddNoteIcon from '../../icons/AddNoteIcon';
-import CrossIcon from '../../icons/CrossIcon';
-import RemoveIcon from '../../icons/RemoveIcon';
-import ComboboxList from '../../form/ComboboxList';
+import AddNoteIcon from '../../../icons/AddNoteIcon';
+import CrossIcon from '../../../icons/CrossIcon';
+import RemoveIcon from '../../../icons/RemoveIcon';
+import ComboboxList from '../../../form/ComboboxList';
 
 export default function NotesTool({
   name,

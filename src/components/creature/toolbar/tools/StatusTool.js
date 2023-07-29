@@ -1,7 +1,7 @@
 import React from 'react';
 import KillStabalizeIcon from '../../../icons/KillStabalizeIcon';
 
-export default function StatusButton({
+export default function StatusTool({
   creature,
   onFocus,
   onClick,

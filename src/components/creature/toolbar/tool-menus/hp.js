@@ -1,8 +1,8 @@
 import React from 'react';
 import HpIcon from '../../../icons/AddHpIcon';
-import HealthPointsTool from '../../toolbar/HealthPointsTool';
-import MaxHitPointsTool from '../../toolbar/MaxHitPointsTool';
-import TemporaryHitPointsTool from '../../toolbar/TemporaryHitPointsTool';
+import HealthPointsTool from '../tools/HealthPointsTool';
+import MaxHitPointsTool from '../tools/MaxHitPointsTool';
+import TemporaryHitPointsTool from '../tools/TemporaryHitPointsTool';
 
 export function HpToolMenu({
   creature,

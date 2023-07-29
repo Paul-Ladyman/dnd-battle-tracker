@@ -1,6 +1,6 @@
 import React from 'react';
 import NotesIcon from '../../../icons/AddNoteIcon';
-import NotesTool from '../../toolbar/NotesTool';
+import NotesTool from '../tools/NotesTool';
 
 export function NotesToolMenu({
   creature,
