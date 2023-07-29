@@ -78,7 +78,6 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Hamburger menu](https://game-icons.net/1x1/delapouite/hamburger-menu.html)
   * [Save arrow](https://game-icons.net/1x1/delapouite/save-arrow.html)
   * [Share](https://game-icons.net/1x1/delapouite/share.html)
-  * [Broom](https://game-icons.net/1x1/delapouite/broom.html)
   * [Padlock open](https://game-icons.net/1x1/delapouite/padlock-open.html)
   * [Contract](https://game-icons.net/1x1/delapouite/contract.html)
   * [Expand](https://game-icons.net/1x1/delapouite/expand.html)
@@ -86,14 +85,13 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Pencil](https://game-icons.net/1x1/delapouite/pencil.html)
   * [Player time](https://game-icons.net/1x1/delapouite/player-time.html)
   * [Next button](https://game-icons.net/1x1/delapouite/next-button.html)
-  * [Dice 20 faces 20](https://game-icons.net/1x1/delapouite/dice-twenty-faces-twenty.html)
   * [ID Card](https://game-icons.net/1x1/delapouite/id-card.html)
+  * [Spell book](https://game-icons.net/1x1/delapouite/spell-book.html)
 * Icons by [Lorc](http://lorcblog.blogspot.com/):
   * [Magnifying glass](https://game-icons.net/1x1/lorc/magnifying-glass.html)
   * [Crossed swords](https://game-icons.net/1x1/lorc/crossed-swords.html)
   * [Padlock](https://game-icons.net/1x1/lorc/padlock.html)
   * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
-  * [Charm](https://game-icons.net/1x1/lorc/charm.html)
   * [Two shadows](https://game-icons.net/1x1/lorc/two-shadows.html)
   * [Backup](https://game-icons.net/1x1/lorc/backup.html)
 

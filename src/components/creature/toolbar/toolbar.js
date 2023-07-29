@@ -5,9 +5,10 @@ import { InitiativeButton, InitiativeToolMenu } from './tool-menus/initiative';
 import { ConditionsButton, ConditionsToolMenu } from './tool-menus/conditions';
 import { NotesButton, NotesToolMenu } from './tool-menus/notes';
 import { HpButton, HpToolMenu } from './tool-menus/hp';
+import { SpellSlotsButton, SpellSlotsToolMenu } from './tool-menus/spellSlots';
 
 export default function getToolbar() {
-  return [
+  const toolbar = [
     {
       Button: CreatureMenuButton,
       ToolMenu: CreatureMenuToolMenu,
@@ -44,4 +45,14 @@ export default function getToolbar() {
       key: (id) => `${id}-notes`,
     },
   ];
+
+  if (window.FLAG_spellSlots) {
+    toolbar.push({
+      Button: SpellSlotsButton,
+      ToolMenu: SpellSlotsToolMenu,
+      ref: React.createRef(),
+      key: (id) => `${id}-spell-slots`,
+    });
+  }
+  return toolbar;
 }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
 import PlayerAppWrapper from './components/app/PlayerAppWrapper';
 import ErrorBoundary from './components/error/ErrorBoundary';
+import featureFlags from './featureFlags';
 
 function getUrlParameter(name) {
   const cleanName = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
@@ -11,10 +12,12 @@ function getUrlParameter(name) {
   return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
-// function setFeatureFlag(flag) {
-//   const value = getUrlParameter(flag);
-//   window[`FLAG_${flag}`] = value === 'true';
-// }
+function setFeatureFlags() {
+  featureFlags.forEach((flag) => {
+    const value = getUrlParameter(flag);
+    window[`FLAG_${flag}`] = value === 'true';
+  });
+}
 
 function RenderPlayerApp({ battleId }) {
   return (
@@ -42,6 +45,7 @@ const battleId = getUrlParameter('battle');
 
 async function render() {
   registerServiceworker();
+  setFeatureFlags();
   const rootElement = document.getElementById('root');
 
   if (battleId) {
