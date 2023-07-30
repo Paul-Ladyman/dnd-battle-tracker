@@ -10,6 +10,7 @@ function isInputDisabled(leftEnabled, rightEnabled) {
 
 function Input({
   integer,
+  spinner,
   error,
   required,
   inputRef,
@@ -61,11 +62,12 @@ function Input({
   const rightButtonClasses = rightDisabled ? `${buttonClass} ${buttonClass}__right ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__right`;
 
   const inputClassDisabled = inputDisabled ? 'input__disabled' : '';
+  const inputSpinnerClass = spinner ? '' : 'input__no-spinner';
   const inputClassRightModifier = RightSubmitIcon || RightControl ? 'input__button-right' : '';
   const inputClassLeftModifier = LeftSubmitIcon ? 'input__button-left' : '';
   const inputClassLeftDisabled = leftDisabled ? 'input__button-left-disabled' : '';
   const inputClassRightDisabled = rightDisabled ? 'input__button-right-disabled' : '';
-  const inputClasses = `input ${inputClassDisabled} ${inputClassLeftModifier} ${inputClassLeftDisabled} ${inputClassRightModifier} ${inputClassRightDisabled}`;
+  const inputClasses = `input ${inputClassDisabled} ${inputClassLeftModifier} ${inputClassLeftDisabled} ${inputClassRightModifier} ${inputClassRightDisabled} ${inputSpinnerClass}`;
 
   const leftSubmit = (e) => {
     e.preventDefault();
