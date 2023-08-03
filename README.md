@@ -28,6 +28,7 @@ As a new DM I found that I was frequently making mistakes during combat, such as
 It was clear that some automation would be helpful. There's a number of browser-based combat trackers out there at the time of writing, in no particular order:
 
 * [D&D Beyond](https://www.dndbeyond.com/combat-tracker)
+* [Avrae](https://avrae.io/)
 * [Aide D&D](https://www.aidedd.org/en/online-assistant/)
 * [DHMStark](http://dhmstark.co.uk/rpgs/encounter-tracker/)
 * [Donjon](https://donjon.bin.sh/5e/initiative/)
