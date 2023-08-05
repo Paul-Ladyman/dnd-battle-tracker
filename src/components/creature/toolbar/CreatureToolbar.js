@@ -159,7 +159,7 @@ export default function CreatureToolbar({
   const tabIndex = focusedButton === null ? 0 : focusedButton;
   const toolMenuExpanded = !!ToolMenu;
   const toolMenuDisplay = toolMenuExpanded ? 'block' : 'none';
-  const toolMenuId = `${name}-tool-menu`;
+  const toolMenuId = `${id}-tool-menu`;
 
   return (
     <div
@@ -181,7 +181,7 @@ export default function CreatureToolbar({
           } = button;
           return (
             <Button
-              key={key}
+              key={key(id)}
               creature={creature}
               buttonRef={ref}
               focused={selectedButton === i}
@@ -196,7 +196,7 @@ export default function CreatureToolbar({
           );
         })}
       </div>
-      { toolMenuExpanded && <div className="expanded-creature--separator" />}
+      { toolMenuExpanded && <div className="creature-toolbar-separator" />}
       <div
         role="menu"
         aria-label={`${name} tool menu`}
@@ -210,6 +210,7 @@ export default function CreatureToolbar({
             conditions={conditions}
             creatureManagement={creatureManagement}
             active={active}
+            toolMenuId={toolMenuId}
           />
           )}
       </div>

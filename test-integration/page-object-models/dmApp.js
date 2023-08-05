@@ -3,7 +3,6 @@ import React from 'react';
 import {
   screen,
   getByRole,
-  queryByRole,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DndBattleTracker from './dndBattleTracker';
@@ -15,6 +14,7 @@ import StatusTool from './statusTool';
 import HpTool from './hpTool';
 import InitiativeTool from './initiativeTool';
 import ConditionsTool from './conditionsTool';
+import SpellSlotsTool from './spellSlotsTool';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
@@ -26,6 +26,7 @@ export default class DmApp extends DndBattleTracker {
     this.hpTool = new HpTool(this.user);
     this.initiativeTool = new InitiativeTool(this.user);
     this.conditionsTool = new ConditionsTool(this.user);
+    this.spellSlotsTool = new SpellSlotsTool(this.user);
   }
 
   async startBattle() {

@@ -20,3 +20,13 @@ describe('Spell Slots tool', () => {
     await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
   });
 });
+
+describe('Spell Slot tabs', () => {
+  it('selects the Used Spell Slots tab by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.spellSlotsTool.assertUsedTabSelected();
+    await dmApp.spellSlotsTool.assertTotalTabUnselected();
+  });
+});

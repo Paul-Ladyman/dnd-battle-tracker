@@ -668,6 +668,12 @@ label {
   grid-column: span 5;
 }
 
+.creature-toolbar-separator {
+  margin-bottom: 25px;
+  margin-top: 10px;
+  border-bottom: 1px solid #822000;
+}
+
 /* Create creature form */
 
 .create-creature-form {
@@ -1191,4 +1197,48 @@ label {
     box-shadow: none;
     background-color: transparent;
   }
+}
+ 
+/* Tab list */
+
+.tablist-container {
+  width: fit-content;
+}
+
+.tablist {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #822000;
+}
+
+button[role=tab] {
+  min-width: 88px;
+  width: auto;
+  font-size: 16px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 10px;
+  padding: 0 10px;
+  border-bottom: none;
+}
+
+button[role=tab]:hover,
+button[role=tab]:focus  {
+  padding: 0px 9px 1px 9px;
+}
+
+button[role=tab][aria-selected=true] {
+  background-color: #EBE1AD;
+  border: 1px solid #822000;
+  border-bottom-width: 4px;
+  box-shadow: 0 0 5px #979aa4;
+  font-weight: bold;
+  height: 48px;
+  margin-top: -4px;
+}
+
+button[role=tab][aria-selected=true]:hover,
+button[role=tab][aria-selected=true]:focus  {
+  padding: 0px 10px;
 }

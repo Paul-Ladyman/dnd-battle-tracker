@@ -1,11 +1,13 @@
 import React from 'react';
 import SpellSlotsIcon from '../../../icons/SpellSlotsIcon';
+import TabList from '../../../widgets/TabList';
 
-export function SpellSlotsToolMenu() {
+export function SpellSlotsToolMenu({ toolMenuId }) {
+  const tabs = ['Used', 'Total'];
+  const labelledBy = `${toolMenuId}-spell-slots`;
+  const id = `${toolMenuId}-spell-slots-tabs`;
   return (
-    <div className="new-creature-toolbar--tool-menu">
-      Spell slots !
-    </div>
+    <TabList labelledBy={labelledBy} tabs={tabs} id={id} />
   );
 }
 
@@ -33,6 +35,7 @@ export function SpellSlotsButton({
       aria-haspopup="true"
       aria-controls={toolMenuId}
       aria-expanded={toolMenuExpanded}
+      id={`${toolMenuId}-spell-slots`}
     >
       <SpellSlotsIcon />
       Spell Slots
