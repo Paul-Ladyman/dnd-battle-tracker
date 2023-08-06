@@ -1242,3 +1242,19 @@ button[role=tab][aria-selected=true]:hover,
 button[role=tab][aria-selected=true]:focus  {
   padding: 0px 10px;
 }
+
+/* Spell Slot Toolbar */
+.spell-slots-container {
+  padding-left: 10px;
+}
+
+.spell-slot-row {
+  grid-gap: 34px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 10px);
+  margin-bottom: 22px;
+}
+
+.spell-slot {
+  grid-column: span 2;
+}

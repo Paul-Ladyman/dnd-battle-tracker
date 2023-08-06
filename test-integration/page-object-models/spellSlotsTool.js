@@ -11,15 +11,23 @@ export default class SpellSlotsTool {
     this.user = user;
   }
 
-  async assertUsedTabSelected() {
-    const tablist = await screen.findByRole('tablist', { name: 'Spell Slots' });
-    const tab = await findByRole(tablist, 'tab', { name: 'Used' });
-    return expect(tab).toHaveAttribute('aria-selected', 'true');
+  async openTotalSpellSlots(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tab = await findByRole(toolMenu, 'tab', { name: 'Total' });
+    return this.user.click(tab);
   }
 
-  async assertTotalTabUnselected() {
-    const tablist = await screen.findByRole('tablist', { name: 'Spell Slots' });
-    const tab = await findByRole(tablist, 'tab', { name: 'Total' });
-    return expect(tab).toHaveAttribute('aria-selected', 'false');
+  async assertUsedSpellSlotValue(name, level, value) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Used' });
+    const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: `${level} Level` });
+    return expect(spellSlot).toHaveValue(value);
+  }
+
+  async assertTotalSpellSlotValue(name, level, value) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total' });
+    const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: `${level} Level` });
+    return expect(spellSlot).toHaveValue(value);
   }
 }

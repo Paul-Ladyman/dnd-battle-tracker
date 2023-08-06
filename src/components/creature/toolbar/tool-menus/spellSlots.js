@@ -1,13 +1,22 @@
 import React from 'react';
 import SpellSlotsIcon from '../../../icons/SpellSlotsIcon';
 import TabList from '../../../widgets/TabList';
+import SpellSlotTool from '../tools/SpellSlotTool';
 
-export function SpellSlotsToolMenu({ toolMenuId }) {
+export function SpellSlotsToolMenu({
+  creature,
+  toolMenuId,
+}) {
+  const { id: creatureId } = creature;
   const tabs = ['Used', 'Total'];
+  const panels = [
+    <SpellSlotTool id="used" creatureId={creatureId} defaultValue={0} />,
+    <SpellSlotTool id="total" creatureId={creatureId} defaultValue={null} />,
+  ];
   const labelledBy = `${toolMenuId}-spell-slots`;
   const id = `${toolMenuId}-spell-slots-tabs`;
   return (
-    <TabList labelledBy={labelledBy} tabs={tabs} id={id} />
+    <TabList labelledBy={labelledBy} tabs={tabs} panels={panels} id={id} customClasses="spell-slots-container" />
   );
 }
 
