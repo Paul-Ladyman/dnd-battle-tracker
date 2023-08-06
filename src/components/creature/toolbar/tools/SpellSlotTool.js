@@ -1,5 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../../../form/Input';
+
+function SpellSlot({
+  defaultValue,
+  ariaLabel,
+  label,
+  inputId,
+}) {
+  const [value, setValue] = useState(defaultValue);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  return (
+    <Input
+      integer
+      spinner
+      value={value}
+      ariaLabel={ariaLabel}
+      label={label}
+      inputId={inputId}
+      customClasses="spell-slot"
+      handleChange={handleChange}
+    />
+  );
+}
 
 function SpellSlotRow({
   row,
@@ -11,14 +37,11 @@ function SpellSlotRow({
     <div className="spell-slot-row">
       {
         row.map((level) => (
-          <Input
-            integer
-            spinner
-            value={defaultValue}
+          <SpellSlot
+            defaultValue={defaultValue}
             ariaLabel={`${level} Level`}
             label={`${level} Lvl`}
             inputId={`${creatureId}-${id}-spell-slots-${level}`}
-            customClasses="spell-slot"
           />
         ))
       }
