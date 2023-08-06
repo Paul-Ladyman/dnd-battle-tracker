@@ -17,8 +17,17 @@ export default function TabList({
         {tabs.map((tab, i) => {
           const isSelected = i === selected;
           const key = `${id}-${tab}`;
+          const panelId = `${id}-${tab}-panel`;
           return (
-            <button type="button" role="tab" aria-selected={isSelected} key={key} id={key} onClick={() => onClick(i)}>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={isSelected}
+              aria-controls={panelId}
+              key={key}
+              id={key}
+              onClick={() => onClick(i)}
+            >
               {tab}
             </button>
           );
@@ -31,7 +40,7 @@ export default function TabList({
           const tabId = `${id}-${tab}`;
           const key = `${id}-${tab}-panel`;
           return (
-            <div role="tabpanel" key={key} aria-labelledby={tabId} style={{ display }}>
+            <div role="tabpanel" key={key} id={key} aria-labelledby={tabId} style={{ display }}>
               {panel}
             </div>
           );
