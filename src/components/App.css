@@ -1244,10 +1244,6 @@ button[role=tab][aria-selected=true]:focus  {
 }
 
 /* Spell Slot Toolbar */
-.spell-slots-container {
-  padding-left: 10px;
-}
-
 @media only screen and (min-width: 1175px) {
   .spell-slot-grid {
     display: flex;
@@ -1256,6 +1252,10 @@ button[role=tab][aria-selected=true]:focus  {
 }
 
 @media only screen and (max-width: 1175px) {
+  .spell-slots-container {
+    padding-left: 10px;
+  }
+
   .spell-slot-row {
     margin-bottom: 22px;
   }
