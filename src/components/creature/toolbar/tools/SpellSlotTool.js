@@ -43,13 +43,15 @@ function SpellSlotRow({
     <div className="spell-slot-row">
       {
         row.map((level) => {
+          const inputId = `${creatureId}-${id}-spell-slots-${level}`;
           const max = maxValues && maxValues[level];
           return (
             <SpellSlot
+              key={inputId}
               defaultValue={defaultValue}
               ariaLabel={`${level} Level`}
               label={`${level} Lvl`}
-              inputId={`${creatureId}-${id}-spell-slots-${level}`}
+              inputId={inputId}
               max={max}
             />
           );
@@ -99,7 +101,7 @@ export default function SpellSlotTool({ creatureId, toolMenuId }) {
   const tabs = ['Used', 'Total'];
   const panels = [
     <SpellSlotGrid id="used" creatureId={creatureId} defaultValue={0} />,
-    <SpellSlotGrid id="total" creatureId={creatureId} defaultValue={null} maxValues={maxSpellSlots} />,
+    <SpellSlotGrid id="total" creatureId={creatureId} defaultValue="" maxValues={maxSpellSlots} />,
   ];
   const labelledBy = `${toolMenuId}-spell-slots`;
   const id = `${toolMenuId}-spell-slots-tabs`;

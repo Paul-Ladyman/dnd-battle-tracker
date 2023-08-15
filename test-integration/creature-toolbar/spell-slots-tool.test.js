@@ -54,7 +54,7 @@ describe('Used spell slots', () => {
 });
 
 describe('Total spell slots', () => {
-  it('sets the number of total spell slots for all levels to null by default', async () => {
+  it('does not set the number of total spell slots for all levels by default', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
