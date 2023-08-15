@@ -69,7 +69,7 @@ function SpellSlotGrid({
   const row2 = ['4th', '5th', '6th'];
   const row3 = ['7th', '8th', '9th'];
   return (
-    <>
+    <div className="spell-slot-grid">
       <SpellSlotRow
         row={row1}
         id={id}
@@ -91,7 +91,7 @@ function SpellSlotGrid({
         defaultValue={defaultValue}
         maxValues={maxValues}
       />
-    </>
+    </div>
   );
 }
 

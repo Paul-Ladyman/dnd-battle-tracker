@@ -1248,15 +1248,27 @@ button[role=tab][aria-selected=true]:focus  {
   padding-left: 10px;
 }
 
+@media only screen and (min-width: 1175px) {
+  .spell-slot-grid {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media only screen and (max-width: 1175px) {
+  .spell-slot-row {
+    margin-bottom: 22px;
+  }
+}
+
 .spell-slot-row {
-  grid-gap: 34px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 10px);
-  margin-bottom: 22px;
+  display: flex;
+  flex-direction: row;
 }
 
 .spell-slot {
-  grid-column: span 2;
+  width: 56px;
+  margin-right: 22px;
 }
 
 .spell-slot input:invalid {
