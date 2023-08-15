@@ -24,10 +24,31 @@ export default class SpellSlotsTool {
     return expect(spellSlot).toHaveValue(value);
   }
 
+  async assertUsedSpellSlotMin(name, level, value) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Used' });
+    const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: `${level} Level` });
+    return expect(spellSlot).toHaveAttribute('min', value);
+  }
+
   async assertTotalSpellSlotValue(name, level, value) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total' });
     const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: `${level} Level` });
     return expect(spellSlot).toHaveValue(value);
+  }
+
+  async assertTotalSpellSlotMin(name, level, value) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total' });
+    const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: `${level} Level` });
+    return expect(spellSlot).toHaveAttribute('min', value);
+  }
+
+  async assertTotalSpellSlotMax(name, level, value) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total' });
+    const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: `${level} Level` });
+    return expect(spellSlot).toHaveAttribute('max', value);
   }
 }

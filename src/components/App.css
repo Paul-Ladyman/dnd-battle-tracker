@@ -1258,3 +1258,7 @@ button[role=tab][aria-selected=true]:focus  {
 .spell-slot {
   grid-column: span 2;
 }
+
+.spell-slot input:invalid {
+  border-color: red;
+}
