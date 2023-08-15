@@ -100,7 +100,7 @@ function SpellSlotGrid({
 export default function SpellSlotTool({ creatureId, toolMenuId }) {
   const tabs = ['Used', 'Total'];
   const panels = [
-    <SpellSlotGrid id="used" creatureId={creatureId} defaultValue={0} />,
+    <SpellSlotGrid id="used" creatureId={creatureId} defaultValue={0} maxValues={maxSpellSlots} />,
     <SpellSlotGrid id="total" creatureId={creatureId} defaultValue="" maxValues={maxSpellSlots} />,
   ];
   const labelledBy = `${toolMenuId}-spell-slots`;
