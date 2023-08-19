@@ -12,6 +12,8 @@ export default {
       shared: true,
       hitPointsShared: true,
       statBlock: null,
+      totalSpellSlots: null,
+      usedSpellSlots: null,
     },
     {
       name: 'Goblin #1',
@@ -27,6 +29,8 @@ export default {
       shared: false,
       hitPointsShared: true,
       statBlock: 'https://www.dndbeyond.com/monsters/goblin',
+      totalSpellSlots: null,
+      usedSpellSlots: null,
     },
     {
       name: 'Goblin #2',
@@ -42,6 +46,8 @@ export default {
       shared: true,
       hitPointsShared: true,
       statBlock: 'https://www.dndbeyond.com/monsters/goblin',
+      totalSpellSlots: null,
+      usedSpellSlots: null,
     },
   ],
   creatureIdCount: 3,

@@ -1621,6 +1621,40 @@ describe('addTotalSpellSlots', () => {
     expect(result).toEqual(expectedState);
   });
 
+  it('overrides the previous total number of spell slots for a specific level', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          totalSpellSlots: {
+            '1st': 4,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          totalSpellSlots: {
+            '1st': 2,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 2 1st level spell slots'],
+    };
+
+    const result = addTotalSpellSlots(state, 1, '1st', 2);
+    expect(result).toEqual(expectedState);
+  });
+
   it('maintains existing spell slots when adding a new level to a creature', () => {
     const state = {
       ...defaultState,
@@ -1754,6 +1788,11 @@ describe('addTotalSpellSlots', () => {
     const result = addTotalSpellSlots(defaultState, 1, '1st', -1);
     expect(result).toEqual(defaultState);
   });
+
+  it('does nothing if the spell slot level is not valid', () => {
+    const result = addTotalSpellSlots(defaultState, 1, 'nth', 1);
+    expect(result).toEqual(defaultState);
+  });
 });
 
 describe('addUsedSpellSlots', () => {
@@ -1774,6 +1813,40 @@ describe('addUsedSpellSlots', () => {
     };
 
     const result = addUsedSpellSlots(defaultState, 1, '1st', 1);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('overrides the previous used number of spell slots for a specific level', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          usedSpellSlots: {
+            '1st': 4,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          usedSpellSlots: {
+            '1st': 2,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has used 2 1st level spell slots'],
+    };
+
+    const result = addUsedSpellSlots(state, 1, '1st', 2);
     expect(result).toEqual(expectedState);
   });
 
@@ -1823,6 +1896,11 @@ describe('addUsedSpellSlots', () => {
 
   it('does nothing if the used value is less than 0', () => {
     const result = addUsedSpellSlots(defaultState, 1, '1st', -1);
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing if the spell slot level is not valid', () => {
+    const result = addUsedSpellSlots(defaultState, 1, 'nth', 1);
     expect(result).toEqual(defaultState);
   });
 });

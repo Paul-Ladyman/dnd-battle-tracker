@@ -311,7 +311,7 @@ export function isCreatureStable(creature) {
 
 export function addTotalSpellSlots(state, creatureId, level, slots) {
   const max = maxSpellSlots[level];
-  if (slots < 0 || slots > max) return state;
+  if (max === undefined || slots < 0 || slots > max) return state;
 
   const creature = findCreature(state.creatures, creatureId);
   const { totalSpellSlots, usedSpellSlots } = creature;
@@ -339,7 +339,7 @@ export function addTotalSpellSlots(state, creatureId, level, slots) {
 
 export function addUsedSpellSlots(state, creatureId, level, slots) {
   const max = maxSpellSlots[level];
-  if (slots < 0 || slots > max) return state;
+  if (max === undefined || slots < 0 || slots > max) return state;
 
   const creature = findCreature(state.creatures, creatureId);
   const { usedSpellSlots, totalSpellSlots } = creature;
