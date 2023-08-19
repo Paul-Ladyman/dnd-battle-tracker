@@ -1,6 +1,6 @@
 {
   "name": "dnd-battle-tracker",
-  "version": "5.73.0",
+  "version": "5.73.1",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.16",
@@ -30,7 +30,7 @@
   },
   "size-limit": [
     {
-      "limit": "246 kb",
+      "limit": "247 kb",
       "path": "dist-final/dnd-battle-tracker.html"
     }
   ],
