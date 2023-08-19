@@ -1,6 +1,7 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
 import CreatureStatus from './CreatureStatus';
+import maxSpellSlots from '../../domain/spellSlots';
 
 export default function ExpandedCreature({
   creature,
@@ -12,10 +13,33 @@ export default function ExpandedCreature({
   playerSession,
 }) {
   const {
-    initiative, id, conditions, notes, shared, armorClass,
+    initiative, id, conditions, notes, shared, armorClass, totalSpellSlots, usedSpellSlots,
   } = creature;
   const showInitiative = initiative !== undefined && initiative !== null;
   const showAc = armorClass !== null && armorClass !== undefined;
+
+  const spellSlotMeters = Object.keys(maxSpellSlots).map((level) => {
+    const total = totalSpellSlots?.[level];
+    const used = usedSpellSlots?.[level];
+    const max = total || used || 0;
+    if (max === 0) return null;
+
+    const now = used || 0;
+
+    const usedMeter = new Array(now).fill('X');
+    const remainingMeter = new Array(max - now).fill('0');
+
+    const slotsId = `${id}-spell-slots-${level}`;
+    return (
+      <div key={level} className="spell-slot-meter-container">
+        <div id={slotsId}>{`${level} Level`}</div>
+        <div role="meter" aria-valuemin="0" aria-valuemax={max} aria-valuenow={now} aria-labelledby={slotsId}>
+          {usedMeter}
+          {remainingMeter}
+        </div>
+      </div>
+    );
+  }).filter((_) => _);
 
   return (
     <div className="expanded-creature">
@@ -60,6 +84,12 @@ export default function ExpandedCreature({
         secondsElapsed={secondsElapsed}
         playerSession={playerSession}
       />
+      {spellSlotMeters.length > 0 && (
+        <div className="avoid-break">
+          <div className="creature-note-list--label">Spell Casting</div>
+          {spellSlotMeters}
+        </div>
+      )}
     </div>
   );
 }

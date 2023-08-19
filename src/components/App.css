@@ -1279,3 +1279,8 @@ button[role=tab][aria-selected=true]:focus  {
   text-decoration: line-through wavy;
   text-decoration-color: #822000;
 }
+
+.spell-slot-meter-container {
+  display: flex;
+  flex-direction: row;
+}
