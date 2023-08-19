@@ -42,6 +42,7 @@ function SpellSlot({
       inputId={inputId}
       customClasses="spell-slot"
       handleChange={handleChange}
+      disabled={max === '0'}
     />
   );
 }

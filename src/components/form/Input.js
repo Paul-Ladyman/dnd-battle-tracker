@@ -1,6 +1,8 @@
 import React from 'react';
 
-function isInputDisabled(leftEnabled, rightEnabled) {
+function isInputDisabled(disabled, leftEnabled, rightEnabled) {
+  if (disabled) return true;
+
   if (leftEnabled !== undefined && rightEnabled !== undefined) {
     return leftEnabled === false && rightEnabled === false;
   }
@@ -35,6 +37,7 @@ function Input({
   onClick,
   onBlur,
   spellCheck = true,
+  disabled,
 }) {
   const {
     leftEnabled,
@@ -55,7 +58,7 @@ function Input({
 
   const leftDisabled = leftEnabled === false;
   const rightDisabled = rightEnabled === false;
-  const inputDisabled = isInputDisabled(leftEnabled, rightEnabled);
+  const inputDisabled = isInputDisabled(disabled, leftEnabled, rightEnabled);
 
   const buttonClass = 'input--submit';
   const leftButtonClasses = leftDisabled ? `${buttonClass} ${buttonClass}__left ${buttonClass}__disabled` : `${buttonClass} ${buttonClass}__left`;
@@ -124,6 +127,7 @@ function Input({
           role={role}
           autoComplete="off"
           spellCheck={spellCheck}
+          aria-disabled={inputDisabled}
         />
         {RightControl && <div className={`button ${rightButtonClasses}`} style={{ display: 'flex', justifyContent: 'center' }}>{RightControl}</div>}
         {!RightControl && RightSubmitIcon
