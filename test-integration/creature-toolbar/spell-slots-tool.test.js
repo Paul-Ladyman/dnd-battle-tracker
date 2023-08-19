@@ -119,7 +119,9 @@ describe('Used spell slots', () => {
     await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', level, '0');
 
-    await dmApp.spellSlotsTool.openUsedSpellSlots('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+
     await dmApp.spellSlotsTool.assertUsedSpellSlotValue('goblin', level, 0);
   });
 

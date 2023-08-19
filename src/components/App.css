@@ -1274,3 +1274,8 @@ button[role=tab][aria-selected=true]:focus  {
 .spell-slot input:invalid {
   border-color: red;
 }
+
+.spell-slot__max label {
+  text-decoration: line-through wavy;
+  text-decoration-color: #822000;
+}

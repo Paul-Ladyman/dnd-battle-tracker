@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Input from '../../../form/Input';
 import TabList from '../../../widgets/TabList';
 import maxSpellSlots from '../../../../domain/spellSlots';
@@ -13,34 +13,34 @@ function SpellSlot({
   defaultMaxValues,
   maxValues,
   addSpellSlots,
+  displayMaxExceeded,
 }) {
-  const initialValue = values?.[level] || defaultValue;
+  const slots = values?.[level]?.toString();
+  const initialValue = slots || defaultValue;
   const [value, setValue] = useState(initialValue);
 
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
   const inputId = `${creatureId}-${id}-spell-slots-${level}`;
-  const max = maxValues?.[level] || defaultMaxValues[level];
+  const max = maxValues?.[level]?.toString() || defaultMaxValues[level]?.toString();
+  const maxExceeded = value >= max;
+  const maxClass = displayMaxExceeded && maxExceeded ? 'spell-slot__max' : '';
 
   const handleChange = (event) => {
     const { value: newValue } = event.target;
     setValue(newValue);
-    addSpellSlots(creatureId, level, newValue);
+    if (newValue !== '') addSpellSlots(creatureId, level, parseInt(newValue, 10));
   };
 
   return (
     <Input
       integer
-      min={0}
+      min="0"
       max={max}
       spinner
       value={value}
       ariaLabel={`${level} Level`}
       label={`${level} Lvl`}
       inputId={inputId}
-      customClasses="spell-slot"
+      customClasses={`spell-slot ${maxClass}`}
       handleChange={handleChange}
       disabled={max === '0'}
     />
@@ -96,11 +96,12 @@ export default function SpellSlotTool({
     <SpellSlotGrid
       id="used"
       creatureId={creatureId}
-      defaultValue={0}
+      defaultValue="0"
       values={usedSpellSlots}
       defaultMaxValues={maxSpellSlots}
       maxValues={totalSpellSlots}
       addSpellSlots={addUsedSpellSlots}
+      displayMaxExceeded
     />,
     <SpellSlotGrid
       id="total"
