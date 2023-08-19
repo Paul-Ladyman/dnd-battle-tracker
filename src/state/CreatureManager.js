@@ -1,6 +1,7 @@
 import getSecondsElapsed from './TimeManager';
 import { allConditions, addCondition, removeCondition } from './ConditionsManager';
 import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
+import maxSpellSlots from '../domain/spellSlots';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({ id }) => creatureId === id);
@@ -309,6 +310,9 @@ export function isCreatureStable(creature) {
 }
 
 export function addTotalSpellSlots(state, creatureId, level, slots) {
+  const max = maxSpellSlots[level];
+  if (slots < 0 || slots > max) return state;
+
   const creature = findCreature(state.creatures, creatureId);
   const { totalSpellSlots, usedSpellSlots } = creature;
 
@@ -334,8 +338,14 @@ export function addTotalSpellSlots(state, creatureId, level, slots) {
 }
 
 export function addUsedSpellSlots(state, creatureId, level, slots) {
+  const max = maxSpellSlots[level];
+  if (slots < 0 || slots > max) return state;
+
   const creature = findCreature(state.creatures, creatureId);
-  const { usedSpellSlots } = creature;
+  const { usedSpellSlots, totalSpellSlots } = creature;
+
+  const total = totalSpellSlots?.[level];
+  if (slots > total) return state;
 
   const newUsedSpellSlots = {
     ...usedSpellSlots,

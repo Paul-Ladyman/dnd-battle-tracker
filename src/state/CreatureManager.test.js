@@ -22,6 +22,7 @@ import {
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
 import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
+import maxSpellSlots from '../domain/spellSlots';
 
 jest.mock('./ConditionsManager');
 jest.mock('../client/dndBeyond');
@@ -1732,6 +1733,27 @@ describe('addTotalSpellSlots', () => {
     const result = addTotalSpellSlots(state, 1, '1st', 3);
     expect(result).toEqual(expectedState);
   });
+
+  it.each([
+    ['1st'],
+    ['2nd'],
+    ['3rd'],
+    ['4th'],
+    ['5th'],
+    ['6th'],
+    ['7th'],
+    ['8th'],
+    ['9th'],
+  ])('does nothing if the total value is above the maximum allowed for %p level', (level) => {
+    const max = maxSpellSlots[level];
+    const result = addTotalSpellSlots(defaultState, 1, level, max + 1);
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing if the total value is less than 0', () => {
+    const result = addTotalSpellSlots(defaultState, 1, '1st', -1);
+    expect(result).toEqual(defaultState);
+  });
 });
 
 describe('addUsedSpellSlots', () => {
@@ -1753,5 +1775,54 @@ describe('addUsedSpellSlots', () => {
 
     const result = addUsedSpellSlots(defaultState, 1, '1st', 1);
     expect(result).toEqual(expectedState);
+  });
+
+  it.each([
+    ['1st'],
+    ['2nd'],
+    ['3rd'],
+    ['4th'],
+    ['5th'],
+    ['6th'],
+    ['7th'],
+    ['8th'],
+    ['9th'],
+  ])('does nothing if the used value is above the total value for %p level', (level) => {
+    const max = maxSpellSlots[level];
+    const result = addUsedSpellSlots(defaultState, 1, level, max + 1);
+    expect(result).toEqual(defaultState);
+  });
+
+  it.each([
+    ['1st'],
+    ['2nd'],
+    ['3rd'],
+    ['4th'],
+    ['5th'],
+    ['6th'],
+    ['7th'],
+    ['8th'],
+    ['9th'],
+  ])('does nothing if the used value is above the maximum allowed for %p level', (level) => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          totalSpellSlots: {
+            [level]: 0,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+    const result = addUsedSpellSlots(state, 1, level, 1);
+    expect(result).toEqual(state);
+  });
+
+  it('does nothing if the used value is less than 0', () => {
+    const result = addUsedSpellSlots(defaultState, 1, '1st', -1);
+    expect(result).toEqual(defaultState);
   });
 });
