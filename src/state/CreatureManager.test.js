@@ -17,6 +17,7 @@ import {
   getRawName,
   isCreatureStable,
   addTotalSpellSlots,
+  addUsedSpellSlots,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -566,6 +567,7 @@ describe('createCreature', () => {
       hitPointsShared: true,
       statBlock: null,
       totalSpellSlots: null,
+      usedSpellSlots: null,
     };
 
     const creature = createCreature(1, { name: 'name', initiative: null, healthPoints: null });
@@ -589,6 +591,7 @@ describe('createCreature', () => {
       hitPointsShared: true,
       statBlock: null,
       totalSpellSlots: null,
+      usedSpellSlots: null,
     };
 
     const creature = createCreature(1, {
@@ -617,6 +620,7 @@ describe('createCreature', () => {
       hitPointsShared: true,
       statBlock: null,
       totalSpellSlots: null,
+      usedSpellSlots: null,
     };
 
     const creature = createCreature(1, {
@@ -1648,6 +1652,106 @@ describe('addTotalSpellSlots', () => {
     };
 
     const result = addTotalSpellSlots(state, 1, '2nd', 3);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('sets the corresponding used spell slot value if the total spell slots for the same level is reduced below the current value', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          usedSpellSlots: {
+            '1st': 4,
+            '2nd': 3,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          usedSpellSlots: {
+            '1st': 3,
+            '2nd': 3,
+          },
+          totalSpellSlots: {
+            '1st': 3,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 3 1st level spell slots'],
+    };
+
+    const result = addTotalSpellSlots(state, 1, '1st', 3);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does not modify the corresponding used spell slot value if the total spell slots for the same level is reduced but remains above the current value', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          usedSpellSlots: {
+            '1st': 2,
+            '2nd': 3,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          usedSpellSlots: {
+            '1st': 2,
+            '2nd': 3,
+          },
+          totalSpellSlots: {
+            '1st': 3,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 3 1st level spell slots'],
+    };
+
+    const result = addTotalSpellSlots(state, 1, '1st', 3);
+    expect(result).toEqual(expectedState);
+  });
+});
+
+describe('addUsedSpellSlots', () => {
+  it('adds a used number of spell slots for a specific level to a creature', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          usedSpellSlots: {
+            '1st': 1,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has used 1 1st level spell slots'],
+    };
+
+    const result = addUsedSpellSlots(defaultState, 1, '1st', 1);
     expect(result).toEqual(expectedState);
   });
 });

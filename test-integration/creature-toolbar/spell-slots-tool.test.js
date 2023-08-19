@@ -98,6 +98,30 @@ describe('Used spell slots', () => {
     await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '8th', expectedValue('8th'));
     await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '9th', expectedValue('9th'));
   });
+
+  it.each([
+    ['1st'],
+    ['2nd'],
+    ['3rd'],
+    ['4th'],
+    ['5th'],
+    ['6th'],
+    ['7th'],
+    ['8th'],
+    ['9th'],
+  ])('sets the number of used spell slots for level %p when the total spell slots for the same level is set lower than the current used value', async (level) => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+
+    await dmApp.spellSlotsTool.setUsedSpellSlotValue('goblin', level, '1');
+
+    await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', level, '0');
+
+    await dmApp.spellSlotsTool.openUsedSpellSlots('goblin');
+    await dmApp.spellSlotsTool.assertUsedSpellSlotValue('goblin', level, 0);
+  });
 });
 
 describe('Total spell slots', () => {

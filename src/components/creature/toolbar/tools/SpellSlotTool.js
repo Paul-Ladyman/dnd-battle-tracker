@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../../../form/Input';
 import TabList from '../../../widgets/TabList';
 import maxSpellSlots from '../../../../domain/spellSlots';
@@ -16,6 +16,10 @@ function SpellSlot({
 }) {
   const initialValue = values?.[level] || defaultValue;
   const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   const inputId = `${creatureId}-${id}-spell-slots-${level}`;
   const max = maxValues?.[level] || defaultMaxValues[level];
@@ -84,7 +88,7 @@ function SpellSlotGrid(props) {
 }
 
 export default function SpellSlotTool({
-  creatureId, toolMenuId, totalSpellSlots, addTotalSpellSlots,
+  creatureId, toolMenuId, totalSpellSlots, addTotalSpellSlots, usedSpellSlots, addUsedSpellSlots,
 }) {
   const tabs = ['Used', 'Total'];
   const panels = [
@@ -92,10 +96,10 @@ export default function SpellSlotTool({
       id="used"
       creatureId={creatureId}
       defaultValue={0}
-      values={{}}
+      values={usedSpellSlots}
       defaultMaxValues={maxSpellSlots}
       maxValues={totalSpellSlots}
-      addSpellSlots={() => {}}
+      addSpellSlots={addUsedSpellSlots}
     />,
     <SpellSlotGrid
       id="total"

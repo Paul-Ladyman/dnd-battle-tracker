@@ -135,6 +135,7 @@ export function createCreature(creatureId, {
     hitPointsShared: true,
     statBlock,
     totalSpellSlots: null,
+    usedSpellSlots: null,
   };
 }
 
@@ -309,13 +310,40 @@ export function isCreatureStable(creature) {
 
 export function addTotalSpellSlots(state, creatureId, level, slots) {
   const creature = findCreature(state.creatures, creatureId);
-  const { totalSpellSlots } = creature;
+  const { totalSpellSlots, usedSpellSlots } = creature;
+
   const newTotalSpellSlots = {
     ...totalSpellSlots,
     [level]: slots,
   };
-  const update = { totalSpellSlots: newTotalSpellSlots };
+
+  const usedSlots = usedSpellSlots?.[level];
+  const totalBelowUsed = slots < usedSlots;
+
+  const newUsedSpellSlots = totalBelowUsed
+    ? {
+      ...usedSpellSlots,
+      [level]: slots,
+    }
+    : usedSpellSlots;
+
+  const update = { totalSpellSlots: newTotalSpellSlots, usedSpellSlots: newUsedSpellSlots };
 
   const ariaAnnouncement = `${creature.name} has ${slots} ${level} level spell slots`;
+  return updateCreature(state, creatureId, update, ariaAnnouncement);
+}
+
+export function addUsedSpellSlots(state, creatureId, level, slots) {
+  const creature = findCreature(state.creatures, creatureId);
+  const { usedSpellSlots } = creature;
+
+  const newUsedSpellSlots = {
+    ...usedSpellSlots,
+    [level]: slots,
+  };
+
+  const update = { usedSpellSlots: newUsedSpellSlots };
+
+  const ariaAnnouncement = `${creature.name} has used ${slots} ${level} level spell slots`;
   return updateCreature(state, creatureId, update, ariaAnnouncement);
 }

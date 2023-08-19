@@ -23,6 +23,13 @@ export default class SpellSlotsTool {
     return this.user.click(tab);
   }
 
+  async setUsedSpellSlotValue(name, level, value) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Used' });
+    const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: `${level} Level` });
+    return this.user.type(spellSlot, value);
+  }
+
   async setTotalSpellSlotValue(name, level, value) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total' });
