@@ -20,14 +20,23 @@ const expectedInput = (battleId) => ({
         {
           ...defaultState.creatures[0],
           statBlock: undefined,
+          armorClass: undefined,
+          totalSpellSlots: undefined,
+          usedSpellSlots: undefined,
         },
         {
           ...defaultState.creatures[1],
           statBlock: undefined,
+          armorClass: undefined,
+          totalSpellSlots: undefined,
+          usedSpellSlots: undefined,
         },
         {
           ...defaultState.creatures[2],
           statBlock: undefined,
+          armorClass: undefined,
+          totalSpellSlots: undefined,
+          usedSpellSlots: undefined,
         },
       ],
       activeCreature: defaultState.activeCreature,

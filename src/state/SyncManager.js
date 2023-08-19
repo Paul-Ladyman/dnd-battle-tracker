@@ -6,6 +6,8 @@ function getSharedCreatures(creatures) {
     ...creature,
     statBlock: undefined,
     armorClass: undefined,
+    totalSpellSlots: undefined,
+    usedSpellSlots: undefined,
   }));
 }
 
