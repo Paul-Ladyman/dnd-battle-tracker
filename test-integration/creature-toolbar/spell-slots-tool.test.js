@@ -1,4 +1,5 @@
 import DmApp from '../page-object-models/dmApp';
+import maxSpellSlots from '../../src/domain/spellSlots';
 
 beforeAll(() => {
   window.FLAG_spellSlots = true;
@@ -66,6 +67,37 @@ describe('Used spell slots', () => {
     await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '8th', '1');
     await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '9th', '1');
   });
+
+  it.each([
+    ['1st'],
+    ['2nd'],
+    ['3rd'],
+    ['4th'],
+    ['5th'],
+    ['6th'],
+    ['7th'],
+    ['8th'],
+    ['9th'],
+  ])('sets the maximum number of used spell slots for level %p when the total spell slots for the same level is modified', async (level) => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+
+    await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', level, '0');
+
+    await dmApp.spellSlotsTool.openUsedSpellSlots('goblin');
+    const expectedValue = (expectedLevel) => (expectedLevel === level ? '0' : maxSpellSlots[expectedLevel].toString());
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '1st', expectedValue('1st'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '2nd', expectedValue('2nd'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '3rd', expectedValue('3rd'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '4th', expectedValue('4th'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '5th', expectedValue('5th'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '6th', expectedValue('6th'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '7th', expectedValue('7th'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '8th', expectedValue('8th'));
+    await dmApp.spellSlotsTool.assertUsedSpellSlotMax('goblin', '9th', expectedValue('9th'));
+  });
 });
 
 describe('Total spell slots', () => {
@@ -115,5 +147,36 @@ describe('Total spell slots', () => {
     await dmApp.spellSlotsTool.assertTotalSpellSlotMax('goblin', '7th', '2');
     await dmApp.spellSlotsTool.assertTotalSpellSlotMax('goblin', '8th', '1');
     await dmApp.spellSlotsTool.assertTotalSpellSlotMax('goblin', '9th', '1');
+  });
+
+  it('allows the number of total spell slots for all levels to be set and persisted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
+
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '1st', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '2nd', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '3rd', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '4th', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '5th', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '6th', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '7th', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '8th', '1');
+    await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '9th', '1');
+
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
+
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '1st', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '2nd', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '3rd', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '4th', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '5th', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '6th', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '7th', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '8th', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '9th', 1);
   });
 });

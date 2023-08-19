@@ -134,6 +134,7 @@ export function createCreature(creatureId, {
     shared: true,
     hitPointsShared: true,
     statBlock,
+    totalSpellSlots: null,
   };
 }
 
@@ -304,4 +305,17 @@ export function isCreatureStable(creature) {
   ) > -1;
 
   return healthPoints === 0 || isUnconscious;
+}
+
+export function addTotalSpellSlots(state, creatureId, level, slots) {
+  const creature = findCreature(state.creatures, creatureId);
+  const { totalSpellSlots } = creature;
+  const newTotalSpellSlots = {
+    ...totalSpellSlots,
+    [level]: slots,
+  };
+  const update = { totalSpellSlots: newTotalSpellSlots };
+
+  const ariaAnnouncement = `${creature.name} has ${slots} ${level} level spell slots`;
+  return updateCreature(state, creatureId, update, ariaAnnouncement);
 }

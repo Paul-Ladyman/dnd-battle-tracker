@@ -4,10 +4,19 @@ import SpellSlotTool from '../tools/SpellSlotTool';
 
 export function SpellSlotsToolMenu({
   creature,
+  creatureManagement,
   toolMenuId,
 }) {
-  const { id } = creature;
-  return <SpellSlotTool creatureId={id} toolMenuId={toolMenuId} />;
+  const { id, totalSpellSlots } = creature;
+  const { addTotalSpellSlots } = creatureManagement;
+  return (
+    <SpellSlotTool
+      creatureId={id}
+      toolMenuId={toolMenuId}
+      totalSpellSlots={totalSpellSlots}
+      addTotalSpellSlots={addTotalSpellSlots}
+    />
+  );
 }
 
 export function SpellSlotsButton({

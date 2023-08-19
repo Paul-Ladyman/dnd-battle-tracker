@@ -16,6 +16,7 @@ import {
   resetCreature,
   getRawName,
   isCreatureStable,
+  addTotalSpellSlots,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -564,6 +565,7 @@ describe('createCreature', () => {
       shared: true,
       hitPointsShared: true,
       statBlock: null,
+      totalSpellSlots: null,
     };
 
     const creature = createCreature(1, { name: 'name', initiative: null, healthPoints: null });
@@ -586,6 +588,7 @@ describe('createCreature', () => {
       shared: true,
       hitPointsShared: true,
       statBlock: null,
+      totalSpellSlots: null,
     };
 
     const creature = createCreature(1, {
@@ -613,6 +616,7 @@ describe('createCreature', () => {
       shared: true,
       hitPointsShared: true,
       statBlock: null,
+      totalSpellSlots: null,
     };
 
     const creature = createCreature(1, {
@@ -1588,5 +1592,62 @@ describe('isCreatureStable', () => {
     };
 
     expect(isCreatureStable(creature)).toBe(false);
+  });
+});
+
+describe('addTotalSpellSlots', () => {
+  it('adds a total number of spell slots for a specific level to a creature', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          totalSpellSlots: {
+            '1st': 4,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 4 1st level spell slots'],
+    };
+
+    const result = addTotalSpellSlots(defaultState, 1, '1st', 4);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('maintains existing spell slots when adding a new level to a creature', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          totalSpellSlots: {
+            '1st': 4,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          totalSpellSlots: {
+            '1st': 4,
+            '2nd': 3,
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 3 2nd level spell slots'],
+    };
+
+    const result = addTotalSpellSlots(state, 1, '2nd', 3);
+    expect(result).toEqual(expectedState);
   });
 });

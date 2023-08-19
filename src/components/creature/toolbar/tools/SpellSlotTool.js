@@ -4,16 +4,21 @@ import TabList from '../../../widgets/TabList';
 import maxSpellSlots from '../../../../domain/spellSlots';
 
 function SpellSlot({
+  level,
+  creatureId,
   defaultValue,
   ariaLabel,
   label,
   inputId,
   max,
+  onChange,
 }) {
   const [value, setValue] = useState(defaultValue);
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    const { value: newValue } = event.target;
+    setValue(newValue);
+    onChange(creatureId, level, newValue);
   };
 
   return (
@@ -37,22 +42,29 @@ function SpellSlotRow({
   id,
   creatureId,
   defaultValue,
+  values,
+  defaultMaxValues,
   maxValues,
+  onChange,
 }) {
   return (
     <div className="spell-slot-row">
       {
         row.map((level) => {
           const inputId = `${creatureId}-${id}-spell-slots-${level}`;
-          const max = maxValues && maxValues[level];
+          const value = values?.[level] || defaultValue;
+          const max = maxValues?.[level] || defaultMaxValues[level];
           return (
             <SpellSlot
               key={inputId}
-              defaultValue={defaultValue}
+              level={level}
+              creatureId={creatureId}
+              defaultValue={value}
               ariaLabel={`${level} Level`}
               label={`${level} Lvl`}
               inputId={inputId}
               max={max}
+              onChange={onChange}
             />
           );
         })
@@ -65,7 +77,10 @@ function SpellSlotGrid({
   id,
   creatureId,
   defaultValue,
+  values,
+  defaultMaxValues,
   maxValues,
+  onChange,
 }) {
   const row1 = ['1st', '2nd', '3rd'];
   const row2 = ['4th', '5th', '6th'];
@@ -77,31 +92,58 @@ function SpellSlotGrid({
         id={id}
         creatureId={creatureId}
         defaultValue={defaultValue}
+        values={values}
+        defaultMaxValues={defaultMaxValues}
         maxValues={maxValues}
+        onChange={onChange}
       />
       <SpellSlotRow
         row={row2}
         id={id}
         creatureId={creatureId}
         defaultValue={defaultValue}
+        values={values}
+        defaultMaxValues={defaultMaxValues}
         maxValues={maxValues}
+        onChange={onChange}
       />
       <SpellSlotRow
         row={row3}
         id={id}
         creatureId={creatureId}
         defaultValue={defaultValue}
+        values={values}
+        defaultMaxValues={defaultMaxValues}
         maxValues={maxValues}
+        onChange={onChange}
       />
     </div>
   );
 }
 
-export default function SpellSlotTool({ creatureId, toolMenuId }) {
+export default function SpellSlotTool({
+  creatureId, toolMenuId, totalSpellSlots, addTotalSpellSlots,
+}) {
   const tabs = ['Used', 'Total'];
   const panels = [
-    <SpellSlotGrid id="used" creatureId={creatureId} defaultValue={0} maxValues={maxSpellSlots} />,
-    <SpellSlotGrid id="total" creatureId={creatureId} defaultValue="" maxValues={maxSpellSlots} />,
+    <SpellSlotGrid
+      id="used"
+      creatureId={creatureId}
+      defaultValue={0}
+      values={{}}
+      defaultMaxValues={maxSpellSlots}
+      maxValues={totalSpellSlots}
+      onChange={() => {}}
+    />,
+    <SpellSlotGrid
+      id="total"
+      creatureId={creatureId}
+      defaultValue=""
+      values={totalSpellSlots}
+      defaultMaxValues={maxSpellSlots}
+      maxValues={maxSpellSlots}
+      onChange={addTotalSpellSlots}
+    />,
   ];
   const labelledBy = `${toolMenuId}-spell-slots`;
   const id = `${toolMenuId}-spell-slots-tabs`;
