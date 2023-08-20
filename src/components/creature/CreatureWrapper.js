@@ -30,6 +30,17 @@ function getColumnClasses(showExpanded, multiColumn) {
   return multiColumn ? `${baseClass} ${baseClass}__wide` : `${baseClass} ${baseClass}__normal`;
 }
 
+function hasSpellSlots(slots) {
+  return Object.values(slots || {}).findIndex((_) => _ > 0) > -1;
+}
+
+function isMultiColumn(conditions, notes, totalSpellSlots, usedSpellSlots) {
+  return conditions.length > 0
+    || notes.length > 0
+    || hasSpellSlots(totalSpellSlots)
+    || hasSpellSlots(usedSpellSlots);
+}
+
 class CreatureWrapper extends Component {
   constructor(props) {
     super(props);
@@ -91,6 +102,8 @@ class CreatureWrapper extends Component {
       notes,
       conditions: creatureConditions,
       alive,
+      totalSpellSlots,
+      usedSpellSlots,
     } = creature;
 
     const { expanded } = this.state;
@@ -116,7 +129,7 @@ class CreatureWrapper extends Component {
     );
     const showHitPoints = shouldShowHitPoints(creatureHealthPoints, hitPointsShared, playerSession);
 
-    const multiColumn = creatureConditions.length > 0 || notes.length > 0;
+    const multiColumn = isMultiColumn(creatureConditions, notes, totalSpellSlots, usedSpellSlots);
 
     const [
       leftPercentage,

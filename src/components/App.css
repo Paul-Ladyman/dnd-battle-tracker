@@ -1280,7 +1280,40 @@ button[role=tab][aria-selected=true]:focus  {
   text-decoration-color: #822000;
 }
 
-.spell-slot-meter-container {
+.spell-slot-meter--container {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.spell-slot-meter--label {
+  width: 100px;
+}
+
+.spell-slot-meter--label__full {
+  text-decoration: line-through wavy;
+  text-decoration-color: #822000;
+}
+
+.spell-slot-meter {
+  display: flex;
+  flex-direction: row;
+}
+
+.spell-slot-meter > * {
+  height: 22px;
+  width: 22px;
+  border: 1px solid #822000;
+  box-shadow: 0 0 5px #979aa4;
+  border-radius: 15px;
+  margin-right: 10px;
+}
+
+.spell-slot-meter__filled {
+  background-color: #822000;
+}
+
+.spell-slot-meter__empty {
+  background-color: transparent;
 }
