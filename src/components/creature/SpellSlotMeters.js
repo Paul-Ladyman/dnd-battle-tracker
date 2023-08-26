@@ -46,7 +46,7 @@ export default function SpellSlotMeters({ totalSpellSlots, usedSpellSlots, id })
 
   return (
     <div className="avoid-break">
-      <div className="creature-note-list--label">Spell Casting</div>
+      <div className="creature-note-list--label">Spell Slots</div>
       {spellSlotMeters}
     </div>
   );
