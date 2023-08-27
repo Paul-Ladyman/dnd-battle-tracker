@@ -1,5 +1,3 @@
-const featureFlags = [
-  'spellSlots',
-];
+const featureFlags = [];
 
 export default featureFlags;

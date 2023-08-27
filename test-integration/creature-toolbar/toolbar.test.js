@@ -104,7 +104,7 @@ describe('Creature toolbar navigation', () => {
   it('wraps navigation when navigating forwards with the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
     await dmApp.creatureToolbar.navigate('goblin', 1);
     await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Creature Menu');
   });
@@ -122,7 +122,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.navigate('goblin', 1, false);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Notes');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Spell Slots');
   });
 
   it('navigates to the first button when the home key is pressed', async () => {
@@ -138,7 +138,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
     await dmApp.creatureToolbar.navigateEnd('goblin');
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Notes');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Spell Slots');
   });
 
   it("navigates two creature's toolbars independently", async () => {

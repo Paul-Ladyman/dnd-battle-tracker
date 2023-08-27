@@ -1,9 +1,5 @@
 import DmApp from './page-object-models/dmApp';
 
-beforeAll(() => {
-  window.FLAG_spellSlots = true;
-});
-
 describe('Spell Slots', () => {
   it('does not show the Spell Slots section if the creature has no total or used spell slots', async () => {
     const dmApp = new DmApp();

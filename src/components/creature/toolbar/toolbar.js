@@ -8,7 +8,7 @@ import { HpButton, HpToolMenu } from './tool-menus/hp';
 import { SpellSlotsButton, SpellSlotsToolMenu } from './tool-menus/spellSlots';
 
 export default function getToolbar() {
-  const toolbar = [
+  return [
     {
       Button: CreatureMenuButton,
       ToolMenu: CreatureMenuToolMenu,
@@ -44,15 +44,11 @@ export default function getToolbar() {
       ref: React.createRef(),
       key: (id) => `${id}-notes`,
     },
-  ];
-
-  if (window.FLAG_spellSlots) {
-    toolbar.push({
+    {
       Button: SpellSlotsButton,
       ToolMenu: SpellSlotsToolMenu,
       ref: React.createRef(),
       key: (id) => `${id}-spell-slots`,
-    });
-  }
-  return toolbar;
+    },
+  ];
 }

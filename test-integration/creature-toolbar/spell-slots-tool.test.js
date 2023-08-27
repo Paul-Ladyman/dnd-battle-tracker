@@ -1,10 +1,6 @@
 import DmApp from '../page-object-models/dmApp';
 import maxSpellSlots from '../../src/domain/spellSlots';
 
-beforeAll(() => {
-  window.FLAG_spellSlots = true;
-});
-
 describe('Spell Slots tool', () => {
   it('opens the tool menu when the Spell Slots toolbar button is selected', async () => {
     const dmApp = new DmApp();
