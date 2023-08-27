@@ -152,9 +152,9 @@ export default function CreatureToolbar({
 
   const ToolMenu = buttons[selectedButton]?.ToolMenu;
 
-  const toolbarWrapperClass = 'new-creature-toolbar-wrapper';
+  const toolbarWrapperClass = 'creature-toolbar-wrapper';
   const toolbarWrapperClasses = focused ? `${toolbarWrapperClass} ${toolbarWrapperClass}__focused` : toolbarWrapperClass;
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
 
   const tabIndex = focusedButton === null ? 0 : focusedButton;
   const toolMenuExpanded = !!ToolMenu;

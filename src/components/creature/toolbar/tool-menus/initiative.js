@@ -35,7 +35,7 @@ export function InitiativeButton({
   const { initiative } = creature;
   const enabled = initiative === undefined || initiative === null;
   const ariaDisabled = enabled ? 'false' : 'true';
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const mediumButtonClass = `${buttonClass}__medium`;

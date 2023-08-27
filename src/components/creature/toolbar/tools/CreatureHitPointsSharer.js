@@ -9,7 +9,7 @@ function CreatureHitPointsSharer({
   const text = hitPointsShared ? 'Unshare HP' : 'Share HP';
   const buttonAriaLabel = hitPointsShared ? `Unshare ${name} HP` : `Share ${name} HP`;
   const ariaPressed = hitPointsShared ? 'true' : 'false';
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
 

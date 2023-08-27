@@ -558,30 +558,30 @@ label {
   border-radius: 0;
 }
 
-.new-creature-toolbar-wrapper {
+.creature-toolbar-wrapper {
   padding: 10px;
   border-radius: 15px;
   background-color: #ebe2d3;
 }
 
-.new-creature-toolbar-wrapper__focused {
+.creature-toolbar-wrapper__focused {
   padding: 9px;
   border: 1px solid #822000;
   box-shadow: 0 0 5px #979aa4;
 }
 
 @media only screen and (max-width: 825px) {
-  .new-creature-toolbar-wrapper {
+  .creature-toolbar-wrapper {
     border-radius: 0;
   }
 
-  .new-creature-toolbar-wrapper__focused {
+  .creature-toolbar-wrapper__focused {
     border-left: none;
     border-right: none;
   }
 }
 
-.new-creature-toolbar {
+.creature-toolbar {
   grid-gap: 10px;
   grid-row-gap: 10px;
   display: grid;
@@ -614,37 +614,37 @@ label {
   grid-auto-rows: 1fr;
 }
 
-.new-creature-toolbar-button {
+.creature-toolbar-button {
   grid-column: span 2;
   font-weight: normal;
 }
 
 @media only screen and (max-width: 1175px) {
-  .new-creature-toolbar-button__small {
+  .creature-toolbar-button__small {
     grid-column: span 2;
   }
 
-  .new-creature-toolbar-button__text svg {
+  .creature-toolbar-button__text svg {
     display: none;
   }
 }
 
 @media only screen and (min-width: 1175px) {
-  .new-creature-toolbar-wrapper__focused .new-creature-toolbar-button__focused {
+  .creature-toolbar-wrapper__focused .creature-toolbar-button__focused {
     background-color: #EBE1AD;
     border: 1px solid #822000;
     box-shadow: 0 0 5px #979aa4;
   }
 }
 
-.new-creature-toolbar-button__text:hover,
-.new-creature-toolbar-button__focused.new-creature-toolbar-button__text,
-.new-creature-toolbar-button__text:focus {
+.creature-toolbar-button__text:hover,
+.creature-toolbar-button__focused.creature-toolbar-button__text,
+.creature-toolbar-button__text:focus {
   padding: 4px 10px;
   color: black;
 }
 
-.new-creature-toolbar-button__text {
+.creature-toolbar-button__text {
   width: auto;
   grid-column: span 4;
   display: flex;
@@ -656,12 +656,12 @@ label {
   text-align: center;
 }
 
-.new-creature-toolbar-button__large {
+.creature-toolbar-button__large {
   grid-column: span 5;
 }
 
-.new-creature-toolbar-button__medium,
-.new-creature-toolbar-button__small {
+.creature-toolbar-button__medium,
+.creature-toolbar-button__small {
   grid-column: span 3;
 }
 

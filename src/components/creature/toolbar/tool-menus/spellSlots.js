@@ -32,7 +32,7 @@ export function SpellSlotsButton({
   toolMenuExpanded,
   toolMenuId,
 }) {
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const focusedButtonClass = focused ? `${buttonClass}__focused` : '';

@@ -12,7 +12,7 @@ export default function StatusTool({
 }) {
   const { alive, id } = creature;
   const { killCreature, stabalizeCreature } = creatureManagement;
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const mediumButtonClass = `${buttonClass}__medium`;

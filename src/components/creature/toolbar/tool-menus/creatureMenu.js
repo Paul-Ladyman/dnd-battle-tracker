@@ -51,7 +51,7 @@ export function CreatureMenuButton({
   toolMenuExpanded,
   focused,
 }) {
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const focusedButtonClass = focused ? `${buttonClass}__focused` : '';
   return (

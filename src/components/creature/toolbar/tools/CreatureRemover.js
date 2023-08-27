@@ -15,7 +15,7 @@ export default function CreatureRemover({
   const onClickConfim = () => {
     if (!disabled) removeCreature(id);
   };
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const ariaLabel = removing ? `confirm remove ${creature.name}` : `remove ${name}`;

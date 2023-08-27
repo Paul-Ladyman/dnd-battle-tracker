@@ -6,7 +6,7 @@ function CreatureLocker({ creature, toggleCreatureLock }) {
   const text = locked ? 'Unlock' : 'Lock';
   const buttonAriaLabel = locked ? `Unlock ${name}` : `Lock ${name}`;
   const ariaPressed = locked ? 'true' : 'false';
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const mediumButtonClass = `${buttonClass}__medium`;

@@ -6,7 +6,7 @@ import { getRawName } from '../../../../state/CreatureManager';
 function MonsterSearcher({ search }) {
   const rawSearch = getRawName(search);
   const encodedSearch = encodeURIComponent(rawSearch);
-  const toolbarClass = 'new-creature-toolbar';
+  const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const largeButtonClass = `${buttonClass}__large`;
