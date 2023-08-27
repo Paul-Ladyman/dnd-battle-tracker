@@ -35,13 +35,14 @@ export default function TabList({
       </div>
       {
         panels.map((panel, i) => {
-          const display = i === selected ? 'block' : 'none';
+          const panelSelected = i === selected;
+          const display = panelSelected ? 'block' : 'none';
           const tab = tabs[i];
           const tabId = `${id}-${tab}`;
           const key = `${id}-${tab}-panel`;
           return (
             <div role="tabpanel" key={key} id={key} aria-labelledby={tabId} style={{ display }}>
-              {panel}
+              {panelSelected && panel}
             </div>
           );
         })
