@@ -666,6 +666,97 @@ describe('createCreature', () => {
     createCreature(1, creature);
     expect(monsterUrlFrom5eApiIndex).toHaveBeenCalledWith('goblin');
   });
+
+  test("it adds total spell slots if the creature's stats include spell slots", () => {
+    const stats = {
+      special_abilities: [
+        {},
+        {
+          spellcasting: {
+            slots: {
+              1: 4,
+              2: 3,
+            },
+          },
+        },
+      ],
+    };
+    const creature = {
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    const expectedSlots = {
+      '1st': 4,
+      '2nd': 3,
+      '3rd': 0,
+      '4th': 0,
+      '5th': 0,
+      '6th': 0,
+      '7th': 0,
+      '8th': 0,
+      '9th': 0,
+    };
+    expect(createdCreature.totalSpellSlots).toEqual(expectedSlots);
+  });
+
+  test('it does not add total spell slots if the creature does not have slots', () => {
+    const stats = {
+      special_abilities: [{
+        spellcasting: {
+        },
+      }],
+    };
+    const creature = {
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.totalSpellSlots).toBeNull();
+  });
+
+  test('it does not add total spell slots if the creature does not have spellcasting', () => {
+    const stats = {
+      special_abilities: [{}],
+    };
+    const creature = {
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.totalSpellSlots).toBeNull();
+  });
+
+  test("it does not add total spell slots if the creature's special abilities is not a list", () => {
+    const stats = {
+      special_abilities: {},
+    };
+    const creature = {
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.totalSpellSlots).toBeNull();
+  });
+
+  test('it does not add total spell slots if the creature has no special abilities', () => {
+    const creature = {
+      name: 'name',
+      initiative: 13,
+      healthPoints: 10,
+      stats: {},
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.totalSpellSlots).toBeNull();
+  });
 });
 
 describe('addNoteToCreature', () => {

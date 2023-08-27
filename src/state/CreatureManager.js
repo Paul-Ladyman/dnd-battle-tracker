@@ -113,6 +113,22 @@ export function getRawName(name) {
   return name.replace(/[0-9]|#/g, '').trim();
 }
 
+function getTotalSpellSlots(stats) {
+  const abilities = stats?.special_abilities;
+  const spellcastingAbility = Array.isArray(abilities) && abilities.find((_) => _.spellcasting);
+  const srdSlots = spellcastingAbility?.spellcasting?.slots;
+
+  if (!srdSlots) return null;
+
+  return Object.keys(maxSpellSlots).reduce((totalSlots, level, i) => {
+    const slots = Object.values(srdSlots)[i] || 0;
+    return {
+      ...totalSlots,
+      [level]: slots,
+    };
+  }, {});
+}
+
 export function createCreature(creatureId, {
   name, number, initiative, healthPoints, armorClass, stats,
 }) {
@@ -120,6 +136,7 @@ export function createCreature(creatureId, {
   const index = stats?.index;
   const statBlock = index ? monsterUrlFrom5eApiIndex(index) : null;
   const hp = healthPoints === null || healthPoints > 0 ? healthPoints : 1;
+
   return {
     name: groupedName,
     initiative,
@@ -135,7 +152,7 @@ export function createCreature(creatureId, {
     shared: true,
     hitPointsShared: true,
     statBlock,
-    totalSpellSlots: null,
+    totalSpellSlots: getTotalSpellSlots(stats),
     usedSpellSlots: null,
   };
 }

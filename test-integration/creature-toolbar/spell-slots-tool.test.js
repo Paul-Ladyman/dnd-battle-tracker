@@ -227,4 +227,20 @@ describe('Total spell slots', () => {
     await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '8th', 1);
     await dmApp.spellSlotsTool.assertTotalSpellSlotValue('goblin', '9th', 1);
   });
+
+  it('prefills total spell slots when an SRD monster is created with spell slots', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addSrdCreature('Mage');
+    await dmApp.creatureToolbar.selectTool('Mage', 'Spell Slots');
+    await dmApp.spellSlotsTool.openTotalSpellSlots('Mage');
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '1st', 4);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '2nd', 3);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '3rd', 3);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '4th', 3);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '5th', 1);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '6th', 0);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '7th', 0);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '8th', 0);
+    await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '9th', 0);
+  });
 });

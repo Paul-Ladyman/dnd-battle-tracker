@@ -9,6 +9,7 @@ export default [
       results: [
         { index: 'goblin', name: 'Goblin', url: '/api/monsters/goblin' },
         { index: 'hobgoblin', name: 'Hobgoblin', url: '/api/monsters/hobgoblin' },
+        { index: 'mage', name: 'Mage', url: '/api/monsters/mage' },
       ],
     }),
   )),
@@ -38,6 +39,42 @@ export default [
           ],
         },
       ],
+    }),
+  )),
+
+  rest.get('https://www.dnd5eapi.co/api/monsters/mage', (req, res, ctx) => res(
+    ctx.json({
+      index: 'mage',
+      name: 'Mage',
+      hit_points: 40,
+      hit_points_roll: '9d8',
+      dexterity: 14,
+      armor_class: [
+        {
+          type: 'dex',
+          value: 12,
+        },
+        {
+          type: 'spell',
+          value: 15,
+          spell: {
+            index: 'mage-armor',
+            name: 'Mage Armor',
+            url: '/api/spells/mage-armor',
+          },
+        },
+      ],
+      special_abilities: [{
+        spellcasting: {
+          slots: {
+            1: 4,
+            2: 3,
+            3: 3,
+            4: 3,
+            5: 1,
+          },
+        },
+      }],
     }),
   )),
 
