@@ -10,7 +10,7 @@ export function ConditionsToolMenu({
   const { name, id } = creature;
   const { addNoteToCreature } = creatureManagement;
   return (
-    <div className="new-creature-toolbar--tool-menu">
+    <div className="creature-toolbar--grid creature-toolbar--entrance">
       <ConditionsTool
         name={name}
         id={id}

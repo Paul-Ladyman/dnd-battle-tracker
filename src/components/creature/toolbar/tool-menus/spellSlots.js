@@ -10,14 +10,16 @@ export function SpellSlotsToolMenu({
   const { id, totalSpellSlots, usedSpellSlots } = creature;
   const { addTotalSpellSlots, addUsedSpellSlots } = creatureManagement;
   return (
-    <SpellSlotTool
-      creatureId={id}
-      toolMenuId={toolMenuId}
-      totalSpellSlots={totalSpellSlots}
-      addTotalSpellSlots={addTotalSpellSlots}
-      usedSpellSlots={usedSpellSlots}
-      addUsedSpellSlots={addUsedSpellSlots}
-    />
+    <div className="creature-toolbar--entrance">
+      <SpellSlotTool
+        creatureId={id}
+        toolMenuId={toolMenuId}
+        totalSpellSlots={totalSpellSlots}
+        addTotalSpellSlots={addTotalSpellSlots}
+        usedSpellSlots={usedSpellSlots}
+        addUsedSpellSlots={addUsedSpellSlots}
+      />
+    </div>
   );
 }
 

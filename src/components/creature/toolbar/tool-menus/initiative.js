@@ -9,7 +9,7 @@ export function InitiativeToolMenu({
   const { name, id, initiative } = creature;
   const { addInitiativeToCreature } = creatureManagement;
   return (
-    <div className="new-creature-toolbar--tool-menu">
+    <div className="creature-toolbar--grid creature-toolbar--entrance">
       <InitiativeTool
         name={name}
         id={id}

@@ -594,17 +594,19 @@ label {
   to { opacity: 1; }
 }
 
-.new-creature-toolbar--tool-menu {
-  grid-gap: 22px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 15px);
-
+.creature-toolbar--entrance {
   animation-duration: 200ms;
   animation-timing-function: ease-in-out;
   animation-name: creature-toolmenu-fadein;
 }
 
-.new-creature-toolbar--tool-menu__buttons-only {
+.creature-toolbar--grid {
+  grid-gap: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 15px);
+}
+
+.creature-toolbar--grid__buttons-only {
   grid-gap: 10px;
   grid-row-gap: 10px;
   display: grid;
@@ -663,7 +665,7 @@ label {
   grid-column: span 3;
 }
 
-.new-creature-toolbar--tool-menu .creature-toolbar--dropdown {
+.creature-toolbar--grid .creature-toolbar--dropdown {
   height: unset;
   grid-column: span 5;
 }

@@ -17,7 +17,7 @@ export function NotesToolMenu({
     removeNoteFromCreature,
   } = creatureManagement;
   return (
-    <div className="new-creature-toolbar--tool-menu">
+    <div className="creature-toolbar--grid creature-toolbar--entrance">
       <NotesTool
         name={name}
         id={id}
