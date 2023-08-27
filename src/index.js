@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
 import PlayerAppWrapper from './components/app/PlayerAppWrapper';
 import ErrorBoundary from './components/error/ErrorBoundary';
@@ -47,11 +47,12 @@ async function render() {
   registerServiceworker();
   setFeatureFlags();
   const rootElement = document.getElementById('root');
+  const root = createRoot(rootElement);
 
   if (battleId) {
-    ReactDOM.render(RenderPlayerApp({ battleId }), rootElement);
+    root.render(RenderPlayerApp({ battleId }));
   } else {
-    ReactDOM.render(RenderDmApp(), rootElement);
+    root.render(RenderDmApp());
   }
 }
 
