@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react';
 
+function isModified(e) {
+  return e.altKey || e.ctrlKey || e.metaKey || e.shiftKey;
+}
+
 function isHotkeyForward(e, horizontal) {
+  if (isModified(e)) return false;
   const code = horizontal ? 39 : 40;
   return e.keyCode === code;
 }
 
 function isHotkeyBackward(e, horizontal) {
+  if (isModified(e)) return false;
   const code = horizontal ? 37 : 38;
   return e.keyCode === code;
 }
@@ -52,10 +58,12 @@ export default function useNavigableList({
         onNavigate();
       }
       if (isHotkeyForward(e, horizontal)) {
+        e.preventDefault();
         setFocusedItem(getNextItemForward);
         onNavigate();
       }
       if (isHotkeyBackward(e, horizontal)) {
+        e.preventDefault();
         setFocusedItem(getNextItemBackward);
         onNavigate();
       }
