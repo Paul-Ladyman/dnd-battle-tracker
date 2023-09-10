@@ -5,22 +5,7 @@ import React, {
   useMemo,
 } from 'react';
 import getToolbar from './toolbar';
-
-function isHotkeyForward(e) {
-  return e.keyCode === 39;
-}
-
-function isHotkeyBackward(e) {
-  return e.keyCode === 37;
-}
-
-function isHotkeyHome(e) {
-  return e.keyCode === 36;
-}
-
-function isHotkeyEnd(e) {
-  return e.keyCode === 35;
-}
+import useNavigableList from '../../widgets/useNavigableList';
 
 export default function CreatureToolbar({
   creature,
@@ -29,7 +14,6 @@ export default function CreatureToolbar({
   active,
 }) {
   const [focused, setFocused] = useState(false);
-  const [focusedButton, setFocusedButton] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
   const toolbarRef = useRef(null);
   const {
@@ -38,32 +22,9 @@ export default function CreatureToolbar({
 
   const buttons = useMemo(getToolbar, []);
 
+  const [focusedButton, setFocusedButton] = useNavigableList(buttons, toolbarRef);
+
   const wrapperId = `toolbar-wrapper-${id}`;
-
-  const getNextButtonForward = (prev) => {
-    const next = prev + 1;
-    if (next === buttons.length) return 0;
-    return next;
-  };
-
-  const getNextButtonBackward = (prev) => {
-    const next = prev - 1;
-    if (next === -1) return buttons.length - 1;
-    return next;
-  };
-
-  const hotKeyHandler = (e) => {
-    if (isHotkeyHome(e)) {
-      e.preventDefault();
-      setFocusedButton(0);
-    }
-    if (isHotkeyEnd(e)) {
-      e.preventDefault();
-      setFocusedButton(buttons.length - 1);
-    }
-    if (isHotkeyForward(e)) setFocusedButton(getNextButtonForward);
-    if (isHotkeyBackward(e)) setFocusedButton(getNextButtonBackward);
-  };
 
   const toggleSelectedButton = (i) => {
     if (selectedButton === i) {
@@ -78,15 +39,6 @@ export default function CreatureToolbar({
   const focusButton = (i) => {
     if (i !== null) buttons[i].ref.current.focus();
   };
-
-  useEffect(() => {
-    if (toolbarRef.current) {
-      const toolbar = toolbarRef.current;
-      toolbar.addEventListener('keydown', hotKeyHandler);
-      return () => toolbar.removeEventListener('keydown', hotKeyHandler);
-    }
-    return null;
-  }, []);
 
   useEffect(() => {
     focusButton(focusedButton);
