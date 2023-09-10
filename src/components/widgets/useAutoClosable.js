@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 export default function useAutoClosable({
-  closable,
+  closable = true,
   wrapperId,
   onClickToClose,
   onTabToClose,

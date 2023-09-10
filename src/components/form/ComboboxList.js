@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import isHotkey from 'is-hotkey';
 import Input from './Input';
 import DropdownOption from './DropdownOption';
 import ComboboxLabel from './ComboboxLabel';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import useNavigableList from '../widgets/useNavigableList';
+import useAutoClosable from '../widgets/useAutoClosable';
 
 export default function ComboboxList({
   value,
@@ -55,6 +56,10 @@ export default function ComboboxList({
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
+  };
+
+  const close = () => {
+    setExpanded(false);
   };
 
   const handleChange = (event) => {
@@ -121,8 +126,6 @@ export default function ComboboxList({
       if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
     }
 
-    if (isHotkey(hotkeys.dropdownEscape, e)) handleEscape();
-
     if (isHotkey('enter', e)) {
       e.preventDefault();
       handleKeyboardSubmit();
@@ -133,39 +136,13 @@ export default function ComboboxList({
     }
   };
 
-  useEffect(() => {
-    if (expanded) {
-      const clickHandler = (e) => {
-        const comboBox = document.getElementById(id);
-        const clickInComboBox = comboBox && comboBox.contains(e.target);
-        if (expanded && !clickInComboBox) {
-          setExpanded(false);
-        }
-      };
-      document.addEventListener('click', clickHandler);
-
-      return () => document.removeEventListener('click', clickHandler);
-    }
-    return undefined;
-  }, [expanded]);
-
-  useEffect(() => {
-    if (expanded) {
-      const comboBox = document.getElementById(id);
-      const focusHandler = (e) => {
-        const focusOutsideComboBox = e.relatedTarget !== null
-          && comboBox
-          && !comboBox.contains(e.relatedTarget);
-        if (expanded && focusOutsideComboBox) {
-          setExpanded(false);
-        }
-      };
-      comboBox.addEventListener('focusout', focusHandler);
-
-      return () => comboBox.removeEventListener('focusout', focusHandler);
-    }
-    return undefined;
-  }, [expanded]);
+  useAutoClosable({
+    wrapperId: id,
+    onClickToClose: close,
+    onTabToClose: close,
+    onEscapeToClose: handleEscape,
+    onEscapeDeps: [showList],
+  });
 
   return (
     <div

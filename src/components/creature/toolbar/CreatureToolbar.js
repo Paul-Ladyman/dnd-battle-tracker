@@ -52,10 +52,7 @@ export default function CreatureToolbar({
 
   const onEscapeToClose = (e) => {
     const targetIsNotesTool = e.target.getAttribute('id') === `combobox-notes-wrapper-${id}`;
-    const notesToolEmpty = e.target.getAttribute('value') === '';
-    const notesToolClosed = e.target.getAttribute('aria-expanded') === 'false';
-    const shouldEscape = targetIsNotesTool ? notesToolEmpty && notesToolClosed : true;
-    if (shouldEscape) {
+    if (!targetIsNotesTool) {
       setSelectedButton(null);
       focusButton(focusedButton);
     }
