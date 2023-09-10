@@ -23,7 +23,11 @@ export default function CreatureToolbar({
 
   const buttons = useMemo(getToolbar, []);
 
-  const [focusedButton, setFocusedButton] = useNavigableList(buttons, toolbarRef);
+  const [focusedButton, setFocusedButton] = useNavigableList({
+    items: buttons,
+    parentRef: toolbarRef,
+    horizontal: true,
+  });
 
   const wrapperId = `toolbar-wrapper-${id}`;
 

@@ -4,6 +4,7 @@ import Input from './Input';
 import DropdownOption from './DropdownOption';
 import ComboboxLabel from './ComboboxLabel';
 import { hotkeys } from '../../hotkeys/hotkeys';
+import useNavigableList from '../widgets/useNavigableList';
 
 export default function ComboboxList({
   value,
@@ -30,10 +31,14 @@ export default function ComboboxList({
   spellCheck,
   resetOnSubmit = true,
 }) {
-  const [expanded, setExpanded] = useState(false);
-  const [focusedItem, setFocusedItem] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
   const internalInputRef = inputRef || useRef();
+  const [expanded, setExpanded] = useState(false);
+  const [focusedItem, setFocusedItem] = useNavigableList({
+    items: list,
+    parentRef: internalInputRef,
+    onNavigate: () => !expanded && setExpanded(true),
+  });
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const hasList = list.length > 0;
   const activeNoteId = focusedItem !== null ? `${dropdownId}-${focusedItem}` : '';
@@ -47,26 +52,6 @@ export default function ComboboxList({
   const rControls = selectedItem ? rightControlsItemSelected : rightControls;
   const lControls = selectedItem ? leftControlsItemSelected : leftControls;
   const ariaLabel = selectedItem ? inputAriaLabelItemSelected : inputAriaLabel;
-
-  const moveFocus = (e, down = true) => {
-    if (value !== '' && !expanded) return null;
-
-    e.preventDefault();
-
-    const noItemFocused = focusedItem === null;
-    const start = 0;
-    const end = list.length - 1;
-    const endBound = down ? end : start;
-    const startBound = down ? start : end;
-    const endItemFocused = focusedItem === endBound;
-
-    if (!expanded) setExpanded(true);
-
-    if (noItemFocused || endItemFocused) return setFocusedItem(startBound);
-
-    const focusIncrement = down ? 1 : -1;
-    return setFocusedItem((currentlyFocusedItem) => currentlyFocusedItem + focusIncrement);
-  };
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -133,8 +118,6 @@ export default function ComboboxList({
 
   const comboBoxFormHandler = (e) => {
     if (list.length > 0) {
-      if (isHotkey(hotkeys.dropdownNavDown, e)) moveFocus(e);
-      if (isHotkey(hotkeys.dropdownNavUp, e)) moveFocus(e, false);
       if (isHotkey(hotkeys.dropdownNavOpen, e)) setExpanded(true);
     }
 
