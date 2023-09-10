@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import getToolbar from './toolbar';
 import useNavigableList from '../../widgets/useNavigableList';
+import useAutoClosable from '../../widgets/useAutoClosable';
 
 export default function CreatureToolbar({
   creature,
@@ -34,73 +35,40 @@ export default function CreatureToolbar({
     }
   };
 
-  const closeToolMenu = () => setSelectedButton(null);
-
   const focusButton = (i) => {
     if (i !== null) buttons[i].ref.current.focus();
+  };
+
+  const closeToolMenu = () => setSelectedButton(null);
+
+  const onAutoClose = () => {
+    setFocused(false);
+    closeToolMenu();
+  };
+
+  const onEscapeToClose = (e) => {
+    const targetIsNotesTool = e.target.getAttribute('id') === `combobox-notes-wrapper-${id}`;
+    const notesToolEmpty = e.target.getAttribute('value') === '';
+    const notesToolClosed = e.target.getAttribute('aria-expanded') === 'false';
+    const shouldEscape = targetIsNotesTool ? notesToolEmpty && notesToolClosed : true;
+    if (shouldEscape) {
+      setSelectedButton(null);
+      focusButton(focusedButton);
+    }
   };
 
   useEffect(() => {
     focusButton(focusedButton);
   }, [focusedButton]);
 
-  useEffect(() => {
-    if (focused) {
-      const wrapper = document.getElementById(wrapperId);
-      const clickToCloseHandler = (e) => {
-        const clickOutsideWrapper = wrapper && !wrapper.contains(e.target);
-        if (clickOutsideWrapper) {
-          setFocused(false);
-          setSelectedButton(null);
-        }
-      };
-      document.addEventListener('click', clickToCloseHandler);
-
-      return () => document.removeEventListener('click', clickToCloseHandler);
-    }
-    return undefined;
-  }, [focused]);
-
-  useEffect(() => {
-    if (focused) {
-      const wrapper = document.getElementById(wrapperId);
-      const tabToCloseHandler = (e) => {
-        if (e.keyCode === 9) {
-          const focusOutsideComboBox = wrapper && !wrapper.contains(e.target);
-          if (focusOutsideComboBox) {
-            setFocused(false);
-            setSelectedButton(null);
-          }
-        }
-      };
-      document.addEventListener('keyup', tabToCloseHandler);
-
-      return () => document.removeEventListener('keyup', tabToCloseHandler);
-    }
-    return undefined;
-  }, [focused]);
-
-  useEffect(() => {
-    if (focused) {
-      const wrapper = document.getElementById(wrapperId);
-      const escapeToCloseHandler = (e) => {
-        if (e.keyCode === 27) {
-          const targetIsNotesTool = e.target.getAttribute('id') === `combobox-notes-wrapper-${id}`;
-          const notesToolEmpty = e.target.getAttribute('value') === '';
-          const notesToolClosed = e.target.getAttribute('aria-expanded') === 'false';
-          const shouldEscape = targetIsNotesTool ? notesToolEmpty && notesToolClosed : true;
-          if (shouldEscape) {
-            setSelectedButton(null);
-            focusButton(focusedButton);
-          }
-        }
-      };
-      wrapper.addEventListener('keydown', escapeToCloseHandler);
-
-      return () => wrapper.removeEventListener('keydown', escapeToCloseHandler);
-    }
-    return undefined;
-  }, [focused, focusedButton]);
+  useAutoClosable({
+    closable: focused,
+    wrapperId,
+    onClickToClose: onAutoClose,
+    onTabToClose: onAutoClose,
+    onEscapeToClose,
+    onEscapeDeps: [focusedButton],
+  });
 
   const ToolMenu = buttons[selectedButton]?.ToolMenu;
 
