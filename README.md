@@ -28,7 +28,7 @@ As a new DM I found that I was frequently making mistakes during combat, such as
 It was clear that some automation would be helpful. There's a number of browser-based combat trackers out there at the time of writing, in no particular order:
 
 * [D&D Beyond](https://www.dndbeyond.com/combat-tracker)
-* [Avrae](https://avrae.io/)
+* [Avrae](https://avrae.io/) (Discord bot usable in the browser)
 * [Aide D&D](https://www.aidedd.org/en/online-assistant/)
 * [DHMStark](http://dhmstark.co.uk/rpgs/encounter-tracker/)
 * [Donjon](https://donjon.bin.sh/5e/initiative/)
@@ -41,6 +41,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [5e Tools](https://5e.tools/dmscreen.html) (click the add button then go to Special and add the Initiative Tracker. Player view also available)
 * [DM Tools](https://dm.tools/tracker)
 * [Role Generator](https://www.rolegenerator.com/en/module/initiative-tracker)
+* [Dungeons & Dragons Battle Tracker](https://battletracker.jazzsequence.com/bad84fad-19ba-2e17-3a6f360ea05c)
 
 Many of these systems are very feature rich and aim to provide tools beyond the combat tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
