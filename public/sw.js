@@ -28,15 +28,13 @@ self.addEventListener('fetch', function (event) {
   const requestURL = new URL(event.request.url);
 
   if (requestURL.origin == location.origin) {
-    // Stale-while-revalidate
     event.respondWith(
       caches.open(cacheName).then(function (cache) {
-        return cache.match(event.request).then(function (response) {
-          const fetchPromise = fetch(event.request).then(function (networkResponse) {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-          return response || fetchPromise;
+        return fetch(event.request.url).then((fetchedResponse) => {
+          cache.put(event.request, fetchedResponse.clone());
+          return fetchedResponse;
+        }).catch(() => {
+          return cache.match(event.request.url);
         });
       }),
     );

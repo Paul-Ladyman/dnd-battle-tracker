@@ -53,7 +53,7 @@ test('The application is available offline after the first page load', async ({ 
   await expect(offlineTitle).toBeVisible();
 });
 
-test('After the first page load the cached application is served whilst a new version is fetched', async ({ page, context }) => {
+test('New application versions are fetched immediately if the network allows', async ({ page, context }) => {
   await page.goto('');
   // Ensure page is controlled by service worker
   await page.reload();
@@ -68,12 +68,6 @@ test('After the first page load the cached application is served whilst a new ve
     });
   });
 
-  // Page served stale-while-revalidate
-  await page.reload();
-  const title2 = page.locator('role=heading[name="D&D Battle Tracker"]');
-  await expect(title2).toBeVisible();
-
-  // New application version now available in cache
   await page.reload();
   const newTitle = page.locator('role=heading[name="New Title"]');
   await expect(newTitle).toBeVisible();
