@@ -10,6 +10,7 @@ import ShareIcon from '../icons/ShareIcon';
 import RulesSearchMenuIcon from '../icons/RulesSearchMenuIcon';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../../state/AppManager';
+import BattleMenu from './battle-toolbar/BattleMenu';
 
 function ResetButton({
   className,
@@ -165,6 +166,7 @@ function BattleToolbar({
         {nextButtonLabel}
       </button>
       )}
+      {window.FLAG_new_battle_menu && <BattleMenu /> }
       <div className="battle-toolbar--stat">
         Turn:
         <button

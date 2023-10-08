@@ -16,6 +16,7 @@ import InitiativeTool from './initiativeTool';
 import ConditionsTool from './conditionsTool';
 import SpellSlotsTool from './spellSlotsTool';
 import Creature from './creature';
+import BattleMenu from './battleMenu';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
@@ -29,6 +30,7 @@ export default class DmApp extends DndBattleTracker {
     this.conditionsTool = new ConditionsTool(this.user);
     this.spellSlotsTool = new SpellSlotsTool(this.user);
     this.creature = new Creature(this.user);
+    this.battleMenu = new BattleMenu(this.user);
   }
 
   async startBattle() {
