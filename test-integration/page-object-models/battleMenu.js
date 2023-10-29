@@ -3,6 +3,7 @@
 import {
   screen,
   findByRole,
+  findAllByRole,
   fireEvent,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -68,6 +69,12 @@ export default class BattleMenu {
     const menu = await screen.findByRole('menu', { name: 'Battle Menu' });
     const item = await findByRole(menu, 'menuitem', { name });
     return expect(item).toBeVisible();
+  }
+
+  async assertMenuItemsLength(length) {
+    const menu = await screen.findByRole('menu', { name: 'Battle Menu' });
+    const items = await findAllByRole(menu, 'menuitem');
+    return expect(items).toHaveLength(length);
   }
 
   async assertMenuItemFocused(name) {

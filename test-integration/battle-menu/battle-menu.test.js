@@ -1,4 +1,5 @@
 import DmApp from '../page-object-models/dmApp';
+import PlayerApp from '../page-object-models/playerApp';
 
 beforeAll(() => {
   window.FLAG_new_battle_menu = 'true';
@@ -23,7 +24,7 @@ describe('Battle Menu', () => {
     await dmApp.battleMenu.assertClosed();
   });
 
-  it('displays the menu options when opened', async () => {
+  it('displays the menu items when opened', async () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.assertMenuItem('Search rules');
@@ -31,6 +32,14 @@ describe('Battle Menu', () => {
     await dmApp.battleMenu.assertMenuItem('Reset battle');
     await dmApp.battleMenu.assertMenuItem('Save battle');
     await dmApp.battleMenu.assertMenuItem('Load battle');
+  });
+
+  it('displays only Search rules in the Player App', async () => {
+    const playerApp = new PlayerApp();
+    await PlayerApp.waitForOnline();
+    await playerApp.battleMenu.toggle();
+    await playerApp.battleMenu.assertMenuItem('Search rules');
+    await playerApp.battleMenu.assertMenuItemsLength(1);
   });
 });
 

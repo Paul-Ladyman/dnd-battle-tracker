@@ -7,12 +7,14 @@ import RemoveIcon from '../../icons/RemoveIcon';
 import useNavigableList from '../../widgets/useNavigableList';
 import useAutoClosable from '../../widgets/useAutoClosable';
 
-const items = [
-  {
-    icon: <RulesSearchMenuIcon />,
-    label: 'Search rules',
-    ref: React.createRef(),
-  },
+const searchRules = {
+  icon: <RulesSearchMenuIcon />,
+  label: 'Search rules',
+  ref: React.createRef(),
+};
+
+const dmItems = [
+  searchRules,
   {
     icon: <ShareIcon />,
     label: 'Share battle',
@@ -35,7 +37,10 @@ const items = [
   },
 ];
 
-export default function BattleMenu() {
+const playerItems = [searchRules];
+
+export default function BattleMenu({ playerSession }) {
+  const items = playerSession ? playerItems : dmItems;
   const [open, setOpen] = useState(false);
   const parentRef = useRef(null);
   const buttonRef = useRef(null);
