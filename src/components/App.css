@@ -307,6 +307,50 @@ label {
   margin-top: 10px;
 }
 
+.battle-menu {
+  list-style: none;
+  border-bottom: 2px solid #822000;
+  border-left: 2px solid #822000;
+  border-right: 2px solid #822000;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: 0 5px 5px #979AA4;
+  background: #ebe2d3;
+  margin-top: 10px;
+  position: absolute;
+  padding: 0;
+}
+
+.battle-menu--button {
+  margin-top: 5px;
+}
+
+.battle-menu--button__open {
+  background-color: #EBE1AD;
+  border: 1px solid #822000;
+  box-shadow: 0 0 5px #979aa4;
+}
+
+.battle-menu--item {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  cursor: pointer;
+  padding: 10px 20px 10px 10px;
+  overflow: hidden;
+  border-bottom: 1px solid #822000;
+}
+
+.battle-menu--item:last-child {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom: none;
+}
+
+.battle-menu--item:hover {
+  background: #EBE1AD;
+}
+
 /* Input */
 
 .input--form {

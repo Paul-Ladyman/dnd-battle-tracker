@@ -10,6 +10,8 @@ export default function BattleMenu() {
   const ariaExpanded = open ? 'true' : 'false';
   const menuDisplay = open ? 'block' : 'none';
   const toggle = () => setOpen(!open);
+  const buttonClass = 'battle-menu--button';
+  const buttonClasses = open ? `${buttonClass} ${buttonClass}__open` : buttonClass;
 
   return (
     <div>
@@ -22,29 +24,36 @@ export default function BattleMenu() {
         aria-controls="battle-menu"
         id="battle-menu-button"
         onClick={toggle}
+        className={buttonClasses}
       >
         <OptionsMenuIcon />
       </button>
-      <ul id="battle-menu" role="menu" aria-labelledby="battle-menu-button" style={{ display: menuDisplay }}>
-        <li role="menuitem">
-          <SaveLoadIcon />
-          Save battle
-        </li>
-        <li role="menuitem">
-          <SaveLoadIcon load />
-          Load battle
-        </li>
-        <li role="menuitem">
-          <ShareIcon />
-          Share battle
-        </li>
-        <li role="menuitem">
+      <ul
+        id="battle-menu"
+        role="menu"
+        aria-labelledby="battle-menu-button"
+        style={{ display: menuDisplay }}
+        className="battle-menu"
+      >
+        <li role="menuitem" className="battle-menu--item">
           <RulesSearchMenuIcon />
           Search rules
         </li>
-        <li role="menuitem">
+        <li role="menuitem" className="battle-menu--item">
+          <ShareIcon />
+          Share battle
+        </li>
+        <li role="menuitem" className="battle-menu--item">
           <RemoveIcon />
           Reset battle
+        </li>
+        <li role="menuitem" className="battle-menu--item">
+          <SaveLoadIcon />
+          Save battle
+        </li>
+        <li role="menuitem" className="battle-menu--item">
+          <SaveLoadIcon load />
+          Load battle
         </li>
       </ul>
     </div>
