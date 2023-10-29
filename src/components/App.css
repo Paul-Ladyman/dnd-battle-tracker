@@ -339,6 +339,7 @@ label {
   padding: 10px 20px 10px 10px;
   overflow: hidden;
   border-bottom: 1px solid #822000;
+  outline: none;
 }
 
 .battle-menu--item:last-child {
@@ -347,7 +348,8 @@ label {
   border-bottom: none;
 }
 
-.battle-menu--item:hover {
+.battle-menu--item:hover,
+.battle-menu--item:focus {
   background: #EBE1AD;
 }
 

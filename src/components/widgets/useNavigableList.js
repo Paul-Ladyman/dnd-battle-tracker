@@ -28,6 +28,7 @@ export default function useNavigableList({
   items,
   parentRef,
   horizontal = false,
+  autoManageFocus = false,
   onNavigate = () => {},
 }) {
   const [focusedItem, setFocusedItem] = useState(null);
@@ -76,6 +77,14 @@ export default function useNavigableList({
     }
     return null;
   }, [items, onNavigate]);
+
+  const focusItem = (i) => {
+    if (i !== null) items[i].ref.current.focus();
+  };
+
+  useEffect(() => {
+    if (autoManageFocus) focusItem(focusedItem);
+  }, [focusedItem]);
 
   return [focusedItem, setFocusedItem];
 }
