@@ -166,7 +166,12 @@ function BattleToolbar({
         {nextButtonLabel}
       </button>
       )}
-      {window.FLAG_new_battle_menu && <BattleMenu playerSession={playerSession} /> }
+      {window.FLAG_new_battle_menu && (
+        <BattleMenu
+          playerSession={playerSession}
+          shareEnabled={shareEnabled}
+        />
+      )}
       <div className="battle-toolbar--stat">
         Turn:
         <button

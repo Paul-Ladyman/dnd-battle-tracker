@@ -51,6 +51,12 @@ export default class BattleMenu {
     return this.user.click(item);
   }
 
+  async selectMenuItemByKeyboard(name) {
+    const menu = await screen.findByRole('menu', { name: 'Battle Menu' });
+    const item = await findByRole(menu, 'menuitem', { name });
+    return fireEvent.keyDown(item, { key: 'Enter', code: 'Enter', keyCode: 13 });
+  }
+
   async assertClosed() {
     const button = await screen.findByRole('button', { name: 'Battle Menu' });
     expect(button).toHaveAttribute('aria-expanded', 'false');

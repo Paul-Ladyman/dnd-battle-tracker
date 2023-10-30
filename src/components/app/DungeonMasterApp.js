@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
 import CreateCreatureForm from '../page/create-creature-form/CreateCreatureForm';
@@ -50,6 +50,7 @@ import { handleCreateCreatureErrors } from '../../state/CreatureFormManager';
 import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
+import BattleManagerContext from './BattleManagerContext';
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
@@ -124,6 +125,10 @@ function DungeonMasterApp({
     addUsedSpellSlots: updateBattle(addUsedSpellSlots),
   };
 
+  const battleManagement = useMemo(() => ({
+    toggleShare: updateBattle(toggleSync),
+  }), []);
+
   const onScrollActiveInitiative = () => {
     creaturesRef.current.scrollToCreature(activeCreatureId);
   };
@@ -133,7 +138,7 @@ function DungeonMasterApp({
   }, [activeCreatureId]);
 
   return (
-    <>
+    <BattleManagerContext.Provider value={battleManagement}>
       <BattleToolbar
         initiative={activeCreatureName}
         round={round}
@@ -184,7 +189,7 @@ function DungeonMasterApp({
         </main>
         <Footer />
       </div>
-    </>
+    </BattleManagerContext.Provider>
   );
 }
 
