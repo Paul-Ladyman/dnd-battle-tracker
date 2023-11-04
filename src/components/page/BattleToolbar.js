@@ -170,6 +170,7 @@ function BattleToolbar({
         <BattleMenu
           playerSession={playerSession}
           shareEnabled={shareEnabled}
+          rulesSearchOpen={rulesSearchOpen}
         />
       )}
       <div className="battle-toolbar--stat">

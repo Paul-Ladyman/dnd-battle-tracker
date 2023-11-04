@@ -127,6 +127,7 @@ function DungeonMasterApp({
 
   const battleManagement = useMemo(() => ({
     toggleShare: updateBattle(toggleSync),
+    toggleRulesSearch: updateBattle(toggleRulesSearch, false),
   }), []);
 
   const onScrollActiveInitiative = () => {

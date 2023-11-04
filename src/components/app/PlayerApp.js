@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+} from 'react';
 import isHotkey from 'is-hotkey';
 import BattleToolbar from '../page/BattleToolbar';
 import Creatures from '../page/Creatures';
@@ -12,6 +17,7 @@ import { getInitiative } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import { getCreatureList } from '../../state/CreatureListManager';
 import { hotkeys } from '../../hotkeys/hotkeys';
+import BattleManagerContext from './BattleManagerContext';
 
 // TODO abstract into SyncManager
 function getBattleData(getLoading, getData, syncLoading, syncData) {
@@ -76,8 +82,12 @@ function PlayerApp({
     creaturesRef?.current?.scrollToCreature(activeCreatureId);
   };
 
+  const battleManagement = useMemo(() => ({
+    toggleRulesSearch: updateRulesSearch,
+  }), []);
+
   return (
-    <>
+    <BattleManagerContext.Provider value={battleManagement}>
       <BattleToolbar
         initiative={activeCreatureName}
         round={round}
@@ -115,7 +125,7 @@ function PlayerApp({
         </main>
         <Footer playerSession />
       </div>
-    </>
+    </BattleManagerContext.Provider>
   );
 }
 

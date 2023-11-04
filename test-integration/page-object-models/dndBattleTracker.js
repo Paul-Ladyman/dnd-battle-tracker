@@ -7,10 +7,14 @@ import {
   findByRole,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import RulesSearchBar from './rulesSearchBar';
+import BattleMenu from './battleMenu';
 
 export default class DndBattleTracker {
   constructor(component) {
     this.user = userEvent.setup();
+    this.rulesSearchBar = new RulesSearchBar(this.user);
+    this.battleMenu = new BattleMenu(this.user);
     render(component);
   }
 

@@ -8,15 +8,15 @@ import useNavigableList from '../../widgets/useNavigableList';
 import useAutoClosable from '../../widgets/useAutoClosable';
 import BattleManagerContext from '../../app/BattleManagerContext';
 
-const searchRules = {
-  icon: <RulesSearchMenuIcon />,
-  label: 'Search rules',
+const searchRules = (onClick, rulesSearchOpen) => ({
+  icon: <RulesSearchMenuIcon opened={rulesSearchOpen} />,
+  label: rulesSearchOpen ? 'Close search' : 'Search rules',
   ref: React.createRef(),
-  onClick: () => {},
-};
+  onClick,
+});
 
-const dmItems = (battleManager, shareEnabled) => ([
-  searchRules,
+const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => ([
+  searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
   {
     icon: <ShareIcon enabled={shareEnabled} />,
     label: shareEnabled ? 'Unshare battle' : 'Share battle',
@@ -43,14 +43,18 @@ const dmItems = (battleManager, shareEnabled) => ([
   },
 ]);
 
-const playerItems = [searchRules];
+const playerItems = (battleManager, rulesSearchOpen) => ([
+  searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
+]);
 
-export default function BattleMenu({ playerSession, shareEnabled }) {
+export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpen }) {
   const [open, setOpen] = useState(false);
   const battleManager = useContext(BattleManagerContext);
   const parentRef = useRef(null);
   const buttonRef = useRef(null);
-  const items = playerSession ? playerItems : dmItems(battleManager, shareEnabled);
+  const items = playerSession
+    ? playerItems(battleManager, rulesSearchOpen)
+    : dmItems(battleManager, shareEnabled, rulesSearchOpen);
 
   const [_, setFocusedItem] = useNavigableList({
     items,
