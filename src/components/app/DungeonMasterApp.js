@@ -130,6 +130,7 @@ function DungeonMasterApp({
     toggleRulesSearch: updateBattle(toggleRulesSearch, false),
     resetBattle: updateBattle(resetBattle),
     saveBattle: updateBattle(save, false),
+    loadBattle,
   }), []);
 
   const onScrollActiveInitiative = () => {

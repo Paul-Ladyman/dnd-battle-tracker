@@ -16,7 +16,7 @@ const searchRules = (onClick, rulesSearchOpen) => ({
   onClick,
 });
 
-const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => {
+const dmItems = (battleManager, shareEnabled, rulesSearchOpen, fileSelector) => {
   const menuItems1 = [
     searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
     {
@@ -27,22 +27,24 @@ const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => {
     },
   ];
 
-  const save = isSaveLoadSupported()
-    ? [{
-      icon: <SaveLoadIcon />,
-      label: 'Save battle',
-      ref: React.createRef(),
-      onClick: battleManager.saveBattle,
-    }]
+  const saveLoadItems = isSaveLoadSupported()
+    ? [
+      {
+        icon: <SaveLoadIcon />,
+        label: 'Save battle',
+        ref: React.createRef(),
+        onClick: battleManager.saveBattle,
+      },
+      {
+        icon: <SaveLoadIcon load />,
+        label: 'Load battle',
+        ref: React.createRef(),
+        onClick: () => fileSelector.current.click(),
+      },
+    ]
     : [];
 
   const menuItems2 = [
-    {
-      icon: <SaveLoadIcon load />,
-      label: 'Load battle',
-      ref: React.createRef(),
-      onClick: () => {},
-    },
     {
       icon: <RemoveIcon />,
       label: 'Reset battle',
@@ -51,7 +53,7 @@ const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => {
     },
   ];
 
-  return [...menuItems1, ...save, ...menuItems2];
+  return [...menuItems1, ...saveLoadItems, ...menuItems2];
 };
 
 const playerItems = (battleManager, rulesSearchOpen) => ([
@@ -63,9 +65,10 @@ export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpe
   const battleManager = useContext(BattleManagerContext);
   const parentRef = useRef(null);
   const buttonRef = useRef(null);
+  const fileSelector = useRef(null);
   const items = playerSession
     ? playerItems(battleManager, rulesSearchOpen)
-    : dmItems(battleManager, shareEnabled, rulesSearchOpen);
+    : dmItems(battleManager, shareEnabled, rulesSearchOpen, fileSelector);
 
   const [_, setFocusedItem] = useNavigableList({
     items,
@@ -101,6 +104,11 @@ export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpe
   const clickHandler = (onClick) => {
     setOpen(false);
     onClick();
+  };
+
+  const handleUpload = () => {
+    const file = fileSelector.current.files[0];
+    battleManager.loadBattle(file);
   };
 
   return (
@@ -147,6 +155,15 @@ export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpe
           </li>
         ))}
       </ul>
+      <input
+        data-testid="load-battle"
+        type="file"
+        className="hidden"
+        accept="application/json"
+        ref={fileSelector}
+        onChange={handleUpload}
+        value=""
+      />
     </div>
   );
 }

@@ -127,7 +127,7 @@ describe('load', () => {
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file "fileName" was saved from version 0.1.0 of the battle tracker and is not compatible with the current version, 1.0.0.'],
+      errors: ['Failed to load battle. The file "fileName" was saved from version 0.1.0 of the battle tracker and is not compatible with the current version, 5.0.0.'],
     };
 
     expect(results).toEqual(expectedState);
@@ -145,7 +145,7 @@ describe('load', () => {
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file "fileName" was saved from version 2.0.0 of the battle tracker and is not compatible with the current version, 1.0.0.'],
+      errors: ['Failed to load battle. The file "fileName" was saved from version 2.0.0 of the battle tracker and is not compatible with the current version, 5.0.0.'],
     };
 
     expect(results).toEqual(expectedState);
@@ -163,7 +163,7 @@ describe('load', () => {
     const expectedState = {
       ...defaultState,
       ariaAnnouncements: ['failed to load battle'],
-      errors: ['Failed to load battle. The file "fileName" was saved from a different version of the battle tracker and is not compatible with the current version, 1.0.0.'],
+      errors: ['Failed to load battle. The file "fileName" was saved from a different version of the battle tracker and is not compatible with the current version, 5.0.0.'],
     };
 
     expect(results).toEqual(expectedState);

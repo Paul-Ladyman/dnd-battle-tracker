@@ -8,6 +8,7 @@ import {
   queryByRole,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 
 export default class BattleMenu {
   constructor(user) {
@@ -56,6 +57,12 @@ export default class BattleMenu {
     const menu = await screen.findByRole('menu', { name: 'Battle Menu' });
     const item = await findByRole(menu, 'menuitem', { name });
     return fireEvent.keyDown(item, { key: 'Enter', code: 'Enter', keyCode: 13 });
+  }
+
+  async loadBattle() {
+    const file = new File(['hello'], 'battle.json', { type: 'application/json' });
+    const input = screen.getByTestId('load-battle');
+    return userEvent.upload(input, file);
   }
 
   async assertClosed() {
