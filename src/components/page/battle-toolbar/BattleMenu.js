@@ -7,6 +7,7 @@ import RemoveIcon from '../../icons/RemoveIcon';
 import useNavigableList from '../../widgets/useNavigableList';
 import useAutoClosable from '../../widgets/useAutoClosable';
 import BattleManagerContext from '../../app/BattleManagerContext';
+import { isSaveLoadSupported } from '../../../state/AppManager';
 
 const searchRules = (onClick, rulesSearchOpen) => ({
   icon: <RulesSearchMenuIcon opened={rulesSearchOpen} />,
@@ -15,33 +16,43 @@ const searchRules = (onClick, rulesSearchOpen) => ({
   onClick,
 });
 
-const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => ([
-  searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
-  {
-    icon: <ShareIcon enabled={shareEnabled} />,
-    label: shareEnabled ? 'Unshare battle' : 'Share battle',
-    ref: React.createRef(),
-    onClick: battleManager.toggleShare,
-  },
-  {
-    icon: <SaveLoadIcon />,
-    label: 'Save battle',
-    ref: React.createRef(),
-    onClick: () => {},
-  },
-  {
-    icon: <SaveLoadIcon load />,
-    label: 'Load battle',
-    ref: React.createRef(),
-    onClick: () => {},
-  },
-  {
-    icon: <RemoveIcon />,
-    label: 'Reset battle',
-    ref: React.createRef(),
-    onClick: battleManager.resetBattle,
-  },
-]);
+const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => {
+  const menuItems1 = [
+    searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
+    {
+      icon: <ShareIcon enabled={shareEnabled} />,
+      label: shareEnabled ? 'Unshare battle' : 'Share battle',
+      ref: React.createRef(),
+      onClick: battleManager.toggleShare,
+    },
+  ];
+
+  const save = isSaveLoadSupported()
+    ? [{
+      icon: <SaveLoadIcon />,
+      label: 'Save battle',
+      ref: React.createRef(),
+      onClick: battleManager.saveBattle,
+    }]
+    : [];
+
+  const menuItems2 = [
+    {
+      icon: <SaveLoadIcon load />,
+      label: 'Load battle',
+      ref: React.createRef(),
+      onClick: () => {},
+    },
+    {
+      icon: <RemoveIcon />,
+      label: 'Reset battle',
+      ref: React.createRef(),
+      onClick: battleManager.resetBattle,
+    },
+  ];
+
+  return [...menuItems1, ...save, ...menuItems2];
+};
 
 const playerItems = (battleManager, rulesSearchOpen) => ([
   searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
