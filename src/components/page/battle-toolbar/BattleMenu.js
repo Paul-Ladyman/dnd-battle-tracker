@@ -1,64 +1,9 @@
 import React, { useRef, useState, useContext } from 'react';
 import OptionsMenuIcon from '../../icons/OptionsMenuIcon';
-import SaveLoadIcon from '../../icons/SaveLoadIcon';
-import ShareIcon from '../../icons/ShareIcon';
-import RulesSearchMenuIcon from '../../icons/RulesSearchMenuIcon';
-import RemoveIcon from '../../icons/RemoveIcon';
 import useNavigableList from '../../widgets/useNavigableList';
 import useAutoClosable from '../../widgets/useAutoClosable';
 import BattleManagerContext from '../../app/BattleManagerContext';
-import { isSaveLoadSupported } from '../../../state/AppManager';
-
-const searchRules = (onClick, rulesSearchOpen) => ({
-  icon: <RulesSearchMenuIcon opened={rulesSearchOpen} />,
-  label: rulesSearchOpen ? 'Close search' : 'Search rules',
-  ref: React.createRef(),
-  onClick,
-});
-
-const dmItems = (battleManager, shareEnabled, rulesSearchOpen, fileSelector) => {
-  const menuItems1 = [
-    searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
-    {
-      icon: <ShareIcon enabled={shareEnabled} />,
-      label: shareEnabled ? 'Unshare battle' : 'Share battle',
-      ref: React.createRef(),
-      onClick: battleManager.toggleShare,
-    },
-  ];
-
-  const saveLoadItems = isSaveLoadSupported()
-    ? [
-      {
-        icon: <SaveLoadIcon />,
-        label: 'Save battle',
-        ref: React.createRef(),
-        onClick: battleManager.saveBattle,
-      },
-      {
-        icon: <SaveLoadIcon load />,
-        label: 'Load battle',
-        ref: React.createRef(),
-        onClick: () => fileSelector.current.click(),
-      },
-    ]
-    : [];
-
-  const menuItems2 = [
-    {
-      icon: <RemoveIcon />,
-      label: 'Reset battle',
-      ref: React.createRef(),
-      onClick: battleManager.resetBattle,
-    },
-  ];
-
-  return [...menuItems1, ...saveLoadItems, ...menuItems2];
-};
-
-const playerItems = (battleManager, rulesSearchOpen) => ([
-  searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
-]);
+import { playerItems, dmItems } from './menuItems';
 
 export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpen }) {
   const [open, setOpen] = useState(false);
