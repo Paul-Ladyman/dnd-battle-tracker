@@ -2,10 +2,6 @@ import '@testing-library/jest-dom';
 import DmApp from '../page-object-models/dmApp';
 import PlayerApp from '../page-object-models/playerApp';
 
-beforeAll(() => {
-  window.FLAG_new_battle_menu = 'true';
-});
-
 describe('Search rules - DM', () => {
   test('closes the Battle Menu', async () => {
     const dmApp = new DmApp();

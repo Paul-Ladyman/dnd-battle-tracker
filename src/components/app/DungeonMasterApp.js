@@ -131,7 +131,7 @@ function DungeonMasterApp({
     resetBattle: updateBattle(resetBattle),
     saveBattle: updateBattle(save, false),
     loadBattle,
-  }), []);
+  }), [state]);
 
   const onScrollActiveInitiative = () => {
     creaturesRef.current.scrollToCreature(activeCreatureId);
@@ -149,14 +149,9 @@ function DungeonMasterApp({
         secondsElapsed={secondsElapsed}
         creatureCount={creatureCount}
         nextInitiative={updateBattle(nextInitiative)}
-        resetBattle={updateBattle(resetBattle)}
-        saveBattle={updateBattle(save, false)}
-        loadBattle={loadBattle}
-        toggleShare={updateBattle(toggleSync)}
         shareEnabled={shareEnabled}
         isSaveLoadSupported={isSaveLoadSupported}
         rulesSearchOpen={rulesSearchOpened}
-        toggleRulesSearch={updateBattle(toggleRulesSearch, false)}
         onScrollActiveInitiative={onScrollActiveInitiative}
       />
       { errors && (

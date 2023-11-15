@@ -1,10 +1,6 @@
 import '@testing-library/jest-dom';
 import DmApp from '../page-object-models/dmApp';
 
-beforeAll(() => {
-  window.FLAG_new_battle_menu = 'true';
-});
-
 describe('Reset battle', () => {
   test('closes the Battle Menu', async () => {
     const dmApp = new DmApp();

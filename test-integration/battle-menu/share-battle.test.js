@@ -5,10 +5,6 @@ import DmApp from '../page-object-models/dmApp';
 const writeTextMock = jest.fn();
 const playerSessionUrl = 'http://localhost/?battle=random-battle-id';
 
-beforeAll(() => {
-  window.FLAG_new_battle_menu = 'true';
-});
-
 beforeEach(() => {
   writeTextMock.mockReset();
 });

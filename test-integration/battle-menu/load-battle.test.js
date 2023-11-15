@@ -5,10 +5,6 @@ import defaultState from '../../test/fixtures/battle';
 
 jest.mock('../../src/util/fileSystem');
 
-beforeAll(() => {
-  window.FLAG_new_battle_menu = 'true';
-});
-
 beforeEach(() => {
   jest.resetAllMocks();
   FileSystem.isSaveSupported.mockReturnValue(true);

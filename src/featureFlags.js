@@ -1,3 +1,3 @@
-const featureFlags = ['new_battle_menu'];
+const featureFlags = [];
 
 export default featureFlags;

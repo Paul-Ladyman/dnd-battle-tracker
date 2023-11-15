@@ -1,10 +1,6 @@
 import DmApp from '../page-object-models/dmApp';
 import PlayerApp from '../page-object-models/playerApp';
 
-beforeAll(() => {
-  window.FLAG_new_battle_menu = 'true';
-});
-
 describe('Battle Menu', () => {
   it('is closed by default', async () => {
     const dmApp = new DmApp();

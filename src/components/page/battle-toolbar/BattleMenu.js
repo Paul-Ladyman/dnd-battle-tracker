@@ -1,9 +1,16 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, {
+  useRef,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
+import isHotkey from 'is-hotkey';
 import OptionsMenuIcon from '../../icons/OptionsMenuIcon';
 import useNavigableList from '../../widgets/useNavigableList';
 import useAutoClosable from '../../widgets/useAutoClosable';
 import BattleManagerContext from '../../app/BattleManagerContext';
 import { playerItems, dmItems } from './menuItems';
+import { hotkeys } from '../../../hotkeys/hotkeys';
 
 export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpen }) {
   const [open, setOpen] = useState(false);
@@ -39,6 +46,15 @@ export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpe
     onEscapeToClose,
     onEscapeDeps: [],
   });
+
+  const hotKeyHandler = (e) => {
+    if (isHotkey(hotkeys.battlebar, e)) buttonRef.current.focus();
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', hotKeyHandler);
+    return () => window.removeEventListener('keydown', hotKeyHandler);
+  }, []);
 
   const ariaExpanded = open ? 'true' : 'false';
   const menuDisplay = open ? 'block' : 'none';

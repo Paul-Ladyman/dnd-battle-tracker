@@ -14,12 +14,13 @@ export const hotkeys = {
 };
 
 const rulesSearchBar = 'Search rules using D&D Beyond';
+const battlebar = 'Move focus to battle toolbar';
 
 export const hotkeyDescriptions = {
   nextInitiative: 'Advance to the next creature in the initiative order',
   rulesSearchBar,
   createCreature: 'Move focus to create creature form',
-  battlebar: 'Move focus to battle toolbar',
+  battlebar,
   healCreature: 'Heal a creature whilst using the Damage/Heal tool',
   damageCreature: 'Damage a creature whilst using the Damage/Heal tool',
   dropdownNavDown: 'Navigate down through a dropdown menu',
@@ -32,4 +33,5 @@ export const hotkeyDescriptions = {
 
 export const playerSessionHotkeyDescriptions = {
   rulesSearchBar,
+  battlebar,
 };
