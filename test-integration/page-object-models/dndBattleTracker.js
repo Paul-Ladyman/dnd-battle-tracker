@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-extraneous-dependencies */
 import {
   render,
@@ -22,6 +23,11 @@ export default class DndBattleTracker {
     const creatures = await screen.findAllByRole('region');
     const creatureNames = creatures.map((creature) => getByRole(creature, 'heading').textContent);
     return expect(creatureNames).toEqual(expectedCreatureNames);
+  }
+
+  async assertCreatureListEmpty() {
+    const creatures = await screen.queryAllByRole('region');
+    return expect(creatures).toHaveLength(0);
   }
 
   static async assertCreatureVisible(name, hp, ac, note) {

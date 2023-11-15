@@ -21,13 +21,7 @@ const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => ([
     icon: <ShareIcon enabled={shareEnabled} />,
     label: shareEnabled ? 'Unshare battle' : 'Share battle',
     ref: React.createRef(),
-    onClick: () => battleManager.toggleShare(),
-  },
-  {
-    icon: <RemoveIcon />,
-    label: 'Reset battle',
-    ref: React.createRef(),
-    onClick: () => {},
+    onClick: battleManager.toggleShare,
   },
   {
     icon: <SaveLoadIcon />,
@@ -40,6 +34,12 @@ const dmItems = (battleManager, shareEnabled, rulesSearchOpen) => ([
     label: 'Load battle',
     ref: React.createRef(),
     onClick: () => {},
+  },
+  {
+    icon: <RemoveIcon />,
+    label: 'Reset battle',
+    ref: React.createRef(),
+    onClick: battleManager.resetBattle,
   },
 ]);
 

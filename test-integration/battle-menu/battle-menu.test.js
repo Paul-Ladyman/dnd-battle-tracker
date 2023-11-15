@@ -55,7 +55,7 @@ describe('Battle Menu navigation', () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.navigate(1, false);
     await dmApp.battleMenu.assertOpen();
-    await dmApp.battleMenu.assertMenuItemFocused('Load battle');
+    await dmApp.battleMenu.assertMenuItemFocused('Reset battle');
   });
 
   it('allows the menu items to be navigated forwards with the keyboard', async () => {
@@ -63,13 +63,13 @@ describe('Battle Menu navigation', () => {
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Search rules');
     await dmApp.battleMenu.navigate(2);
-    await dmApp.battleMenu.assertMenuItemFocused('Reset battle');
+    await dmApp.battleMenu.assertMenuItemFocused('Save battle');
   });
 
   it('wraps navigation when navigating forwards with the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
-    await dmApp.battleMenu.selectMenuItem('Load battle');
+    await dmApp.battleMenu.selectMenuItem('Reset battle');
     await dmApp.battleMenu.navigate(2);
     await dmApp.battleMenu.assertMenuItemFocused('Share battle');
   });
@@ -77,9 +77,9 @@ describe('Battle Menu navigation', () => {
   it('allows the menu items to be navigated backwards with the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
-    await dmApp.battleMenu.selectMenuItem('Load battle');
+    await dmApp.battleMenu.selectMenuItem('Reset battle');
     await dmApp.battleMenu.navigate(2, false);
-    await dmApp.battleMenu.assertMenuItemFocused('Reset battle');
+    await dmApp.battleMenu.assertMenuItemFocused('Save battle');
   });
 
   it('wraps navigation when navigating backwards with the keyboard', async () => {
@@ -87,7 +87,7 @@ describe('Battle Menu navigation', () => {
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Search rules');
     await dmApp.battleMenu.navigate(2, false);
-    await dmApp.battleMenu.assertMenuItemFocused('Save battle');
+    await dmApp.battleMenu.assertMenuItemFocused('Load battle');
   });
 
   it('navigates to the first menu item when the home key is pressed', async () => {
@@ -101,9 +101,9 @@ describe('Battle Menu navigation', () => {
   it('navigates to the last button when the end key is pressed', async () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
-    await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.battleMenu.selectMenuItem('Load battle');
     await dmApp.battleMenu.navigateEnd();
-    await dmApp.battleMenu.assertMenuItemFocused('Load battle');
+    await dmApp.battleMenu.assertMenuItemFocused('Reset battle');
   });
 
   it('closes the menu when it loses focus', async () => {
