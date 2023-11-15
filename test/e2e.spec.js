@@ -24,7 +24,7 @@ test('A DM can share an existing battle with their players who receive subsequen
   await page.fill('text=AC (optional)', '1');
   await page.locator('role=button[name="Add creature"]').click();
   await page.locator('role=button[name="Battle Menu"]').click();
-  await page.locator('role=button[name="Share battle"]').click();
+  await page.locator('role=menuitem[name="Share battle"]').click();
 
   const [playerPage] = await Promise.all([
     context.waitForEvent('page'),
