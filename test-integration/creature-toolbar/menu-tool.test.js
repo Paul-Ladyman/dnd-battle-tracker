@@ -101,7 +101,7 @@ describe('Share tool', () => {
   it("is disabled by default if it is the creature's turn", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     return dmApp.menuTool.assertCreatureShareDisabled('Goblin');
   });
@@ -109,7 +109,7 @@ describe('Share tool', () => {
   it('does nothing if clicked whilst disabled', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     await dmApp.menuTool.unshareCreature('Goblin');
     return dmApp.menuTool.assertCreatureShared('Goblin');
@@ -120,7 +120,7 @@ describe('Share tool', () => {
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     await dmApp.menuTool.unshareCreature('Goblin');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     return dmApp.menuTool.assertCreatureShareEnabled('Goblin');
   });
@@ -130,7 +130,7 @@ describe('Share tool', () => {
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     await dmApp.menuTool.unshareCreature('Goblin');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     await dmApp.menuTool.shareCreature('Goblin');
     return dmApp.menuTool.assertCreatureShared('Goblin');
@@ -184,7 +184,7 @@ describe('Remove tool', () => {
   it("is disabled if it is the creature's turn", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     return dmApp.menuTool.assertRemoveCreatureDisabled('Goblin');
   });
@@ -192,7 +192,7 @@ describe('Remove tool', () => {
   it("does not allow removing a creature to be confirmed when it is the creature's turn", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     await dmApp.menuTool.removeCreature('Goblin');
     return dmApp.menuTool.assertConfirmRemoveCreatureNotVisible('Goblin');
@@ -205,7 +205,7 @@ describe('Remove tool', () => {
     await dmApp.menuTool.removeCreature('Goblin');
     await dmApp.menuTool.confirmRemoveCreature('Goblin');
     await dmApp.createCreatureForm.addCreature('Goblin 2', '1');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     return DmApp.assertCreatureList(['Goblin 2Active creature']);
   });
 });

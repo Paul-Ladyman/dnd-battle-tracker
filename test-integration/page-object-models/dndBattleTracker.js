@@ -6,6 +6,8 @@ import {
   getByText,
   getByRole,
   findByRole,
+  findAllByRole,
+  queryAllByRole,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RulesSearchBar from './rulesSearchBar';
@@ -20,13 +22,15 @@ export default class DndBattleTracker {
   }
 
   static async assertCreatureList(expectedCreatureNames) {
-    const creatures = await screen.findAllByRole('region');
+    const main = await screen.findByRole('main');
+    const creatures = await findAllByRole(main, 'region');
     const creatureNames = creatures.map((creature) => getByRole(creature, 'heading').textContent);
     return expect(creatureNames).toEqual(expectedCreatureNames);
   }
 
   async assertCreatureListEmpty() {
-    const creatures = await screen.queryAllByRole('region');
+    const main = await screen.findByRole('main');
+    const creatures = await queryAllByRole(main, 'region');
     return expect(creatures).toHaveLength(0);
   }
 

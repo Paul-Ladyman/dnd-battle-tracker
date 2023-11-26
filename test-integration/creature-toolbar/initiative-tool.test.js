@@ -46,7 +46,7 @@ describe('Initiative tool', () => {
     await dmApp.initiativeTool.setCreatureInitiative('goblin 1', '1');
     await dmApp.creatureToolbar.selectTool('goblin 2', 'Initiative');
     await dmApp.initiativeTool.setCreatureInitiative('goblin 2', '2');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await DmApp.assertCreatureList(['goblin 2Active creature', 'goblin 1']);
   });
 });

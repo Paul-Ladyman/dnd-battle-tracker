@@ -1,9 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import {
-  screen,
-  getByRole,
-} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DndBattleTracker from './dndBattleTracker';
 import DungeonMasterAppWrapper from '../../src/components/app/DungeonMasterAppWrapper';
@@ -16,6 +12,7 @@ import InitiativeTool from './initiativeTool';
 import ConditionsTool from './conditionsTool';
 import SpellSlotsTool from './spellSlotsTool';
 import Creature from './creature';
+import BattleToolbar from './battleToolbar';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
@@ -29,11 +26,6 @@ export default class DmApp extends DndBattleTracker {
     this.conditionsTool = new ConditionsTool(this.user);
     this.spellSlotsTool = new SpellSlotsTool(this.user);
     this.creature = new Creature(this.user);
-  }
-
-  async startBattle() {
-    const banner = await screen.findByRole('banner');
-    const startBattleButton = getByRole(banner, 'button', { name: 'Start battle' });
-    return this.user.click(startBattleButton);
+    this.battleToolbar = new BattleToolbar(this.user);
   }
 }

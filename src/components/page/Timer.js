@@ -32,17 +32,20 @@ function Timer({
   const time = getTime(startTime, endTime);
   const round = getRound(startRound, endRound);
   const showRound = round !== undefined;
+
   const minutes = Math.floor(parseFloat(time) / 60.0);
   const remainingSeconds = time % 60;
 
   const roundAriaLabel = showRound ? `${round} rounds ` : '';
   const timeAriaLabel = `${minutes} minutes ${remainingSeconds} seconds`;
 
+  const displayMinutes = minutes.toLocaleString('en', { minimumIntegerDigits: 2 });
+  const displaySeconds = remainingSeconds.toLocaleString('en', { minimumIntegerDigits: 2 });
+
   return (
     <span className={className} aria-label={roundAriaLabel + timeAriaLabel}>
-      {showRound && `${round}r `}
-      {`${minutes}m `}
-      {`${remainingSeconds}s`}
+      {showRound && `${round} round${round === 1 ? '' : 's'}; `}
+      {`${displayMinutes}:${displaySeconds}`}
     </span>
   );
 }

@@ -63,10 +63,10 @@ function BattleToolbar({
         Round:
         <div className="battle-toolbar--stat-value">{round}</div>
       </div>
-      <div className="battle-toolbar--stat battle-toolbar--stat__extra2">
+      <section aria-label="time elapsed" className="battle-toolbar--stat battle-toolbar--stat__extra2">
         Time Elapsed:
         <Timer startTime={secondsElapsed} className="battle-toolbar--stat-value" />
-      </div>
+      </section>
       {!playerSession && (
         <button
           title={nextButtonTitle}

@@ -19,14 +19,14 @@ describe('Battle Toolbar initiative controls - DM', () => {
   test('the current turn button is enabled when the battle starts', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', '1');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await DmApp.assertCurrentTurn(true, 'goblin');
   });
 
   test("it's not possible to start a battle if a creature has no initiative", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.startBattle();
+    await dmApp.battleToolbar.startBattle();
     await DmApp.assertError('Cannot continue battle; goblin has no initiative.');
   });
 });
