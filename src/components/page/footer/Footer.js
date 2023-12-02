@@ -15,7 +15,9 @@ function Footer({ playerSession, error }) {
         </p>
         )}
       <p>
-        D&D Battle Tracker is a combat tracker tool for Dungeons & Dragons 5th Edition.
+        D&D Battle Tracker is an initiative and combat tracker tool
+        {' '}
+        for Dungeons & Dragons 5th Edition (D&D 5e).
       </p>
       { !error
         && (
