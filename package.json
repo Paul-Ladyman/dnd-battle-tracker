@@ -1,6 +1,6 @@
 {
   "name": "dnd-battle-tracker",
-  "version": "5.96.1",
+  "version": "5.96.2",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.16",
