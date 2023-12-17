@@ -30,7 +30,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [D&D Beyond](https://www.dndbeyond.com/combat-tracker)
 * [Avrae](https://avrae.io/) (Discord bot usable in the browser)
 * [Aide D&D](https://www.aidedd.org/en/online-assistant/)
-* [DHMStark](http://dhmstark.co.uk/rpgs/encounter-tracker/)
+* [Kastark](https://kastark.co.uk/rpgs/encounter-tracker/)
 * [Donjon](https://donjon.bin.sh/5e/initiative/)
 * [Harmless Key](https://harmlesskey.com/)
 * [Improved Initiative](https://improvedinitiative.app/)
