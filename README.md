@@ -43,6 +43,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [Role Generator](https://www.rolegenerator.com/en/module/initiative-tracker)
 * [Dungeons & Dragons Battle Tracker](https://battletracker.jazzsequence.com/bad84fad-19ba-2e17-3a6f360ea05c)
 * [DnD Combat Tracker](https://santiagoclv.github.io/dnd-combat-tracker/)
+* [Monstrous Initiative Tracker](https://brewchetta.github.io/monstrous-initiative-tracker/)
 
 Many of these systems are very feature rich and aim to provide tools beyond the combat tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
