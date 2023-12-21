@@ -99,8 +99,3 @@ export async function load(state, file) {
 export function isSaveLoadSupported() {
   return FileSystem.isSaveSupported();
 }
-
-export function updateErrors(state, errorToAdd) {
-  const errors = addError(state, errorToAdd);
-  return { ...state, errors };
-}

@@ -43,14 +43,18 @@ import {
   save,
   load,
   isSaveLoadSupported,
-  updateErrors,
 } from '../../state/AppManager';
 import { handleCreateCreatureErrors } from '../../state/CreatureFormManager';
 import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import BattleManagerContext from './BattleManagerContext';
-import { findCreatureWithError, battleHasErrors, dismissErrors } from '../../state/ErrorManager';
+import {
+  findCreatureWithError,
+  battleHasErrors,
+  dismissErrors,
+  updateErrors,
+} from '../../state/ErrorManager';
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,

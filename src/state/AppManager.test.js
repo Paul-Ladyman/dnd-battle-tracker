@@ -1,5 +1,5 @@
 import {
-  save, load, isSaveLoadSupported, updateErrors,
+  save, load, isSaveLoadSupported,
 } from './AppManager';
 import FileSystem from '../util/fileSystem';
 import defaultState from '../../test/fixtures/battle';
@@ -198,29 +198,5 @@ describe('isSaveLoadSupported', () => {
   it('returns false if saving a file is not supported', () => {
     FileSystem.isSaveSupported.mockReturnValue(false);
     expect(isSaveLoadSupported()).toBe(false);
-  });
-});
-
-describe('updateErrors', () => {
-  test('adds a new error to state', () => {
-    const state = {
-      ...defaultState,
-      errors: ['one', 'two', 'three'],
-    };
-
-    const result = updateErrors(state, 'four');
-    const expectedErrors = ['one', 'two', 'three', 'four'];
-    expect(result).toEqual({ ...state, errors: expectedErrors });
-  });
-
-  test('returns the existing state if an error if it exists', () => {
-    const errors = ['one', 'two', 'three'];
-    const state = {
-      ...defaultState,
-      errors,
-    };
-
-    const result = updateErrors(state, 'three');
-    expect(result).toEqual(state);
   });
 });

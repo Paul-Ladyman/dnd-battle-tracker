@@ -25,3 +25,8 @@ export function dismissErrors(state) {
     errors: [],
   };
 }
+
+export function updateErrors(state, errorToAdd) {
+  const errors = addError(state, errorToAdd);
+  return { ...state, errors };
+}

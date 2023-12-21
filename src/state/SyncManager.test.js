@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 import { share, handleShareError } from './SyncManager';
-import { updateErrors } from './AppManager';
-import { dismissErrors } from './ErrorManager';
+import { dismissErrors, updateErrors } from './ErrorManager';
 import defaultState from '../../test/fixtures/battle';
 
 jest.mock('nanoid');

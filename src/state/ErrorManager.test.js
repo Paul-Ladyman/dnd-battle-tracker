@@ -1,5 +1,11 @@
 import defaultState from '../../test/fixtures/battle';
-import { findCreatureWithError, battleHasErrors, addError, dismissErrors } from './ErrorManager';
+import {
+  findCreatureWithError,
+  battleHasErrors,
+  addError,
+  dismissErrors,
+  updateErrors
+} from './ErrorManager';
 
 describe('findCreatureWithError', () => {
   test('returns the context of an InitiativeError if it exists', () => {
@@ -163,5 +169,29 @@ describe('dismissErrors', () => {
   it('does nothing if there are no errors', () => {
     const result = dismissErrors(defaultState);
     expect(result).toEqual(defaultState);
+  });
+});
+
+describe('updateErrors', () => {
+  test('adds a new error to state', () => {
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two', 'three'],
+    };
+
+    const result = updateErrors(state, 'four');
+    const expectedErrors = ['one', 'two', 'three', 'four'];
+    expect(result).toEqual({ ...state, errors: expectedErrors });
+  });
+
+  test('returns the existing state if an error if it exists', () => {
+    const errors = ['one', 'two', 'three'];
+    const state = {
+      ...defaultState,
+      errors,
+    };
+
+    const result = updateErrors(state, 'three');
+    expect(result).toEqual(state);
   });
 });
