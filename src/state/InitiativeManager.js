@@ -1,4 +1,4 @@
-import { addError } from './AppManager';
+import { addError } from './ErrorManager';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({ id }) => creature.id === id);

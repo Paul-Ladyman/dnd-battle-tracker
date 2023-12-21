@@ -1,5 +1,5 @@
 import {
-  save, load, isSaveLoadSupported, dismissErrors, addError, updateErrors,
+  save, load, isSaveLoadSupported, dismissErrors, updateErrors,
 } from './AppManager';
 import FileSystem from '../util/fileSystem';
 import defaultState from '../../test/fixtures/battle';
@@ -215,75 +215,6 @@ describe('dismissErrors', () => {
   it('does nothing if there are no errors', () => {
     const result = dismissErrors(defaultState);
     expect(result).toEqual(defaultState);
-  });
-});
-
-describe('addError', () => {
-  test('adds a new error', () => {
-    const state = {
-      ...defaultState,
-      errors: ['one', 'two', 'three'],
-    };
-
-    const result = addError(state, 'four');
-    const expectedErrors = ['one', 'two', 'three', 'four'];
-    expect(result).toEqual(expectedErrors);
-  });
-
-  test('does not add an error if it exists', () => {
-    const errors = ['one', 'two', 'three'];
-    const state = {
-      ...defaultState,
-      errors,
-    };
-
-    const result = addError(state, 'three');
-    expect(result).toEqual(errors);
-  });
-
-  test('adds a new error with context', () => {
-    const state = {
-      ...defaultState,
-      errors: ['one', 'two', 'three'],
-    };
-
-    const error = {
-      type: 'InitiativeError',
-      context: 0,
-      message: 'error',
-    };
-    const result = addError(state, error);
-    const expectedErrors = ['one', 'two', 'three', error];
-    expect(result).toEqual(expectedErrors);
-  });
-
-  test('does not add an error with context if it already exists as a simple error', () => {
-    const state = {
-      ...defaultState,
-      errors: ['one', 'two', 'three'],
-    };
-
-    const error = {
-      type: 'InitiativeError',
-      context: 0,
-      message: 'three',
-    };
-    const result = addError(state, error);
-    expect(result).toEqual(state.errors);
-  });
-
-  test('does not add an error with context if it already exists', () => {
-    const error = {
-      type: 'InitiativeError',
-      context: 0,
-      message: 'three',
-    };
-    const state = {
-      ...defaultState,
-      errors: ['one', 'two', error],
-    };
-    const result = addError(state, error);
-    expect(result).toEqual(state.errors);
   });
 });
 

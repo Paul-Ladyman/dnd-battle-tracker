@@ -1,4 +1,5 @@
 import FileSystem from '../util/fileSystem';
+import { addError } from './ErrorManager';
 
 export function save(state) {
   const {
@@ -31,18 +32,6 @@ function versionCompatibility(version, loadedVersion) {
   const majorVersion = version.split('.')[0];
   const loadedMajorVersion = loadedVersion && loadedVersion.split('.')[0];
   return majorVersion === loadedMajorVersion;
-}
-
-export function addError(state, errorToAdd) {
-  const errorExists = state.errors.find(
-    (error) => error === errorToAdd || error === errorToAdd.message,
-  );
-
-  if (errorExists) {
-    return state.errors;
-  }
-
-  return state.errors.concat(errorToAdd);
 }
 
 function getLoadState(oldState, newState, ariaAnnouncement, error) {

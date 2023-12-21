@@ -6,3 +6,15 @@ export function findCreatureWithError(state) {
 export function battleHasErrors(state) {
   return state.errors?.length > 0;
 }
+
+export function addError(state, errorToAdd) {
+  const errorExists = state.errors.find(
+    (error) => error === errorToAdd || error === errorToAdd.message,
+  );
+
+  if (errorExists) {
+    return state.errors;
+  }
+
+  return state.errors.concat(errorToAdd);
+}

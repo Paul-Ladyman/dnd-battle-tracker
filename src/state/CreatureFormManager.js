@@ -1,4 +1,4 @@
-import { addError } from './AppManager';
+import { addError } from './ErrorManager';
 import { validateSyntax } from '../domain/dice';
 
 function isDefined(value) {
