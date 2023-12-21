@@ -100,13 +100,6 @@ export function isSaveLoadSupported() {
   return FileSystem.isSaveSupported();
 }
 
-export function dismissErrors(state) {
-  return {
-    ...state,
-    errors: [],
-  };
-}
-
 export function updateErrors(state, errorToAdd) {
   const errors = addError(state, errorToAdd);
   return { ...state, errors };

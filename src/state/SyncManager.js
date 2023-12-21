@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
-import { updateErrors, dismissErrors } from './AppManager';
+import { updateErrors } from './AppManager';
+import { dismissErrors } from './ErrorManager';
 
 function getSharedCreatures(creatures) {
   return creatures.map((creature) => ({

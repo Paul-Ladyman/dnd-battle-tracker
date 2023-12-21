@@ -18,3 +18,10 @@ export function addError(state, errorToAdd) {
 
   return state.errors.concat(errorToAdd);
 }
+
+export function dismissErrors(state) {
+  return {
+    ...state,
+    errors: [],
+  };
+}

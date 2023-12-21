@@ -1,10 +1,12 @@
 import { nanoid } from 'nanoid';
 import { share, handleShareError } from './SyncManager';
-import { updateErrors, dismissErrors } from './AppManager';
+import { updateErrors } from './AppManager';
+import { dismissErrors } from './ErrorManager';
 import defaultState from '../../test/fixtures/battle';
 
 jest.mock('nanoid');
 jest.mock('./AppManager');
+jest.mock('./ErrorManager');
 
 const createBattleMock = jest.fn();
 const updateBattleMock = jest.fn();
