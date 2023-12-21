@@ -207,8 +207,12 @@ describe('nextInitiative', () => {
     };
     const expected = {
       ...state,
-      ariaAnnouncements: ['Cannot continue battle. Droop has no initiative.'],
-      errors: ['Cannot continue battle; Droop has no initiative.'],
+      ariaAnnouncements: ['Cannot continue battle; Droop has no initiative.'],
+      errors: [{
+        type: 'InitiativeError',
+        context: 3,
+        message: 'Cannot continue battle; Droop has no initiative.',
+      }],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -232,8 +236,12 @@ describe('nextInitiative', () => {
     };
     const expected = {
       ...state,
-      ariaAnnouncements: ['Cannot continue battle. Droop has no initiative.'],
-      errors: ['Cannot continue battle; Droop has no initiative.'],
+      ariaAnnouncements: ['Cannot continue battle; Droop has no initiative.'],
+      errors: [{
+        type: 'InitiativeError',
+        context: 3,
+        message: 'Cannot continue battle; Droop has no initiative.',
+      }],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -257,8 +265,12 @@ describe('nextInitiative', () => {
     };
     const expected = {
       ...state,
-      ariaAnnouncements: ['Cannot continue battle. Droop has no initiative.'],
-      errors: ['Cannot continue battle; Droop has no initiative.'],
+      ariaAnnouncements: ['Cannot continue battle; Droop has no initiative.'],
+      errors: [{
+        type: 'InitiativeError',
+        context: 3,
+        message: 'Cannot continue battle; Droop has no initiative.',
+      }],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });

@@ -4,6 +4,7 @@ import CreatureWrapper from '../creature/CreatureWrapper';
 function Creatures({
   creatures,
   activeCreatureId,
+  errorCreatureId,
   focusedCreature,
   round,
   secondsElapsed,
@@ -35,6 +36,7 @@ function Creatures({
       {creatures.map((creature, i) => {
         const { id } = creature;
         const active = activeCreatureId === id;
+        const hasError = errorCreatureId === id;
         const focused = focusedCreature === i;
         return (
           <div
@@ -46,7 +48,8 @@ function Creatures({
             <CreatureWrapper
               creature={creature}
               active={active}
-              focused={focused}
+              hasError={hasError}
+              focused={focused || hasError}
               round={round}
               secondsElapsed={secondsElapsed}
               creatureManagement={creatureManagement}

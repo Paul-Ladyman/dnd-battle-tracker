@@ -34,7 +34,9 @@ function versionCompatibility(version, loadedVersion) {
 }
 
 export function addError(state, errorToAdd) {
-  const errorExists = state.errors.find((error) => error === errorToAdd);
+  const errorExists = state.errors.find(
+    (error) => error === errorToAdd || error === errorToAdd.message,
+  );
 
   if (errorExists) {
     return state.errors;

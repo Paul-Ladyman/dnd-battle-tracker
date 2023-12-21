@@ -11,7 +11,7 @@ export default function Errors({ errors, dismissErrors }) {
           return (
             // eslint-disable-next-line react/no-array-index-key
             <div className={classes} key={`error-${i}`}>
-              {error}
+              {error.message || error}
             </div>
           );
         })}

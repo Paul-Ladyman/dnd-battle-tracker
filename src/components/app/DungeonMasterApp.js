@@ -51,6 +51,7 @@ import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import BattleManagerContext from './BattleManagerContext';
+import { findCreatureWithError, battleHasErrors } from '../../state/ErrorManager';
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
@@ -81,7 +82,8 @@ function DungeonMasterApp({
     setState(newState);
   };
 
-  const errors = state.errors && state.errors.length > 0;
+  const errors = battleHasErrors(state);
+  const errorCreatureId = findCreatureWithError(state);
 
   const [round, activeCreatureName, activeCreatureId] = getInitiative(state);
   const [creatures, creatureCount] = getCreatureList(state);
@@ -141,6 +143,12 @@ function DungeonMasterApp({
     onScrollActiveInitiative(activeCreatureId);
   }, [activeCreatureId]);
 
+  useEffect(() => {
+    if (errorCreatureId >= 0) {
+      creaturesRef.current.scrollToCreature(errorCreatureId);
+    }
+  }, [errorCreatureId]);
+
   return (
     <BattleManagerContext.Provider value={battleManagement}>
       <BattleToolbar
@@ -180,6 +188,7 @@ function DungeonMasterApp({
             ref={creaturesRef}
             creatures={creatures}
             activeCreatureId={activeCreatureId}
+            errorCreatureId={errorCreatureId}
             focusedCreature={focusedCreature}
             round={round}
             secondsElapsed={secondsElapsed}

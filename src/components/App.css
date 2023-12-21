@@ -859,6 +859,13 @@ label {
   border-bottom: 10px solid #822000;
 }
 
+.creature-wrapper__error {
+  border-top: 10px double red;
+  border-bottom: 10px double red;
+  border-left: 1px solid red;
+  border-right: 1px solid red;
+}
+
 /* Ensure the creature boxes take up 100% of the screen width for smaller screens. */
 @media only screen and (max-width: 825px) {
   .creature-list {

@@ -62,6 +62,7 @@ class CreatureWrapper extends Component {
       creature,
       active,
       focused,
+      hasError,
       round,
     } = this.props;
 
@@ -72,6 +73,7 @@ class CreatureWrapper extends Component {
     const shouldUpdate = JSON.stringify(nextProps.creature) !== JSON.stringify(creature)
       || nextProps.active !== active
       || nextProps.focused !== focused
+      || nextProps.hasError !== hasError
       || nextState.expanded !== expanded
       || nextProps.round !== round;
 
@@ -86,6 +88,7 @@ class CreatureWrapper extends Component {
     const {
       creature,
       active,
+      hasError,
       creatureManagement,
       playerSession,
       round,
@@ -109,8 +112,9 @@ class CreatureWrapper extends Component {
     const { expanded } = this.state;
 
     const showExpanded = active || expanded;
+    const errorClassModifier = hasError ? 'creature-wrapper__error' : '';
     const activeClassModifier = active ? 'creature-wrapper__active' : '';
-    const classes = `creature-wrapper ${activeClassModifier}`;
+    const classes = `creature-wrapper ${activeClassModifier} ${errorClassModifier}`;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
       removeCreature,

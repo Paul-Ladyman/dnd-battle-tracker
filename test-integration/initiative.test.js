@@ -29,6 +29,30 @@ describe('Battle Toolbar initiative controls - DM', () => {
     await dmApp.battleToolbar.startBattle();
     await DmApp.assertError('Cannot continue battle; goblin has no initiative.');
   });
+
+  test('focuses a creature without initiative at the start of the list on attempting to start the battle', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.battleToolbar.startBattle();
+    await dmApp.creature.assertFocused('goblin');
+  });
+
+  test('focuses a creature without initiative at the end of the list on attempting to start the battle', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.battleToolbar.startBattle();
+    await dmApp.creature.assertFocused('goblin 2');
+  });
+
+  test('the first creature without initiative is focused on attempting to start the battle', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.createCreatureForm.addCreature('goblin 3');
+    await dmApp.battleToolbar.startBattle();
+    await dmApp.creature.assertFocused('goblin 2');
+  });
 });
 
 describe('Battle Toolbar initiative controls - Player', () => {

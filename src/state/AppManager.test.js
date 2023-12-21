@@ -240,6 +240,51 @@ describe('addError', () => {
     const result = addError(state, 'three');
     expect(result).toEqual(errors);
   });
+
+  test('adds a new error with context', () => {
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two', 'three'],
+    };
+
+    const error = {
+      type: 'InitiativeError',
+      context: 0,
+      message: 'error',
+    };
+    const result = addError(state, error);
+    const expectedErrors = ['one', 'two', 'three', error];
+    expect(result).toEqual(expectedErrors);
+  });
+
+  test('does not add an error with context if it already exists as a simple error', () => {
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two', 'three'],
+    };
+
+    const error = {
+      type: 'InitiativeError',
+      context: 0,
+      message: 'three',
+    };
+    const result = addError(state, error);
+    expect(result).toEqual(state.errors);
+  });
+
+  test('does not add an error with context if it already exists', () => {
+    const error = {
+      type: 'InitiativeError',
+      context: 0,
+      message: 'three',
+    };
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two', error],
+    };
+    const result = addError(state, error);
+    expect(result).toEqual(state.errors);
+  });
 });
 
 describe('updateErrors', () => {

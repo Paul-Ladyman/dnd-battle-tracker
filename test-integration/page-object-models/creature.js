@@ -43,4 +43,10 @@ export default class Creature {
     expect(meter).toHaveAttribute('aria-valuemax', max);
     expect(meter).toHaveAttribute('aria-valuenow', now);
   }
+
+  async assertFocused(name) {
+    const creature = await screen.findByRole('region', { name });
+    const button = await findByRole(creature, 'button', { name: `expand ${name}` });
+    expect(button).toHaveFocus();
+  }
 }
