@@ -246,6 +246,21 @@ export function addHitPointsToCreature(state, creatureId, hitPoints) {
   );
 }
 
+export function addArmorClassToCreature(state, creatureId, ac) {
+  if (ac < 0) {
+    return state;
+  }
+
+  const creature = findCreature(state.creatures, creatureId);
+  const ariaAnnouncement = `${creature.name}'s AC is ${ac}`;
+  return updateCreature(
+    state,
+    creatureId,
+    { armorClass: ac },
+    ariaAnnouncement,
+  );
+}
+
 export function addTemporaryHealthToCreature(state, creatureId, health) {
   if (health < 0) {
     return state;

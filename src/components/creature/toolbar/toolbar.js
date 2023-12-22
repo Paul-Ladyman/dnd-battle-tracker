@@ -6,6 +6,7 @@ import { ConditionsButton, ConditionsToolMenu } from './tool-menus/conditions';
 import { NotesButton, NotesToolMenu } from './tool-menus/notes';
 import { HpButton, HpToolMenu } from './tool-menus/hp';
 import { SpellSlotsButton, SpellSlotsToolMenu } from './tool-menus/spellSlots';
+import { AcButton, AcToolMenu } from './tool-menus/ac';
 
 export default function getToolbar() {
   return [
@@ -31,6 +32,12 @@ export default function getToolbar() {
       ToolMenu: HpToolMenu,
       ref: React.createRef(),
       key: (id) => `${id}-hp`,
+    },
+    {
+      Button: AcButton,
+      ToolMenu: AcToolMenu,
+      ref: React.createRef(),
+      key: (id) => `${id}-ac`,
     },
     {
       Button: ConditionsButton,

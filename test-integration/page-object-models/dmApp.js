@@ -13,6 +13,7 @@ import ConditionsTool from './conditionsTool';
 import SpellSlotsTool from './spellSlotsTool';
 import Creature from './creature';
 import BattleToolbar from './battleToolbar';
+import AcTool from './acTool';
 
 export default class DmApp extends DndBattleTracker {
   constructor() {
@@ -22,6 +23,7 @@ export default class DmApp extends DndBattleTracker {
     this.menuTool = new MenuTool(this.user);
     this.statusTool = new StatusTool(this.user);
     this.hpTool = new HpTool(this.user);
+    this.acTool = new AcTool(this.user);
     this.initiativeTool = new InitiativeTool(this.user);
     this.conditionsTool = new ConditionsTool(this.user);
     this.spellSlotsTool = new SpellSlotsTool(this.user);

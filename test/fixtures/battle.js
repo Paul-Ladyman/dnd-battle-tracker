@@ -30,7 +30,7 @@ export default {
       shared: false,
       hitPointsShared: true,
       statBlock: 'https://www.dndbeyond.com/monsters/goblin',
-      armorClass: null,
+      armorClass: 15,
       totalSpellSlots: null,
       usedSpellSlots: null,
     },

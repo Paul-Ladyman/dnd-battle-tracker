@@ -114,7 +114,7 @@ describe('Creature toolbar navigation', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
     await dmApp.creatureToolbar.navigate('goblin', 2, false);
-    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'Kill');
+    await dmApp.creatureToolbar.assertButtonFocused('goblin', 'HP');
   });
 
   it('wraps navigation when navigating backwards with the keyboard', async () => {

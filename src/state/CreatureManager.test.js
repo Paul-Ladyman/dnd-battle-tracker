@@ -8,6 +8,7 @@ import {
   updateNoteForCreature,
   removeNoteFromCreature,
   addHitPointsToCreature,
+  addArmorClassToCreature,
   addTemporaryHealthToCreature,
   addInitiativeToCreature,
   toggleCreatureLock,
@@ -1341,6 +1342,67 @@ describe('addHitPointsToCreature', () => {
 
   it('does nothing to a creature if less than 0 hp is added', () => {
     const result = addHitPointsToCreature(defaultState, 0, -1);
+    expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addArmorClassToCreature', () => {
+  it('adds an armor class to a creature that does not already have it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          armorClass: 10,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ["Wellby's AC is 10"],
+    };
+
+    const result = addArmorClassToCreature(defaultState, 0, 10);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('overrides the armor class of a creature that already has it', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          armorClass: 20,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ["Goblin #1's AC is 20"],
+    };
+
+    const result = addArmorClassToCreature(defaultState, 1, 20);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('allows an armor class of 0 to be added to a creature', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          armorClass: 0,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ["Wellby's AC is 0"],
+    };
+
+    const result = addArmorClassToCreature(defaultState, 0, 0);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature if an armor class of less than 0 is added', () => {
+    const result = addArmorClassToCreature(defaultState, 0, -1);
     expect(result).toEqual(defaultState);
   });
 });
