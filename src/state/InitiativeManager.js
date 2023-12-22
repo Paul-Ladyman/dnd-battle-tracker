@@ -1,4 +1,4 @@
-import { addError } from './ErrorManager';
+import { addInitiativeError } from './ErrorManager';
 
 function findCreatureIndex(creatures, creature) {
   return creatures.findIndex(({ id }) => creature.id === id);
@@ -39,17 +39,10 @@ export function nextInitiative(state) {
   const creaturesWithoutInitiative = state.creatures.filter(
     (creature) => creature.initiative === undefined || creature.initiative === null,
   );
+
   if (creaturesWithoutInitiative.length > 0) {
     const { name, id } = creaturesWithoutInitiative[0];
-    const message = `Cannot continue battle; ${name} has no initiative.`;
-    const ariaAnnouncements = state.ariaAnnouncements.concat(message);
-    const error = {
-      type: 'InitiativeError',
-      context: id,
-      message,
-    };
-    const errors = addError({ ...state, errors: [] }, error);
-    return { ...state, ariaAnnouncements, errors };
+    return addInitiativeError(state, name, id);
   }
 
   const [

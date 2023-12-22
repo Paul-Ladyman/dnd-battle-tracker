@@ -4,7 +4,8 @@ import {
   battleHasErrors,
   addError,
   dismissErrors,
-  updateErrors
+  updateErrors,
+  addInitiativeError,
 } from './ErrorManager';
 
 describe('findCreatureWithError', () => {
@@ -193,5 +194,47 @@ describe('updateErrors', () => {
 
     const result = updateErrors(state, 'three');
     expect(result).toEqual(state);
+  });
+});
+
+describe('addInitiativeError', () => {
+  test('adds a new InitiativeError error', () => {
+    const state = {
+      ...defaultState,
+      errors: [],
+    };
+
+    const result = addInitiativeError(state, 'goblin', 0);
+
+    const expectedState = {
+      ...state,
+      ariaAnnouncements: ['Cannot continue battle; goblin has no initiative.'],
+      errors: [{
+        type: 'InitiativeError',
+        context: 0,
+        message: 'Cannot continue battle; goblin has no initiative.',
+      }],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  test('removes existing errors when adding a new InitiativeError error', () => {
+    const state = {
+      ...defaultState,
+      errors: ['one', 'two'],
+    };
+
+    const result = addInitiativeError(state, 'goblin', 0);
+
+    const expectedState = {
+      ...state,
+      ariaAnnouncements: ['Cannot continue battle; goblin has no initiative.'],
+      errors: [{
+        type: 'InitiativeError',
+        context: 0,
+        message: 'Cannot continue battle; goblin has no initiative.',
+      }],
+    };
+    expect(result).toEqual(expectedState);
   });
 });

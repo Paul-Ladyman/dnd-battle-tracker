@@ -30,3 +30,14 @@ export function updateErrors(state, errorToAdd) {
   const errors = addError(state, errorToAdd);
   return { ...state, errors };
 }
+
+export function addInitiativeError(state, creatureName, creatureId) {
+  const message = `Cannot continue battle; ${creatureName} has no initiative.`;
+  const ariaAnnouncements = state.ariaAnnouncements.concat(message);
+  const error = {
+    type: 'InitiativeError',
+    context: creatureId,
+    message,
+  };
+  return { ...state, errors: [error], ariaAnnouncements };
+}
