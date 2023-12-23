@@ -13,7 +13,7 @@ export default function MaxHitPointsTool({
       name="creature-toolbar-ac"
       min={1}
       ariaLabel={`add/edit AC ${name}`}
-      label="AC"
+      label="Armor Class"
       rightSubmit={(hitPoints) => addArmorClassToCreature(id, hitPoints)}
       rightControls={{
         rightTitle: 'Add/Edit AC',

@@ -665,16 +665,6 @@ label {
   font-weight: normal;
 }
 
-@media only screen and (max-width: 1175px) {
-  .creature-toolbar-button__small {
-    grid-column: span 2;
-  }
-
-  .creature-toolbar-button__text svg {
-    display: none;
-  }
-}
-
 @media only screen and (min-width: 1175px) {
   .creature-toolbar-wrapper__focused .creature-toolbar-button__focused {
     background-color: #EBE1AD;
@@ -720,6 +710,16 @@ label {
   margin-bottom: 25px;
   margin-top: 10px;
   border-bottom: 1px solid #822000;
+}
+
+@media only screen and (max-width: 1175px) {
+  .creature-toolbar-button__small {
+    grid-column: span 2;
+  }
+
+  .creature-toolbar-button__text svg {
+    display: none;
+  }
 }
 
 /* Create creature form */

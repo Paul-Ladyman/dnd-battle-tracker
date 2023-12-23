@@ -14,7 +14,7 @@ export default class AcTool {
 
   async setCreatureAc(name, ac) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
-    const acTool = await findByText(toolMenu, 'AC');
+    const acTool = await findByText(toolMenu, 'Armor Class');
     await this.user.type(acTool, ac);
     const acButton = await findByRole(toolMenu, 'button', { name: 'Add/Edit AC' });
     return this.user.click(acButton);
