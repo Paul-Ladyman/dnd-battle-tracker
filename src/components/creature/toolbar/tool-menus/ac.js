@@ -1,8 +1,5 @@
 import React from 'react';
 import AcIcon from '../../../icons/AcIcon';
-import HealthPointsTool from '../tools/HealthPointsTool';
-import MaxHitPointsTool from '../tools/MaxHitPointsTool';
-import TemporaryHitPointsTool from '../tools/TemporaryHitPointsTool';
 import AcTool from '../tools/AcTool';
 
 export function AcToolMenu({
