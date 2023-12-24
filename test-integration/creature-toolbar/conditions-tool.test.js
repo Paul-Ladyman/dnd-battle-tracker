@@ -20,7 +20,6 @@ describe('Condition tool', () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
-    await dmApp.conditionsTool.openConditions('goblin');
     await dmApp.conditionsTool.assertConditionAvailable('goblin', 'Blinded');
     await dmApp.conditionsTool.assertConditionAvailable('goblin', 'Charmed');
     await dmApp.conditionsTool.assertConditionAvailable('goblin', 'Deafened');
@@ -38,21 +37,67 @@ describe('Condition tool', () => {
     await dmApp.conditionsTool.assertConditionAvailable('goblin', 'Unconscious');
   });
 
-  it('allows a condition to be added', async () => {
+  it('sets conditions to inactive by default', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
-    await dmApp.conditionsTool.addCondition('goblin', 'Blinded');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Blinded');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Charmed');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Deafened');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Exhaustion');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Frightened');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Grappled');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Incapacitated');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Invisible');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Paralyzed');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Petrified');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Poisoned');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Prone');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Restrained');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Stunned');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Unconscious');
+  });
+
+  it('allows a condition to be added to a creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
+    await dmApp.conditionsTool.selectCondition('goblin', 'Blinded');
     await DmApp.assertCreatureVisible('goblin', null, null, 'Blinded');
   });
 
-  it("removes a creature's existing condition from the list", async () => {
+  it('allows a condition to be added to a creature using the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
-    await dmApp.conditionsTool.addCondition('goblin', 'Blinded');
-    await dmApp.conditionsTool.addCondition('goblin', 'Charmed');
-    await dmApp.conditionsTool.assertConditionNotAvailable('goblin', 'Blinded');
-    await dmApp.conditionsTool.assertConditionNotAvailable('goblin', 'Charmed');
+    await dmApp.conditionsTool.selectConditionUsingKeyboard('goblin', 'Blinded');
+    await DmApp.assertCreatureVisible('goblin', null, null, 'Blinded');
+  });
+
+  it('sets the condition to be active when added', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
+    await dmApp.conditionsTool.selectCondition('goblin', 'Blinded');
+    await dmApp.conditionsTool.assertConditionActive('goblin', 'Blinded');
+  });
+
+  it('allows a condition to be removed from a creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
+    await dmApp.conditionsTool.selectCondition('goblin', 'Blinded');
+    await dmApp.conditionsTool.selectCondition('goblin', 'Blinded');
+    await dmApp.creature.expand('goblin');
+    await dmApp.creature.assertExpandedTextNotVisible('goblin', 'Blinded');
+  });
+
+  it('sets the condition to be inactive when remove', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Conditions');
+    await dmApp.conditionsTool.selectCondition('goblin', 'Blinded');
+    await dmApp.conditionsTool.selectCondition('goblin', 'Blinded');
+    await dmApp.conditionsTool.assertConditionInactive('goblin', 'Blinded');
   });
 });

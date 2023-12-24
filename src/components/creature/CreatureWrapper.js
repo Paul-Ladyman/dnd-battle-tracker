@@ -118,7 +118,6 @@ class CreatureWrapper extends Component {
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
       removeCreature,
-      removeNoteFromCreature,
     } = creatureManagement;
 
     const healthPoints = (
@@ -165,10 +164,8 @@ class CreatureWrapper extends Component {
                   round={round}
                   secondsElapsed={secondsElapsed}
                   removeCreature={removeCreature}
-                  removeNoteFromCreature={removeNoteFromCreature}
                   healthPoints={healthPoints}
                   showHealth={showHitPoints}
-                  playerSession={playerSession}
                 />
               )
               : (

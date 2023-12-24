@@ -136,40 +136,11 @@ describe('removeCondition', () => {
 });
 
 describe('getAvailableConditions', () => {
-  it('returns all conditions if a creature has no conditions', () => {
+  it('returns all conditions', () => {
     const creature = { conditions: [] };
     const result = getAvailableConditions(creature);
     const expected = [
       'Blinded',
-      'Charmed',
-      'Deafened',
-      'Exhaustion',
-      'Frightened',
-      'Grappled',
-      'Incapacitated',
-      'Invisible',
-      'Paralyzed',
-      'Petrified',
-      'Poisoned',
-      'Prone',
-      'Restrained',
-      'Stunned',
-      'Unconscious',
-    ];
-    expect(result).toEqual(expected);
-  });
-
-  it('filters any conditions a creature already has', () => {
-    const condition = {
-      text: blindedText,
-      appliedAtRound: round,
-      appliedAtSeconds: 0,
-      url: blindedUrl,
-      id: blindedId,
-    };
-    const creature = { conditions: [condition] };
-    const result = getAvailableConditions(creature);
-    const expected = [
       'Charmed',
       'Deafened',
       'Exhaustion',

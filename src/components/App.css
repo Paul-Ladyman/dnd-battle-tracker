@@ -477,21 +477,6 @@ label {
 
 /* Creature toolbar */
 
-.creature-toolbar--select {
-  background-color: white;
-  box-sizing: border-box;
-  display: block;
-}
-
-.creature-toolbar--dropdown {
-  -webkit-appearance: none;
-  cursor: pointer;
-  grid-column: span 4;
-  display: flex;
-  flex-direction: column;
-  height: 44px;
-}
-
 .combobox-wrapper {
   position: relative;
 }
@@ -701,11 +686,6 @@ label {
   grid-column: span 3;
 }
 
-.creature-toolbar--grid .creature-toolbar--dropdown {
-  height: unset;
-  grid-column: span 5;
-}
-
 .creature-toolbar-separator {
   margin-bottom: 25px;
   margin-top: 10px;
@@ -720,6 +700,70 @@ label {
   .creature-toolbar-button__text svg {
     display: none;
   }
+}
+
+.conditions {
+  column-count: 3;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  column-gap: 44px;
+}
+
+@media only screen and (max-width: 600px) {
+  .conditions {
+    column-count: 2;
+    column-gap: 32px;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  .conditions {
+    column-count: 1;
+  }
+}
+
+.condition {
+  list-style: none;
+}
+
+.condition [role="checkbox"] {
+  display: inline-block;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 15px;
+  margin-bottom: 8px;
+}
+
+.condition [role="checkbox"]::before {
+  position: relative;
+  top: 1px;
+  left: -4px;
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='forced-color-adjust: auto;'%3E%3Crect x='2' y='2' height='13' width='13' rx='2' stroke='currentcolor' stroke-width='1' fill-opacity='0' /%3E%3C/svg%3E");
+}
+
+.condition [role="checkbox"][aria-checked="true"]::before {
+  position: relative;
+  top: 1px;
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='forced-color-adjust: auto;'%3E%3Crect x='2' y='2' height='13' width='13' rx='2' stroke='currentcolor' stroke-width='1' fill-opacity='0' /%3E%3Ccircle cx='8.5' cy='8.5' r='4' stroke='%23822000' stroke-width='1' fill='%23822000' fillOpacity='1' /%3E%3C/svg%3E");
+}
+
+.condition [role="checkbox"]:hover {
+  padding: 3px 7px;
+  background-color: #EBE1AD;
+  border: 1px solid #822000;
+  box-shadow: 0 0 5px #979aa4;
+  outline: none;
+}
+
+.condition [role="checkbox"]:focus-within {
+  padding: 3px 7px;
+  background-color: #EBE1AD;
+  border: 1px solid #822000;
+  outline: 1px solid #822000;
+  outline-offset: 2px;
+  box-shadow: 0 0 5px #979aa4;
 }
 
 /* Create creature form */
@@ -1071,17 +1115,6 @@ label {
 
 .creature-note-list--note::first-letter {
   text-transform: uppercase;
-}
-
-.creature-note-list--button {
-  margin-right: 15%;
-  margin-left: 5px;
-}
-
-@media only screen and (max-width: 825px) {
-  .creature-note-list--button {
-    margin-right: 0;
-  }
 }
 
 .creature-note-list--timer {

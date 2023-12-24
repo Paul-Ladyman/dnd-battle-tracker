@@ -1,34 +1,51 @@
 import React from 'react';
 
 export default function ConditionsTool({
-  name,
   id,
   conditions,
+  creatureConditions,
   addNoteToCreature,
+  removeNoteFromCreature,
+  toolMenuId,
 }) {
-  const conditionsClasses = 'form--input creature-toolbar--select creature-toolbar--dropdown';
   const conditionsId = `conditions-${id}`;
-  const enableConditions = conditions.length > 0;
+
+  const selectCondition = (creatureId, condition, activeCondition) => {
+    if (activeCondition) removeNoteFromCreature(creatureId, activeCondition, true);
+    else addNoteToCreature(creatureId, condition, true);
+  };
+
+  const onKeyDown = (creatureId, condition, active) => (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      selectCondition(creatureId, condition, active);
+    }
+  };
+
+  const labelledBy = `${toolMenuId}-conditions`;
+
   return (
-    <div className="creature-toolbar--dropdown">
-      <label htmlFor={conditionsId} aria-label={`add condition to ${name}`}>
-        <div className="form--label">Add Condition</div>
-        <select
-          id={conditionsId}
-          className={conditionsClasses}
-          disabled={!enableConditions}
-          value=""
-          name="creature-toolbar-conditions"
-          onChange={(event) => addNoteToCreature(id, event.target.value, true)}
-        >
-          <option>--</option>
-          {conditions.map((condition) => (
-            <option key={`${conditionsId}-${condition}`} value={condition}>
-              {condition}
-            </option>
-          ))}
-        </select>
-      </label>
+    <div role="group" aria-labelledby={labelledBy}>
+      <ul className="conditions">
+        {conditions.map((condition) => {
+          const activeCondition = creatureConditions.find(
+            (creatureCondition) => creatureCondition.text === condition,
+          );
+          return (
+            <li className="condition" key={`${conditionsId}-${condition}`}>
+              <div
+                role="checkbox"
+                aria-checked={activeCondition ? 'true' : 'false'}
+                tabIndex={0}
+                onClick={() => selectCondition(id, condition, activeCondition)}
+                onKeyDown={onKeyDown(id, condition, activeCondition)}
+              >
+                {condition}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

@@ -6,10 +6,8 @@ function CreatureNoteList({
   creatureId,
   label,
   noteList,
-  dismissHandler,
   round,
   secondsElapsed,
-  playerSession,
   isConditionList,
 }) {
   if (noteList.length === 0) {
@@ -21,9 +19,6 @@ function CreatureNoteList({
       condition={condition}
       round={round}
       secondsElapsed={secondsElapsed}
-      playerSession={playerSession}
-      dismissHandler={dismissHandler}
-      creatureId={creatureId}
       key={condition.id}
     />
   );

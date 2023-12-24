@@ -6,16 +6,19 @@ export function ConditionsToolMenu({
   creature,
   conditions,
   creatureManagement,
+  toolMenuId,
 }) {
-  const { name, id } = creature;
-  const { addNoteToCreature } = creatureManagement;
+  const { id, conditions: creatureConditions } = creature;
+  const { addNoteToCreature, removeNoteFromCreature } = creatureManagement;
   return (
-    <div className="creature-toolbar--grid creature-toolbar--entrance">
+    <div className="creature-toolbar--entrance">
       <ConditionsTool
-        name={name}
         id={id}
         conditions={conditions}
+        creatureConditions={creatureConditions}
         addNoteToCreature={addNoteToCreature}
+        removeNoteFromCreature={removeNoteFromCreature}
+        toolMenuId={toolMenuId}
       />
     </div>
   );
@@ -46,6 +49,7 @@ export function ConditionsButton({
       aria-haspopup="true"
       aria-controls={toolMenuId}
       aria-expanded={toolMenuExpanded}
+      id={`${toolMenuId}-conditions`}
     >
       <ConditionsIcon />
       Conditions

@@ -7,10 +7,8 @@ export default function ExpandedCreature({
   creature,
   round,
   secondsElapsed,
-  removeNoteFromCreature,
   healthPoints,
   showHealth,
-  playerSession,
 }) {
   const {
     initiative, id, conditions, notes, shared, armorClass, totalSpellSlots, usedSpellSlots,
@@ -46,20 +44,16 @@ export default function ExpandedCreature({
         creatureId={id}
         label="Conditions"
         noteList={conditions}
-        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, true)}
         round={round}
         secondsElapsed={secondsElapsed}
-        playerSession={playerSession}
         isConditionList
       />
       <CreatureNoteList
         creatureId={id}
         label="Notes"
         noteList={notes}
-        dismissHandler={(creatureId, note) => removeNoteFromCreature(creatureId, note, false)}
         round={round}
         secondsElapsed={secondsElapsed}
-        playerSession={playerSession}
       />
       <SpellSlotMeters totalSpellSlots={totalSpellSlots} usedSpellSlots={usedSpellSlots} id={id} />
     </div>
