@@ -10,7 +10,6 @@ import useAutoClosable from '../../widgets/useAutoClosable';
 
 export default function CreatureToolbar({
   creature,
-  conditions,
   creatureManagement,
   active,
 }) {
@@ -128,7 +127,6 @@ export default function CreatureToolbar({
           && (
           <ToolMenu
             creature={creature}
-            conditions={conditions}
             creatureManagement={creatureManagement}
             active={active}
             toolMenuId={toolMenuId}

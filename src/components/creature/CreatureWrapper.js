@@ -4,7 +4,6 @@ import ExpandedCreature from './ExpandedCreature';
 import CreatureToolbar from './toolbar/CreatureToolbar';
 import HealthPoints from './HealthPoints';
 import CreatureHeader from './CreatureHeader';
-import { getAvailableConditions } from '../../state/ConditionsManager';
 import { getHitPointsBar, shouldShowHitPoints } from '../../display/displayLogic';
 
 function getCreatureAriaLabel(creature, active, expanded) {
@@ -180,7 +179,6 @@ class CreatureWrapper extends Component {
         { !playerSession && (
           <CreatureToolbar
             creature={creature}
-            conditions={getAvailableConditions(creature)}
             creatureManagement={creatureManagement}
             active={active}
           />

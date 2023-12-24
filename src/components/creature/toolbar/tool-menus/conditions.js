@@ -4,7 +4,6 @@ import ConditionsTool from '../tools/ConditionsTool';
 
 export function ConditionsToolMenu({
   creature,
-  conditions,
   creatureManagement,
   toolMenuId,
 }) {
@@ -14,7 +13,6 @@ export function ConditionsToolMenu({
     <div className="creature-toolbar--entrance">
       <ConditionsTool
         id={id}
-        conditions={conditions}
         creatureConditions={creatureConditions}
         addNoteToCreature={addNoteToCreature}
         removeNoteFromCreature={removeNoteFromCreature}

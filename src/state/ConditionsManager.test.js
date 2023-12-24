@@ -1,14 +1,12 @@
 import {
-  allConditions,
   addCondition,
   removeCondition,
-  getAvailableConditions,
 } from './ConditionsManager';
 import getSecondsElapsed from './TimeManager';
 
 jest.mock('./TimeManager');
 
-const { Blinded } = allConditions;
+const blinded = 'Blinded';
 const blindedUrl = 'https://www.dndbeyond.com/sources/basic-rules/appendix-a-conditions#Blinded';
 const blindedText = 'Blinded';
 const blindedId = 'blinded-0';
@@ -25,7 +23,7 @@ describe('addCondition', () => {
       conditions: [],
       id: 0,
     };
-    const result = addCondition(Blinded, creature, round);
+    const result = addCondition(blinded, creature, round);
     const expectedConditions = [{
       text: blindedText,
       appliedAtRound: round,
@@ -50,7 +48,7 @@ describe('addCondition', () => {
       conditions: [condition],
       id: 0,
     };
-    const result = addCondition(Blinded, creature, round);
+    const result = addCondition(blinded, creature, round);
     const expectedConditions = [
       condition,
       {
@@ -78,7 +76,7 @@ describe('addCondition', () => {
       conditions: [condition],
       id: 0,
     };
-    const result = addCondition(Blinded, creature, round);
+    const result = addCondition(blinded, creature, round);
     expect(result).toEqual(creature.conditions);
     expect(getSecondsElapsed).not.toHaveBeenCalled();
   });
@@ -114,7 +112,7 @@ describe('removeCondition', () => {
       conditions: [condition, anotherCondition],
       id: 0,
     };
-    const result = removeCondition(Blinded, creature);
+    const result = removeCondition(blinded, creature);
     expect(result).toEqual([anotherCondition]);
   });
 
@@ -132,30 +130,5 @@ describe('removeCondition', () => {
     };
     const result = removeCondition('Unknown', creature);
     expect(result).toEqual(creature.conditions);
-  });
-});
-
-describe('getAvailableConditions', () => {
-  it('returns all conditions', () => {
-    const creature = { conditions: [] };
-    const result = getAvailableConditions(creature);
-    const expected = [
-      'Blinded',
-      'Charmed',
-      'Deafened',
-      'Exhaustion',
-      'Frightened',
-      'Grappled',
-      'Incapacitated',
-      'Invisible',
-      'Paralyzed',
-      'Petrified',
-      'Poisoned',
-      'Prone',
-      'Restrained',
-      'Stunned',
-      'Unconscious',
-    ];
-    expect(result).toEqual(expected);
   });
 });

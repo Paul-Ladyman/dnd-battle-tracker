@@ -1,7 +1,8 @@
 import getSecondsElapsed from './TimeManager';
-import { allConditions, addCondition, removeCondition } from './ConditionsManager';
+import { addCondition, removeCondition } from './ConditionsManager';
 import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
 import maxSpellSlots from '../domain/spellSlots';
+import conditionsData from '../domain/conditions';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({ id }) => creatureId === id);
@@ -23,7 +24,7 @@ export function killCreature(state, creatureId) {
   const creature = findCreature(state.creatures, creatureId);
   const healthPoints = creature.healthPoints === undefined ? undefined : 0;
   const ariaAnnouncement = `${creature.name} killed/made unconscious`;
-  const newConditions = addCondition(allConditions.Unconscious, creature, state.round);
+  const newConditions = addCondition(conditionsData.Unconscious.text, creature, state.round);
   return updateCreature(
     state,
     creatureId,
@@ -65,7 +66,7 @@ export function damageCreature(state, creatureId, damage) {
   if (healthPoints <= 0) {
     healthPoints = 0;
     alive = false;
-    conditions = addCondition(allConditions.Unconscious, creature, state.round);
+    conditions = addCondition(conditionsData.Unconscious.text, creature, state.round);
   }
 
   const temporaryHealthPointsAnnouncement = temporaryHealthPoints !== null ? `${creature.name}'s temporary health is ${temporaryHealthPoints}. ` : '';
@@ -102,7 +103,7 @@ export function healCreature(state, creatureId, health) {
   let { alive, conditions } = creature;
   if (creature.healthPoints === 0 && healthPoints > 0) {
     alive = true;
-    conditions = removeCondition(allConditions.Unconscious, creature);
+    conditions = removeCondition(conditionsData.Unconscious.text, creature);
   }
 
   const ariaAnnouncement = `healed ${creature.name} by ${health}. ${creature.name}'s health is ${healthPoints}`;
@@ -335,7 +336,7 @@ export function isCreatureStable(creature) {
   }
 
   const isUnconscious = conditions.findIndex(
-    ({ text }) => text === allConditions.Unconscious,
+    ({ text }) => text === conditionsData.Unconscious.text,
   ) > -1;
 
   return healthPoints === 0 || isUnconscious;

@@ -1,8 +1,8 @@
 import React from 'react';
+import conditionsData from '../../../../domain/conditions';
 
 export default function ConditionsTool({
   id,
-  conditions,
   creatureConditions,
   addNoteToCreature,
   removeNoteFromCreature,
@@ -27,20 +27,21 @@ export default function ConditionsTool({
   return (
     <div role="group" aria-labelledby={labelledBy}>
       <ul className="conditions">
-        {conditions.map((condition) => {
+        {Object.values(conditionsData).map((condition) => {
+          const { text, id: conditionId } = condition;
           const activeCondition = creatureConditions.find(
-            (creatureCondition) => creatureCondition.text === condition,
+            (creatureCondition) => creatureCondition.text === text,
           );
           return (
-            <li className="condition" key={`${conditionsId}-${condition}`}>
+            <li className="condition" key={`${conditionsId}-${conditionId}`}>
               <div
                 role="checkbox"
                 aria-checked={activeCondition ? 'true' : 'false'}
                 tabIndex={0}
-                onClick={() => selectCondition(id, condition, activeCondition)}
-                onKeyDown={onKeyDown(id, condition, activeCondition)}
+                onClick={() => selectCondition(id, text, activeCondition)}
+                onKeyDown={onKeyDown(id, text, activeCondition)}
               >
-                {condition}
+                {text}
               </div>
             </li>
           );
