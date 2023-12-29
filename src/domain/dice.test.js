@@ -8,7 +8,7 @@ afterEach(() => {
   jest.spyOn(global.Math, 'random').mockRestore();
 });
 
-describe('roll', () => {
+describe('roll result', () => {
   test.each([
     [20, 20],
     ['20', 20],
@@ -210,5 +210,189 @@ describe('roll', () => {
   test('returns an error object if the multipliers for multiple dice add to greater than 500', () => {
     const { result } = roll('500d6 + 1d20');
     expect(result.message).toBe('invalid dice notation: 500d6 + 1d20');
+  });
+});
+
+describe('roll terms', () => {
+  test('returns an integer term for a roll described by an integer', () => {
+    const { terms } = roll(1);
+    expect(terms).toEqual([{
+      type: 'integer',
+      term: '1',
+    }]);
+  });
+
+  test('returns a dice term for a roll described by an single dice', () => {
+    const { terms } = roll('1d20');
+    expect(terms).toEqual([{
+      type: 'dice',
+      term: '1d20',
+      rolls: ['20'],
+    }]);
+  });
+
+  test('returns the terms of a dice roll plus an integer', () => {
+    const { terms } = roll('d20+2');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: 'd20',
+        rolls: ['20'],
+      },
+      {
+        type: 'operator',
+        term: '+',
+      },
+      {
+        type: 'integer',
+        term: '2',
+      },
+    ]);
+  });
+
+  test('returns the terms of a dice roll minus an integer', () => {
+    const { terms } = roll('d20-2');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: 'd20',
+        rolls: ['20'],
+      },
+      {
+        type: 'operator',
+        term: '-',
+      },
+      {
+        type: 'integer',
+        term: '2',
+      },
+    ]);
+  });
+
+  test('returns the terms of multiple dice rolls of the same type', () => {
+    const { terms } = roll('2d20');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: '2d20',
+        rolls: ['20', '20'],
+      },
+    ]);
+  });
+
+  test('returns the terms of multiple dice rolls of different types', () => {
+    const { terms } = roll('d20+d6');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: 'd20',
+        rolls: ['20'],
+      },
+      {
+        type: 'operator',
+        term: '+',
+      },
+      {
+        type: 'dice',
+        term: 'd6',
+        rolls: ['6'],
+      },
+    ]);
+  });
+
+  test('returns the terms of multiple dice rolls of different types with multipliers', () => {
+    const { terms } = roll('2d20+2d6');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: '2d20',
+        rolls: ['20', '20'],
+      },
+      {
+        type: 'operator',
+        term: '+',
+      },
+      {
+        type: 'dice',
+        term: '2d6',
+        rolls: ['6', '6'],
+      },
+    ]);
+  });
+
+  test('returns the terms of one dice roll minus another', () => {
+    const { terms } = roll('d20-d6');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: 'd20',
+        rolls: ['20'],
+      },
+      {
+        type: 'operator',
+        term: '-',
+      },
+      {
+        type: 'dice',
+        term: 'd6',
+        rolls: ['6'],
+      },
+    ]);
+  });
+
+  test('returns the terms of one multiplied dice roll minus another', () => {
+    const { terms } = roll('2d20-2d6');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: '2d20',
+        rolls: ['20', '20'],
+      },
+      {
+        type: 'operator',
+        term: '-',
+      },
+      {
+        type: 'dice',
+        term: '2d6',
+        rolls: ['6', '6'],
+      },
+    ]);
+  });
+
+  test('returns the terms of a complex dice notation', () => {
+    const { terms } = roll('2d20 - 3 + d6 + 1');
+    expect(terms).toEqual([
+      {
+        type: 'dice',
+        term: '2d20',
+        rolls: ['20', '20'],
+      },
+      {
+        type: 'operator',
+        term: '-',
+      },
+      {
+        type: 'integer',
+        term: '3',
+      },
+      {
+        type: 'operator',
+        term: '+',
+      },
+      {
+        type: 'dice',
+        term: 'd6',
+        rolls: ['6'],
+      },
+      {
+        type: 'operator',
+        term: '+',
+      },
+      {
+        type: 'integer',
+        term: '1',
+      },
+    ]);
   });
 });

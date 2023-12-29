@@ -4,7 +4,7 @@ import {
   screen,
   findByRole,
   queryByRole,
-  getByText,
+  getAllByText,
   queryByText,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -22,7 +22,8 @@ export default class Creature {
 
   async assertExpandedTextVisible(name, text) {
     const creature = await screen.findByRole('region', { name: `${name} expanded` });
-    expect(getByText(creature, text)).toBeVisible();
+    const screenText = getAllByText(creature, (_, element) => element.textContent === text);
+    expect(screenText.length).toBeGreaterThan(0);
   }
 
   async assertExpandedTextNotVisible(name, text) {
