@@ -57,7 +57,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/core": "^7.21.5",
+    "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.23.3",
     "@playwright/test": "^1.39.0",
