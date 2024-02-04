@@ -19,6 +19,7 @@ export default function Errors({ errors, dismissErrors }) {
       <button
         className="error-bar--dismiss"
         title="Dismiss errors"
+        aria-label="Dismiss errors"
         onClick={dismissErrors}
         type="button"
       >
