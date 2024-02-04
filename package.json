@@ -39,7 +39,12 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     },
-    "testEnvironment": "jsdom",
+    "testEnvironment": "<rootDir>/jsdom-extended.js",
+    "testEnvironmentOptions": {
+      "customExportConditions": [
+        ""
+      ]
+    },
     "transformIgnorePatterns": [
       "/node_modules/(?!(uuid|nanoid)/)"
     ],
@@ -83,7 +88,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.7.6",
-    "msw": "^1.2.3",
+    "msw": "^2.1.5",
     "mustache": "^4.2.0",
     "size-limit": "^4.9.1",
     "webpack": "^5.89.0",

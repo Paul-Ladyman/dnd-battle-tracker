@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import DmApp from './page-object-models/dmApp';
 import CreateCreatureForm from './page-object-models/createCreatureForm';
 import msw from './mocks/server';
@@ -31,13 +31,11 @@ describe('SRD search', () => {
 
   it("sets initiative to d20 if a creature's dexterity modifier is 0", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          dexterity: 10,
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        dexterity: 10,
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -46,13 +44,11 @@ describe('SRD search', () => {
 
   it("sets initiative to a well-formed dice notation if a creature's dexterity modifier is a negative", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          dexterity: 1,
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        dexterity: 1,
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -83,13 +79,11 @@ describe('SRD search', () => {
 
   it("selects only a creature's name if it does not specify a URL", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.json({
-          results: [
-            { index: 'goblin', name: 'Goblin' },
-          ],
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters', () => HttpResponse.json({
+        results: [
+          { index: 'goblin', name: 'Goblin' },
+        ],
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -100,9 +94,7 @@ describe('SRD search', () => {
 
   it("selects only a creature's name if its data is malformed", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.body('malformed'),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => new HttpResponse('malformed')),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -113,9 +105,9 @@ describe('SRD search', () => {
 
   it("selects only a creature's name if fetching its data returns an error", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.status(500),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => new HttpResponse(null, {
+        status: 500,
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -126,13 +118,11 @@ describe('SRD search', () => {
 
   it("selects a creature's average HP if dice roll HP is not specified", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          hit_points: 7,
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        hit_points: 7,
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -145,13 +135,11 @@ describe('SRD search', () => {
 
   it("selects a creature's HP dice roll if the average HP is not specified", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          hit_points_roll: '2d6',
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        hit_points_roll: '2d6',
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -164,12 +152,10 @@ describe('SRD search', () => {
 
   it("does not set a creature's HP if it is not specified", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -181,12 +167,10 @@ describe('SRD search', () => {
 
   it("does not set initiative if a creature's dexterity it is not specified", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -196,12 +180,10 @@ describe('SRD search', () => {
 
   it("does not set AC if a creature's armor_class it is not specified", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -211,13 +193,11 @@ describe('SRD search', () => {
 
   it("does not set AC if a creature's armor_class is malformed", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          armor_class: 'malformed',
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        armor_class: 'malformed',
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -227,13 +207,11 @@ describe('SRD search', () => {
 
   it("does not set AC if a creature's armor_class is empty", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          armor_class: [],
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        armor_class: [],
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -243,13 +221,11 @@ describe('SRD search', () => {
 
   it("does not set AC if a creature's armor_class has no value", async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          armor_class: [{}],
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        armor_class: [{}],
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');
@@ -259,13 +235,11 @@ describe('SRD search', () => {
 
   it('sets AC to the first armor_class available', async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters/goblin', (req, res, ctx) => res(
-        ctx.json({
-          index: 'goblin',
-          name: 'Goblin',
-          armor_class: [{ value: 15 }, { value: 10 }],
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters/goblin', () => HttpResponse.json({
+        index: 'goblin',
+        name: 'Goblin',
+        armor_class: [{ value: 15 }, { value: 10 }],
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.selectSrdCreature('Goblin');

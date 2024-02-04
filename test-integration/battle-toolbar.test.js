@@ -1,4 +1,4 @@
-import { graphql } from 'msw';
+import { graphql, HttpResponse } from 'msw';
 import DmApp from './page-object-models/dmApp';
 import PlayerApp from './page-object-models/playerApp';
 import msw from './mocks/server';
@@ -64,8 +64,8 @@ describe('Turn - Player', () => {
 
   test('the current turn button is disabled if the battle has not started', async () => {
     msw.use(
-      graphql.query('GET_BATTLE', (req, res, ctx) => res(
-        ctx.data({
+      graphql.query('GET_BATTLE', () => HttpResponse.json({
+        data: {
           getDndbattletracker: {
             battleId: 'some-battle-id',
             round: 0,
@@ -84,8 +84,8 @@ describe('Turn - Player', () => {
             }],
             activeCreature: null,
           },
-        }),
-      )),
+        },
+      })),
     );
     const _ = new PlayerApp();
     await PlayerApp.waitForOnline();
@@ -94,8 +94,8 @@ describe('Turn - Player', () => {
 
   test('the current turn button is enabled when the battle starts', async () => {
     msw.use(
-      graphql.query('GET_BATTLE', (req, res, ctx) => res(
-        ctx.data({
+      graphql.query('GET_BATTLE', () => HttpResponse.json({
+        data: {
           getDndbattletracker: {
             battleId: 'some-battle-id',
             activeCreature: 0,
@@ -114,8 +114,8 @@ describe('Turn - Player', () => {
               notes: [],
             }],
           },
-        }),
-      )),
+        },
+      })),
     );
     const _ = new PlayerApp();
     await PlayerApp.waitForOnline();

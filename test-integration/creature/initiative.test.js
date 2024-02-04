@@ -1,4 +1,4 @@
-import { graphql } from 'msw';
+import { graphql, HttpResponse } from 'msw';
 import DmApp from '../page-object-models/dmApp';
 import random from '../../src/util/random';
 import PlayerApp from '../page-object-models/playerApp';
@@ -87,8 +87,8 @@ describe('Initiative display - Player', () => {
 
   test('does not show initiative if the creature does not have an initiative', async () => {
     msw.use(
-      graphql.query('GET_BATTLE', (req, res, ctx) => res(
-        ctx.data({
+      graphql.query('GET_BATTLE', () => HttpResponse.json({
+        data: {
           getDndbattletracker: {
             battleId: 'some-battle-id',
             round: 0,
@@ -107,8 +107,8 @@ describe('Initiative display - Player', () => {
             }],
             activeCreature: null,
           },
-        }),
-      )),
+        },
+      })),
     );
     const playerApp = new PlayerApp();
     await PlayerApp.waitForOnline();
@@ -118,8 +118,8 @@ describe('Initiative display - Player', () => {
 
   test("shows a creature's initiative", async () => {
     msw.use(
-      graphql.query('GET_BATTLE', (req, res, ctx) => res(
-        ctx.data({
+      graphql.query('GET_BATTLE', () => HttpResponse.json({
+        data: {
           getDndbattletracker: {
             battleId: 'some-battle-id',
             round: 0,
@@ -138,8 +138,8 @@ describe('Initiative display - Player', () => {
             }],
             activeCreature: null,
           },
-        }),
-      )),
+        },
+      })),
     );
     const playerApp = new PlayerApp();
     await PlayerApp.waitForOnline();
@@ -149,8 +149,8 @@ describe('Initiative display - Player', () => {
 
   test("shows a creature's initiative if it is 0", async () => {
     msw.use(
-      graphql.query('GET_BATTLE', (req, res, ctx) => res(
-        ctx.data({
+      graphql.query('GET_BATTLE', () => HttpResponse.json({
+        data: {
           getDndbattletracker: {
             battleId: 'some-battle-id',
             round: 0,
@@ -169,8 +169,8 @@ describe('Initiative display - Player', () => {
             }],
             activeCreature: null,
           },
-        }),
-      )),
+        },
+      })),
     );
     const playerApp = new PlayerApp();
     await PlayerApp.waitForOnline();

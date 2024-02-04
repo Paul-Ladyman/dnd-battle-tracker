@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import DmApp from './page-object-models/dmApp';
 import msw from './mocks/server';
 
@@ -32,11 +32,9 @@ describe('Creature SRD search', () => {
 
   it('has no creatures if the search returned an empty list', async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.json({
-          results: [],
-        }),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters', () => HttpResponse.json({
+        results: [],
+      })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.typeName('goblin');
@@ -45,9 +43,7 @@ describe('Creature SRD search', () => {
 
   it('has no creatures if the search returned malformed JSON', async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.json({}),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters', () => HttpResponse.json({})),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.typeName('goblin');
@@ -56,9 +52,7 @@ describe('Creature SRD search', () => {
 
   it('has no creatures if the search returned a malformed response', async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.body('malformed'),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters', () => new HttpResponse('malformed')),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.typeName('goblin');
@@ -67,9 +61,7 @@ describe('Creature SRD search', () => {
 
   it('has no creatures if the search returned an error', async () => {
     msw.use(
-      rest.get('https://www.dnd5eapi.co/api/monsters', (req, res, ctx) => res(
-        ctx.status(500),
-      )),
+      http.get('https://www.dnd5eapi.co/api/monsters', () => new HttpResponse(null, { status: 500 })),
     );
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.typeName('goblin');
