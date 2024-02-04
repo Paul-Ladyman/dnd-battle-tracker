@@ -140,7 +140,8 @@ export function createCreature(creatureId, {
 
   return {
     name: groupedName,
-    initiative,
+    initiative: initiative.result,
+    initiativeRoll: initiative,
     healthPoints: hp,
     maxHealthPoints: hp,
     armorClass: armorClass || null,
@@ -323,6 +324,7 @@ export function resetCreature(id, creature) {
     ...creature,
     id,
     initiative: undefined,
+    initiativeRoll: undefined,
     notes,
     conditions,
   };

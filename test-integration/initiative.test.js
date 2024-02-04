@@ -1,26 +1,9 @@
-import { graphql } from 'msw';
 import DmApp from './page-object-models/dmApp';
-import PlayerApp from './page-object-models/playerApp';
-import msw from './mocks/server';
-import { cache } from '../src/graphql/apolloClient';
 
-describe('Battle Toolbar initiative controls - DM', () => {
-  test('the current turn button is disabled if there are no creatures', async () => {
-    const _ = new DmApp();
-    await DmApp.assertCurrentTurn(false, '...');
-  });
-
-  test('the current turn button is disabled if the battle has not started', async () => {
+describe('Start battle', () => {
+  test('the start battle button is disabled if there are no creatures', async () => {
     const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin');
-    await DmApp.assertCurrentTurn(false, '...');
-  });
-
-  test('the current turn button is enabled when the battle starts', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', '1');
-    await dmApp.battleToolbar.startBattle();
-    await DmApp.assertCurrentTurn(true, 'goblin');
+    await dmApp.battleToolbar.assertStartBattleDisabled();
   });
 
   test("it's not possible to start a battle if a creature has no initiative", async () => {
@@ -53,76 +36,53 @@ describe('Battle Toolbar initiative controls - DM', () => {
     await dmApp.battleToolbar.startBattle();
     await dmApp.creature.assertFocused('goblin 2');
   });
+
+  test('makes the first creature in the initiative order active', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '2');
+    await dmApp.createCreatureForm.addCreature('goblin 3', '3');
+    await dmApp.battleToolbar.startBattle();
+    await dmApp.assertCreatureActive('goblin 3');
+    await dmApp.assertCreatureInactive('goblin 2');
+    await dmApp.assertCreatureInactive('goblin 1');
+  });
 });
 
-describe('Battle Toolbar initiative controls - Player', () => {
-  beforeEach(async () => {
-    await cache.reset();
+describe('Next turn', () => {
+  test('makes the next creature in the initiative order active ', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '2');
+    await dmApp.createCreatureForm.addCreature('goblin 3', '3');
+    await dmApp.battleToolbar.startBattle();
+    await dmApp.battleToolbar.nextTurn();
+    await dmApp.assertCreatureInactive('goblin 3');
+    await dmApp.assertCreatureActive('goblin 2');
+    await dmApp.assertCreatureInactive('goblin 1');
   });
 
-  test('the current turn button is disabled if there are no creatures', async () => {
-    const _ = new PlayerApp();
-    await PlayerApp.waitForOnline();
-    await PlayerApp.assertCurrentTurn(false, '...');
+  test('makes the last creature in the initiative order active ', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '2');
+    await dmApp.createCreatureForm.addCreature('goblin 3', '3');
+    await dmApp.battleToolbar.startBattle();
+    await dmApp.battleToolbar.advanceTurns(2);
+    await dmApp.assertCreatureInactive('goblin 3');
+    await dmApp.assertCreatureInactive('goblin 2');
+    await dmApp.assertCreatureActive('goblin 1');
   });
 
-  test('the current turn button is disabled if the battle has not started', async () => {
-    msw.use(
-      graphql.query('GET_BATTLE', (req, res, ctx) => res(
-        ctx.data({
-          getDndbattletracker: {
-            battleId: 'some-battle-id',
-            round: 0,
-            creatures: [{
-              name: 'goblin',
-              id: 1,
-              locked: false,
-              shared: true,
-              hitPointsShared: true,
-              alive: true,
-              initiative: 1,
-              healthPoints: 1,
-              maxHealthPoints: 1,
-              conditions: [],
-              notes: [],
-            }],
-            activeCreature: null,
-          },
-        }),
-      )),
-    );
-    const _ = new PlayerApp();
-    await PlayerApp.waitForOnline();
-    await PlayerApp.assertCurrentTurn(false, '...');
-  });
-
-  test('the current turn button is enabled when the battle starts', async () => {
-    msw.use(
-      graphql.query('GET_BATTLE', (req, res, ctx) => res(
-        ctx.data({
-          getDndbattletracker: {
-            battleId: 'some-battle-id',
-            activeCreature: 0,
-            round: 1,
-            creatures: [{
-              name: 'goblin',
-              id: 1,
-              locked: false,
-              shared: true,
-              hitPointsShared: true,
-              alive: true,
-              initiative: 1,
-              healthPoints: 1,
-              maxHealthPoints: 1,
-              conditions: [],
-              notes: [],
-            }],
-          },
-        }),
-      )),
-    );
-    const _ = new PlayerApp();
-    await PlayerApp.waitForOnline();
-    await PlayerApp.assertCurrentTurn(true, 'goblin');
+  test('makes the first creature in the initiative order active again at the start of a new round ', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '2');
+    await dmApp.createCreatureForm.addCreature('goblin 3', '3');
+    await dmApp.battleToolbar.startBattle();
+    await dmApp.battleToolbar.advanceTurns(3);
+    await dmApp.assertCreatureActive('goblin 3');
+    await dmApp.assertCreatureInactive('goblin 2');
+    await dmApp.assertCreatureInactive('goblin 1');
   });
 });

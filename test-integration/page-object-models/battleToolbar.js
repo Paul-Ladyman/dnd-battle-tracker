@@ -33,4 +33,10 @@ export default class BattleToolbar {
     const timeElapsed = getByRole(battleToolbar, 'region', { name: 'time elapsed' });
     return expect(timeElapsed).toHaveTextContent(`Time Elapsed:${time}`);
   }
+
+  async assertStartBattleDisabled() {
+    const battleToolbar = await screen.findByRole('banner');
+    const startBattleButton = getByRole(battleToolbar, 'button', { name: 'Start battle' });
+    return expect(startBattleButton).toHaveAttribute('aria-disabled', 'true');
+  }
 }

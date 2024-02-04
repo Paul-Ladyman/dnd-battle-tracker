@@ -76,11 +76,18 @@ function CreateCreatureForm({
     setState((prevState) => ({ ...prevState, healthPoints: newHp }));
   };
 
-  const rollField = (ref, rollEach) => {
+  const rollFieldForResult = (ref, rollEach) => {
     const { roll } = ref.current;
     if (rollEach) return () => roll().result;
     const hp = roll().result;
     return () => hp;
+  };
+
+  const rollField = (ref, rollEach) => {
+    const { roll } = ref.current;
+    if (rollEach) return () => roll();
+    const result = roll();
+    return () => result;
   };
 
   const createCreature = () => {
@@ -102,7 +109,7 @@ function CreateCreatureForm({
     if (!errors) {
       const creature = {
         name,
-        healthPoints: rollField(hpInput, rollEachHp),
+        healthPoints: rollFieldForResult(hpInput, rollEachHp),
         armorClass,
         initiative: rollField(initiativeInput, rollEachInitiative),
         quantity: intQuantity,

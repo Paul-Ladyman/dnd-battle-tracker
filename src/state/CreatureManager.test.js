@@ -556,6 +556,7 @@ describe('createCreature', () => {
     const expectedCreature = {
       name: 'name',
       initiative: null,
+      initiativeRoll: { result: null },
       healthPoints: null,
       maxHealthPoints: null,
       armorClass: null,
@@ -572,7 +573,7 @@ describe('createCreature', () => {
       usedSpellSlots: null,
     };
 
-    const creature = createCreature(1, { name: 'name', initiative: null, healthPoints: null });
+    const creature = createCreature(1, { name: 'name', initiative: { result: null }, healthPoints: null });
     expect(creature).toEqual(expectedCreature);
   });
 
@@ -580,6 +581,7 @@ describe('createCreature', () => {
     const expectedCreature = {
       name: 'name',
       initiative: 13,
+      initiativeRoll: { result: 13 },
       healthPoints: 10,
       armorClass: 20,
       maxHealthPoints: 10,
@@ -598,7 +600,7 @@ describe('createCreature', () => {
 
     const creature = createCreature(1, {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       armorClass: 20,
     });
@@ -609,6 +611,7 @@ describe('createCreature', () => {
     const expectedCreature = {
       name: 'name #3',
       initiative: 13,
+      initiativeRoll: { result: 13 },
       healthPoints: 10,
       maxHealthPoints: 10,
       armorClass: 20,
@@ -626,7 +629,7 @@ describe('createCreature', () => {
     };
 
     const creature = createCreature(1, {
-      name: 'name', number: 3, initiative: 13, healthPoints: 10, armorClass: 20,
+      name: 'name', number: 3, initiative: { result: 13 }, healthPoints: 10, armorClass: 20,
     });
     expect(creature).toEqual(expectedCreature);
   });
@@ -637,6 +640,7 @@ describe('createCreature', () => {
   ])("it sets a creature's HP to 1 if it is 0 or less", (hp) => {
     const creature = {
       name: 'name',
+      initiative: { result: 13 },
       healthPoints: hp,
     };
     const createdCreature = createCreature(1, creature);
@@ -648,7 +652,7 @@ describe('createCreature', () => {
     const stats = { index: 'goblin' };
     const creature = {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       stats,
     };
@@ -660,7 +664,7 @@ describe('createCreature', () => {
     const stats = { index: 'goblin' };
     const creature = {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       stats,
     };
@@ -684,7 +688,7 @@ describe('createCreature', () => {
     };
     const creature = {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       stats,
     };
@@ -712,7 +716,7 @@ describe('createCreature', () => {
     };
     const creature = {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       stats,
     };
@@ -726,7 +730,7 @@ describe('createCreature', () => {
     };
     const creature = {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       stats,
     };
@@ -740,7 +744,7 @@ describe('createCreature', () => {
     };
     const creature = {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       stats,
     };
@@ -751,7 +755,7 @@ describe('createCreature', () => {
   test('it does not add total spell slots if the creature has no special abilities', () => {
     const creature = {
       name: 'name',
-      initiative: 13,
+      initiative: { result: 13 },
       healthPoints: 10,
       stats: {},
     };
@@ -1667,6 +1671,8 @@ describe('resetCreatures', () => {
       name: 'Goblin',
       healthPoints: 10,
       maxHealthPoints: 10,
+      initiative: 13,
+      initiativeRoll: { result: 13 },
       id: 1,
       alive: true,
       notes: [{ text: 'Exhaustion', appliedAtRound: 1, appliedAtSeconds: 6 }],
@@ -1678,6 +1684,7 @@ describe('resetCreatures', () => {
     const expectedCreature = {
       ...creature,
       initiative: undefined,
+      initiativeRoll: undefined,
       id: 0,
       notes: [{ text: 'Exhaustion', appliedAtRound: 0, appliedAtSeconds: 0 }],
       conditions: [{

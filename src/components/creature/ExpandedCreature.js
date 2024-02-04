@@ -2,6 +2,7 @@ import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
 import CreatureStatus from './CreatureStatus';
 import SpellSlotMeters from './SpellSlotMeters';
+import RollResult from '../dice/RollResult';
 
 export default function ExpandedCreature({
   creature,
@@ -11,7 +12,15 @@ export default function ExpandedCreature({
   showHealth,
 }) {
   const {
-    initiative, id, conditions, notes, shared, armorClass, totalSpellSlots, usedSpellSlots,
+    initiative,
+    initiativeRoll,
+    id,
+    conditions,
+    notes,
+    shared,
+    armorClass,
+    totalSpellSlots,
+    usedSpellSlots,
   } = creature;
   const showInitiative = initiative !== undefined && initiative !== null;
   const showAc = armorClass !== null && armorClass !== undefined;
@@ -36,6 +45,7 @@ export default function ExpandedCreature({
             <b>Initiative</b>
             {' '}
             {initiative}
+            <RollResult roll={initiativeRoll} />
           </div>
           )}
         { (showHealth || showAc || showInitiative) && <div className="expanded-creature--separator" /> }

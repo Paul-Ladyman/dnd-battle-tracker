@@ -8,6 +8,7 @@ function getSharedCreatures(creatures) {
     armorClass: undefined,
     totalSpellSlots: undefined,
     usedSpellSlots: undefined,
+    initiativeRoll: undefined,
   }));
 }
 

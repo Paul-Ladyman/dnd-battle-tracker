@@ -4,6 +4,7 @@ import {
   render,
   screen,
   getByText,
+  getAllByText,
   getByRole,
   findByRole,
   findAllByRole,
@@ -12,12 +13,14 @@ import {
 import userEvent from '@testing-library/user-event';
 import RulesSearchBar from './rulesSearchBar';
 import BattleMenu from './battleMenu';
+import Creature from './creature';
 
 export default class DndBattleTracker {
   constructor(component) {
     this.user = userEvent.setup();
     this.rulesSearchBar = new RulesSearchBar(this.user);
     this.battleMenu = new BattleMenu(this.user);
+    this.creature = new Creature(this.user);
     render(component);
   }
 
@@ -69,5 +72,20 @@ export default class DndBattleTracker {
       return expect(currentTurnButton).toHaveAttribute('aria-disabled', 'false');
     }
     return expect(currentTurnButton).toHaveAttribute('aria-disabled', 'true');
+  }
+
+  async assertCreatureActive(name) {
+    const creature = await screen.findByRole('region', { name: `active creature ${name}` });
+    const button = await findByRole(creature, 'button', { name: `expand ${name}` });
+    expect(button).toHaveFocus();
+    const screenText = getAllByText(creature, (_, element) => element.textContent === 'Initiative');
+    return expect(screenText.length).toBeGreaterThan(0);
+  }
+
+  async assertCreatureInactive(name) {
+    const creature = screen.queryByRole('region', { name: `active creature ${name}` });
+    expect(creature).toBeNull();
+    const inactiveCreature = screen.queryByRole('region', { name });
+    return expect(inactiveCreature).toBeVisible();
   }
 }

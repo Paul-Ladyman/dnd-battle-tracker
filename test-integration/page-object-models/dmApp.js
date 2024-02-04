@@ -11,7 +11,6 @@ import HpTool from './hpTool';
 import InitiativeTool from './initiativeTool';
 import ConditionsTool from './conditionsTool';
 import SpellSlotsTool from './spellSlotsTool';
-import Creature from './creature';
 import BattleToolbar from './battleToolbar';
 import AcTool from './acTool';
 
@@ -27,7 +26,6 @@ export default class DmApp extends DndBattleTracker {
     this.initiativeTool = new InitiativeTool(this.user);
     this.conditionsTool = new ConditionsTool(this.user);
     this.spellSlotsTool = new SpellSlotsTool(this.user);
-    this.creature = new Creature(this.user);
     this.battleToolbar = new BattleToolbar(this.user);
   }
 }
