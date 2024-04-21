@@ -279,14 +279,12 @@ export function addTemporaryHealthToCreature(state, creatureId, health) {
 }
 
 export function addInitiativeToCreature(state, creatureId, initiative) {
-  const creature = findCreature(state.creatures, creatureId);
-
-  if (creature.initiative !== undefined && creature.initiative !== null) {
-    return state;
-  }
-
+  const { creatures, activeCreature } = state;
+  const creature = findCreature(creatures, creatureId);
+  const activeCreatureId = creatures[activeCreature]?.id;
+  if (creature.id === activeCreatureId) return state;
   const ariaAnnouncement = `${creature.name}'s initiative is ${initiative}`;
-  return updateCreature(state, creatureId, { initiative }, ariaAnnouncement);
+  return updateCreature(state, creatureId, { initiative, initiativeRoll: null }, ariaAnnouncement);
 }
 
 export function toggleCreatureLock(state, creatureId) {

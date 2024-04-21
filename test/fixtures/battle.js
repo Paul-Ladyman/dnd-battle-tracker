@@ -3,6 +3,7 @@ export default {
     {
       name: 'Wellby',
       initiative: 13,
+      initiativeRoll: { result: 13 },
       temporaryHealthPoints: null,
       id: 0,
       alive: true,
@@ -19,6 +20,7 @@ export default {
     {
       name: 'Goblin #1',
       initiative: 12,
+      initiativeRoll: { result: 12 },
       healthPoints: 10,
       maxHealthPoints: 10,
       temporaryHealthPoints: 10,
@@ -37,6 +39,7 @@ export default {
     {
       name: 'Goblin #2',
       initiative: 12,
+      initiativeRoll: { result: 12 },
       healthPoints: 10,
       maxHealthPoints: 10,
       temporaryHealthPoints: null,

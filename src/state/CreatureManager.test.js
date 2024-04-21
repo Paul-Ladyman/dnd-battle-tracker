@@ -1493,6 +1493,7 @@ describe('addInitiativeToCreature', () => {
         {
           ...defaultState.creatures[1],
           initiative: 10,
+          initiativeRoll: null,
         },
         defaultState.creatures[2],
       ],
@@ -1511,6 +1512,7 @@ describe('addInitiativeToCreature', () => {
         {
           ...defaultState.creatures[1],
           initiative: null,
+          initiativeRoll: null,
         },
         defaultState.creatures[2],
       ],
@@ -1523,6 +1525,7 @@ describe('addInitiativeToCreature', () => {
         {
           ...defaultState.creatures[1],
           initiative: 10,
+          initiativeRoll: null,
         },
         defaultState.creatures[2],
       ],
@@ -1533,9 +1536,32 @@ describe('addInitiativeToCreature', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('does nothing to a creature that already has initiative', () => {
+  it("modifies a creature's initiative", () => {
     const result = addInitiativeToCreature(defaultState, 1, 30);
-    expect(result).toEqual(defaultState);
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiative: 30,
+          initiativeRoll: null,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s initiative is 30'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature if it is active', () => {
+    const state = {
+      ...defaultState,
+      activeCreature: 0,
+    };
+
+    const result = addInitiativeToCreature(state, 0, 10);
+    expect(result).toEqual(state);
   });
 });
 

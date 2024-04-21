@@ -4,25 +4,25 @@ import InitiativeTool from '../tools/InitiativeTool';
 
 export function InitiativeToolMenu({
   creature,
+  active,
   creatureManagement,
 }) {
-  const { name, id, initiative } = creature;
+  const { name, id } = creature;
   const { addInitiativeToCreature } = creatureManagement;
   return (
     <div className="creature-toolbar--grid creature-toolbar--entrance">
       <InitiativeTool
+        active={active}
         name={name}
         id={id}
-        initiative={initiative}
         addInitiativeToCreature={addInitiativeToCreature}
-        showIfNoInitiative
       />
     </div>
   );
 }
 
 export function InitiativeButton({
-  creature,
+  active,
   onFocus,
   onClick,
   tabIndex,
@@ -32,8 +32,7 @@ export function InitiativeButton({
   toolMenuId,
   toolMenuExpanded,
 }) {
-  const { initiative } = creature;
-  const enabled = initiative === undefined || initiative === null;
+  const enabled = !active;
   const ariaDisabled = enabled ? 'false' : 'true';
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;

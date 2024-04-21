@@ -103,6 +103,7 @@ export default function CreatureToolbar({
             <Button
               key={key(id)}
               creature={creature}
+              active={active}
               buttonRef={ref}
               focused={selectedButton === i}
               onFocus={() => setFocusedButton(i)}

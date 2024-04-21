@@ -3,15 +3,12 @@ import CreatureToolbarInput from './CreatureToolbarInput';
 import CrossIcon from '../../../icons/CrossIcon';
 
 export default function InitiativeTool({
+  active,
   name,
   id,
-  initiative,
   addInitiativeToCreature,
-  showIfNoInitiative = false,
 }) {
-  const enabled = initiative === undefined || initiative === null;
-  const showTool = showIfNoInitiative || enabled;
-  return showTool && (
+  return (
     <CreatureToolbarInput
       customClasses="creature-toolbar--last"
       integer
@@ -20,7 +17,7 @@ export default function InitiativeTool({
       rightSubmit={(initiativeInput) => addInitiativeToCreature(id, initiativeInput)}
       rightControls={{
         rightTitle: 'Add Initiative',
-        rightEnabled: enabled,
+        rightEnabled: !active,
         RightSubmitIcon: <CrossIcon />,
       }}
       inputId={`initiative-${id}`}
