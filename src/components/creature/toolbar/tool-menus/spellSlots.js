@@ -50,7 +50,7 @@ export function SpellSlotsButton({
       id={`${toolMenuId}-spell-slots`}
     >
       <SpellSlotsIcon />
-      Spell Slots
+      Spellcasting
     </button>
   );
 }

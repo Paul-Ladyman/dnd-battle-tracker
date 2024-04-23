@@ -1,11 +1,11 @@
 import DmApp from '../page-object-models/dmApp';
 
-describe('Spell Slots', () => {
+describe('Spellcasting', () => {
   it('does not show the Spell Slots section if the creature has no total or used spell slots', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creature.expand('goblin');
-    await dmApp.creature.assertExpandedTextNotVisible('goblin', 'Spell Slots');
+    await dmApp.creature.assertExpandedTextNotVisible('goblin', 'Spellcasting');
   });
 
   it('does not show spell slots if the creature has no total or used spell slots', async () => {
@@ -18,18 +18,18 @@ describe('Spell Slots', () => {
   it('does not show the Spell Slots section if the creature has total spell slots all with values of 0', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '1st', '0');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '2nd', '0');
     await dmApp.creature.expand('goblin');
-    await dmApp.creature.assertExpandedTextNotVisible('goblin', 'Spell Slots');
+    await dmApp.creature.assertExpandedTextNotVisible('goblin', 'Spellcasting');
   });
 
   it('does not shows spell slots if the creature has total spell slots all with values of 0', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '1st', '0');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '2nd', '0');
@@ -40,26 +40,26 @@ describe('Spell Slots', () => {
   it('shows the spell slots section if the creature has used spell slots', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellSlotsTool.setUsedSpellSlotValue('goblin', '1st', '1');
     await dmApp.creature.expand('goblin');
-    await dmApp.creature.assertExpandedTextVisible('goblin', 'Spell Slots');
+    await dmApp.creature.assertExpandedTextVisible('goblin', 'Spellcasting');
   });
 
   it('shows the spell slots section if the creature has total spell slots', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '1st', '1');
     await dmApp.creature.expand('goblin');
-    await dmApp.creature.assertExpandedTextVisible('goblin', 'Spell Slots');
+    await dmApp.creature.assertExpandedTextVisible('goblin', 'Spellcasting');
   });
 
   it('shows a full spell slot meter per level if the creature has used spell slots', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellSlotsTool.setUsedSpellSlotValue('goblin', '1st', '1');
     await dmApp.spellSlotsTool.setUsedSpellSlotValue('goblin', '2nd', '1');
     await dmApp.creature.expand('goblin');
@@ -70,7 +70,7 @@ describe('Spell Slots', () => {
   it('shows an empty spell slot meter per level if the creature has total spell slots', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '1st', '1');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '2nd', '1');
@@ -82,7 +82,7 @@ describe('Spell Slots', () => {
   it('shows a spell slot meter per level if the creature has both used and total spell slots per level', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
 
     await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '1st', '2');
@@ -100,7 +100,7 @@ describe('Spell Slots', () => {
   it('shows a spell slot meter per level if the creature has some levels with only total spell slots', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Spell Slots');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
 
     await dmApp.spellSlotsTool.openTotalSpellSlots('goblin');
     await dmApp.spellSlotsTool.setTotalSpellSlotValue('goblin', '1st', '2');

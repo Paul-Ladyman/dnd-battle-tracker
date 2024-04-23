@@ -7,7 +7,16 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import TabList from './TabList';
 
-const tabs = ['one', 'two'];
+const tabs = [
+  {
+    label: 'one',
+    id: 'one',
+  },
+  {
+    label: 'two',
+    id: 'two',
+  },
+];
 const panels = ['panel one', 'panel two'];
 
 describe('TabList', () => {

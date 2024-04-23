@@ -15,9 +15,10 @@ export default function TabList({
     <div className={`tablist-container ${customClasses}`}>
       <div role="tablist" className="tablist" aria-labelledby={labelledBy}>
         {tabs.map((tab, i) => {
+          const { label, id: tabId } = tab;
           const isSelected = i === selected;
-          const key = `${id}-${tab}`;
-          const panelId = `${id}-${tab}-panel`;
+          const key = `${id}-${tabId}`;
+          const panelId = `${id}-${tabId}-panel`;
           return (
             <button
               type="button"
@@ -28,7 +29,7 @@ export default function TabList({
               id={key}
               onClick={() => onClick(i)}
             >
-              {tab}
+              {label}
             </button>
           );
         })}
@@ -37,7 +38,7 @@ export default function TabList({
         panels.map((panel, i) => {
           const panelSelected = i === selected;
           const display = panelSelected ? 'block' : 'none';
-          const tab = tabs[i];
+          const { id: tab } = tabs[i];
           const tabId = `${id}-${tab}`;
           const key = `${id}-${tab}-panel`;
           return (

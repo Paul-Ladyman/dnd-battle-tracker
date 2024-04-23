@@ -91,7 +91,16 @@ function SpellSlotGrid(props) {
 export default function SpellSlotTool({
   creatureId, toolMenuId, totalSpellSlots, addTotalSpellSlots, usedSpellSlots, addUsedSpellSlots,
 }) {
-  const tabs = ['Used', 'Total'];
+  const tabs = [
+    {
+      label: 'Used slots',
+      id: 'used-slots',
+    },
+    {
+      label: 'Total slots',
+      id: 'total-slots',
+    },
+  ];
   const panels = [
     <SpellSlotGrid
       id="used"
