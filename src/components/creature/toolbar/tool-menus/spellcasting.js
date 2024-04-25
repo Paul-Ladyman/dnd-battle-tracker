@@ -1,8 +1,8 @@
 import React from 'react';
-import SpellSlotsIcon from '../../../icons/SpellSlotsIcon';
-import SpellSlotTool from '../tools/SpellSlotTool';
+import SpellcastingIcon from '../../../icons/SpellcastingIcon';
+import SpellcastingTool from '../tools/SpellcastingTool';
 
-export function SpellSlotsToolMenu({
+export function SpellcastingToolMenu({
   creature,
   creatureManagement,
   toolMenuId,
@@ -11,7 +11,7 @@ export function SpellSlotsToolMenu({
   const { addTotalSpellSlots, addUsedSpellSlots } = creatureManagement;
   return (
     <div className="creature-toolbar--entrance">
-      <SpellSlotTool
+      <SpellcastingTool
         creatureId={id}
         toolMenuId={toolMenuId}
         totalSpellSlots={totalSpellSlots}
@@ -23,7 +23,7 @@ export function SpellSlotsToolMenu({
   );
 }
 
-export function SpellSlotsButton({
+export function SpellcastingButton({
   onFocus,
   onClick,
   tabIndex,
@@ -47,9 +47,9 @@ export function SpellSlotsButton({
       aria-haspopup="true"
       aria-controls={toolMenuId}
       aria-expanded={toolMenuExpanded}
-      id={`${toolMenuId}-spell-slots`}
+      id={`${toolMenuId}-spellcasting`}
     >
-      <SpellSlotsIcon />
+      <SpellcastingIcon />
       Spellcasting
     </button>
   );

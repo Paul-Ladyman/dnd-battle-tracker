@@ -10,7 +10,7 @@ import StatusTool from './statusTool';
 import HpTool from './hpTool';
 import InitiativeTool from './initiativeTool';
 import ConditionsTool from './conditionsTool';
-import SpellSlotsTool from './spellSlotsTool';
+import SpellcastingTool from './spellcastingTool';
 import BattleToolbar from './battleToolbar';
 import AcTool from './acTool';
 
@@ -25,7 +25,7 @@ export default class DmApp extends DndBattleTracker {
     this.acTool = new AcTool(this.user);
     this.initiativeTool = new InitiativeTool(this.user);
     this.conditionsTool = new ConditionsTool(this.user);
-    this.spellSlotsTool = new SpellSlotsTool(this.user);
+    this.spellSlotsTool = new SpellcastingTool(this.user);
     this.battleToolbar = new BattleToolbar(this.user);
   }
 }

@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-export default class SpellSlotsTool {
+export default class SpellcastingTool {
   constructor(user) {
     this.user = user;
   }

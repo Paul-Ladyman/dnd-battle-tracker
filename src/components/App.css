@@ -1340,7 +1340,7 @@ button[role=tab][aria-selected=true]:focus  {
 }
 
 @media only screen and (max-width: 1175px) {
-  .spell-slots-container {
+  .spellcasting-container {
     padding-left: 10px;
   }
 

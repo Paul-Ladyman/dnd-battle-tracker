@@ -5,7 +5,7 @@ import { InitiativeButton, InitiativeToolMenu } from './tool-menus/initiative';
 import { ConditionsButton, ConditionsToolMenu } from './tool-menus/conditions';
 import { NotesButton, NotesToolMenu } from './tool-menus/notes';
 import { HpButton, HpToolMenu } from './tool-menus/hp';
-import { SpellSlotsButton, SpellSlotsToolMenu } from './tool-menus/spellSlots';
+import { SpellcastingButton, SpellcastingToolMenu } from './tool-menus/spellcasting';
 import { AcButton, AcToolMenu } from './tool-menus/ac';
 
 export default function getToolbar() {
@@ -52,10 +52,10 @@ export default function getToolbar() {
       key: (id) => `${id}-notes`,
     },
     {
-      Button: SpellSlotsButton,
-      ToolMenu: SpellSlotsToolMenu,
+      Button: SpellcastingButton,
+      ToolMenu: SpellcastingToolMenu,
       ref: React.createRef(),
-      key: (id) => `${id}-spell-slots`,
+      key: (id) => `${id}-spellcasting`,
     },
   ];
 }

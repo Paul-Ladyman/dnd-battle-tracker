@@ -1,7 +1,7 @@
 import DmApp from '../page-object-models/dmApp';
 import maxSpellSlots from '../../src/domain/spellSlots';
 
-describe('Spell Slots tool', () => {
+describe('Spellcasting tool', () => {
   it('opens the tool menu when the Spell Slots toolbar button is selected', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');

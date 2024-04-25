@@ -88,7 +88,7 @@ function SpellSlotGrid(props) {
   );
 }
 
-export default function SpellSlotTool({
+export default function SpellcastingTool({
   creatureId, toolMenuId, totalSpellSlots, addTotalSpellSlots, usedSpellSlots, addUsedSpellSlots,
 }) {
   const tabs = [
@@ -122,9 +122,9 @@ export default function SpellSlotTool({
       addSpellSlots={addTotalSpellSlots}
     />,
   ];
-  const labelledBy = `${toolMenuId}-spell-slots`;
-  const id = `${toolMenuId}-spell-slots-tabs`;
+  const labelledBy = `${toolMenuId}-spellcasting`;
+  const id = `${toolMenuId}-spellcasting-tabs`;
   return (
-    <TabList labelledBy={labelledBy} tabs={tabs} panels={panels} id={id} customClasses="spell-slots-container" />
+    <TabList labelledBy={labelledBy} tabs={tabs} panels={panels} id={id} customClasses="spellcasting-container" />
   );
 }
