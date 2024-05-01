@@ -67,7 +67,7 @@
     "@babel/preset-react": "^7.23.3",
     "@playwright/test": "^1.39.0",
     "@size-limit/preset-app": "^4.9.1",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.4.3",
     "babel-loader": "^9.1.3",
