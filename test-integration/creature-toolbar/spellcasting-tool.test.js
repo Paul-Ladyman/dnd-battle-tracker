@@ -240,3 +240,158 @@ describe('Total spell slots', () => {
     await dmApp.spellSlotsTool.assertTotalSpellSlotValue('Mage', '9th', 0);
   });
 });
+
+describe('Used spells', () => {
+  it('sets the list of used spells to empty by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.assertUsedSpellsEmpty('goblin');
+  });
+
+  it('allows a spell to be added to the list', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.addUsedSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertUsedSpellsContains('goblin', 'cure wounds');
+  });
+
+  it('sets the number of uses of a spells to 0 by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.addUsedSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertUsedSpellValue('goblin', 'cure wounds', 0);
+  });
+
+  it('sets the minimum number of uses of a spell to 0', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.addUsedSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertUsedSpellMin('goblin', 'cure wounds', '0');
+  });
+
+  it('sets the default maximum number of uses of a spell', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.addUsedSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertUsedSpellMax('goblin', 'cure wounds', '5');
+  });
+
+  it('sets the maximum number of uses of a spell when the total for the same spell is modified', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'inflict wounds');
+    await dmApp.spellSlotsTool.setTotalSpellValue('goblin', 'cure wounds', '0');
+
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.assertUsedSpellMax('goblin', 'cure wounds', '0');
+    await dmApp.spellSlotsTool.assertUsedSpellMax('goblin', 'inflict wounds', '5');
+  });
+
+  it('sets the number of uses of a spell when the total for the same level is set lower than the current used value', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.addUsedSpell('goblin', 'cure wounds');
+
+    await dmApp.spellSlotsTool.setUsedSpellValue('goblin', 'cure wounds', '1');
+
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.setTotalSpellValue('goblin', 'cure wounds', '0');
+
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+
+    await dmApp.spellSlotsTool.assertUsedSpellValue('goblin', 'cure wounds', 0);
+  });
+
+  it('disables used spells when the total the same spell is set to 0', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.setTotalSpellValue('goblin', 'cure wounds', '0');
+
+    await dmApp.spellSlotsTool.openUsedSpells('goblin');
+    await dmApp.spellSlotsTool.assertUsedSpellDisabled('goblin', 'cure wounds');
+  });
+});
+
+describe('Total spells', () => {
+  it('sets the list of total spells to empty by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.assertTotalSpellsEmpty('goblin');
+  });
+
+  it('allows a spell to be added to the list', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertTotalSpellsContains('goblin', 'cure wounds');
+  });
+
+  it('does not set the number of total uses of a spell by default', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertTotalSpellValue('goblin', 'cure wounds', null);
+  });
+
+  it('sets the minimum number of total uses of a spell to 0', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertTotalSpellMin('goblin', 'cure wounds', '0');
+  });
+
+  it('sets the maximum number of total spell slots for all levels', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'cure wounds');
+    await dmApp.spellSlotsTool.assertTotalSpellMax('goblin', 'cure wounds', '5');
+  });
+
+  it('allows the number of total uses of a spell to be set and persisted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+    await dmApp.spellSlotsTool.addTotalSpell('goblin', 'cure wounds');
+
+    await dmApp.spellSlotsTool.setTotalSpellValue('goblin', 'cure wounds', '1');
+
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellSlotsTool.openTotalSpells('goblin');
+
+    await dmApp.spellSlotsTool.assertTotalSpellValue('goblin', 'cure wounds', 1);
+  });
+});

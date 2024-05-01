@@ -1,23 +1,41 @@
 import React from 'react';
 import SpellcastingIcon from '../../../icons/SpellcastingIcon';
-import SpellcastingTool from '../tools/SpellcastingTool';
+import SpellcastingTool from '../tools/spellcasting/SpellcastingTool';
 
 export function SpellcastingToolMenu({
   creature,
   creatureManagement,
   toolMenuId,
 }) {
-  const { id, totalSpellSlots, usedSpellSlots } = creature;
-  const { addTotalSpellSlots, addUsedSpellSlots } = creatureManagement;
+  const {
+    id,
+    name,
+    totalSpellSlots,
+    usedSpellSlots,
+    spells,
+  } = creature;
+
+  const {
+    addTotalSpellSlots,
+    addUsedSpellSlots,
+    addSpell,
+    addSpellTotalUses,
+    addSpellUses,
+  } = creatureManagement;
   return (
     <div className="creature-toolbar--entrance">
       <SpellcastingTool
         creatureId={id}
+        creatureName={name}
         toolMenuId={toolMenuId}
         totalSpellSlots={totalSpellSlots}
         addTotalSpellSlots={addTotalSpellSlots}
         usedSpellSlots={usedSpellSlots}
         addUsedSpellSlots={addUsedSpellSlots}
+        addSpell={addSpell}
+        addSpellTotalUses={addSpellTotalUses}
+        addSpellUses={addSpellUses}
+        spells={spells}
       />
     </div>
   );

@@ -39,6 +39,9 @@ import {
   toggleCreatureHitPointsShare,
   addTotalSpellSlots,
   addUsedSpellSlots,
+  addSpell,
+  addSpellTotalUses,
+  addSpellUses,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -130,6 +133,9 @@ function DungeonMasterApp({
     toggleCreatureHitPointsShare: updateBattle(toggleCreatureHitPointsShare),
     addTotalSpellSlots: updateBattle(addTotalSpellSlots),
     addUsedSpellSlots: updateBattle(addUsedSpellSlots),
+    addSpell: updateBattle(addSpell),
+    addSpellTotalUses: updateBattle(addSpellTotalUses),
+    addSpellUses: updateBattle(addSpellUses),
   };
 
   const battleManagement = useMemo(() => ({

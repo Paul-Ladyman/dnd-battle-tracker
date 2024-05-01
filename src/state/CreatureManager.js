@@ -156,6 +156,7 @@ export function createCreature(creatureId, {
     statBlock,
     totalSpellSlots: getTotalSpellSlots(stats),
     usedSpellSlots: null,
+    spells: {},
   };
 }
 
@@ -388,5 +389,78 @@ export function addUsedSpellSlots(state, creatureId, level, slots) {
   const update = { usedSpellSlots: newUsedSpellSlots };
 
   const ariaAnnouncement = `${creature.name} has used ${slots} ${level} level spell slots`;
+  return updateCreature(state, creatureId, update, ariaAnnouncement);
+}
+
+export function addSpell(state, creatureId, spell) {
+  const creature = findCreature(state.creatures, creatureId);
+  const { spells } = creature;
+  const key = spell.replace(/\s/g, '').toLowerCase();
+
+  if (spells?.[key]) return state;
+
+  const newSpells = {
+    ...spells,
+    [key]: {
+      label: spell,
+    },
+  };
+
+  const update = { spells: newSpells };
+
+  const ariaAnnouncement = `added spell ${spell} to ${creature.name}`;
+  return updateCreature(state, creatureId, update, ariaAnnouncement);
+}
+
+export function addSpellTotalUses(state, creatureId, spellKey, uses) {
+  if (uses < 0 || uses > 5) return state;
+
+  const creature = findCreature(state.creatures, creatureId);
+  const { spells } = creature;
+  const oldSpell = spells?.[spellKey];
+
+  if (!oldSpell) return state;
+
+  const { used } = oldSpell;
+
+  const newUsed = uses < used ? uses : used;
+
+  const newSpells = {
+    ...spells,
+    [spellKey]: {
+      ...oldSpell,
+      used: newUsed,
+      total: uses,
+    },
+  };
+
+  const update = { spells: newSpells };
+
+  const ariaAnnouncement = `${creature.name} has ${uses} uses of ${oldSpell.label}`;
+  return updateCreature(state, creatureId, update, ariaAnnouncement);
+}
+
+export function addSpellUses(state, creatureId, spellKey, uses) {
+  if (uses < 0 || uses > 5) return state;
+  const creature = findCreature(state.creatures, creatureId);
+  const { spells } = creature;
+  const oldSpell = spells?.[spellKey];
+
+  if (!oldSpell) return state;
+
+  const { total } = oldSpell;
+  if (uses > total) return state;
+
+  const newSpells = {
+    ...spells,
+    [spellKey]: {
+      ...oldSpell,
+      used: uses,
+    },
+  };
+
+  const update = { spells: newSpells };
+
+  const ariaAnnouncement = `${creature.name} has used ${uses} ${oldSpell.label}`;
   return updateCreature(state, creatureId, update, ariaAnnouncement);
 }

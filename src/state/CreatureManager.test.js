@@ -19,6 +19,9 @@ import {
   isCreatureStable,
   addTotalSpellSlots,
   addUsedSpellSlots,
+  addSpell,
+  addSpellTotalUses,
+  addSpellUses,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -571,6 +574,7 @@ describe('createCreature', () => {
       statBlock: null,
       totalSpellSlots: null,
       usedSpellSlots: null,
+      spells: {},
     };
 
     const creature = createCreature(1, { name: 'name', initiative: { result: null }, healthPoints: null });
@@ -596,6 +600,7 @@ describe('createCreature', () => {
       statBlock: null,
       totalSpellSlots: null,
       usedSpellSlots: null,
+      spells: {},
     };
 
     const creature = createCreature(1, {
@@ -626,6 +631,7 @@ describe('createCreature', () => {
       statBlock: null,
       totalSpellSlots: null,
       usedSpellSlots: null,
+      spells: {},
     };
 
     const creature = createCreature(1, {
@@ -2088,5 +2094,494 @@ describe('addUsedSpellSlots', () => {
   it('does nothing if the spell slot level is not valid', () => {
     const result = addUsedSpellSlots(defaultState, 1, 'nth', 1);
     expect(result).toEqual(defaultState);
+  });
+});
+
+describe('addSpell', () => {
+  it('adds a spell to a creature', () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['added spell Speak With Animals to Goblin #1'],
+    };
+
+    const result = addSpell(defaultState, 1, 'Speak With Animals');
+    expect(result).toEqual(expectedState);
+  });
+
+  it('maintains existing spells', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ]
+    };
+
+    const result = addSpell(state, 1, 'cure wounds');
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+            curewounds: {
+              label: 'cure wounds',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['added spell cure wounds to Goblin #1'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing if a spell already exists', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addSpell(state, 1, 'Speak With Animals');
+
+    expect(result).toEqual(state);
+  });
+});
+
+describe('addSpellTotalUses', () => {
+  it('adds total uses to a spell', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addSpellTotalUses(state, 1, 'speakwithanimals', 1);
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              total: 1,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 1 uses of Speak With Animals'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('overrides the previous total uses of a spell', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              total: 1,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addSpellTotalUses(state, 1, 'speakwithanimals', 2);
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              total: 2,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 2 uses of Speak With Animals'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('maintains existing spells when adding total uses', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            curewounds: {
+              label: 'cure wounds',
+            },
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              total: 1,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addSpellTotalUses(state, 1, 'curewounds', 1);
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            curewounds: {
+              label: 'cure wounds',
+              total: 1,
+            },
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              total: 1,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 1 uses of cure wounds'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('sets the corresponding used spell value if the total for the same spell is reduced below the current value', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              used: 2,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              used: 1,
+              total: 1,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 1 uses of Speak With Animals'],
+    };
+
+    const result = addSpellTotalUses(state, 1, 'speakwithanimals', 1);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does not modify the corresponding used spell value if the total for the same level is reduced but remains above the current value', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              used: 2,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              used: 2,
+              total: 3,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has 3 uses of Speak With Animals'],
+    };
+
+    const result = addSpellTotalUses(state, 1, 'speakwithanimals', 3);
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing if a spell does not exist', () => {
+    const result = addSpellTotalUses(defaultState, 1, 'speakwithanimals', 1);
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing if the total value is above the maximum allowed', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+    const result = addSpellTotalUses(state, 1, 'speakwithanimals', 6);
+    expect(result).toEqual(state);
+  });
+
+  it('does nothing if the total value is less than 0', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+    const result = addSpellTotalUses(state, 1, 'speakwithanimals', -1);
+    expect(result).toEqual(state);
+  });
+});
+
+describe('addSpellUses', () => {
+  it('adds uses to a spell', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addSpellUses(state, 1, 'speakwithanimals', 1);
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              used: 1,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has used 1 Speak With Animals'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('overrides the previous number of uses of a spell', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              used: 1,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+
+    const result = addSpellUses(state, 1, 'speakwithanimals', 2);
+
+    const expectedState = {
+      ...state,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              used: 2,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1 has used 2 Speak With Animals'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing if the spell does not exist', () => {
+    const result = addSpellUses(defaultState, 1, 'speakwithanimals', 1);
+    expect(result).toEqual(defaultState);
+  });
+
+  it('does nothing if the used value is above the default total value', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+    const result = addSpellUses(state, 1, 'speakwithanimals', 6);
+    expect(result).toEqual(state);
+  });
+
+  it('does nothing if the used value is above the maximum allowed for the spell', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+              total: 0,
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+    const result = addSpellUses(state, 1, 'speakwithanimals', 1);
+    expect(result).toEqual(state);
+  });
+
+  it('does nothing if the used value is less than 0', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          spells: {
+            speakwithanimals: {
+              label: 'Speak With Animals',
+            },
+          },
+        },
+        defaultState.creatures[2],
+      ],
+    };
+    const result = addSpellUses(state, 1, 'speakwithanimals', -1);
+    expect(result).toEqual(state);
   });
 });
