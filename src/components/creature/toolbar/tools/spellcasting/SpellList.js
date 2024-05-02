@@ -12,14 +12,17 @@ function Spell({
   defaultValue,
   onSpellChange,
   useSpellMax,
+  displayMaxExceeded,
 }) {
-  const initialValue = spell[spellProperty] || defaultValue;
+  const initialValue = Number.isInteger(spell[spellProperty]) ? spell[spellProperty] : defaultValue;
   const [value, setValue] = useState(initialValue);
   const { label, total } = spell;
 
   const inputId = `${creatureId}-${id}-spells-${spellKey}`;
 
   const max = useSpellMax && Number.isInteger(total) ? total : 5;
+  const maxExceeded = value >= max;
+  const maxClass = displayMaxExceeded && maxExceeded ? 'spell-slot__max' : '';
 
   const handleChange = (event) => {
     const { value: newValue } = event.target;
@@ -37,7 +40,7 @@ function Spell({
       ariaLabel={label}
       label={label}
       inputId={inputId}
-      customClasses="spell"
+      customClasses={`spell ${maxClass}`}
       handleChange={handleChange}
       disabled={max === 0}
     />
@@ -52,6 +55,7 @@ function Spells({
   defaultValue,
   onSpellChange,
   useSpellMax,
+  displayMaxExceeded,
 }) {
   const spellKeys = Object.keys(spells);
   if (spellKeys.length === 0) return null;
@@ -67,6 +71,7 @@ function Spells({
         defaultValue={defaultValue}
         onSpellChange={onSpellChange}
         useSpellMax={useSpellMax}
+        displayMaxExceeded={displayMaxExceeded}
       />
     </li>
   );
@@ -88,6 +93,7 @@ export default function SpellList({
   defaultValue,
   onSpellChange,
   useSpellMax,
+  displayMaxExceeded,
 }) {
   return (
     <div>
@@ -111,6 +117,7 @@ export default function SpellList({
         defaultValue={defaultValue}
         onSpellChange={onSpellChange}
         useSpellMax={useSpellMax}
+        displayMaxExceeded={displayMaxExceeded}
       />
     </div>
   );

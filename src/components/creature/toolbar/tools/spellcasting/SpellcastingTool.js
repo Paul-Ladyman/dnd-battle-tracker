@@ -65,6 +65,7 @@ export default function SpellcastingTool({
       defaultValue="0"
       useSpellMax
       onSpellChange={addSpellUses}
+      displayMaxExceeded
     />,
     <SpellList
       id="total"
