@@ -1289,15 +1289,12 @@ label {
  
 /* Tab list */
 
-.tablist-container {
-  width: fit-content;
-}
-
 .tablist {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
   border-bottom: 1px solid #822000;
+  width: fit-content;
 }
 
 button[role=tab] {
@@ -1340,6 +1337,10 @@ button[role=tab][aria-selected=true]:focus  {
 }
 
 @media only screen and (max-width: 1175px) {
+  button[role=tab] {
+    min-width: auto;
+  }
+
   .spellcasting-container {
     padding-left: 10px;
   }
@@ -1366,6 +1367,64 @@ button[role=tab][aria-selected=true]:focus  {
 .spell-slot__max label {
   text-decoration: line-through wavy;
   text-decoration-color: #822000;
+}
+
+.spellcasting-spell-input {
+  width: 32%;
+  margin-bottom: 22px;
+}
+
+.spell-list {
+  column-count: 3;
+  column-gap: 22px;
+  list-style: none;
+  padding-left: 0;
+}
+
+.spell {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.spell .input {
+  border-bottom-left-radius: 0;
+  width: 44px;
+}
+
+.spell .input-wrapper {
+  border-bottom-left-radius: 0;
+  width: 44px;
+}
+
+.spell label {
+  width: 100%;
+  padding-right: 4px;
+  border-bottom: 1px solid #822000;
+  height: 44px;
+  align-content: end;
+  overflow: hidden;
+  text-transform: capitalize;
+}
+
+@media only screen and (max-width: 1175px) {
+  .spell-list {
+    column-count: 2;
+  }
+
+  .spellcasting-spell-input {
+    width: 48%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .spell-list {
+    column-count: 1;
+  }
+
+  .spellcasting-spell-input {
+    width: 100%
+  }
 }
 
 .spell-slot-meter--container {

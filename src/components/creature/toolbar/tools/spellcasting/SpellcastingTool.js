@@ -62,7 +62,6 @@ export default function SpellcastingTool({
       spells={spells}
       spellProperty="used"
       addSpell={addSpell}
-      description="Used spells per day / innate spellcasting:"
       defaultValue="0"
       useSpellMax
       onSpellChange={addSpellUses}
@@ -74,7 +73,6 @@ export default function SpellcastingTool({
       spells={spells}
       spellProperty="total"
       addSpell={addSpell}
-      description="Total spells per day / innate spellcasting:"
       defaultValue=""
       onSpellChange={addSpellTotalUses}
     />,

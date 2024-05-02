@@ -37,7 +37,7 @@ function Spell({
       ariaLabel={label}
       label={label}
       inputId={inputId}
-      customClasses="spell-slot"
+      customClasses="spell"
       handleChange={handleChange}
       disabled={max === 0}
     />
@@ -56,24 +56,25 @@ function Spells({
   const spellKeys = Object.keys(spells);
   if (spellKeys.length === 0) return null;
 
-  const spellsWithInputs = spellKeys.map((key) => (
-    <Spell
-      key={key}
-      spellProperty={spellProperty}
-      spellKey={key}
-      spell={spells[key]}
-      id={id}
-      creatureId={creatureId}
-      defaultValue={defaultValue}
-      onSpellChange={onSpellChange}
-      useSpellMax={useSpellMax}
-    />
-  ));
+  const renderSpell = (key) => (
+    <li key={key}>
+      <Spell
+        spellProperty={spellProperty}
+        spellKey={key}
+        spell={spells[key]}
+        id={id}
+        creatureId={creatureId}
+        defaultValue={defaultValue}
+        onSpellChange={onSpellChange}
+        useSpellMax={useSpellMax}
+      />
+    </li>
+  );
 
   return (
-    <section aria-label="Spells">
-      {spellsWithInputs}
-    </section>
+    <ul aria-label="Spells" className="spell-list">
+      {spellKeys.map(renderSpell)}
+    </ul>
   );
 }
 
@@ -84,24 +85,24 @@ export default function SpellList({
   creatureId,
   creatureName,
   id,
-  description,
   defaultValue,
   onSpellChange,
   useSpellMax,
 }) {
   return (
     <div>
-      <p>{description}</p>
-      <CreatureToolbarInput
-        ariaLabel={`Add spells for ${creatureName}`}
-        label="Spells"
-        rightSubmit={(spell) => addSpell(creatureId, spell)}
-        rightControls={{
-          rightTitle: 'Add spell',
-          RightSubmitIcon: <CrossIcon />,
-        }}
-        inputId={`${creatureId}-${id}-spells`}
-      />
+      <div className="spellcasting-spell-input">
+        <CreatureToolbarInput
+          ariaLabel={`Add spells for ${creatureName}`}
+          label="Spells"
+          rightSubmit={(spell) => addSpell(creatureId, spell)}
+          rightControls={{
+            rightTitle: 'Add spell',
+            RightSubmitIcon: <CrossIcon />,
+          }}
+          inputId={`${creatureId}-${id}-spells`}
+        />
+      </div>
       <Spells
         spells={spells}
         spellProperty={spellProperty}

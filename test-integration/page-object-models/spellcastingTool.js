@@ -135,21 +135,21 @@ export default class SpellcastingTool {
   async assertUsedSpellsEmpty(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
-    const spells = queryByRole(tabPanel, 'region', { name: 'Spells' });
+    const spells = queryByRole(tabPanel, 'list', { name: 'Spells' });
     return expect(spells).toBeNull();
   }
 
   async assertTotalSpellsEmpty(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total spells' });
-    const spells = queryByRole(tabPanel, 'region', { name: 'Spells' });
+    const spells = queryByRole(tabPanel, 'list', { name: 'Spells' });
     return expect(spells).toBeNull();
   }
 
   async assertUsedSpellsContains(name, spell) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
-    const spells = await findByRole(tabPanel, 'region', { name: 'Spells' });
+    const spells = await findByRole(tabPanel, 'list', { name: 'Spells' });
     const usedSpell = getByText(spells, spell);
     return expect(usedSpell).toBeVisible();
   }
@@ -157,7 +157,7 @@ export default class SpellcastingTool {
   async assertTotalSpellsContains(name, spell) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total spells' });
-    const spells = await findByRole(tabPanel, 'region', { name: 'Spells' });
+    const spells = await findByRole(tabPanel, 'list', { name: 'Spells' });
     const usedSpell = getByText(spells, spell);
     return expect(usedSpell).toBeVisible();
   }
