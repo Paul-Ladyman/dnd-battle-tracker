@@ -25,7 +25,7 @@ export default class DmApp extends DndBattleTracker {
     this.acTool = new AcTool(this.user);
     this.initiativeTool = new InitiativeTool(this.user);
     this.conditionsTool = new ConditionsTool(this.user);
-    this.spellSlotsTool = new SpellcastingTool(this.user);
+    this.spellcastingTool = new SpellcastingTool(this.user);
     this.battleToolbar = new BattleToolbar(this.user);
   }
 }

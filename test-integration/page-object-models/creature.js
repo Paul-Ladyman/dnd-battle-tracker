@@ -31,15 +31,15 @@ export default class Creature {
     expect(queryByText(creature, text)).toBeNull();
   }
 
-  async assertNoSpellSlots(name) {
+  async assertNoSpellMeters(name) {
     const creature = await screen.findByRole('region', { name: `${name} expanded` });
     const meter = queryByRole(creature, 'meter', { name: /.* Level/ });
     expect(meter).toBeNull();
   }
 
-  async assertSpellSlots(name, level, max, now) {
+  async assertSpellMeters(name, label, max, now) {
     const creature = await screen.findByRole('region', { name: `${name} expanded` });
-    const meter = await findByRole(creature, 'meter', { name: `${level} Level` });
+    const meter = await findByRole(creature, 'meter', { name: label });
     expect(meter).toHaveAttribute('aria-valuemin', '0');
     expect(meter).toHaveAttribute('aria-valuemax', max);
     expect(meter).toHaveAttribute('aria-valuenow', now);

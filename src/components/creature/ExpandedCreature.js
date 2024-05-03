@@ -1,7 +1,7 @@
 import React from 'react';
 import CreatureNoteList from './CreatureNoteList';
 import CreatureStatus from './CreatureStatus';
-import SpellSlotMeters from './SpellSlotMeters';
+import Spellcasting from './Spellcasting';
 import RollResult from '../dice/RollResult';
 
 export default function ExpandedCreature({
@@ -21,6 +21,7 @@ export default function ExpandedCreature({
     armorClass,
     totalSpellSlots,
     usedSpellSlots,
+    spells,
   } = creature;
   const showInitiative = initiative !== undefined && initiative !== null;
   const showAc = armorClass !== null && armorClass !== undefined;
@@ -65,7 +66,12 @@ export default function ExpandedCreature({
         round={round}
         secondsElapsed={secondsElapsed}
       />
-      <SpellSlotMeters totalSpellSlots={totalSpellSlots} usedSpellSlots={usedSpellSlots} id={id} />
+      <Spellcasting
+        totalSpellSlots={totalSpellSlots}
+        usedSpellSlots={usedSpellSlots}
+        spells={spells}
+        id={id}
+      />
     </div>
   );
 }

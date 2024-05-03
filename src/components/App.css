@@ -1427,28 +1427,28 @@ button[role=tab][aria-selected=true]:focus  {
   }
 }
 
-.spell-slot-meter--container {
+.spell-meter--container {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.spell-slot-meter--label {
+.spell-meter--label {
   width: 100px;
 }
 
-.spell-slot-meter--label__full {
+.spell-meter--label__full {
   text-decoration: line-through wavy;
   text-decoration-color: #822000;
 }
 
-.spell-slot-meter {
+.spell-meter {
   display: flex;
   flex-direction: row;
 }
 
-.spell-slot-meter > * {
+.spell-meter > * {
   height: 22px;
   width: 22px;
   border: 1px solid #822000;
@@ -1457,10 +1457,10 @@ button[role=tab][aria-selected=true]:focus  {
   margin-right: 10px;
 }
 
-.spell-slot-meter__filled {
+.spell-meter__filled {
   background-color: #822000;
 }
 
-.spell-slot-meter__empty {
+.spell-meter__empty {
   background-color: transparent;
 }
