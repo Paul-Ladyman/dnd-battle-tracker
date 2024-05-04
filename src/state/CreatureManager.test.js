@@ -2134,7 +2134,7 @@ describe('addSpell', () => {
           },
         },
         defaultState.creatures[2],
-      ]
+      ],
     };
 
     const result = addSpell(state, 1, 'cure wounds');
