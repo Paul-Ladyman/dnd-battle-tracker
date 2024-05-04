@@ -25,6 +25,7 @@ const expectedInput = (battleId) => ({
           totalSpellSlots: undefined,
           usedSpellSlots: undefined,
           initiativeRoll: undefined,
+          spells: undefined,
         },
         {
           ...defaultState.creatures[1],
@@ -33,6 +34,7 @@ const expectedInput = (battleId) => ({
           totalSpellSlots: undefined,
           usedSpellSlots: undefined,
           initiativeRoll: undefined,
+          spells: undefined,
         },
         {
           ...defaultState.creatures[2],
@@ -41,6 +43,7 @@ const expectedInput = (battleId) => ({
           totalSpellSlots: undefined,
           usedSpellSlots: undefined,
           initiativeRoll: undefined,
+          spells: undefined,
         },
       ],
       activeCreature: defaultState.activeCreature,

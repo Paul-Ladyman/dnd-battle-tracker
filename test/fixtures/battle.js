@@ -16,6 +16,7 @@ export default {
       armorClass: null,
       totalSpellSlots: null,
       usedSpellSlots: null,
+      spells: {},
     },
     {
       name: 'Goblin #1',
@@ -35,6 +36,7 @@ export default {
       armorClass: 15,
       totalSpellSlots: null,
       usedSpellSlots: null,
+      spells: {},
     },
     {
       name: 'Goblin #2',
@@ -54,6 +56,7 @@ export default {
       armorClass: null,
       totalSpellSlots: null,
       usedSpellSlots: null,
+      spells: {},
     },
   ],
   creatureIdCount: 3,
