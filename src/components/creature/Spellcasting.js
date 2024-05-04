@@ -10,6 +10,10 @@ function isFull(total, used, key) {
   return maxSpellsPerDay === used;
 }
 
+function useWideFormat(meters) {
+  return meters.findIndex(({ label }) => label.length >= 15) > -1;
+}
+
 function meter(max, now) {
   return Array.from({ length: maxSpellsPerDay }).reduce((slots, _, i) => {
     const key = slots.length;
@@ -20,7 +24,13 @@ function meter(max, now) {
   }, []);
 }
 
-function getSpellMeter(total, used, spellKey, label, id) {
+function SpellMeter({
+  total,
+  used,
+  spellKey,
+  label,
+  id,
+}) {
   const max = total || used || 0;
   if (max === 0) return null;
   const now = used || 0;
@@ -28,7 +38,7 @@ function getSpellMeter(total, used, spellKey, label, id) {
   const fullClass = isFull(total, used, spellKey) ? 'spell-meter--label__full' : '';
   const meterId = `${id}-spellcasting-${spellKey}`;
   return (
-    <div key={spellKey} className="spell-meter--container">
+    <div className="spell-meter--container">
       <div className={`spell-meter--label ${fullClass}`} id={meterId}>{label}</div>
       <div className="spell-meter" role="meter" aria-valuemin="0" aria-valuemax={max} aria-valuenow={now} aria-labelledby={meterId}>
         {meter(max, now)}
@@ -40,29 +50,61 @@ function getSpellMeter(total, used, spellKey, label, id) {
 export default function Spellcasting({
   totalSpellSlots,
   usedSpellSlots,
-  spells,
+  spells = {},
   id,
 }) {
   const spellSlotMeters = Object.keys(maxSpellSlots).map((level) => {
     const total = totalSpellSlots?.[level];
     const used = usedSpellSlots?.[level];
     const label = `${level} Level`;
-    return getSpellMeter(total, used, level, label, id);
+    if (!total && !used) return null;
+    return {
+      total,
+      used,
+      spellKey: level,
+      label,
+    };
   }).filter((_) => _);
 
   const spellMeters = Object.keys(spells).map((key) => {
     const spell = spells[key];
     const { total, used, label } = spell;
-    return getSpellMeter(total, used, key, label, id);
+    if (!total && !used) return null;
+    return {
+      total,
+      used,
+      spellKey: key,
+      label,
+    };
   }).filter((_) => _);
 
-  if (spellSlotMeters.length === 0 && spellMeters.length === 0) return null;
+  const meters = [
+    ...spellSlotMeters,
+    ...spellMeters,
+  ];
+
+  if (meters.length === 0) return null;
+
+  const formatClass = useWideFormat(meters) ? 'spell-meters__wide' : 'spell-meters__slim';
 
   return (
-    <div className="avoid-break">
+    <div className={`avoid-break ${formatClass}`}>
       <div className="creature-note-list--label">Spellcasting</div>
-      {spellSlotMeters}
-      {spellMeters}
+      {meters.map(({
+        total,
+        used,
+        spellKey,
+        label,
+      }) => (
+        <SpellMeter
+          total={total}
+          used={used}
+          spellKey={spellKey}
+          label={label}
+          id={id}
+          key={spellKey}
+        />
+      ))}
     </div>
   );
 }

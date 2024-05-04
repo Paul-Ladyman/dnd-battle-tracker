@@ -1399,7 +1399,7 @@ button[role=tab][aria-selected=true]:focus  {
 
 .spell label {
   width: 100%;
-  padding-right: 4px;
+  margin-right: 4px;
   border-bottom: 1px solid #822000;
   height: 44px;
   align-content: end;
@@ -1431,12 +1431,21 @@ button[role=tab][aria-selected=true]:focus  {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+}
+
+.spell-meters__wide .spell-meter--container {
   justify-content: space-between;
 }
 
 .spell-meter--label {
   text-transform: capitalize;
-  margin-right: 18px;
+  margin-right: 44px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spell-meters__slim .spell-meter--label {
+  width: 100px;
 }
 
 .spell-meter--label__full {
