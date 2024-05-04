@@ -11,10 +11,11 @@ function isFull(total, used, key) {
 }
 
 function meter(max, now) {
-  return Array.from({ length: max }).reduce((slots, _, i) => {
+  return Array.from({ length: 4 }).reduce((slots, _, i) => {
     const key = slots.length;
-    const className = i < now ? 'spell-meter__filled' : 'spell-meter__empty';
-    const slot = <div className={className} key={key} />;
+    const slotClass = i < max ? 'spell-meter__slot' : '';
+    const filledClass = i < now ? 'spell-meter__filled' : '';
+    const slot = <div className={`${slotClass} ${filledClass}`} key={key} />;
     return [...slots, slot];
   }, []);
 }

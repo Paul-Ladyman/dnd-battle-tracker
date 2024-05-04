@@ -1032,7 +1032,7 @@ label {
   margin-bottom: 15px;
 }
 
-@media only screen and (max-width: 825px) {
+@media only screen and (max-width: 600px) {
   .creature--columns__wide {
     column-count: 1;
   }
@@ -1110,7 +1110,6 @@ label {
 .creature-note-list--note {
   margin-top: 10px;
   color: black;
-  font-style: italic;
 }
 
 .creature-note-list--note::first-letter {
@@ -1120,6 +1119,7 @@ label {
 .creature-note-list--timer {
   margin-left: 10px;
   white-space: nowrap;
+  font-style: italic;
 }
 
 /* Health points */
@@ -1430,12 +1430,13 @@ button[role=tab][aria-selected=true]:focus  {
 .spell-meter--container {
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .spell-meter--label {
-  width: 100px;
+  text-transform: capitalize;
+  margin-right: 18px;
 }
 
 .spell-meter--label__full {
@@ -1451,16 +1452,17 @@ button[role=tab][aria-selected=true]:focus  {
 .spell-meter > * {
   height: 22px;
   width: 22px;
-  border: 1px solid #822000;
-  box-shadow: 0 0 5px #979aa4;
+  border: 1px solid transparent;
   border-radius: 15px;
   margin-right: 10px;
+  background-color: transparent;
+}
+
+.spell-meter__slot {
+  border: 1px solid #822000;
+  box-shadow: 0 0 5px #979aa4;
 }
 
 .spell-meter__filled {
   background-color: #822000;
-}
-
-.spell-meter__empty {
-  background-color: transparent;
 }
