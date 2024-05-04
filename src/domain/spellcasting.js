@@ -1,4 +1,4 @@
-const maxSpellSlots = {
+export const maxSpellSlots = {
   '1st': 4,
   '2nd': 3,
   '3rd': 3,
@@ -10,4 +10,4 @@ const maxSpellSlots = {
   '9th': 1,
 };
 
-export default maxSpellSlots;
+export const maxSpellsPerDay = 4;

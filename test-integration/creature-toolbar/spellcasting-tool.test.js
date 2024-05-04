@@ -1,5 +1,5 @@
 import DmApp from '../page-object-models/dmApp';
-import maxSpellSlots from '../../src/domain/spellSlots';
+import { maxSpellSlots } from '../../src/domain/spellcasting';
 
 describe('Spellcasting tool', () => {
   it('opens the tool menu when the Spell Slots toolbar button is selected', async () => {
@@ -283,7 +283,7 @@ describe('Used spells', () => {
     await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellcastingTool.openUsedSpells('goblin');
     await dmApp.spellcastingTool.addUsedSpell('goblin', 'cure wounds');
-    await dmApp.spellcastingTool.assertUsedSpellMax('goblin', 'cure wounds', '5');
+    await dmApp.spellcastingTool.assertUsedSpellMax('goblin', 'cure wounds', '4');
   });
 
   it('sets the maximum number of uses of a spell when the total for the same spell is modified', async () => {
@@ -298,7 +298,7 @@ describe('Used spells', () => {
 
     await dmApp.spellcastingTool.openUsedSpells('goblin');
     await dmApp.spellcastingTool.assertUsedSpellMax('goblin', 'cure wounds', '0');
-    await dmApp.spellcastingTool.assertUsedSpellMax('goblin', 'inflict wounds', '5');
+    await dmApp.spellcastingTool.assertUsedSpellMax('goblin', 'inflict wounds', '4');
   });
 
   it('sets the number of uses of a spell when the total for the same level is set lower than the current used value', async () => {
@@ -376,7 +376,7 @@ describe('Total spells', () => {
     await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
     await dmApp.spellcastingTool.openTotalSpells('goblin');
     await dmApp.spellcastingTool.addTotalSpell('goblin', 'cure wounds');
-    await dmApp.spellcastingTool.assertTotalSpellMax('goblin', 'cure wounds', '5');
+    await dmApp.spellcastingTool.assertTotalSpellMax('goblin', 'cure wounds', '4');
   });
 
   it('allows the number of total uses of a spell to be set and persisted', async () => {

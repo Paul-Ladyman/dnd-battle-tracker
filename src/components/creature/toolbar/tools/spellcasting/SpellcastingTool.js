@@ -1,6 +1,6 @@
 import React from 'react';
 import TabList from '../../../../widgets/TabList';
-import maxSpellSlots from '../../../../../domain/spellSlots';
+import { maxSpellSlots } from '../../../../../domain/spellcasting';
 import SpellSlotGrid from './SpellSlotGrid';
 import SpellList from './SpellList';
 

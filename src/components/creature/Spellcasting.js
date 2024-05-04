@@ -1,5 +1,5 @@
 import React from 'react';
-import maxSpellSlots from '../../domain/spellSlots';
+import { maxSpellSlots, maxSpellsPerDay } from '../../domain/spellcasting';
 
 function isFull(total, used, key) {
   if (total !== undefined) return total === used;
@@ -7,11 +7,11 @@ function isFull(total, used, key) {
   const max = maxSpellSlots[key];
   if (max) return maxSpellSlots[key] === used;
 
-  return maxSpellSlots['1st'] === used;
+  return maxSpellsPerDay === used;
 }
 
 function meter(max, now) {
-  return Array.from({ length: 4 }).reduce((slots, _, i) => {
+  return Array.from({ length: maxSpellsPerDay }).reduce((slots, _, i) => {
     const key = slots.length;
     const slotClass = i < max ? 'spell-meter__slot' : '';
     const filledClass = i < now ? 'spell-meter__filled' : '';

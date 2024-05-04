@@ -1,7 +1,7 @@
 import getSecondsElapsed from './TimeManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
-import maxSpellSlots from '../domain/spellSlots';
+import { maxSpellSlots } from '../domain/spellcasting';
 import conditionsData from '../domain/conditions';
 
 function findCreature(creatures, creatureId) {

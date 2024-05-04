@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CreatureToolbarInput from '../CreatureToolbarInput';
 import CrossIcon from '../../../../icons/CrossIcon';
 import Input from '../../../../form/Input';
+import { maxSpellsPerDay } from '../../../../../domain/spellcasting';
 
 function Spell({
   spellProperty,
@@ -20,7 +21,7 @@ function Spell({
 
   const inputId = `${creatureId}-${id}-spells-${spellKey}`;
 
-  const max = useSpellMax && Number.isInteger(total) ? total : 5;
+  const max = useSpellMax && Number.isInteger(total) ? total : maxSpellsPerDay;
   const maxExceeded = value >= max;
   const maxClass = displayMaxExceeded && maxExceeded ? 'spell-slot__max' : '';
 
