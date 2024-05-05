@@ -730,7 +730,8 @@ label {
 
 .condition [role="checkbox"] {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 3px 7px;
+  border: 1px solid transparent;
   cursor: pointer;
   border-radius: 15px;
   margin-bottom: 8px;
@@ -750,7 +751,6 @@ label {
 }
 
 .condition [role="checkbox"]:hover {
-  padding: 3px 7px;
   background-color: #EBE1AD;
   border: 1px solid #822000;
   box-shadow: 0 0 5px #979aa4;
@@ -758,7 +758,6 @@ label {
 }
 
 .condition [role="checkbox"]:focus-within {
-  padding: 3px 7px;
   background-color: #EBE1AD;
   border: 1px solid #822000;
   outline: 1px solid #822000;
