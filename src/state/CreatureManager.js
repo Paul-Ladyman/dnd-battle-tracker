@@ -130,6 +130,30 @@ function getTotalSpellSlots(stats) {
   }, {});
 }
 
+function getTotalSpells(stats) {
+  const abilities = stats?.special_abilities;
+  const spellcastingAbility = Array.isArray(abilities) && abilities.find((_) => _.spellcasting);
+  const srdSpells = spellcastingAbility?.spellcasting?.spells;
+
+  if (!srdSpells) return {};
+
+  return srdSpells.reduce((spells, spell) => {
+    const { name, usage } = spell;
+    const { times, type } = usage;
+
+    if (type === 'at will') return spells;
+
+    const key = name.toLowerCase().replace(/\s/g, '');
+    return {
+      ...spells,
+      [key]: {
+        label: name,
+        total: times,
+      },
+    };
+  }, {});
+}
+
 export function createCreature(creatureId, {
   name, number, initiative, healthPoints, armorClass, stats,
 }) {
@@ -156,7 +180,7 @@ export function createCreature(creatureId, {
     statBlock,
     totalSpellSlots: getTotalSpellSlots(stats),
     usedSpellSlots: null,
-    spells: {},
+    spells: getTotalSpells(stats),
   };
 }
 

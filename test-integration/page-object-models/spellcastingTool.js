@@ -3,6 +3,7 @@
 import {
   screen,
   findByRole,
+  findAllByRole,
   queryByRole,
   getByText,
 } from '@testing-library/react';
@@ -188,6 +189,13 @@ export default class SpellcastingTool {
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total spells' });
     const totalSpell = await findByRole(tabPanel, 'spinbutton', { name: spell });
     return expect(totalSpell).toHaveValue(value);
+  }
+
+  async assertTotalSpells(name, number) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Total spells' });
+    const spells = await findAllByRole(tabPanel, 'listitem');
+    return expect(spells).toHaveLength(number);
   }
 
   async assertTotalSpellMin(name, spell, value) {

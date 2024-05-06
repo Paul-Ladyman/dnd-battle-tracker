@@ -394,4 +394,14 @@ describe('Total spells', () => {
 
     await dmApp.spellcastingTool.assertTotalSpellValue('goblin', 'cure wounds', 1);
   });
+
+  it('prefills total spells when an SRD monster is created with spells', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addSrdCreature('Couatl');
+    await dmApp.creatureToolbar.selectTool('Couatl', 'Spellcasting');
+    await dmApp.spellcastingTool.openTotalSpells('Couatl');
+    await dmApp.spellcastingTool.assertTotalSpells('Couatl', 2);
+    await dmApp.spellcastingTool.assertTotalSpellValue('Couatl', 'Bless', 3);
+    await dmApp.spellcastingTool.assertTotalSpellValue('Couatl', 'Dream', 1);
+  });
 });

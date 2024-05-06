@@ -713,7 +713,82 @@ describe('createCreature', () => {
     expect(createdCreature.totalSpellSlots).toEqual(expectedSlots);
   });
 
-  test('it does not add total spell slots if the creature does not have slots', () => {
+  test("it adds total spells if the creature's stats include spells", () => {
+    const stats = {
+      special_abilities: [
+        {},
+        {
+          spellcasting: {
+            spells: [
+              {
+                name: 'Spell Name 1',
+                usage: {
+                  type: 'per day',
+                  times: 1,
+                },
+              },
+              {
+                name: 'Spell Name 2',
+                usage: {
+                  type: 'per day',
+                  times: 2,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    };
+    const creature = {
+      name: 'name',
+      initiative: { result: 13 },
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    const expectedSpells = {
+      spellname1: {
+        label: 'Spell Name 1',
+        total: 1,
+      },
+      spellname2: {
+        label: 'Spell Name 2',
+        total: 2,
+      },
+    };
+    expect(createdCreature.spells).toEqual(expectedSpells);
+  });
+
+  test('it does not add at will spells', () => {
+    const stats = {
+      special_abilities: [
+        {},
+        {
+          spellcasting: {
+            spells: [
+              {
+                name: 'Spell 1',
+                usage: {
+                  type: 'at will',
+                  times: 1,
+                },
+              }
+            ],
+          },
+        },
+      ],
+    };
+    const creature = {
+      name: 'name',
+      initiative: { result: 13 },
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.spells).toEqual({});
+  });
+
+  test('it does not add spells or slots if the creature has neither', () => {
     const stats = {
       special_abilities: [{
         spellcasting: {
@@ -730,7 +805,7 @@ describe('createCreature', () => {
     expect(createdCreature.totalSpellSlots).toBeNull();
   });
 
-  test('it does not add total spell slots if the creature does not have spellcasting', () => {
+  test('it does not add spells or slots if the creature does not have spellcasting', () => {
     const stats = {
       special_abilities: [{}],
     };
@@ -744,7 +819,7 @@ describe('createCreature', () => {
     expect(createdCreature.totalSpellSlots).toBeNull();
   });
 
-  test("it does not add total spell slots if the creature's special abilities is not a list", () => {
+  test("it does not add spells or slots if the creature's special abilities is not a list", () => {
     const stats = {
       special_abilities: {},
     };
@@ -758,7 +833,7 @@ describe('createCreature', () => {
     expect(createdCreature.totalSpellSlots).toBeNull();
   });
 
-  test('it does not add total spell slots if the creature has no special abilities', () => {
+  test('it does not add spells or slots if the creature has no special abilities', () => {
     const creature = {
       name: 'name',
       initiative: { result: 13 },

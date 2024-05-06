@@ -9,6 +9,7 @@ export default [
       { index: 'goblin', name: 'Goblin', url: '/api/monsters/goblin' },
       { index: 'hobgoblin', name: 'Hobgoblin', url: '/api/monsters/hobgoblin' },
       { index: 'mage', name: 'Mage', url: '/api/monsters/mage' },
+      { index: 'mage', name: 'Couatl', url: '/api/monsters/couatl' },
     ],
   })),
 
@@ -69,6 +70,57 @@ export default [
             4: 3,
             5: 1,
           },
+        },
+      }],
+    },
+  )),
+
+  http.get('https://www.dnd5eapi.co/api/monsters/couatl', () => HttpResponse.json(
+    {
+      index: 'couatl',
+      name: 'Couatl',
+      hit_points: 97,
+      hit_points_roll: '13d8+39',
+      dexterity: 20,
+      armor_class: [
+        {
+          type: 'natural',
+          value: 19,
+        },
+      ],
+      special_abilities: [{
+        spellcasting: {
+          spells: [
+            {
+              name: 'Detect Evil and Good',
+              level: 1,
+              url: '/api/spells/detect-evil-and-good',
+              usage: {
+                type: 'at will',
+                rest_types: [],
+              },
+            },
+            {
+              name: 'Bless',
+              level: 1,
+              url: '/api/spells/bless',
+              usage: {
+                type: 'per day',
+                times: 3,
+                rest_types: [],
+              },
+            },
+            {
+              name: 'Dream',
+              level: 5,
+              url: '/api/spells/dream',
+              usage: {
+                type: 'per day',
+                times: 1,
+                rest_types: [],
+              },
+            },
+          ],
         },
       }],
     },
