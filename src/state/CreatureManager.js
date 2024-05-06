@@ -139,10 +139,10 @@ function getTotalSpells(stats) {
 
   return srdSpells.reduce((spells, spell) => {
     const { name, usage } = spell;
-    const { times, type } = usage;
+    const type = usage?.type;
+    if (type !== 'per day') return spells;
 
-    if (type === 'at will') return spells;
-
+    const { times } = usage;
     const key = name.toLowerCase().replace(/\s/g, '');
     return {
       ...spells,

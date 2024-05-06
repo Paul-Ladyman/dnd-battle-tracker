@@ -759,7 +759,7 @@ describe('createCreature', () => {
     expect(createdCreature.spells).toEqual(expectedSpells);
   });
 
-  test('it does not add at will spells', () => {
+  test('it does not add spells that do not have a per day usage', () => {
     const stats = {
       special_abilities: [
         {},
@@ -772,7 +772,38 @@ describe('createCreature', () => {
                   type: 'at will',
                   times: 1,
                 },
-              }
+              },
+              {
+                name: 'Spell 2',
+                usage: {
+                  times: 1,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    };
+    const creature = {
+      name: 'name',
+      initiative: { result: 13 },
+      healthPoints: 10,
+      stats,
+    };
+    const createdCreature = createCreature(1, creature);
+    expect(createdCreature.spells).toEqual({});
+  });
+
+  test('does not add spells without a usage', () => {
+    const stats = {
+      special_abilities: [
+        {},
+        {
+          spellcasting: {
+            spells: [
+              {
+                name: 'Spell 1',
+              },
             ],
           },
         },
