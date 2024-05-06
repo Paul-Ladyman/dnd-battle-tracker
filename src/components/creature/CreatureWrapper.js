@@ -33,11 +33,16 @@ function hasSpellSlots(slots) {
   return Object.values(slots || {}).findIndex((_) => _ > 0) > -1;
 }
 
-function isMultiColumn(conditions, notes, totalSpellSlots, usedSpellSlots) {
+function hasSpells(spells) {
+  return Object.values(spells || {}).findIndex(({ used, total }) => used > 0 || total > 0) > -1;
+}
+
+function isMultiColumn(conditions, notes, totalSpellSlots, usedSpellSlots, spells) {
   return conditions.length > 0
     || notes.length > 0
     || hasSpellSlots(totalSpellSlots)
-    || hasSpellSlots(usedSpellSlots);
+    || hasSpellSlots(usedSpellSlots)
+    || hasSpells(spells);
 }
 
 class CreatureWrapper extends Component {
@@ -106,6 +111,7 @@ class CreatureWrapper extends Component {
       alive,
       totalSpellSlots,
       usedSpellSlots,
+      spells,
     } = creature;
 
     const { expanded } = this.state;
@@ -131,7 +137,13 @@ class CreatureWrapper extends Component {
     );
     const showHitPoints = shouldShowHitPoints(creatureHealthPoints, hitPointsShared, playerSession);
 
-    const multiColumn = isMultiColumn(creatureConditions, notes, totalSpellSlots, usedSpellSlots);
+    const multiColumn = isMultiColumn(
+      creatureConditions,
+      notes,
+      totalSpellSlots,
+      usedSpellSlots,
+      spells,
+    );
 
     const [
       leftPercentage,
