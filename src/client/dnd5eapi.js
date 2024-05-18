@@ -22,3 +22,14 @@ export async function getMonster(monster) {
     return {};
   }
 }
+
+export async function getSpells() {
+  try {
+    const response = await fetch(`${BASE_API_URL}/api/spells`, { 'Content-Type': 'application/json' });
+    const json = await response.json();
+    const { results } = json;
+    return results || [];
+  } catch {
+    return [];
+  }
+}

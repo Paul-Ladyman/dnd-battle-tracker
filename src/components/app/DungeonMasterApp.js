@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useMemo,
+  useState,
+} from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
 import CreateCreatureForm from '../page/create-creature-form/CreateCreatureForm';
@@ -59,10 +64,13 @@ import {
   dismissErrors,
   updateErrors,
 } from '../../state/ErrorManager';
+import { getSpells } from '../../client/dnd5eapi';
+import SrdContext from './SrdContext';
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
+  const [srdSpells, setSrdSpells] = useState([]);
   const creaturesRef = useRef(null);
 
   const updateBattle = (update, doShare = true) => (...args) => {
@@ -102,6 +110,10 @@ function DungeonMasterApp({
     battleId,
     focusedCreature,
   } = state;
+
+  useEffect(() => {
+    getSpells().then(setSrdSpells);
+  }, []);
 
   useEffect(() => {
     window.onbeforeunload = () => true;
@@ -146,6 +158,8 @@ function DungeonMasterApp({
     loadBattle,
   }), [state]);
 
+  const srd = useMemo(() => ({ srdSpells }));
+
   const onScrollActiveInitiative = () => {
     creaturesRef.current.scrollToCreature(activeCreatureId);
   };
@@ -161,54 +175,56 @@ function DungeonMasterApp({
   }, [errorCreatureId]);
 
   return (
-    <BattleManagerContext.Provider value={battleManagement}>
-      <BattleToolbar
-        initiative={activeCreatureName}
-        round={round}
-        secondsElapsed={secondsElapsed}
-        creatureCount={creatureCount}
-        nextInitiative={updateBattle(nextInitiative)}
-        shareEnabled={shareEnabled}
-        isSaveLoadSupported={isSaveLoadSupported}
-        rulesSearchOpen={rulesSearchOpened}
-        onScrollActiveInitiative={onScrollActiveInitiative}
-      />
-      { errors && (
-      <Errors
-        errors={state.errors}
-        dismissErrors={updateBattle(dismissErrors, false)}
-      />
-      )}
-      <AriaAnnouncements announcements={ariaAnnouncements} />
-      <div className="main-footer-wrapper">
-        <RulesSearchBar
-          rulesSearchOpened={rulesSearchOpened}
-          onSearch={updateBattle(toggleRulesSearch, false)}
+    <SrdContext.Provider value={srd}>
+      <BattleManagerContext.Provider value={battleManagement}>
+        <BattleToolbar
+          initiative={activeCreatureName}
+          round={round}
+          secondsElapsed={secondsElapsed}
+          creatureCount={creatureCount}
+          nextInitiative={updateBattle(nextInitiative)}
+          shareEnabled={shareEnabled}
+          isSaveLoadSupported={isSaveLoadSupported}
+          rulesSearchOpen={rulesSearchOpened}
+          onScrollActiveInitiative={onScrollActiveInitiative}
         />
-        <main className="main">
-          <Title
-            shareEnabled={shareEnabled}
-            battleId={battleId}
+        { errors && (
+        <Errors
+          errors={state.errors}
+          dismissErrors={updateBattle(dismissErrors, false)}
+        />
+        )}
+        <AriaAnnouncements announcements={ariaAnnouncements} />
+        <div className="main-footer-wrapper">
+          <RulesSearchBar
+            rulesSearchOpened={rulesSearchOpened}
+            onSearch={updateBattle(toggleRulesSearch, false)}
           />
-          <CreateCreatureForm
-            createCreature={updateBattle(addCreature)}
-            handleCreateCreatureErrors={updateBattle(handleCreateCreatureErrors)}
-            createCreatureErrors={state.createCreatureErrors}
-          />
-          <Creatures
-            ref={creaturesRef}
-            creatures={creatures}
-            activeCreatureId={activeCreatureId}
-            errorCreatureId={errorCreatureId}
-            focusedCreature={focusedCreature}
-            round={round}
-            secondsElapsed={secondsElapsed}
-            creatureManagement={creatureManagement}
-          />
-        </main>
-        <Footer />
-      </div>
-    </BattleManagerContext.Provider>
+          <main className="main">
+            <Title
+              shareEnabled={shareEnabled}
+              battleId={battleId}
+            />
+            <CreateCreatureForm
+              createCreature={updateBattle(addCreature)}
+              handleCreateCreatureErrors={updateBattle(handleCreateCreatureErrors)}
+              createCreatureErrors={state.createCreatureErrors}
+            />
+            <Creatures
+              ref={creaturesRef}
+              creatures={creatures}
+              activeCreatureId={activeCreatureId}
+              errorCreatureId={errorCreatureId}
+              focusedCreature={focusedCreature}
+              round={round}
+              secondsElapsed={secondsElapsed}
+              creatureManagement={creatureManagement}
+            />
+          </main>
+          <Footer />
+        </div>
+      </BattleManagerContext.Provider>
+    </SrdContext.Provider>
   );
 }
 

@@ -4,8 +4,10 @@ import {
   screen,
   findByRole,
   findAllByRole,
+  findByText,
   queryByRole,
   getByText,
+  queryByText,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -55,8 +57,29 @@ export default class SpellcastingTool {
   async addUsedSpell(name, spell) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
-    const spellTool = await findByRole(tab, 'textbox', { name: `Add spells for ${name}` });
+    const spellTool = await findByRole(tab, 'combobox', { name: `Add spells for ${name}` });
     await this.user.type(spellTool, spell);
+    const add = await findByRole(spellTool.parentElement, 'button', { name: 'Add spell' });
+    return this.user.click(add);
+  }
+
+  async searchUsedSrdSpell(name, spell) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
+    const spellTool = await findByRole(tab, 'combobox', { name: `Add spells for ${name}` });
+    return this.user.type(spellTool, spell);
+  }
+
+  async addUsedSrdSpell(name, spell) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
+    const spellTool = await findByRole(tab, 'combobox', { name: `Add spells for ${name}` });
+    await this.user.type(spellTool, spell);
+
+    const spells = queryByRole(tab, 'listbox', { name: 'Spell search results' });
+    const spellResult = await findByText(spells, spell);
+    await this.user.click(spellResult);
+
     const add = await findByRole(spellTool.parentElement, 'button', { name: 'Add spell' });
     return this.user.click(add);
   }
@@ -64,7 +87,7 @@ export default class SpellcastingTool {
   async addTotalSpell(name, spell) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Total spells' });
-    const spellTool = await findByRole(tab, 'textbox', { name: `Add spells for ${name}` });
+    const spellTool = await findByRole(tab, 'combobox', { name: `Add spells for ${name}` });
     await this.user.type(spellTool, spell);
     const add = await findByRole(spellTool.parentElement, 'button', { name: 'Add spell' });
     return this.user.click(add);
@@ -217,5 +240,31 @@ export default class SpellcastingTool {
     const tabPanel = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
     const spellSlot = await findByRole(tabPanel, 'spinbutton', { name: spell });
     return expect(spellSlot).toHaveAttribute('aria-disabled', 'true');
+  }
+
+  async assertUsedSrdSpell(name, spell) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
+
+    const spells = queryByRole(tab, 'listbox', { name: 'Spell search results' });
+    const spellResult = await findByText(spells, spell);
+    return expect(spellResult).toBeVisible();
+  }
+
+  async assertNotUsedSrdSpell(name, spell) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
+
+    const spells = queryByRole(tab, 'listbox', { name: 'Spell search results' });
+    const spellResult = queryByText(spells, spell);
+    return expect(spellResult).toBeNull();
+  }
+
+  async assertNoUsedSrdSpells(name) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
+
+    const spells = queryByRole(tab, 'listbox', { name: 'Spell search results' });
+    return expect(spells).toBeNull();
   }
 }

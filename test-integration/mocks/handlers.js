@@ -126,6 +126,29 @@ export default [
     },
   )),
 
+  http.get('https://www.dnd5eapi.co/api/spells', () => HttpResponse.json({
+    results: [
+      {
+        index: 'acid-arrow',
+        name: 'Acid Arrow',
+        level: 2,
+        url: '/api/spells/acid-arrow',
+      },
+      {
+        index: 'acid-splash',
+        name: 'Acid Splash',
+        level: 0,
+        url: '/api/spells/acid-splash',
+      },
+      {
+        index: 'aid',
+        name: 'Aid',
+        level: 2,
+        url: '/api/spells/aid',
+      },
+    ],
+  })),
+
   graphql.mutation('CREATE_BATTLE', () => HttpResponse.json({
     data: {
       createDndbattletracker: {

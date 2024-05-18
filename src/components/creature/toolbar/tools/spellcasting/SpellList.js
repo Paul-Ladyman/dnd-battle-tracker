@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import CreatureToolbarInput from '../CreatureToolbarInput';
+import React, { useState, useContext } from 'react';
 import CrossIcon from '../../../../icons/CrossIcon';
 import Input from '../../../../form/Input';
 import { maxSpellsPerDay } from '../../../../../domain/spellcasting';
+import ComboboxList from '../../../../form/ComboboxList';
+import SrdContext from '../../../../app/SrdContext';
 
 function Spell({
   spellProperty,
@@ -84,6 +85,17 @@ function Spells({
   );
 }
 
+function getFilteredSpells(name, spellData) {
+  if (name.length < 2) return [];
+  return spellData
+    .filter((spell) => spell.name && spell.name.toLowerCase().includes(name.toLowerCase()))
+    .map((spell) => ({
+      ...spell,
+      text: spell.name,
+      id: spell.index,
+    }));
+}
+
 export default function SpellList({
   spells,
   spellProperty,
@@ -96,18 +108,31 @@ export default function SpellList({
   useSpellMax,
   displayMaxExceeded,
 }) {
+  const [name, setName] = useState('');
+  const srd = useContext(SrdContext);
+  const { srdSpells } = srd;
+  const spellRightControls = {
+    rightTitle: 'Add spell',
+    RightSubmitIcon: <CrossIcon />,
+  };
   return (
     <div>
       <div className="spellcasting-spell-input">
-        <CreatureToolbarInput
-          ariaLabel={`Add spells for ${creatureName}`}
+        <ComboboxList
+          value={name}
+          setValue={setName}
+          list={getFilteredSpells(name, srdSpells)}
+          id={`${creatureId}-${id}-spells`}
+          dropdownId={`${creatureId}-${id}-spells-dropdown`}
+          dropdownLabel="Select spell"
           label="Spells"
-          rightSubmit={(spell) => addSpell(creatureId, spell)}
-          rightControls={{
-            rightTitle: 'Add spell',
-            RightSubmitIcon: <CrossIcon />,
-          }}
-          inputId={`${creatureId}-${id}-spells`}
+          listAriaLabel="Spell search results"
+          inputAriaLabel={`Add spells for ${creatureName}`}
+          inputAriaLabelItemSelected={`Add spells for ${creatureName}`}
+          rightControls={spellRightControls}
+          rightControlsItemSelected={spellRightControls}
+          handleSubmit={() => addSpell(creatureId, name)}
+          spellCheck={false}
         />
       </div>
       <Spells

@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
+import msw from './mocks/server';
 import DmApp from './page-object-models/dmApp';
 import CreateCreatureForm from './page-object-models/createCreatureForm';
-import msw from './mocks/server';
 import random from '../src/util/random';
 
 jest.mock('../src/util/random');

@@ -1,3 +1,5 @@
+import { http, HttpResponse } from 'msw';
+import msw from '../mocks/server';
 import DmApp from '../page-object-models/dmApp';
 import { maxSpellSlots } from '../../src/domain/spellcasting';
 
@@ -403,5 +405,66 @@ describe('Total spells', () => {
     await dmApp.spellcastingTool.assertTotalSpells('Couatl', 2);
     await dmApp.spellcastingTool.assertTotalSpellValue('Couatl', 'Bless', 3);
     await dmApp.spellcastingTool.assertTotalSpellValue('Couatl', 'Dream', 1);
+  });
+});
+
+describe('SRD spell search', () => {
+  it('adds an SRD spell to the list', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellcastingTool.openUsedSpells('goblin');
+    await dmApp.spellcastingTool.addUsedSrdSpell('goblin', 'Acid Arrow');
+  });
+
+  it('filters the SRD spell list by the search term', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellcastingTool.openUsedSpells('goblin');
+    await dmApp.spellcastingTool.searchUsedSrdSpell('goblin', 'Acid');
+    await dmApp.spellcastingTool.assertUsedSrdSpell('goblin', 'Acid Arrow');
+    await dmApp.spellcastingTool.assertUsedSrdSpell('goblin', 'Acid Splash');
+    await dmApp.spellcastingTool.assertNotUsedSrdSpell('goblin', 'Aid');
+  });
+
+  it('displays no spells if they do not include a name', async () => {
+    msw.use(
+      http.get('https://www.dnd5eapi.co/api/spells', () => HttpResponse.json({
+        results: [{}],
+      })),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellcastingTool.openUsedSpells('goblin');
+    await dmApp.spellcastingTool.searchUsedSrdSpell('goblin', 'Acid Arrow');
+    await dmApp.spellcastingTool.assertNoUsedSrdSpells('goblin');
+  });
+
+  it('displays no spells if the response is malformed', async () => {
+    msw.use(
+      http.get('https://www.dnd5eapi.co/api/spells', () => new HttpResponse('malformed')),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellcastingTool.openUsedSpells('goblin');
+    await dmApp.spellcastingTool.searchUsedSrdSpell('goblin', 'Acid Arrow');
+    await dmApp.spellcastingTool.assertNoUsedSrdSpells('goblin');
+  });
+
+  it('displays no spells if there was an error fetching them', async () => {
+    msw.use(
+      http.get('https://www.dnd5eapi.co/api/spells', () => new HttpResponse(null, {
+        status: 500,
+      })),
+    );
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellcastingTool.openUsedSpells('goblin');
+    await dmApp.spellcastingTool.searchUsedSrdSpell('goblin', 'Acid Arrow');
+    await dmApp.spellcastingTool.assertNoUsedSrdSpells('goblin');
   });
 });
