@@ -85,17 +85,6 @@ function Spells({
   );
 }
 
-function getFilteredSpells(name, spellData) {
-  if (name.length < 2) return [];
-  return spellData
-    .filter((spell) => spell.name && spell.name.toLowerCase().includes(name.toLowerCase()))
-    .map((spell) => ({
-      ...spell,
-      text: spell.name,
-      id: spell.index,
-    }));
-}
-
 export default function SpellList({
   spells,
   spellProperty,
@@ -110,7 +99,7 @@ export default function SpellList({
 }) {
   const [name, setName] = useState('');
   const srd = useContext(SrdContext);
-  const { srdSpells } = srd;
+  const { spellList } = srd;
   const spellRightControls = {
     rightTitle: 'Add spell',
     RightSubmitIcon: <CrossIcon />,
@@ -121,7 +110,7 @@ export default function SpellList({
         <ComboboxList
           value={name}
           setValue={setName}
-          list={getFilteredSpells(name, srdSpells)}
+          list={spellList.search(name)}
           id={`${creatureId}-${id}-spells`}
           dropdownId={`${creatureId}-${id}-spells-dropdown`}
           dropdownLabel="Select spell"

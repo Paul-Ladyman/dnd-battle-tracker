@@ -1,3 +1,26 @@
+import { getSpells } from '../client/dnd5eapi';
+
+class SpellList {
+  constructor(spells) {
+    this.spells = spells;
+  }
+
+  search(name) {
+    if (name.length < 2) return [];
+    return this.spells
+      .filter((spell) => spell.name && spell.name.toLowerCase().includes(name.toLowerCase()))
+      .map((spell) => ({
+        text: spell.name,
+        id: spell.index,
+      }));
+  }
+}
+
+export async function getSpellList() {
+  const spells = await getSpells();
+  return new SpellList(spells);
+}
+
 export const maxSpellSlots = {
   '1st': 4,
   '2nd': 3,

@@ -64,13 +64,13 @@ import {
   dismissErrors,
   updateErrors,
 } from '../../state/ErrorManager';
-import { getSpells } from '../../client/dnd5eapi';
+import { getSpellList } from '../../domain/spellcasting';
 import SrdContext from './SrdContext';
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
-  const [srdSpells, setSrdSpells] = useState([]);
+  const [spellList, setSpellList] = useState([]);
   const creaturesRef = useRef(null);
 
   const updateBattle = (update, doShare = true) => (...args) => {
@@ -112,7 +112,7 @@ function DungeonMasterApp({
   } = state;
 
   useEffect(() => {
-    getSpells().then(setSrdSpells);
+    getSpellList().then(setSpellList);
   }, []);
 
   useEffect(() => {
@@ -158,7 +158,7 @@ function DungeonMasterApp({
     loadBattle,
   }), [state]);
 
-  const srd = useMemo(() => ({ srdSpells }));
+  const srd = useMemo(() => ({ spellList }));
 
   const onScrollActiveInitiative = () => {
     creaturesRef.current.scrollToCreature(activeCreatureId);
