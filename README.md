@@ -32,7 +32,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [Aide D&D](https://www.aidedd.org/en/online-assistant/)
 * [Kastark](https://kastark.co.uk/rpgs/encounter-tracker/)
 * [Donjon](https://donjon.bin.sh/5e/initiative/)
-* [Harmless Key](https://harmlesskey.com/)
+* [Shieldmaiden](https://shieldmaiden.app/) (Previously Harmless Key)
 * [Improved Initiative](https://improvedinitiative.app/)
 * [Kassoon](https://www.kassoon.com/dnd/combat-tracker/)
 * [Orc Pub](https://www.orcpub2.com/) ([replaced by Dungeon Master's Vault](https://www.dungeonmastersvault.com/help/faq-about-orcpub-and-dungeonmastersvault/) though seemingly without a combat tracker)
