@@ -1474,3 +1474,16 @@ button[role=tab][aria-selected=true]:focus  {
 .spell-meter__filled {
   background-color: #822000;
 }
+
+.loading-spinner {
+  animation-name: spin;
+  animation-duration: 360ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  to {
+      transform:rotate(360deg);
+  }
+}

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import getApolloSession from './apolloClient';
+import Loading from '../components/app/Loading';
 
 export default function RefreshingApolloProvider({
   online, OnlineView, OfflineView, ...props
@@ -44,10 +45,14 @@ export default function RefreshingApolloProvider({
     );
   }
 
-  return (
-    <OfflineView
-      onlineError={apolloSession && apolloSession.error}
-      {...props}
-    />
-  );
+  if (online && apolloSession && apolloSession.error) {
+    return (
+      <OfflineView
+        onlineError={apolloSession && apolloSession.error}
+        {...props}
+      />
+    );
+  }
+
+  return <Loading />;
 }

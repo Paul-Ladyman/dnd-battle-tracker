@@ -5,12 +5,6 @@ function ErrorSubTitle() {
   return 'Something went wrong!';
 }
 
-function PlayerSessionSubTitle({ loading, battleId }) {
-  return loading
-    ? `Loading player Session ${battleId} ...`
-    : `Player Session ${battleId}`;
-}
-
 function DungeonMasterSubTitle({ battleId }) {
   const [playerLink, setPlayerLink] = useState({ url: null, copied: false });
 
@@ -48,7 +42,6 @@ function DungeonMasterSubTitle({ battleId }) {
 function SubTitle({
   error,
   playerSession,
-  loading,
   battleId,
 }) {
   if (error) {
@@ -56,14 +49,14 @@ function SubTitle({
   }
 
   if (playerSession) {
-    return (<PlayerSessionSubTitle loading={loading} battleId={battleId} />);
+    return `Player Session ${battleId}`;
   }
 
   return (<DungeonMasterSubTitle battleId={battleId} />);
 }
 
 export default function Title({
-  shareEnabled, battleId, playerSession, error, loading,
+  shareEnabled, battleId, playerSession, error,
 }) {
   const showSubtitle = error || shareEnabled || playerSession;
 
@@ -79,7 +72,6 @@ export default function Title({
           <SubTitle
             error={error}
             playerSession={playerSession}
-            loading={loading}
             battleId={battleId}
           />
         </h2>

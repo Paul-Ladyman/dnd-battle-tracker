@@ -18,6 +18,7 @@ import getSecondsElapsed from '../../state/TimeManager';
 import { getCreatureList } from '../../state/CreatureListManager';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import BattleManagerContext from './BattleManagerContext';
+import Loading from './Loading';
 
 // TODO abstract into SyncManager
 function getBattleData(getLoading, getData, syncLoading, syncData) {
@@ -86,6 +87,10 @@ function PlayerApp({
     toggleRulesSearch: updateRulesSearch,
   }), []);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <BattleManagerContext.Provider value={battleManagement}>
       <BattleToolbar
@@ -111,7 +116,6 @@ function PlayerApp({
           <Title
             battleId={battleId}
             playerSession
-            loading={loading}
           />
           <Creatures
             ref={creaturesRef}
