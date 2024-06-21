@@ -1,8 +1,9 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   resolve: {
@@ -31,17 +32,17 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader"
-          }
-        ]
-      }
+            loader: 'html-loader',
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -50,11 +51,20 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
     new HtmlWebPackPlugin({
-      template: "./public/index.html",
-      filename: "./index.html"
+      template: './src/index.html.ejs',
+      templateParameters: {
+        BUILD_TIME: new Date().getTime(),
+      },
+      filename: './index.html',
+      favicon: './public/favicon.png',
     }),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
-  ]
-}
+  ],
+  output: {
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+};
