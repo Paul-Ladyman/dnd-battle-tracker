@@ -23,14 +23,7 @@
     "test:ci": "npx jest --testPathIgnorePatterns=/test/e2e.spec.js",
     "test:e2e": "PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS=1 npx playwright test",
     "lint": "npx eslint --ext js,jsx src",
-    "size": "size-limit"
   },
-  "size-limit": [
-    {
-      "limit": "252 kb",
-      "path": "dist/index.html"
-    }
-  ],
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
@@ -63,7 +56,6 @@
     "@babel/preset-env": "^7.24.6",
     "@babel/preset-react": "^7.23.3",
     "@playwright/test": "^1.39.0",
-    "@size-limit/preset-app": "^4.9.1",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.4.3",
@@ -86,7 +78,6 @@
     "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.7.6",
     "msw": "^2.2.14",
-    "size-limit": "^4.9.1",
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",

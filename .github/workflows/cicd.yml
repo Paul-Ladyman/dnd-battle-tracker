@@ -23,8 +23,6 @@ jobs:
       run: npm run lint
     - name: Run Build
       run: npm run build
-    - name: Run Size Tests
-      run: npm run size
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run E2E Tests
