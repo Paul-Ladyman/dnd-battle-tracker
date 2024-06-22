@@ -86,7 +86,6 @@
     "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.7.6",
     "msw": "^2.2.14",
-    "mustache": "^4.2.0",
     "size-limit": "^4.9.1",
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.91.0",
