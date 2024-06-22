@@ -55,7 +55,7 @@ module.exports = {
       templateParameters: {
         BUILD_TIME: new Date().getTime(),
       },
-      filename: './index.html',
+      filename: './dnd-battle-tracker.html',
       favicon: './public/favicon.png',
     }),
     new webpack.ProvidePlugin({
