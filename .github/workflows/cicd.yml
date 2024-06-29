@@ -86,31 +86,31 @@ jobs:
   #         diff-search: true
 
   # deployprod:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://dndbattletracker.com/
-    concurrency:
-      group: production
-      cancel-in-progress: true
-    needs: deployprodpreflight
-    if: github.event_name == 'push' && needs.deployprodpreflight.outputs.versionchanged == 'true'
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Download Build Artefact
-        uses: actions/download-artifact@v3
-        with:
-          name: dist
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          role-to-assume: arn:aws:iam::341118543232:role/github-s3-access-production
-          aws-region: eu-west-2
-      - name: Deploy to Production
-        run: aws s3 sync . s3://dndbattletracker.com/
+    # name: Deploy to Production
+    # runs-on: ubuntu-latest
+    # environment:
+    #   name: production
+    #   url: https://dndbattletracker.com/
+    # concurrency:
+    #   group: production
+    #   cancel-in-progress: true
+    # needs: deployprodpreflight
+    # if: github.event_name == 'push' && needs.deployprodpreflight.outputs.versionchanged == 'true'
+    # permissions:
+    #   id-token: write
+    #   contents: read
+    # steps:
+    #   - name: Download Build Artefact
+    #     uses: actions/download-artifact@v3
+    #     with:
+    #       name: dist
+    #   - name: Configure AWS Credentials
+    #     uses: aws-actions/configure-aws-credentials@v1-node16
+    #     with:
+    #       role-to-assume: arn:aws:iam::341118543232:role/github-s3-access-production
+    #       aws-region: eu-west-2
+    #   - name: Deploy to Production
+    #     run: aws s3 sync . s3://dndbattletracker.com/
 
   githubrelease:
     name: Github Release
