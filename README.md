@@ -12,10 +12,12 @@ The D&D Battle Tracker is a web application designed to run in a browser but doe
 
 First, [access the live D&D Battle Tracker](http://dndbattletracker.com/). The application will then be saved in your browser for offline use. If your mobile or desktop browser supports it you can install the Battle Tracker as a [Progressive Web App](https://support.google.com/chrome/answer/9658361?hl=en-GB&co=GENIE.Platform%3DDesktop) on your device so you can easily access it whenever you need to.
 
-You can also download a specific release of the `dnd-battle-tracker.html` file below and open it in your favourite browser. This will be necessary if you have downloaded an in-progress battle that is no longer compatible with the live application:
+You can also download a specific release of D&D Battle Tracker below and open it in your favourite browser. This will be necessary if you have downloaded an in-progress battle that is no longer compatible with the live application:
 
 * [Latest release](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/latest)
 * [List of previous releases](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases)
+
+For a particular release download the file `dnd-battle-tracker.zip` under Assets, unzip it and open the file `dnd-battle-tracker.html` in a browser. For older releases you can download and open the `dnd-battle-tracker.html` file directly.
 
 ## Motivation
 
