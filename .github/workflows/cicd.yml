@@ -127,6 +127,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
@@ -134,4 +136,4 @@ jobs:
           makeLatest: true
           body: ${{ github.event.head_commit.message }}
           tag: "v${{ needs.deployprodpreflight.outputs.version }}"
-          artifacts: "dnd-battle-tracker.html"
+          artifacts: "dist.zip"
