@@ -10,12 +10,12 @@ beforeEach(() => {
 });
 
 describe('Battle Share', () => {
-  test('displays a loading message whilst the battle is being shared', async () => {
+  test('displays a loading screen whilst the battle is being shared', async () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Share battle');
-    const playerSessionLink = screen.getByText('. . .');
-    expect(playerSessionLink).toBeVisible();
+    const loading = screen.getByTestId('loading');
+    expect(loading).toBeVisible();
   });
 
   test('displays a loading message whilst the player session link is being copied', async () => {

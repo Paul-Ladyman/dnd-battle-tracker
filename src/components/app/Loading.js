@@ -9,7 +9,7 @@ export default function Loading() {
       <main className="main">
         <div className="battle-toolbar" />
         <Title />
-        <div className="loading-spinner">
+        <div className="loading-spinner" data-testid="loading">
           <LoadingIcon />
         </div>
         {/* <Footer /> */}
