@@ -115,7 +115,7 @@ jobs:
   githubrelease:
     name: Github Release
     runs-on: ubuntu-latest
-    needs: [testbuild, deployprod]
+    needs: [testbuild]
     if: github.event_name == 'push'
     permissions:
       contents: write
