@@ -16,7 +16,7 @@ function getVersionInfo() {
 
   const isoBuildTime = buildTime.toISOString();
   const formattedBuildTime = isoBuildTime.replace('T', ', ').replace('Z', '');
-  return `${version} built at ${formattedBuildTime}`;
+  return `${version} built at ${formattedBuildTime}.`;
 }
 
 export default function Info() {
