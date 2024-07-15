@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
-import PlayerAppWrapper from './components/app/PlayerAppWrapper';
 import ErrorBoundary from './components/error/ErrorBoundary';
 import featureFlags from './featureFlags';
+import Loading from './components/app/Loading';
+
+const PlayerAppWrapper = lazy(() => import('./components/app/PlayerAppWrapper'));
 
 function getUrlParameter(name) {
   const cleanName = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
@@ -22,7 +24,9 @@ function setFeatureFlags() {
 function RenderPlayerApp({ battleId }) {
   return (
     <ErrorBoundary>
-      <PlayerAppWrapper battleId={battleId} />
+      <Suspense fallback={<Loading />}>
+        <PlayerAppWrapper battleId={battleId} />
+      </Suspense>
     </ErrorBoundary>
   );
 }
