@@ -17,7 +17,7 @@ You can also download a specific release of D&D Battle Tracker below and open it
 * [Latest release](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/latest)
 * [List of previous releases](https://github.com/Paul-Ladyman/dnd-battle-tracker/releases)
 
-For a particular release download the file `dnd-battle-tracker.zip` under Assets, unzip it and open the file `dnd-battle-tracker.html` in a browser. For older releases you can download and open the `dnd-battle-tracker.html` file directly.
+For a particular release download the file `dnd-battle-tracker.zip` under Assets, unzip it and open the file `index.html` in a browser. For older releases you can download and open the `dnd-battle-tracker.html` file directly.
 
 ## Motivation
 
