@@ -1,5 +1,4 @@
 import React from 'react';
-import './BuyMeACoffee.css';
 
 const version = Math.floor(Math.random() * 5) + 1;
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './ViewSwitcher.css';
 import BuyMeACoffee from '../page/BuyMeACoffee';
 
 export default function ViewSwitcher({ views }) {
