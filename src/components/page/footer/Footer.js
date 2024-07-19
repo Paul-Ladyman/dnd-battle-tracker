@@ -1,6 +1,7 @@
 import React from 'react';
 import ExternalLink from '../ExternalLink';
 import Help from './Help';
+import BuyMeACoffee from '../BuyMeACoffee';
 
 function Footer({ playerSession, error }) {
   return (
@@ -23,7 +24,7 @@ function Footer({ playerSession, error }) {
         && (
         <>
           <Help playerSession={playerSession} />
-          <a href="https://ko-fi.com/R5R12KANF" target="_blank" rel="noreferrer"><img height="36" style={{ border: '0px', height: '36px' }} src="https://cdn.ko-fi.com/cdn/kofi4.png?v=3" border="0" alt="Buy Me a Coffee at ko-fi.com" /></a>
+          <BuyMeACoffee mobileOnly />
         </>
         )}
     </footer>

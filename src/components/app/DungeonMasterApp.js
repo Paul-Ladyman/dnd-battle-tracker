@@ -3,11 +3,11 @@ import React, {
   useRef,
   useMemo,
   useState,
+  Suspense,
+  lazy,
 } from 'react';
 import isHotkey from 'is-hotkey';
 import '../App.css';
-import CreateCreatureForm from '../page/create-creature-form/CreateCreatureForm';
-import Creatures from '../page/Creatures';
 import BattleToolbar from '../page/BattleToolbar';
 import Title from '../page/Title';
 import AriaAnnouncements from '../page/AriaAnnouncements';
@@ -23,7 +23,6 @@ import {
 } from '../../state/InitiativeManager';
 import {
   removeCreature,
-  addCreature,
   getCreatureList,
 } from '../../state/CreatureListManager';
 import getSecondsElapsed from '../../state/TimeManager';
@@ -53,8 +52,6 @@ import {
   load,
   isSaveLoadSupported,
 } from '../../state/AppManager';
-import { handleCreateCreatureErrors } from '../../state/CreatureFormManager';
-import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import BattleManagerContext from './BattleManagerContext';
@@ -66,6 +63,11 @@ import {
 } from '../../state/ErrorManager';
 import { getSpellList } from '../../domain/spellcasting';
 import SrdContext from './SrdContext';
+import Loading from './Loading';
+import ViewSwitcher from '../view/ViewSwitcher';
+import InitiativeView from '../view/InitiativeView';
+
+const DungeonMasterTips = lazy(() => import('../view/DungeonMasterTips'));
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
@@ -161,7 +163,9 @@ function DungeonMasterApp({
   const srd = useMemo(() => ({ spellList }));
 
   const onScrollActiveInitiative = () => {
-    creaturesRef.current.scrollToCreature(activeCreatureId);
+    if (creaturesRef.current) {
+      creaturesRef.current.scrollToCreature(activeCreatureId);
+    }
   };
 
   useEffect(() => {
@@ -169,10 +173,38 @@ function DungeonMasterApp({
   }, [activeCreatureId]);
 
   useEffect(() => {
-    if (errorCreatureId >= 0) {
+    if (errorCreatureId >= 0 && creaturesRef.current) {
       creaturesRef.current.scrollToCreature(errorCreatureId);
     }
   }, [errorCreatureId]);
+
+  const views = [
+    {
+      id: 'initiative',
+      title: 'Initiative',
+      content: <InitiativeView
+        updateBattle={updateBattle}
+        state={state}
+        creaturesRef={creaturesRef}
+        creatures={creatures}
+        activeCreatureId={activeCreatureId}
+        errorCreatureId={errorCreatureId}
+        focusedCreature={focusedCreature}
+        round={round}
+        secondsElapsed={secondsElapsed}
+        creatureManagement={creatureManagement}
+      />,
+    },
+    {
+      id: 'dmtips',
+      title: 'DM Tips',
+      content: (
+        <Suspense fallback={<Loading />}>
+          <DungeonMasterTips />
+        </Suspense>
+      ),
+    },
+  ];
 
   return (
     <SrdContext.Provider value={srd}>
@@ -200,28 +232,11 @@ function DungeonMasterApp({
             rulesSearchOpened={rulesSearchOpened}
             onSearch={updateBattle(toggleRulesSearch, false)}
           />
-          <main className="main">
-            <Title
-              shareEnabled={shareEnabled}
-              battleId={battleId}
-            />
-            <CreateCreatureForm
-              createCreature={updateBattle(addCreature)}
-              handleCreateCreatureErrors={updateBattle(handleCreateCreatureErrors)}
-              createCreatureErrors={state.createCreatureErrors}
-            />
-            <Creatures
-              ref={creaturesRef}
-              creatures={creatures}
-              activeCreatureId={activeCreatureId}
-              errorCreatureId={errorCreatureId}
-              focusedCreature={focusedCreature}
-              round={round}
-              secondsElapsed={secondsElapsed}
-              creatureManagement={creatureManagement}
-            />
-          </main>
-          <Footer />
+          <Title
+            shareEnabled={shareEnabled}
+            battleId={battleId}
+          />
+          <ViewSwitcher views={views} />
         </div>
       </BattleManagerContext.Provider>
     </SrdContext.Provider>

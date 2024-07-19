@@ -10,6 +10,11 @@ body {
   font-size: 18px;
 }
 
+.dnd-battle-tracker {
+  position: relative;
+  min-height: 100vh;
+}
+
 input {
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -127,6 +132,7 @@ a:hover {
   display: flex;
   align-items: center;
   flex-flow: column;
+  padding-bottom: 44px;
 }
 
 .aria-announcements {

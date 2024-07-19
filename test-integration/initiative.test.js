@@ -47,6 +47,21 @@ describe('Start battle', () => {
     await dmApp.assertCreatureInactive('goblin 2');
     await dmApp.assertCreatureInactive('goblin 1');
   });
+
+  test('displays the creature has no initiative error when not on the initiative view', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.navigation.navigateTo('DM Tips');
+    await dmApp.battleToolbar.startBattle();
+    await DmApp.assertError('Cannot continue battle; goblin has no initiative.');
+  });
+
+  test('starts the battle when not on the initiative view', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.navigation.navigateTo('DM Tips');
+    await dmApp.battleToolbar.startBattle();
+  });
 });
 
 describe('Next turn', () => {

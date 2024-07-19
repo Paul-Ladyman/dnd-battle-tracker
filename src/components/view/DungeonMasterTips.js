@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 import React from 'react';
-import ExternalLink from '../ExternalLink';
+import ExternalLink from '../page/ExternalLink';
 
-export default function DmTips() {
+export default function DungeonMasterTips() {
   return (
-    <>
+    <main className="main">
+      <h2>Dungeon Master Tips</h2>
       <p>Here&apos;s some useful tips to help DMs get the most out of the Battle Tracker.</p>
       <ul>
         <li>The Battle Tracker is intended to be as quick and simple to use as possible to make it easy to deal with even an unplanned combat encounter. The only thing required to add a creature to the Battle is its name. The only additional thing required to start combat is an intitiave roll</li>
@@ -27,6 +28,6 @@ export default function DmTips() {
         </li>
         <li>The number of rounds and amount of time that has elapsed is displayed both for the combat encounter itself and for each note and condition added to a creature. This can be used to determine when an effect or condition should come to an end</li>
       </ul>
-    </>
+    </main>
   );
 }
