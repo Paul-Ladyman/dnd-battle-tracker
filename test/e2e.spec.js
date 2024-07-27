@@ -42,6 +42,18 @@ test('A DM can share an existing battle with their players who receive subsequen
   await expect(owlbear).toBeVisible();
 });
 
+test('An error message is displayed if the shared resources cannot be downloaded', async ({ page, context }) => {
+  await page.goto('');
+  const title = page.locator('role=heading[name="D&D Battle Tracker"]');
+  await expect(title).toBeVisible();
+
+  await context.setOffline(true);
+  await page.locator('role=button[name="Battle Menu"]').click();
+  await page.locator('role=menuitem[name="Share battle"]').click();
+  const offlineMessage = page.locator('text=Error sharing battle with players. Try toggling share button.');
+  await expect(offlineMessage).toBeVisible();
+});
+
 test('The application is available offline after the first page load', async ({ page, context }) => {
   await page.goto('');
   const title = page.locator('role=heading[name="D&D Battle Tracker"]');

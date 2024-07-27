@@ -4,9 +4,23 @@ import {
   newBattleState,
 } from '../../state/BattleManager';
 import Loading from './Loading';
+import OfflineApolloProvider from '../../graphql/OfflineApolloProvider';
 
-const RefreshingApolloProvider = lazy(() => import('../../graphql/RefreshingApolloProvider'));
-const SharedDungeonMasterApp = lazy(() => import('./SharedDungeonMasterApp'));
+const RefreshingApolloProvider = lazy(async () => {
+  try {
+    return await import('../../graphql/RefreshingApolloProvider');
+  } catch {
+    return { default: OfflineApolloProvider };
+  }
+});
+
+const SharedDungeonMasterApp = lazy(async () => {
+  try {
+    return await import('./SharedDungeonMasterApp');
+  } catch {
+    return { default: DungeonMasterApp };
+  }
+});
 
 export default function DungeonMasterAppWrapper() {
   const [state, setState] = useState(newBattleState);
