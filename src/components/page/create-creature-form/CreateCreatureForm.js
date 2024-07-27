@@ -40,7 +40,6 @@ function CreateCreatureForm({
   };
 
   useEffect(() => {
-    nameInput.current.focus();
     window.addEventListener('keydown', hotKeyHandler);
     return () => window.removeEventListener('keydown', hotKeyHandler);
   }, []);
