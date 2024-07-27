@@ -72,3 +72,26 @@ test('New application versions are fetched immediately if the network allows', a
   const newTitle = page.locator('role=heading[name="New Title"]');
   await expect(newTitle).toBeVisible();
 });
+
+test('An error message is displayed if the DM Tips view cannot be downloaded', async ({ page, context }) => {
+  await page.goto('');
+  const title = page.locator('role=heading[name="D&D Battle Tracker"]');
+  await expect(title).toBeVisible();
+
+  await context.setOffline(true);
+  await page.locator('role=button[name="DM Tips"]').click();
+  const offlineMessage = page.locator('text=This page is not available right now. Please check your internet connection.');
+  await expect(offlineMessage).toBeVisible();
+});
+
+test('The view can be changed when the application is offline', async ({ page, context }) => {
+  await page.goto('');
+  const title = page.locator('role=heading[name="D&D Battle Tracker"]');
+  await expect(title).toBeVisible();
+
+  await context.setOffline(true);
+  await page.locator('role=button[name="DM Tips"]').click();
+  await page.locator('role=button[name="Initiative"]').click();
+  const creatureNameInput = page.locator('text=Creature Name');
+  await expect(creatureNameInput).toBeVisible();
+});

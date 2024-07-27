@@ -66,8 +66,15 @@ import SrdContext from './SrdContext';
 import Loading from './Loading';
 import ViewSwitcher from '../view/ViewSwitcher';
 import InitiativeView from '../view/InitiativeView';
+import ViewError from '../view/ViewError';
 
-const DungeonMasterTips = lazy(() => import('../view/DungeonMasterTips'));
+const DungeonMasterTips = lazy(async () => {
+  try {
+    return await import('../view/DungeonMasterTips');
+  } catch {
+    return { default: ViewError };
+  }
+});
 
 function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
