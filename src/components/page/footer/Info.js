@@ -27,21 +27,6 @@ export default function Info() {
         with this D&D 5e combat tracker!
       </p>
       <p>
-        The next time you open D&D Battle Tracker in this browser
-        {' '}
-        it will be available for offline use so you can play anywhere!
-        {' '}
-        If your browser supports it you can also install the Battle Tracker to your device as a
-        {' '}
-        <ExternalLink
-          url="https://support.google.com/chrome/answer/9658361?hl=en-GB&co=GENIE.Platform%3DDesktop"
-        >
-          PWA
-        </ExternalLink>
-        {' '}
-        to get the best experience.
-      </p>
-      <p>
         See&nbsp;
         <ExternalLink
           url="https://paul-ladyman.github.io/dnd-battle-tracker"

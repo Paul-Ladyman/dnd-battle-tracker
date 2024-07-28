@@ -263,12 +263,6 @@ describe('Create creature', () => {
 });
 
 describe('Name', () => {
-  it('allows a creature to be searched', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await CreateCreatureForm.assertCreateCreatureSearch('goblin');
-  });
-
   it('adds a creature to the battle when the name field is submitted', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.enterCreatureName('goblin');

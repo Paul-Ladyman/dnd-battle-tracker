@@ -1569,3 +1569,41 @@ button[role=tab][aria-selected=true]:focus  {
   margin-left: 24px;
   margin-top: 4px;
 }
+
+/* DM Tips */
+.dmtips {
+  padding: 10px;
+}
+
+.dmtips--title {
+  text-align: center;
+}
+
+.dmtips--intro {
+  text-align: center;
+}
+
+.dmtips--tip {
+  margin-left: 20px;
+  font-style: italic;
+  color: #822000;
+}
+
+.dmtips--tip::before {
+  content: "💡";
+  font-style: normal;
+}
+
+.dmtips--tip svg {
+  margin: 0 5px;
+  top: 8px;
+  position: relative
+}
+
+.dmtips--happydming {
+  color: #822000;
+  text-align: center;
+  font-family: "IM Fell Great Primer SC";
+  font-variant: small-caps;
+  font-size: 1.17em;
+}

@@ -184,13 +184,6 @@ export default class CreateCreatureForm {
     return this.submitCreature();
   }
 
-  static async assertCreateCreatureSearch(name) {
-    const search = await screen.findByRole('link', { name: `Search ${name} on D&D Beyond` });
-    expect(search).toBeVisible();
-    const expectedHref = `https://www.dndbeyond.com/monsters?filter-search=${name}&sort=cr`;
-    return expect(search).toHaveAttribute('href', expectedHref);
-  }
-
   async typeName(name) {
     const srdSearch = await findSrdSearch();
     return this.user.type(srdSearch, name);

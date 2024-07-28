@@ -103,6 +103,7 @@ This D&D Battle Tracker simply aims to automate the process of tracking combat u
   * [Skull crossed bones](https://game-icons.net/1x1/lorc/skull-crossed-bones.html)
   * [Two shadows](https://game-icons.net/1x1/lorc/two-shadows.html)
   * [Backup](https://game-icons.net/1x1/lorc/backup.html)
+  * [Cog](https://game-icons.net/1x1/lorc/cog.html)
 
 ### Fonts
 

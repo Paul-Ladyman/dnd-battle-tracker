@@ -1,11 +1,11 @@
 import React from 'react';
-import OptionsMenuIcon from '../../../icons/OptionsMenuIcon';
 import StatBlockLink from '../tools/StatBlockLink';
 import MonsterSearcher from '../tools/MonsterSearcher';
 import CreatureLocker from '../tools/CreatureLocker';
 import CreatureSharer from '../tools/CreatureSharer';
 import CreatureHitPointsSharer from '../tools/CreatureHitPointsSharer';
 import CreatureRemover from '../tools/CreatureRemover';
+import CreatureMenuIcon from '../../../icons/CreatureMenuIcon';
 
 export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
   const {
@@ -68,7 +68,7 @@ export function CreatureMenuButton({
       aria-controls={toolMenuId}
       aria-expanded={toolMenuExpanded}
     >
-      <OptionsMenuIcon />
+      <CreatureMenuIcon />
     </button>
   );
 }

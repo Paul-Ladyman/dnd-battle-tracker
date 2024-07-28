@@ -1,5 +1,5 @@
 import React from 'react';
-import CreatureExpander from '../buttons/CreatureExpander';
+import CreatureExpander from './CreatureExpander';
 
 function getName(expanded, active, name, multiColumn) {
   const maxLength = 22;

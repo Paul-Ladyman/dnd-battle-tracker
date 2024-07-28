@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import MonsterSearcher from '../../buttons/MonsterSearcher';
 import ComboboxList from '../../form/ComboboxList';
 import { getMonsters } from '../../../client/dnd5eapi';
 
@@ -28,11 +27,6 @@ export default function Name({
     getMonsters().then(setMonsterData);
   }, []);
 
-  const nameRightControls = {
-    rightEnabled: true,
-    RightControl: <MonsterSearcher asButton={false} search={name} />,
-  };
-
   return (
     <ComboboxList
       value={name}
@@ -45,8 +39,6 @@ export default function Name({
       listAriaLabel="Creature search results"
       inputAriaLabel="create creature form. Name (required)"
       inputAriaLabelItemSelected="create creature form. Name (required)"
-      rightControls={nameRightControls}
-      rightControlsItemSelected={nameRightControls}
       handleSubmit={createCreature}
       onItemSubmit={onSelectMonster}
       inputRef={inputRef}
