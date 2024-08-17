@@ -21,6 +21,7 @@ const Battle = `{
     id
     name
     initiative
+    initiativeTieBreaker
     healthPoints
     maxHealthPoints
     alive

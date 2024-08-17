@@ -1,6 +1,7 @@
 import React from 'react';
 import InitiativeIcon from '../../../icons/InitiativeIcon';
 import InitiativeTool from '../tools/InitiativeTool';
+import TieBreakerTool from '../tools/TieBreakerTool';
 
 export function InitiativeToolMenu({
   creature,
@@ -8,7 +9,7 @@ export function InitiativeToolMenu({
   creatureManagement,
 }) {
   const { name, id } = creature;
-  const { addInitiativeToCreature } = creatureManagement;
+  const { addInitiativeToCreature, addTieBreakerToCreature } = creatureManagement;
   return (
     <div className="creature-toolbar--grid creature-toolbar--entrance">
       <InitiativeTool
@@ -16,6 +17,12 @@ export function InitiativeToolMenu({
         name={name}
         id={id}
         addInitiativeToCreature={addInitiativeToCreature}
+      />
+      <TieBreakerTool
+        active={active}
+        name={name}
+        id={id}
+        addTieBreakerToCreature={addTieBreakerToCreature}
       />
     </div>
   );

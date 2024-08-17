@@ -14,6 +14,7 @@ export default function ExpandedCreature({
   const {
     initiative,
     initiativeRoll,
+    initiativeTieBreaker,
     id,
     conditions,
     notes,
@@ -47,6 +48,16 @@ export default function ExpandedCreature({
             {' '}
             {initiative}
             <RollResult roll={initiativeRoll} />
+            {initiativeTieBreaker
+              && (
+              <>
+                {' '}
+                (Tie
+                {' '}
+                {initiativeTieBreaker}
+                )
+              </>
+              )}
           </div>
           )}
         { (showHealth || showAc || showInitiative) && <div className="expanded-creature--separator" /> }

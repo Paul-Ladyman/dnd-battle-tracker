@@ -5,7 +5,18 @@ function findCreatureIndex(creatures, creature) {
 }
 
 function sortCreatures(creatures) {
-  return creatures.sort((creatureA, creatureB) => creatureB.initiative - creatureA.initiative);
+  return creatures.sort((creatureA, creatureB) => {
+    const initiativeA = creatureA.initiative;
+    const initiativeB = creatureB.initiative;
+
+    if (initiativeA === initiativeB) {
+      const tieBreakerA = creatureA.initiativeTieBreaker || 0;
+      const tieBreakerB = creatureB.initiativeTieBreaker || 0;
+      return tieBreakerB - tieBreakerA;
+    }
+
+    return initiativeB - initiativeA;
+  });
 }
 
 export function sortByInitiative(creatures, activeCreature, round) {

@@ -78,6 +78,40 @@ describe('Initiative display - DM', () => {
     await dmApp.creature.expand('goblin');
     await dmApp.creature.assertExpandedTextVisible('goblin', 'Initiative 1');
   });
+
+  test('does not show tie breaker if the creature does not have a tie breaker', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creature.expand('goblin');
+    await dmApp.creature.assertExpandedTextNotVisible('goblin', 'Tie');
+  });
+
+  test('does not show tie breaker if the creature does not have initiative', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin', '1');
+    await dmApp.creature.expand('goblin');
+    await dmApp.creature.assertExpandedTextNotVisible('goblin', 'Tie');
+  });
+
+  test("shows a creature's tie breaker alongside initiative", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin', '1');
+    await dmApp.creature.expand('goblin');
+    await dmApp.creature.assertExpandedTextVisible('goblin', 'Initiative 1 (Tie 1)');
+  });
+
+  test("shows a creature's tie breaker alongside rolled initiative", async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1d20+2');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin', '1');
+    await dmApp.creature.expand('goblin');
+    await dmApp.creature.assertExpandedTextVisible('goblin', 'Initiative 22 ([20] + 2) (Tie 1)');
+  });
 });
 
 describe('Initiative display - Player', () => {
@@ -176,5 +210,37 @@ describe('Initiative display - Player', () => {
     await PlayerApp.waitForOnline();
     await playerApp.creature.expand('goblin');
     await playerApp.creature.assertExpandedTextVisible('goblin', 'Initiative 0');
+  });
+
+  test("shows a creature's tie breaker", async () => {
+    msw.use(
+      graphql.query('GET_BATTLE', () => HttpResponse.json({
+        data: {
+          getDndbattletracker: {
+            battleId: 'some-battle-id',
+            round: 0,
+            creatures: [{
+              name: 'goblin',
+              id: 1,
+              locked: false,
+              shared: true,
+              hitPointsShared: true,
+              alive: true,
+              initiative: 1,
+              initiativeTieBreaker: 1,
+              healthPoints: 1,
+              maxHealthPoints: 1,
+              conditions: [],
+              notes: [],
+            }],
+            activeCreature: null,
+          },
+        },
+      })),
+    );
+    const playerApp = new PlayerApp();
+    await PlayerApp.waitForOnline();
+    await playerApp.creature.expand('goblin');
+    await playerApp.creature.assertExpandedTextVisible('goblin', 'Initiative 1 (Tie 1)');
   });
 });

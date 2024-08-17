@@ -166,6 +166,7 @@ export function createCreature(creatureId, {
     name: groupedName,
     initiative: initiative.result,
     initiativeRoll: initiative,
+    initiativeTieBreaker: null,
     healthPoints: hp,
     maxHealthPoints: hp,
     armorClass: armorClass || null,
@@ -312,6 +313,15 @@ export function addInitiativeToCreature(state, creatureId, initiative) {
   return updateCreature(state, creatureId, { initiative, initiativeRoll: null }, ariaAnnouncement);
 }
 
+export function addTieBreakerToCreature(state, creatureId, initiativeTieBreaker) {
+  const { creatures, activeCreature } = state;
+  const creature = findCreature(creatures, creatureId);
+  const activeCreatureId = creatures[activeCreature]?.id;
+  if (creature.id === activeCreatureId) return state;
+  const ariaAnnouncement = `${creature.name}'s initiative tie breaker is ${initiativeTieBreaker}`;
+  return updateCreature(state, creatureId, { initiativeTieBreaker }, ariaAnnouncement);
+}
+
 export function toggleCreatureLock(state, creatureId) {
   const creature = findCreature(state.creatures, creatureId);
   const newState = creature.locked ? 'unlocked' : 'locked';
@@ -348,6 +358,7 @@ export function resetCreature(id, creature) {
     id,
     initiative: undefined,
     initiativeRoll: undefined,
+    initiativeTieBreaker: null,
     notes,
     conditions,
   };

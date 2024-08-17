@@ -92,3 +92,39 @@ describe('Initiative tool', () => {
     await DmApp.assertCreatureList(['goblin 2Active creature', 'goblin 1']);
   });
 });
+
+describe('Tie Breaker tool', () => {
+  it('sets the initiative order of two creatures with the same initiative', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '1');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin 1', '1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin 2', '2');
+    await dmApp.battleToolbar.startBattle();
+    await DmApp.assertCreatureList(['goblin 2Active creature', 'goblin 1']);
+  });
+
+  it('orders a creature with a tie breaker above a creature without one', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin 2', '2');
+    await dmApp.battleToolbar.startBattle();
+    await DmApp.assertCreatureList(['goblin 2Active creature', 'goblin 1']);
+  });
+
+  it('does nothing for two creatures with different initiative', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '2');
+    await dmApp.createCreatureForm.addCreature('goblin 2', '1');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin 1', '1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Initiative');
+    await dmApp.initiativeTool.setTieBreaker('goblin 2', '2');
+    await dmApp.battleToolbar.startBattle();
+    await DmApp.assertCreatureList(['goblin 1Active creature', 'goblin 2']);
+  });
+});

@@ -23,6 +23,7 @@ type Note @aws_api_key @aws_iam {
 type Creature @aws_api_key @aws_iam {
   name: String!
   initiative: Int
+  initiativeTieBreaker: Int
   healthPoints: Int
   maxHealthPoints: Int
   temporaryHealthPoints: Int
@@ -62,6 +63,7 @@ input NoteInput @aws_api_key @aws_iam {
 input CreatureInput @aws_api_key @aws_iam {
   name: String!
   initiative: Int
+  initiativeTieBreaker: Int
   healthPoints: Int
   maxHealthPoints: Int
   temporaryHealthPoints: Int

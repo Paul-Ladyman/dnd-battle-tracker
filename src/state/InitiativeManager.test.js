@@ -448,6 +448,104 @@ describe('sortByInitiative', () => {
     expect(sortByInitiative(creatures, 1, 1)).toEqual([expectedCreatures, 0]);
   });
 
+  it('maintains the original order of creatures with the same initiative', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: undefined,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: undefined,
+      },
+    ];
+
+    expect(sortByInitiative(creatures, 1, 1)).toEqual([creatures, 1]);
+  });
+
+  it('maintains the original order of creatures with the same initiative and tie breaker', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: 1,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 1,
+      },
+    ];
+
+    expect(sortByInitiative(creatures, 1, 1)).toEqual([creatures, 1]);
+  });
+
+  it('sorts creatures with the same initiative according to their tie breaker, maintaining the active creature', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: 1,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 2,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[0],
+      creatures[2],
+      creatures[1],
+    ];
+
+    expect(sortByInitiative(creatures, 1, 1)).toEqual([expectedCreatures, 2]);
+  });
+
+  it('treats a null tie breaker as 0', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: null,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 1,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[0],
+      creatures[2],
+      creatures[1],
+    ];
+
+    expect(sortByInitiative(creatures, 1, 1)).toEqual([expectedCreatures, 2]);
+  });
+
+  it('treats an undefined tie breaker as 0', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: undefined,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 1,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[0],
+      creatures[2],
+      creatures[1],
+    ];
+
+    expect(sortByInitiative(creatures, 1, 1)).toEqual([expectedCreatures, 2]);
+  });
+
   it('does not change the active creature after sorting if combat as not started yet', () => {
     const creatures = [
       {

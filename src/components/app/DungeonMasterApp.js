@@ -46,6 +46,7 @@ import {
   addSpell,
   addSpellTotalUses,
   addSpellUses,
+  addTieBreakerToCreature,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -145,6 +146,7 @@ function DungeonMasterApp({
     addTemporaryHealthToCreature: updateBattle(addTemporaryHealthToCreature, false),
     addArmorClassToCreature: updateBattle(addArmorClassToCreature, false),
     addInitiativeToCreature: updateBattle(addInitiativeToCreature),
+    addTieBreakerToCreature: updateBattle(addTieBreakerToCreature),
     removeCreature: updateBattle(removeCreature),
     addNoteToCreature: updateBattle(addNoteToCreature),
     updateNoteForCreature: updateBattle(updateNoteForCreature),

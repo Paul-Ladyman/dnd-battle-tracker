@@ -22,6 +22,7 @@ import {
   addSpell,
   addSpellTotalUses,
   addSpellUses,
+  addTieBreakerToCreature,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -560,6 +561,7 @@ describe('createCreature', () => {
       name: 'name',
       initiative: null,
       initiativeRoll: { result: null },
+      initiativeTieBreaker: null,
       healthPoints: null,
       maxHealthPoints: null,
       armorClass: null,
@@ -586,6 +588,7 @@ describe('createCreature', () => {
       name: 'name',
       initiative: 13,
       initiativeRoll: { result: 13 },
+      initiativeTieBreaker: null,
       healthPoints: 10,
       armorClass: 20,
       maxHealthPoints: 10,
@@ -617,6 +620,7 @@ describe('createCreature', () => {
       name: 'name #3',
       initiative: 13,
       initiativeRoll: { result: 13 },
+      initiativeTieBreaker: null,
       healthPoints: 10,
       maxHealthPoints: 10,
       armorClass: 20,
@@ -1677,6 +1681,82 @@ describe('addInitiativeToCreature', () => {
   });
 });
 
+describe('addTieBreakerToCreature', () => {
+  it('adds a tie breaker to a creature that does not already have it', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          initiativeTieBreaker: undefined,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+    };
+    const result = addTieBreakerToCreature(state, 0, 1);
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        {
+          ...defaultState.creatures[0],
+          initiativeTieBreaker: 1,
+        },
+        defaultState.creatures[1],
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Wellby\'s initiative tie breaker is 1'],
+    };
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it("adds a tie breaker to a creature who's tie breaker is currently null", () => {
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiativeTieBreaker: 1,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s initiative tie breaker is 1'],
+    };
+
+    const result = addTieBreakerToCreature(defaultState, 1, 1);
+    expect(result).toEqual(expectedState);
+  });
+
+  it("modifies a creature's tie breaker", () => {
+    const result = addTieBreakerToCreature(defaultState, 1, 2);
+    const expectedState = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          initiativeTieBreaker: 2,
+        },
+        defaultState.creatures[2],
+      ],
+      ariaAnnouncements: ['Goblin #1\'s initiative tie breaker is 2'],
+    };
+    expect(result).toEqual(expectedState);
+  });
+
+  it('does nothing to a creature if it is active', () => {
+    const state = {
+      ...defaultState,
+      activeCreature: 0,
+    };
+
+    const result = addTieBreakerToCreature(state, 0, 1);
+    expect(result).toEqual(state);
+  });
+});
+
 describe('toggleCreatureLock', () => {
   it('locks a creature if it is unlocked', () => {
     const expectedState = {
@@ -1811,6 +1891,7 @@ describe('resetCreatures', () => {
       maxHealthPoints: 10,
       initiative: 13,
       initiativeRoll: { result: 13 },
+      initiativeTieBreaker: 1,
       id: 1,
       alive: true,
       notes: [{ text: 'Exhaustion', appliedAtRound: 1, appliedAtSeconds: 6 }],
@@ -1823,6 +1904,7 @@ describe('resetCreatures', () => {
       ...creature,
       initiative: undefined,
       initiativeRoll: undefined,
+      initiativeTieBreaker: null,
       id: 0,
       notes: [{ text: 'Exhaustion', appliedAtRound: 0, appliedAtSeconds: 0 }],
       conditions: [{
