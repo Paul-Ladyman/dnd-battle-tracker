@@ -1607,3 +1607,20 @@ button[role=tab][aria-selected=true]:focus  {
   font-variant: small-caps;
   font-size: 1.17em;
 }
+
+/* Welcome */
+
+.welcome {
+  font-family: "IM Fell Great Primer SC";
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 1.17em;
+  margin-top: 40px;
+  padding: 10px;
+}
+
+.welcome svg {
+  margin: 0 5px;
+  top: 8px;
+  position: relative
+}

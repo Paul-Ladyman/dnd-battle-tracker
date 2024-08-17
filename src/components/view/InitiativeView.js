@@ -4,6 +4,7 @@ import Footer from '../page/footer/Footer';
 import { addCreature } from '../../state/CreatureListManager';
 import CreateCreatureForm from '../page/create-creature-form/CreateCreatureForm';
 import Creatures from '../page/Creatures';
+import Welcome from '../page/Welcome';
 
 export default function InitiativeView({
   updateBattle,
@@ -25,16 +26,19 @@ export default function InitiativeView({
           handleCreateCreatureErrors={updateBattle(handleCreateCreatureErrors)}
           createCreatureErrors={state.createCreatureErrors}
         />
-        <Creatures
-          ref={creaturesRef}
-          creatures={creatures}
-          activeCreatureId={activeCreatureId}
-          errorCreatureId={errorCreatureId}
-          focusedCreature={focusedCreature}
-          round={round}
-          secondsElapsed={secondsElapsed}
-          creatureManagement={creatureManagement}
-        />
+        {creatures.length === 0 && <Welcome />}
+        {creatures.length > 0 && (
+          <Creatures
+            ref={creaturesRef}
+            creatures={creatures}
+            activeCreatureId={activeCreatureId}
+            errorCreatureId={errorCreatureId}
+            focusedCreature={focusedCreature}
+            round={round}
+            secondsElapsed={secondsElapsed}
+            creatureManagement={creatureManagement}
+          />
+        )}
       </main>
       <Footer />
     </>
