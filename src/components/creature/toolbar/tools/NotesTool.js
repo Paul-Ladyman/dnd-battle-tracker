@@ -14,10 +14,7 @@ export default function NotesTool({
 }) {
   const [value, setValue] = useState('');
 
-  const notes = allNotes.filter((note) => {
-    const noteRegex = new RegExp(value);
-    return noteRegex.test(note.text);
-  });
+  const notes = allNotes.filter((note) => note.text.toLowerCase().includes(value.toLowerCase()));
 
   const notesDropdownId = `notes-dropdown-${id}`;
   const notesAriaLabel = `${name} notes`;

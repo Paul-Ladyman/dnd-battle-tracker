@@ -14,10 +14,11 @@ export default function ViewSwitcher({ views }) {
       <nav className="navigation">
         <ul className="navigation-options">
           {views.map((view, i) => {
+            const { id, title } = view;
             const activeClass = i === viewIndex ? 'navigation-option__active' : '';
             return (
-              <li>
-                <button className={`navigation-option ${activeClass}`} type="button" onClick={() => setViewIndex(i)}>{view.title}</button>
+              <li key={id}>
+                <button className={`navigation-option ${activeClass}`} type="button" onClick={() => setViewIndex(i)}>{title}</button>
               </li>
             );
           })}

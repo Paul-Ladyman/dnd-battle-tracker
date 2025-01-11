@@ -139,6 +139,33 @@ describe('Creature note tool', () => {
     dmApp.creatureToolbar.assertCreatureNotesLength('goblin', 1);
   });
 
+  it('ignores case of note when searching notes', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
+    await dmApp.creatureToolbar.addNote('goblin', 'One');
+    await dmApp.creatureToolbar.typeNote('goblin', 'o');
+    await dmApp.creatureToolbar.assertCreatureNoteExists('goblin', 'One');
+  });
+
+  it('ignores case of search term when searching notes', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
+    await dmApp.creatureToolbar.addNote('goblin', 'one');
+    await dmApp.creatureToolbar.typeNote('goblin', 'O');
+    await dmApp.creatureToolbar.assertCreatureNoteExists('goblin', 'one');
+  });
+
+  it('allows a note to be searched with special characters', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Notes');
+    await dmApp.creatureToolbar.addNote('goblin', 'one \\');
+    await dmApp.creatureToolbar.typeNote('goblin', '\\');
+    await dmApp.creatureToolbar.assertCreatureNoteExists('goblin', 'one \\');
+  });
+
   it('selects the last note when navigating up from a closed note tool', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
