@@ -20,7 +20,7 @@ const tabs = [
 const panels = ['panel one', 'panel two'];
 
 describe('TabList', () => {
-  it('select the first tab by default', () => {
+  it('selects the first tab by default', () => {
     render(<TabList tabs={tabs} panels={panels} />);
     const tab = screen.getByRole('tab', { name: 'one' });
     expect(tab).toHaveAttribute('aria-selected', 'true');

@@ -172,13 +172,63 @@ describe('Remove tool', () => {
     return DmApp.assertCreatureList(['Goblin #1', 'Goblin #2']);
   });
 
+  it('asks the user to confirm removing the creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
+    await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin #1');
+    return dmApp.alert.assertMessage('Are you sure you want to remove Goblin #1?');
+  });
+
   it('removes a creature when confirmed', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
     await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
     await dmApp.menuTool.removeCreature('Goblin #1');
-    await dmApp.menuTool.confirmRemoveCreature('Goblin #1');
+    await dmApp.alert.clickYes();
     return DmApp.assertCreatureList(['Goblin #2']);
+  });
+
+  it('does not remove the creature when cancelled', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
+    await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin #1');
+    await dmApp.alert.clickNo();
+    await dmApp.alert.assertNotVisible();
+    return DmApp.assertCreatureList(['Goblin #1', 'Goblin #2']);
+  });
+
+  it('returns focus to the remove tool when cancelled', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
+    await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin #1');
+    await dmApp.alert.clickNo();
+    await dmApp.alert.assertNotVisible();
+    await dmApp.creatureToolbar.assertToolMenuVisible('Goblin #1');
+    await dmApp.menuTool.assertRemoveCreatureFocused('Goblin #1');
+  });
+
+  it('does not remove the creature when cancelled by keyboard', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
+    await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin #1');
+    await dmApp.alert.close();
+    await dmApp.alert.assertNotVisible();
+    return DmApp.assertCreatureList(['Goblin #1', 'Goblin #2']);
+  });
+
+  it('returns focus to the remove tool when cancelled by keyboard', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', null, null, '2');
+    await dmApp.creatureToolbar.selectTool('Goblin #1', 'Creature Menu');
+    await dmApp.menuTool.removeCreature('Goblin #1');
+    await dmApp.alert.close();
+    await dmApp.alert.assertNotVisible();
+    await dmApp.creatureToolbar.assertToolMenuVisible('Goblin #1');
+    await dmApp.menuTool.assertRemoveCreatureFocused('Goblin #1');
   });
 
   it("is disabled if it is the creature's turn", async () => {
@@ -195,7 +245,7 @@ describe('Remove tool', () => {
     await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     await dmApp.menuTool.removeCreature('Goblin');
-    return dmApp.menuTool.assertConfirmRemoveCreatureNotVisible('Goblin');
+    await dmApp.alert.assertNotVisible();
   });
 
   it('allows the battle to be restarted after the last creature is removed', async () => {
@@ -203,7 +253,7 @@ describe('Remove tool', () => {
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     await dmApp.menuTool.removeCreature('Goblin');
-    await dmApp.menuTool.confirmRemoveCreature('Goblin');
+    await dmApp.alert.clickYes();
     await dmApp.createCreatureForm.addCreature('Goblin 2', '1');
     await dmApp.battleToolbar.startBattle();
     return DmApp.assertCreatureList(['Goblin 2Active creature']);

@@ -46,7 +46,7 @@ export default function useAutoClosable({
     if (closable) {
       const wrapper = document.getElementById(wrapperId);
       const escapeToCloseHandler = (e) => {
-        if (e.keyCode === 27) {
+        if (e.keyCode === 27 && !e.target?.id?.includes('alertdialog')) {
           onEscapeToClose(e);
         }
       };
