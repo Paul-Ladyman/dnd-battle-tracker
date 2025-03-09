@@ -1,21 +1,25 @@
 import { resetCreature } from './CreatureManager';
 import packageJson from '../../package.json';
+import now from '../util/date';
 
-export const newBattleState = {
-  creatures: [],
-  creatureIdCount: 0,
-  activeCreature: null,
-  focusedCreature: undefined,
-  round: 0,
-  ariaAnnouncements: [],
-  errors: [],
-  createCreatureErrors: {},
-  battleId: undefined,
-  battleCreated: false,
-  shareEnabled: false,
-  battleTrackerVersion: packageJson.version,
-  rulesSearchOpened: false,
-};
+export function newBattleState() {
+  return {
+    creatures: [],
+    creatureIdCount: 0,
+    activeCreature: null,
+    focusedCreature: undefined,
+    round: 0,
+    ariaAnnouncements: [],
+    errors: [],
+    createCreatureErrors: {},
+    battleId: undefined,
+    battleCreated: false,
+    shareEnabled: false,
+    battleTrackerVersion: packageJson.version,
+    timestamp: now(),
+    rulesSearchOpened: false,
+  };
+}
 
 export function resetBattle(state) {
   const {
@@ -30,7 +34,7 @@ export function resetBattle(state) {
   const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
   const ariaAnnouncements = currentAriaAnnouncements.concat(['battle reset']);
   return {
-    ...newBattleState,
+    ...newBattleState(),
     battleCreated,
     shareEnabled,
     battleId,

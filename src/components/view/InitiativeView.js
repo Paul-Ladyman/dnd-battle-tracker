@@ -5,6 +5,7 @@ import { addCreature } from '../../state/CreatureListManager';
 import CreateCreatureForm from '../page/create-creature-form/CreateCreatureForm';
 import Creatures from '../page/Creatures';
 import Welcome from '../page/Welcome';
+import BattleDate from '../page/BattleDate';
 
 export default function InitiativeView({
   updateBattle,
@@ -27,6 +28,7 @@ export default function InitiativeView({
           createCreatureErrors={state.createCreatureErrors}
         />
         {creatures.length === 0 && <Welcome />}
+        <BattleDate timestamp={state.timestamp} />
         {creatures.length > 0 && (
           <Creatures
             ref={creaturesRef}

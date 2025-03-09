@@ -1,5 +1,6 @@
 import FileSystem from '../util/fileSystem';
 import { addError } from './ErrorManager';
+import now from '../util/date';
 
 export function save(state) {
   const {
@@ -55,6 +56,11 @@ function getLoadState(oldState, newState, ariaAnnouncement, error) {
   };
 }
 
+function battleSavedMoreThan12HoursAgo(timestamp) {
+  const twelveHours = 12 * 60 * 60 * 1000;
+  return Math.abs(now() - timestamp) >= twelveHours;
+}
+
 export async function load(state, file) {
   const fileContents = await FileSystem.load(file);
   const loadedState = jsonParse(fileContents);
@@ -98,4 +104,48 @@ export async function load(state, file) {
 
 export function isSaveLoadSupported() {
   return FileSystem.isSaveSupported();
+}
+
+export function autoLoad(name, defaultState) {
+  const storedBattle = window.localStorage.getItem('battle');
+  if (!storedBattle) return defaultState;
+
+  console.log('>>> LOAD BATTLE', name, storedBattle);
+  const loadedState = JSON.parse(storedBattle);
+
+  const { battleTrackerVersion, timestamp: timestampOld } = defaultState;
+  const { battleTrackerVersion: loadedBattleTrackerVersion, timestamp } = loadedState;
+
+  const versionsAreCompatible = versionCompatibility(
+    battleTrackerVersion,
+    loadedBattleTrackerVersion,
+  );
+
+  if (!versionsAreCompatible) {
+    const loadedVersion = loadedBattleTrackerVersion
+      ? `version ${loadedBattleTrackerVersion}`
+      : 'a different version';
+    const error = `Cannot autoload battle. The last autosave was from ${loadedVersion} of the battle tracker and is not compatible with the current version, ${battleTrackerVersion}.`;
+    const errors = addError(defaultState, error);
+    return {
+      ...defaultState,
+      errors,
+    };
+  }
+
+  console.log('>>> OLD BATTLE', timestamp, timestampOld, battleSavedMoreThan12HoursAgo(timestamp));
+  if (battleSavedMoreThan12HoursAgo(timestamp)) {
+    return {
+      ...loadedState,
+      battleCreated: defaultState.battleCreated,
+      battleId: defaultState.battleId,
+      shareEnabled: defaultState.shareEnabled,
+      loaded: true,
+    };
+  }
+
+  return {
+    ...loadedState,
+    loaded: true,
+  };
 }

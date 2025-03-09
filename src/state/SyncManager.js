@@ -47,10 +47,22 @@ export function share(state, createBattle, updateBattle, date) {
 export function handleShareError(state, createError, updateError) {
   if (!createError && !updateError) return dismissErrors(state);
 
-  const error = 'Error sharing battle with players. Try toggling share button.';
+  console.log('>>> SHARE ERROR', state.loaded);
+  const error = state.loaded
+    ? 'Error rejoining previously shared battle. Try resharing the battle.'
+    : 'Error sharing battle with players. Try toggling share button.';
   const stateWithErrors = updateErrors(state, error);
 
   if (createError) return { ...stateWithErrors, battleCreated: false };
+
+  if (state.loaded) {
+    return {
+      ...stateWithErrors,
+      battleCreated: false,
+      shareEnabled: false,
+      battleId: undefined,
+    };
+  }
 
   return stateWithErrors;
 }

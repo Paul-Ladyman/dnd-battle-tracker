@@ -7,6 +7,7 @@ import Loading from '../components/app/Loading';
 export default function RefreshingApolloProvider({
   online, OnlineView, OfflineView, ...props
 }) {
+  console.log('>>> RefreshingApolloProvider');
   const [apolloInitCount, setApolloInitCount] = useState(0);
   const [apolloSession, setApolloSession] = useState(undefined);
 

@@ -30,7 +30,7 @@ function getBattleData(getLoading, getData, syncLoading, syncData) {
     return getData.getDndbattletracker;
   }
 
-  return newBattleState;
+  return newBattleState();
 }
 
 function PlayerApp({

@@ -146,6 +146,25 @@ describe('handleShareError', () => {
     expect(updateErrors).toHaveBeenCalledWith(state, error);
   });
 
+  it('unshares the battle on update battle error for a loaded battle', () => {
+    const state = { ...defaultState, battleCreated: true, loaded: true };
+    const error = 'Error rejoining previously shared battle. Try resharing the battle.';
+    const stateWithErrors = { ...state, errors: [error] };
+    updateErrors.mockReturnValue(stateWithErrors);
+
+    const newState = handleShareError(state, undefined, new Error('updateError'));
+
+    const expectedState = {
+      ...stateWithErrors,
+      battleCreated: false,
+      shareEnabled: false,
+      battleId: undefined,
+    };
+    expect(newState).toEqual(expectedState);
+    expect(updateErrors).toHaveBeenCalledTimes(1);
+    expect(updateErrors).toHaveBeenCalledWith(state, error);
+  });
+
   it('clears errors in state if there are no errors', () => {
     const state = { ...defaultState, errors: ['some error'] };
     dismissErrors.mockReturnValue(defaultState);

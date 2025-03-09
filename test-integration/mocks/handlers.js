@@ -157,6 +157,17 @@ export default [
     },
   })),
 
+  graphql.mutation('UPDATE_BATTLE', () => HttpResponse.json({
+    data: {
+      updateDndbattletracker: {
+        battleId: 'some-battle-id',
+        round: 0,
+        creatures: [],
+        activeCreature: null,
+      },
+    },
+  })),
+
   graphql.query('GET_BATTLE', () => HttpResponse.json({
     data: {
       getDndbattletracker: {

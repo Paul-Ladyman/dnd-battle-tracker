@@ -62,6 +62,8 @@ export default function Title({
 
   const titleClasses = `main-title ${showSubtitle ? 'main-title__short' : ''}`;
 
+  console.log('>>> TITLE', error, shareEnabled, playerSession, battleId);
+
   return (
     <>
       <h1 className={titleClasses}>

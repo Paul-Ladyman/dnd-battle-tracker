@@ -32,7 +32,7 @@ describe('newBattleState', () => {
       rulesSearchOpened: false,
     };
 
-    expect(newBattleState).toEqual(expected);
+    expect(newBattleState()).toEqual(expected);
   });
 });
 

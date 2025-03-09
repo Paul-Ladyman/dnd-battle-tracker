@@ -68,6 +68,7 @@ import Loading from './Loading';
 import ViewSwitcher from '../view/ViewSwitcher';
 import InitiativeView from '../view/InitiativeView';
 import ViewError from '../view/ViewError';
+import useAutoSaveLoad from './useAutoSaveLoad';
 
 const DungeonMasterTips = lazy(async () => {
   try {
@@ -78,8 +79,9 @@ const DungeonMasterTips = lazy(async () => {
 });
 
 function DungeonMasterApp({
-  state, setState, shareBattle, onlineError,
+  state, setState, shareBattle, onlineError, name
 }) {
+  console.log('>>> DungeonMasterApp');
   const [spellList, setSpellList] = useState([]);
   const creaturesRef = useRef(null);
 
@@ -126,8 +128,6 @@ function DungeonMasterApp({
   }, []);
 
   useEffect(() => {
-    window.onbeforeunload = () => true;
-
     window.addEventListener('keydown', hotKeyHandler);
 
     return () => window.removeEventListener('keydown', hotKeyHandler);

@@ -2,6 +2,7 @@ import React from 'react';
 import CrossIcon from '../icons/CrossIcon';
 
 export default function Errors({ errors, dismissErrors }) {
+  console.log('>>> Errors', errors);
   return (
     <div className="error-bar" role="alert">
       <div className="error-bar--errors">

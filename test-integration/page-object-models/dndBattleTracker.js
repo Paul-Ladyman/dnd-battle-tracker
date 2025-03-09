@@ -9,6 +9,7 @@ import {
   findByRole,
   findAllByRole,
   queryAllByRole,
+  queryByRole,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RulesSearchBar from './rulesSearchBar';
@@ -21,7 +22,11 @@ export default class DndBattleTracker {
     this.rulesSearchBar = new RulesSearchBar(this.user);
     this.battleMenu = new BattleMenu(this.user);
     this.creature = new Creature(this.user);
-    render(component);
+    this.screen = render(component);
+  }
+
+  close() {
+    this.screen.unmount();
   }
 
   static async assertCreatureList(expectedCreatureNames) {
@@ -31,10 +36,28 @@ export default class DndBattleTracker {
     return expect(creatureNames).toEqual(expectedCreatureNames);
   }
 
+  async assertBattleDate(date) {
+    const main = await screen.findByRole('main');
+    const battleDate = await findByRole(main, 'time');
+    expect(battleDate).toHaveTextContent(date);
+  }
+
+  async assertNoBattleDate() {
+    const main = await screen.findByRole('main');
+    const battleDate = await queryByRole(main, 'time');
+    expect(battleDate).toBeNull();
+  }
+
   async assertCreatureListEmpty() {
     const main = await screen.findByRole('main');
     const creatures = await queryAllByRole(main, 'region');
     return expect(creatures).toHaveLength(0);
+  }
+
+  async assertCreatureListLength(length) {
+    const main = await screen.findByRole('main');
+    const creatures = await queryAllByRole(main, 'region');
+    return expect(creatures).toHaveLength(length);
   }
 
   static async assertCreatureVisible(name, hp, ac, note) {

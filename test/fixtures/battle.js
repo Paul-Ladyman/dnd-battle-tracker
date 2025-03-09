@@ -74,4 +74,5 @@ export default {
   battleId: '123',
   battleTrackerVersion: '5.0.0',
   rulesSearchOpened: false,
+  timestamp: 1740944517000,
 };

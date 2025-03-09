@@ -1,10 +1,18 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, {
+  useState,
+  Suspense,
+  lazy,
+  useEffect,
+  useMemo,
+} from 'react';
 import DungeonMasterApp from './DungeonMasterApp';
 import {
   newBattleState,
 } from '../../state/BattleManager';
 import Loading from './Loading';
 import OfflineApolloProvider from '../../graphql/OfflineApolloProvider';
+import useAutoSaveLoad from './useAutoSaveLoad';
+import { autoLoad } from '../../state/AppManager';
 
 const RefreshingApolloProvider = lazy(async () => {
   try {
@@ -22,8 +30,23 @@ const SharedDungeonMasterApp = lazy(async () => {
   }
 });
 
-export default function DungeonMasterAppWrapper() {
-  const [state, setState] = useState(newBattleState);
+export default function DungeonMasterAppWrapper({ name }) {
+  console.log('>>> DungeonMasterAppWrapper')
+  // const previousBattle = window.localStorage.getItem('battle');
+  // const defaultState = previousBattle ? JSON.parse(previousBattle) : newBattleState;
+  const initialState = useMemo(() => autoLoad(name, newBattleState()), []);
+  const [state, setState] = useState(initialState);
+
+  useEffect(() => {
+    const { creatures } = state;
+    if (creatures.length > 0) {
+      console.log('>>> SAVE BATTLE', name, state);
+      window.localStorage.setItem('battle', JSON.stringify(state));
+    } else {
+      console.log('>>> RESET BATTLE', name);
+      window.localStorage.removeItem('battle');
+    }
+  }, [state]);
 
   if (state.shareEnabled) {
     return (
@@ -45,6 +68,7 @@ export default function DungeonMasterAppWrapper() {
       shareBattle={(sharedState) => sharedState}
       state={state}
       setState={setState}
+      name={name}
     />
   );
 }
