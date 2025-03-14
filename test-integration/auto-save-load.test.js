@@ -142,11 +142,15 @@ describe('Auto save/load', () => {
     expect(playerSessionLink).toBeVisible();
   });
 
-  // does not save errors
-  
-  // does not save create creature form errors
-
-  // does not save aria announcements
+  it('does not save errors', async () => {
+    global.localStorage.setItem('battle', JSON.stringify({
+      ...defaultState,
+      shareEnabled: false,
+      errors: ['An error'],
+    }));
+    const dmApp = new DmApp('one');
+    dmApp.assertNoErrors();
+  });
 
   // shows an error if loading a battle fails
 

@@ -9,7 +9,6 @@ import {
   findByRole,
   findAllByRole,
   queryAllByRole,
-  queryByRole,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RulesSearchBar from './rulesSearchBar';
@@ -34,18 +33,6 @@ export default class DndBattleTracker {
     const creatures = await findAllByRole(main, 'region');
     const creatureNames = creatures.map((creature) => getByRole(creature, 'heading').textContent);
     return expect(creatureNames).toEqual(expectedCreatureNames);
-  }
-
-  async assertBattleDate(date) {
-    const main = await screen.findByRole('main');
-    const battleDate = await findByRole(main, 'time');
-    expect(battleDate).toHaveTextContent(date);
-  }
-
-  async assertNoBattleDate() {
-    const main = await screen.findByRole('main');
-    const battleDate = await queryByRole(main, 'time');
-    expect(battleDate).toBeNull();
   }
 
   async assertCreatureListEmpty() {
@@ -84,6 +71,11 @@ export default class DndBattleTracker {
   static async assertError(message) {
     const errorBar = await screen.findByRole('alert');
     return expect(errorBar).toHaveTextContent(message);
+  }
+
+  assertNoErrors() {
+    const errorBar = screen.queryByRole('alert');
+    return expect(errorBar).toBeNull();
   }
 
   static async assertCurrentTurn(enabled, name) {

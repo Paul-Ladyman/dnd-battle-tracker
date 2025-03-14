@@ -133,19 +133,23 @@ export function autoLoad(name, defaultState) {
     };
   }
 
+  const loadedBattle = {
+    ...loadedState,
+    errors: [],
+    ariaAnnouncements: [],
+    createCreatureErrors: {},
+    loaded: true,
+  };
+
   console.log('>>> OLD BATTLE', sharedTimestamp, battleSavedMoreThan12HoursAgo(sharedTimestamp));
   if (battleSavedMoreThan12HoursAgo(sharedTimestamp)) {
     return {
-      ...loadedState,
+      ...loadedBattle,
       battleCreated: defaultState.battleCreated,
       battleId: defaultState.battleId,
       shareEnabled: defaultState.shareEnabled,
-      loaded: true,
     };
   }
 
-  return {
-    ...loadedState,
-    loaded: true,
-  };
+  return loadedBattle;
 }
