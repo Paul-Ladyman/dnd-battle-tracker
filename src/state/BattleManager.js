@@ -16,7 +16,6 @@ export function newBattleState() {
     shareEnabled: false,
     battleTrackerVersion: packageJson.version,
     sharedTimestamp: null,
-    rulesSearchOpened: false,
   };
 }
 
@@ -48,11 +47,4 @@ export function toggleSync(state) {
   const announcement = shareEnabled ? 'share disabled' : 'share enabled';
   const ariaAnnouncements = currentAriaAnnouncements.concat([announcement]);
   return { ...state, shareEnabled: !shareEnabled, ariaAnnouncements };
-}
-
-export function toggleRulesSearch(state) {
-  const { rulesSearchOpened, ariaAnnouncements: currentAriaAnnouncements } = state;
-  const announcement = rulesSearchOpened ? 'rules search closed' : 'rules search opened';
-  const ariaAnnouncements = currentAriaAnnouncements.concat([announcement]);
-  return { ...state, rulesSearchOpened: !rulesSearchOpened, ariaAnnouncements };
 }

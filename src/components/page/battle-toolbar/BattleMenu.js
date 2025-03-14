@@ -12,15 +12,20 @@ import BattleManagerContext from '../../app/BattleManagerContext';
 import { playerItems, dmItems } from './menuItems';
 import { hotkeys } from '../../../hotkeys/hotkeys';
 
-export default function BattleMenu({ playerSession, shareEnabled, rulesSearchOpen }) {
+export default function BattleMenu({
+  playerSession,
+  shareEnabled,
+  rulesSearchOpen,
+  toggleRulesSearch,
+}) {
   const [open, setOpen] = useState(false);
   const battleManager = useContext(BattleManagerContext);
   const parentRef = useRef(null);
   const buttonRef = useRef(null);
   const fileSelector = useRef(null);
   const items = playerSession
-    ? playerItems(battleManager, rulesSearchOpen)
-    : dmItems(battleManager, shareEnabled, rulesSearchOpen, fileSelector);
+    ? playerItems(rulesSearchOpen, toggleRulesSearch)
+    : dmItems(battleManager, shareEnabled, rulesSearchOpen, toggleRulesSearch, fileSelector);
 
   const [_, setFocusedItem] = useNavigableList({
     items,

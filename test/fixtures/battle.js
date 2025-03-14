@@ -73,6 +73,5 @@ export default {
   shareEnabled: true,
   battleId: '123',
   battleTrackerVersion: '5.0.0',
-  rulesSearchOpened: false,
   sharedTimestamp: null,
 };

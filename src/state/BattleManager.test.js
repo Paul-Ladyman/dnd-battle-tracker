@@ -2,7 +2,6 @@ import {
   newBattleState,
   resetBattle,
   toggleSync,
-  toggleRulesSearch,
 } from './BattleManager';
 import { resetCreature } from './CreatureManager';
 import defaultState from '../../test/fixtures/battle';
@@ -29,7 +28,6 @@ describe('newBattleState', () => {
       shareEnabled: false,
       battleId: undefined,
       battleTrackerVersion: '1.0.0',
-      rulesSearchOpened: false,
     };
 
     expect(newBattleState()).toEqual(expected);
@@ -115,28 +113,6 @@ describe('toggleSync', () => {
       ...defaultState,
       shareEnabled: false,
       ariaAnnouncements: ['share disabled'],
-    });
-  });
-});
-
-describe('toggleRulesSearch', () => {
-  it('opens rules search if it is closed', () => {
-    expect(toggleRulesSearch(defaultState)).toEqual({
-      ...defaultState,
-      rulesSearchOpened: true,
-      ariaAnnouncements: ['rules search opened'],
-    });
-  });
-
-  it('closes rules search if it is opened', () => {
-    const state = {
-      ...defaultState,
-      rulesSearchOpened: true,
-    };
-    expect(toggleRulesSearch(state)).toEqual({
-      ...state,
-      rulesSearchOpened: false,
-      ariaAnnouncements: ['rules search closed'],
     });
   });
 });

@@ -142,8 +142,6 @@ describe('Auto save/load', () => {
     expect(playerSessionLink).toBeVisible();
   });
 
-  // does not save UI state
-
   // does not save errors
   
   // does not save create creature form errors
