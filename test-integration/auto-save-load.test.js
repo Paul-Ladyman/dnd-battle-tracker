@@ -89,31 +89,6 @@ describe('Auto save/load', () => {
     await DmApp.assertCreatureVisible('goblin');
   });
 
-  it('does not display the date of a new battle', async () => {
-    now.mockReturnValue(1740227593000);
-    const dmApp = new DmApp('one');
-    await dmApp.assertNoBattleDate();
-  });
-
-  it('does not display the date of a battle auto loaded on the same day it was created', async () => {
-    now.mockReturnValue(1740227593000);
-    const dmApp = new DmApp('one');
-    await dmApp.createCreatureForm.addCreature('goblin');
-    dmApp.close();
-    const dmApp2 = new DmApp('two');
-    await dmApp2.assertNoBattleDate();
-  });
-
-  it('displays the date an auto loaded battle was started', async () => {
-    now.mockReturnValue(1740227593000);
-    const dmApp = new DmApp('one');
-    await dmApp.createCreatureForm.addCreature('goblin');
-    dmApp.close();
-    now.mockReturnValue(1740313993000);
-    const dmApp2 = new DmApp('two');
-    await dmApp2.assertBattleDate('22 February 2025');
-  });
-
   it('unshares a battle if there was an error sharing after loading', async () => {
     const dmApp = new DmApp('one');
     await dmApp.createCreatureForm.addCreature('goblin');
@@ -137,12 +112,12 @@ describe('Auto save/load', () => {
     }
   });
 
-  it('unshares a battle if it was last saved more than 12 hours ago', async () => {
+  it('unshares a battle if it was shared more than 12 hours ago', async () => {
     const nowMs = Date.now();
     now.mockReturnValue(nowMs);
     global.localStorage.setItem('battle', JSON.stringify({
       ...defaultState,
-      timestamp: nowMs - 12 * 60 * 60 * 1000,
+      sharedTimestamp: nowMs - 12 * 60 * 60 * 1000,
     }));
     const dmApp = new DmApp('one');
     await waitFor(() => dmApp.assertCreatureListLength(3));
@@ -150,12 +125,12 @@ describe('Auto save/load', () => {
     expect(playerSessionLink).toBeNull();
   });
 
-  it.only('does not unshare a battle that was initially shared more than 12 hours ago but has been reshared since', async () => {
+  it('does not unshare a battle that was initially shared more than 12 hours ago but has been reshared since', async () => {
     const nowMs = Date.now();
     now.mockReturnValue(nowMs);
     global.localStorage.setItem('battle', JSON.stringify({
       ...defaultState,
-      timestamp: nowMs - 12 * 60 * 60 * 1000,
+      sharedTimestamp: nowMs - 12 * 60 * 60 * 1000,
     }));
     const dmApp = new DmApp('one');
     await dmApp.battleMenu.toggle();

@@ -1,6 +1,5 @@
 import { resetCreature } from './CreatureManager';
 import packageJson from '../../package.json';
-import now from '../util/date';
 
 export function newBattleState() {
   return {
@@ -16,7 +15,7 @@ export function newBattleState() {
     battleCreated: false,
     shareEnabled: false,
     battleTrackerVersion: packageJson.version,
-    timestamp: now(),
+    sharedTimestamp: null,
     rulesSearchOpened: false,
   };
 }

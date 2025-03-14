@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import { dismissErrors, updateErrors } from './ErrorManager';
+import now from '../util/date';
 
 function getSharedCreatures(creatures) {
   return creatures.map((creature) => ({
@@ -41,7 +42,12 @@ export function share(state, createBattle, updateBattle, date) {
 
   createBattle(input);
 
-  return { ...state, battleCreated: true, battleId };
+  return {
+    ...state,
+    battleCreated: true,
+    battleId,
+    sharedTimestamp: now(),
+  };
 }
 
 export function handleShareError(state, createError, updateError) {

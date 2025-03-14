@@ -113,8 +113,8 @@ export function autoLoad(name, defaultState) {
   console.log('>>> LOAD BATTLE', name, storedBattle);
   const loadedState = JSON.parse(storedBattle);
 
-  const { battleTrackerVersion, timestamp: timestampOld } = defaultState;
-  const { battleTrackerVersion: loadedBattleTrackerVersion, timestamp } = loadedState;
+  const { battleTrackerVersion } = defaultState;
+  const { battleTrackerVersion: loadedBattleTrackerVersion, sharedTimestamp } = loadedState;
 
   const versionsAreCompatible = versionCompatibility(
     battleTrackerVersion,
@@ -133,8 +133,8 @@ export function autoLoad(name, defaultState) {
     };
   }
 
-  console.log('>>> OLD BATTLE', timestamp, timestampOld, battleSavedMoreThan12HoursAgo(timestamp));
-  if (battleSavedMoreThan12HoursAgo(timestamp)) {
+  console.log('>>> OLD BATTLE', sharedTimestamp, battleSavedMoreThan12HoursAgo(sharedTimestamp));
+  if (battleSavedMoreThan12HoursAgo(sharedTimestamp)) {
     return {
       ...loadedState,
       battleCreated: defaultState.battleCreated,
