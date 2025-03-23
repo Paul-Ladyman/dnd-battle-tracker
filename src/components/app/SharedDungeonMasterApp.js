@@ -13,7 +13,6 @@ export default function SharedDungeonMasterApp({ state, setState }) {
     shareState,
     createBattleMutation,
     updateBattleMutation,
-    new Date(),
   );
 
   useEffect(() => {

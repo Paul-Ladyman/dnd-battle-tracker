@@ -14,12 +14,13 @@ function getSharedCreatures(creatures) {
   }));
 }
 
-export function share(state, createBattle, updateBattle, date) {
+export function share(state, createBattle, updateBattle) {
   if (!state.shareEnabled) {
     return state;
   }
 
   const battleId = state.battleId || nanoid(11);
+  const timestamp = now();
 
   const input = {
     variables: {
@@ -28,7 +29,7 @@ export function share(state, createBattle, updateBattle, date) {
         round: state.round,
         creatures: getSharedCreatures(state.creatures),
         activeCreature: state.activeCreature,
-        expdate: Math.floor(date.getTime() / 1000.0) + 86400,
+        expdate: Math.floor(timestamp / 1000.0) + 86400,
       },
     },
   };
@@ -46,7 +47,7 @@ export function share(state, createBattle, updateBattle, date) {
     ...state,
     battleCreated: true,
     battleId,
-    sharedTimestamp: now(),
+    sharedTimestamp: timestamp,
   };
 }
 

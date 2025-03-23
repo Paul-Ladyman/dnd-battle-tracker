@@ -28,6 +28,7 @@ describe('newBattleState', () => {
       shareEnabled: false,
       battleId: undefined,
       battleTrackerVersion: '1.0.0',
+      sharedTimestamp: null,
     };
 
     expect(newBattleState()).toEqual(expected);
