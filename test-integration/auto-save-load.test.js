@@ -9,6 +9,10 @@ import defaultState from '../test/fixtures/battle';
 
 jest.mock('../src/util/date');
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 describe('Auto save/load', () => {
   it('saves a battle and loads it when a new session starts', async () => {
     const dmApp = new DmApp('one');
@@ -152,9 +156,29 @@ describe('Auto save/load', () => {
     dmApp.assertNoErrors();
   });
 
-  // shows an error if loading a battle fails
+  it('shows an error if loading a battle fails', async () => {
+    jest.spyOn(Storage.prototype, 'getItem');
+    global.localStorage.getItem.mockImplementation(() => {
+      throw new Error('oops');
+    });
+    new DmApp('one');
+    await DmApp.assertError('Cannot autoload battle. An unexpected error occured');
+  });
 
-  // shows an error if saving a battle fails
+  it('shows an error if the loaded battle was invalid', async () => {
+    global.localStorage.setItem('battle', 'invalid');
+    new DmApp('one');
+    await DmApp.assertError('Cannot autoload battle. An unexpected error occured');
+  });
+
+  // it.only('shows an error if saving a battle fails', async () => {
+  //   jest.spyOn(Storage.prototype, 'setItem');
+  //   global.localStorage.setItem.mockImplementation(() => {
+  //     throw new Error('oops');
+  //   });
+  //   new DmApp('one');
+  //   await DmApp.assertError('An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
+  // });
 
   // stops auto-saving after an error
 

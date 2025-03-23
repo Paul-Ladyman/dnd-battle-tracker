@@ -106,12 +106,24 @@ export function isSaveLoadSupported() {
   return FileSystem.isSaveSupported();
 }
 
-export function autoLoad(name, defaultState) {
-  const storedBattle = window.localStorage.getItem('battle');
-  if (!storedBattle) return defaultState;
+function getAutoLoadState() {
+  try {
+    const storedBattle = window.localStorage.getItem('battle');
+    return JSON.parse(storedBattle);
+  } catch {
+    return false;
+  }
+}
 
-  console.log('>>> LOAD BATTLE', name, storedBattle);
-  const loadedState = JSON.parse(storedBattle);
+export function autoLoad(name, defaultState) {
+  const loadedState = getAutoLoadState();
+  if (!loadedState) {
+    const errors = loadedState === false ? addError(defaultState, 'Cannot autoload battle. An unexpected error occured.') : [];
+    return {
+      ...defaultState,
+      errors,
+    };
+  }
 
   const { battleTrackerVersion } = defaultState;
   const { battleTrackerVersion: loadedBattleTrackerVersion, sharedTimestamp } = loadedState;
