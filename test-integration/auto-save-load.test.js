@@ -171,16 +171,49 @@ describe('Auto save/load', () => {
     await DmApp.assertError('Cannot autoload battle. An unexpected error occured');
   });
 
-  // it.only('shows an error if saving a battle fails', async () => {
-  //   jest.spyOn(Storage.prototype, 'setItem');
-  //   global.localStorage.setItem.mockImplementation(() => {
-  //     throw new Error('oops');
-  //   });
-  //   new DmApp('one');
-  //   await DmApp.assertError('An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
-  // });
+  it('shows an error if saving a battle fails', async () => {
+    jest.spyOn(Storage.prototype, 'setItem');
+    global.localStorage.setItem.mockImplementation(() => {
+      throw new Error('oops');
+    });
+    const dmApp = new DmApp('one');
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await DmApp.assertError('An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
+    await DmApp.assertCreatureList(['goblin']);
+  });
 
-  // stops auto-saving after an error
+  it('shows an error if resetting a saved battle fails', async () => {
+    jest.spyOn(Storage.prototype, 'removeItem');
+    global.localStorage.removeItem.mockImplementation(() => {
+      throw new Error('oops');
+    });
+    const dmApp = new DmApp('one');
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.battleMenu.toggle();
+    await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await DmApp.assertError('An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
+    await dmApp.assertCreatureListEmpty();
+  });
 
-  // adds window.onbeforeunload = () => true after an error
+  it('stops auto-saving after an error', async () => {
+    jest.spyOn(Storage.prototype, 'setItem');
+    global.localStorage.setItem.mockImplementation(() => {
+      throw new Error('oops');
+    });
+    const dmApp = new DmApp('one');
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin');
+    const saves = global.localStorage.setItem.mock.calls.filter((call) => call[0] === 'battle');
+    expect(saves).toHaveLength(1);
+  });
+
+  it('will warn the user about losing data when they close the app if there was an error saving', async () => {
+    jest.spyOn(Storage.prototype, 'setItem');
+    global.localStorage.setItem.mockImplementation(() => {
+      throw new Error('oops');
+    });
+    const dmApp = new DmApp('one');
+    await dmApp.createCreatureForm.addCreature('goblin');
+    expect(window.onbeforeunload()).toBe(true);
+  });
 });
