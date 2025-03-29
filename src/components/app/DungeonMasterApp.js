@@ -67,7 +67,6 @@ import Loading from './Loading';
 import ViewSwitcher from '../view/ViewSwitcher';
 import InitiativeView from '../view/InitiativeView';
 import ViewError from '../view/ViewError';
-import useAutoSaveLoad from './useAutoSaveLoad';
 
 const DungeonMasterTips = lazy(async () => {
   try {

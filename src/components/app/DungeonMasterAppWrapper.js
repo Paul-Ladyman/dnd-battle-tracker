@@ -2,7 +2,6 @@ import React, {
   useState,
   Suspense,
   lazy,
-  useEffect,
   useMemo,
 } from 'react';
 import DungeonMasterApp from './DungeonMasterApp';
@@ -11,9 +10,7 @@ import {
 } from '../../state/BattleManager';
 import Loading from './Loading';
 import OfflineApolloProvider from '../../graphql/OfflineApolloProvider';
-import useAutoSaveLoad from './useAutoSaveLoad';
-import { autoLoad } from '../../state/AppManager';
-import { addError } from '../../state/ErrorManager';
+import { autoLoad, useAutoSave } from '../../state/AppManager';
 
 const RefreshingApolloProvider = lazy(async () => {
   try {
@@ -38,24 +35,11 @@ export default function DungeonMasterAppWrapper({ name }) {
   const initialState = useMemo(() => autoLoad(name, newBattleState()), []);
   const [state, setState] = useState(initialState);
 
-  useEffect(() => {
-    const { creatures, autoSaveError } = state;
-    if (!autoSaveError) {
-      try {
-        if (creatures.length > 0) {
-          console.log('>>> SAVE BATTLE', name, window.localStorage.setItem);
-          window.localStorage.setItem('battle', JSON.stringify(state));
-        } else {
-          console.log('>>> RESET BATTLE', name);
-          window.localStorage.removeItem('battle');
-        }
-      } catch {
-        const errors = addError(state, 'An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
-        setState({ ...state, errors, autoSaveError: true });
-        window.onbeforeunload = () => true;
-      }
-    }
-  }, [state]);
+  useAutoSave({
+    state,
+    setState,
+    name,
+  });
 
   if (state.shareEnabled) {
     return (

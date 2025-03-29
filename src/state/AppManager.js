@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import FileSystem from '../util/fileSystem';
 import { addError } from './ErrorManager';
 import now from '../util/date';
@@ -164,4 +165,31 @@ export function autoLoad(name, defaultState) {
   }
 
   return loadedBattle;
+}
+
+export function useAutoSave({
+  state,
+  setState,
+  name
+}) {
+  console.log('>>> useAutoSaveLoad', name)
+  
+  useEffect(() => {
+    const { creatures, autoSaveError } = state;
+    if (!autoSaveError) {
+      try {
+        if (creatures.length > 0) {
+          console.log('>>> SAVE BATTLE', name, window.localStorage.setItem);
+          window.localStorage.setItem('battle', JSON.stringify(state));
+        } else {
+          console.log('>>> RESET BATTLE', name);
+          window.localStorage.removeItem('battle');
+        }
+      } catch {
+        const errors = addError(state, 'An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
+        setState({ ...state, errors, autoSaveError: true });
+        window.onbeforeunload = () => true;
+      }
+    }
+  }, [state]);
 }
