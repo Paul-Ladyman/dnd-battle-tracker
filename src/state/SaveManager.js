@@ -1,15 +1,8 @@
 import { useEffect } from 'react';
 import FileSystem from '../util/fileSystem';
+import { getLocalState, setLocalState, removeLocalState } from '../util/localStorage';
 import { addError } from './ErrorManager';
 import now from '../util/date';
-
-function jsonParse(value) {
-  try {
-    return JSON.parse(value);
-  } catch {
-    return undefined;
-  }
-}
 
 function versionCompatibility(version, loadedVersion) {
   const majorVersion = version.split('.')[0];
@@ -22,87 +15,23 @@ function battleSavedMoreThan12HoursAgo(timestamp) {
   return Math.abs(now() - timestamp) >= twelveHours;
 }
 
-function getLoadState(oldState, newState, ariaAnnouncement, error) {
-  const {
-    battleId,
-    battleCreated,
-    shareEnabled,
-  } = oldState;
-
-  const ariaAnnouncements = oldState.ariaAnnouncements.concat([ariaAnnouncement]);
-  const errors = error ? addError(oldState, error) : [];
-
-  return {
-    ...newState,
-    battleId,
-    battleCreated,
-    shareEnabled,
-    ariaAnnouncements,
-    errors,
-    createCreatureErrors: {},
-  };
-}
-
-function getAutoLoadState() {
+function getLoadStateJson(getState) {
   try {
-    const storedBattle = window.localStorage.getItem('battle');
+    const storedBattle = getState();
     return JSON.parse(storedBattle);
   } catch {
     return false;
   }
 }
 
-export function isSaveLoadSupported() {
-  return FileSystem.isSaveSupported();
-}
-
-export async function load(state, file) {
-  const fileContents = await FileSystem.load(file);
-  const loadedState = jsonParse(fileContents);
-
+function loadState(defaultState, getState, auto) {
+  const errorMessage = auto ? 'Cannot autoload battle' : 'Failed to load battle';
+  const loadedState = getLoadStateJson(getState);
   if (!loadedState) {
-    return getLoadState(
-      state,
-      state,
-      'failed to load battle',
-      `Failed to load battle. The file "${file.name}" was invalid.`,
-    );
-  }
-
-  const { battleTrackerVersion } = state;
-  const { battleTrackerVersion: loadedBattleTrackerVersion } = loadedState;
-
-  const versionsAreCompatible = versionCompatibility(
-    battleTrackerVersion,
-    loadedBattleTrackerVersion,
-  );
-
-  if (!versionsAreCompatible) {
-    const loadedVersion = loadedBattleTrackerVersion
-      ? `version ${loadedBattleTrackerVersion}`
-      : 'a different version';
-    const error = `The file "${file.name}" was saved from ${loadedVersion} of the battle tracker and is not compatible with the current version, ${battleTrackerVersion}.`;
-    return getLoadState(
-      state,
-      state,
-      'failed to load battle',
-      `Failed to load battle. ${error}`,
-    );
-  }
-
-  return getLoadState(
-    state,
-    loadedState,
-    'battle loaded',
-  );
-}
-
-export function autoLoad(defaultState) {
-  const loadedState = getAutoLoadState();
-  if (!loadedState) {
-    const errors = loadedState === false ? addError(defaultState, 'Cannot autoload battle. An unexpected error occured.') : [];
+    const errors = loadedState === false ? addError(defaultState, `${errorMessage}. An unexpected error occured.`) : [];
     return {
       ...defaultState,
+      ariaAnnouncements: ['failed to load battle'],
       errors,
     };
   }
@@ -119,10 +48,11 @@ export function autoLoad(defaultState) {
     const loadedVersion = loadedBattleTrackerVersion
       ? `version ${loadedBattleTrackerVersion}`
       : 'a different version';
-    const error = `Cannot autoload battle. The last autosave was from ${loadedVersion} of the battle tracker and is not compatible with the current version, ${battleTrackerVersion}.`;
+    const error = `${errorMessage}. The saved battle was from ${loadedVersion} of the battle tracker and is not compatible with the current version, ${battleTrackerVersion}.`;
     const errors = addError(defaultState, error);
     return {
       ...defaultState,
+      ariaAnnouncements: ['failed to load battle'],
       errors,
     };
   }
@@ -130,7 +60,7 @@ export function autoLoad(defaultState) {
   const loadedBattle = {
     ...loadedState,
     errors: [],
-    ariaAnnouncements: [],
+    ariaAnnouncements: ['battle loaded'],
     createCreatureErrors: {},
     loaded: true,
   };
@@ -141,10 +71,20 @@ export function autoLoad(defaultState) {
       battleCreated: defaultState.battleCreated,
       battleId: defaultState.battleId,
       shareEnabled: defaultState.shareEnabled,
+      sharedTimestamp: defaultState.sharedTimestamp,
     };
   }
 
   return loadedBattle;
+}
+
+export async function load(state, file) {
+  const stateFromFile = await FileSystem.load(file);
+  return loadState(state, () => stateFromFile, false);
+}
+
+export function autoLoad(defaultState) {
+  return loadState(defaultState, getLocalState, true);
 }
 
 export function save(state) {
@@ -174,8 +114,8 @@ export function useAutoSave({
     const { creatures, autoSaveError } = state;
     if (!autoSaveError) {
       try {
-        if (creatures.length > 0) window.localStorage.setItem('battle', JSON.stringify(state));
-        else window.localStorage.removeItem('battle');
+        if (creatures.length > 0) setLocalState(JSON.stringify(state));
+        else removeLocalState();
       } catch {
         const errors = addError(state, 'An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
         setState({ ...state, errors, autoSaveError: true });
@@ -183,4 +123,8 @@ export function useAutoSave({
       }
     }
   }, [state]);
+}
+
+export function isSaveLoadSupported() {
+  return FileSystem.isSaveSupported();
 }

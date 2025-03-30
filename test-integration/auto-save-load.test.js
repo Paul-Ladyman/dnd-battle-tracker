@@ -40,7 +40,7 @@ describe('Auto save/load', () => {
     }));
     const dmApp = new DmApp('one');
     await dmApp.assertCreatureListEmpty();
-    await DmApp.assertError('Cannot autoload battle. The last autosave was from version 0.1.0 of the battle tracker and is not compatible with the current version');
+    await DmApp.assertError('Cannot autoload battle. The saved battle was from version 0.1.0 of the battle tracker and is not compatible with the current version');
   });
 
   it('allows a previously shared battle to be continued after loading', async () => {
