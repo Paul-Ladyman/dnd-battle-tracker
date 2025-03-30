@@ -97,7 +97,7 @@ export async function load(state, file) {
   );
 }
 
-export function autoLoad(name, defaultState) {
+export function autoLoad(defaultState) {
   const loadedState = getAutoLoadState();
   if (!loadedState) {
     const errors = loadedState === false ? addError(defaultState, 'Cannot autoload battle. An unexpected error occured.') : [];
@@ -135,7 +135,6 @@ export function autoLoad(name, defaultState) {
     loaded: true,
   };
 
-  console.log('>>> OLD BATTLE', sharedTimestamp, battleSavedMoreThan12HoursAgo(sharedTimestamp));
   if (battleSavedMoreThan12HoursAgo(sharedTimestamp)) {
     return {
       ...loadedBattle,
@@ -170,21 +169,13 @@ export function save(state) {
 export function useAutoSave({
   state,
   setState,
-  name
 }) {
-  console.log('>>> useAutoSaveLoad', name)
-  
   useEffect(() => {
     const { creatures, autoSaveError } = state;
     if (!autoSaveError) {
       try {
-        if (creatures.length > 0) {
-          console.log('>>> SAVE BATTLE', name, window.localStorage.setItem);
-          window.localStorage.setItem('battle', JSON.stringify(state));
-        } else {
-          console.log('>>> RESET BATTLE', name);
-          window.localStorage.removeItem('battle');
-        }
+        if (creatures.length > 0) window.localStorage.setItem('battle', JSON.stringify(state));
+        else window.localStorage.removeItem('battle');
       } catch {
         const errors = addError(state, 'An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
         setState({ ...state, errors, autoSaveError: true });

@@ -28,17 +28,13 @@ const SharedDungeonMasterApp = lazy(async () => {
   }
 });
 
-export default function DungeonMasterAppWrapper({ name }) {
-  console.log('>>> DungeonMasterAppWrapper')
-  // const previousBattle = window.localStorage.getItem('battle');
-  // const defaultState = previousBattle ? JSON.parse(previousBattle) : newBattleState;
-  const initialState = useMemo(() => autoLoad(name, newBattleState()), []);
+export default function DungeonMasterAppWrapper() {
+  const initialState = useMemo(() => autoLoad(newBattleState()), []);
   const [state, setState] = useState(initialState);
 
   useAutoSave({
     state,
     setState,
-    name,
   });
 
   if (state.shareEnabled) {
@@ -61,7 +57,6 @@ export default function DungeonMasterAppWrapper({ name }) {
       shareBattle={(sharedState) => sharedState}
       state={state}
       setState={setState}
-      name={name}
     />
   );
 }

@@ -76,9 +76,8 @@ const DungeonMasterTips = lazy(async () => {
 });
 
 function DungeonMasterApp({
-  state, setState, shareBattle, onlineError, name
+  state, setState, shareBattle, onlineError,
 }) {
-  console.log('>>> DungeonMasterApp');
   const [spellList, setSpellList] = useState([]);
   const [rulesSearchOpened, setRulesSearchOpened] = useState(false);
   const creaturesRef = useRef(null);
