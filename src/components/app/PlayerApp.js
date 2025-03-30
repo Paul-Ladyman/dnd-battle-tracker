@@ -2,7 +2,6 @@ import React, {
   useState,
   useEffect,
   useRef,
-  useMemo,
 } from 'react';
 import isHotkey from 'is-hotkey';
 import BattleToolbar from '../page/BattleToolbar';
@@ -11,13 +10,11 @@ import Footer from '../page/footer/Footer';
 import Errors from '../error/Errors';
 import Title from '../page/Title';
 import RulesSearchBar from '../page/RulesSearchBar';
-import AriaAnnouncements from '../page/AriaAnnouncements';
-import { newBattleState, toggleRulesSearch } from '../../state/BattleManager';
+import { newBattleState } from '../../state/BattleManager';
 import { getInitiative } from '../../state/InitiativeManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import { getCreatureList } from '../../state/CreatureListManager';
 import { hotkeys } from '../../hotkeys/hotkeys';
-import BattleManagerContext from './BattleManagerContext';
 import Loading from './Loading';
 
 // TODO abstract into SyncManager
@@ -30,12 +27,10 @@ function getBattleData(getLoading, getData, syncLoading, syncData) {
     return getData.getDndbattletracker;
   }
 
-  return newBattleState;
+  return newBattleState();
 }
 
 function PlayerApp({
-  state,
-  setState,
   battleId,
   getLoading,
   syncLoading,
@@ -46,6 +41,11 @@ function PlayerApp({
   onlineError,
 }) {
   const [errors, setErrors] = useState(false);
+  const [rulesSearchOpened, setRulesSearchOpened] = useState(false);
+
+  const toggleRulesSearch = () => {
+    setRulesSearchOpened((prev) => !prev);
+  };
 
   const battleData = getBattleData(getLoading, getData, syncLoading, syncData);
 
@@ -57,12 +57,10 @@ function PlayerApp({
     }
   }, [onlineError, getError, syncError]);
 
-  const updateRulesSearch = () => setState((prevState) => toggleRulesSearch(prevState));
-
   const hotKeyHandler = (e) => {
     if (isHotkey(hotkeys.rulesSearchBar, e)) {
       e.preventDefault();
-      updateRulesSearch();
+      toggleRulesSearch();
     }
   };
 
@@ -77,29 +75,24 @@ function PlayerApp({
   const [round, activeCreatureName, activeCreatureId] = getInitiative(battleData, true);
   const [creatures, creatureCount] = getCreatureList(battleData, true);
   const secondsElapsed = getSecondsElapsed(round);
-  const { rulesSearchOpened, ariaAnnouncements } = state;
 
   const onScrollActiveInitiative = () => {
     creaturesRef?.current?.scrollToCreature(activeCreatureId);
   };
-
-  const battleManagement = useMemo(() => ({
-    toggleRulesSearch: updateRulesSearch,
-  }), []);
 
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <BattleManagerContext.Provider value={battleManagement}>
+    <>
       <BattleToolbar
         initiative={activeCreatureName}
         round={round}
         secondsElapsed={secondsElapsed}
         creatureCount={creatureCount}
         rulesSearchOpen={rulesSearchOpened}
-        toggleRulesSearch={updateRulesSearch}
+        toggleRulesSearch={toggleRulesSearch}
         playerSession
         onScrollActiveInitiative={onScrollActiveInitiative}
       />
@@ -109,9 +102,8 @@ function PlayerApp({
         dismissErrors={() => setErrors(false)}
       />
       )}
-      <AriaAnnouncements announcements={ariaAnnouncements} />
       <div className="main-footer-wrapper">
-        <RulesSearchBar rulesSearchOpened={rulesSearchOpened} onSearch={updateRulesSearch} />
+        <RulesSearchBar rulesSearchOpened={rulesSearchOpened} onSearch={toggleRulesSearch} />
         <main className="main">
           <Title
             battleId={battleId}
@@ -129,7 +121,7 @@ function PlayerApp({
         </main>
         <Footer playerSession />
       </div>
-    </BattleManagerContext.Provider>
+    </>
   );
 }
 

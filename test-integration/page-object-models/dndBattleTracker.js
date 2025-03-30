@@ -21,7 +21,11 @@ export default class DndBattleTracker {
     this.rulesSearchBar = new RulesSearchBar(this.user);
     this.battleMenu = new BattleMenu(this.user);
     this.creature = new Creature(this.user);
-    render(component);
+    this.screen = render(component);
+  }
+
+  close() {
+    this.screen.unmount();
   }
 
   static async assertCreatureList(expectedCreatureNames) {
@@ -35,6 +39,12 @@ export default class DndBattleTracker {
     const main = await screen.findByRole('main');
     const creatures = await queryAllByRole(main, 'region');
     return expect(creatures).toHaveLength(0);
+  }
+
+  async assertCreatureListLength(length) {
+    const main = await screen.findByRole('main');
+    const creatures = await queryAllByRole(main, 'region');
+    return expect(creatures).toHaveLength(length);
   }
 
   static async assertCreatureVisible(name, hp, ac, note) {
@@ -61,6 +71,11 @@ export default class DndBattleTracker {
   static async assertError(message) {
     const errorBar = await screen.findByRole('alert');
     return expect(errorBar).toHaveTextContent(message);
+  }
+
+  assertNoErrors() {
+    const errorBar = screen.queryByRole('alert');
+    return expect(errorBar).toBeNull();
   }
 
   static async assertCurrentTurn(enabled, name) {

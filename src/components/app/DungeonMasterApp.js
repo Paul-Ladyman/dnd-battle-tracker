@@ -15,7 +15,6 @@ import RulesSearchBar from '../page/RulesSearchBar';
 import {
   resetBattle,
   toggleSync,
-  toggleRulesSearch,
 } from '../../state/BattleManager';
 import {
   nextInitiative,
@@ -51,8 +50,7 @@ import {
 import {
   save,
   load,
-  isSaveLoadSupported,
-} from '../../state/AppManager';
+} from '../../state/SaveManager';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import BattleManagerContext from './BattleManagerContext';
@@ -81,7 +79,12 @@ function DungeonMasterApp({
   state, setState, shareBattle, onlineError,
 }) {
   const [spellList, setSpellList] = useState([]);
+  const [rulesSearchOpened, setRulesSearchOpened] = useState(false);
   const creaturesRef = useRef(null);
+
+  const toggleRulesSearch = () => {
+    setRulesSearchOpened((prev) => !prev);
+  };
 
   const updateBattle = (update, doShare = true) => (...args) => {
     setState((prevState) => {
@@ -115,7 +118,6 @@ function DungeonMasterApp({
   const secondsElapsed = getSecondsElapsed(round);
   const {
     shareEnabled,
-    rulesSearchOpened,
     ariaAnnouncements,
     battleId,
     focusedCreature,
@@ -126,8 +128,6 @@ function DungeonMasterApp({
   }, []);
 
   useEffect(() => {
-    window.onbeforeunload = () => true;
-
     window.addEventListener('keydown', hotKeyHandler);
 
     return () => window.removeEventListener('keydown', hotKeyHandler);
@@ -225,8 +225,8 @@ function DungeonMasterApp({
           creatureCount={creatureCount}
           nextInitiative={updateBattle(nextInitiative)}
           shareEnabled={shareEnabled}
-          isSaveLoadSupported={isSaveLoadSupported}
           rulesSearchOpen={rulesSearchOpened}
+          toggleRulesSearch={toggleRulesSearch}
           onScrollActiveInitiative={onScrollActiveInitiative}
         />
         { errors && (
@@ -239,7 +239,7 @@ function DungeonMasterApp({
         <div className="main-footer-wrapper">
           <RulesSearchBar
             rulesSearchOpened={rulesSearchOpened}
-            onSearch={updateBattle(toggleRulesSearch, false)}
+            onSearch={toggleRulesSearch}
           />
           <Title
             shareEnabled={shareEnabled}

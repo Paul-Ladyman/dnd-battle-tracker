@@ -1,7 +1,6 @@
 import {
   ApolloClient, InMemoryCache, ApolloLink,
 } from '@apollo/client';
-
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import { createAuthLink } from 'aws-appsync-auth-link';
 import { CognitoIdentity } from '@aws-sdk/client-cognito-identity';

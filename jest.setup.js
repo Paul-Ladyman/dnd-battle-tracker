@@ -5,5 +5,8 @@ window.HTMLElement.prototype.scrollIntoView = () => {};
 window.scrollTo = () => {};
 
 beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
+beforeEach(() => {
+  server.resetHandlers();
+  window.localStorage.clear();
+});
 afterAll(() => server.close());

@@ -224,7 +224,7 @@ label {
   background-color: #ebe2d3;
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 3;
   box-shadow: 0 0 5px #979aa4;
 }
 
@@ -1170,7 +1170,7 @@ label {
   justify-content: space-between;
   align-items: flex-start;
   box-shadow: 0 0 5px #979aa4;
-  z-index: 3;
+  z-index: 2;
 }
 
 /*

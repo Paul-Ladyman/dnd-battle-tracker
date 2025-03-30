@@ -13,6 +13,7 @@ function BattleToolbar({
   playerSession,
   shareEnabled,
   rulesSearchOpen,
+  toggleRulesSearch,
   onScrollActiveInitiative,
 }) {
   const nextButton = useRef(null);
@@ -41,6 +42,7 @@ function BattleToolbar({
         playerSession={playerSession}
         shareEnabled={shareEnabled}
         rulesSearchOpen={rulesSearchOpen}
+        toggleRulesSearch={toggleRulesSearch}
       />
       <div className="battle-toolbar--stat">
         Turn:

@@ -3,7 +3,7 @@ import SaveLoadIcon from '../../icons/SaveLoadIcon';
 import ShareIcon from '../../icons/ShareIcon';
 import RulesSearchMenuIcon from '../../icons/RulesSearchMenuIcon';
 import RemoveIcon from '../../icons/RemoveIcon';
-import { isSaveLoadSupported } from '../../../state/AppManager';
+import { isSaveLoadSupported } from '../../../state/SaveManager';
 
 const searchRules = (onClick, rulesSearchOpen) => ({
   icon: <RulesSearchMenuIcon opened={rulesSearchOpen} />,
@@ -12,9 +12,15 @@ const searchRules = (onClick, rulesSearchOpen) => ({
   onClick,
 });
 
-export const dmItems = (battleManager, shareEnabled, rulesSearchOpen, fileSelector) => {
+export const dmItems = (
+  battleManager,
+  shareEnabled,
+  rulesSearchOpen,
+  toggleRulesSearch,
+  fileSelector,
+) => {
   const menuItems1 = [
-    searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
+    searchRules(toggleRulesSearch, rulesSearchOpen),
     {
       icon: <ShareIcon enabled={shareEnabled} />,
       label: shareEnabled ? 'Unshare battle' : 'Share battle',
@@ -52,6 +58,6 @@ export const dmItems = (battleManager, shareEnabled, rulesSearchOpen, fileSelect
   return [...menuItems1, ...saveLoadItems, ...menuItems2];
 };
 
-export const playerItems = (battleManager, rulesSearchOpen) => ([
-  searchRules(battleManager.toggleRulesSearch, rulesSearchOpen),
+export const playerItems = (rulesSearchOpen, toggleRulesSearch) => ([
+  searchRules(toggleRulesSearch, rulesSearchOpen),
 ]);

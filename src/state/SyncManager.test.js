@@ -2,15 +2,17 @@ import { nanoid } from 'nanoid';
 import { share, handleShareError } from './SyncManager';
 import { dismissErrors, updateErrors } from './ErrorManager';
 import defaultState from '../../test/fixtures/battle';
+import now from '../util/date';
 
 jest.mock('nanoid');
-jest.mock('./AppManager');
+jest.mock('../util/date');
 jest.mock('./ErrorManager');
 
 const createBattleMock = jest.fn();
 const updateBattleMock = jest.fn();
 
-const date = new Date(1605815493000);
+const timestamp = 1605815493000;
+now.mockReturnValue(timestamp);
 
 const expectedInput = (battleId) => ({
   variables: {
@@ -62,9 +64,13 @@ beforeEach(() => {
 
 describe('share', () => {
   it('creates a new battle with a 24 hour TTL', () => {
-    const newState = share(defaultState, createBattleMock, updateBattleMock, date);
+    const newState = share(defaultState, createBattleMock, updateBattleMock);
 
-    expect(newState).toEqual({ ...defaultState, battleCreated: true });
+    expect(newState).toEqual({
+      ...defaultState,
+      battleCreated: true,
+      sharedTimestamp: timestamp,
+    });
     expect(createBattleMock).toHaveBeenCalledTimes(1);
     expect(createBattleMock.mock.calls[0][0]).toEqual(expectedInput());
     expect(updateBattleMock).not.toHaveBeenCalled();
@@ -72,7 +78,7 @@ describe('share', () => {
 
   it('updates an existing battle with a 24 hour TTL', () => {
     const state = { ...defaultState, battleCreated: true };
-    const newState = share(state, createBattleMock, updateBattleMock, date);
+    const newState = share(state, createBattleMock, updateBattleMock);
 
     expect(newState).toEqual(state);
     expect(updateBattleMock).toHaveBeenCalledTimes(1);
@@ -82,7 +88,7 @@ describe('share', () => {
 
   it('does nothing if share is disabled', () => {
     const state = { ...defaultState, shareEnabled: false };
-    const newState = share(state, createBattleMock, updateBattleMock, date);
+    const newState = share(state, createBattleMock, updateBattleMock);
 
     expect(newState).toEqual(state);
     expect(createBattleMock).not.toHaveBeenCalled();
@@ -93,9 +99,14 @@ describe('share', () => {
     nanoid.mockReturnValue('new-id');
 
     const state = { ...defaultState, battleId: undefined };
-    const newState = share(state, createBattleMock, updateBattleMock, date);
+    const newState = share(state, createBattleMock, updateBattleMock);
 
-    const expectedState = { ...defaultState, battleCreated: true, battleId: 'new-id' };
+    const expectedState = {
+      ...defaultState,
+      battleCreated: true,
+      battleId: 'new-id',
+      sharedTimestamp: timestamp,
+    };
 
     expect(newState).toEqual(expectedState);
     expect(createBattleMock).toHaveBeenCalledTimes(1);
@@ -141,6 +152,25 @@ describe('handleShareError', () => {
     const newState = handleShareError(state, new Error('createError'), new Error('updateError'));
 
     const expectedState = { ...stateWithErrors, battleCreated: false };
+    expect(newState).toEqual(expectedState);
+    expect(updateErrors).toHaveBeenCalledTimes(1);
+    expect(updateErrors).toHaveBeenCalledWith(state, error);
+  });
+
+  it('unshares the battle on update battle error for a loaded battle', () => {
+    const state = { ...defaultState, battleCreated: true, loaded: true };
+    const error = 'Error rejoining previously shared battle. Try resharing the battle.';
+    const stateWithErrors = { ...state, errors: [error] };
+    updateErrors.mockReturnValue(stateWithErrors);
+
+    const newState = handleShareError(state, undefined, new Error('updateError'));
+
+    const expectedState = {
+      ...stateWithErrors,
+      battleCreated: false,
+      shareEnabled: false,
+      battleId: undefined,
+    };
     expect(newState).toEqual(expectedState);
     expect(updateErrors).toHaveBeenCalledTimes(1);
     expect(updateErrors).toHaveBeenCalledWith(state, error);

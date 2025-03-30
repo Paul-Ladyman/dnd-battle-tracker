@@ -1,7 +1,6 @@
 import React from 'react';
 import Title from '../page/Title';
 import LoadingIcon from '../icons/LoadingIcon';
-// import Footer from '../page/footer/Footer';
 
 export default function Loading() {
   return (
@@ -12,7 +11,6 @@ export default function Loading() {
         <div className="loading-spinner" data-testid="loading">
           <LoadingIcon />
         </div>
-        {/* <Footer /> */}
       </main>
     </div>
   );
