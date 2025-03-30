@@ -16,13 +16,13 @@ import AcTool from './acTool';
 import Navigation from './navigation';
 import Alert from './alert';
 
-function TestDmApp({ name }) {
-  return <DungeonMasterAppWrapper name={name} />;
+function TestDmApp() {
+  return <DungeonMasterAppWrapper />;
 }
 
 export default class DmApp extends DndBattleTracker {
-  constructor(name) {
-    super(<TestDmApp name={name} />);
+  constructor() {
+    super(<TestDmApp />);
     this.createCreatureForm = new CreateCreatureForm(this.user);
     this.creatureToolbar = new CreatureToolbar(this.user);
     this.menuTool = new MenuTool(this.user);

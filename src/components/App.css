@@ -884,15 +884,6 @@ label {
   }
 }
 
-.battle-date {
-  width: 80%;
-  margin-top: 60px;
-  font-style: italic;
-  font-weight: bold;
-  text-decoration: underline;
-  margin-bottom: -30px;
-}
-
 /* Creatures */
 
 .creature-list {
