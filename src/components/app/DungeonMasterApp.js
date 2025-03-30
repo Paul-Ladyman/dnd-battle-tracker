@@ -50,8 +50,7 @@ import {
 import {
   save,
   load,
-  isSaveLoadSupported,
-} from '../../state/AppManager';
+} from '../../state/SaveManager';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import BattleManagerContext from './BattleManagerContext';
@@ -227,7 +226,6 @@ function DungeonMasterApp({
           creatureCount={creatureCount}
           nextInitiative={updateBattle(nextInitiative)}
           shareEnabled={shareEnabled}
-          isSaveLoadSupported={isSaveLoadSupported}
           rulesSearchOpen={rulesSearchOpened}
           toggleRulesSearch={toggleRulesSearch}
           onScrollActiveInitiative={onScrollActiveInitiative}

@@ -3,7 +3,7 @@ import SaveLoadIcon from '../../icons/SaveLoadIcon';
 import ShareIcon from '../../icons/ShareIcon';
 import RulesSearchMenuIcon from '../../icons/RulesSearchMenuIcon';
 import RemoveIcon from '../../icons/RemoveIcon';
-import { isSaveLoadSupported } from '../../../state/AppManager';
+import { isSaveLoadSupported } from '../../../state/SaveManager';
 
 const searchRules = (onClick, rulesSearchOpen) => ({
   icon: <RulesSearchMenuIcon opened={rulesSearchOpen} />,

@@ -1,6 +1,6 @@
 import {
   save, load, isSaveLoadSupported,
-} from './AppManager';
+} from './SaveManager';
 import FileSystem from '../util/fileSystem';
 import defaultState from '../../test/fixtures/battle';
 

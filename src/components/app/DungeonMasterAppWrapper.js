@@ -10,7 +10,7 @@ import {
 } from '../../state/BattleManager';
 import Loading from './Loading';
 import OfflineApolloProvider from '../../graphql/OfflineApolloProvider';
-import { autoLoad, useAutoSave } from '../../state/AppManager';
+import { autoLoad, useAutoSave } from '../../state/SaveManager';
 
 const RefreshingApolloProvider = lazy(async () => {
   try {

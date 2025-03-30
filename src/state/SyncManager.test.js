@@ -5,7 +5,6 @@ import defaultState from '../../test/fixtures/battle';
 import now from '../util/date';
 
 jest.mock('nanoid');
-jest.mock('./AppManager');
 jest.mock('../util/date');
 jest.mock('./ErrorManager');
 

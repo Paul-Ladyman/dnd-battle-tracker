@@ -3,25 +3,6 @@ import FileSystem from '../util/fileSystem';
 import { addError } from './ErrorManager';
 import now from '../util/date';
 
-export function save(state) {
-  const {
-    ariaAnnouncements, errors, createCreatureErrors, ...stateToSave
-  } = state;
-  const date = new Date(now());
-  const dateSuffix = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
-  const timeSuffix = `${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`;
-  const fileSuffix = `${dateSuffix}_${timeSuffix}`;
-  const fileContents = JSON.stringify(stateToSave, null, 2);
-  FileSystem.save(`dnd_battle_tracker_${fileSuffix}.json`, 'application/json', fileContents);
-
-  const ariaAnnouncement = 'battle saved';
-  const newAriaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
-  return {
-    ...state,
-    ariaAnnouncements: newAriaAnnouncements,
-  };
-}
-
 function jsonParse(value) {
   try {
     return JSON.parse(value);
@@ -34,6 +15,11 @@ function versionCompatibility(version, loadedVersion) {
   const majorVersion = version.split('.')[0];
   const loadedMajorVersion = loadedVersion && loadedVersion.split('.')[0];
   return majorVersion === loadedMajorVersion;
+}
+
+function battleSavedMoreThan12HoursAgo(timestamp) {
+  const twelveHours = 12 * 60 * 60 * 1000;
+  return Math.abs(now() - timestamp) >= twelveHours;
 }
 
 function getLoadState(oldState, newState, ariaAnnouncement, error) {
@@ -57,9 +43,17 @@ function getLoadState(oldState, newState, ariaAnnouncement, error) {
   };
 }
 
-function battleSavedMoreThan12HoursAgo(timestamp) {
-  const twelveHours = 12 * 60 * 60 * 1000;
-  return Math.abs(now() - timestamp) >= twelveHours;
+function getAutoLoadState() {
+  try {
+    const storedBattle = window.localStorage.getItem('battle');
+    return JSON.parse(storedBattle);
+  } catch {
+    return false;
+  }
+}
+
+export function isSaveLoadSupported() {
+  return FileSystem.isSaveSupported();
 }
 
 export async function load(state, file) {
@@ -101,19 +95,6 @@ export async function load(state, file) {
     loadedState,
     'battle loaded',
   );
-}
-
-export function isSaveLoadSupported() {
-  return FileSystem.isSaveSupported();
-}
-
-function getAutoLoadState() {
-  try {
-    const storedBattle = window.localStorage.getItem('battle');
-    return JSON.parse(storedBattle);
-  } catch {
-    return false;
-  }
 }
 
 export function autoLoad(name, defaultState) {
@@ -165,6 +146,25 @@ export function autoLoad(name, defaultState) {
   }
 
   return loadedBattle;
+}
+
+export function save(state) {
+  const {
+    ariaAnnouncements, errors, createCreatureErrors, ...stateToSave
+  } = state;
+  const date = new Date(now());
+  const dateSuffix = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
+  const timeSuffix = `${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`;
+  const fileSuffix = `${dateSuffix}_${timeSuffix}`;
+  const fileContents = JSON.stringify(stateToSave, null, 2);
+  FileSystem.save(`dnd_battle_tracker_${fileSuffix}.json`, 'application/json', fileContents);
+
+  const ariaAnnouncement = 'battle saved';
+  const newAriaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
+  return {
+    ...state,
+    ariaAnnouncements: newAriaAnnouncements,
+  };
 }
 
 export function useAutoSave({
