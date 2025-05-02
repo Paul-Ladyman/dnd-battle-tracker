@@ -94,6 +94,12 @@ describe('resetBattle', () => {
     const expected = { battleCreated: true };
     expect(resetBattle(state)).toMatchObject(expected);
   });
+
+  test('resets the battle state, keeping sharedTimestamp', () => {
+    const state = { ...defaultState, sharedTimestamp: 1743339621000 };
+    const expected = { sharedTimestamp: 1743339621000 };
+    expect(resetBattle(state)).toMatchObject(expected);
+  });
 });
 
 describe('toggleSync', () => {

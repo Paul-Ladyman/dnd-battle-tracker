@@ -7,7 +7,3 @@ export function getLocalState() {
 export function setLocalState(value) {
   return window.localStorage.setItem(key, value);
 }
-
-export function removeLocalState() {
-  return window.localStorage.removeItem(key);
-}

@@ -26,6 +26,7 @@ export function resetBattle(state) {
     battleId,
     shareEnabled,
     battleCreated,
+    sharedTimestamp,
   } = state;
   const lockedCreatures = creatures.filter((creature) => creature.locked);
   const creatureIdCount = lockedCreatures.length;
@@ -36,6 +37,7 @@ export function resetBattle(state) {
     battleCreated,
     shareEnabled,
     battleId,
+    sharedTimestamp,
     creatureIdCount,
     creatures: resetLockedCreatures,
     ariaAnnouncements,

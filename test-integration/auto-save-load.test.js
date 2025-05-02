@@ -55,19 +55,19 @@ describe('Auto save/load', () => {
     expect(playerSessionLink).toBeVisible();
   });
 
-  it('does not save a battle without creatures', async () => {
-    expect.assertions(1);
+  it('allows a previously shared battle that has been reset to be continued after loading', async () => {
     const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Share battle');
     await screen.findByRole('link', { name: 'Player session random-battle-id (link copied)' });
+    await dmApp.battleMenu.toggle();
+    await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.assertCreatureListEmpty();
     dmApp.close();
     new DmApp();
-    try {
-      await screen.findByRole('link', { name: 'Player session random-battle-id (link copied)' });
-    } catch (e) {
-      expect(e).toBeDefined();
-    }
+    const playerSessionLink = await screen.findByRole('link', { name: 'Player session random-battle-id (link copied)' });
+    expect(playerSessionLink).toBeVisible();
   });
 
   it('resets the the saved state when a battle is fully reset', async () => {
@@ -176,23 +176,8 @@ describe('Auto save/load', () => {
     global.localStorage.setItem.mockImplementation(() => {
       throw new Error('oops');
     });
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin');
+    new DmApp();
     await DmApp.assertError('An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
-    await DmApp.assertCreatureList(['goblin']);
-  });
-
-  it('shows an error if resetting a saved battle fails', async () => {
-    jest.spyOn(Storage.prototype, 'removeItem');
-    global.localStorage.removeItem.mockImplementation(() => {
-      throw new Error('oops');
-    });
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin');
-    await dmApp.battleMenu.toggle();
-    await dmApp.battleMenu.selectMenuItem('Reset battle');
-    await DmApp.assertError('An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
-    await dmApp.assertCreatureListEmpty();
   });
 
   it('stops auto-saving after an error', async () => {

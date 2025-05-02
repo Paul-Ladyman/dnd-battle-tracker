@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import FileSystem from '../util/fileSystem';
-import { getLocalState, setLocalState, removeLocalState } from '../util/localStorage';
+import { getLocalState, setLocalState } from '../util/localStorage';
 import { addError } from './ErrorManager';
 import now from '../util/date';
 
@@ -111,12 +111,11 @@ export function useAutoSave({
   setState,
 }) {
   useEffect(() => {
-    const { creatures, autoSaveError } = state;
+    const { autoSaveError } = state;
     if (!autoSaveError) {
       try {
-        if (creatures.length > 0) setLocalState(JSON.stringify(state));
-        else removeLocalState();
-      } catch {
+        setLocalState(JSON.stringify(state));
+      } catch (e) {
         const errors = addError(state, 'An error occurred while autosaving the battle. Autosaving will be disabled until the page is reloaded.');
         setState({ ...state, errors, autoSaveError: true });
         window.onbeforeunload = () => true;
