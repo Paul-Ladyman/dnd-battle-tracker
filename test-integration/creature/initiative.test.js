@@ -73,6 +73,7 @@ describe('Initiative display - DM', () => {
     await dmApp.menuTool.lockCreature('goblin');
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickYes();
     await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
     await dmApp.initiativeTool.setCreatureInitiative('goblin', '1');
     await dmApp.creature.expand('goblin');

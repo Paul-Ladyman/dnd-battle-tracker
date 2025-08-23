@@ -66,6 +66,7 @@ describe('Battle Menu navigation', () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickNo();
     await dmApp.battleMenu.navigate(2);
     await dmApp.battleMenu.assertMenuItemFocused('Share battle');
   });
@@ -74,6 +75,7 @@ describe('Battle Menu navigation', () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickNo();
     await dmApp.battleMenu.navigate(2, false);
     await dmApp.battleMenu.assertMenuItemFocused('Save battle');
   });
@@ -90,6 +92,7 @@ describe('Battle Menu navigation', () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickNo();
     await dmApp.battleMenu.navigateHome();
     await dmApp.battleMenu.assertMenuItemFocused('Search rules');
   });
@@ -114,6 +117,7 @@ describe('Battle Menu navigation', () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickNo();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.battleMenu.navigate(1);
     await dmApp.battleMenu.assertMenuItemFocused('Search rules');
@@ -131,6 +135,7 @@ describe('Battle Menu navigation', () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickNo();
     await dmApp.battleMenu.closeByKeyboard();
     await dmApp.battleMenu.navigate(1);
     await dmApp.battleMenu.assertMenuItemFocused('Search rules');

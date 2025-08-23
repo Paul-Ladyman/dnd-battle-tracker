@@ -52,6 +52,8 @@ export const dmItems = (
       label: 'Reset battle',
       ref: React.createRef(),
       onClick: battleManager.resetBattle,
+      confirm: true,
+      message: <span>Are you sure you want to reset the battle?<br/>This will remove all unlocked creatures and reset all initiative rolls.</span>,
     },
   ];
 

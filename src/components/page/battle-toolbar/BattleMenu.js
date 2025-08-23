@@ -11,6 +11,7 @@ import useAutoClosable from '../../widgets/useAutoClosable';
 import BattleManagerContext from '../../app/BattleManagerContext';
 import { playerItems, dmItems } from './menuItems';
 import { hotkeys } from '../../../hotkeys/hotkeys';
+import AlertDialog from '../../widgets/AlertDialog';
 
 export default function BattleMenu({
   playerSession,
@@ -19,6 +20,7 @@ export default function BattleMenu({
   toggleRulesSearch,
 }) {
   const [open, setOpen] = useState(false);
+  const [confirming, setConfirming] = useState(null);
   const battleManager = useContext(BattleManagerContext);
   const parentRef = useRef(null);
   const buttonRef = useRef(null);
@@ -67,9 +69,26 @@ export default function BattleMenu({
   const buttonClass = 'battle-menu--button';
   const buttonClasses = open ? `${buttonClass} ${buttonClass}__open` : buttonClass;
 
-  const clickHandler = (onClick) => {
-    setOpen(false);
-    onClick();
+  const clickHandler = (onClick, confirm, message, currentItem) => {
+    const handleClick = () => {
+      setOpen(false);
+      onClick();
+    };
+
+    if (!confirm) return handleClick();
+
+    setFocusedItem(null);
+    return setConfirming({
+      onNo: () => {
+        setConfirming(null);
+        setFocusedItem(currentItem);
+      },
+      onYes: () => {
+        setConfirming(null);
+        handleClick();
+      },
+      message,
+    });
   };
 
   const handleUpload = () => {
@@ -105,6 +124,8 @@ export default function BattleMenu({
           label,
           ref,
           onClick,
+          confirm,
+          message,
         }, i) => (
           <li
             ref={ref}
@@ -113,8 +134,8 @@ export default function BattleMenu({
             className="battle-menu--item"
             tabIndex="-1"
             onFocus={() => setFocusedItem(i)}
-            onClick={() => clickHandler(onClick)}
-            onKeyDown={({ code }) => code === 'Enter' && clickHandler(onClick)}
+            onClick={() => clickHandler(onClick, confirm, message, i)}
+            onKeyDown={({ code }) => code === 'Enter' && clickHandler(onClick, confirm, message, i)}
           >
             {icon}
             {label}
@@ -129,6 +150,12 @@ export default function BattleMenu({
         ref={fileSelector}
         onChange={handleUpload}
         value=""
+      />
+      <AlertDialog
+        show={confirming}
+        message={confirming?.message}
+        onYes={confirming?.onYes}
+        onNo={confirming?.onNo}
       />
     </div>
   );

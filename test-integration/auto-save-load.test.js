@@ -63,6 +63,7 @@ describe('Auto save/load', () => {
     await screen.findByRole('link', { name: 'Player session random-battle-id (link copied)' });
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickYes();
     await dmApp.assertCreatureListEmpty();
     dmApp.close();
     new DmApp();
@@ -75,6 +76,7 @@ describe('Auto save/load', () => {
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickYes();
     await dmApp.assertCreatureListEmpty();
     dmApp.close();
     const dmApp2 = new DmApp();
@@ -88,6 +90,7 @@ describe('Auto save/load', () => {
     await dmApp.menuTool.lockCreature('goblin');
     await dmApp.battleMenu.toggle();
     await dmApp.battleMenu.selectMenuItem('Reset battle');
+    await dmApp.alert.clickYes();
     dmApp.close();
     new DmApp();
     await DmApp.assertCreatureVisible('goblin');
