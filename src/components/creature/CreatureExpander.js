@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import ExpandIcon from '../icons/ExpandIcon';
 import CollapseIcon from '../icons/CollapseIcon';
-import ActiveCreatureIcon from '../icons/ActiveCreatureIcon';
+import InitiativeIcon from '../icons/InitiativeIcon';
 
 function CreatureExpander({
   classes, active, expanded, name, expandHandler, focused,
@@ -40,7 +40,7 @@ function CreatureExpander({
     >
       {name}
       {!active && <div className="creature-expander-icon">{buttonIcon}</div>}
-      {active && <ActiveCreatureIcon className="creature-expander-icon" />}
+      {active && <InitiativeIcon className="creature-expander-icon" title="Active creature" />}
     </button>
   );
 }
