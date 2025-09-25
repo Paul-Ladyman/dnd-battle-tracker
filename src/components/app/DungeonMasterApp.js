@@ -27,7 +27,7 @@ import {
 import getSecondsElapsed from '../../state/TimeManager';
 import {
   killCreature,
-  stabalizeCreature,
+  stabilizeCreature,
   damageCreature,
   healCreature,
   addNoteToCreature,
@@ -139,7 +139,7 @@ function DungeonMasterApp({
 
   const creatureManagement = {
     killCreature: updateBattle(killCreature),
-    stabalizeCreature: updateBattle(stabalizeCreature),
+    stabilizeCreature: updateBattle(stabilizeCreature),
     damageCreature: updateBattle(damageCreature),
     healCreature: updateBattle(healCreature),
     addHitPointsToCreature: updateBattle(addHitPointsToCreature),

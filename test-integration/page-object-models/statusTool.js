@@ -17,7 +17,7 @@ export default class StatusTool {
 
   async assertPressed(name) {
     const toolbar = await this.findToolbar(name);
-    const statusTool = await findByRole(toolbar, 'button', { name: 'Stabalize' });
+    const statusTool = await findByRole(toolbar, 'button', { name: 'Stabilize' });
     expect(statusTool).toBeVisible();
     expect(statusTool).toHaveAttribute('aria-pressed', 'true');
   }

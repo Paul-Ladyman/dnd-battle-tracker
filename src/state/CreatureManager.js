@@ -33,9 +33,9 @@ export function killCreature(state, creatureId) {
   );
 }
 
-export function stabalizeCreature(state, creatureId) {
+export function stabilizeCreature(state, creatureId) {
   const creature = findCreature(state.creatures, creatureId);
-  const ariaAnnouncement = `${creature.name} stabalized`;
+  const ariaAnnouncement = `${creature.name} stabilized`;
   return updateCreature(state, creatureId, { alive: true }, ariaAnnouncement);
 }
 

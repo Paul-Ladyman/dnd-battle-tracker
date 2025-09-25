@@ -1,5 +1,5 @@
 import React from 'react';
-import KillStabalizeIcon from '../../../icons/KillStabalizeIcon';
+import KillStabilizeIcon from '../../../icons/KillStabilizeIcon';
 
 export default function StatusTool({
   creature,
@@ -11,18 +11,18 @@ export default function StatusTool({
   focused,
 }) {
   const { alive, id } = creature;
-  const { killCreature, stabalizeCreature } = creatureManagement;
+  const { killCreature, stabilizeCreature } = creatureManagement;
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
   const mediumButtonClass = `${buttonClass}__medium`;
   const focusedButtonClass = focused ? `${buttonClass}__focused` : '';
-  const statusToolTitle = alive ? 'Kill' : 'Stabalize';
+  const statusToolTitle = alive ? 'Kill' : 'Stabilize';
   const onClickStatus = () => {
     if (alive) {
       killCreature(id);
     } else {
-      stabalizeCreature(id);
+      stabilizeCreature(id);
     }
     onClick();
   };
@@ -37,7 +37,7 @@ export default function StatusTool({
       tabIndex={tabIndex}
       aria-pressed={!alive}
     >
-      <KillStabalizeIcon alive={alive} />
+      <KillStabilizeIcon alive={alive} />
       {statusToolTitle}
     </button>
   );
