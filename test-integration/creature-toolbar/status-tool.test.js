@@ -16,11 +16,11 @@ describe('Status tool', () => {
     await DmApp.assertCreatureVisible('goblin', '0', null, 'Unconscious');
   });
 
-  it('stabalises a creature when clicked again', async () => {
+  it('stabilises a creature when clicked again', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');
     await dmApp.creatureToolbar.selectTool('goblin', 'Kill');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Stabalize');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Stabilize');
     await dmApp.statusTool.assertNotPressed('goblin');
     await DmApp.assertCreatureVisible('goblin', '0', null, 'Unconscious');
   });

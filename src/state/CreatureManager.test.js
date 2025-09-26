@@ -1,6 +1,6 @@
 import {
   killCreature,
-  stabalizeCreature,
+  stabilizeCreature,
   damageCreature,
   healCreature,
   createCreature,
@@ -84,8 +84,8 @@ describe('killCreature', () => {
   });
 });
 
-describe('stabalizeCreature', () => {
-  it('stabalizes a creature who is dead with 0 hit points', () => {
+describe('stabilizeCreature', () => {
+  it('stabilizes a creature who is dead with 0 hit points', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -110,13 +110,13 @@ describe('stabalizeCreature', () => {
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1 stabalized'],
+      ariaAnnouncements: ['Goblin #1 stabilized'],
     };
 
-    expect(stabalizeCreature(state, 1)).toEqual(expected);
+    expect(stabilizeCreature(state, 1)).toEqual(expected);
   });
 
-  it('stabalizes a creature who is dead with no hit points', () => {
+  it('stabilizes a creature who is dead with no hit points', () => {
     const state = {
       ...defaultState,
       creatures: [
@@ -139,18 +139,18 @@ describe('stabalizeCreature', () => {
         defaultState.creatures[1],
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Wellby stabalized'],
+      ariaAnnouncements: ['Wellby stabilized'],
     };
 
-    expect(stabalizeCreature(state, 0)).toEqual(expected);
+    expect(stabilizeCreature(state, 0)).toEqual(expected);
   });
 
-  it('stabalizes a creature who is already alive', () => {
+  it('stabilizes a creature who is already alive', () => {
     const expected = {
       ...defaultState,
-      ariaAnnouncements: ['Wellby stabalized'],
+      ariaAnnouncements: ['Wellby stabilized'],
     };
-    expect(stabalizeCreature(defaultState, 0)).toEqual(expected);
+    expect(stabilizeCreature(defaultState, 0)).toEqual(expected);
   });
 });
 
@@ -446,7 +446,7 @@ describe('healCreature', () => {
     expect(healCreature(state, 1, 10)).toEqual(expectedState);
   });
 
-  it('stabalizes a creature if it was dead and removes the unconscious condition', () => {
+  it('stabilizes a creature if it was dead and removes the unconscious condition', () => {
     const state = {
       ...defaultState,
       creatures: [
