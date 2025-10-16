@@ -188,11 +188,6 @@ a:hover {
   font-size: 16px;
 }
 
-.form--label__error {
-  font-weight: bold;
-  color: red;
-}
-
 .hidden {
   display: none;
 }
@@ -390,6 +385,10 @@ label {
   outline-offset: 2px;
 }
 
+.create-creature-form--modified .input-wrapper:has( .input:user-invalid ) {
+  outline: 2px solid red;
+}
+
 .input {
   width: 100%;
   background: white;
@@ -475,10 +474,6 @@ label {
 .input--submit__disabled {
   cursor: not-allowed;
   background: transparent;
-}
-
-.input__error {
-  outline: 2px solid red;
 }
 
 /* Creature toolbar */
@@ -806,11 +801,6 @@ label {
   justify-content: flex-end;
 }
 
-.create-creature-form--item__tall {
-  margin-top: -18px;
-  line-height: 20px;
-}
-
 .create-creature-form--submit {
   grid-column: span 2;
 }
@@ -873,10 +863,6 @@ label {
 
   .create-creature-form--item__number .form--label {
     text-align: center;
-  }
-  
-  .create-creature-form--item__tall {
-    margin-top: 0;
   }
 
   .create-creature-form--submit {

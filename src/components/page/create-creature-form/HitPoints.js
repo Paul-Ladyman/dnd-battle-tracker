@@ -16,7 +16,6 @@ export default function HitPoints({
   hp,
   setHp,
   creatureStats,
-  createCreature,
   inputRef,
   error,
   rollEachHp,
@@ -33,8 +32,9 @@ export default function HitPoints({
       setValue={setHp}
       Component={ComboboxList}
       ref={inputRef}
-      customClasses={`create-creature-form--item__number ${error && 'create-creature-form--item__tall'}`}
-      error={error && <span className="form--label__error">number &gt;0, dice</span>}
+      customClasses="create-creature-form--item__number"
+      min="1"
+      error={error}
       list={getHpOptions(creatureStats)}
       id="create-creature-form-hp"
       dropdownId="create-creature-form-hp-dropdown"
@@ -44,7 +44,6 @@ export default function HitPoints({
       inputAriaLabel="create creature form. Hit points (optional)"
       inputAriaLabelItemSelected="create creature form. Hit points (optional)"
       handleSubmit={toggleRollEachHp}
-      formHandler={createCreature}
       rightControls={rightControls}
       rightControlsItemSelected={rightControls}
       resetOnSubmit={false}

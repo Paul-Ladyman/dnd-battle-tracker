@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function isInputDisabled(disabled, leftEnabled, rightEnabled) {
   if (disabled) return true;
@@ -38,6 +38,7 @@ function Input({
   onBlur,
   spellCheck = true,
   disabled,
+  validate,
 }) {
   const {
     leftEnabled,
@@ -53,8 +54,6 @@ function Input({
 
   const type = integer ? 'number' : 'text';
   const numberModifier = integer ? 'input--number' : '';
-
-  const inputErrorClass = error ? 'input__error' : '';
 
   const leftDisabled = leftEnabled === false;
   const rightDisabled = rightEnabled === false;
@@ -84,15 +83,30 @@ function Input({
     submitHandler(false);
   };
 
+  useEffect(() => {
+    const input = document.getElementById(inputId);
+
+    input.addEventListener('input', () => {
+      if (!validate || validate(input.value)) {
+        input.setCustomValidity('');
+      } else {
+        input.setCustomValidity(error);
+      }
+    });
+
+    input.addEventListener('invalid', () => {
+      input.setCustomValidity(error);
+    });
+  }, []);
+
   return (
     <div className={`input--form ${numberModifier} ${customClasses}`}>
       <label aria-label={ariaLabel} htmlFor={inputId}>
         <div className="form--label">
           {label}
-          {error}
         </div>
       </label>
-      <div className={`input-wrapper ${inputErrorClass}`}>
+      <div className="input-wrapper">
         {LeftSubmitIcon && (
           <button
             aria-disabled={leftDisabled}

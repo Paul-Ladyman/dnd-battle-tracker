@@ -68,7 +68,6 @@ export default {
   round: 0,
   ariaAnnouncements: [],
   errors: [],
-  createCreatureErrors: {},
   battleCreated: false,
   shareEnabled: true,
   battleId: '123',

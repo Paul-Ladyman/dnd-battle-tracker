@@ -30,6 +30,8 @@ export default function ComboboxList({
   error,
   customClasses,
   spellCheck,
+  required,
+  validate,
   resetOnSubmit = true,
 }) {
   const internalInputRef = inputRef || useRef();
@@ -100,14 +102,14 @@ export default function ComboboxList({
     internalInputRef.current.focus();
   };
 
-  const handleKeyboardSubmit = () => {
+  const handleKeyboardSubmit = (e) => {
     if (focusedItem !== null) {
+      e.preventDefault();
       handleItemSubmit(list[focusedItem]);
     } else if (formHandler) {
+      e.preventDefault();
       if (resetOnSubmit) resetForm();
       formHandler(null, selectedItem);
-    } else {
-      submitHandler();
     }
   };
 
@@ -127,8 +129,7 @@ export default function ComboboxList({
     }
 
     if (isHotkey('enter', e)) {
-      e.preventDefault();
-      handleKeyboardSubmit();
+      handleKeyboardSubmit(e);
     }
 
     if (isHotkey(hotkeys.removeNote, e) || isHotkey(hotkeys.removeNoteAlt, e)) {
@@ -156,6 +157,7 @@ export default function ComboboxList({
         ariaControls={dropdownId}
         ariaActiveDescendant={activeNoteId}
         role="combobox"
+        required={required}
         label={ComboboxLabel(showList, label, listAriaLabel, dropdownId, toggleExpanded)}
         rightControls={rControls}
         leftControls={lControls}
@@ -168,6 +170,7 @@ export default function ComboboxList({
         submitHandler={submitHandler}
         formHandler={comboBoxFormHandler}
         error={error}
+        validate={validate}
         spellCheck={spellCheck}
       />
       <ul className={dropdownClassName} style={{ display }} id={dropdownId} role="listbox" aria-label={listAriaLabel}>

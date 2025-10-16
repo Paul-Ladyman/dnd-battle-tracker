@@ -22,7 +22,7 @@ describe('save', () => {
     expect(calls.length).toBe(1);
     const fileContents = JSON.parse(calls[0][2]);
     const {
-      ariaAnnouncements, errors, createCreatureErrors, ...expectedFileContents
+      ariaAnnouncements, errors, ...expectedFileContents
     } = defaultState;
     expect(fileContents).toEqual(expectedFileContents);
   });
@@ -101,10 +101,9 @@ describe('load', () => {
     const state = {
       ...defaultState,
       errors: ['an error'],
-      createCreatureErrors: { some: 'error' },
     };
     const {
-      ariaAnnouncements, createCreatureErrors, errors, ...fileContents
+      ariaAnnouncements, errors, ...fileContents
     } = defaultState;
     FileSystem.load.mockResolvedValue(JSON.stringify(fileContents));
 
@@ -269,10 +268,9 @@ describe('autoLoad', () => {
     const state = {
       ...defaultState,
       errors: ['an error'],
-      createCreatureErrors: { some: 'error' },
     };
     const {
-      ariaAnnouncements, createCreatureErrors, errors, ...autoSave
+      ariaAnnouncements, errors, ...autoSave
     } = defaultState;
     getLocalState.mockReturnValue(JSON.stringify(autoSave));
 

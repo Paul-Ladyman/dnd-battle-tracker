@@ -507,12 +507,10 @@ describe('addCreature', () => {
 
     const state = {
       ...defaultState,
-      createCreatureErrors: { nameError: 'some error' },
       errors: ['create creature error'],
     };
 
     const result = addCreature(state, creature);
-    expect(result.createCreatureErrors).toEqual(defaultState.createCreatureErrors);
     expect(result.errors).toEqual(defaultState.errors);
   });
 });

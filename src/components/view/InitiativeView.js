@@ -1,5 +1,4 @@
 import React from 'react';
-import { handleCreateCreatureErrors } from '../../state/CreatureFormManager';
 import Footer from '../page/footer/Footer';
 import { addCreature } from '../../state/CreatureListManager';
 import CreateCreatureForm from '../page/create-creature-form/CreateCreatureForm';
@@ -8,7 +7,6 @@ import Welcome from '../page/Welcome';
 
 export default function InitiativeView({
   updateBattle,
-  state,
   creaturesRef,
   creatures,
   activeCreatureId,
@@ -23,8 +21,6 @@ export default function InitiativeView({
       <main className="main">
         <CreateCreatureForm
           createCreature={updateBattle(addCreature)}
-          handleCreateCreatureErrors={updateBattle(handleCreateCreatureErrors)}
-          createCreatureErrors={state.createCreatureErrors}
         />
         {creatures.length === 0 && <Welcome />}
         {creatures.length > 0 && (

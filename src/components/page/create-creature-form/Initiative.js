@@ -10,15 +10,14 @@ export default function Initiative({
   handleChange,
   rollEachInitiative,
   toggleRollEachInitiative,
-  formHandler,
   inputRef,
 }) {
   return (
     <Rollable
       Component={Input}
       value={initiative}
-      customClasses={`create-creature-form--item__number ${error && 'create-creature-form--item__tall'}`}
-      error={error && <span className="form--label__error"> number, dice</span>}
+      customClasses="create-creature-form--item__number"
+      error={error}
       ariaLabel="create creature form. Initiative (optional)"
       label="Initiative (optional)"
       name="initiative"
@@ -28,7 +27,6 @@ export default function Initiative({
         rightTitle: rollEachInitiative ? 'Roll initiative as group' : 'Roll initiative per creature',
         RightSubmitIcon: rollEachInitiative ? <RollEachIcon /> : <RollGroupIcon />,
       }}
-      formHandler={formHandler}
       inputId="create-creature-form-initiative"
       ref={inputRef}
     />

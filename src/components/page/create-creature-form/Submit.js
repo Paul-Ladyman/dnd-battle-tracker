@@ -7,11 +7,11 @@ export default function Submit({
   return (
     <div className="create-creature-form--item__submit">
       <button
-        type="button"
+        type="submit"
         className="create-creature-form--submit"
         title="Add creature"
         aria-label="Add creature"
-        onClick={createCreature}
+        // onClick={createCreature}
       >
         <CrossIcon />
       </button>

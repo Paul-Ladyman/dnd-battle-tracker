@@ -16,7 +16,6 @@ function getFilteredMonsters(name, monsterData) {
 export default function Name({
   name,
   setName,
-  createCreature,
   onSelectMonster,
   inputRef,
   error,
@@ -39,12 +38,12 @@ export default function Name({
       listAriaLabel="Creature search results"
       inputAriaLabel="create creature form. Name (required)"
       inputAriaLabelItemSelected="create creature form. Name (required)"
-      handleSubmit={createCreature}
       onItemSubmit={onSelectMonster}
       inputRef={inputRef}
-      error={error && <span className="form--label__error">required</span>}
+      error={error}
       customClasses="create-creature-form--item__text"
       spellCheck={false}
+      required
     />
   );
 }

@@ -61,7 +61,6 @@ function loadState(defaultState, getState, auto) {
     ...loadedState,
     errors: [],
     ariaAnnouncements: ['battle loaded'],
-    createCreatureErrors: {},
     loaded: true,
   };
 
@@ -89,7 +88,7 @@ export function autoLoad(defaultState) {
 
 export function save(state) {
   const {
-    ariaAnnouncements, errors, createCreatureErrors, ...stateToSave
+    ariaAnnouncements, errors, ...stateToSave
   } = state;
   const date = new Date(now());
   const dateSuffix = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;

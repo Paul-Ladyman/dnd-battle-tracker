@@ -104,6 +104,9 @@ export default function SpellList({
     rightTitle: 'Add spell',
     RightSubmitIcon: <CrossIcon />,
   };
+
+  const handleSubmit = () => addSpell(creatureId, name);
+
   return (
     <div>
       <div className="spellcasting-spell-input">
@@ -120,7 +123,8 @@ export default function SpellList({
           inputAriaLabelItemSelected={`Add spells for ${creatureName}`}
           rightControls={spellRightControls}
           rightControlsItemSelected={spellRightControls}
-          handleSubmit={() => addSpell(creatureId, name)}
+          handleSubmit={handleSubmit}
+          formHandler={handleSubmit}
           spellCheck={false}
         />
       </div>

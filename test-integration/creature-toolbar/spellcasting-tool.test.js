@@ -261,6 +261,15 @@ describe('Used spells', () => {
     await dmApp.spellcastingTool.assertUsedSpellsContains('goblin', 'cure wounds');
   });
 
+  it('allows a spell to be added to the list by keyboard', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Spellcasting');
+    await dmApp.spellcastingTool.openUsedSpells('goblin');
+    await dmApp.spellcastingTool.addUsedSpellByKeyboard('goblin', 'cure wounds');
+    await dmApp.spellcastingTool.assertUsedSpellsContains('goblin', 'cure wounds');
+  });
+
   it('sets the number of uses of a spells to 0 by default', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');

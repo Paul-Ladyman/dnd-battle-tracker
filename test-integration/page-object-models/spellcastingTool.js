@@ -8,6 +8,7 @@ import {
   queryByRole,
   getByText,
   queryByText,
+  fireEvent,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -61,6 +62,15 @@ export default class SpellcastingTool {
     await this.user.type(spellTool, spell);
     const add = await findByRole(spellTool.parentElement, 'button', { name: 'Add spell' });
     return this.user.click(add);
+  }
+
+  async addUsedSpellByKeyboard(name, spell) {
+    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
+    const tab = await findByRole(toolMenu, 'tabpanel', { name: 'Used spells' });
+    const spellTool = await findByRole(tab, 'combobox', { name: `Add spells for ${name}` });
+    await this.user.type(spellTool, spell);
+    const add = await findByRole(spellTool.parentElement, 'button', { name: 'Add spell' });
+    return this.user.type(add, '{enter}');
   }
 
   async searchUsedSrdSpell(name, spell) {

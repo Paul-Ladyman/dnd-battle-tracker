@@ -269,21 +269,15 @@ describe('Name', () => {
     await DmApp.assertCreatureVisible('goblin');
   });
 
-  it('shows an error when the creature name is empty', async () => {
+  it('does not allow a creature name that is empty', async () => {
     const dmApp = new DmApp();
+    await dmApp.createCreatureForm.assertInvalid();
     await dmApp.createCreatureForm.submitCreature();
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+    await dmApp.assertCreatureListEmpty();
   });
 });
 
 describe('Initiative', () => {
-  it('adds a creature to the battle when the initiative field is submitted', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await dmApp.createCreatureForm.submitInitiative();
-    await DmApp.assertCreatureVisible('goblin');
-  });
-
   it("adds creatures to the battle in the order they are submitted if they don't have initiative", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin 1');
@@ -295,6 +289,15 @@ describe('Initiative', () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin 1', '1');
     await dmApp.createCreatureForm.addCreature('goblin 2', '2');
+    await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
+  });
+
+  it('adds a creature to the battle when the initiative field is submitted', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1', '1');
+    await dmApp.createCreatureForm.enterCreatureName('goblin 2');
+    await dmApp.createCreatureForm.enterInitiative('2');
+    await dmApp.createCreatureForm.submitInitiative();
     await DmApp.assertCreatureList(['goblin 2', 'goblin 1']);
   });
 
@@ -370,10 +373,12 @@ describe('Initiative', () => {
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'goblin #3', 'goblin #4', 'goblin #5']);
   });
 
-  it('shows an error when the creature initiative is invalid', async () => {
+  it('does not allow an initiative that is invalid', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', 'initiative');
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
   });
 });
 
@@ -387,8 +392,9 @@ describe('Hit points', () => {
   it('adds a creature to the battle when the HP field is submitted', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.enterHp('1');
     await dmApp.createCreatureForm.submitHp();
-    await DmApp.assertCreatureVisible('goblin');
+    await DmApp.assertCreatureVisible('goblin', '1');
   });
 
   it("allows a creature's HP to be specified as dice notation", async () => {
@@ -479,10 +485,20 @@ describe('Hit points', () => {
     await DmApp.assertCreatureVisible('goblin #5', '1');
   });
 
-  it('shows an error when the creature HP is invalid', async () => {
+  it('does not allow an integer HP that is less than 1', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, '0');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
+  });
+
+  it('does not allow a HP that is invalid dice notation', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, 'hp');
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
   });
 });
 
@@ -496,8 +512,9 @@ describe('Armor class', () => {
   it('adds a creature to the battle when the AC field is submitted', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.enterAc('20');
     await dmApp.createCreatureForm.submitAc();
-    await DmApp.assertCreatureVisible('goblin');
+    await DmApp.assertCreatureVisible('goblin', null, '20');
   });
 
   it('adds the same AC to each creature in a group', async () => {
@@ -507,36 +524,66 @@ describe('Armor class', () => {
     await DmApp.assertCreatureVisible('goblin #2', null, '20');
   });
 
-  it('shows an error when the creature AC is invalid', async () => {
+  it('does not allow an AC that is less than 1', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, null, '2', null, null, '0');
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
   });
 });
 
 describe('Quantity', () => {
-  it('adds a creature to the battle when the quantity field is submitted', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.enterCreatureName('goblin');
-    await dmApp.createCreatureForm.submitQuantity();
-    await DmApp.assertCreatureVisible('goblin');
-  });
-
-  it('adds a quantity of a creature to the battle', async () => {
+  it('adds a group of creatures to the battle', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, null, '2');
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2']);
   });
 
-  it('shows an error when the quantity is less than 1', async () => {
+  it('adds a creature to the battle when the quantity field is submitted', async () => {
     const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', null, null, '0');
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.enterQuantity('2');
+    await dmApp.createCreatureForm.submitQuantity();
+    await DmApp.assertCreatureList(['goblin #1', 'goblin #2']);
   });
 
-  it('shows an error when the quantity is greater than 50', async () => {
+  it('allows the group size to be specified as dice notation', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, null, '1d6');
+    await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'goblin #3', 'goblin #4', 'goblin #5', 'goblin #6']);
+  });
+
+  it('does not allow an empty quantity', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.enterCreatureName('goblin');
+    await dmApp.createCreatureForm.enterQuantity('{backspace}');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
+  });
+
+  it('does not allow an integer quantity that is less than 1', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, null, '0');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
+  });
+
+  it('does not allow an integer quantity that is greater than 50', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', null, null, '51');
-    await DmApp.assertError('Failed to create creature. Create creature form is invalid.');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
+  });
+
+  it('does not allow a quantity that is invalid dice notation', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', null, null, 'invalid');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
   });
 });

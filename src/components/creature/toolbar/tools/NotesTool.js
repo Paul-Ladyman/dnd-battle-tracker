@@ -68,6 +68,7 @@ export default function NotesTool({
       leftControls={leftControls}
       leftControlsItemSelected={leftControlsItemSelected}
       handleSubmit={handleNoteSubmit}
+      formHandler={handleNoteSubmit}
       handleRemoveItem={handleRemoveItem}
     />
   );

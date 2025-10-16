@@ -29,32 +29,47 @@ export default class CreateCreatureForm {
 
   async submitName() {
     const nameField = await screen.findByRole('combobox', { name: 'create creature form. Name (required)' });
-    return fireEvent.keyDown(nameField, { key: 'enter', keyCode: 13 });
+    return this.user.type(nameField, '{enter}');
   }
 
   async submitInitiative() {
     const initiativeField = await screen.findByRole('textbox', { name: 'create creature form. Initiative (optional)' });
-    return fireEvent.keyDown(initiativeField, { key: 'enter', keyCode: 13 });
+    return this.user.type(initiativeField, '{enter}');
   }
 
   async submitHp() {
     const hpField = await this.findHpField();
-    return fireEvent.keyDown(hpField, { key: 'enter', keyCode: 13 });
+    return this.user.type(hpField, '{enter}');
   }
 
   async submitAc() {
     const acField = await screen.findByRole('spinbutton', { name: 'create creature form. AC (optional)' });
-    return fireEvent.keyDown(acField, { key: 'enter', keyCode: 13 });
+    return this.user.type(acField, '{enter}');
   }
 
   async submitQuantity() {
-    const quantityField = await screen.findByRole('spinbutton', { name: 'create creature form. Quantity (required)' });
-    return fireEvent.keyDown(quantityField, { key: 'enter', keyCode: 13 });
+    const quantityField = await screen.findByRole('textbox', { name: 'create creature form. Quantity (required)' });
+    return this.user.type(quantityField, '{enter}');
   }
 
   async enterCreatureName(name) {
     const nameField = await screen.findByText('Creature Name');
     return this.user.type(nameField, name);
+  }
+
+  async enterInitiative(initiative) {
+    const initiativeField = await screen.findByRole('textbox', { name: 'create creature form. Initiative (optional)' });
+    return this.user.type(initiativeField, initiative);
+  }
+
+  async enterHp(hp) {
+    const hpField = await this.findHpField();
+    return this.user.type(hpField, hp);
+  }
+
+  async enterAc(ac) {
+    const acField = await screen.findByRole('spinbutton', { name: 'create creature form. AC (optional)' });
+    return this.user.type(acField, ac);
   }
 
   async enterQuantity(quantity) {
@@ -296,5 +311,11 @@ export default class CreateCreatureForm {
   async assertAc(ac) {
     const acField = await screen.findByLabelText('AC (optional)');
     await waitFor(() => expect(acField).toHaveDisplayValue(ac));
+  }
+
+  async assertInvalid() {
+    const hpField = await this.findHpField();
+    const form = hpField.closest('form');
+    expect(form.checkValidity()).toBe(false);
   }
 }

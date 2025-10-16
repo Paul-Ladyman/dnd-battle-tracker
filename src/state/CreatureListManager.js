@@ -94,7 +94,6 @@ export function addCreature(state, creature) {
     activeCreature,
     focusedCreature: undefined,
     ariaAnnouncements,
-    createCreatureErrors: {},
     errors: [],
   };
 }

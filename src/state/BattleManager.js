@@ -10,7 +10,6 @@ export function newBattleState() {
     round: 0,
     ariaAnnouncements: [],
     errors: [],
-    createCreatureErrors: {},
     battleId: undefined,
     battleCreated: false,
     shareEnabled: false,

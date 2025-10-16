@@ -23,7 +23,6 @@ describe('newBattleState', () => {
       round: 0,
       ariaAnnouncements: [],
       errors: [],
-      createCreatureErrors: {},
       battleCreated: false,
       shareEnabled: false,
       battleId: undefined,
@@ -44,7 +43,6 @@ describe('resetBattle', () => {
       round: 0,
       ariaAnnouncements: ['battle reset'],
       errors: [],
-      createCreatureErrors: {},
       battleTrackerVersion: '1.0.0',
     };
 

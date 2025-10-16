@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import { hotkeys } from '../../../hotkeys/hotkeys';
 import getMonster from '../../../domain/monster';
-import { validateCreature } from '../../../state/CreatureFormManager';
 import Name from './Name';
 import Initiative from './Initiative';
 import HitPoints from './HitPoints';
@@ -11,9 +10,7 @@ import Submit from './Submit';
 import ArmorClass from './ArmorClass';
 
 function CreateCreatureForm({
-  createCreatureErrors,
   createCreature: propsCreateCreature,
-  handleCreateCreatureErrors,
 }) {
   const initialState = {
     name: '',
@@ -28,10 +25,12 @@ function CreateCreatureForm({
     stats: null,
   };
   const [state, setState] = useState(initialState);
+  const [modified, setModified] = useState(false);
 
   const nameInput = useRef(null);
   const initiativeInput = useRef(null);
   const hpInput = useRef(null);
+  const quantityInput = useRef(null);
 
   const hotKeyHandler = (e) => {
     if (isHotkey(hotkeys.createCreature, e)) {
@@ -50,13 +49,11 @@ function CreateCreatureForm({
   };
 
   useEffect(() => {
-    const errors = Object.keys(createCreatureErrors).length > 0;
-
     const { submitted } = state;
-    if (submitted && !errors) {
+    if (submitted) {
       resetForm();
     }
-  }, [state.submitted, createCreatureErrors]);
+  }, [state.submitted]);
 
   const handleChange = (event) => {
     event.persist();
@@ -78,8 +75,8 @@ function CreateCreatureForm({
   const rollFieldForResult = (ref, rollEach) => {
     const { roll } = ref.current;
     if (rollEach) return () => roll().result;
-    const hp = roll().result;
-    return () => hp;
+    const { result } = roll();
+    return () => result;
   };
 
   const rollField = (ref, rollEach) => {
@@ -91,34 +88,23 @@ function CreateCreatureForm({
 
   const createCreature = () => {
     const {
-      quantity,
       name,
-      initiative,
-      healthPoints,
       armorClass,
       rollEachHp,
       rollEachInitiative,
       stats,
     } = state;
 
-    const intQuantity = parseInt(quantity, 10);
+    const creature = {
+      name,
+      healthPoints: rollFieldForResult(hpInput, rollEachHp),
+      armorClass,
+      initiative: rollField(initiativeInput, rollEachInitiative),
+      quantity: rollFieldForResult(quantityInput)(),
+      stats,
+    };
 
-    const errors = validateCreature(name, initiative, healthPoints, armorClass, intQuantity);
-
-    if (!errors) {
-      const creature = {
-        name,
-        healthPoints: rollFieldForResult(hpInput, rollEachHp),
-        armorClass,
-        initiative: rollField(initiativeInput, rollEachInitiative),
-        quantity: intQuantity,
-        stats,
-      };
-
-      propsCreateCreature(creature);
-    } else {
-      handleCreateCreatureErrors(errors);
-    }
+    propsCreateCreature(creature);
 
     setState((prevState) => ({ ...prevState, submitted: true }));
   };
@@ -137,12 +123,6 @@ function CreateCreatureForm({
       const newState = { ...prevState, rollEachHp: !rollEachHp };
       return newState;
     });
-  };
-
-  const formHandler = (event) => {
-    if (event.keyCode === 13) {
-      createCreature();
-    }
   };
 
   const getInitiative = (dexterity, dexterityModifier) => {
@@ -181,50 +161,54 @@ function CreateCreatureForm({
     name, initiative, healthPoints, armorClass, quantity, rollEachInitiative, rollEachHp,
   } = state;
 
-  const {
-    nameError, initiativeError, healthError, acError, quantityError,
-  } = createCreatureErrors;
+  const formOnSubmit = (e) => {
+    e.preventDefault();
+    setModified(false);
+    createCreature();
+  };
+
+  const formOnChange = () => {
+    if (!modified) setModified(true);
+  };
+
+  const modifiedModifier = modified ? 'create-creature-form--modified' : '';
 
   return (
-    <form className="create-creature-form">
+    <form className={`create-creature-form ${modifiedModifier}`} onSubmit={formOnSubmit} onChange={formOnChange}>
       <Name
         name={name}
         setName={setName}
-        createCreature={createCreature}
         onSelectMonster={onSelectMonster}
         inputRef={nameInput}
-        error={nameError}
+        error="Required"
       />
       <Initiative
         initiative={initiative}
         handleChange={handleChange}
         rollEachInitiative={rollEachInitiative}
         toggleRollEachInitiative={toggleRollEachInitiative}
-        formHandler={formHandler}
         inputRef={initiativeInput}
-        error={initiativeError}
+        error="Number / dice notation"
       />
       <HitPoints
         hp={healthPoints}
         setHp={setHp}
         creatureStats={state.stats}
-        createCreature={createCreature}
         inputRef={hpInput}
-        error={healthError}
+        error="Number greater than 0 / dice notation"
         rollEachHp={rollEachHp}
         toggleRollEachHp={toggleRollEachHp}
       />
       <ArmorClass
         ac={armorClass}
         handleChange={handleChange}
-        formHandler={formHandler}
-        error={acError}
+        error="Number greater than 0"
       />
       <Quantity
         quantity={quantity}
         handleChange={handleChange}
-        formHandler={formHandler}
-        error={quantityError}
+        error="Required. Number between 1 and 50 / dice notation"
+        inputRef={quantityInput}
       />
       <Submit createCreature={createCreature} />
     </form>
