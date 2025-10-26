@@ -210,7 +210,7 @@ function CreateCreatureForm({
         error="Required. Number between 1 and 50 / dice notation"
         inputRef={quantityInput}
       />
-      <Submit createCreature={createCreature} />
+      <Submit />
     </form>
   );
 }

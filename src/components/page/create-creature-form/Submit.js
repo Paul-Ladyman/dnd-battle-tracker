@@ -1,9 +1,7 @@
 import React from 'react';
 import CrossIcon from '../../icons/CrossIcon';
 
-export default function Submit({
-  createCreature,
-}) {
+export default function Submit() {
   return (
     <div className="create-creature-form--item__submit">
       <button
@@ -11,7 +9,6 @@ export default function Submit({
         className="create-creature-form--submit"
         title="Add creature"
         aria-label="Add creature"
-        // onClick={createCreature}
       >
         <CrossIcon />
       </button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 function isInputDisabled(disabled, leftEnabled, rightEnabled) {
   if (disabled) return true;
