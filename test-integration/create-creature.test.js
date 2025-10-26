@@ -373,9 +373,17 @@ describe('Initiative', () => {
     await DmApp.assertCreatureList(['goblin #1', 'goblin #2', 'goblin #3', 'goblin #4', 'goblin #5']);
   });
 
-  it('does not allow an initiative that is invalid', async () => {
+  it('does not allow an initiative that is invalid dice notation', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', 'initiative');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.submitCreature();
+    await dmApp.assertCreatureListEmpty();
+  });
+
+  it('does not allow an initiative that is out of bounds dice notation', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '501d20');
     await dmApp.createCreatureForm.assertInvalid();
     await dmApp.createCreatureForm.submitCreature();
     await dmApp.assertCreatureListEmpty();

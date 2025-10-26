@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useImperativeHandle } from 'react';
-import roll, { validateSyntax } from '../../domain/dice';
+import roll, { validateDiceNotation } from '../../domain/dice';
 
 function Rollable({
   value,
@@ -24,7 +24,7 @@ function Rollable({
     const intValue = parseInt(valueToValidate, 10);
     const minValid = min ? intValue >= min : true;
     const maxValid = max ? intValue <= max : true;
-    return minValid && maxValid && validateSyntax(valueToValidate);
+    return minValid && maxValid && validateDiceNotation(valueToValidate);
   };
 
   return (

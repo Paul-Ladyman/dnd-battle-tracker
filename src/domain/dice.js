@@ -9,7 +9,7 @@ function validateLength(notation) {
   return notation.length <= 500;
 }
 
-export function validateSyntax(notation) {
+function validateSyntax(notation) {
   return /^(\d|-[d\d]|\+[d\d]|d\d+)+$/g.test(notation);
 }
 
@@ -25,10 +25,14 @@ function validateTotalRolls(notation) {
   return totalRolls <= 500;
 }
 
-function validateNotation(notation) {
-  return validateLength(notation)
-    && validateSyntax(notation)
-    && validateTotalRolls(notation);
+export function validateDiceNotation(notation) {
+  const standardisedNotation = notation.toString().replace(whiteSpace, '').toLowerCase();
+
+  const isValid = validateLength(standardisedNotation)
+    && validateSyntax(standardisedNotation)
+    && validateTotalRolls(standardisedNotation);
+
+  return isValid ? standardisedNotation : false;
 }
 
 function rollDice(diceType) {
@@ -88,9 +92,9 @@ function calculateResult(terms) {
 export default function roll(notation) {
   if (notation === undefined || notation === '') return { result: null };
 
-  const standardisedNotation = notation.toString().replace(whiteSpace, '').toLowerCase();
+  const standardisedNotation = validateDiceNotation(notation);
 
-  if (!validateNotation(standardisedNotation)) return { result: new Error(`invalid dice notation: ${notation}`) };
+  if (!standardisedNotation) return { result: new Error(`invalid dice notation: ${notation}`) };
 
   const rawTerms = getRawTerms(standardisedNotation);
   const terms = parseRawTerms(rawTerms);
