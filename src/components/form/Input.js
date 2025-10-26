@@ -85,19 +85,21 @@ function Input({
 
   useEffect(() => {
     const input = document.getElementById(inputId);
-
-    input.addEventListener('input', () => {
-      if (!validate || validate(input.value)) {
-        input.setCustomValidity('');
-      } else {
-        input.setCustomValidity(error);
-      }
-    });
-
-    input.addEventListener('invalid', () => {
+    const handleInvalid = () => {
       input.setCustomValidity(error);
-    });
+    };
+    input.addEventListener('invalid', handleInvalid);
+    return () => input.removeEventListener('invalid', handleInvalid);
   }, []);
+
+  useEffect(() => {
+    const input = document.getElementById(inputId);
+    if (!validate || validate(value)) {
+      input.setCustomValidity('');
+    } else {
+      input.setCustomValidity(error);
+    }
+  }, [value]);
 
   return (
     <div className={`input--form ${numberModifier} ${customClasses}`}>

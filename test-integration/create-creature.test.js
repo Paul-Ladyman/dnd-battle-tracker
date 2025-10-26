@@ -500,6 +500,15 @@ describe('Hit points', () => {
     await dmApp.createCreatureForm.submitCreature();
     await dmApp.assertCreatureListEmpty();
   });
+
+  it('clears errors when a HP value is selected from the dropdown for an SRD creature', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.selectSrdCreature('Goblin');
+    await dmApp.createCreatureForm.enterHp('hp');
+    await dmApp.createCreatureForm.assertInvalid();
+    await dmApp.createCreatureForm.selectHpRollByKeyboard();
+    await dmApp.createCreatureForm.assertValid();
+  });
 });
 
 describe('Armor class', () => {

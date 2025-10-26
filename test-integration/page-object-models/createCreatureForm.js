@@ -318,4 +318,10 @@ export default class CreateCreatureForm {
     const form = hpField.closest('form');
     expect(form.checkValidity()).toBe(false);
   }
+
+  async assertValid() {
+    const hpField = await this.findHpField();
+    const form = hpField.closest('form');
+    expect(form.checkValidity()).toBe(true);
+  }
 }
