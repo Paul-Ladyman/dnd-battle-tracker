@@ -385,7 +385,7 @@ label {
   outline-offset: 2px;
 }
 
-.create-creature-form--modified .input-wrapper:has( .input:user-invalid ) {
+.create-creature-form--modified .input-wrapper:has( .input:invalid ) {
   outline: 2px solid red;
 }
 
