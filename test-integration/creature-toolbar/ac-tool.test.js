@@ -16,6 +16,21 @@ describe('AC tool', () => {
     await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
   });
 
+  it('is disabled if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.asserToolDisabled('goblin', 'AC');
+  });
+
+  it('does not open the tool menu when selected if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.selectTool('goblin', 'AC');
+    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
+  });
+
   it('adds AC to a creature that has none', async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin');

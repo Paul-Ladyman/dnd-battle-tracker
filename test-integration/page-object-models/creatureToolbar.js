@@ -12,6 +12,10 @@ function findNoteTool(name) {
   return screen.findByRole('combobox', { name: `add note for ${name}` });
 }
 
+function getRoleForTool(tool) {
+  return 'button';
+}
+
 export default class CreatureToolbar {
   constructor(user) {
     this.user = user;
@@ -200,33 +204,33 @@ export default class CreatureToolbar {
     return expect(toolbar).toBeVisible();
   }
 
-  async assertButtonVisible(name, button) {
+  async assertToolVisible(name, tool) {
     const toolbar = await this.findToolbar(name);
-    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    const toolbarButton = await findByRole(toolbar, getRoleForTool(tool), { name: tool });
     return expect(toolbarButton).toBeVisible();
   }
 
-  async assertButtonNotFocused(name, button) {
+  async assertToolNotFocused(name, tool) {
     const toolbar = await this.findToolbar(name);
-    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    const toolbarButton = await findByRole(toolbar, getRoleForTool(tool), { name: tool });
     return expect(toolbarButton).not.toHaveFocus();
   }
 
-  async assertButtonFocused(name, button) {
+  async assertToolFocused(name, tool) {
     const toolbar = await this.findToolbar(name);
-    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    const toolbarButton = await findByRole(toolbar, getRoleForTool(tool), { name: tool });
     return expect(toolbarButton).toHaveFocus();
   }
 
-  async assertButtonTabable(name, button) {
+  async assertToolTabable(name, tool) {
     const toolbar = await this.findToolbar(name);
-    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    const toolbarButton = await findByRole(toolbar, getRoleForTool(tool), { name: tool });
     return expect(toolbarButton).toHaveAttribute('tabindex', '0');
   }
 
-  async assertButtonNotTabable(name, button) {
+  async assertToolNotTabable(name, tool) {
     const toolbar = await this.findToolbar(name);
-    const toolbarButton = await findByRole(toolbar, 'button', { name: button });
+    const toolbarButton = await findByRole(toolbar, getRoleForTool(tool), { name: tool });
     return expect(toolbarButton).toHaveAttribute('tabindex', '-1');
   }
 
@@ -238,5 +242,11 @@ export default class CreatureToolbar {
   async assertToolMenuNotVisible(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
     return expect(toolMenu).toBeNull();
+  }
+
+  async asserToolDisabled(name, tool) {
+    const toolbar = await screen.findByRole('toolbar', { name: `${name} toolbar` });
+    const toolbarButton = await findByRole(toolbar, 'button', { name: tool });
+    expect(toolbarButton).toHaveAttribute('aria-disabled', 'true');
   }
 }

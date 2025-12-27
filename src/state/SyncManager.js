@@ -11,6 +11,7 @@ function getSharedCreatures(creatures) {
     usedSpellSlots: undefined,
     initiativeRoll: undefined,
     spells: undefined,
+    selected: undefined,
   }));
 }
 

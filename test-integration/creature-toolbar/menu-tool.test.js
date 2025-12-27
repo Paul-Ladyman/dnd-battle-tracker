@@ -15,6 +15,21 @@ describe('Creature menu tool', () => {
     await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
   });
+
+  it('is disabled if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.asserToolDisabled('goblin', 'Creature Menu');
+  });
+
+  it('does not open the tool menu when selected if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
+  });
 });
 
 describe('Stat block tool', () => {

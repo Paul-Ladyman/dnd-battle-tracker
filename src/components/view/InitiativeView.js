@@ -15,6 +15,7 @@ export default function InitiativeView({
   round,
   secondsElapsed,
   creatureManagement,
+  selectedCreatureCount,
 }) {
   return (
     <>
@@ -33,6 +34,7 @@ export default function InitiativeView({
             round={round}
             secondsElapsed={secondsElapsed}
             creatureManagement={creatureManagement}
+            selectedCreatureCount={selectedCreatureCount}
           />
         )}
       </main>

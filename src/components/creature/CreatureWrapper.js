@@ -91,6 +91,8 @@ class CreatureWrapper extends Component {
   render() {
     const {
       creature,
+      selectedCreatures,
+      first,
       active,
       hasError,
       creatureManagement,
@@ -119,7 +121,9 @@ class CreatureWrapper extends Component {
     const showExpanded = active || expanded;
     const errorClassModifier = hasError ? 'creature-wrapper__error' : '';
     const activeClassModifier = active ? 'creature-wrapper__active' : '';
-    const classes = `creature-wrapper ${activeClassModifier} ${errorClassModifier}`;
+    const selectedCreaturesModifier = selectedCreatures ? 'creature-wrapper__selected-creatures' : '';
+    const firstModifier = first ? 'creature-wrapper__first' : '';
+    const classes = `creature-wrapper ${activeClassModifier} ${errorClassModifier} ${selectedCreaturesModifier} ${firstModifier}`;
     const creatureAriaLabel = getCreatureAriaLabel(creature, active, expanded);
     const {
       removeCreature,

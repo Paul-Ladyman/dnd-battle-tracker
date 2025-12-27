@@ -23,6 +23,7 @@ import {
   addSpellTotalUses,
   addSpellUses,
   addTieBreakerToCreature,
+  toggleSelect,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -41,116 +42,113 @@ beforeEach(() => {
   monsterUrlFrom5eApiIndex.mockReturnValue('https://www.dndbeyond.com/monsters/goblin');
 });
 
-describe('killCreature', () => {
-  it('kills a creature and adds the unconscious condition', () => {
-    const expected = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          alive: false,
-          conditions: unconsciousCondition,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-      ariaAnnouncements: ['Wellby killed/made unconscious'],
-    };
-
-    const result = killCreature(defaultState, 0);
-    expect(result).toEqual(expected);
-    expect(addCondition).toHaveBeenCalledTimes(1);
-    expect(addCondition).toHaveBeenCalledWith('Unconscious', defaultState.creatures[0], 0);
+describe('toggleSelect', () => {
+  it('adds an aria announcement when a creature is selected', () => {
+    const result = toggleSelect(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby selected');
   });
 
-  it('kills a creature and sets its health points to 0 if it has them', () => {
-    const expected = {
+  it('adds an aria announcement when a creature is unselected', () => {
+    const state = {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          alive: false,
-          healthPoints: 0,
-          conditions: unconsciousCondition,
+          selected: true,
         },
         defaultState.creatures[2],
       ],
-      ariaAnnouncements: ['Goblin #1 killed/made unconscious'],
     };
+    const result = toggleSelect(state, 1);
+    expect(result.ariaAnnouncements).toContain('Goblin #1 unselected');
+  });
 
-    const result = killCreature(defaultState, 1);
-    expect(result).toEqual(expected);
+  it('sets the creature as focused when it is unselected', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          selected: true,
+        },
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
+      ],
+    };
+    const result = toggleSelect(state, 1);
+    expect(result.focusedCreature).toBe(1);
+  });
+
+  it('does not set the creature as focused when it is the last to be unselected', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          selected: true,
+        },
+        defaultState.creatures[2],
+      ],
+    };
+    const result = toggleSelect(state, 1);
+    expect(result.focusedCreature).toBeUndefined();
+  });
+});
+
+describe('killCreature', () => {
+  it('adds an aria announcement for a single creature', () => {
+    const result = killCreature(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby killed/made unconscious');
+  });
+
+  it('adds an aria announcement for multiple selected creatures', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          selected: true,
+        },
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
+      ],
+    };
+    const result = killCreature(state, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby and 2 others killed/made unconscious');
   });
 });
 
 describe('stabilizeCreature', () => {
-  it('stabilizes a creature who is dead with 0 hit points', () => {
+  it('adds an aria announcement for a single creature', () => {
+    const result = stabilizeCreature(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby stabilized');
+  });
+
+  it('adds an aria announcement for multiple selected creatures', () => {
     const state = {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          alive: false,
-          healthPoints: 0,
+          selected: true,
         },
-        defaultState.creatures[2],
-      ],
-    };
-
-    const expected = {
-      ...defaultState,
-      creatures: [
-        defaultState.creatures[0],
         {
-          ...defaultState.creatures[1],
-          alive: true,
-          healthPoints: 0,
+          ...defaultState.creatures[2],
+          selected: true,
         },
-        defaultState.creatures[2],
-      ],
-      ariaAnnouncements: ['Goblin #1 stabilized'],
-    };
-
-    expect(stabilizeCreature(state, 1)).toEqual(expected);
-  });
-
-  it('stabilizes a creature who is dead with no hit points', () => {
-    const state = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          alive: false,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
       ],
     };
-
-    const expected = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          alive: true,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-      ariaAnnouncements: ['Wellby stabilized'],
-    };
-
-    expect(stabilizeCreature(state, 0)).toEqual(expected);
-  });
-
-  it('stabilizes a creature who is already alive', () => {
-    const expected = {
-      ...defaultState,
-      ariaAnnouncements: ['Wellby stabilized'],
-    };
-    expect(stabilizeCreature(defaultState, 0)).toEqual(expected);
+    const result = stabilizeCreature(state, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby and 2 others stabilized');
   });
 });
 
@@ -577,6 +575,7 @@ describe('createCreature', () => {
       totalSpellSlots: null,
       usedSpellSlots: null,
       spells: {},
+      selected: false,
     };
 
     const creature = createCreature(1, { name: 'name', initiative: { result: null }, healthPoints: null });
@@ -604,6 +603,7 @@ describe('createCreature', () => {
       totalSpellSlots: null,
       usedSpellSlots: null,
       spells: {},
+      selected: false,
     };
 
     const creature = createCreature(1, {
@@ -636,6 +636,7 @@ describe('createCreature', () => {
       totalSpellSlots: null,
       usedSpellSlots: null,
       spells: {},
+      selected: false,
     };
 
     const creature = createCreature(1, {

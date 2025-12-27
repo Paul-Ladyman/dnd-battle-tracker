@@ -23,6 +23,7 @@ export function ConditionsToolMenu({
 }
 
 export function ConditionsButton({
+  creature,
   onFocus,
   onClick,
   tabIndex,
@@ -31,6 +32,8 @@ export function ConditionsButton({
   toolMenuId,
   toolMenuExpanded,
 }) {
+  const { selected } = creature;
+  const ariaDisabled = selected ? 'true' : 'false';
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
@@ -42,11 +45,12 @@ export function ConditionsButton({
       type="button"
       ref={buttonRef}
       onFocus={onFocus}
-      onClick={onClick}
+      onClick={() => !selected && onClick()}
       tabIndex={tabIndex}
       aria-haspopup="true"
       aria-controls={toolMenuId}
       aria-expanded={toolMenuExpanded}
+      aria-disabled={ariaDisabled}
       id={`${toolMenuId}-conditions`}
     >
       <ConditionsIcon />

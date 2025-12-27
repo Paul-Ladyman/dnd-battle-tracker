@@ -35,6 +35,13 @@ export default class DndBattleTracker {
     return expect(creatureNames).toEqual(expectedCreatureNames);
   }
 
+  async assertUnselectedCreatureList(expectedCreatureNames) {
+    const main = await screen.findByRole('main');
+    const creatures = await findAllByRole(main, 'checkbox');
+    const creatureNames = creatures.map((creature) => getByRole(creature, 'heading').textContent);
+    return expect(creatureNames).toEqual(expectedCreatureNames);
+  }
+
   async assertCreatureListEmpty() {
     const main = await screen.findByRole('main');
     const creatures = await queryAllByRole(main, 'region');

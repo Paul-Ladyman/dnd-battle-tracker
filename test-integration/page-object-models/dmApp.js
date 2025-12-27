@@ -15,6 +15,7 @@ import BattleToolbar from './battleToolbar';
 import AcTool from './acTool';
 import Navigation from './navigation';
 import Alert from './alert';
+import SelectTool from './selectTool';
 
 function TestDmApp() {
   return <DungeonMasterAppWrapper />;
@@ -27,6 +28,7 @@ export default class DmApp extends DndBattleTracker {
     this.creatureToolbar = new CreatureToolbar(this.user);
     this.menuTool = new MenuTool(this.user);
     this.statusTool = new StatusTool(this.user);
+    this.selectTool = new SelectTool(this.user);
     this.hpTool = new HpTool(this.user);
     this.acTool = new AcTool(this.user);
     this.initiativeTool = new InitiativeTool(this.user);

@@ -18,6 +18,7 @@ export default {
       totalSpellSlots: null,
       usedSpellSlots: null,
       spells: {},
+      selected: false,
     },
     {
       name: 'Goblin #1',
@@ -39,6 +40,7 @@ export default {
       totalSpellSlots: null,
       usedSpellSlots: null,
       spells: {},
+      selected: false,
     },
     {
       name: 'Goblin #2',
@@ -60,6 +62,7 @@ export default {
       totalSpellSlots: null,
       usedSpellSlots: null,
       spells: {},
+      selected: false,
     },
   ],
   creatureIdCount: 3,

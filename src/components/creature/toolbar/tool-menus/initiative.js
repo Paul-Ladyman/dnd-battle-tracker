@@ -29,6 +29,7 @@ export function InitiativeToolMenu({
 }
 
 export function InitiativeButton({
+  creature,
   active,
   onFocus,
   onClick,
@@ -39,7 +40,8 @@ export function InitiativeButton({
   toolMenuId,
   toolMenuExpanded,
 }) {
-  const enabled = !active;
+  const { selected } = creature;
+  const enabled = !active && !selected;
   const ariaDisabled = enabled ? 'false' : 'true';
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;

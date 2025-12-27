@@ -20,6 +20,11 @@ export default class Creature {
     return this.user.click(button);
   }
 
+  async select(name) {
+    const creature = await screen.findByRole('checkbox', { name });
+    return this.user.click(creature);
+  }
+
   async assertExpandedTextVisible(name, text) {
     const creature = await screen.findByRole('region', { name: `${name} expanded` });
     const screenText = getAllByText(creature, (_, element) => element.textContent === text);
@@ -49,5 +54,10 @@ export default class Creature {
     const creature = await screen.findByRole('region', { name });
     const button = await findByRole(creature, 'button', { name: `expand ${name}` });
     expect(button).toHaveFocus();
+  }
+
+  async assertUnselectedFocused(name) {
+    const creature = await screen.findByRole('checkbox', { name });
+    expect(creature).toHaveFocus();
   }
 }

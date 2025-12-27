@@ -31,6 +31,7 @@ export function NotesToolMenu({
 }
 
 export function NotesButton({
+  creature,
   onFocus,
   onClick,
   tabIndex,
@@ -39,6 +40,8 @@ export function NotesButton({
   toolMenuExpanded,
   toolMenuId,
 }) {
+  const { selected } = creature;
+  const ariaDisabled = selected ? 'true' : 'false';
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
@@ -50,11 +53,12 @@ export function NotesButton({
       type="button"
       ref={buttonRef}
       onFocus={onFocus}
-      onClick={onClick}
+      onClick={() => !selected && onClick()}
       tabIndex={tabIndex}
       aria-haspopup="true"
       aria-controls={toolMenuId}
       aria-expanded={toolMenuExpanded}
+      aria-disabled={ariaDisabled}
     >
       <NotesIcon />
       Notes

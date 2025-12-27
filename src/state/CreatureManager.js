@@ -3,9 +3,17 @@ import { addCondition, removeCondition } from './ConditionsManager';
 import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
 import { maxSpellSlots } from '../domain/spellcasting';
 import conditionsData from '../domain/conditions';
+import Creatures from '../domain/creatures';
 
 function findCreature(creatures, creatureId) {
   return creatures.find(({ id }) => creatureId === id);
+}
+
+function updateAnnouncements(state, creatureNames, announcement) {
+  const others = creatureNames.length - 1;
+  const othersAnnouncement = others > 0 ? ` and ${others} others` : '';
+  const ariaAnnouncement = `${creatureNames[0]}${othersAnnouncement} ${announcement}`;
+  return state.ariaAnnouncements.concat(ariaAnnouncement);
 }
 
 function updateCreature(state, id, updates, announcement) {
@@ -20,23 +28,39 @@ function updateCreature(state, id, updates, announcement) {
   return { ...state, creatures: newCreatures, ariaAnnouncements };
 }
 
+export function toggleSelect(state, creatureId) {
+  const creatures = new Creatures(state.creatures)
+    .updateCreature(creatureId, (creature) => creature.toggleSelect());
+  const updatedCreatureIndex = creatures.getIndex(creatureId);
+  const selectedCreatureCount = creatures.countSelected();
+  const focusedCreature = selectedCreatureCount > 0 ? updatedCreatureIndex : undefined;
+  const updatedCreature = creatures.list[updatedCreatureIndex];
+  const description = updatedCreature.selected ? 'selected' : 'unselected';
+  const ariaAnnouncements = updateAnnouncements(state, [updatedCreature.name], description);
+  return {
+    ...state,
+    creatures: creatures.serialize(),
+    ariaAnnouncements,
+    focusedCreature,
+  };
+}
+
 export function killCreature(state, creatureId) {
-  const creature = findCreature(state.creatures, creatureId);
-  const healthPoints = creature.healthPoints === undefined ? undefined : 0;
-  const ariaAnnouncement = `${creature.name} killed/made unconscious`;
-  const newConditions = addCondition(conditionsData.Unconscious.text, creature, state.round);
-  return updateCreature(
-    state,
-    creatureId,
-    { alive: false, healthPoints, conditions: newConditions },
-    ariaAnnouncement,
-  );
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.kill(state.round));
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'killed/made unconscious');
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
 }
 
 export function stabilizeCreature(state, creatureId) {
-  const creature = findCreature(state.creatures, creatureId);
-  const ariaAnnouncement = `${creature.name} stabilized`;
-  return updateCreature(state, creatureId, { alive: true }, ariaAnnouncement);
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.stabilize());
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'stabilized');
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
 }
 
 export function damageCreature(state, creatureId, damage) {
@@ -182,6 +206,7 @@ export function createCreature(creatureId, {
     totalSpellSlots: getTotalSpellSlots(stats),
     usedSpellSlots: null,
     spells: getTotalSpells(stats),
+    selected: false,
   };
 }
 

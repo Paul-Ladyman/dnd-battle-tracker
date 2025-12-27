@@ -1,5 +1,6 @@
 import React, { useImperativeHandle } from 'react';
 import CreatureWrapper from '../creature/CreatureWrapper';
+import UnselectedCreature from '../creature/UnselectedCreature';
 
 function Creatures({
   creatures,
@@ -10,6 +11,7 @@ function Creatures({
   secondsElapsed,
   creatureManagement,
   playerSession,
+  selectedCreatureCount,
 }, forwardedRef) {
   const refs = creatures.reduce((acc, value) => {
     acc[value.id] = React.createRef();
@@ -31,13 +33,27 @@ function Creatures({
     [refs],
   );
 
+  const selectedCreatures = selectedCreatureCount > 0;
+
   return (
     <div className="creature-list">
       {creatures.map((creature, i) => {
-        const { id } = creature;
+        const { id, selected } = creature;
         const active = activeCreatureId === id;
         const hasError = errorCreatureId === id;
         const focused = focusedCreature === i;
+
+        if (selectedCreatures && !selected) {
+          return (
+            <UnselectedCreature
+              creature={creature}
+              active={active}
+              creatureManagement={creatureManagement}
+              focused={focused}
+            />
+          );
+        }
+
         return (
           <div
             className="creature-scroll-effect"
@@ -47,6 +63,8 @@ function Creatures({
 
             <CreatureWrapper
               creature={creature}
+              selectedCreatures={selectedCreatures}
+              first={i === 0}
               active={active}
               hasError={hasError}
               focused={focused || hasError}

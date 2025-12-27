@@ -122,3 +122,48 @@ describe('Turn - Player', () => {
     await PlayerApp.assertCurrentTurn(true, 'goblin');
   });
 });
+
+describe('Selected Creatures', () => {
+  it('does not display the number of selected creatures if there are none', async () => {
+    const dmApp = new DmApp();
+    await dmApp.battleToolbar.assertNoSelectedCreatures();
+  });
+
+  it('does not display the unselect all button if there are no selected ceatures', async () => {
+    const dmApp = new DmApp();
+    await dmApp.battleToolbar.assertNoUnselectAll();
+  });
+
+  it('displays the number of selected creatures in the battle toolbar', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+    await dmApp.battleToolbar.assertSelectedCreatures('2');
+  });
+
+  it('does not display the other stats when there are selected creatures', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.battleToolbar.assertNoStats();
+  });
+
+  it('does not display the start battle button when there are selected creatures', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.battleToolbar.assertNoStartBattle();
+  });
+
+  it('allows all creatures to be unselected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+    await dmApp.battleToolbar.unselectAll();
+    await dmApp.battleToolbar.assertNoSelectedCreatures();
+  });
+});

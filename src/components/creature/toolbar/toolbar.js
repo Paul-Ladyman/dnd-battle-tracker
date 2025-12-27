@@ -7,9 +7,15 @@ import { NotesButton, NotesToolMenu } from './tool-menus/notes';
 import { HpButton, HpToolMenu } from './tool-menus/hp';
 import { SpellcastingButton, SpellcastingToolMenu } from './tool-menus/spellcasting';
 import { AcButton, AcToolMenu } from './tool-menus/ac';
+import SelectTool from './tools/SelectTool';
 
 export default function getToolbar() {
   return [
+    {
+      Button: SelectTool,
+      ref: React.createRef(),
+      key: (id) => `${id}-select`,
+    },
     {
       Button: CreatureMenuButton,
       ToolMenu: CreatureMenuToolMenu,

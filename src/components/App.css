@@ -256,6 +256,10 @@ label {
   .battle-toolbar--stat {
     max-width: 33%;
   }
+
+  .battle-toolbar--stat__wide {
+    max-width: fit-content;
+  }
 }
 
 /* Remove second-most unimportant battle bar info for screens smaller than 300px */
@@ -266,6 +270,10 @@ label {
 
   .battle-toolbar--stat {
     max-width: 50%;
+  }
+
+  .battle-toolbar--stat__wide {
+    max-width: fit-content;
   }
 }
 
@@ -279,6 +287,29 @@ label {
   white-space: nowrap;
   overflow: hidden;
   margin-top: 2px;
+}
+
+.battle-toolbar--stat-value__button {
+  min-height: 28px;
+  height: 28px;
+  font-size: 18px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  padding: 0 8px;
+  margin: 0;
+  display: block;
+}
+
+.battle-toolbar--stat-value__button:hover,
+.battle-toolbar--stat-value__button:focus {
+  padding: 0 7px;
+}
+
+@media only screen and (max-width: 1175px) {
+  .battle-toolbar--stat-value__button {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
 }
 
 .battle-toolbar--button {
@@ -701,6 +732,18 @@ label {
   .creature-toolbar-button__text svg {
     display: none;
   }
+
+  .creature-toolbar-button__icon {
+    grid-column: span 2;
+  }
+
+  .creature-toolbar-button__icon svg {
+    display: block;
+  }
+
+  .creature-toolbar-button__icon .creature-toolbar-button--text {
+    display: none;
+  }
 }
 
 .conditions {
@@ -874,7 +917,34 @@ label {
 
 .creature-list {
   width: 80%;
+  margin-top: 60px;
   margin-bottom: 40px;
+}
+
+.unselected-creature {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  cursor: pointer;
+  padding: 12px;
+}
+
+.unselected-creature:hover, .unselected-creature:focus-within {
+  padding: 11px;
+}
+
+.unselected-creature svg {
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 1175px) {
+  .unselected-creature {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
 }
 
 .creature-wrapper {
@@ -887,6 +957,14 @@ label {
   margin: 60px 0 10px 0;
   padding: 10px;
   box-sizing: border-box;
+}
+
+.creature-wrapper__selected-creatures {
+  margin-top: 30px;
+}
+
+.creature-wrapper__first {
+  margin-top: 0;
 }
 
 .creature-wrapper__active {
@@ -1254,28 +1332,6 @@ label {
 /* scroll to active initiative */
 .creature-scroll-effect {
   scroll-margin-top: 54px;
-}
-
-.battle-toolbar--stat-value__button {
-  min-height: auto;
-  font-size: 18px;
-  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  padding: 0 8px;
-  margin: 0;
-  display: block;
-}
-
-.battle-toolbar--stat-value__button:hover,
-.battle-toolbar--stat-value__button:focus {
-  padding: 0 7px;
-}
-
-@media only screen and (max-width: 1175px) {
-  .battle-toolbar--stat-value__button {
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-  }
 }
  
 /* Tab list */

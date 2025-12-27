@@ -43,6 +43,7 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
 }
 
 export function CreatureMenuButton({
+  creature,
   onFocus,
   onClick,
   tabIndex,
@@ -51,24 +52,30 @@ export function CreatureMenuButton({
   toolMenuExpanded,
   focused,
 }) {
+  const { selected } = creature;
+  const ariaDisabled = selected ? 'true' : 'false';
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
+  const textButtonClass = `${buttonClass} ${buttonClass}__text`;
+  const iconButtonClass = `${buttonClass} ${buttonClass}__icon`;
+  const mediumButtonClass = `${buttonClass}__medium`;
   const focusedButtonClass = focused ? `${buttonClass}__focused` : '';
   return (
     <button
-      title="Creature Menu"
       aria-label="Creature Menu"
-      className={`${buttonClass} ${focusedButtonClass}`}
+      aria-disabled={ariaDisabled}
+      className={`${textButtonClass} ${iconButtonClass} ${mediumButtonClass} ${focusedButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}
-      onClick={onClick}
+      onClick={() => !selected && onClick()}
       tabIndex={tabIndex}
       aria-haspopup="true"
       aria-controls={toolMenuId}
       aria-expanded={toolMenuExpanded}
     >
       <CreatureMenuIcon />
+      <div className={`${buttonClass}--text`}>Settings</div>
     </button>
   );
 }

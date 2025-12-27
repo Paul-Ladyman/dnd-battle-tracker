@@ -40,6 +40,21 @@ describe('Initiative tool', () => {
     await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
   });
 
+  it('is disabled if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.initiativeTool.assertDisabled('goblin');
+  });
+
+  it('does not open the tool menu when selected if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Initiative');
+    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
+  });
+
   it("closes the tool menu when selected if it is the creature's turn", async () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('goblin', '1');

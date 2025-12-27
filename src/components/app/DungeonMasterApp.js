@@ -23,6 +23,7 @@ import {
 import {
   removeCreature,
   getCreatureList,
+  unselectAll,
 } from '../../state/CreatureListManager';
 import getSecondsElapsed from '../../state/TimeManager';
 import {
@@ -46,6 +47,7 @@ import {
   addSpellTotalUses,
   addSpellUses,
   addTieBreakerToCreature,
+  toggleSelect,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -122,16 +124,19 @@ function DungeonMasterApp({
     battleId,
     focusedCreature,
   } = state;
+  const selectedCreatureCount = creatures.filter(({ selected }) => selected).length;
 
   useEffect(() => {
     getSpellList().then(setSpellList);
   }, []);
 
   useEffect(() => {
-    window.addEventListener('keydown', hotKeyHandler);
-
-    return () => window.removeEventListener('keydown', hotKeyHandler);
-  }, []);
+    if (selectedCreatureCount === 0) {
+      window.addEventListener('keydown', hotKeyHandler);
+      return () => window.removeEventListener('keydown', hotKeyHandler);
+    }
+    return () => {};
+  }, [selectedCreatureCount]);
 
   useEffect(() => {
     if (onlineError) updateBattle(updateErrors, false)('Error sharing battle with players. Try toggling share button.');
@@ -159,6 +164,7 @@ function DungeonMasterApp({
     addSpell: updateBattle(addSpell),
     addSpellTotalUses: updateBattle(addSpellTotalUses),
     addSpellUses: updateBattle(addSpellUses),
+    toggleSelect: updateBattle(toggleSelect, false),
   };
 
   const battleManagement = useMemo(() => ({
@@ -202,6 +208,7 @@ function DungeonMasterApp({
         round={round}
         secondsElapsed={secondsElapsed}
         creatureManagement={creatureManagement}
+        selectedCreatureCount={selectedCreatureCount}
       />,
     },
     {
@@ -228,6 +235,8 @@ function DungeonMasterApp({
           rulesSearchOpen={rulesSearchOpened}
           toggleRulesSearch={toggleRulesSearch}
           onScrollActiveInitiative={onScrollActiveInitiative}
+          selectedCreatureCount={selectedCreatureCount}
+          unselectAll={updateBattle(unselectAll, false)}
         />
         { errors && (
         <Errors

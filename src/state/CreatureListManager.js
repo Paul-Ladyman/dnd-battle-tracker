@@ -1,3 +1,4 @@
+import Creatures from '../domain/creatures';
 import { createCreature } from './CreatureManager';
 import { sortByInitiative } from './InitiativeManager';
 
@@ -106,4 +107,17 @@ export function getCreatureList(state, playerSession = false) {
 
   const sharedCreatures = state.creatures.filter(({ shared }) => shared);
   return [sharedCreatures, sharedCreatures.length];
+}
+
+export function unselectAll(state) {
+  const creatures = new Creatures(state.creatures)
+    .updateAll((creature) => creature.unselect())
+    .serialize();
+
+  const ariaAnnouncements = state.ariaAnnouncements.concat(['All creatures unselected']);
+  return {
+    ...state,
+    creatures,
+    ariaAnnouncements,
+  };
 }

@@ -1,5 +1,10 @@
 import { createCreature } from './CreatureManager';
-import { removeCreature, addCreature, getCreatureList } from './CreatureListManager';
+import {
+  removeCreature,
+  addCreature,
+  getCreatureList,
+  unselectAll,
+} from './CreatureListManager';
 import defaultState from '../../test/fixtures/battle';
 
 jest.mock('./CreatureManager');
@@ -528,5 +533,12 @@ describe('getCreatureList', () => {
     ];
     const expected = [expectedCreatures, 2];
     expect(getCreatureList(defaultState, true)).toEqual(expected);
+  });
+});
+
+describe('unselectAll', () => {
+  it('adds an aria announcement', () => {
+    const result = unselectAll(defaultState);
+    expect(result.ariaAnnouncements).toEqual(['All creatures unselected']);
   });
 });
