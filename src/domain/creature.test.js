@@ -159,3 +159,51 @@ describe('serialize', () => {
     expect(creature.serialize()).toEqual(defaultState.creatures[0]);
   });
 });
+
+describe('lock', () => {
+  it('locks a creature that is unlocked', () => {
+    const creature = new Creature(defaultState.creatures[0]);
+    const newCreature = creature.lock();
+    expect(newCreature.locked).toBe(true);
+  });
+
+  it('does nothing to a creature that is already locked', () => {
+    const creature = new Creature(defaultState.creatures[1]);
+    const newCreature = creature.lock();
+    expect(newCreature.locked).toBe(true);
+  });
+
+  it('locks a creature that does not have a locked field', () => {
+    const state = {
+      ...defaultState.creatures[0],
+      locked: undefined,
+    };
+    const creature = new Creature(state);
+    const newCreature = creature.lock();
+    expect(newCreature.locked).toBe(true);
+  });
+});
+
+describe('unlock', () => {
+  it('unlocks a creature that is locked', () => {
+    const creature = new Creature(defaultState.creatures[1]);
+    const newCreature = creature.unlock();
+    expect(newCreature.locked).toBe(false);
+  });
+
+  it('does nothing to a creature that is already unlocked', () => {
+    const creature = new Creature(defaultState.creatures[0]);
+    const newCreature = creature.unlock();
+    expect(newCreature.locked).toBe(false);
+  });
+
+  it('unlocks a creature that does not have a locked field', () => {
+    const state = {
+      ...defaultState.creatures[0],
+      locked: undefined,
+    };
+    const creature = new Creature(state);
+    const newCreature = creature.unlock();
+    expect(newCreature.locked).toBe(false);
+  });
+});

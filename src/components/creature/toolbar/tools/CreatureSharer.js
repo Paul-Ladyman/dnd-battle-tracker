@@ -6,8 +6,13 @@ function CreatureSharer({
   toggleCreatureShare,
   active,
 }) {
-  const { shared, name, id } = creature;
-  const disabled = active && shared;
+  const {
+    shared,
+    name,
+    id,
+    selected,
+  } = creature;
+  const disabled = selected || (active && shared);
 
   const text = shared ? 'Unshare' : 'Share';
   const buttonAriaLabel = shared ? `Unshare ${name}` : `Share ${name}`;

@@ -15,21 +15,6 @@ describe('Creature menu tool', () => {
     await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
     await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
   });
-
-  it('is disabled if the creature is selected', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', '1');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
-    await dmApp.creatureToolbar.asserToolDisabled('goblin', 'Creature Menu');
-  });
-
-  it('does not open the tool menu when selected if the creature is selected', async () => {
-    const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', '1');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
-    await dmApp.creatureToolbar.assertToolMenuNotVisible('goblin');
-  });
 });
 
 describe('Stat block tool', () => {
@@ -86,6 +71,55 @@ describe('Lock tool', () => {
     await dmApp.menuTool.unlockCreature('Goblin');
     return dmApp.menuTool.assertCreatureUnlocked('Goblin');
   });
+
+  it('locks all selected creatures', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.lockCreature('goblin 1');
+    await dmApp.menuTool.assertCreatureLocked('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    return dmApp.menuTool.assertCreatureLocked('goblin 2');
+  });
+
+  it('unlocks all selected creatures', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.lockCreature('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    await dmApp.menuTool.lockCreature('goblin 2');
+
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.unlockCreature('goblin 1');
+    await dmApp.menuTool.assertCreatureUnlocked('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    return dmApp.menuTool.assertCreatureUnlocked('goblin 2');
+  });
+
+  it('handles a mix of locked and unlocked selected creatures', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.lockCreature('goblin 1');
+
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    await dmApp.menuTool.lockCreature('goblin 2');
+    await dmApp.menuTool.assertCreatureLocked('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    return dmApp.menuTool.assertCreatureLocked('goblin 1');
+  });
 });
 
 describe('Share tool', () => {
@@ -119,6 +153,14 @@ describe('Share tool', () => {
     await dmApp.battleToolbar.startBattle();
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     return dmApp.menuTool.assertCreatureShareDisabled('Goblin');
+  });
+
+  it('is disabled if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    return dmApp.menuTool.assertCreatureShareDisabled('goblin');
   });
 
   it('does nothing if clicked whilst disabled', async () => {
@@ -175,6 +217,23 @@ describe('Share HP tool', () => {
     await dmApp.menuTool.unshareHP('Goblin');
     await dmApp.menuTool.shareHP('Goblin');
     return dmApp.menuTool.assertHPShared('Goblin');
+  });
+
+  it('is disabled if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    return dmApp.menuTool.assertHPShareDisabled('goblin');
+  });
+
+  it('does nothing when disabled', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin', '1');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
+    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('goblin');
+    return dmApp.menuTool.assertHPShared('goblin');
   });
 });
 
@@ -250,6 +309,14 @@ describe('Remove tool', () => {
     const dmApp = new DmApp();
     await dmApp.createCreatureForm.addCreature('Goblin', '1');
     await dmApp.battleToolbar.startBattle();
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
+    return dmApp.menuTool.assertRemoveCreatureDisabled('Goblin');
+  });
+
+  it('is disabled if the creature is selected', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('Goblin', '1');
+    await dmApp.creatureToolbar.selectTool('Goblin', 'Select');
     await dmApp.creatureToolbar.selectTool('Goblin', 'Creature Menu');
     return dmApp.menuTool.assertRemoveCreatureDisabled('Goblin');
   });

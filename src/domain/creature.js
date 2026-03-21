@@ -63,6 +63,20 @@ export default class Creature {
     });
   }
 
+  lock() {
+    return new Creature({
+      ...this.data,
+      locked: true,
+    });
+  }
+
+  unlock() {
+    return new Creature({
+      ...this.data,
+      locked: false,
+    });
+  }
+
   kill(round) {
     const healthPoints = this.healthPoints === undefined ? undefined : 0;
     const unconsciousCondition = {

@@ -347,11 +347,22 @@ export function addTieBreakerToCreature(state, creatureId, initiativeTieBreaker)
   return updateCreature(state, creatureId, { initiativeTieBreaker }, ariaAnnouncement);
 }
 
-export function toggleCreatureLock(state, creatureId) {
-  const creature = findCreature(state.creatures, creatureId);
-  const newState = creature.locked ? 'unlocked' : 'locked';
-  const ariaAnnouncement = `${creature.name} is ${newState}`;
-  return updateCreature(state, creatureId, { locked: !creature.locked }, ariaAnnouncement);
+export function lockCreature(state, creatureId) {
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.lock());
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'locked');
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
+}
+
+export function unlockCreature(state, creatureId) {
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.unlock());
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'unlocked');
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
 }
 
 export function toggleCreatureShare(state, creatureId) {

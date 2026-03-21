@@ -11,7 +11,6 @@ import {
   addArmorClassToCreature,
   addTemporaryHealthToCreature,
   addInitiativeToCreature,
-  toggleCreatureLock,
   toggleCreatureShare,
   toggleCreatureHitPointsShare,
   resetCreature,
@@ -24,6 +23,8 @@ import {
   addSpellUses,
   addTieBreakerToCreature,
   toggleSelect,
+  lockCreature,
+  unlockCreature,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -1758,41 +1759,55 @@ describe('addTieBreakerToCreature', () => {
   });
 });
 
-describe('toggleCreatureLock', () => {
-  it('locks a creature if it is unlocked', () => {
-    const expectedState = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          locked: true,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-      ariaAnnouncements: ['Wellby is locked'],
-    };
-
-    const result = toggleCreatureLock(defaultState, 0);
-    expect(result).toEqual(expectedState);
+describe('lockCreature', () => {
+  it('adds an aria announcement for a single creature when it is locked', () => {
+    const result = lockCreature(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby locked');
   });
 
-  it('unlocks a creature if it is locked', () => {
-    const expectedState = {
+  it('adds an aria announcement for multiple selected creatures when one is locked', () => {
+    const state = {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          locked: false,
+          selected: true,
         },
-        defaultState.creatures[2],
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
       ],
-      ariaAnnouncements: ['Goblin #1 is unlocked'],
     };
+    const result = lockCreature(state, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby and 2 others locked');
+  });
+});
 
-    const result = toggleCreatureLock(defaultState, 1);
-    expect(result).toEqual(expectedState);
+describe('unlockCreature', () => {
+  it('adds an aria announcement for a single creature when it is unlocked', () => {
+    const result = unlockCreature(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby unlocked');
+  });
+
+  it('adds an aria announcement for multiple selected creatures when one is unlocked', () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          selected: true,
+        },
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
+      ],
+    };
+    const result = unlockCreature(state, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby and 2 others unlocked');
   });
 });
 

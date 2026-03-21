@@ -11,9 +11,11 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
   const {
     statBlock,
     name,
+    selected,
   } = creature;
   const {
-    toggleCreatureLock,
+    lockCreature,
+    unlockCreature,
     toggleCreatureShare,
     toggleCreatureHitPointsShare,
     removeCreature,
@@ -23,7 +25,11 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
     <div className="creature-toolbar--grid creature-toolbar--grid__buttons-only creature-toolbar--entrance">
       { !statBlock && <MonsterSearcher search={name} /> }
       { statBlock && <StatBlockLink url={statBlock} /> }
-      <CreatureLocker creature={creature} toggleCreatureLock={toggleCreatureLock} />
+      <CreatureLocker
+        creature={creature}
+        lockCreature={lockCreature}
+        unlockCreature={unlockCreature}
+      />
       <CreatureSharer
         creature={creature}
         toggleCreatureShare={toggleCreatureShare}
@@ -36,14 +42,13 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
       <CreatureRemover
         creature={creature}
         removeCreature={removeCreature}
-        disabled={active}
+        disabled={active || selected}
       />
     </div>
   );
 }
 
 export function CreatureMenuButton({
-  creature,
   onFocus,
   onClick,
   tabIndex,
@@ -52,8 +57,6 @@ export function CreatureMenuButton({
   toolMenuExpanded,
   focused,
 }) {
-  const { selected } = creature;
-  const ariaDisabled = selected ? 'true' : 'false';
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
@@ -63,12 +66,11 @@ export function CreatureMenuButton({
   return (
     <button
       aria-label="Creature Menu"
-      aria-disabled={ariaDisabled}
       className={`${textButtonClass} ${iconButtonClass} ${mediumButtonClass} ${focusedButtonClass}`}
       type="button"
       ref={buttonRef}
       onFocus={onFocus}
-      onClick={() => !selected && onClick()}
+      onClick={onClick}
       tabIndex={tabIndex}
       aria-haspopup="true"
       aria-controls={toolMenuId}

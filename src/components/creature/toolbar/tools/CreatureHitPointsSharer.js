@@ -5,20 +5,27 @@ function CreatureHitPointsSharer({
   creature,
   toggleCreatureHitPointsShare,
 }) {
-  const { hitPointsShared, name, id } = creature;
+  const {
+    hitPointsShared,
+    name,
+    id,
+    selected,
+  } = creature;
   const text = hitPointsShared ? 'Unshare HP' : 'Share HP';
   const buttonAriaLabel = hitPointsShared ? `Unshare ${name} HP` : `Share ${name} HP`;
   const ariaPressed = hitPointsShared ? 'true' : 'false';
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
+  const ariaDisabled = selected ? 'true' : 'false';
 
   return (
     <button
       aria-label={buttonAriaLabel}
       aria-pressed={ariaPressed}
+      aria-disabled={ariaDisabled}
       className={textButtonClass}
-      onClick={() => toggleCreatureHitPointsShare(id)}
+      onClick={() => !selected && toggleCreatureHitPointsShare(id)}
       type="button"
     >
       <ShareHitPointsIcon enabled={hitPointsShared} />
