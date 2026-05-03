@@ -49,6 +49,8 @@ import {
   addSpellUses,
   addTieBreakerToCreature,
   toggleSelect,
+  shareCreature,
+  unshareCreature,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -159,7 +161,8 @@ function DungeonMasterApp({
     removeNoteFromCreature: updateBattle(removeNoteFromCreature),
     lockCreature: updateBattle(lockCreature, false),
     unlockCreature: updateBattle(unlockCreature, false),
-    toggleCreatureShare: updateBattle(toggleCreatureShare),
+    shareCreature: updateBattle(shareCreature),
+    unshareCreature: updateBattle(unshareCreature),
     toggleCreatureHitPointsShare: updateBattle(toggleCreatureHitPointsShare),
     addTotalSpellSlots: updateBattle(addTotalSpellSlots),
     addUsedSpellSlots: updateBattle(addUsedSpellSlots),

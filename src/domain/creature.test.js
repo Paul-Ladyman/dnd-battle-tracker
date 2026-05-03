@@ -207,3 +207,51 @@ describe('unlock', () => {
     expect(newCreature.locked).toBe(false);
   });
 });
+
+describe('share', () => {
+  it('shares a creature that is unshared', () => {
+    const creature = new Creature(defaultState.creatures[1]);
+    const newCreature = creature.share();
+    expect(newCreature.shared).toBe(true);
+  });
+
+  it('does nothing to a creature that is already shared', () => {
+    const creature = new Creature(defaultState.creatures[0]);
+    const newCreature = creature.share();
+    expect(newCreature.shared).toBe(true);
+  });
+
+  it('shares a creature that does not have a shared field', () => {
+    const state = {
+      ...defaultState.creatures[0],
+      shared: undefined,
+    };
+    const creature = new Creature(state);
+    const newCreature = creature.share();
+    expect(newCreature.shared).toBe(true);
+  });
+});
+
+describe('unshare', () => {
+  it('unshare a creature that is shared', () => {
+    const creature = new Creature(defaultState.creatures[0]);
+    const newCreature = creature.unshare();
+    expect(newCreature.shared).toBe(false);
+  });
+
+  it('does nothing to a creature that is already unshared', () => {
+    const creature = new Creature(defaultState.creatures[1]);
+    const newCreature = creature.unshare();
+    expect(newCreature.shared).toBe(false);
+  });
+
+  it('unshares a creature that does not have a shared field', () => {
+    const state = {
+      ...defaultState.creatures[0],
+      shared: undefined,
+    };
+    const creature = new Creature(state);
+    const newCreature = creature.unshare();
+    expect(newCreature.shared).toBe(false);
+  });
+});

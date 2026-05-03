@@ -3,23 +3,24 @@ import ShareIcon from '../../../icons/ShareIcon';
 
 function CreatureSharer({
   creature,
-  toggleCreatureShare,
+  shareCreature,
+  unshareCreature,
   active,
 }) {
   const {
     shared,
     name,
     id,
-    selected,
   } = creature;
-  const disabled = selected || (active && shared);
+  const disabled = active && shared;
 
   const text = shared ? 'Unshare' : 'Share';
   const buttonAriaLabel = shared ? `Unshare ${name}` : `Share ${name}`;
   const ariaPressed = shared ? 'true' : 'false';
   const ariaDisabled = disabled ? 'true' : 'false';
   const onClick = () => {
-    if (!disabled) toggleCreatureShare(id);
+    if (disabled) return null;
+    return shared ? unshareCreature(id) : shareCreature(id);
   };
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;

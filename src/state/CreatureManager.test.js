@@ -11,7 +11,7 @@ import {
   addArmorClassToCreature,
   addTemporaryHealthToCreature,
   addInitiativeToCreature,
-  toggleCreatureShare,
+  shareCreature,
   toggleCreatureHitPointsShare,
   resetCreature,
   getRawName,
@@ -25,6 +25,7 @@ import {
   toggleSelect,
   lockCreature,
   unlockCreature,
+  unshareCreature,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -1811,41 +1812,55 @@ describe('unlockCreature', () => {
   });
 });
 
-describe('toggleCreatureShare', () => {
-  it('enables creature share if it is disabled', () => {
-    const expectedState = {
+describe('shareCreature', () => {
+  it('adds an aria announcement for a single creature when it is shared', () => {
+    const result = shareCreature(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby shared');
+  });
+
+  it('adds an aria announcement for multiple selected creatures when one is shared', () => {
+    const state = {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          shared: true,
+          selected: true,
         },
-        defaultState.creatures[2],
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
       ],
-      ariaAnnouncements: ['Goblin #1 is shared'],
     };
+    const result = shareCreature(state, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby and 2 others shared');
+  });
+});
 
-    const result = toggleCreatureShare(defaultState, 1);
-    expect(result).toEqual(expectedState);
+describe('unshareCreature', () => {
+  it('adds an aria announcement for a single creature when it is unshared', () => {
+    const result = unshareCreature(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby unshared');
   });
 
-  it('disables creature share if it is enabled', () => {
-    const expectedState = {
+  it('adds an aria announcement for multiple selected creatures when one is unshared', () => {
+    const state = {
       ...defaultState,
       creatures: [
+        defaultState.creatures[0],
         {
-          ...defaultState.creatures[0],
-          shared: false,
+          ...defaultState.creatures[1],
+          selected: true,
         },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
       ],
-      ariaAnnouncements: ['Wellby is not shared'],
     };
-
-    const result = toggleCreatureShare(defaultState, 0);
-    expect(result).toEqual(expectedState);
+    const result = unshareCreature(state, 0);
+    expect(result.ariaAnnouncements).toContain('Wellby and 2 others unshared');
   });
 });
 

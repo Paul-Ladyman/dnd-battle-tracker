@@ -365,11 +365,22 @@ export function unlockCreature(state, creatureId) {
   return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
 }
 
-export function toggleCreatureShare(state, creatureId) {
-  const creature = findCreature(state.creatures, creatureId);
-  const newState = creature.shared ? 'not shared' : 'shared';
-  const ariaAnnouncement = `${creature.name} is ${newState}`;
-  return updateCreature(state, creatureId, { shared: !creature.shared }, ariaAnnouncement);
+export function shareCreature(state, creatureId) {
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.share());
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'shared');
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
+}
+
+export function unshareCreature(state, creatureId) {
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.unshare());
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'unshared');
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
 }
 
 export function toggleCreatureHitPointsShare(state, creatureId) {

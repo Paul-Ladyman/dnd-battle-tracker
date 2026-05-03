@@ -16,7 +16,8 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
   const {
     lockCreature,
     unlockCreature,
-    toggleCreatureShare,
+    shareCreature,
+    unshareCreature,
     toggleCreatureHitPointsShare,
     removeCreature,
   } = creatureManagement;
@@ -32,7 +33,8 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
       />
       <CreatureSharer
         creature={creature}
-        toggleCreatureShare={toggleCreatureShare}
+        shareCreature={shareCreature}
+        unshareCreature={unshareCreature}
         active={active}
       />
       <CreatureHitPointsSharer
