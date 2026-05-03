@@ -9,10 +9,12 @@ function findCreature(creatures, creatureId) {
   return creatures.find(({ id }) => creatureId === id);
 }
 
-function updateAnnouncements(state, creatureNames, announcement) {
+function updateAnnouncements(state, creatureNames, announcement, possessive) {
   const others = creatureNames.length - 1;
   const othersAnnouncement = others > 0 ? ` and ${others} others` : '';
-  const ariaAnnouncement = `${creatureNames[0]}${othersAnnouncement} ${announcement}`;
+  const possessiveMod = possessive ? "'s" : '';
+  const othersPossessiveMod = others && possessive ? "'" : '';
+  const ariaAnnouncement = `${creatureNames[0]}${possessiveMod}${othersAnnouncement}${othersPossessiveMod} ${announcement}`;
   return state.ariaAnnouncements.concat(ariaAnnouncement);
 }
 
@@ -383,16 +385,22 @@ export function unshareCreature(state, creatureId) {
   return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
 }
 
-export function toggleCreatureHitPointsShare(state, creatureId) {
-  const creature = findCreature(state.creatures, creatureId);
-  const newState = creature.hitPointsShared ? 'not shared' : 'shared';
-  const ariaAnnouncement = `${creature.name}'s hit points are ${newState}`;
-  return updateCreature(
-    state,
-    creatureId,
-    { hitPointsShared: !creature.hitPointsShared },
-    ariaAnnouncement,
-  );
+export function shareCreatureHitPoints(state, creatureId) {
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.shareHitPoints());
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'hit points are shared', true);
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
+}
+
+export function unshareCreatureHitPoints(state, creatureId) {
+  const creatures = new Creatures(state.creatures)
+    .updateCreatureAndSelected(creatureId, (creature) => creature.unshareHitPoints());
+  const updatedCreatures = creatures.getAndSelected(creatureId);
+  const creatureNames = updatedCreatures.map((creature) => creature.name);
+  const ariaAnnouncements = updateAnnouncements(state, creatureNames, 'hit points are unshared', true);
+  return { ...state, creatures: creatures.serialize(), ariaAnnouncements };
 }
 
 export function resetCreature(id, creature) {

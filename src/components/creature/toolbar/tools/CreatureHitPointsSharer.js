@@ -3,13 +3,13 @@ import ShareHitPointsIcon from '../../../icons/ShareHitPointsIcon';
 
 function CreatureHitPointsSharer({
   creature,
-  toggleCreatureHitPointsShare,
+  shareCreatureHitPoints,
+  unshareCreatureHitPoints,
 }) {
   const {
     hitPointsShared,
     name,
     id,
-    selected,
   } = creature;
   const text = hitPointsShared ? 'Unshare HP' : 'Share HP';
   const buttonAriaLabel = hitPointsShared ? `Unshare ${name} HP` : `Share ${name} HP`;
@@ -17,15 +17,17 @@ function CreatureHitPointsSharer({
   const toolbarClass = 'creature-toolbar';
   const buttonClass = `${toolbarClass}-button`;
   const textButtonClass = `${buttonClass} ${buttonClass}__text`;
-  const ariaDisabled = selected ? 'true' : 'false';
+  const onClick = () => {
+    if (hitPointsShared) unshareCreatureHitPoints(id);
+    else shareCreatureHitPoints(id);
+  };
 
   return (
     <button
       aria-label={buttonAriaLabel}
       aria-pressed={ariaPressed}
-      aria-disabled={ariaDisabled}
       className={textButtonClass}
-      onClick={() => !selected && toggleCreatureHitPointsShare(id)}
+      onClick={onClick}
       type="button"
     >
       <ShareHitPointsIcon enabled={hitPointsShared} />

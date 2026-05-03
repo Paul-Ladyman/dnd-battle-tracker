@@ -260,21 +260,53 @@ describe('Share HP tool', () => {
     return dmApp.menuTool.assertHPShared('Goblin');
   });
 
-  it('is disabled if the creature is selected', async () => {
+  it("unshares all selected creatures' HP", async () => {
     const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', '1');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
-    return dmApp.menuTool.assertHPShareDisabled('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('goblin 1');
+    await dmApp.menuTool.assertHPNotShared('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    return dmApp.menuTool.assertHPNotShared('goblin 2');
   });
 
-  it('does nothing when disabled', async () => {
+  it("shares all selected creatures' HP", async () => {
     const dmApp = new DmApp();
-    await dmApp.createCreatureForm.addCreature('goblin', '1');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Select');
-    await dmApp.creatureToolbar.selectTool('goblin', 'Creature Menu');
-    await dmApp.menuTool.unshareHP('goblin');
-    return dmApp.menuTool.assertHPShared('goblin');
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('goblin 2');
+
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.shareHP('goblin 1');
+    await dmApp.menuTool.assertHPShared('goblin 1');
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    return dmApp.menuTool.assertHPShared('goblin 2');
+  });
+
+  it('handles a mix of creatures with shared and unshared HP', async () => {
+    const dmApp = new DmApp();
+    await dmApp.createCreatureForm.addCreature('goblin 1');
+    await dmApp.createCreatureForm.addCreature('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('goblin 1');
+
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Select');
+    await dmApp.creature.select('goblin 2');
+
+    await dmApp.creatureToolbar.selectTool('goblin 2', 'Creature Menu');
+    await dmApp.menuTool.unshareHP('goblin 2');
+    await dmApp.menuTool.assertHPNotShared('goblin 2');
+    await dmApp.creatureToolbar.selectTool('goblin 1', 'Creature Menu');
+    return dmApp.menuTool.assertHPNotShared('goblin 1');
   });
 });
 

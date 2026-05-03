@@ -149,13 +149,6 @@ export default class MenuTool {
     expect(shareTool).toHaveAttribute('aria-disabled', 'true');
   }
 
-  async assertHPShareDisabled(name) {
-    const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
-
-    const shareTool = await findByRole(toolMenu, 'button', { name: `Unshare ${name} HP` });
-    expect(shareTool).toHaveAttribute('aria-disabled', 'true');
-  }
-
   async assertCreatureShareEnabled(name) {
     const toolMenu = screen.queryByRole('menu', { name: `${name} tool menu` });
 

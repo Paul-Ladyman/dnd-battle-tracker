@@ -34,7 +34,7 @@ export default {
       notes: [],
       locked: true,
       shared: false,
-      hitPointsShared: true,
+      hitPointsShared: false,
       statBlock: 'https://www.dndbeyond.com/monsters/goblin',
       armorClass: 15,
       totalSpellSlots: null,

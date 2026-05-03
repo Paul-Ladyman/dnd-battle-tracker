@@ -40,7 +40,6 @@ import {
   addInitiativeToCreature,
   lockCreature,
   unlockCreature,
-  toggleCreatureHitPointsShare,
   addTotalSpellSlots,
   addUsedSpellSlots,
   addSpell,
@@ -50,6 +49,8 @@ import {
   toggleSelect,
   shareCreature,
   unshareCreature,
+  shareCreatureHitPoints,
+  unshareCreatureHitPoints,
 } from '../../state/CreatureManager';
 import {
   save,
@@ -162,7 +163,8 @@ function DungeonMasterApp({
     unlockCreature: updateBattle(unlockCreature, false),
     shareCreature: updateBattle(shareCreature),
     unshareCreature: updateBattle(unshareCreature),
-    toggleCreatureHitPointsShare: updateBattle(toggleCreatureHitPointsShare),
+    shareCreatureHitPoints: updateBattle(shareCreatureHitPoints),
+    unshareCreatureHitPoints: updateBattle(unshareCreatureHitPoints),
     addTotalSpellSlots: updateBattle(addTotalSpellSlots),
     addUsedSpellSlots: updateBattle(addUsedSpellSlots),
     addSpell: updateBattle(addSpell),

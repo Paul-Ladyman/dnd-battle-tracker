@@ -12,7 +12,6 @@ import {
   addTemporaryHealthToCreature,
   addInitiativeToCreature,
   shareCreature,
-  toggleCreatureHitPointsShare,
   resetCreature,
   getRawName,
   isCreatureStable,
@@ -26,6 +25,8 @@ import {
   lockCreature,
   unlockCreature,
   unshareCreature,
+  shareCreatureHitPoints,
+  unshareCreatureHitPoints,
 } from './CreatureManager';
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
@@ -1864,53 +1865,55 @@ describe('unshareCreature', () => {
   });
 });
 
-describe('toggleCreatureHitPointsShare', () => {
-  it('enables creature hit points share if it is disabled', () => {
-    const state = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          hitPointsShared: false,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-    };
-
-    const expectedState = {
-      ...defaultState,
-      creatures: [
-        {
-          ...defaultState.creatures[0],
-          hitPointsShared: true,
-        },
-        defaultState.creatures[1],
-        defaultState.creatures[2],
-      ],
-      ariaAnnouncements: ['Wellby\'s hit points are shared'],
-    };
-
-    const result = toggleCreatureHitPointsShare(state, 0);
-    expect(result).toEqual(expectedState);
+describe('shareCreatureHitPoints', () => {
+  it('adds an aria announcement for a single creature when its HP is shared', () => {
+    const result = shareCreatureHitPoints(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain("Wellby's hit points are shared");
   });
 
-  it('disables creature hit points share if it is enabled', () => {
-    const expectedState = {
+  it("adds an aria announcement for multiple selected creatures when one's HP is shared", () => {
+    const state = {
       ...defaultState,
       creatures: [
         defaultState.creatures[0],
         {
           ...defaultState.creatures[1],
-          hitPointsShared: false,
+          selected: true,
         },
-        defaultState.creatures[2],
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
       ],
-      ariaAnnouncements: ['Goblin #1\'s hit points are not shared'],
     };
+    const result = shareCreatureHitPoints(state, 0);
+    expect(result.ariaAnnouncements).toContain("Wellby's and 2 others' hit points are shared");
+  });
+});
 
-    const result = toggleCreatureHitPointsShare(defaultState, 1);
-    expect(result).toEqual(expectedState);
+describe('unshareCreatureHitPoints', () => {
+  it('adds an aria announcement for a single creature when its HP is unshared', () => {
+    const result = unshareCreatureHitPoints(defaultState, 0);
+    expect(result.ariaAnnouncements).toContain("Wellby's hit points are unshared");
+  });
+
+  it("adds an aria announcement for multiple selected creatures when one's HP is unshared", () => {
+    const state = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          selected: true,
+        },
+        {
+          ...defaultState.creatures[2],
+          selected: true,
+        },
+      ],
+    };
+    const result = unshareCreatureHitPoints(state, 0);
+    expect(result.ariaAnnouncements).toContain("Wellby's and 2 others' hit points are unshared");
   });
 });
 

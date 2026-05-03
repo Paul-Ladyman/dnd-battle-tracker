@@ -18,7 +18,8 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
     unlockCreature,
     shareCreature,
     unshareCreature,
-    toggleCreatureHitPointsShare,
+    shareCreatureHitPoints,
+    unshareCreatureHitPoints,
     removeCreature,
   } = creatureManagement;
 
@@ -39,7 +40,8 @@ export function CreatureMenuToolMenu({ creature, creatureManagement, active }) {
       />
       <CreatureHitPointsSharer
         creature={creature}
-        toggleCreatureHitPointsShare={toggleCreatureHitPointsShare}
+        shareCreatureHitPoints={shareCreatureHitPoints}
+        unshareCreatureHitPoints={unshareCreatureHitPoints}
       />
       <CreatureRemover
         creature={creature}

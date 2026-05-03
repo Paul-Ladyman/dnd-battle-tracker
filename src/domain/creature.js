@@ -91,6 +91,20 @@ export default class Creature {
     });
   }
 
+  shareHitPoints() {
+    return new Creature({
+      ...this.data,
+      hitPointsShared: true,
+    });
+  }
+
+  unshareHitPoints() {
+    return new Creature({
+      ...this.data,
+      hitPointsShared: false,
+    });
+  }
+
   kill(round) {
     const healthPoints = this.healthPoints === undefined ? undefined : 0;
     const unconsciousCondition = {

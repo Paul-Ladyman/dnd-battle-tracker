@@ -255,3 +255,51 @@ describe('unshare', () => {
     expect(newCreature.shared).toBe(false);
   });
 });
+
+describe('shareHitPoints', () => {
+  it("shares a creature's HP when it is unshared", () => {
+    const creature = new Creature(defaultState.creatures[1]);
+    const newCreature = creature.shareHitPoints();
+    expect(newCreature.hitPointsShared).toBe(true);
+  });
+
+  it("does nothing to a creature who's HP is already shared", () => {
+    const creature = new Creature(defaultState.creatures[0]);
+    const newCreature = creature.shareHitPoints();
+    expect(newCreature.hitPointsShared).toBe(true);
+  });
+
+  it("shares a creature's HP when the creature does not have a HP shared field", () => {
+    const state = {
+      ...defaultState.creatures[0],
+      hitPointsShared: undefined,
+    };
+    const creature = new Creature(state);
+    const newCreature = creature.shareHitPoints();
+    expect(newCreature.hitPointsShared).toBe(true);
+  });
+});
+
+describe('unshareHitPoints', () => {
+  it("unshares a creature's HP when it is shared", () => {
+    const creature = new Creature(defaultState.creatures[0]);
+    const newCreature = creature.unshareHitPoints();
+    expect(newCreature.hitPointsShared).toBe(false);
+  });
+
+  it("does nothing to a creature's HP when it is already unshared", () => {
+    const creature = new Creature(defaultState.creatures[1]);
+    const newCreature = creature.unshareHitPoints();
+    expect(newCreature.hitPointsShared).toBe(false);
+  });
+
+  it("unshares a creature's HP when the creaturedoes not have a HP shared field", () => {
+    const state = {
+      ...defaultState.creatures[0],
+      hitPointsShared: undefined,
+    };
+    const creature = new Creature(state);
+    const newCreature = creature.unshareHitPoints();
+    expect(newCreature.hitPointsShared).toBe(false);
+  });
+});
