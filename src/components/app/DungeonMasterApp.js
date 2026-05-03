@@ -40,7 +40,6 @@ import {
   addInitiativeToCreature,
   lockCreature,
   unlockCreature,
-  toggleCreatureShare,
   toggleCreatureHitPointsShare,
   addTotalSpellSlots,
   addUsedSpellSlots,
