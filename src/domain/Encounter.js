@@ -18,7 +18,10 @@ export default class Encounter {
     if (creatureWithoutInitiative) throw new MissingInitiativeError(creatureWithoutInitiative);
 
     const initiativeOrder = this.creatures.getInitiativeOrder();
-    const nextCreature = this.creatures.findFirst(({ id }) => !this.turns.includes(id));
+    const currentCreatureIndex = initiativeOrder.getIndex(this.turn) || -1;
+    const nextCreature = initiativeOrder.findFirst(
+      ({ id }, i) => !this.turns.includes(id) && i > currentCreatureIndex,
+    );
     if (nextCreature) {
       const { id } = nextCreature;
       const turns = [

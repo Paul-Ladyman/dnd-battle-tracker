@@ -61,7 +61,7 @@ describe('nextTurn', () => {
     expect(nextTurn.turns).toEqual([0, 1]);
   });
 
-  it('sorts creatures by their initiative before advancing to the next turn in a round', () => {
+  it('sorts creatures by their initiative before advancing to the next turn in a round without going backwards', () => {
     const creatures = new Creatures([
       ...defaultState.creatures,
       droop,
@@ -75,7 +75,7 @@ describe('nextTurn', () => {
     ]);
     expect(nextTurn.creatures).toEqual(expectedCreatures);
     expect(nextTurn.round).toBe(1);
-    expect(nextTurn.turn).toBe(3);
+    expect(nextTurn.turn).toBe(1);
   });
 
   it('starts at the top of the next round after all creatures have had their turn', () => {

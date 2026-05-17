@@ -147,11 +147,11 @@ describe('nextInitiative', () => {
         ...defaultState.creatures,
       ],
       round: 1,
-      activeCreature: 0,
-      focusedCreature: 0,
-      ariaAnnouncements: ['its Droop\'s go'],
-      turn: 3,
-      turns: [0, 3],
+      activeCreature: 2,
+      focusedCreature: 2,
+      ariaAnnouncements: ['its Goblin #1\'s go'],
+      turn: 1,
+      turns: [0, 1],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
