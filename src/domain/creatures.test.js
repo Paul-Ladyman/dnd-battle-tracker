@@ -107,6 +107,40 @@ describe('getIndex', () => {
   });
 });
 
+describe('getFirst', () => {
+  it('returns the first creature', () => {
+    const creatures = new Creatures(defaultState.creatures);
+    const creature = creatures.getFirst();
+    expect(creature).toEqual(new Creature(defaultState.creatures[0]));
+  });
+
+  it('returns null if the list of creatures is empty', () => {
+    const creatures = new Creatures([]);
+    const creature = creatures.getFirst();
+    expect(creature).toBeNull();
+  });
+});
+
+describe('findFirst', () => {
+  it('returns the first creature that matches', () => {
+    const creatures = new Creatures(defaultState.creatures);
+    const found = creatures.findFirst((creature) => creature.id === 1);
+    expect(found).toEqual(new Creature(defaultState.creatures[1]));
+  });
+
+  it('returns null if no creature matches', () => {
+    const creatures = new Creatures([]);
+    const found = creatures.findFirst((creature) => creature.id === 10);
+    expect(found).toBeNull();
+  });
+
+  it('returns null if the list of creatures is empty', () => {
+    const creatures = new Creatures([]);
+    const found = creatures.findFirst((creature) => creature.id === 1);
+    expect(found).toBeNull();
+  });
+});
+
 describe('get', () => {
   it('returns the specified creature', () => {
     const creatures = new Creatures(defaultState.creatures);
@@ -168,9 +202,152 @@ describe('countSelected', () => {
   });
 });
 
+describe('count', () => {
+  it('returns the number of creatures', () => {
+    const creatures = new Creatures(state.creatures);
+    expect(creatures.count()).toBe(3);
+  });
+
+  it('returns 0 if there are no creatures', () => {
+    const creatures = new Creatures([]);
+    expect(creatures.count()).toBe(0);
+  });
+});
+
 describe('serialize', () => {
   it('returns the list of creatures as JSON', () => {
     const creatures = new Creatures(defaultState.creatures);
     expect(creatures.serialize()).toEqual(defaultState.creatures);
+  });
+});
+
+describe('getInitiativeOrder', () => {
+  it('sorts out of order creatures by their initiative', () => {
+    const creatures = [
+      {
+        ...defaultState.creatures[0],
+        initiative: 1,
+      },
+      {
+        ...defaultState.creatures[1],
+        initiative: 3,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiative: 2,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[1],
+      creatures[2],
+      creatures[0],
+    ];
+
+    const initiativeOrder = new Creatures(creatures).getInitiativeOrder();
+    expect(initiativeOrder.serialize()).toEqual(expectedCreatures);
+  });
+
+  it('maintains the original order of creatures with the same initiative', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: undefined,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: undefined,
+      },
+    ];
+
+    const initiativeOrder = new Creatures(creatures).getInitiativeOrder();
+    expect(initiativeOrder.serialize()).toEqual(creatures);
+  });
+
+  it('maintains the original order of creatures with the same initiative and tie breaker', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: 1,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 1,
+      },
+    ];
+
+    const initiativeOrder = new Creatures(creatures).getInitiativeOrder();
+    expect(initiativeOrder.serialize()).toEqual(creatures);
+  });
+
+  it('sorts creatures with the same initiative according to their tie breaker', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: 1,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 2,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[0],
+      creatures[2],
+      creatures[1],
+    ];
+
+    const initiativeOrder = new Creatures(creatures).getInitiativeOrder();
+    expect(initiativeOrder.serialize()).toEqual(expectedCreatures);
+  });
+
+  it('treats a null tie breaker as 0', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: null,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 1,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[0],
+      creatures[2],
+      creatures[1],
+    ];
+
+    const initiativeOrder = new Creatures(creatures).getInitiativeOrder();
+    expect(initiativeOrder.serialize()).toEqual(expectedCreatures);
+  });
+
+  it('treats an undefined tie breaker as 0', () => {
+    const creatures = [
+      defaultState.creatures[0],
+      {
+        ...defaultState.creatures[1],
+        initiativeTieBreaker: undefined,
+      },
+      {
+        ...defaultState.creatures[2],
+        initiativeTieBreaker: 1,
+      },
+    ];
+
+    const expectedCreatures = [
+      creatures[0],
+      creatures[2],
+      creatures[1],
+    ];
+
+    const initiativeOrder = new Creatures(creatures).getInitiativeOrder();
+    expect(initiativeOrder.serialize()).toEqual(expectedCreatures);
   });
 });
