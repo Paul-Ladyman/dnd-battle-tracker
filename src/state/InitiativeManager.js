@@ -1,3 +1,5 @@
+import Creatures from '../domain/creatures';
+import Encounter from '../domain/Encounter';
 import { addInitiativeError } from './ErrorManager';
 
 function findCreatureIndex(creatures, creature) {
@@ -28,61 +30,59 @@ export function sortByInitiative(creatures, activeCreature, round) {
   return [sortedCreatures, currentlyActiveCreature];
 }
 
-function getNextActiveCreatureAndRound(currentActiveCreature, creatureCount, currentRound) {
-  if (currentActiveCreature === null) {
-    return [0, 1];
-  }
+function getNextTurnAnnouncement(state, activeCreature) {
+  if (!activeCreature) return state.ariaAnnouncements;
 
-  const nextActiveCreature = currentActiveCreature + 1;
-
-  if (nextActiveCreature === creatureCount) {
-    return [0, currentRound + 1];
-  }
-
-  return [nextActiveCreature, currentRound];
-}
-
-export function nextInitiative(state) {
-  if (state.creatures.length === 0) {
-    return state;
-  }
-
-  const creaturesWithoutInitiative = state.creatures.filter(
-    (creature) => creature.initiative === undefined || creature.initiative === null,
-  );
-
-  if (creaturesWithoutInitiative.length > 0) {
-    const { name, id } = creaturesWithoutInitiative[0];
-    return addInitiativeError(state, name, id);
-  }
-
-  const [
-    sortedCreatures,
-    currentlyActiveCreature,
-  ] = sortByInitiative(state.creatures, state.activeCreature, state.round);
-
-  const [
-    activeCreature,
-    round,
-  ] = getNextActiveCreatureAndRound(currentlyActiveCreature, state.creatures.length, state.round);
-
-  const { name, alive } = state.creatures[activeCreature];
+  const { name, alive } = activeCreature;
   let ariaAnnouncement = `its ${name}'s go`;
 
   if (!alive) {
     ariaAnnouncement = `${ariaAnnouncement}. ${name} is dead/unconscious`;
   }
-  const ariaAnnouncements = state.ariaAnnouncements.concat([ariaAnnouncement]);
+  return state.ariaAnnouncements.concat([ariaAnnouncement]);
+}
 
-  return {
-    ...state,
-    creatures: sortedCreatures,
-    round,
-    activeCreature,
-    focusedCreature: activeCreature,
-    ariaAnnouncements,
-    errors: [],
-  };
+export function nextInitiative(state) {
+  const {
+    creatures: originalCreatures,
+    round: originalRound,
+    turn: originalTurn,
+    turns: originalTurns,
+  } = state;
+
+  const encounter = new Encounter(
+    new Creatures(originalCreatures),
+    originalRound,
+    originalTurn,
+    originalTurns,
+  );
+
+  try {
+    const {
+      creatures,
+      round,
+      turn,
+      turns,
+    } = encounter.nextTurn();
+
+    const activeCreature = creatures.get(turn);
+    const activeCreatureIndex = creatures.getIndex(turn);
+
+    return {
+      ...state,
+      creatures: creatures.serialize(),
+      round,
+      activeCreature: activeCreatureIndex,
+      focusedCreature: activeCreatureIndex,
+      ariaAnnouncements: getNextTurnAnnouncement(state, activeCreature),
+      errors: [],
+      turn,
+      turns,
+    };
+  } catch (e) {
+    const { name, id } = e.creature;
+    return addInitiativeError(state, name, id);
+  }
 }
 
 function findPreviousSharedCreature(

@@ -25,6 +25,8 @@ describe('nextInitiative', () => {
       activeCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go'],
+      turn: 0,
+      turns: [0],
     };
     expect(nextInitiative(defaultState)).toEqual(expected);
   });
@@ -47,6 +49,8 @@ describe('nextInitiative', () => {
       activeCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go'],
+      turn: 0,
+      turns: [0],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -69,6 +73,8 @@ describe('nextInitiative', () => {
       activeCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Droop\'s go'],
+      turn: 3,
+      turns: [3],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -91,6 +97,8 @@ describe('nextInitiative', () => {
       activeCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go. Wellby is dead/unconscious'],
+      turn: 0,
+      turns: [0],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
@@ -101,6 +109,8 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 0,
       focusedCreature: 0,
+      turn: 0,
+      turns: [0],
     };
 
     const expected = {
@@ -109,6 +119,8 @@ describe('nextInitiative', () => {
       activeCreature: 1,
       focusedCreature: 1,
       ariaAnnouncements: ['its Goblin #1\'s go'],
+      turn: 1,
+      turns: [0, 1],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -124,6 +136,8 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 0,
       focusedCreature: 0,
+      turn: 0,
+      turns: [0],
     };
 
     const expected = {
@@ -133,9 +147,11 @@ describe('nextInitiative', () => {
         ...defaultState.creatures,
       ],
       round: 1,
-      activeCreature: 2,
-      focusedCreature: 2,
-      ariaAnnouncements: ['its Goblin #1\'s go'],
+      activeCreature: 0,
+      focusedCreature: 0,
+      ariaAnnouncements: ['its Droop\'s go'],
+      turn: 3,
+      turns: [0, 3],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -147,6 +163,8 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 0,
       focusedCreature: 2,
+      turn: 0,
+      turns: [0],
     };
 
     const expected = {
@@ -155,6 +173,8 @@ describe('nextInitiative', () => {
       activeCreature: 1,
       focusedCreature: 1,
       ariaAnnouncements: ['its Goblin #1\'s go'],
+      turn: 1,
+      turns: [0, 1],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -166,6 +186,8 @@ describe('nextInitiative', () => {
       round: 1,
       activeCreature: 2,
       focusedCreature: 2,
+      turn: 2,
+      turns: [0, 1, 2],
     };
 
     const expected = {
@@ -174,6 +196,8 @@ describe('nextInitiative', () => {
       activeCreature: 0,
       focusedCreature: 0,
       ariaAnnouncements: ['its Wellby\'s go'],
+      turn: 0,
+      turns: [0],
     };
 
     expect(nextInitiative(state)).toEqual(expected);
@@ -184,6 +208,9 @@ describe('nextInitiative', () => {
       ...defaultState,
       creatures: [],
       ariaAnnouncements: [],
+      focusedCreature: null,
+      turn: null,
+      turns: [],
     };
 
     expect(nextInitiative(state)).toEqual(state);
@@ -300,6 +327,8 @@ describe('nextInitiative', () => {
       focusedCreature: 0,
       errors: [],
       ariaAnnouncements: ['its Wellby\'s go'],
+      turn: 0,
+      turns: [0],
     };
     expect(nextInitiative(state)).toEqual(expected);
   });
