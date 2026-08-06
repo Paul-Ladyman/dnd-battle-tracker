@@ -6,8 +6,10 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
+  entry: './src/index.tsx',
   resolve: {
     fallback: { url: false, util: false, buffer: require.resolve('buffer/') },
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   optimization: {
     minimizer: [
@@ -28,12 +30,19 @@ module.exports = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
+      // {
+      //   test: /\.(js|jsx)$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: 'babel-loader',
+      //   },
+      // },
+      { test: /\.(t|j)sx?$/, use: { loader: 'ts-loader' }, exclude: /node_modules/ },
       {
-        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
+        loader: 'source-map-loader',
       },
       {
         test: /\.html$/,
@@ -67,4 +76,5 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
+  devtool: 'source-map',
 };
