@@ -97,63 +97,63 @@ export default class Creature {
     this.selected = selected;
   }
 
-  toggleSelect() {
+  toggleSelect(): Creature {
     return new Creature({
       ...this.data,
       selected: !this.selected,
     });
   }
 
-  unselect() {
+  unselect(): Creature {
     return new Creature({
       ...this.data,
       selected: false,
     });
   }
 
-  lock() {
+  lock(): Creature {
     return new Creature({
       ...this.data,
       locked: true,
     });
   }
 
-  unlock() {
+  unlock(): Creature {
     return new Creature({
       ...this.data,
       locked: false,
     });
   }
 
-  share() {
+  share(): Creature {
     return new Creature({
       ...this.data,
       shared: true,
     });
   }
 
-  unshare() {
+  unshare(): Creature {
     return new Creature({
       ...this.data,
       shared: false,
     });
   }
 
-  shareHitPoints() {
+  shareHitPoints(): Creature {
     return new Creature({
       ...this.data,
       hitPointsShared: true,
     });
   }
 
-  unshareHitPoints() {
+  unshareHitPoints(): Creature {
     return new Creature({
       ...this.data,
       hitPointsShared: false,
     });
   }
 
-  kill(round) {
+  kill(round: number): Creature {
     const healthPoints = this.healthPoints === null ? null : 0;
     const unconsciousCondition = {
       text: conditionsData.Unconscious.text,
@@ -177,14 +177,14 @@ export default class Creature {
     return new Creature(newData);
   }
 
-  stabilize() {
+  stabilize(): Creature {
     return new Creature({
       ...this.data,
       alive: true,
     });
   }
 
-  serialize() {
+  serialize(): CreatureData {
     return {
       name: this.name,
       initiative: this.initiative,
