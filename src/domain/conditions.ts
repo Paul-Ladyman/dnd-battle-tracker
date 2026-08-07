@@ -77,3 +77,11 @@ const conditionsData = {
 };
 
 export default conditionsData;
+
+export type AppliedCondition = {
+  text: string,
+  appliedAtRound: number,
+  appliedAtSeconds: number,
+  url: string,
+  id: string
+}

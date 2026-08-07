@@ -44,7 +44,7 @@ function rollAllDice(term) {
   return Array.from({ length: multiplier || 1 }).map(() => rollDice(diceType));
 }
 
-function getRawTerms(notation) {
+function getRawTerms(notation: string) {
   return Array.from(notation)
     .reduce((terms, char) => {
       const currentTerm = terms[terms.length - 1];
@@ -87,6 +87,15 @@ function calculateResult(terms) {
   }, '');
 
   return calculate(equation);
+}
+
+export type Roll = {
+  result: number,
+  terms?: {
+    type: string,
+    term: string,
+    rolls?: string[]
+  }[]
 }
 
 export default function roll(notation) {

@@ -5,6 +5,8 @@ export default {
       initiative: 13,
       initiativeRoll: { result: 13 },
       initiativeTieBreaker: null,
+      healthPoints: null,
+      maxHealthPoints: null,
       temporaryHealthPoints: null,
       id: 0,
       alive: true,

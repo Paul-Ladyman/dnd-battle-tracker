@@ -1,6 +1,8 @@
 import { getSpells } from '../client/dnd5eapi';
 
 class SpellList {
+  spells
+
   constructor(spells) {
     this.spells = spells;
   }
@@ -19,6 +21,26 @@ class SpellList {
 export async function getSpellList() {
   const spells = await getSpells();
   return new SpellList(spells);
+}
+
+export type SpellSlots = {
+  '1st'?: number,
+  '2nd'?: number,
+  '3rd'?: number,
+  '4th'?: number,
+  '5th'?: number,
+  '6th'?: number,
+  '7th'?: number,
+  '8th'?: number,
+  '9th'?: number,
+};
+
+export type Spells = {
+  [index: string]: {
+    label: string,
+    used?: number,
+    total?: number
+  }
 }
 
 export const maxSpellSlots = {

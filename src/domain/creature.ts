@@ -1,8 +1,56 @@
 import getSecondsElapsed from '../state/TimeManager';
-import conditionsData from './conditions';
+import conditionsData, { AppliedCondition } from './conditions';
+import { Roll } from './dice';
+import { AppliedNote } from './notes';
+import { Spells, SpellSlots } from './spellcasting';
+
+export type CreatureData = {
+  name: string,
+  initiative: number | null,
+  initiativeRoll: Roll,
+  initiativeTieBreaker: number | null,
+  healthPoints: number | null,
+  maxHealthPoints: number | null,
+  armorClass: number | null,
+  temporaryHealthPoints: number | null,
+  id: number,
+  alive: boolean,
+  conditions: AppliedCondition[],
+  notes: AppliedNote[],
+  locked: boolean,
+  shared: boolean,
+  hitPointsShared: boolean,
+  statBlock: string | null,
+  totalSpellSlots: SpellSlots | null,
+  usedSpellSlots: SpellSlots | null,
+  spells: Spells,
+  selected: boolean,
+}
 
 export default class Creature {
-  constructor(data) {
+  private data: CreatureData
+  name: string
+  initiative: number | null
+  initiativeRoll: Roll
+  initiativeTieBreaker: number | null
+  healthPoints: number | null
+  maxHealthPoints: number | null
+  armorClass: number | null
+  temporaryHealthPoints: number | null
+  id: number
+  alive: boolean
+  conditions: AppliedCondition[]
+  notes: AppliedNote[]
+  locked: boolean
+  shared: boolean
+  hitPointsShared: boolean
+  statBlock: string | null
+  totalSpellSlots: SpellSlots | null
+  usedSpellSlots: SpellSlots | null
+  spells: Spells
+  selected: boolean
+
+  constructor(data: CreatureData) {
     const {
       name,
       initiative,
@@ -106,7 +154,7 @@ export default class Creature {
   }
 
   kill(round) {
-    const healthPoints = this.healthPoints === undefined ? undefined : 0;
+    const healthPoints = this.healthPoints === null ? null : 0;
     const unconsciousCondition = {
       text: conditionsData.Unconscious.text,
       appliedAtRound: round,

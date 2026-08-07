@@ -9,16 +9,6 @@ describe('toggleSelect', () => {
     expect(newCreature.selected).toBe(true);
   });
 
-  it('selects a creature that does not have a selected field', () => {
-    const state = {
-      ...defaultState.creatures[0],
-      selected: undefined,
-    };
-    const creature = new Creature(state);
-    const newCreature = creature.toggleSelect();
-    expect(newCreature.selected).toBe(true);
-  });
-
   it('unselects a creature that is selected', () => {
     const state = {
       ...defaultState,
@@ -40,16 +30,6 @@ describe('toggleSelect', () => {
 describe('unselect', () => {
   it('does nothing to a creature that is unselected', () => {
     const creature = new Creature(defaultState.creatures[0]);
-    const newCreature = creature.unselect();
-    expect(newCreature.selected).toBe(false);
-  });
-
-  it('unselects a creature that does not have a selected field', () => {
-    const state = {
-      ...defaultState.creatures[0],
-      selected: undefined,
-    };
-    const creature = new Creature(state);
     const newCreature = creature.unselect();
     expect(newCreature.selected).toBe(false);
   });
@@ -108,7 +88,7 @@ describe('kill', () => {
   it('does not modify health points if the creature has none', () => {
     const creature = new Creature(defaultState.creatures[0]);
     const newCreature = creature.kill(0);
-    expect(newCreature.healthPoints).toBeUndefined();
+    expect(newCreature.healthPoints).toBeNull();
   });
 
   it('sets health points to 0 if the creature has them', () => {
@@ -143,7 +123,7 @@ describe('stabilize', () => {
 
     const newCreature = creature.stabilize();
     expect(newCreature.alive).toBe(true);
-    expect(newCreature.healthPoints).toBeUndefined();
+    expect(newCreature.healthPoints).toBeNull();
   });
 
   it('stabilizes a creature who is already alive', () => {
@@ -172,16 +152,6 @@ describe('lock', () => {
     const newCreature = creature.lock();
     expect(newCreature.locked).toBe(true);
   });
-
-  it('locks a creature that does not have a locked field', () => {
-    const state = {
-      ...defaultState.creatures[0],
-      locked: undefined,
-    };
-    const creature = new Creature(state);
-    const newCreature = creature.lock();
-    expect(newCreature.locked).toBe(true);
-  });
 });
 
 describe('unlock', () => {
@@ -193,16 +163,6 @@ describe('unlock', () => {
 
   it('does nothing to a creature that is already unlocked', () => {
     const creature = new Creature(defaultState.creatures[0]);
-    const newCreature = creature.unlock();
-    expect(newCreature.locked).toBe(false);
-  });
-
-  it('unlocks a creature that does not have a locked field', () => {
-    const state = {
-      ...defaultState.creatures[0],
-      locked: undefined,
-    };
-    const creature = new Creature(state);
     const newCreature = creature.unlock();
     expect(newCreature.locked).toBe(false);
   });
@@ -220,16 +180,6 @@ describe('share', () => {
     const newCreature = creature.share();
     expect(newCreature.shared).toBe(true);
   });
-
-  it('shares a creature that does not have a shared field', () => {
-    const state = {
-      ...defaultState.creatures[0],
-      shared: undefined,
-    };
-    const creature = new Creature(state);
-    const newCreature = creature.share();
-    expect(newCreature.shared).toBe(true);
-  });
 });
 
 describe('unshare', () => {
@@ -241,16 +191,6 @@ describe('unshare', () => {
 
   it('does nothing to a creature that is already unshared', () => {
     const creature = new Creature(defaultState.creatures[1]);
-    const newCreature = creature.unshare();
-    expect(newCreature.shared).toBe(false);
-  });
-
-  it('unshares a creature that does not have a shared field', () => {
-    const state = {
-      ...defaultState.creatures[0],
-      shared: undefined,
-    };
-    const creature = new Creature(state);
     const newCreature = creature.unshare();
     expect(newCreature.shared).toBe(false);
   });
@@ -268,16 +208,6 @@ describe('shareHitPoints', () => {
     const newCreature = creature.shareHitPoints();
     expect(newCreature.hitPointsShared).toBe(true);
   });
-
-  it("shares a creature's HP when the creature does not have a HP shared field", () => {
-    const state = {
-      ...defaultState.creatures[0],
-      hitPointsShared: undefined,
-    };
-    const creature = new Creature(state);
-    const newCreature = creature.shareHitPoints();
-    expect(newCreature.hitPointsShared).toBe(true);
-  });
 });
 
 describe('unshareHitPoints', () => {
@@ -289,16 +219,6 @@ describe('unshareHitPoints', () => {
 
   it("does nothing to a creature's HP when it is already unshared", () => {
     const creature = new Creature(defaultState.creatures[1]);
-    const newCreature = creature.unshareHitPoints();
-    expect(newCreature.hitPointsShared).toBe(false);
-  });
-
-  it("unshares a creature's HP when the creaturedoes not have a HP shared field", () => {
-    const state = {
-      ...defaultState.creatures[0],
-      hitPointsShared: undefined,
-    };
-    const creature = new Creature(state);
     const newCreature = creature.unshareHitPoints();
     expect(newCreature.hitPointsShared).toBe(false);
   });
