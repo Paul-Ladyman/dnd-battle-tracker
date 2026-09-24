@@ -12,6 +12,8 @@ import BattleManagerContext from '../../app/BattleManagerContext';
 import { playerItems, dmItems } from './menuItems';
 import { hotkeys } from '../../../hotkeys/hotkeys';
 import AlertDialog from '../../widgets/AlertDialog';
+import RecentBattlesDialog from '../../widgets/RecentBattlesDialog';
+import { getRecentBattles } from '../../../state/RecentBattlesManager';
 
 export default function BattleMenu({
   playerSession,
@@ -21,13 +23,24 @@ export default function BattleMenu({
 }) {
   const [open, setOpen] = useState(false);
   const [confirming, setConfirming] = useState(null);
+  const [recentBattlesOpen, setRecentBattlesOpen] = useState(false);
   const battleManager = useContext(BattleManagerContext);
   const parentRef = useRef(null);
   const buttonRef = useRef(null);
   const fileSelector = useRef(null);
+  const recentBattles = playerSession ? [] : getRecentBattles();
+  const openRecentBattles = () => setRecentBattlesOpen(true);
   const items = playerSession
     ? playerItems(rulesSearchOpen, toggleRulesSearch)
-    : dmItems(battleManager, shareEnabled, rulesSearchOpen, toggleRulesSearch, fileSelector);
+    : dmItems(
+      battleManager,
+      shareEnabled,
+      rulesSearchOpen,
+      toggleRulesSearch,
+      fileSelector,
+      recentBattles.length > 0,
+      openRecentBattles,
+    );
 
   const [_, setFocusedItem] = useNavigableList({
     items,
@@ -96,6 +109,17 @@ export default function BattleMenu({
     battleManager.loadBattle(file);
   };
 
+  const closeRecentBattles = () => {
+    setRecentBattlesOpen(false);
+    buttonRef.current.focus();
+  };
+
+  const restoreBattle = (snapshot) => {
+    setRecentBattlesOpen(false);
+    battleManager.restoreRecentBattle(snapshot);
+    buttonRef.current.focus();
+  };
+
   return (
     <div ref={parentRef} id={wrapperId}>
       <button
@@ -156,6 +180,12 @@ export default function BattleMenu({
         message={confirming?.message}
         onYes={confirming?.onYes}
         onNo={confirming?.onNo}
+      />
+      <RecentBattlesDialog
+        show={recentBattlesOpen}
+        battles={recentBattles}
+        onClose={closeRecentBattles}
+        onRestore={restoreBattle}
       />
     </div>
   );

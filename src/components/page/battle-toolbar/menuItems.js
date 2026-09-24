@@ -18,6 +18,8 @@ export const dmItems = (
   rulesSearchOpen,
   toggleRulesSearch,
   fileSelector,
+  recentBattlesAvailable,
+  openRecentBattles,
 ) => {
   const menuItems1 = [
     searchRules(toggleRulesSearch, rulesSearchOpen),
@@ -46,6 +48,17 @@ export const dmItems = (
     ]
     : [];
 
+  const recentBattleItems = recentBattlesAvailable
+    ? [
+      {
+        icon: <SaveLoadIcon load />,
+        label: 'Recent battles',
+        ref: React.createRef(),
+        onClick: openRecentBattles,
+      },
+    ]
+    : [];
+
   const menuItems2 = [
     {
       icon: <RemoveIcon />,
@@ -63,7 +76,7 @@ export const dmItems = (
     },
   ];
 
-  return [...menuItems1, ...saveLoadItems, ...menuItems2];
+  return [...menuItems1, ...saveLoadItems, ...recentBattleItems, ...menuItems2];
 };
 
 export const playerItems = (rulesSearchOpen, toggleRulesSearch) => ([

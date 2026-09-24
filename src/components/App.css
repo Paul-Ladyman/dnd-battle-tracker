@@ -1721,3 +1721,48 @@ button[role=tab][aria-selected=true]:focus  {
   opacity: 0.7;
   z-index: 3;
 }
+
+
+/* Recent battles */
+.recent-battles-dialog {
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.recent-battles {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.recent-battles--item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #822000;
+}
+
+.recent-battles--item:last-child {
+  border-bottom: none;
+}
+
+.recent-battles--details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.recent-battles--creatures {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-battles--restore {
+  width: auto;
+  padding: 0 12px;
+  font-size: 16px;
+}

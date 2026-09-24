@@ -56,6 +56,10 @@ import {
   save,
   load,
 } from '../../state/SaveManager';
+import {
+  archiveRecentBattle,
+  restoreRecentBattle,
+} from '../../state/RecentBattlesManager';
 import Errors from '../error/Errors';
 import { hotkeys } from '../../hotkeys/hotkeys';
 import BattleManagerContext from './BattleManagerContext';
@@ -111,8 +115,20 @@ function DungeonMasterApp({
   };
 
   const loadBattle = async (file) => {
+    archiveRecentBattle(state);
     const newState = shareBattle(await load(state, file));
     setState(newState);
+  };
+
+  const resetCurrentBattle = () => {
+    setState((prevState) => {
+      archiveRecentBattle(prevState);
+      return shareBattle(resetBattle(prevState));
+    });
+  };
+
+  const restoreBattle = (snapshot) => {
+    setState((prevState) => shareBattle(restoreRecentBattle(prevState, snapshot)));
   };
 
   const errors = battleHasErrors(state);
@@ -176,9 +192,10 @@ function DungeonMasterApp({
   const battleManagement = useMemo(() => ({
     toggleShare: updateBattle(toggleSync),
     toggleRulesSearch: updateBattle(toggleRulesSearch, false),
-    resetBattle: updateBattle(resetBattle),
+    resetBattle: resetCurrentBattle,
     saveBattle: updateBattle(save, false),
     loadBattle,
+    restoreRecentBattle: restoreBattle,
   }), [state]);
 
   const srd = useMemo(() => ({ spellList }));
