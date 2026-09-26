@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
 import ErrorBoundary from './components/error/ErrorBoundary';
@@ -50,7 +50,7 @@ const battleId = getUrlParameter('battle');
 async function render() {
   registerServiceworker();
   setFeatureFlags();
-  const rootElement = document.getElementById('root');
+  const rootElement = document.getElementById('root')!;
   const root = createRoot(rootElement);
 
   if (battleId) {

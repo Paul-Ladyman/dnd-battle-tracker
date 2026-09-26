@@ -1,8 +1,56 @@
 import getSecondsElapsed from '../state/TimeManager';
-import conditionsData from './conditions';
+import conditionsData, { AppliedCondition } from './conditions';
+import { Roll } from './dice';
+import { AppliedNote } from './notes';
+import { Spells, SpellSlots } from './spellcasting';
+
+export type CreatureData = {
+  name: string,
+  initiative: number | null,
+  initiativeRoll: Roll,
+  initiativeTieBreaker: number | null,
+  healthPoints: number | null,
+  maxHealthPoints: number | null,
+  armorClass: number | null,
+  temporaryHealthPoints: number | null,
+  id: number,
+  alive: boolean,
+  conditions: AppliedCondition[],
+  notes: AppliedNote[],
+  locked: boolean,
+  shared: boolean,
+  hitPointsShared: boolean,
+  statBlock: string | null,
+  totalSpellSlots: SpellSlots | null,
+  usedSpellSlots: SpellSlots | null,
+  spells: Spells,
+  selected: boolean,
+}
 
 export default class Creature {
-  constructor(data) {
+  private data: CreatureData
+  name: string
+  initiative: number | null
+  initiativeRoll: Roll
+  initiativeTieBreaker: number | null
+  healthPoints: number | null
+  maxHealthPoints: number | null
+  armorClass: number | null
+  temporaryHealthPoints: number | null
+  id: number
+  alive: boolean
+  conditions: AppliedCondition[]
+  notes: AppliedNote[]
+  locked: boolean
+  shared: boolean
+  hitPointsShared: boolean
+  statBlock: string | null
+  totalSpellSlots: SpellSlots | null
+  usedSpellSlots: SpellSlots | null
+  spells: Spells
+  selected: boolean
+
+  constructor(data: CreatureData) {
     const {
       name,
       initiative,
@@ -49,64 +97,64 @@ export default class Creature {
     this.selected = selected;
   }
 
-  toggleSelect() {
+  toggleSelect(): Creature {
     return new Creature({
       ...this.data,
       selected: !this.selected,
     });
   }
 
-  unselect() {
+  unselect(): Creature {
     return new Creature({
       ...this.data,
       selected: false,
     });
   }
 
-  lock() {
+  lock(): Creature {
     return new Creature({
       ...this.data,
       locked: true,
     });
   }
 
-  unlock() {
+  unlock(): Creature {
     return new Creature({
       ...this.data,
       locked: false,
     });
   }
 
-  share() {
+  share(): Creature {
     return new Creature({
       ...this.data,
       shared: true,
     });
   }
 
-  unshare() {
+  unshare(): Creature {
     return new Creature({
       ...this.data,
       shared: false,
     });
   }
 
-  shareHitPoints() {
+  shareHitPoints(): Creature {
     return new Creature({
       ...this.data,
       hitPointsShared: true,
     });
   }
 
-  unshareHitPoints() {
+  unshareHitPoints(): Creature {
     return new Creature({
       ...this.data,
       hitPointsShared: false,
     });
   }
 
-  kill(round) {
-    const healthPoints = this.healthPoints === undefined ? undefined : 0;
+  kill(round: number): Creature {
+    const healthPoints = this.healthPoints === null ? null : 0;
     const unconsciousCondition = {
       text: conditionsData.Unconscious.text,
       appliedAtRound: round,
@@ -129,14 +177,14 @@ export default class Creature {
     return new Creature(newData);
   }
 
-  stabilize() {
+  stabilize(): Creature {
     return new Creature({
       ...this.data,
       alive: true,
     });
   }
 
-  serialize() {
+  serialize(): CreatureData {
     return {
       name: this.name,
       initiative: this.initiative,
