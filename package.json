@@ -34,9 +34,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/core": "^7.23.9",
-    "@babel/preset-env": "^7.24.6",
-    "@babel/preset-react": "^7.24.7",
     "@playwright/test": "^1.48.2",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^16.0.1",
