@@ -44,7 +44,8 @@ export default function ComboboxList({
   const [selectedItem, setSelectedItem] = useState(null);
 
   const hasList = list.length > 0;
-  const activeNoteId = focusedItem !== null ? `${dropdownId}-${focusedItem}` : '';
+  const focusedOption = focusedItem !== null ? list[focusedItem] : null;
+  const activeOptionId = focusedOption ? `combobox-dropdown-${id}-${focusedOption.id}` : '';
   const showList = hasList && expanded;
   const className = 'combobox';
   const classModifier = 'combobox__open';
@@ -155,7 +156,7 @@ export default function ComboboxList({
         ariaAutoComplete="list"
         ariaExpanded={expanded}
         ariaControls={dropdownId}
-        ariaActiveDescendant={activeNoteId}
+        ariaActiveDescendant={activeOptionId}
         role="combobox"
         required={required}
         label={ComboboxLabel(showList, label, listAriaLabel, dropdownId, toggleExpanded)}

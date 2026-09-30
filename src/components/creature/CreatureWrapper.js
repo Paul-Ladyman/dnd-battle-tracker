@@ -158,7 +158,6 @@ class CreatureWrapper extends Component {
       <>
         <section
           className={classes}
-          id="creature-wrapper"
           aria-label={creatureAriaLabel}
           data-creature-id={id}
           style={{ backgroundImage: `linear-gradient(to right, #EBE1AD ${leftPercentage}%, lightgrey ${rightPercentage}%)` }}
