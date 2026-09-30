@@ -110,7 +110,7 @@ export default function CreatureToolbar({
               onClick={() => toggleSelectedButton(i)}
               tabIndex={i === tabIndex ? '0' : '-1'}
               toolMenuId={toolMenuId}
-              toolMenuExpanded={toolMenuExpanded}
+              toolMenuExpanded={selectedButton === i && toolMenuExpanded}
               creatureManagement={creatureManagement}
               closeToolMenu={closeToolMenu}
             />

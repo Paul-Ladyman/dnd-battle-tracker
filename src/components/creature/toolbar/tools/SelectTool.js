@@ -38,7 +38,7 @@ export default function SelectTool({
       onFocus={onFocus}
       onClick={onClickSelect}
       tabIndex={tabIndex}
-      id={`${toolMenuId}-conditions`}
+      id={`${toolMenuId}-select`}
       aria-pressed={selected ? 'true' : 'false'}
     >
       {selected ? <CheckedIcon /> : <UncheckedIcon />}
