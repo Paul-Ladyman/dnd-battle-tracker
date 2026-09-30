@@ -46,6 +46,7 @@ function Creatures({
         if (selectedCreatures && !selected) {
           return (
             <UnselectedCreature
+              key={id}
               creature={creature}
               active={active}
               creatureManagement={creatureManagement}
