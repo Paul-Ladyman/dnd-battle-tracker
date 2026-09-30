@@ -48,6 +48,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [DnD Combat Tracker](https://dnd.achim-strauss.net/)
 * [Monstrous Initiative Tracker](https://brewchetta.github.io/monstrous-initiative-tracker/)
 * [Warforged 5e](https://warforged5e.com/)
+* [Table Mimic](https://tablemimic.com/initiative/)
 
 Many of these systems are very feature rich and aim to provide tools beyond the combat tracker itself, which is great. However that does mean that they come with a learning curve and several are gated-off behind login screens.
 
