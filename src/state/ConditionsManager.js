@@ -1,9 +1,14 @@
 import getSecondsElapsed from './TimeManager';
 import conditionsData from '../domain/conditions';
 
-function conditionExists(newConditionId, existingConditions) {
+function conditionExists(conditionId, creatureId, existingConditions) {
+  const validIds = [
+    conditionId,
+    `${conditionId}-${creatureId}`,
+  ];
+
   return existingConditions.findIndex(
-    (existingCondition) => existingCondition.id === newConditionId,
+    (existingCondition) => validIds.includes(existingCondition.id),
   ) > -1;
 }
 
@@ -18,7 +23,7 @@ export function addCondition(conditionToAdd, creature, round) {
   const { text, url, id } = conditionDataToAdd;
   const newConditionId = `${id}-${creatureId}`;
 
-  if (conditionExists(newConditionId, existingConditions)) {
+  if (conditionExists(id, creatureId, existingConditions)) {
     return existingConditions;
   }
 
