@@ -42,6 +42,15 @@ describe('save', () => {
     expect(fileName.match(fileNameRegex).length).toBe(1);
   });
 
+  it('uses a one-based month in the file name', () => {
+    now.mockReturnValue(new Date(2025, 0, 2, 3, 4, 5).getTime());
+
+    save(defaultState);
+
+    const { calls } = FileSystem.save.mock;
+    expect(calls[0][0]).toBe('dnd_battle_tracker_2_1_2025_3_4_5.json');
+  });
+
   it('sets an aria announcement in the app state', () => {
     const expectedState = {
       ...defaultState,
@@ -250,6 +259,41 @@ describe('autoLoad', () => {
       shareEnabled: false,
       sharedTimestamp: null,
     };
+    const loadedFileContents = await autoLoad(initialState);
+
+    const expectedFileContents = {
+      ...defaultState,
+      battleId: undefined,
+      battleCreated: false,
+      shareEnabled: false,
+      sharedTimestamp: null,
+      loaded: true,
+      ariaAnnouncements: ['battle loaded'],
+    };
+    expect(loadedFileContents).toEqual(expectedFileContents);
+  });
+
+  it.each([
+    ['missing', undefined],
+    ['invalid', 'not-a-timestamp'],
+  ])('resets battle sharing data if the shared timestamp is %s', async (_description, sharedTimestamp) => {
+    const loadedState = {
+      ...defaultState,
+      sharedTimestamp,
+      battleId: '123',
+      battleCreated: true,
+      shareEnabled: true,
+    };
+    getLocalState.mockReturnValue(JSON.stringify(loadedState));
+
+    const initialState = {
+      ...defaultState,
+      battleId: undefined,
+      battleCreated: false,
+      shareEnabled: false,
+      sharedTimestamp: null,
+    };
+
     const loadedFileContents = await autoLoad(initialState);
 
     const expectedFileContents = {

@@ -9,6 +9,10 @@ import defaultState from '../test/fixtures/battle';
 
 jest.mock('../src/util/date');
 
+beforeEach(() => {
+  now.mockReturnValue(1743339621000);
+});
+
 afterEach(() => {
   jest.restoreAllMocks();
 });

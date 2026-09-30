@@ -12,6 +12,7 @@ function versionCompatibility(version, loadedVersion) {
 
 function battleSavedMoreThan12HoursAgo(timestamp) {
   const twelveHours = 12 * 60 * 60 * 1000;
+  if (!Number.isFinite(timestamp)) return true;
   return Math.abs(now() - timestamp) >= twelveHours;
 }
 
@@ -91,7 +92,7 @@ export function save(state) {
     ariaAnnouncements, errors, ...stateToSave
   } = state;
   const date = new Date(now());
-  const dateSuffix = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
+  const dateSuffix = `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;
   const timeSuffix = `${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`;
   const fileSuffix = `${dateSuffix}_${timeSuffix}`;
   const fileContents = JSON.stringify(stateToSave, null, 2);
