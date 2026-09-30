@@ -87,7 +87,7 @@ describe('kill', () => {
       appliedAtRound: 2,
       appliedAtSeconds: 6,
       url: conditionsData.Unconscious.url,
-      id: conditionsData.Unconscious.id,
+      id: `${conditionsData.Unconscious.id}-${creature.id}`,
     };
     expect(newCreature.conditions).toEqual([unconsciousCondition]);
   });
@@ -100,9 +100,43 @@ describe('kill', () => {
       appliedAtRound: 2,
       appliedAtSeconds: 6,
       url: conditionsData.Unconscious.url,
-      id: conditionsData.Unconscious.id,
+      id: `${conditionsData.Unconscious.id}-${creature.id}`,
     };
     expect(newCreature.conditions).toEqual([unconsciousCondition]);
+  });
+
+  it('does not duplicate an unconscious condition added through the conditions tool', () => {
+    const creatureState = {
+      ...defaultState.creatures[0],
+      conditions: [{
+        text: conditionsData.Unconscious.text,
+        appliedAtRound: 1,
+        appliedAtSeconds: 3,
+        url: conditionsData.Unconscious.url,
+        id: `${conditionsData.Unconscious.id}-${defaultState.creatures[0].id}`,
+      }],
+    };
+    const creature = new Creature(creatureState);
+    const newCreature = creature.kill(2);
+
+    expect(newCreature.conditions).toEqual(creatureState.conditions);
+  });
+
+  it('does not duplicate a legacy unconscious condition', () => {
+    const creatureState = {
+      ...defaultState.creatures[0],
+      conditions: [{
+        text: conditionsData.Unconscious.text,
+        appliedAtRound: 1,
+        appliedAtSeconds: 3,
+        url: conditionsData.Unconscious.url,
+        id: conditionsData.Unconscious.id,
+      }],
+    };
+    const creature = new Creature(creatureState);
+    const newCreature = creature.kill(2);
+
+    expect(newCreature.conditions).toEqual(creatureState.conditions);
   });
 
   it('does not modify health points if the creature has none', () => {
