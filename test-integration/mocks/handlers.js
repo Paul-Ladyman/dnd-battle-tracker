@@ -2,6 +2,10 @@
 import { graphql, http, HttpResponse } from 'msw';
 
 export default [
+  http.get('https://api.github.com/repos/Paul-Ladyman/dnd-battle-tracker/releases/latest', () => HttpResponse.json({
+    tag_name: 'v5.127.0',
+  })),
+
   http.get('https://wyqoq6xpifbjlm6xq6jnqugjvm.appsync-realtime-api.eu-west-2.amazonaws.com/graphql', null),
 
   http.get('https://www.dnd5eapi.co/api/monsters', () => HttpResponse.json({

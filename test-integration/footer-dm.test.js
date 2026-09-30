@@ -8,8 +8,10 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import DungeonMasterAppWrapper from '../src/components/app/DungeonMasterAppWrapper';
 import packageInfo from '../package.json';
+import server from './mocks/server';
 
 describe('Keyboard shortcuts', () => {
   test('the keyboard shortcuts button is not expanded by default', async () => {
@@ -125,6 +127,37 @@ describe('Info', () => {
     const info = await screen.findByTestId('info');
     expect(info).toBeInTheDocument();
     expect(info).toHaveStyle({ display: 'none' });
+  });
+
+  test('displays a link when a newer release is available', async () => {
+    server.use(
+      http.get(
+        'https://api.github.com/repos/Paul-Ladyman/dnd-battle-tracker/releases/latest',
+        () => HttpResponse.json({ tag_name: 'v999.0.0' }),
+      ),
+    );
+
+    render(<DungeonMasterAppWrapper />);
+    const user = userEvent.setup();
+    const button = await screen.findByRole('button', { name: 'Info' });
+    await user.click(button);
+    const info = await screen.findByTestId('info');
+
+    const updateNotice = await findByText(
+      info,
+      /A newer version is available: Version 999\.0\.0\./,
+    );
+    expect(updateNotice).toBeVisible();
+
+    const latestRelease = await findByRole(
+      info,
+      'link',
+      { name: 'Download the latest release' },
+    );
+    expect(latestRelease).toHaveAttribute(
+      'href',
+      'https://github.com/Paul-Ladyman/dnd-battle-tracker/releases/latest',
+    );
   });
 
   test('displays only version details if build time is not set', async () => {

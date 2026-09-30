@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ExternalLink from '../ExternalLink';
 import packageInfo from '../../../../package.json';
+import {
+  getLatestReleaseVersion,
+  isNewerVersion,
+  LATEST_RELEASE_URL,
+} from '../../../client/github';
 
 function isValidDate(date) {
   return !Number.isNaN(Date.parse(date));
@@ -20,6 +25,22 @@ function getVersionInfo() {
 }
 
 export default function Info() {
+  const [latestVersion, setLatestVersion] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    getLatestReleaseVersion().then((version) => {
+      if (mounted && isNewerVersion(version, packageInfo.version)) {
+        setLatestVersion(version);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <>
       <p>
@@ -42,6 +63,16 @@ export default function Info() {
         <ExternalLink url="https://github.com/Paul-Ladyman/dnd-battle-tracker/issues/new">Github issues</ExternalLink>
         .
       </p>
+      {latestVersion && (
+        <p aria-live="polite">
+          A newer version is available:
+          {` Version ${latestVersion}. `}
+          <ExternalLink url={LATEST_RELEASE_URL}>
+            Download the latest release
+          </ExternalLink>
+          .
+        </p>
+      )}
       {getVersionInfo()}
     </>
   );
