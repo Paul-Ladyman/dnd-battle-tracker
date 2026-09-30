@@ -4,6 +4,7 @@ import DungeonMasterAppWrapper from './components/app/DungeonMasterAppWrapper';
 import ErrorBoundary from './components/error/ErrorBoundary';
 import featureFlags from './featureFlags';
 import Loading from './components/app/Loading';
+import { getDmRecoveryFromLocation } from './state/DmRecoveryManager';
 
 const PlayerAppWrapper = lazy(() => import('./components/app/PlayerAppWrapper'));
 
@@ -31,10 +32,10 @@ function RenderPlayerApp({ battleId }) {
   );
 }
 
-function RenderDmApp() {
+function RenderDmApp({ recovery }) {
   return (
     <ErrorBoundary>
-      <DungeonMasterAppWrapper />
+      <DungeonMasterAppWrapper recovery={recovery} />
     </ErrorBoundary>
   );
 }
@@ -46,6 +47,7 @@ function registerServiceworker() {
 }
 
 const battleId = getUrlParameter('battle');
+const recovery = getDmRecoveryFromLocation();
 
 async function render() {
   registerServiceworker();
@@ -53,10 +55,12 @@ async function render() {
   const rootElement = document.getElementById('root');
   const root = createRoot(rootElement);
 
-  if (battleId) {
+  if (recovery) {
+    root.render(RenderDmApp({ recovery }));
+  } else if (battleId) {
     root.render(RenderPlayerApp({ battleId }));
   } else {
-    root.render(RenderDmApp());
+    root.render(RenderDmApp({}));
   }
 }
 

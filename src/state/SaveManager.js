@@ -59,6 +59,9 @@ function loadState(defaultState, getState, auto) {
 
   const loadedBattle = {
     ...loadedState,
+    dmRecoveryId: loadedState.dmRecoveryId ?? defaultState.dmRecoveryId,
+    dmRecoveryKey: loadedState.dmRecoveryKey ?? defaultState.dmRecoveryKey,
+    dmRecoveryCreated: loadedState.dmRecoveryCreated ?? defaultState.dmRecoveryCreated,
     errors: [],
     ariaAnnouncements: ['battle loaded'],
     loaded: true,
@@ -88,7 +91,12 @@ export function autoLoad(defaultState) {
 
 export function save(state) {
   const {
-    ariaAnnouncements, errors, ...stateToSave
+    ariaAnnouncements,
+    errors,
+    dmRecoveryId,
+    dmRecoveryKey,
+    dmRecoveryCreated,
+    ...stateToSave
   } = state;
   const date = new Date(now());
   const dateSuffix = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;

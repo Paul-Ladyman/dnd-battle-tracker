@@ -178,4 +178,10 @@ export default [
       },
     },
   })),
+
+  graphql.query('GET_DM_RECOVERY', () => HttpResponse.json({
+    data: {
+      getDndbattletracker: null,
+    },
+  })),
 ];

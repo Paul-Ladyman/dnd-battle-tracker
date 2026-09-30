@@ -42,6 +42,30 @@ describe('Battle Share', () => {
     expect(playerSessionLink).toHaveAttribute('href', playerSessionUrl);
   });
 
+  test('displays a private DM recovery link', async () => {
+    const dmApp = new DmApp();
+    await dmApp.battleMenu.toggle();
+    await dmApp.battleMenu.selectMenuItem('Share battle');
+    await screen.findByRole('link', { name: 'Player session random-battle-id (link copied)' });
+
+    await waitFor(() => {
+      const savedState = JSON.parse(window.localStorage.getItem('battle'));
+      expect(savedState.dmRecoveryId).toBe('dm-random-battle-id');
+      expect(savedState.dmRecoveryKey).toBeDefined();
+      expect(savedState.dmRecoveryCreated).toBe(true);
+    });
+
+    const recoveryLink = await screen.findByRole('link', { name: 'DM recovery link' });
+    const recoveryUrl = new URL(recoveryLink.href);
+    const recovery = new URLSearchParams(recoveryUrl.hash.replace(/^#/, ''));
+
+    expect(recoveryLink).toBeVisible();
+    expect(recoveryUrl.searchParams.get('battle')).toBeNull();
+    expect(recovery.get('dm')).toBe('dm-random-battle-id');
+    expect(recovery.get('dm')).not.toBe('random-battle-id');
+    expect(recovery.get('key')).toHaveLength(43);
+  });
+
   test('allows the battle to be shared using the keyboard', async () => {
     const dmApp = new DmApp();
     await dmApp.battleMenu.toggle();

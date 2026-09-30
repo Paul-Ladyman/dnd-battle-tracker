@@ -28,25 +28,30 @@ const SharedDungeonMasterApp = lazy(async () => {
   }
 });
 
-export default function DungeonMasterAppWrapper() {
+export default function DungeonMasterAppWrapper({ recovery }) {
   const initialState = useMemo(() => autoLoad(newBattleState()), []);
   const [state, setState] = useState(initialState);
+  const [activeRecovery, setActiveRecovery] = useState(recovery);
 
   useAutoSave({
     state,
     setState,
   });
 
-  if (state.shareEnabled) {
+  const online = state.shareEnabled || Boolean(activeRecovery);
+
+  if (online) {
     return (
       <Suspense fallback={<Loading />}>
         <RefreshingApolloProvider
-          online={state.shareEnabled}
+          online={online}
           OnlineView={SharedDungeonMasterApp}
           OfflineView={DungeonMasterApp}
           shareBattle={(sharedState) => sharedState}
           state={state}
           setState={setState}
+          recovery={activeRecovery}
+          onRecoveryResolved={() => setActiveRecovery(undefined)}
         />
       </Suspense>
     );

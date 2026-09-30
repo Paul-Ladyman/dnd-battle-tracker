@@ -76,4 +76,7 @@ export default {
   battleId: '123',
   battleTrackerVersion: '5.0.0',
   sharedTimestamp: null,
+  dmRecoveryId: undefined,
+  dmRecoveryKey: undefined,
+  dmRecoveryCreated: false,
 };
