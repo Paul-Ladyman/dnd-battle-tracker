@@ -38,7 +38,7 @@ It was clear that some automation would be helpful. There's a number of browser-
 * [Improved Initiative](https://improvedinitiative.app/)
 * [Kassoon](https://www.kassoon.com/dnd/combat-tracker/)
 * Orc Pub, [replaced by Dungeon Master's Vault](https://www.dungeonmastersvault.com/help/faq-about-orcpub-and-dungeonmastersvault/) (though seemingly without a combat tracker)
-* Full VTTs like [Roll20](https://app.roll20.net/sessions/new), [Fantasy Grounds](https://www.fantasygrounds.com/), [Owlbear Rodeo](https://www.owlbear.rodeo/), [Foundry](https://foundryvtt.com/), [Forge](https://forge-vtt.com/)
+* Full VTTs like [D&D Beyond Maps](https://www.dndbeyond.com/games), [Roll20](https://app.roll20.net/sessions/new), [Fantasy Grounds](https://www.fantasygrounds.com/), [Owlbear Rodeo](https://www.owlbear.rodeo/), [Foundry](https://foundryvtt.com/), [Forge](https://forge-vtt.com/)
 * [HeroMuster](https://encounters.heromuster.com/)
 * [5e Tools](https://5e.tools/dmscreen.html) (click the add button then go to Special and add the Initiative Tracker. Player view also available)
 * [DM Tools](https://dm.tools/tracker)
