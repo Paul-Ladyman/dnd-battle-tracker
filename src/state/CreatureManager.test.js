@@ -31,7 +31,7 @@ import {
 import { addCondition, removeCondition } from './ConditionsManager';
 import defaultState from '../../test/fixtures/battle';
 import { monsterUrlFrom5eApiIndex } from '../client/dndBeyond';
-import { maxSpellSlots } from '../domain/spellcasting';
+import { maxSpellSlots } from '../domain/spellcasting.ts';
 
 jest.mock('./ConditionsManager');
 jest.mock('../client/dndBeyond');

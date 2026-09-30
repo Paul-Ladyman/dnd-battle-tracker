@@ -117,7 +117,7 @@ export function healCreature(state, creatureId, health) {
 
   const creature = findCreature(state.creatures, creatureId);
 
-  if (creature.healthPoints === undefined) {
+  if (creature.healthPoints === null) {
     return state;
   }
 
