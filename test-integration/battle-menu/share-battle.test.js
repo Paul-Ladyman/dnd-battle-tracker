@@ -9,6 +9,10 @@ beforeEach(() => {
   writeTextMock.mockReset();
 });
 
+afterEach(() => {
+  window.history.pushState({}, '', '/');
+});
+
 describe('Battle Share', () => {
   test('displays a loading screen whilst the battle is being shared', async () => {
     const dmApp = new DmApp();
@@ -40,6 +44,20 @@ describe('Battle Share', () => {
     const playerSessionLink = await screen.findByRole('link', { name: 'Player session random-battle-id (link copied)' });
     expect(playerSessionLink).toBeVisible();
     expect(playerSessionLink).toHaveAttribute('href', playerSessionUrl);
+  });
+
+  test('builds the player session link from an existing query string', async () => {
+    window.history.pushState({}, '', '/?feature=true#section');
+
+    const dmApp = new DmApp();
+    await dmApp.battleMenu.toggle();
+    await dmApp.battleMenu.selectMenuItem('Share battle');
+
+    const playerSessionLink = await screen.findByRole('link', { name: 'Player session random-battle-id (link copied)' });
+    expect(playerSessionLink).toHaveAttribute(
+      'href',
+      'http://localhost/?feature=true&battle=random-battle-id',
+    );
   });
 
   test('allows the battle to be shared using the keyboard', async () => {

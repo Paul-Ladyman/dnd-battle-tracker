@@ -10,14 +10,16 @@ function DungeonMasterSubTitle({ battleId }) {
 
   useEffect(() => {
     if (battleId) {
-      const { href } = window.location;
-      const url = `${href}?battle=${battleId}`;
+      const url = new URL(window.location.href);
+      url.searchParams.set('battle', battleId);
+      url.hash = '';
+      const playerSessionUrl = url.toString();
       const copyPlayerLink = async () => {
         try {
-          await window.navigator.clipboard.writeText(url);
-          setPlayerLink({ url, copied: true });
+          await window.navigator.clipboard.writeText(playerSessionUrl);
+          setPlayerLink({ url: playerSessionUrl, copied: true });
         } catch {
-          setPlayerLink({ url, copied: false });
+          setPlayerLink({ url: playerSessionUrl, copied: false });
         }
       };
       copyPlayerLink();
