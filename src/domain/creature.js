@@ -1,5 +1,4 @@
-import getSecondsElapsed from '../state/TimeManager';
-import conditionsData from './conditions';
+import { addCondition } from '../state/ConditionsManager';
 
 export default class Creature {
   constructor(data) {
@@ -107,18 +106,7 @@ export default class Creature {
 
   kill(round) {
     const healthPoints = this.healthPoints === undefined ? undefined : 0;
-    const unconsciousCondition = {
-      text: conditionsData.Unconscious.text,
-      appliedAtRound: round,
-      appliedAtSeconds: getSecondsElapsed(round),
-      url: conditionsData.Unconscious.url,
-      id: conditionsData.Unconscious.id,
-    };
-    const alreadyUnconscious = this.conditions
-      .findIndex(({ id }) => id === conditionsData.Unconscious.id) > -1;
-    const conditions = alreadyUnconscious
-      ? this.conditions
-      : [...this.conditions, unconsciousCondition];
+    const conditions = addCondition('Unconscious', this, round);
 
     const newData = {
       ...this.data,

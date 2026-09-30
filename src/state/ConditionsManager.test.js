@@ -81,6 +81,23 @@ describe('addCondition', () => {
     expect(getSecondsElapsed).not.toHaveBeenCalled();
   });
 
+  it('does not duplicate a legacy unsuffixed condition id', () => {
+    const condition = {
+      text: blindedText,
+      appliedAtRound: round,
+      appliedAtSeconds: 0,
+      url: blindedUrl,
+      id: 'blinded',
+    };
+    const creature = {
+      conditions: [condition],
+      id: 0,
+    };
+    const result = addCondition(blinded, creature, round);
+    expect(result).toEqual(creature.conditions);
+    expect(getSecondsElapsed).not.toHaveBeenCalled();
+  });
+
   it('does not add an unknown condition', () => {
     const creature = {
       conditions: [],
